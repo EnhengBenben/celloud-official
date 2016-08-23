@@ -334,6 +334,26 @@ public class DataAction {
 		return mv;
 	}
 
+	@ActionLog(value = "跳转数据编辑", button = "数据编辑")
+	@RequestMapping("toEditData")
+	@ResponseBody
+	public Map<String, Object> toEditData(Integer dataId) {
+		logger.info("用户{}打开修改数据弹窗，id={}", ConstantsData.getLoginUserName(), dataId);
+		Map<String, Object> map = new HashMap<>();
+		DataFile file = dataService.getDataById(dataId);
+		List<App> apps = appService.findAppsByFormat(ConstantsData.getLoginUserId(), file.getFileFormat());
+		map.put("file", file);
+		map.put("appList", apps);
+		return map;
+	}
+
+	@ActionLog(value = "数据编辑", button = "数据编辑")
+	@RequestMapping("updateDataAndTag")
+	@ResponseBody
+	public Integer updateDataAndTag(DataFile data) {
+		return dataService.updateDataAndTag(data);
+	}
+
 	/**
 	 * 获取物种列表
 	 * 

@@ -196,6 +196,16 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
+	public int updateDataAndTag(DataFile record) {
+		//1.清除历史标签
+		dataFileMapper.deleteDataTag(record.getFileId());
+		//2.插入新的标签
+		dataFileMapper.insertDataTag(record);
+		//3.修改数据信息
+		return dataFileMapper.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
 	public List<DataFile> getDataByAnotherName(Integer userId, String anotherName) {
 		return dataFileMapper.getDataByAnotherName(userId, anotherName, DataState.ACTIVE);
 	}

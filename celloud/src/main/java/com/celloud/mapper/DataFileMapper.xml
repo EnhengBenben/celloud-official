@@ -52,14 +52,18 @@
 	<sql id="Tag_Column_List">
 		tag.tag_name tagName,apptag.app_id appId
 	</sql>
-	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
-		parameterType="java.lang.Integer">
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithTag" parameterType="java.lang.Integer">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from tb_file
-		where file_id = #{fileId,jdbcType=INTEGER}
+		,
+		<include refid="Tag_Column_List" />
+		from tb_file f
+		left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+		left join tb_tag tag on tag.tag_id = filetag.tag_id
+		left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
+		where f.file_id = #{fileId,jdbcType=INTEGER}
 	</select>
 	<select id="getDataByAnotherName" resultMap="BaseResultMap">
 		select
@@ -95,6 +99,15 @@
 		tb_file
 		where file_id = #{fileId,jdbcType=INTEGER}
 	</delete>
+	<delete id="deleteDataTag" parameterType="java.lang.Integer">
+		delete from
+		tb_file_tag_relat
+		where file_id = #{fileId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertDataTag" parameterType="com.celloud.model.mysql.DataFile">
+		insert into tb_file_tag_relat (file_id,tag_id)
+		select #{fileId,jdbcType=INTEGER},tag_id from tb_tag where tag_name = #{tagName,jdbcType=VARCHAR};
+	</insert>
 	<insert id="insert" parameterType="com.celloud.model.mysql.DataFile">
 		insert into tb_file (file_id,
 		user_id, data_key,
