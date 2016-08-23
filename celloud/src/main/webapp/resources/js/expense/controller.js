@@ -96,4 +96,11 @@
 		};
 		$scope.pageQueryInvoice(1,10);
 	});
+	celloudApp.controller("toRecharge",function($scope,expenseService){
+		expenseService.toRecharge().
+		success(function(data){
+			$scope.balance = data;
+		});
+		$scope.tab = 'pay_tab_alipay';
+	});
 })();

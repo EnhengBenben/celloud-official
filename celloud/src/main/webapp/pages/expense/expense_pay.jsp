@@ -1,4 +1,6 @@
+<%@page import="com.celloud.constants.Bank"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <ng-include src="'pages/partial/_partial_expense_sidebar.jsp'"></ng-include>
 <div class="pro-body">
     <ol class="breadcrumb">
@@ -17,7 +19,7 @@
         </span>
       </div> -->
       <div class="content-body pay-content">
-        <h2>账户余额： <span class="tips">￥2900</span></h2>
+        <h2>账户余额： <span class="tips">￥{{balance}}</span></h2>
         <div class="pay-types">
            <lable class="pay-types-header">充值方式：</lable>
            <div class="pay-types-detail">
@@ -42,104 +44,73 @@
              <button class="btn btn-money-confirm">确定</button>
            </div>
         </div>
-        <div class="pay-types">
+        <div class="pay-types nav-tabs" role="tablist">
            <lable class="pay-types-header">支付方式：</lable>
            <div class="pay-types-detail">
-               <label class="checkbox-lable">
-                 <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
+               <label class="radio-lable">
+                 <input class="radio" type="radio" name="pay-way" checked ng-click="tab = 'pay_tab_alipay'">
                  <span class="info"></span>
                </label>
                支付宝
            </div>
            <div class="pay-types-detail">
-               <label class="checkbox-lable">
-                 <input class="checkbox" type="checkbox" name="demo-checkbox1">
+               <label class="radio-lable">
+                 <input class="radio" type="radio" name="pay-way" ng-click="tab = 'pay_tab_b2b'">
                  <span class="info"></span>
                </label>
                企业网银
            </div>
            <div class="pay-types-detail">
-               <label class="checkbox-lable">
-                 <input class="checkbox" type="checkbox" name="demo-checkbox1">
+               <label class="radio-lable">
+                 <input class="radio" type="radio" name="pay-way" ng-click="tab = 'pay_tab_b2c'">
                  <span class="info"></span>
                </label>
                个人网银
            </div>
         </div>
-        <div class="bank-list">
-          <ul class="pay-banks">
+       	<div role="tabpanel" class="bank-list" ng-if="tab == 'pay_tab_alipay'" >
+          <ul class="pay-banks tab-pane">
             <li class="bank-item">
               <label class="checkbox-inline">
-                <label class="checkbox-lable">
-                  <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
+                <label class="radio-lable">
+                  <input class="radio" type="radio" name="pay-bank" checked="checked" value="alipay" checked>
                   <span class="info"></span>
                 </label>
-                <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/404.gif">
+				<img alt="支付宝" src="<%=request.getContextPath()%>/images/bank/alipay.gif" />
               </label>
             </li>
-            <li class="bank-item">
-              <label class="checkbox-inline">
-                  <label class="checkbox-lable">
-                     <input class="checkbox" type="checkbox" name="demo-checkbox1">
-                     <span class="info"></span>
-                   </label>
-                  <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/404.gif">
-              </label>
-            </li>
-            <li class="bank-item">
-              <label class="checkbox-inline">
-                  <label class="checkbox-lable">
-                     <input class="checkbox" type="checkbox" name="demo-checkbox1">
-                     <span class="info"></span>
-                   </label>
-                  <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/404.gif">
-              </label>
-            </li>
-            <li class="bank-item">
-              <label class="checkbox-inline">
-                  <label class="checkbox-lable">
-                     <input class="checkbox" type="checkbox" name="demo-checkbox1">
-                     <span class="info"></span>
-                   </label>
-                  <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/404.gif">
-              </label>
-            </li>
-            <li class="bank-item">
-              <label class="checkbox-inline">
-                  <label class="checkbox-lable">
-                     <input class="checkbox" type="checkbox" name="demo-checkbox1">
-                     <span class="info"></span>
-                   </label>
-                  <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/404.gif">
-              </label>
-            </li>
-            <li class="bank-item">
-              <label class="checkbox-inline">
-                  <label class="checkbox-lable">
-                     <input class="checkbox" type="checkbox" name="demo-checkbox1">
-                     <span class="info"></span>
-                   </label>
-                  <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/404.gif">
-              </label>
-            </li>
-            <li class="bank-item">
-              <label class="checkbox-inline">
-                  <label class="checkbox-lable">
-                     <input class="checkbox" type="checkbox" name="demo-checkbox1">
-                     <span class="info"></span>
-                   </label>
-                  <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/404.gif">
-              </label>
-            </li>
-            <li class="bank-item">
-              <label class="checkbox-inline">
-                  <label class="checkbox-lable">
-                     <input class="checkbox" type="checkbox" name="demo-checkbox1">
-                     <span class="info"></span>
-                   </label>
-                  <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/404.gif">
-              </label>
-            </li>
+          </ul>
+        </div>
+        <div role="tabpanel" class="bank-list" ng-if="tab == 'pay_tab_b2b'" >
+          <ul class="pay-banks">
+          	<c:set var="b2bBanks" value="<%=Bank.listB2B()%>"></c:set>
+			<c:forEach items="${b2bBanks}" var="bank">
+				<li class="bank-item">
+	              <label class="checkbox-inline">
+	                <label class="radio-lable">
+	                  <input class="radio" type="radio" name="pay-bank" value="${bank.bankCode }">
+	                  <span class="info"></span>
+	                </label>
+	                <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/${bank.bankLogo }.gif">
+	              </label>
+	            </li>
+			</c:forEach>
+          </ul>
+        </div>
+      	<div role="tabpanel" class="bank-list" ng-if="tab == 'pay_tab_b2c'" >
+          <ul class="pay-banks">
+          	<c:set var="b2cBanks" value="<%=Bank.listB2C()%>"></c:set>
+			<c:forEach items="${b2cBanks}" var="bank">
+				<li class="bank-item">
+	              <label class="checkbox-inline">
+	                <label class="radio-lable">
+	                  <input class="radio" type="radio" name="pay-bank" value="${bank.bankCode }">
+	                  <span class="info"></span>
+	                </label>
+	                <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/${bank.bankLogo }.gif">
+	              </label>
+	            </li>
+			</c:forEach>
           </ul>
         </div>
       </div>

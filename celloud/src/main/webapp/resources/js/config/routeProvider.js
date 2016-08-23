@@ -39,7 +39,8 @@
       controller: "pageQueryConsume"
     })
     .when('/expense/paydetail',{
-      templateUrl: "pages/expense/expense_pay.jsp"
+      templateUrl: "pages/expense/expense_pay.jsp",
+      controller: "toRecharge"
     })
     .when('/expense/paylist',{
       templateUrl: "pages/expense/expense_paylist.jsp",
