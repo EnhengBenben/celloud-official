@@ -67,7 +67,7 @@
            </div>
         </div>
         <div class="bank-list">
-          <ul class="pay-banks">
+          <ul class="pay-banks clearfix">
             <li class="bank-item">
               <label class="checkbox-inline">
                 <label class="checkbox-lable">
@@ -141,6 +141,9 @@
               </label>
             </li>
           </ul>
+        </div>
+        <div class="pay-btns">
+           <button type="button" class="btn -low">现在充值</button>
         </div>
       </div>
     </div>
