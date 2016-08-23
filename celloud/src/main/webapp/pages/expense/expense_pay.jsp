@@ -50,21 +50,21 @@
 		           <lable class="pay-types-header">支付方式：</lable>
 		           <div class="pay-types-detail">
 		               <label class="radio-lable">
-		                 <input class="radio" type="radio" name="pay-way" checked ng-click="tab = 'pay_tab_alipay'">
+		                 <input class="radio" type="radio" name="pay-way" value="alipay" checked ng-click="tab = 'pay_tab_alipay'">
 		                 <span class="info"></span>
 		               </label>
 		               支付宝
 		           </div>
 		           <div class="pay-types-detail">
 		               <label class="radio-lable">
-		                 <input class="radio" type="radio" name="pay-way" ng-click="tab = 'pay_tab_b2b'">
+		                 <input class="radio" type="radio" name="pay-way" value="jdpay" ng-click="tab = 'pay_tab_b2b'">
 		                 <span class="info"></span>
 		               </label>
 		               企业网银
 		           </div>
 		           <div class="pay-types-detail">
 		               <label class="radio-lable">
-		                 <input class="radio" type="radio" name="pay-way" ng-click="tab = 'pay_tab_b2c'">
+		                 <input class="radio" type="radio" name="pay-way" value="jdpay" ng-click="tab = 'pay_tab_b2c'">
 		                 <span class="info"></span>
 		               </label>
 		               个人网银

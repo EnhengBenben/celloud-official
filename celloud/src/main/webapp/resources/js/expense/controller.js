@@ -137,6 +137,8 @@
 			if($.isNumeric(money)){//测试用的
 //				$self.attr('action',$self.attr("action")+(payType?'alipay':'jdpay'));
 //				$("#tip-modal").modal("show");
+				var payWay = $("input[name=pay-way]:checked").val();
+				$("#rechargeForm").attr("action",$("#rechargeForm").attr("action") + payWay);
 				$scope.checkFlag = false;
 				$scope.checkSubmit = false;
 				return true;
