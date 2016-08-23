@@ -12,10 +12,12 @@
 		    <div class="o-app-list">
 			  <ul>
 			    <li>
-			      <div class="inner">
-			        <img src="<%=request.getContextPath()%>/images/app/bactive.png" alt="百菌探" title="百菌探">
+			      <a href="<%=request.getContextPath()%>/app/bsi">
+			        <div class="inner">
+			          <img src="<%=request.getContextPath()%>/images/app/bactive.png" alt="百菌探" title="百菌探">
 	<!-- 		        <a href="#" class="footer"><i class="setup-icon"></i></a> -->
-			      </div>
+			        </div>
+			      </a>
 			    </li>
 			  </ul>
 	<!-- 		  <div class="more-app pull-right"> -->
@@ -24,7 +26,7 @@
 		    </div>
 		  </section>
 	  </shiro:hasPermission>
-	<shiro:hasPermission name="rocky:product">
+	  <shiro:hasPermission name="rocky:product">
 		  <section class="overview-s">
 		    <h5 class="overview-header"><i class="myapp-icon"></i><span>我的产品</span></h5>
 		    <div class="o-app-list">

@@ -176,6 +176,11 @@ public class HomeAction {
 		return "index";
     }
 
+    @RequestMapping("app/bsi")
+    public String bsi() {
+        return "bsi/index";
+    }
+
     @RequestMapping("download.html")
     public ModelAndView download() {
         ModelAndView mv = new ModelAndView("download");
@@ -202,16 +207,6 @@ public class HomeAction {
     @RequestMapping("home_phone.html")
     public String homePhone() {
         return "home_phone";
-    }
-
-    @RequestMapping("bsi.html")
-    public String bsi() {
-        return "print/print_bsi";
-    }
-
-    @RequestMapping("bsianaly.html")
-    public String bsianaly() {
-        return "print/print_bsi_detail";
     }
 
     @RequestMapping("about_us.html")

@@ -23,17 +23,17 @@
         <div class="pay-types">
            <lable class="pay-types-header">充值方式：</lable>
            <div class="pay-types-detail">
-	           <label class="checkbox-lable">
-	             <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
+	           <label class="radio-lable">
+	             <input class="radio" type="radio" name="pay-type" checked>
 	             <span class="info"></span>
 	           </label>
 	           在线充值
            </div>
            <div class="pay-types-detail">
-               <label class="checkbox-lable">
-	             <input class="checkbox" type="checkbox" name="demo-checkbox1">
-	             <span class="info"></span>
-	           </label>
+               <label class="radio-lable">
+                 <input class="radio" type="radio" name="pay-type">
+                 <span class="info"></span>
+               </label>
 	           公司转账
            </div>
         </div>

@@ -33,10 +33,25 @@
 	    </div>
 	    <ul class="nav navbar-nav pull-left">
 	    	<shiro:hasPermission name="rocky:product">
-		      <li><a href="#"><i class="cubes-icon"></i></a></li>
+		      <li>
+		        <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+	              <i class="cubes-icon">&nbsp;</i>
+	            </a>
+	            <div class="dropdown-menu product-dropdown">
+	              <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
+	            </div>
+		      </li>
 	    	</shiro:hasPermission>
 	    	<shiro:hasPermission name="bsi:product">
-		      <li><a href="#"><i class="cubes-icon"></i></a></li>
+		      <li>
+                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="cubes-icon">&nbsp;</i>
+                </a>
+                <div class="dropdown-menu product-dropdown">
+                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="百菌探" title="百菌探"></a>
+                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
+                </div>
+              </li>
 	    	</shiro:hasPermission>
 	      <li><a data-toggle="modal" data-target="#upload-modal"><i class="upload-icon"></i></a></li>
 	    </ul>
