@@ -30,6 +30,6 @@
           </tr>
 	    </tbody>
 	  </table>
-	  <ng-include src="'pages/partial/_partial_pagination_common.jsp'"></ng-include>
+	  <pagination page="dataList.page" change="changePage(page,pageSize)"></pagination>
     </div>
 </div>
