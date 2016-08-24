@@ -81,7 +81,7 @@
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{notices.num}}</span>条新消息</p>
-              <a class="btn-link" href="#/notice/list">查看所有</a>
+              <a class="btn-link" href="#/notices">查看所有</a>
             </div>
           </li>
            <li class="dropdown">
@@ -91,7 +91,7 @@
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{messages.num}}</span>条新消息</p>
-              <a class="btn-link" href="#/notice/list">查看所有</a>
+              <a class="btn-link" href="#/messages">查看所有</a>
             </div>
           </li>
 	      <li class="dropdown">
