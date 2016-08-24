@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.celloud.manager.alimail.AliEmailUtils;
 import com.celloud.manager.constants.AppIsAdd;
 import com.celloud.manager.constants.Constants;
 import com.celloud.manager.constants.ConstantsData;
@@ -29,7 +30,6 @@ import com.celloud.manager.service.ExpensesService;
 import com.celloud.manager.service.RechargeService;
 import com.celloud.manager.service.UserService;
 import com.celloud.manager.utils.Base64Util;
-import com.celloud.manager.utils.EmailUtils;
 import com.celloud.manager.utils.MD5Util;
 import com.celloud.manager.utils.PropertiesUtil;
 import com.celloud.manager.utils.ResetPwdUtils;
@@ -43,6 +43,8 @@ public class UserServiceImpl implements UserService {
 	private RechargeService rechargeService;
 	@Resource
 	private ExpensesService expensesService;
+    @Resource
+    private AliEmailUtils aliEmail;
 
     @Override
     public User login(User user) {
@@ -192,7 +194,7 @@ public class UserServiceImpl implements UserService {
             String context = ResetPwdUtils.userContent.replaceAll("url",
                     "<a href='" + ResetPwdUtils.userPath.replaceAll("path", param) + "'>"
                             + ResetPwdUtils.userPath.replaceAll("path", param) + "</a>");
-            EmailUtils.sendWithTitle(ResetPwdUtils.userTitle, context, email);
+            aliEmail.simpleSend(ResetPwdUtils.userTitle, context, email);
         }
 
     }
