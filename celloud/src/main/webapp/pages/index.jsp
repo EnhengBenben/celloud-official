@@ -149,7 +149,7 @@
           <a href="#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
         <li ng-class="{active: isActive('/qa')}">
-          <a href="#/qa"><i class="qa-icon"></i><span>问题反馈</span></a>
+          <a href="#/feedback"><i class="qa-icon"></i><span>问题反馈</span></a>
         </li>
         <li ng-class="{active: isActive('/expense')}">
           <a href="#/expense/consume"><i class="cost-icon"></i><span>费用中心</span></a>
@@ -206,5 +206,7 @@
   <script src="<%=request.getContextPath()%>/js/notice/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/notice/messageController.js"></script>
   <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
+  <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
 </body>
 </html>

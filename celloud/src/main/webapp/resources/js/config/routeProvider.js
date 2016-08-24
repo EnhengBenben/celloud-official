@@ -54,8 +54,8 @@
       templateUrl: "pages/expense/expense_invoicelist.jsp",
       controller: "pageQueryInvoice"
     })
-    .when('/qa',{
-      templateUrl: "pages/qa/qa_list.jsp"
+    .when('/feedback',{
+      templateUrl: "pages/feedback/feedback_main.jsp"
     })
     .when('/notices',{
       templateUrl: "pages/notice/notices.jsp",
