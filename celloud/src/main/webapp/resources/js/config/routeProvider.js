@@ -63,7 +63,7 @@
     })
     .when('/messages',{
       templateUrl: "pages/notice/messages.jsp",
-      controller:"noticeController"
+      controller:"messageController"
     })
     .when('/message/setting',{
       templateUrl: "pages/notice/notice_set.jsp"

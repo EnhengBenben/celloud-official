@@ -204,6 +204,7 @@
   <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
   <script src="<%=request.getContextPath()%>/js/notice/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/notice/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/notice/messageController.js"></script>
+  <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
 </body>
 </html>
