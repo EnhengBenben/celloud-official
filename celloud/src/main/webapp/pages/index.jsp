@@ -148,7 +148,7 @@
         <li ng-class="{active: isActive('/user')}">
           <a href="#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
-        <li ng-class="{active: isActive('/qa')}">
+        <li ng-class="{active: isActive('/feedback')}">
           <a href="#/feedback"><i class="qa-icon"></i><span>问题反馈</span></a>
         </li>
         <li ng-class="{active: isActive('/expense')}">
