@@ -10,4 +10,9 @@
 		};
 		return $resource("notice/list/:type",{},actions);
 	});
+	celloudApp.service("messageService", function($resource){
+		this.getUserSetting = function(){
+			return $resource("message/category/setting");
+		}
+	});
 })();

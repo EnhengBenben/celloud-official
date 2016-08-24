@@ -67,7 +67,8 @@
       controller:"messageController"
     })
     .when('/message/setting',{
-      templateUrl: "pages/notice/notice_set.jsp"
+      templateUrl: "pages/notice/notice_set.jsp",
+      controller:"settingController"
     })
     .when('/reportdata',{
       templateUrl: "pages/report/report_data.jsp"

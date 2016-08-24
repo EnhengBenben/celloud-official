@@ -26,10 +26,16 @@
 	        $scope.confirmPwd = "";
 	    };
 	    $scope.updatePassword = function(){
+	    	$scope.state = false;
 	    	userService.updatePassword($scope.oldPwd,$scope.newPwd).
 	    	success(function(data){
 	    		$scope.code = data.code;
-	    		$scope.message = data.message;
+	    		if($scope.code==203){
+	    			$scope.pwdMessage = data.message;
+	    		}else{
+	    			$scope.message = data.message;
+	    			$scope.state = true;
+	    		}
 	    	}).error(function(data) {
 
 			});

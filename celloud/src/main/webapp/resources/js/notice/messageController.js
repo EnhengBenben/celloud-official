@@ -76,4 +76,8 @@
 			changeState();
 		}
 	});
+	celloudApp.controller("settingController",function($scope,messageService){
+		var data = messageService.getUserSetting().query();
+		$scope.userMessageCategoryList = data;
+	});
 })();

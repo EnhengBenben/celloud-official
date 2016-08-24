@@ -21,8 +21,44 @@
 	            </tr>
 	          </thead>
 	          <tbody>
-	            <tr>
-	              <td>收到[被分享报告]通知</td>
+	          
+						<%-- <tr>
+							<td>收到【${message.name }】通知</td>
+							<td>
+								<c:choose>
+									<c:when test="${message.email=='2'}">
+									    <div><input name="email" class="create-switch" type="checkbox" disabled="disabled" /></div>
+									</c:when>
+									<c:otherwise>
+									    <div><input name="email" class="create-switch" type="checkbox" ${message.email=='0'?'':'checked' } /></div>
+									</c:otherwise>
+								</c:choose>
+						    </td>
+							<td>
+								<c:choose>
+									<c:when test="${message.window=='2'}">
+									    <div><input name="window" class="create-switch" type="checkbox" disabled="disabled"/></div>
+									</c:when>
+									<c:otherwise>
+									    <div><input name="window" class="create-switch" type="checkbox" ${message.window=='0'?'':'checked' } /></div>
+									</c:otherwise>
+								</c:choose>
+							</td>
+                                        <td>
+								<c:choose>
+									<c:when test="${message.wechat=='2'}">
+									    <div><input name="wechat" class="create-switch" type="checkbox" disabled="disabled"/></div>
+									</c:when>
+									<c:otherwise>
+                                              <div><input name="wechat" class="create-switch" type="checkbox" ${message.wechat=='0'?'':'checked' } /></div>
+									</c:otherwise>
+								</c:choose>
+                                        </td>
+                                        <td><input type="hidden" name="messageCategoryId" value="${message.mcId }" /></td>											
+                                        <td><input type="hidden" name="flag" value="${message.flag }" /></td>
+						</tr> --%>
+	            <tr ng-repeat="message in userMessageCategoryList">
+	              <td>收到[{{message.name}}]通知</td>
 	              <td>
 	                <div class="switch-btn-group">
 	                  <a><span class="s-btn no">拒绝</span></a>
@@ -42,69 +78,7 @@
 	                </div>
 	              </td>
 	            </tr>
-	            <tr>
-	              <td>收到[报告生成]通知</td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	            </tr>
-	            <tr>
-	              <td>收到[账户余额变更]通知</td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	            </tr>
-	            <tr>
-	              <td>收到[系统公告]通知</td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no active">拒绝</span></a>
-	                  <a><span class="s-btn">接受</span></a>
-	                </div>
-	              </td>
-	            </tr>
+	            
 	          </tbody>
 	        </table>
         </div>
