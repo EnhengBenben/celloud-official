@@ -1,54 +1,52 @@
 (function() {
 	celloudApp.controller("messageController", function($scope, $rootScope,
 			noticeService, commonService) {
-		$scope.notices = noticeService.listNotices();
-		$scope.noticeRemoveState = false;
-		$scope.noticeReadState = false;
-		$scope.messageRemoveState = false;
-		$scope.messageReadState = false;
+		$scope.messages = noticeService.listMessage();
+		$scope.removeState = false;
+		$scope.readState = false;
 		var checkedNotices = [];
-		$scope.readNotices = function() {
+		$scope.read = function() {
 			var noticeIds = [];
 			for (i in checkedNotices) {
 				if (checkedNotices[i].readState == 0) {
 					noticeIds.push(checkedNotices[i].noticeId);
 				}
 			}
-			noticeService.readNotices({noticeIds:noticeIds},reload);
+			noticeService.read({noticeIds:noticeIds},reload);
 		};
-		$scope.readAllNotices = function() {
-			noticeService.readNotices(reload);
+		$scope.readAll = function() {
+			noticeService.readMessage(reload);
 		};
 		$scope.readMessage = function() {
 			noticeService.readMessage(reload);
 		};
-		$scope.deleteNotice = function() {
+		$scope.remove = function() {
 			var noticeIds = [];
 			for (i in checkedNotices) {
 				noticeIds.push(checkedNotices[i].noticeId);
 			}
 			noticeService.deleteNotice({noticeIds:noticeIds},reload);
 		};
-		$scope.checkNoticeAll = function(state) {
+		$scope.checkAll = function(state) {
 			if (state) {
-				$scope.chk = true;
-				checkedNotices = $scope.notices.datas;
+				$scope.chkall = true;
+				checkedNotices = $scope.messages.datas;
 			}else{
-				$scope.chk = false;
+				$scope.chkall = false;
 				checkedNotices = [];
 			}
-			changeNoticeState();
+			changeState();
 		}
-		$scope.checkNoticeOne = function(notice, state) {
+		$scope.checkOne = function(notice, state) {
 			if (state) {
 				checkedNotices.push(notice);
 			} else {
 				checkedNotices = removeNotice(checkedNotices, notice);
 			}
-			changeNoticeState();
+			changeState();
 		}
-		var changeNoticeState = function() {
-			$scope.noticeRemoveState = checkedNotices.length > 0;
+		var changeState = function() {
+			$scope.removeState = checkedNotices.length > 0;
 			var flag = false;
 			for (i in checkedNotices) {
 				if (checkedNotices[i].readState == 0) {
@@ -56,7 +54,7 @@
 					break;
 				}
 			}
-			$scope.noticeReadState = flag;
+			$scope.readState = flag;
 		}
 		var removeNotice = function(notices, notice) {
 			var index = -1;
@@ -72,11 +70,10 @@
 			return notices;
 		}
 		var reload = function(){
-			$scope.notices = noticeService.listNotices();
+			$scope.messages = noticeService.listMessage();
 			checkedNotices = [];
 			$rootScope.messages = commonService.messages.get();
-			$rootScope.notices = commonService.notices.get();
-			changeNoticeState();
+			changeState();
 		}
 	});
 })();
