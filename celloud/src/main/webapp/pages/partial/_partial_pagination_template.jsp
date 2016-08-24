@@ -76,17 +76,4 @@
 			</select>条
 		</li>
 	</ul>
-	<!-- 
-<div>
-	{{page}}<br>
-	<button class="btn -low" ng-click="change({page:page.currentPage,pageSize:page.pageSize})">试试吧</button>
-	<select ng-model="pageSize" ng-change="change(1,pageSize)">
-		<option value="10" ng-selected="page.pageSize == 10">10</option>
-		<option value="20" ng-selected="page.pageSize == 20">20</option>
-		<option value="30" ng-selected="page.pageSize == 30">30</option>
-		<option value="50" ng-selected="page.pageSize == 50">50</option>
-		<option value="100" ng-selected="page.pageSize == 100">100</option>
-	</select>
-</div>
- -->
 </div>
