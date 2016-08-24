@@ -1,144 +1,114 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <div class="pro-body">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>数据管理</li>
+      <li>报告管理</li>
     </ol>
     <div class="content">
-      <div class="table-opera">
-        <div class="table-opera-content">
-          <div class="opera-info">
-          	<shiro:hasPermission name="runWithProject:button">
-	            <button class="btn"><i class="fa fa-play" aria-hidden="true"></i>runWithProject:button运行</button>
-			</shiro:hasPermission>
-          	<shiro:hasPermission name="runWithData:button">
-	            <button class="btn"><i class="fa fa-play" aria-hidden="true"></i>runWithData:button运行</button>
-			</shiro:hasPermission>
-          </div>
-          <div class="info-btn-group pull-right">
-            <input class="field" type="text" placeholder="搜索" />
-            <a class="action">搜索</a>
-          </div>
-        </div>
+      <form class="search-box-form">
+      <div class="search-box">
+        <ul class="search-type-list">
+          <li class="search-type clearfix">
+            <label>所&emsp;&emsp;属：</label>
+            <div class="search-type-detail times">
+              <ul class="search-info">
+	            <li><a class="active" href="javascript:void(0)">全部</a></li>
+	            <li><a href="javascript:void(0)">我的</a></li>
+	            <li><a href="javascript:void(0)">共享来的</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="search-type clearfix">
+            <label>时&emsp;&emsp;间：</label>
+            <div class="search-type-detail times">
+              <ul class="search-info">
+	            <li><a class="active" href="javascript:void(0)">全部</a></li>
+	            <li><a href="javascript:void(0)">24h</a></li>
+	            <li><a href="javascript:void(0)">3d</a></li>
+	            <li><a href="javascript:void(0)">7d</a></li>
+	            <li><a href="javascript:void(0)">15d</a></li>
+	            <li><a href="javascript:void(0)">30d</a></li>
+              </ul>
+              <div class="search-btns">
+                <input type="text">
+                <span>-</span>
+                <input type="text">
+                <button class="btn btn-cancel">确定</button>
+              </div>
+            </div>
+          </li>
+          <li class="search-type clearfix">
+            <label>产品标签：</label>
+            <div class="search-type-detail inline-detail {{reportMoreAppTag|chevronTypeDivFilter}}" ng-init="reportMoreAppTag=true">
+              <ul class="search-info">
+                <li><a class="active" href="javascript:void(0)">全部</a></li>
+                <li ng-repeat="app in ranAppList.datas"><a href="javascript:void(0)">{{app.app_name}}</a></li>
+              </ul>
+              <div class="search-btns">
+                <button class="btn chevron-btn" ng-click="reportMoreAppTag=changeChevronType(reportMoreAppTag)">{{reportMoreAppTag|chevronTypeTextFilter}}<i ng-class="reportMoreAppTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </li>
+          <li class="search-type clearfix">
+            <label>样本编码：</label>
+            <div class="search-type-detail">
+              <input type="text" placeholder="扫码或输入编号">
+            </div>
+          </li>
+        </ul>
+        </form>
       </div>
       <table class="table table-main">
-        <thead>
-          <tr>
-            <th>
-              <label class="checkbox-lable">
-                <input class="checkbox" type="checkbox" name="demo-checkbox1">
-                <span class="info"></span>
-              </label>
-            </th>
-            <th>文件名称</th>
-            <th>产品标签</th>
-            <th>数据标签</th>
-            <th>数据大小</th>
-            <th>上传时间</th>
-            <th>操作</th>
-          </tr>
-        </thead>
         <tbody>
-          <tr ng-repeat="file in dataList.datas">
+          <tr ng-repeat="report in reportList.datas">
             <td>
-              <label class="checkbox-lable">
-                <input class="checkbox" type="checkbox" name="demo-checkbox1" ng-disabled="file.isRunning==1||file.tagName==null">
-                <span class="info"></span>
-              </label>
+            	<div>
+               		项目名称：
+               		<span id="showPname{{report.project_id }}">
+	                    <span id="pnameSpan{{report.project_id }}">
+	                    	{{report.project_name | contextLengthFilter:'13'}}
+	                    </span>
+                    	<a ng-if="report.userName=='no_one'" ng-click="toChangePname(report.project_id)" href="javascript:void()">Edit</a>
+                   	</span>
+                   	<span ng-if="report.userName=='no_one'" id="changePname{{report.project_id}}" class="none">
+	                    <input type="text" value="{{report.project_name}}" ng-blur="changePname(report.project_id)" id="updatePname{{report.project_id }}" class="changeInput"/>
+	                    <img src="<%=request.getContextPath() %>/images/report/ok_blue.png" id="okUpdateImg{{report.project_id }}" class="okImg" ng-click="changePname(report.project_id)" />
+                   	</span>
+               </div>
+               <div>
+                   App名称：{{report.app_name }}
+               </div>
+               <div>
+               	文件数量：
+                <span id="rdataNum{{report.project_id }}">
+                	{{report.data_num }}
+                </span>
+               </div>
+               <div>
+               	数据大小：{{report.data_size | fileSizeFormat}}
+               </div>
+               <div>
+               	启动时间：{{report.create_date | date:'yyyy-MM-dd HH:mm:ss'}}
+               </div>
+               <div>
+               	结束时间：{{report.end_date | date:'yyyy-MM-dd HH:mm:ss'}}
+               </div>
+               <div class="operate" ng-if="report.userName!='no_one'">
+                   <a class="sharefrom" title="共享" href="javascript:void()"></a><span class="shareU">{{report.userName }}</span>
+                   <a class="delete" title="删除" ng-click="cancelProjectShare(report.project_id,report.user_id)" href="javascript:void(0)"></a>
+               </div>
+               <div class="operate" ng-if="report.userName=='no_one'">
+                   <a ng-if="loginUserInSession.companyId == 6" class="projectreport" title="项目报告" target="_blank" href="{{pageContext.request.contextPath }}/report/printPgsProject?projectId={{report.project_id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+	               <a class="pdfdown" title="PDF下载" ng-click="downPDF(report.user_id,report.app_id,report.project_id)" href="javascript:void(0)" ng-if="report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114&&report.app_id!=117"></a>
+	               <a ng-if="report.share_num==0" class="share" title="共享" ng-click="toShareModal(report.project_id,report.project_name,report.data_num)" href="javascript:void(0);"></a>
+	               <a ng-if="report.share_num!=0" class="shared" title="已共享" ng-click="shareModal(report.project_id,report.user_id,report.project_name,report.data_num)" href="javascript:void(0);"></a>
+                   <a class="delete" title="删除" ng-click="removePro(report.project_id)" href="javascript:void(0)"></a>
+               </div>
             </td>
-            <td>{{file.fileName}}<i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i></td>
-            	<!-- TODO show more -->
-            <td>{{file.appId}}--{{file.tagName}}--{{file.isRunning}}--{{file.fileId}}</td>
-            <td>{{file.batch}}</td>
-            <td>{{file.size}}</td>
-            <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+            <td ng-bind-html="report.context | trustHtml"></td>
           </tr>
         </tbody>
       </table>
       <ng-include src="'pages/partial/_partial_pagination_common.jsp'" ></ng-include>
-    </div>
-  <div id="data-detail-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-          <h4 class="modal-title">申请发票</h4>
-        </div>
-        <div class="modal-body form-modal">
-          <form class="form-horizontal info-form">
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">文件名称：</div>
-                <div class="col-xs-9">
-                    <input type="text" name="money" id="money" readonly>
-                    <span class="input-alert break-line">文件名不能为空</span>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">产品标签：</div>
-                <div class="col-xs-9 form-group-content">
-                  <div class="checkbox-group">
-                    <label class="checkbox-lable">
-                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
-                      <span class="info"></span>
-                    </label>
-	                 HBV
-                  </div>
-                  <div class="checkbox-group">
-                    <label class="checkbox-lable">
-                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
-                      <span class="info"></span>
-                    </label>
-                    HCV
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">数据标签：</div>
-                <div class="col-xs-9">
-                    <input type="text" id="address" name="address" maxlength="45"/><span class="invoice-modal-error"></span>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">数据状态：</div>
-                <div class="col-xs-9 form-group-content">
-                  <div class="checkbox-group">
-                    <label class="checkbox-lable">
-                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
-                      <span class="info"></span>
-                    </label>
-                     未归档
-                  </div>
-                  <div class="checkbox-group">
-                    <label class="checkbox-lable">
-                      <input class="checkbox" type="checkbox" name="demo-checkbox1" checked>
-                      <span class="info"></span>
-                    </label>
-                    归档
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label col-xs-3">上传时间：</div>
-                <div class="col-xs-9 form-group-content">
-                  2016-05-21 13:49:00
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="text-center">
-                    <button type="reset" class="btn btn-cancel">取消</button>
-                    <button type="submit" class="btn" >提交</button>
-                </div>
-                <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state">
-                  <button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-                  <span>{{message}}</span>
-                </div>
-              </div>
-          </form>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
 </div>

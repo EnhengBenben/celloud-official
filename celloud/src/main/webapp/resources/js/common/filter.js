@@ -34,4 +34,36 @@
       return chevronType ? "":"more";
     }
   });
+  celloudApp.filter("contextLengthFilter",function(){
+    return function(context,length){
+      if(context.length<=length){
+        return context;
+      }
+      return context.substring(0,length) + "...";
+    }
+  });
+  celloudApp.filter("fileSizeFormat",function(){
+    return function(size){
+      if(size==0){
+        return 0;
+      }else if(size<1024&&size>0){
+        return size + "B";
+      }else if(size<1048576&&size>=1024){
+        temp = size/1024;
+        return temp.toFixed(2) + "KB";
+      }else if(size<1073741824&&size>=1048576){
+        temp = size/1048576;
+        return temp.toFixed(2) + "MB";
+      }else if(size>=1073741824){
+        temp = size/1073741824;
+        return temp.toFixed(2) + "GB";
+      }
+      return "文件大小异常";
+    }
+  });
+  celloudApp.filter('trustHtml', ['$sce', function ($sce) {
+    return function (text) {
+      return $sce.trustAsHtml(text);
+    };
+  }]);
 })();

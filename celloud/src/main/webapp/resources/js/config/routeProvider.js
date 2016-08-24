@@ -65,7 +65,8 @@
       templateUrl: "pages/report/report_data.jsp"
     })
     .when('/reportpro',{
-      templateUrl: "pages/report/report_project.jsp"
+      templateUrl: "pages/report/report_project.jsp",
+      controller: "projectReportController"
     })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",

@@ -150,15 +150,17 @@ public class ReportAction {
 	 */
 	@ActionLog(value = "获取报告模块项目报告列表", button = "报告模块")
 	@RequestMapping("getReportPageList")
-	public ModelAndView reportPages(@RequestParam(defaultValue = "1") Integer page,
+	@ResponseBody
+	public PageList<Map<String, Object>> reportPages(@RequestParam(defaultValue = "1") Integer page,
 			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE + "") Integer size, String condition, String start,
-			String end, Integer appId, Integer belongs) {
+			String end, @RequestParam(defaultValue = "0") Integer appId,
+			@RequestParam(defaultValue = "1") Integer belongs) {
 		Integer userId = ConstantsData.getLoginUserId();
-		ModelAndView mv = new ModelAndView("report/report_list");
 		Page pager = new Page(page, size);
 		PageList<Map<String, Object>> pageList = reportService.getReportPageList(userId, pager, condition, start, end,
 				appId, belongs);
-		return mv.addObject("pageList", pageList);
+		System.out.println(pageList.getDatas().size());
+		return pageList;
 	}
 
 	/**

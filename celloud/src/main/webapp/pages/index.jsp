@@ -132,12 +132,12 @@
           <a href="#/data"><i class="data-icon"></i><span>数据管理</span></a>
         </li>
         <li ng-class="{active: isActive('/report')}">
-<%--           <shiro:lacksPermission name="bsi:product"> --%>
-<!--             <a href="#/reportpro"><i class="report-icon"></i><span>报告管理</span></a> -->
-<%--           </shiro:lacksPermission> --%>
-<%--           <shiro:hasPermission name="bsi:product"> --%>
-            <a href="#/reportdata"><i class="report-icon"></i><span>报告管理</span></a>
-<%--           </shiro:hasPermission> --%>
+        	<shiro:hasPermission name="runWithProject:button">
+	            <a href="#/reportpro"><i class="report-icon"></i><span>报告管理</span></a>
+			</shiro:hasPermission>
+          	<shiro:hasPermission name="runWithData:button">
+	            <a href="#/reportdata"><i class="report-icon"></i><span>报告管理</span></a>
+			</shiro:hasPermission>
         </li>
         <li ng-class="{active: isActive('/app')}">
           <a href="#/app"><i class="app-icon"></i><span>应用市场</span></a>
@@ -196,6 +196,8 @@
   <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
