@@ -20,7 +20,7 @@
 		  </div>
 		</div>
       </div> -->
-      <table class="table table-main">
+      <table class="table table-main" ng-init="pageType='expense/consume'">
         <thead>
           <tr>
             <th>消费时间</th>
@@ -38,6 +38,7 @@
           </tr>
         </tbody>
       </table>
-      <ng-include src="'pages/partial/_partial_pagination_common.jsp'" ></ng-include>
+      {{dataPage}}
+      <ng-include src="'pages/partial/_partial_pagination_common.jsp'"></ng-include>
     </div>
 </div>

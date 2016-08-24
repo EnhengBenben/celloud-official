@@ -41,14 +41,24 @@
 			});
 		}
 	});
-	celloudApp.controller("pageQueryLog",function($scope,userService){
+	celloudApp.controller("pageQueryLog",function($scope,$rootScope,$routeParams,$location,userService){
 		$scope.pageQueryLog = function(currentPage,pageSize){
 			userService.pageQueryLog(currentPage,pageSize).
 			success(function(dataList){
 				$scope.dataList = dataList;
 			});
 		}
-		$scope.pageQueryLog(1,10);
+		$scope.pageList = function(pageSize){
+		  $rootScope.pageSize = pageSize;
+		  $scope.pageQueryLog(1,pageSize);
+		  $location.path($scope.pageType);
+		}
+		if($routeParams.page == null){
+		  $scope.pageQueryLog(1,$rootScope.pageSize);
+		  $location.path($scope.pageType);
+		}else{
+		  $scope.pageQueryLog($routeParams.page,$rootScope.pageSize);
+		}
 	});
 	celloudApp.controller("updateEmail",function($scope,userService){
 		userService.getUserInfo().

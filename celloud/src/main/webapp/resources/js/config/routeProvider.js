@@ -16,6 +16,10 @@
       templateUrl: "pages/user/user_log.jsp",
       controller: "pageQueryLog"
     })
+    .when('/user/log/p:page',{
+      templateUrl: "pages/user/user_log.jsp",
+      controller: "pageQueryLog"
+    })
     .when('/user/report',{
       templateUrl: "pages/user/user_reportset.jsp"
     })
@@ -30,15 +34,15 @@
       templateUrl: "pages/data/data_list.jsp",
       controller: "dataListController"
     })
-    .when('/data/:page',{
-      templateUrl: "pages/data/data_list.jsp",
-      controller: "dataListController"
-    })
-    .when('/data/:page/:size',{
+    .when('/data/p:page',{
       templateUrl: "pages/data/data_list.jsp",
       controller: "dataListController"
     })
     .when('/expense/consume',{
+      templateUrl: "pages/expense/expense_consume.jsp",
+      controller: "pageQueryConsume"
+    })
+    .when('/expense/consume/p:page',{
       templateUrl: "pages/expense/expense_consume.jsp",
       controller: "pageQueryConsume"
     })
@@ -50,7 +54,15 @@
       templateUrl: "pages/expense/expense_paylist.jsp",
       controller: "pageQueryRecharge"
     })
+    .when('/expense/paylist/p:page',{
+      templateUrl: "pages/expense/expense_paylist.jsp",
+      controller: "pageQueryRecharge"
+    })
     .when('/expense/invoice',{
+      templateUrl: "pages/expense/expense_invoicelist.jsp",
+      controller: "pageQueryInvoice"
+    })
+    .when('/expense/invoice/p:page',{
       templateUrl: "pages/expense/expense_invoicelist.jsp",
       controller: "pageQueryInvoice"
     })
@@ -74,7 +86,8 @@
       templateUrl: "pages/report/report_data.jsp"
     })
     .when('/reportpro',{
-      templateUrl: "pages/report/report_project.jsp"
+      templateUrl: "pages/report/report_project.jsp",
+      controller: "projectReportController"
     })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",

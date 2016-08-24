@@ -16,7 +16,7 @@
              发票金额可以是多次充值金额之和，建议您积累到一定金额后一并申请，若您在超过15工作日仍未收到发票，请工单与我们联系。   
         </span>
       </div>
-      <table class="table table-main">
+      <table class="table table-main" ng-init="pageType='expense/invoice'">
         <thead>
           <tr>
             <th>金额</th>
