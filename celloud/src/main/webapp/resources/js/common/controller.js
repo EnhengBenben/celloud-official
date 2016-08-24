@@ -59,5 +59,12 @@
 		  }
 		  return chevronType;
 		}
+		$rootScope.pageArray = function(totalPage){
+		  var p = [];
+		  for(i=1;i<=totalPage;i++){
+		    p[i-1]=i;
+		  }
+		  return p;
+		}
 	});
 })();

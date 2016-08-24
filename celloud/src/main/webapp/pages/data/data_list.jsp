@@ -29,7 +29,7 @@
              提醒：没有产品标签的数据和正在运行的数据无法勾选及运行。
         </span>
       </div>
-      <table class="table table-main">
+      <table class="table table-main" ng-init="pageType='data'">
         <thead>
           <tr>
             <th>

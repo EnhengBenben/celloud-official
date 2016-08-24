@@ -8,7 +8,7 @@
       <li>操作日志</li>
     </ol>
     <div class="content">
-      <table class="table table-main">
+      <table class="table table-main" ng-init="pageType='user/log'">
 	    <thead>
 	      <tr>
 	        <th>操作</th>

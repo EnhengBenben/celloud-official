@@ -127,10 +127,8 @@ public class LoginAction {
         }
         if (newPassword == null || newPassword.trim().length() <= 0) {
             password = RSAUtil.decryptString(privateKey, password);
-			System.out.println(password);
         } else {
             password = RSAUtil.decryptStringByJs(privateKey, newPassword);
-			System.out.println(password);
             password = password == null ? "" : MD5Util.getMD5(password);
         }
         UsernamePasswordToken token = new UsernamePasswordToken(

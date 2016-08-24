@@ -163,6 +163,15 @@
 	  <div class="content">
 	      <div class="page-layout page-main-content">
 		    <div class="topbar-menu">
+		      <header class="common-menu">
+                <div class="logo">
+                    <img alt="华木兰" src="<%=request.getContextPath()%>/images/app/breast_mulations_scan.png">
+                </div>
+                <hr class="-left">
+                <div id="common-menu-center" class="info"></div>
+                <div id="common-menu-right" class="searchs"></div>
+                <hr class="-right">
+              </header>
 		      <div class="common-menu">
 		        <div class="common-menu-inner">
 		          <div class="common-menu-logo pull-left">

@@ -16,6 +16,10 @@
       templateUrl: "pages/user/user_log.jsp",
       controller: "pageQueryLog"
     })
+    .when('/user/log/p:page',{
+      templateUrl: "pages/user/user_log.jsp",
+      controller: "pageQueryLog"
+    })
     .when('/user/report',{
       templateUrl: "pages/user/user_reportset.jsp"
     })
@@ -30,18 +34,27 @@
       templateUrl: "pages/data/data_list.jsp",
       controller: "dataListController"
     })
-    .when('/data/:page',{
+    .when('/data/p:page',{
       templateUrl: "pages/data/data_list.jsp",
-      controller: "dataPageController"
+      controller: "dataListController"
     })
     .when('/expense/consume',{
       templateUrl: "pages/expense/expense_consume.jsp",
       controller: "pageQueryConsume"
     })
+    .when('/expense/consume/p:page',{
+      templateUrl: "pages/expense/expense_consume.jsp",
+      controller: "pageQueryConsume"
+    })
     .when('/expense/paydetail',{
-      templateUrl: "pages/expense/expense_pay.jsp"
+      templateUrl: "pages/expense/expense_pay.jsp",
+      controller: "toRecharge"
     })
     .when('/expense/paylist',{
+      templateUrl: "pages/expense/expense_paylist.jsp",
+      controller: "pageQueryRecharge"
+    })
+    .when('/expense/paylist/p:page',{
       templateUrl: "pages/expense/expense_paylist.jsp",
       controller: "pageQueryRecharge"
     })
@@ -49,16 +62,23 @@
       templateUrl: "pages/expense/expense_invoicelist.jsp",
       controller: "pageQueryInvoice"
     })
-    .when('/qa',{
-      templateUrl: "pages/qa/qa_list.jsp"
+    .when('/expense/invoice/p:page',{
+      templateUrl: "pages/expense/expense_invoicelist.jsp",
+      controller: "pageQueryInvoice"
     })
-    .when('/notice/list',{
-      templateUrl: "pages/notice/notice_list.jsp"
+    .when('/feedback',{
+      templateUrl: "pages/feedback/feedback_main.jsp",
+      controller:"feedbackController"
     })
-    .when('/notice/system',{
-      templateUrl: "pages/notice/notice_system.jsp"
+    .when('/notices',{
+      templateUrl: "pages/notice/notices.jsp",
+      controller:"noticeController"
     })
-    .when('/notice/set',{
+    .when('/messages',{
+      templateUrl: "pages/notice/messages.jsp",
+      controller:"messageController"
+    })
+    .when('/message/setting',{
       templateUrl: "pages/notice/notice_set.jsp"
     })
     .when('/reportdata',{

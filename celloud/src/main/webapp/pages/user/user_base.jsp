@@ -37,7 +37,7 @@
           <div class="info-form-group">
             <label></label>
             <div>
-                <button ng-click="reset()" class="btn btn-cancel">重置</button>
+                <button type="button" ng-click="reset()" class="btn btn-cancel">重置</button>
                 <button type="submit" class="btn"
                 	ng-disabled="userForm.$invalid">提交</button>
             </div>
