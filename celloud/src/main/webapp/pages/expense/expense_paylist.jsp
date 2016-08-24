@@ -14,7 +14,7 @@
       <div class="table-opera">
         <button type="button" class="btn" data-toggle="modal" ng-click="applyInvoice()">申请发票</button>
       </div>
-      <table class="table table-main">
+      <table class="table table-main" ng-init="pageType='expense/paylist'">
         <thead>
           <tr>
             <th>

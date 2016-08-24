@@ -1,5 +1,5 @@
 (function(){
-  celloudApp.controller("dataListController", function($scope,$routeParams, runService){
+  celloudApp.controller("dataListController", function($scope, $rootScope, $location, $routeParams, runService){
     if($routeParams.page == null){
       $scope.dataList = runService.list();
     }else{
@@ -13,10 +13,11 @@
       });
     }
     $scope.pageList = function(pageSize){
-      $.dataManager.options.pageSize = pageSize;
       $.dataManager.options.condition = $scope.dataCondition;
+      $.dataManager.options.pageSize = pageSize;
       runService.conditionList().success(function(response){
         $scope.dataList = response;
+        $location.path("/data");
       });
     }
     //项目运行
