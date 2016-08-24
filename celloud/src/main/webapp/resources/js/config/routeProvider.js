@@ -55,7 +55,8 @@
       controller: "pageQueryInvoice"
     })
     .when('/feedback',{
-      templateUrl: "pages/feedback/feedback_main.jsp"
+      templateUrl: "pages/feedback/feedback_main.jsp",
+      controller:"feedbackController"
     })
     .when('/notices',{
       templateUrl: "pages/notice/notices.jsp",
