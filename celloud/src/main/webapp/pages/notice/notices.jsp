@@ -25,42 +25,40 @@
 				</div>
 			</div>
 		</div>
-		<div id="noticeListTable">
-			<table class="table table-main">
-				<thead>
-					<tr>
-						<th style="width: 30px;">
-							<label class="checkbox-lable">
-								<input class="checkbox" ng-model="checkNoticeAllState" ng-change="checkNoticeAll(checkNoticeAllState)" type="checkbox" name="demo-checkbox1">
-								<span class="info"></span>
-							</label>
-						</th>
-						<th style="width: 30px;"></th>
-						<th style="width: 15%; text-align: left;">标题</th>
-						<th style="text-align: left;">内容</th>
-						<th style="width: 170px;">时间</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="message in notices.datas">
-						<td>
-							<label class="checkbox-lable">
-								<input class="checkbox" type="checkbox" ng-model="chk" ng-change="checkNoticeOne(message,chk)"  name="noticeIds" value="{{message.noticeId }}">
-								<span class="info"></span>
-							</label>
-						</td>
-						<td>
-							<a>
-								<i class="fa ng-class:{'fa-folder':message.readState==0,'fa-folder-open-o':message.readState!=0}" ></i>
-							</a>
-						</td>
-						<td style="text-align: left;">{{message.noticeTitle }}</td>
-						<td style="text-align: left;">{{message.noticeContext }}</td>
-						<td>{{message.createDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<table class="table table-main">
+			<thead>
+				<tr>
+					<th style="width: 30px;">
+						<label class="checkbox-lable">
+							<input class="checkbox" ng-model="checkNoticeAllState" ng-change="checkNoticeAll(checkNoticeAllState)" type="checkbox">
+							<span class="info"></span>
+						</label>
+					</th>
+					<th style="width: 30px;"></th>
+					<th style="width: 15%; text-align: left;">标题</th>
+					<th style="text-align: left;">内容</th>
+					<th style="width: 170px;">时间</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="message in notices.datas">
+					<td>
+						<label class="checkbox-lable">
+							<input class="checkbox" type="checkbox" ng-model="chk" ng-checked="chkall" ng-change="checkNoticeOne(message,chk)" name="noticeIds" value="{{message.noticeId }}">
+							<span class="info"></span>
+						</label>
+					</td>
+					<td>
+						<a>
+							<i class="fa ng-class:{'fa-folder':message.readState==0,'fa-folder-open-o':message.readState!=0}"></i>
+						</a>
+					</td>
+					<td style="text-align: left;">{{message.noticeTitle }}</td>
+					<td style="text-align: left;">{{message.noticeContext }}</td>
+					<td>{{message.createDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+				</tr>
+			</tbody>
+		</table>
 		<ng-include src="'pages/partial/_partial_pagination_common.jsp'"></ng-include>
 	</div>
 </div>

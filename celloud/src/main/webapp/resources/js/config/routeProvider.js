@@ -66,8 +66,9 @@
       templateUrl: "pages/expense/expense_invoicelist.jsp",
       controller: "pageQueryInvoice"
     })
-    .when('/qa',{
-      templateUrl: "pages/qa/qa_list.jsp"
+    .when('/feedback',{
+      templateUrl: "pages/feedback/feedback_main.jsp",
+      controller:"feedbackController"
     })
     .when('/notices',{
       templateUrl: "pages/notice/notices.jsp",
@@ -75,7 +76,7 @@
     })
     .when('/messages',{
       templateUrl: "pages/notice/messages.jsp",
-      controller:"noticeController"
+      controller:"messageController"
     })
     .when('/message/setting',{
       templateUrl: "pages/notice/notice_set.jsp"
