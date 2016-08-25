@@ -167,26 +167,6 @@ public class DataAction {
 	}
 
 	/**
-	 * 获取全部数据列表
-	 * 
-	 * @param session
-	 * @param page
-	 * @param size
-	 * @return
-	 */
-	@ActionLog(value = "打开BSI我的数据页面", button = "我的数据")
-	@RequestMapping("bsiDataAllList")
-	public ModelAndView bsiDataAllList(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "20") int size) {
-		ModelAndView mv = new ModelAndView("bsi/data_list");
-		Page pager = new Page(page, size);
-		PageList<DataFile> dataList = dataService.dataAllList(pager, ConstantsData.getLoginUserId());
-		mv.addObject("pageList", dataList);
-		logger.info("用户{}打开我的数据", ConstantsData.getLoginUserName());
-		return mv;
-	}
-
-	/**
 	 * 根据条件获取数据列表
 	 * 
 	 * @param session
@@ -208,18 +188,11 @@ public class DataAction {
 			@RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
 			@RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
 			@RequestParam(defaultValue = "asc") String sortName) {
-		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
-		Matcher m = p.matcher(condition);
-		StringBuffer con_sb = new StringBuffer();
-		while (m.find()) {
-			String rep = "\\\\" + m.group(0);
-			m.appendReplacement(con_sb, rep);
-		}
-		m.appendTail(con_sb);
 		ModelAndView mv = new ModelAndView("bsi/data_list");
 		Page pager = new Page(page, size);
-		PageList<DataFile> dataList = dataService.dataLists(pager, ConstantsData.getLoginUserId(), con_sb.toString(),
-				sort, sortDate, sortBatch, sortName);
+        PageList<DataFile> dataList = dataService.dataListByAppId(pager,
+                ConstantsData.getLoginUserId(), AppConstants.APP_ID_BSI,
+                condition, sort, sortDate, sortName, sortBatch);
 		mv.addObject("pageList", dataList);
 		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
 		return mv;

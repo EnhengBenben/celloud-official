@@ -138,6 +138,24 @@ public interface DataFileMapper {
 	List<DataFile> findAllDataLists(Page page, @Param("userId") Integer userId, @Param("state") Integer state,
 			@Param("reportType") Integer reportType, @Param("period") Integer period);
 
+    /**
+     * 所有数据分页列表
+     * 
+     * @param page
+     * @param userId
+     * @param state
+     * @param reportType
+     * @param period
+     * @return
+     */
+    List<DataFile> findDataListsByAppId(Page page,
+            @Param("userId") Integer userId, @Param("state") Integer state,
+            @Param("appId") Integer appId, @Param("condition") String condition,
+            @Param("sort") Integer sort,
+            @Param("sortDate") String sortDate,
+            @Param("sortName") String sortName,
+            @Param("sortBatch") String sortBatch);
+
 	/**
 	 * 按条件检索数据列表
 	 * 

@@ -181,6 +181,11 @@ public class HomeAction {
         return "bsi/index";
     }
 
+    @RequestMapping("rocky")
+    public String rocky() {
+        return "rocky/index";
+    }
+
     @RequestMapping("download.html")
     public ModelAndView download() {
         ModelAndView mv = new ModelAndView("download");

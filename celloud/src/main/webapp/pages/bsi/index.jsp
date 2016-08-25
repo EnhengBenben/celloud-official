@@ -159,8 +159,6 @@
 	    <li>CelLoud</li>
 	    <li>我的产品</li>
 	    <li>百菌探</li>
-	    <li><a data-click="report-list" href="javascript:void(0)">报告</a></li>
-	    <li id="to-my-report">报告列表</li>
       </ol>
 	  <div class="content">
 	      <div class="page-layout page-main-content">
@@ -316,23 +314,10 @@
   
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
-  <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/user/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
-  <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/js/utils.js?version=1.1" type="text/javascript"></script>

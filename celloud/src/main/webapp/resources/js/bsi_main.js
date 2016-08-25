@@ -533,7 +533,7 @@ $.data_ = {
     },
     find : {
         all: function(){
-          $.get("data/bsiDataAllList",function(response){
+          $.get("data/bsiDataList",function(response){
             $.data_.loadlist(response);
           });
         },

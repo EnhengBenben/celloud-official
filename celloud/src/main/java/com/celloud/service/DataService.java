@@ -74,6 +74,18 @@ public interface DataService {
 	 */
 	PageList<DataFile> dataAllList(Page page, Integer userId);
 
+    /**
+     * 产品中的数据分页列表
+     * 
+     * @param page
+     * @param userId
+     * @param appId
+     * @return
+     */
+    PageList<DataFile> dataListByAppId(Page page, Integer userId,
+            Integer appId, String condition, Integer sort, String sortDate,
+            String sortName, String sortBatch);
+
 	/**
 	 * 按条件检索数据列表
 	 * 

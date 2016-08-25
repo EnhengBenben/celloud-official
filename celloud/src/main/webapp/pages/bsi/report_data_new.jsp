@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div class="row">
+<div class="row rdata-content">
   <div class="col-sm-10">
 	  <ul id="myTabs" class="nav nav-tabs" role="tablist">
 	    <li role="presentation" class="active"><a href="#patient-report" id="patient-tab" aria-controls="patient-report" role="tab" data-toggle="tab">患者报告</a></li>

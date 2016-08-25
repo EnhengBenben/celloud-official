@@ -1,10 +1,6 @@
 @import "param.less";
 @import "components.less";
 @import "theme.less";
-header,footer,nav,div,section,aside,article,p {
-    border: 1px dotted #f0f0f0;
-    border-radius: 5px;
-}
 html,body,div,section,ul {
     padding: 0;
     margin: 0;
@@ -26,140 +22,18 @@ a, a:link, a:hover, a:active, a:visited {
 ul,ol{
     list-style: none;
 }
-.container-fluid{
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    background: #f0f0f0;
-}
-.main-header,
-.main-sidebar{
-    position: fixed;
-    top: 0px;
-    left: 0px;
-}
-.main-header{
-    width: 100%;
-    height: 50px;
-    background: #fff;
-    z-index: 1030;
-    > .logo {
-        display: block;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        text-align: center;
-        float: left;
-    }
-    > .logo img{
-        width: 30px;
-    }
-    > .navbar{
-        margin-left: 50px;
-        margin-bottom: 0px;
-        border: none;
-    }
-    > .navbar .menu{
-        height: 50px;
-        float: right;
-        > .nav{
-            height: 50px;
-            margin: 0px;
-            padding: 0px;
-            > li{
-               display: inline-block;
-            }
-            > li.open > .dropdown-menu{
-    			right:0px;
-    			left:-40px;
-    			>li > a {
-    				padding: 3px 20px;
-    				color:#333;
-    				width:200px;
-    				text-align:left;
-    				font-size:12px;
-    				line-height: 20px;
-    				height:30px;
-    			}
-    		}
-        }
-    }
-    > .navbar .menu a{
-        width: 50px;
-        height: 50px;
-        padding: 0px;
-        line-height: 50px;
-        font-size: 16px;
-        color: @bg-gray;
-        text-align: center;
-        &:hover{
-            color: @font-gray;
-            background: @bg-gray;
-        }
-    }
-}
-.main-sidebar{
-    width: 50px;
-    min-height: 100%;
-    padding-top: 50px;
-    background: #222d32;
-    > .menu{
-        width: 100%;
-        min-height: 500px;
-        padding: 32px 0px;
-        background: #1a2226;
-    }
-    > .menu .treeview{
-        width: 100%;
-        height: 50px;
-        display: block;
-        &.-active>a {
-            border-left: 2px solid @bactive-color;
-            color: #fff;
-            background: #222d32;
-        }
-    }
-    > .menu .treeview>a{
-        width: 100%;
-        height: 50px;
-        display: block;
-        line-height: 50px;
-        padding: 0px 10px;
-    }
-}
-.main-container{
-    height: 100%;
-    padding: 50px 15px 0px 65px;
-    .header{
-        .breadcrumb {
-            margin-bottom: 0;
-            padding: 10px 0px;
-            color: @font-gray;
-            background: none;
-        }
-       .breadcrumb>li+li:before{
-            padding: 0 5px 0px 0px;
-            color: rgb(150,150,150);
-            content: "＞";
-        }
-    }
-    .content{
-        position: relative;
-        height: 100%;
-    }
-}
 /*banner */
 .common-menu { 
     position: relative;
     width: 100%;
     height: 80px;
     background: @main-color;
-    > .logo {
+    > .rocky-logo {
         width: 170px;
         padding: 10px 0px;
         float: left;
     }
-    > .logo img{
+    > .rocky-logo img{
         height: 60px;
         display: block;
         margin: auto auto;
@@ -227,7 +101,6 @@ ul,ol{
         width: 100%;
         height: 40px;
         display: block;
-        line-height: 40px;
         padding-left: -2px;
         text-align: center;
         font-size: 14px;
@@ -240,6 +113,7 @@ ul,ol{
     > .menu .treeview>a{
         width: 100%;
         height: 40px;
+        line-height: 40px;
         display: block;
         color: @bg-black;
         > i {

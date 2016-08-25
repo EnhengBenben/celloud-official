@@ -16,57 +16,150 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/celloud.min.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/less/main.less" rel="stylesheet/less" type="text/css" />
 <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
+<script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
+<!-- [if It IE 9]>
+<script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]  -->
 </head>
-<body class="container-fluid">
-	<header class="main-header">
-		<a href="javascript:void(0)" class="logo">
-			<img src="<%=request.getContextPath()%>/images/icon/logo-gray.png">
-		</a>
-		<nav class="navbar">
-			<div class="menu">
-				<ul class="nav navbar-nav">
-					<li>
-						<a href="#">
-							<i class="fa fa-bell" aria-hidden="true"></i>
-						</a>
-					</li>
-					<li class="dropdown">
-						<a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							<i class="fa fa-user" aria-hidden="true"></i>
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<li>
-								<a href="javascript:;" id="logoutBtn">
-									<i class="fa fa-sign-out"></i> 退出
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</nav>
-	</header>
-	<aside class="main-sidebar">
-		<ul class="menu">
-			<li class="treeview -active">
-				<a href="javascript:void(0)"></a>
-			</li>
-		</ul>
-	</aside>
-	<div class="main-container">
-		<div class="header">
-			<ol class="breadcrumb">
-				<li>主页</li>
-				<li>应用</li>
-				<li id="app-name">华木兰</li>
-				<li id="menu-name">收样</li>
-			</ol>
-		</div>
-		<section class="content rocky">
+<body class="container">
+<header class="header">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <div class="navbar-logo {{collapsed|logoMiniFilter}}">
+            <a class="logo" href="#"></a>
+          </div>
+        </div>
+        <ul class="nav navbar-nav pull-left">
+            <shiro:hasPermission name="rocky:product">
+              <li>
+                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="cubes-icon">&nbsp;</i>
+                </a>
+                <div class="dropdown-menu product-dropdown">
+                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
+                </div>
+              </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="bsi:product">
+              <li>
+                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="cubes-icon">&nbsp;</i>
+                </a>
+                <div class="dropdown-menu product-dropdown">
+                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="百菌探" title="百菌探"></a>
+                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
+                </div>
+              </li>
+            </shiro:hasPermission>
+          <li><a data-toggle="modal" data-target="#upload-modal"><i class="upload-icon"></i></a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+          <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="code-icon"></i>
+            </a>
+            <div class="dropdown-menu code-dropdown">
+              <img alt="扫码关注" src="<%=request.getContextPath()%>/images/icon/qrcode.jpg">
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="money-icon">&nbsp;</i>
+            </a>
+            <div class="dropdown-menu money-dropdown">
+              <p>账户余额：<span class="tips">{{userInfo.balances}}</span>元</p>
+              <a class="btn" href="#/expense/paydetail">立即充值</a><br>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/expense/consume">查看消费记录</a>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="bell-icon">&nbsp;</i>
+              <span class="label label-danger">{{notices.num==0?'':(notices.num+'')}}</span>
+            </a>
+            <div class="dropdown-menu message-dropdown">
+              <p> 您有<span class="tips">{{notices.num}}</span>条新消息</p>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
+            </div>
+          </li>
+           <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="bell-icon">&nbsp;</i>
+              <span class="label label-danger">{{messages.num==0?'':(''+messages.num)}}</span>
+            </a>
+            <div class="dropdown-menu message-dropdown">
+              <p> 您有<span class="tips">{{messages.num}}</span>条新消息</p>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="user-icon">&nbsp;</i>
+            </a>
+            <div class="dropdown-menu user-dropdown">
+              <a class="btn" href="<%=request.getContextPath()%>/index#/user/base">个人信息</a>
+              <a class="btn btn-cancel" href="logout">退出</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <aside class="sidebar {{collapsed|collapsedFilter}}" id="common-sidebar">
+    <section class="s-bar">
+      <div class="sidebar-collapse">
+        <a href="javascript:void(0)" ng-click="toggleCollapse()"><i class="{{collapsed|collapsedIconFilter}}"></i></a>
+      </div>
+      <ul class="sidebar-menu">
+        <li class="header">产品与服务</li>
+        <li ng-class="{active: isActive('/')}">
+          <a href="#/"><i class="overview-icon"></i><span>我的工作台</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0)"><i class="sample-icon"></i><span>样本采集</span></a>
+        </li>
+        <li>
+          <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
+        </li>
+        <li ng-class="{active: isActive('/data')}">
+          <a href="<%=request.getContextPath()%>/index#/data"><i class="data-icon"></i><span>数据管理</span></a>
+        </li>
+        <li ng-class="{active: isActive('/report')}">
+          <a href="#/reportdata"><i class="report-icon"></i><span>报告管理</span></a>
+        </li>
+        <li ng-class="{active: isActive('/app')}">
+          <a href="<%=request.getContextPath()%>/index#/app"><i class="app-icon"></i><span>应用市场</span></a>
+        </li>
+      </ul>
+      <ul class="sidebar-menu">
+        <li class="header">用户中心</li>
+        <li ng-class="{active: isActive('/user')}">
+          <a href="<%=request.getContextPath()%>/index#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
+        </li>
+        <li ng-class="{active: isActive('/qa')}">
+          <a href="<%=request.getContextPath()%>/index#/qa"><i class="qa-icon"></i><span>问题反馈</span></a>
+        </li>
+        <li ng-class="{active: isActive('/expense')}">
+          <a href="<%=request.getContextPath()%>/index#/expense/consume"><i class="cost-icon"></i><span>费用中心</span></a>
+        </li>
+      </ul>
+    </section>
+  </aside>
+  <div class="view-container">
+    <div class="pro-body">
+      <ol class="breadcrumb">
+        <li>CelLoud</li>
+        <li>我的产品</li>
+        <li>百菌探</li>
+      </ol>
+      <div class="content rocky">
 			<header class="common-menu">
-				<div class="logo">
+				<div class="rocky-logo">
 					<img alt="华木兰" src="<%=request.getContextPath()%>/images/app/breast_mulations_scan.png">
 				</div>
 				<hr class="-left">
@@ -87,11 +180,11 @@
 							<i class="celicon -upload"></i> 上传
 						</a>
 					</li>
-					<li class="treeview">
-						<a id="to-data-a" href="javascript:void(0)" data-menu="数据">
-							<i class="celicon -data"></i> 数据
-						</a>
-					</li>
+<!-- 					<li class="treeview"> -->
+<!-- 						<a id="to-data-a" href="javascript:void(0)" data-menu="数据"> -->
+<!-- 							<i class="celicon -data"></i> 数据 -->
+<!-- 						</a> -->
+<!-- 					</li> -->
 					<li class="treeview">
 						<a id="to-report-a" href="javascript:void(0)" data-menu="报告">
 							<i class="celicon -report"></i> 报告
@@ -103,7 +196,7 @@
 			<div id="upload-container" class="common-container hide">
 				<jsp:include page="upload/upload.jsp"></jsp:include>
 			</div>
-		</section>
+	    </div>
 	</div>
 	<script type="text/javascript">
 		window.contextPath = '<%=request.getContextPath()%>';
@@ -115,6 +208,36 @@
 	<script src="//cdn.bootcss.com/plupload/2.1.8/i18n/zh_CN.js"></script>
 	<script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
 	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
+    <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
+    <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/message.js"></script>
+    <script src="<%=request.getContextPath()%>/js/application.js"></script>
+    <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
+    <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
+  <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/user/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
+  <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
+  <script src="<%=request.getContextPath()%>/js/notice/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/notice/messageController.js"></script>
+  <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
+  <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>

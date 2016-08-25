@@ -32,9 +32,11 @@
 		    <div class="o-app-list">
 			  <ul>
 			    <li>
-			      <div class="inner">
-			        <img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰">
-			      </div>
+			      <a href="<%=request.getContextPath()%>/rocky">
+			        <div class="inner">
+			          <img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰">
+			        </div>
+			      </a>
 			    </li>
 			  </ul>
 		    </div>

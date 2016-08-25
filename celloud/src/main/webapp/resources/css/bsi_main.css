@@ -1197,6 +1197,9 @@ a, a:link, a:hover, a:active, a:visited {
 	font-size: 14px;
 	font-weight: bold;
 }
+.rdata-content{
+	margin-right: 90px;
+}
 .content .data-content-footer ul>li>span{
 	display: inline-block;
 	line-height: 30px;
