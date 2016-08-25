@@ -8,7 +8,8 @@
 				url : 'feedback/reply/:id',
 				method : 'put',
 				params : {
-					id : '@id'
+					id : '@id',
+					content:'@content'
 				}
 			},
 			solve : {
