@@ -10,7 +10,7 @@
 		<li>
 			<a id="prev-page" class="ends" ng-click="change({page:page.currentPage>1?page.currentPage-1:1,pageSize:page.pageSize})">&lt;&lt;</a>
 		</li>
-		<li ng-class="{active: current==page.currentPage}" ng-if="page.totalPage<=7" ng-repeat="current in pageArray(current.totalPage)">
+		<li ng-class="{active: current==page.currentPage}" ng-if="page.totalPage<=7" ng-repeat="current in pageArray(page.totalPage)">
 			<a ng-click="change({page:current,pageSize:page.pageSize})">{{current}}</a>
 		</li>
 		<li ng-class="{active: current==page.currentPage}" ng-if="page.totalPage>7 && page.currentPage<=4" ng-repeat="current in [1,2,3,4,5]">
@@ -67,13 +67,13 @@
 			<span>共&nbsp;&nbsp;{{page.rowCount}}&nbsp;&nbsp;条</span>
 		</li>
 		<li>
-			每页<select id="page-size-sel" ng-model="pageSize" ng-change="change({page:2,pageSize:pageSize})">
+			每页 <select id="page-size-sel" ng-model="pageSize" ng-change="change({page:1,pageSize:pageSize})">
 				<option value="10" ng-selected="page.pageSize == 10">10</option>
 				<option value="20" ng-selected="page.pageSize == 20">20</option>
 				<option value="30" ng-selected="page.pageSize == 30">30</option>
 				<option value="50" ng-selected="page.pageSize == 50">50</option>
 				<option value="100" ng-selected="page.pageSize == 100">100</option>
-			</select>条
+			</select> 条
 		</li>
 	</ul>
 </div>

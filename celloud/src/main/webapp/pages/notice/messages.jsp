@@ -64,6 +64,6 @@
 				</tbody>
 			</table>
 		</div>
-		<ng-include src="'pages/partial/_partial_pagination_common.jsp'"></ng-include>
+		<pagination page="messages.page" change="changePage(page,pageSize)"></pagination>
 	</div>
 </div>

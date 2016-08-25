@@ -1,11 +1,25 @@
 (function() {
 	celloudApp.controller("noticeController", function($scope, $rootScope,
 			noticeService, commonService) {
-		$scope.notices = noticeService.listNotices();
+		var pages = {
+			page : 1,
+			pageSize : 10
+		};
+		$scope.notices = noticeService.listNotices({
+			currentPage : pages.page,
+			pageSize : pages.pageSize
+		});
 		$scope.noticeRemoveState = false;
 		$scope.noticeReadState = false;
 		$scope.changePage = function(page, pageSize) {
-			alert(page + "===" + pageSize);
+			pages = {
+				page : page,
+				pageSize : pageSize
+			};
+			$scope.notices = noticeService.listNotices({
+				currentPage : page,
+				pageSize : pageSize
+			});
 		}
 		var checkedNotices = [];
 		$scope.readNotices = function() {
@@ -17,10 +31,14 @@
 			}
 			noticeService.read({
 				noticeIds : noticeIds
-			}, reload);
+			}, function() {
+				reload(null, null);
+			});
 		};
 		$scope.readAllNotices = function() {
-			noticeService.readNotices(reload);
+			noticeService.readNotices(function() {
+				reload(null, null);
+			});
 		};
 		$scope.deleteNotice = function() {
 			var noticeIds = [];
@@ -29,7 +47,9 @@
 			}
 			noticeService.deleteNotice({
 				noticeIds : noticeIds
-			}, reload);
+			}, function() {
+				reload(1, null);
+			});
 		};
 		$scope.checkNoticeAll = function(state) {
 			if (state) {
@@ -73,8 +93,11 @@
 			}
 			return notices;
 		}
-		var reload = function() {
-			$scope.notices = noticeService.listNotices();
+		var reload = function(page, pageSize) {
+			$scope.notices = noticeService.listNotices({
+				currentPage : page || pages.page,
+				pageSize : pageSize || pages.pageSize
+			});
 			checkedNotices = [];
 			$rootScope.notices = commonService.notices.get();
 			changeNoticeState();

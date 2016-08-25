@@ -1,7 +1,14 @@
 (function() {
 	celloudApp.controller("messageController", function($scope, $rootScope,
 			noticeService, commonService) {
-		$scope.messages = noticeService.listMessage();
+		var pages = {
+			page : 1,
+			pageSize : 10
+		};
+		$scope.messages = noticeService.listMessage({
+			currentPage : pages.page,
+			pageSize : pages.pageSize
+		});
 		$scope.removeState = false;
 		$scope.readState = false;
 		var checkedNotices = [];
@@ -12,26 +19,48 @@
 					noticeIds.push(checkedNotices[i].noticeId);
 				}
 			}
-			noticeService.read({noticeIds:noticeIds},reload);
+			noticeService.read({
+				noticeIds : noticeIds
+			}, function() {
+				reload(null, null);
+			});
 		};
+		$scope.changePage = function(page, pageSize) {
+			pages = {
+				page : page,
+				pageSize : pageSize
+			};
+			$scope.messages = noticeService.listMessage({
+				currentPage : page,
+				pageSize : pageSize
+			});
+		}
 		$scope.readAll = function() {
-			noticeService.readMessage(reload);
+			noticeService.readMessage(function() {
+				reload(null, null);
+			});
 		};
 		$scope.readMessage = function() {
-			noticeService.readMessage(reload);
+			noticeService.readMessage(function() {
+				reload(null, null);
+			});
 		};
 		$scope.remove = function() {
 			var noticeIds = [];
 			for (i in checkedNotices) {
 				noticeIds.push(checkedNotices[i].noticeId);
 			}
-			noticeService.deleteNotice({noticeIds:noticeIds},reload);
+			noticeService.deleteNotice({
+				noticeIds : noticeIds
+			}, function() {
+				reload(1, null);
+			});
 		};
 		$scope.checkAll = function(state) {
 			if (state) {
 				$scope.chkall = true;
 				checkedNotices = $scope.messages.datas;
-			}else{
+			} else {
 				$scope.chkall = false;
 				checkedNotices = [];
 			}
@@ -69,8 +98,11 @@
 			}
 			return notices;
 		}
-		var reload = function(){
-			$scope.messages = noticeService.listMessage();
+		var reload = function(page, pageSize) {
+			$scope.messages = noticeService.listMessage({
+				currentPage : page || pages.page,
+				pageSize : pageSize || pages.pageSize
+			});
 			checkedNotices = [];
 			$rootScope.messages = commonService.messages.get();
 			changeState();

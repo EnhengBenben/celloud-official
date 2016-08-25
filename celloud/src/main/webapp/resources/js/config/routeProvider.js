@@ -89,6 +89,10 @@
       templateUrl: "pages/report/report_project.jsp",
       controller: "projectReportController"
     })
+    .when('/reportpro/p:page',{
+      templateUrl: "pages/report/report_project.jsp",
+      controller: "projectReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
