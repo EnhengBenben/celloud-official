@@ -16,6 +16,9 @@
       self.getReportList = function(){
         return $resource("report/getReportPageList").get();
       }
+      self.getReportListCondition = function(currentPage,pageSize){
+        return $http.get("report/getReportPageList",{params: {page:currentPage,size:pageSize}});
+      }
     });
     
 }());
