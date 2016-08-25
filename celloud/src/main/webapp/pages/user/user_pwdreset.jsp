@@ -18,7 +18,7 @@
             <div>
                 <input name="oldPwd" type="password" ng-model="oldPwd" required />
                	<span class="input-alert" ng-show="pwdForm.oldPwd.$invalid">原始密码不能为空!</span>
-               	<span class="input-alert" ng-show="code==203">{{message}}</span>
+               	<span class="input-alert" ng-show="code==203">{{pwdMessage}}</span>
             </div>
           </div>
           <div class="info-form-group">
@@ -41,6 +41,10 @@
                 <button type="button" class="btn btn-cancel" ng-click="reset()">重置</button>
                 <button type="submit" class="btn" ng-disabled="newPwd!=confirmPwd||pwdForm.$invalid">提交</button>
             </div>
+            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state" ng-cotroller="alertController">
+		      <button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+		      <span>{{message}}</span>
+		    </div>
           </div>
         </form>
       </div>

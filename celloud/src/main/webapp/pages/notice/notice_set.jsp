@@ -21,86 +21,35 @@
 	            </tr>
 	          </thead>
 	          <tbody>
-	            <tr>
-	              <td>收到[被分享报告]通知</td>
+	            <tr ng-repeat="message in userMessageCategoryList">
+	              <td>收到[{{message.name}}]通知</td>
 	              <td>
-	                <div class="switch-btn-group">
+	                <div class="switch-btn-group" ng-show="message.email!='2'">
+	                  <a><span class="s-btn no" ng-class="{active: message.email=='0'}" ng-click="updateMessageCategory(message.flag,message.mcId,'Email',0)">拒绝</span></a>
+	                  <a><span class="s-btn" ng-class="{active: message.email=='1'}" ng-click="updateMessageCategory(message.flag,message.mcId,'Email',1)">接受</span></a>
+	                </div>
+	                <div class="switch-btn-group disabled" ng-show="message.email=='2'">
 	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
+	                  <a><span class="s-btn">接受</span></a>
 	                </div>
 	              </td>
 	              <td>
-	                <div class="switch-btn-group">
+	              	<div class="switch-btn-group" ng-show="message.window!='2'">
+	                  <a><span class="s-btn no" ng-class="{active: message.window=='0'}" ng-click="updateMessageCategory(message.flag,message.mcId,'Window',0)">拒绝</span></a>
+	                  <a><span class="s-btn" ng-class="{active: message.window=='1'}" ng-click="updateMessageCategory(message.flag,message.mcId,'Window',1)">接受</span></a>
+	                </div>
+	                <div class="switch-btn-group disabled" ng-show="message.window=='2'">
 	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
+	                  <a><span class="s-btn">接受</span></a>
 	                </div>
 	              </td>
 	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
+	              	<div class="switch-btn-group" ng-show="message.wechat!='2'">
+	                  <a><span class="s-btn no" ng-class="{active: message.wechat=='0'}" ng-click="updateMessageCategory(message.flag,message.mcId,'Wechat',0)">拒绝</span></a>
+	                  <a><span class="s-btn" ng-class="{active: message.wechat=='1'}" ng-click="updateMessageCategory(message.flag,message.mcId,'Wechat',1)">接受</span></a>
 	                </div>
-	              </td>
-	            </tr>
-	            <tr>
-	              <td>收到[报告生成]通知</td>
-	              <td>
-	                <div class="switch-btn-group">
+	                <div class="switch-btn-group disabled" ng-show="message.wechat=='2'">
 	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	            </tr>
-	            <tr>
-	              <td>收到[账户余额变更]通知</td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	            </tr>
-	            <tr>
-	              <td>收到[系统公告]通知</td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no">拒绝</span></a>
-	                  <a><span class="s-btn active">接受</span></a>
-	                </div>
-	              </td>
-	              <td>
-	                <div class="switch-btn-group">
-	                  <a><span class="s-btn no active">拒绝</span></a>
 	                  <a><span class="s-btn">接受</span></a>
 	                </div>
 	              </td>

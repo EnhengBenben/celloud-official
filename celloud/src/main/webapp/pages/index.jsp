@@ -186,6 +186,7 @@
   
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
+  <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>

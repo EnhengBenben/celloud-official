@@ -143,7 +143,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public PageList<Feedback> findFeedbacks(Page page) {
         page = page == null ? DEFAULT_PAGE : page;
-        page.setPageSize(5);
+        page.setPageSize(555);
         List<Feedback> list = feedbackMapper.selectByUserId(ConstantsData.getLoginUserId(), page);
         return new PageList<>(page, list);
     }
