@@ -128,5 +128,6 @@
 		<include refid="Base_Column_List" />
 		from tb_feedback_reply
 		where feedback_id = #{id,jdbcType=INTEGER}
+		order by create_time asc
 	</select>
 </mapper>

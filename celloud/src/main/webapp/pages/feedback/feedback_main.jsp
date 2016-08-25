@@ -46,7 +46,7 @@
 				</ul>
 			</div>
 			<div class="qa-chatbox">
-				<div ng-repeat="reply in current.replies" class="chat-content ng-class:{'answer-chat':reply.userId!=userInfo.userId,'answer-text':reply.userId==userInfo.userId}">
+				<div ng-repeat="reply in current.replies" class="chat-content ng-class:{'answer-chat':reply.userId!=userInfo.userId,'questioner-chat':reply.userId==userInfo.userId}">
 					<div class="qa-avatar">
 						<img class="img-circle" alt="头像" ng-src="{{reply.userId==userInfo.userId?userInfo.avatar:'images/avatar/05.png'}}">
 					</div>
@@ -58,8 +58,8 @@
 				</div>
 			</div>
 			<div class="qa-insert ng-class:{hide:current.solved}">
-				<textarea rows="4"></textarea>
-				<button class="btn -low">回&nbsp;复</button>
+				<textarea ng-model="replyContent" ng-keyup="replyKeyUp($event)" ng-trim="true" rows="4"></textarea>
+				<button class="btn -low" ng-disabled="replyContent.length<=0" ng-click="reply(current.id,replyContent)">回&nbsp;复</button>
 			</div>
 		</div>
 	</div>
@@ -132,9 +132,23 @@
 					</form>
 				</div>
 			</div>
-			<!-- /.modal-content -->
 		</div>
-		<!-- /.modal-dialog -->
 	</div>
-	<!-- /.modal -->
+</div>
+<div id="attachmentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">
+						<i class="fa fa-times-circle"></i>
+					</span>
+				</button>
+				<h4 class="modal-title">创建工单</h4>
+			</div>
+			<div class="modal-body">
+				<img alt="" class="img-responsive img-thumbnail" src="<%=request.getContextPath()%>/images/screenshot/CMP1.png">
+			</div>
+		</div>
+	</div>
 </div>
