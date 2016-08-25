@@ -59,9 +59,9 @@
         </ul>
         </form>
       </div>
-      <table class="table table-main">
-        <tbody>
-          <tr ng-repeat="report in reportList.datas">
+      <table class="table table-main" ng-init="pageType='reportpro'">
+        <tbody id="_show">
+          <tr ng-repeat="report in dataList.datas" load-over>
             <td>
             	<div>
                		项目名称：
@@ -71,7 +71,7 @@
 	                    </span>
                     	<a ng-if="report.userName=='no_one'" ng-click="toChangePname(report.project_id)" href="javascript:void()">Edit</a>
                    	</span>
-                   	<span ng-if="report.userName=='no_one'" id="changePname{{report.project_id}}" class="none">
+                   	<span ng-if="report.userName=='no_one'" id="changePname{{report.project_id}}" class="hide">
 	                    <input type="text" value="{{report.project_name}}" ng-blur="changePname(report.project_id)" id="updatePname{{report.project_id }}" class="changeInput"/>
 	                    <img src="<%=request.getContextPath() %>/images/report/ok_blue.png" id="okUpdateImg{{report.project_id }}" class="okImg" ng-click="changePname(report.project_id)" />
                    	</span>
@@ -106,7 +106,10 @@
                    <a class="delete" title="删除" ng-click="removePro(report.project_id)" href="javascript:void(0)"></a>
                </div>
             </td>
-            <td ng-bind-html="report.context | trustHtml"></td>
+            <td class="hide">
+			    {{report.app_id}},{{report.app_name}},{{report.project_id}},{{report.user_id}}
+			</td>
+            <td ng-bind-html="report.context | trustHtml" class="projectContext"></td>
           </tr>
         </tbody>
       </table>

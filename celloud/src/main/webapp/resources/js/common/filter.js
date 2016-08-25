@@ -34,6 +34,9 @@
       return chevronType ? "":"more";
     }
   });
+  /**
+   * 内容长度截取
+   */
   celloudApp.filter("contextLengthFilter",function(){
     return function(context,length){
       if(context.length<=length){
@@ -42,6 +45,9 @@
       return context.substring(0,length) + "...";
     }
   });
+  /**
+   * 文件大小格式化
+   */
   celloudApp.filter("fileSizeFormat",function(){
     return function(size){
       if(size==0){
@@ -61,6 +67,9 @@
       return "文件大小异常";
     }
   });
+  /**
+   * 将内容以HTML方式展示
+   */
   celloudApp.filter('trustHtml', ['$sce', function ($sce) {
     return function (text) {
       return $sce.trustAsHtml(text);
