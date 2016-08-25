@@ -13,9 +13,9 @@
             <label>所&emsp;&emsp;属：</label>
             <div class="search-type-detail times">
               <ul class="search-info">
-	            <li><a class="active" href="javascript:void(0)">全部</a></li>
-	            <li><a href="javascript:void(0)">我的</a></li>
-	            <li><a href="javascript:void(0)">共享来的</a></li>
+	            <li><a ng-click="changeBelongs(1)" id="belongs1" href="javascript:void(0)" class="belongs active">全部</a></li>
+	            <li><a ng-click="changeBelongs(2)" id="belongs2" href="javascript:void(0)" class="belongs">我的</a></li>
+	            <li><a ng-click="changeBelongs(3)" id="belongs3" href="javascript:void(0)" class="belongs">共享来的</a></li>
               </ul>
             </div>
           </li>
@@ -23,18 +23,18 @@
             <label>时&emsp;&emsp;间：</label>
             <div class="search-type-detail times">
               <ul class="search-info">
-	            <li><a class="active" href="javascript:void(0)">全部</a></li>
-	            <li><a href="javascript:void(0)">24h</a></li>
-	            <li><a href="javascript:void(0)">3d</a></li>
-	            <li><a href="javascript:void(0)">7d</a></li>
-	            <li><a href="javascript:void(0)">15d</a></li>
-	            <li><a href="javascript:void(0)">30d</a></li>
+	            <li><a ng-click="changeDate(0)" id="changeDate0" href="javascript:void(0)" class="changeDate active">全部</a></li>
+	            <li><a ng-click="changeDate(1)" id="changeDate1" href="javascript:void(0)" class="changeDate">24h</a></li>
+	            <li><a ng-click="changeDate(3)" id="changeDate3" href="javascript:void(0)" class="changeDate">3d</a></li>
+	            <li><a ng-click="changeDate(7)" id="changeDate7" href="javascript:void(0)" class="changeDate">7d</a></li>
+	            <li><a ng-click="changeDate(15)" id="changeDate15" href="javascript:void(0)" class="changeDate">15d</a></li>
+	            <li><a ng-click="changeDate(30)" id="changeDate30" href="javascript:void(0)" class="changeDate">30d</a></li>
               </ul>
               <div class="search-btns">
-                <input type="text">
+                <input type="text" id="_searchDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;">
                 <span>-</span>
-                <input type="text">
-                <button class="btn btn-cancel">确定</button>
+                <input type="text" id="_endDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;">
+                <button class="btn btn-cancel" ng-click="chooseDate()">确定</button>
               </div>
             </div>
           </li>
@@ -42,18 +42,17 @@
             <label>产品标签：</label>
             <div class="search-type-detail inline-detail {{reportMoreAppTag|chevronTypeDivFilter}}" ng-init="reportMoreAppTag=true">
               <ul class="search-info">
-                <li><a class="active" href="javascript:void(0)">全部</a></li>
-                <li ng-repeat="app in ranAppList.datas"><a href="javascript:void(0)">{{app.app_name}}</a></li>
+                <li><a class="changeApp active" ng-click="changeApp(0)" id="changeApp0" href="javascript:void(0)">全部</a></li>
+                <li ng-repeat="app in ranAppList.datas">
+                	<a class="changeApp" ng-click="changeApp(app.app_id)" id="changeApp{{app.app_id}}" href="javascript:void(0)">{{app.app_name}}</a>
+                </li>
               </ul>
-              <div class="search-btns">
-                <button class="btn chevron-btn" ng-click="reportMoreAppTag=changeChevronType(reportMoreAppTag)">{{reportMoreAppTag|chevronTypeTextFilter}}<i ng-class="reportMoreAppTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
-              </div>
             </div>
           </li>
           <li class="search-type clearfix">
-            <label>样本编码：</label>
+            <label>数据：</label>
             <div class="search-type-detail">
-              <input type="text" placeholder="扫码或输入编号">
+              <input type="text" placeholder="检索文件名/别名/数据编号" ng-change="changeCondition()" ng-model="reportCondition">
             </div>
           </li>
         </ul>

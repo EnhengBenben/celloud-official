@@ -19,11 +19,15 @@
     $scope.ranAppList = projectReportService.getRanAPP();
     //分页检索主方法
     $scope.pageQuery = function(currentPage,pageSize){
-      projectReportService.getReportListCondition(currentPage,pageSize).
+      var belongs = $rootScope.reportBelongs;
+      var start = $rootScope.reportSTART;
+      var end = $rootScope.reportEND;
+      var app = $rootScope.reportAPP;
+      var condition = $scope.reportCondition;
+      projectReportService.getReportListCondition(currentPage,pageSize,belongs,start,end,app,condition).
         success(function(dataList){
           $scope.dataList = dataList;
         });
-      
     }
     //切换每页显示记录数
     $scope.pageList = function(pageSize){
@@ -37,6 +41,80 @@
       $location.path($scope.pageType);
     }else{
       $scope.pageQuery($routeParams.page,$rootScope.pageSize);
+    }
+    //切换所属
+    $scope.changeBelongs = function(id){
+      $(".belongs").removeClass("active");
+      $("#belongs"+id).addClass("active");
+      $rootScope.reportBelongs = id;
+      $scope.pageQuery(1,$rootScope.pageSize);
+      $location.path($scope.pageType);
+    }
+    var START = null;
+    var END = null;
+    //设定时间检索
+    $scope.changeDate = function(flag){
+      $("#_searchDate").val("");
+      $("#_endDate").val("");
+      $(".changeDate").removeClass("active");
+      $("#changeDate"+flag).addClass("active");
+      if(flag==0){
+        START = null;
+        END = null;
+      }else{
+        var d = new Date();
+        var date = new Date(d.getTime()-1000*60*60*24*flag);
+        var year = date.getFullYear();    //获取完整的年份(4位,1970-????)
+        var mounth = date.getMonth()+1;       //获取当前月份(0-11,0代表1月)
+        var day = date.getDate();        //获取当前日(1-31)
+        START = year+"-"+mounth+"-"+day;
+        END = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+      }
+      $scope.dateQuery();
+    }
+    //自定义时间检索
+    $scope.chooseDate = function(){
+      $(".changeDate").removeClass("active");
+      START =$("#_searchDate").val();
+      END = $("#_endDate").val();
+      if((!START && END)||(START && !END)){
+        $("#_alertSpan").css("display","");
+        $("#_alertSpan").html("请同时选择起始时间和结束时间");
+        alert("请同时选择起始时间和结束时间");
+        return ;
+      }
+      if(START>END){
+        $("#_alertSpan").css("display","");
+        $("#_alertSpan").html("起始日期不能大于结束日期");
+        alert("起始日期不能大于结束日期");
+        return ;
+      }
+      $scope.dateQuery();
+    }
+    //时间检索入口
+    $scope.dateQuery = function(){
+      if(START != null){
+        START = START+" 00:00:00";
+      }
+      if(END != null){
+        END = END+" 23:59:59";
+      }
+      $rootScope.reportSTART = START;
+      $rootScope.reportEND = END;
+      $scope.pageQuery(1,$rootScope.pageSize);
+    }
+    //根据appId精确检索
+    $scope.changeApp = function(appId){
+      $(".changeApp").removeClass("active");
+      $("#changeApp" + appId).addClass("active");
+      $rootScope.reportAPP = appId;
+      $scope.pageQuery(1,$rootScope.pageSize);
+      $location.path($scope.pageType);
+    }
+    //数据检索
+    $scope.changeCondition = function(){
+      $scope.pageQuery(1,$rootScope.pageSize);
+      $location.path($scope.pageType);
     }
     //显示项目名称编辑框
     $scope.toChangePname = function(projectId){
