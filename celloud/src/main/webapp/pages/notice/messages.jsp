@@ -11,10 +11,10 @@
 		<div class="table-opera">
 			<div class="table-opera-content">
 				<div class="only-btn">
-					<button class="btn -low ng-class:{'btn-cancel' : !readState}" ng-click="read()" ng-disabled="!readState">
+					<button class="btn -low" ng-click="read()" ng-disabled="!readState">
 						<i class="fa fa-folder-open" aria-hidden="true"></i>已读
 					</button>
-					<button class="btn -low ng-class:{'btn-cancel' : !removeState}" ng-click="remove()" ng-disabled="!removeState">
+					<button class="btn -low" ng-click="remove()" ng-disabled="!removeState">
 						<i class="fa fa-times" aria-hidden="true"></i>删除
 					</button>
 					<button class="btn -low" ng-click="readAll()">
