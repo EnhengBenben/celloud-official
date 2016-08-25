@@ -1,5 +1,6 @@
 package com.celloud.service.impl;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -57,8 +58,23 @@ public class MessageCategoryServiceImpl implements MessageCategoryService {
     }
 
     @Override
-    public int initUserMessageCategory(Integer userId, String data) {
-        return messageCategoryMapper.insertUserMessageCategoryRelat(userId, data);
+    public int initUserMessageCategory(Integer userId, String targetName, Integer targetVal, Integer relatId) {
+        try {
+            // 从分类表中获取原始数据
+            MessageCategory messageCategory = messageCategoryMapper.selectByPrimaryKey(relatId);
+            Class<MessageCategory> clazz = MessageCategory.class;
+            // 获取对应的set方法(setEmail,setWindow,setWechat)
+            Method method = clazz.getDeclaredMethod("set" + targetName, Integer.class);
+            method.setAccessible(true);
+            // 更改用户更改的那一项值
+            method.invoke(messageCategory, targetVal);
+            // 将新的分类对象插入到用户消息分类关系表中
+            return messageCategoryMapper.insertUserMessageCategoryRelat(userId, messageCategory);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override

@@ -43,9 +43,9 @@ public class MessageCategoryAction {
     @ActionLog(value = "第一次更改消息设置", button = "消息开关")
     @RequestMapping("insert")
     @ResponseBody
-    public int insert(String data) {
+    public int insert(String targetName, Integer targetVal, Integer relatId) {
         Integer userId = ConstantsData.getLoginUserId();
-        return messageCategoryService.initUserMessageCategory(userId, data);
+        return messageCategoryService.initUserMessageCategory(userId, targetName, targetVal, relatId);
     }
 
     @ActionLog(value = "不是第一次更改消息设置", button = "消息开关")
