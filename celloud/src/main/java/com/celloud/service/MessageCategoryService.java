@@ -49,7 +49,7 @@ public interface MessageCategoryService {
      * @description 初始化用户消息设置
      *
      */
-    int initUserMessageCategory(Integer userId, String data);
+    int initUserMessageCategory(Integer userId, String targetName, Integer targetVal, Integer relatId);
 
     /**
      * @author MQ
