@@ -953,7 +953,7 @@ a, a:link, a:hover, a:active, a:visited {
 	width: 70px;
 	text-align: right;
     position: fixed;
-    margin-left: 165px;
+    right: 40px;
     top: 208px;
 }
 .report-btn-group .btn{
@@ -980,11 +980,12 @@ a, a:link, a:hover, a:active, a:visited {
 	margin-right: 2px;
 }
 .tab-content{
+	width: 100%;
+	min-width: 780px;
+	margin-bottom: 10px;
 	background-color: #fff;
 	padding: 0px 40px 20px 40px;
 	color: #2c3e50;
-	margin-bottom: 10px;
-	width: 780px;
 }
 .tab-content .tab-temp{
 	height:600px;
@@ -1169,7 +1170,8 @@ a, a:link, a:hover, a:active, a:visited {
 	text-align: center;
 }
 .content .data-content-footer{
-	width: 780px;
+	width: 100%;
+	min-width: 780px;
 	height: 30px;
 	background-color: #fff;
 	color: #2c3e50;
@@ -1187,12 +1189,13 @@ a, a:link, a:hover, a:active, a:visited {
     line-height: 30px;
 }
 .content .data-content-footer ul>li>h4{
-	color: #323232;
-	font-size: 14px;
-	font-weight: bold;
+	margin: 0;
 	display: inline-block;
     float: left;
     line-height: 30px;
+	color: #323232;
+	font-size: 14px;
+	font-weight: bold;
 }
 .content .data-content-footer ul>li>span{
 	display: inline-block;
