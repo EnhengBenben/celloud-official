@@ -17,24 +17,27 @@ public class ResetPwdUtils {
     public static String userTitle;
     public static String userContent;
 
+    public static String officialWebsite;
+
     public static Properties prop = null;
     static {
-	prop = new Properties();
-	InputStream inStream = ResetPwdUtils.class.getClassLoader()
-		.getResourceAsStream("ResetPwd.properties");
-	try {
-	    prop.load(inStream);
-	    password = prop.getProperty("password");
-	    title = prop.getProperty("title");
-	    content = prop.getProperty("content");
-	    celloudPath = prop.getProperty("celloudPath");
+        prop = new Properties();
+        InputStream inStream = ResetPwdUtils.class.getClassLoader().getResourceAsStream("ResetPwd.properties");
+        try {
+            prop.load(inStream);
+            password = prop.getProperty("password");
+            title = prop.getProperty("title");
+            content = prop.getProperty("content");
+            celloudPath = prop.getProperty("celloudPath");
 
-	    userPath = prop.getProperty("userPath");
-	    userTitle = prop.getProperty("userTitle");
-	    userContent = prop.getProperty("userContent");
-	} catch (IOException e) {
-	    logger.info("读取ResetPwd配置文件失败");
-	}
+            userPath = prop.getProperty("userPath");
+            userTitle = prop.getProperty("userTitle");
+            userContent = prop.getProperty("userContent");
+
+            officialWebsite = prop.getProperty("officialWebsite");
+        } catch (IOException e) {
+            logger.info("读取ResetPwd配置文件失败");
+        }
     }
 
     /**
@@ -43,7 +46,7 @@ public class ResetPwdUtils {
      * @return
      */
     public String getPwd() {
-	return password;
+        return password;
     }
 
     /**
@@ -52,6 +55,6 @@ public class ResetPwdUtils {
      * @return
      */
     public static String getEmailTile() {
-	return title;
+        return title;
     }
 }

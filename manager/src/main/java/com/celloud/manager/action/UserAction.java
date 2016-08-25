@@ -33,6 +33,7 @@ import com.celloud.manager.service.SecRoleService;
 import com.celloud.manager.service.UserService;
 import com.celloud.manager.utils.Base64Util;
 import com.celloud.manager.utils.MD5Util;
+import com.celloud.manager.utils.ResetPwdUtils;
 
 /**
  * 
@@ -258,6 +259,7 @@ public class UserAction {
         System.out.println("email:" + email);
         String param = Base64Util.decrypt(email);
         System.out.println(param);
+        mv.addObject("officialWebsite", ResetPwdUtils.officialWebsite);
         logger.info("注册邮件{}", param);
         String p[] = param.split("/");
         if (p.length != 6) {
