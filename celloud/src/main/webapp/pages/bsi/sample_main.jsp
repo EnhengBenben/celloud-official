@@ -2,14 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<div class="content-header">
-  <ol class="breadcrumb">
-    <li>主页</li>
-    <li>应用</li>
-    <li>百菌探</li>
-    <li>收样</li>
-  </ol>
-</div>
 <div class="sample-left">
   <div class="data-search">
     <input id="sample-input" class="input-sm" type="text" placeholder="扫描样本编号/病历号"/>

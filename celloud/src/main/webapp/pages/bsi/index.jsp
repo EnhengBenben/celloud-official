@@ -14,11 +14,10 @@
   <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" />
-  <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
-  <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
+  <link href="<%=request.getContextPath() %>/css/celloud.min.css" rel="stylesheet" type="text/css">
   <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
-  <link href="<%=request.getContextPath()%>/css/bsi_main.css?version=3.1.15" rel="stylesheet" type="text/css" />
+  <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
+  <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
   <!-- [if It IE 9]>
   <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -73,7 +72,7 @@
             <div class="dropdown-menu money-dropdown">
               <p>账户余额：<span class="tips">{{userInfo.balances}}</span>元</p>
               <a class="btn" href="#/expense/paydetail">立即充值</a><br>
-              <a class="btn-link" href="#/expense/consume">查看消费记录</a>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/expense/consume">查看消费记录</a>
             </div>
           </li>
           <li class="dropdown">
@@ -83,7 +82,7 @@
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{notices.num}}</span>条新消息</p>
-              <a class="btn-link" href="#/notice/list">查看所有</a>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
             </div>
           </li>
            <li class="dropdown">
@@ -93,7 +92,7 @@
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{messages.num}}</span>条新消息</p>
-              <a class="btn-link" href="#/notice/list">查看所有</a>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
             </div>
           </li>
           <li class="dropdown">
@@ -101,7 +100,7 @@
               <i class="user-icon">&nbsp;</i>
             </a>
             <div class="dropdown-menu user-dropdown">
-              <a class="btn" href="#/user/base">个人信息</a>
+              <a class="btn" href="<%=request.getContextPath()%>/index#/user/base">个人信息</a>
               <a class="btn btn-cancel" href="logout">退出</a>
             </div>
           </li>
@@ -126,7 +125,7 @@
           <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
         </li>
         <li ng-class="{active: isActive('/data')}">
-          <a href="#/data"><i class="data-icon"></i><span>数据管理</span></a>
+          <a href="<%=request.getContextPath()%>/index#/data"><i class="data-icon"></i><span>数据管理</span></a>
         </li>
         <li ng-class="{active: isActive('/report')}">
 <%--           <shiro:lacksPermission name="bsi:product"> --%>
@@ -137,19 +136,19 @@
 <%--           </shiro:hasPermission> --%>
         </li>
         <li ng-class="{active: isActive('/app')}">
-          <a href="#/app"><i class="app-icon"></i><span>应用市场</span></a>
+          <a href="<%=request.getContextPath()%>/index#/app"><i class="app-icon"></i><span>应用市场</span></a>
         </li>
       </ul>
       <ul class="sidebar-menu">
         <li class="header">用户中心</li>
         <li ng-class="{active: isActive('/user')}">
-          <a href="#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
+          <a href="<%=request.getContextPath()%>/index#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
         <li ng-class="{active: isActive('/qa')}">
-          <a href="#/qa"><i class="qa-icon"></i><span>问题反馈</span></a>
+          <a href="<%=request.getContextPath()%>/index#/qa"><i class="qa-icon"></i><span>问题反馈</span></a>
         </li>
         <li ng-class="{active: isActive('/expense')}">
-          <a href="#/expense/consume"><i class="cost-icon"></i><span>费用中心</span></a>
+          <a href="<%=request.getContextPath()%>/index#/expense/consume"><i class="cost-icon"></i><span>费用中心</span></a>
         </li>
       </ul>
     </section>
@@ -158,53 +157,40 @@
     <div class="pro-body">
       <ol class="breadcrumb">
 	    <li>CelLoud</li>
-	    <li>数据管理</li>
+	    <li>我的产品</li>
+	    <li>百菌探</li>
+	    <li><a data-click="report-list" href="javascript:void(0)">报告</a></li>
+	    <li id="to-my-report">报告列表</li>
       </ol>
 	  <div class="content">
 	      <div class="page-layout page-main-content">
 		    <div class="topbar-menu">
 		      <header class="common-menu">
-                <div class="logo">
-                    <img alt="华木兰" src="<%=request.getContextPath()%>/images/app/breast_mulations_scan.png">
+                <div class="common-menu-logo">
+                    <img alt="华木兰" src="<%=request.getContextPath()%>/images/app/bsi.png">
                 </div>
                 <hr class="-left">
-                <div id="common-menu-center" class="info"></div>
-                <div id="common-menu-right" class="searchs"></div>
+                <div id="common-menu-center" class="info">
+                  <div id="common-menu" class="common-menu-btn pull-left">
+                    <a class="item-btn" id="to-sample-a" href="javascript:void(0)"><i class="celicon my-sample-icon"></i><br>收样</a>
+                    <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)">
+                      <i class="celicon my-upload-icon"></i><br>上传
+                      <canvas id="upload-progress" class="upload-progress" width="64" height="64"></canvas>
+                    </a>
+                    <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i><br>数据</a>
+                    <a class="item-btn active" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i><br>报告</a>
+                  </div>
+                </div>
+                <div id="common-menu-right" class="searchs common-menu-btn">
+                  <div class="data-search">
+                     <input id="condition-input" class="input-sm" type="text" placeholder="搜索"/>
+                     <a id="condition-find" class="input-group-btn"><i class="fa fa-search"></i></a>
+                   </div>
+                </div>
                 <hr class="-right">
               </header>
-		      <div class="common-menu">
-		        <div class="common-menu-inner">
-		          <div class="common-menu-logo pull-left">
-		            <a href="javascript:void(0)" class="bio-logo">
-		              <img src="<%=request.getContextPath()%>/images/app/bactive.png">
-		            </a>
-		            <div class="bio-name">
-		              <div>百菌探</div>
-		              <div>Bactive</div>
-		              <a href="javascript:void(0)">详情>>></a>
-		            </div>
-		          </div>
-		          <hr>
-		          <div id="common-menu" class="common-menu-btn pull-left">
-		            <a class="item-btn" id="to-sample-a" href="javascript:void(0)"><i class="celicon my-sample-icon"></i><br>收样</a>
-		            <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)">
-		              <i class="celicon my-upload-icon"></i><br>上传
-		              <canvas id="upload-progress" class="upload-progress" width="64" height="64"></canvas>
-		            </a>
-		            <a class="item-btn" id="to-data-a" href="javascript:void(0)"><i class="celicon my-data-icon"></i><br>数据</a>
-		            <a class="item-btn active" id="to-report-a" href="javascript:void(0)"><i class="celicon my-report-icon"></i><br>报告</a>
-		          </div>
-		          <hr>
-		          <div class="common-menu-search pull-right">
-		            <div class="data-search">
-		              <input id="condition-input" class="input-sm" type="text" placeholder="搜索"/>
-		              <a id="condition-find" class="input-group-btn"><i class="fa fa-search"></i></a>
-		            </div>
-		          </div>
-		        </div>
-		      </div>
 		    </div>
-		    <div id="container" class="container-fluid">
+		    <div id="container" class="container-fluid common-container">
 		     
 		    </div>
 		  </div>
@@ -224,10 +210,6 @@
 	          </div>
 	          <div class="step-one-content">
 	            <input id="batch-info" type="text" placeholder="请输入标签" value=""/><br>
-	            <select>
-	              <option>百菌探-血液</option>
-	              <option>百菌探-腹水</option>
-	            </select>
 	            <p><span>为每次上传数据按输入加入标签，提升后续报告查询、数据管理、分类汇总提供快捷服务。<span></p>
 	            <p><span>示例：外科5月；ICU-9床；急诊发热<span></p>
 	            <a id="next-step" class="btn" href="javascript:void(0)">下一步</a>
@@ -326,6 +308,7 @@
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
+  <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
