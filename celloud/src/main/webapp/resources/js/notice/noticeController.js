@@ -5,7 +5,10 @@
 		$scope.noticeRemoveState = false;
 		$scope.noticeReadState = false;
 		$scope.changePage = function(page, pageSize) {
-			alert(page + "===" + pageSize);
+			$scope.notices = noticeService.listNotices({
+				currentPage : page,
+				pageSize : pageSize
+			});
 		}
 		var checkedNotices = [];
 		$scope.readNotices = function() {

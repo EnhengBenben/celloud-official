@@ -12,8 +12,16 @@
 					noticeIds.push(checkedNotices[i].noticeId);
 				}
 			}
-			noticeService.read({noticeIds:noticeIds},reload);
+			noticeService.read({
+				noticeIds : noticeIds
+			}, reload);
 		};
+		$scope.changePage = function(page, pageSize) {
+			$scope.messages = noticeService.listMessage({
+				currentPage : page,
+				pageSize : pageSize
+			});
+		}
 		$scope.readAll = function() {
 			noticeService.readMessage(reload);
 		};
@@ -25,13 +33,15 @@
 			for (i in checkedNotices) {
 				noticeIds.push(checkedNotices[i].noticeId);
 			}
-			noticeService.deleteNotice({noticeIds:noticeIds},reload);
+			noticeService.deleteNotice({
+				noticeIds : noticeIds
+			}, reload);
 		};
 		$scope.checkAll = function(state) {
 			if (state) {
 				$scope.chkall = true;
 				checkedNotices = $scope.messages.datas;
-			}else{
+			} else {
 				$scope.chkall = false;
 				checkedNotices = [];
 			}
@@ -69,15 +79,16 @@
 			}
 			return notices;
 		}
-		var reload = function(){
+		var reload = function() {
 			$scope.messages = noticeService.listMessage();
 			checkedNotices = [];
 			$rootScope.messages = commonService.messages.get();
 			changeState();
 		}
 	});
-	celloudApp.controller("settingController",function($scope,messageService){
-		var data = messageService.getUserSetting().query();
-		$scope.userMessageCategoryList = data;
-	});
+	celloudApp.controller("settingController",
+			function($scope, messageService) {
+				var data = messageService.getUserSetting().query();
+				$scope.userMessageCategoryList = data;
+			});
 })();
