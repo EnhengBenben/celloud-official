@@ -17,38 +17,36 @@
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     //加载产品标签
     $scope.ranAppList = projectReportService.getRanAPP();
+    //初始化参数
+    var options = {
+        page : 1,
+        pageSize : 10,
+        belongs : 1,
+        start : null,
+        end : null,
+        app : 0,
+        condition : null
+    };
     //分页检索主方法
     $scope.pageQuery = function(currentPage,pageSize){
-      var belongs = $rootScope.reportBelongs;
-      var start = $rootScope.reportSTART;
-      var end = $rootScope.reportEND;
-      var app = $rootScope.reportAPP;
-      var condition = $scope.reportCondition;
+      var belongs = options.belongs;
+      var start = options.start;
+      var end = options.end;
+      var app = options.app;
+      var condition = options.condition;
+      options.pageSize = pageSize;
       projectReportService.getReportListCondition(currentPage,pageSize,belongs,start,end,app,condition).
         success(function(dataList){
           $scope.dataList = dataList;
         });
     }
-    //切换每页显示记录数
-    $scope.pageList = function(pageSize){
-      $rootScope.pageSize = pageSize;
-      $scope.pageQuery(1,pageSize);
-      $location.path($scope.pageType);
-    }
-    //切换分页
-    if($routeParams.page == null){
-      $scope.pageQuery(1,$rootScope.pageSize);
-      $location.path($scope.pageType);
-    }else{
-      $scope.pageQuery($routeParams.page,$rootScope.pageSize);
-    }
+    $scope.pageQuery(options.page,options.pageSize);
     //切换所属
     $scope.changeBelongs = function(id){
       $(".belongs").removeClass("active");
       $("#belongs"+id).addClass("active");
-      $rootScope.reportBelongs = id;
-      $scope.pageQuery(1,$rootScope.pageSize);
-      $location.path($scope.pageType);
+      options.belongs = id;
+      $scope.pageQuery(1,options.pageSize);
     }
     var START = null;
     var END = null;
@@ -99,22 +97,21 @@
       if(END != null){
         END = END+" 23:59:59";
       }
-      $rootScope.reportSTART = START;
-      $rootScope.reportEND = END;
-      $scope.pageQuery(1,$rootScope.pageSize);
+      options.start = START;
+      options.end = END;
+      $scope.pageQuery(1,options.pageSize);
     }
     //根据appId精确检索
     $scope.changeApp = function(appId){
       $(".changeApp").removeClass("active");
       $("#changeApp" + appId).addClass("active");
-      $rootScope.reportAPP = appId;
-      $scope.pageQuery(1,$rootScope.pageSize);
-      $location.path($scope.pageType);
+      options.app = appId;
+      $scope.pageQuery(1,options.pageSize);
     }
     //数据检索
     $scope.changeCondition = function(){
-      $scope.pageQuery(1,$rootScope.pageSize);
-      $location.path($scope.pageType);
+      options.condition = $scope.reportCondition;
+      $scope.pageQuery(1,options.pageSize);
     }
     //显示项目名称编辑框
     $scope.toChangePname = function(projectId){

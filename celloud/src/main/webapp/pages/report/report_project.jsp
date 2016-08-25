@@ -47,6 +47,9 @@
                 	<a class="changeApp" ng-click="changeApp(app.app_id)" id="changeApp{{app.app_id}}" href="javascript:void(0)">{{app.app_name}}</a>
                 </li>
               </ul>
+              <div class="search-btns">
+                <button class="btn chevron-btn" ng-click="reportMoreAppTag=changeChevronType(reportMoreAppTag)">{{reportMoreAppTag|chevronTypeTextFilter}}<i ng-class="reportMoreAppTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
+              </div>
             </div>
           </li>
           <li class="search-type clearfix">
@@ -112,5 +115,5 @@
           </tr>
         </tbody>
       </table>
-      <ng-include src="'pages/partial/_partial_pagination_common.jsp'" ></ng-include>
+      <pagination page="dataList.page" change="pageQuery(page,pageSize)"></pagination>
 </div>
