@@ -12,7 +12,7 @@
 		    <div class="o-app-list">
 			  <ul>
 			    <li>
-			      <a href="<%=request.getContextPath()%>/app/bsi">
+			      <a href="<%=request.getContextPath()%>/bsi">
 			        <div class="inner">
 			          <img src="<%=request.getContextPath()%>/images/app/bactive.png" alt="百菌探" title="百菌探">
 	<!-- 		        <a href="#" class="footer"><i class="setup-icon"></i></a> -->

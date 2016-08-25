@@ -176,7 +176,7 @@ public class HomeAction {
 		return "index";
     }
 
-    @RequestMapping("app/bsi")
+    @RequestMapping("bsi")
     public String bsi() {
         return "bsi/index";
     }
