@@ -79,7 +79,7 @@ public class DataAction {
 	private static String sgeHost = machines.get("158").get(Mod.HOST);
 	private static String sgePwd = machines.get("158").get(Mod.PWD);;
 	private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
-	private static final Response DELETE_DATA_FAIL = new Response("删除数据失败");
+	private static final Response DELETE_DATA_FAIL = new Response("归档数据失败");
 
 	/**
 	 * 检索某个项目下的所有数据
@@ -121,7 +121,6 @@ public class DataAction {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
         Page pager = new Page(page, size);
-		System.out.println("data list");
         return dataService.dataAllList(pager, ConstantsData.getLoginUserId());
     }
 
@@ -289,7 +288,7 @@ public class DataAction {
 		if (dataIds != null && !dataIds.equals(""))
 			result = dataService.delete(dataIds);
 		logger.info("用户{}删除数据{}{}", ConstantsData.getLoginUserName(), dataIds, result);
-		return result > 0 ? Response.DELETE_SUCCESS : DELETE_DATA_FAIL;
+		return result > 0 ? Response.FILED_SUCCESS : DELETE_DATA_FAIL;
 	}
 
 	/**
@@ -326,8 +325,8 @@ public class DataAction {
 	@ActionLog(value = "数据编辑", button = "数据编辑")
 	@RequestMapping("updateDataAndTag")
 	@ResponseBody
-	public Integer updateDataAndTag(DataFile data) {
-		return dataService.updateDataAndTag(data);
+	public Response updateDataAndTag(DataFile data) {
+		return dataService.updateDataAndTag(data) == 1 ? Response.UPDATE_SUCCESS : Response.FAIL;
 	}
 
 	/**
@@ -544,8 +543,7 @@ public class DataAction {
 	@ActionLog(value = "runWithProject", button = "运行")
 	@RequestMapping("runWithProject")
 	@ResponseBody
-	public String runWithProject(String dataIds) {
-		System.out.println(dataIds);
+	public Response runWithProject(String dataIds) {
 		//1. 检索数据详情
 		List<DataFile> dataList = dataService.findDatasById(dataIds);
 		//2. 数据分组
@@ -571,7 +569,7 @@ public class DataAction {
 		if (!appService.checkPriceToRun(appIdList, userId)) {
 			String result = "余额不足，请充值后再运行";
 			logger.info(userName + result);
-			return result;
+			return new Response(result);
 		}
 		//4. 运行
 		StringBuffer result = new StringBuffer();
@@ -581,7 +579,7 @@ public class DataAction {
 				result.append(back).append(";");
 			}
 		}
-		return result.toString();
+		return Response.SUCCESS;
 	}
 
 	private String runSingleProject(Integer appId, List<DataFile> dataList) {

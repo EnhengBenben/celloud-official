@@ -7,10 +7,6 @@
       }
       self.run = function(){
         var checkedIds = $.dataManager.options.checkedIds;
-        if(checkedIds.length==0){
-          alert("请选择数据");
-          return;
-        }
         var dataIds = [];
         $.each(checkedIds, function(i, el){
             if($.inArray(el, dataIds) === -1) dataIds.push(el);
@@ -19,10 +15,6 @@
       }
       self.delete = function(){
           var checkedIds = $.dataManager.options.checkedIds;
-          if(checkedIds.length==0){
-            alert("请选择数据");
-            return;
-          }
           var dataIds = "";
           for (var i=0;i<checkedIds.length;i++){
             dataIds += checkedIds[i] + ",";
@@ -37,5 +29,4 @@
         return $http.get("data/updateDataAndTag",{params: {fileId: dataFile.fileId,anotherName: dataFile.anotherName,batch: dataFile.batch,tagName: dataFile.tagName}});
       }
     });
-    
 }());
