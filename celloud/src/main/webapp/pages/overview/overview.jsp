@@ -72,7 +72,7 @@
 	            <h1>{{map.countApp}}<span>个</span></h1>
 	            <div class="footer">
 	              <span>产品总量</span>
-	              <a href="#"><span>详情</span><i class="next-icon"></i></a>
+	              <a href="#/app"><span>详情</span><i class="next-icon"></i></a>
 	            </div>
 	          </div>
 	        </li>
@@ -82,7 +82,7 @@
 	            <h1>{{map.countReport}}<span>个</span></h1>
 	            <div class="footer">
 	              <span>报告数量</span>
-	              <a href="#"><span>详情</span><i class="next-icon"></i></a>
+	              <a href="#/reportpro"><span>详情</span><i class="next-icon"></i></a>
 	            </div>
 	          </div>
 	        </li>
