@@ -122,10 +122,26 @@
             border-bottom: 1px solid @light-gray;
             &:first-child{
                 text-align: center;
+            }
+            &:last-child{
+                border-right: none;
             }   
         }
         >tr:last-child>td{
             border-bottom: none;
+        }
+    }
+    &.pro-table>tbody>tr>td {
+        &:first-child{
+            text-align: left;
+            width: 220px;
+        }
+        &:last-child{
+            padding: 0;
+            .table-main{
+                margin: 0;
+                border: none;
+            }
         }
     }
     &.notice-table{

@@ -61,7 +61,7 @@
         </ul>
         </form>
       </div>
-      <table class="table table-main" ng-init="pageType='reportpro'">
+      <table class="table table-main info-table pro-table" ng-init="pageType='reportpro'">
         <tbody id="_show">
           <tr ng-repeat="report in dataList.datas" load-over>
             <td>
