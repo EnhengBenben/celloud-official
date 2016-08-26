@@ -70,7 +70,7 @@
                         </c:if>
                         <c:if test="${report.userName=='no_one'}">
                             <div class="operate">
-                                <c:if test="${loginUserInSession.companyId == 6 }">
+                                <c:if test="${loginUserInSession.companyId == 6 || loginUserInSession.companyId == 24}">
                                     <a class="projectreport" title="项目报告" target="_blank" href="${pageContext.request.contextPath }/report/printPgsProject?projectId=${report.project_id}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
                                 </c:if>
                             	<c:if test="${report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114&&report.app_id!=117 }">

@@ -52,6 +52,10 @@ public class Pgs extends Base {
 
     // 用户填写的基本信息
     private Map<String, String> baseInfo;
+    // 项目报告基本信息
+    private Map<String, Object> projectInfo;
+    // 0-数据报告,1-项目报告
+    private Integer flag;
 
     public Integer getFileId() {
         return fileId;
@@ -291,6 +295,22 @@ public class Pgs extends Base {
 
     public void setBaseInfo(Map<String, String> baseInfo) {
         this.baseInfo = baseInfo;
+    }
+
+    public Map<String, Object> getProjectInfo() {
+        return projectInfo;
+    }
+
+    public void setProjectInfo(Map<String, Object> projectInfo) {
+        this.projectInfo = projectInfo;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 
 }
