@@ -24,5 +24,5 @@ public interface FeedbackMapper {
 
     public List<Feedback> selectByUserId(@Param("userId") Integer userId, Page page);
 
-    public int updateAttachState();
+    public int updateAttachState(Integer feedbackId);
 }

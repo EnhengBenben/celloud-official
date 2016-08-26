@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.bson.types.ObjectId;
@@ -90,7 +89,7 @@ public class FeedbackAction {
 	@RequestMapping(value = "save", method = RequestMethod.PUT)
 	@ResponseBody
 	public boolean save(Feedback feedback, User user) {
-		return feedbackService.inserte(user, feedback, null) >= 0;
+		return feedbackService.insert(user, feedback, null) >= 0;
 	}
 
 	/**
@@ -102,9 +101,9 @@ public class FeedbackAction {
 	@ActionLog(value = "创建工单", button = "保存")
 	@RequestMapping(value = "create", method = RequestMethod.PUT)
 	@ResponseBody
-	public Response create(Feedback feedback, String[] attachments) {
-		List<String> list = attachments == null || attachments.length <= 0 ? null : Arrays.asList(attachments);
-		int result = feedbackService.inserte(null, feedback, list);
+	public Response create(Feedback feedback, String[] attachList) {
+		List<String> list = attachList == null || attachList.length <= 0 ? null : Arrays.asList(attachList);
+		int result = feedbackService.insert(null, feedback, list);
 		if (result > 0) {
 			return Response.SAVE_SUCCESS;
 		}
@@ -175,21 +174,23 @@ public class FeedbackAction {
 	 * 工单上传附件
 	 * 
 	 * @param file
-	 * @param session
 	 * @return
 	 */
 	@ActionLog(value = "上传工单附件", button = "+")
 	@RequestMapping(value = "attach", method = RequestMethod.POST)
 	@ResponseBody
-	public String attach(@RequestParam("file") CommonsMultipartFile file, HttpSession session) {
-		String fileName = file.getOriginalFilename();
+	public String attach(@RequestParam("file") CommonsMultipartFile file, String fileName, Integer feedbackId) {
 		String type = fileName.substring(fileName.lastIndexOf("."));
 		File targetFile = new File(FeedbackConstants.getAttachmentTempPath(), new ObjectId().toString() + type);
-		if (!targetFile.exists()) {
-			targetFile.mkdirs();
+		if (feedbackId != null && feedbackId != 0) {
+			targetFile = new File(FeedbackConstants.getAttachment(new ObjectId().toString() + type));
 		}
+		targetFile.getParentFile().mkdirs();
 		try {
 			file.transferTo(targetFile);
+			if (feedbackId != null && feedbackId != 0) {
+				feedbackService.saveAttach(feedbackId, targetFile.getName());
+			}
 		} catch (Exception e) {
 			logger.error("工单上传附件失败：{}", fileName, e);
 		}
