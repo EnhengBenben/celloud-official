@@ -1,31 +1,28 @@
 (function(){
   celloudApp.controller("dataListController", function($scope, $rootScope, $location, $routeParams, runService){
-    if($routeParams.page == null){
-      $scope.dataList = runService.list();
-    }else{
-      $scope.dataList = runService.pageList($routeParams.page);
-    }
-    $scope.dataCondition = $.dataManager.options.condition;
-    $scope.conditionList = function(){
+    //基本检索方法
+    $scope.pageQuery = function(page,pageSize){
       $.dataManager.options.condition = $scope.dataCondition;
-      runService.conditionList().success(function(response){
-        $scope.dataList = response;
-      });
-    }
-    $scope.pageList = function(pageSize){
-      $.dataManager.options.condition = $scope.dataCondition;
+      $.dataManager.options.page = page;
       $.dataManager.options.pageSize = pageSize;
-      runService.conditionList().success(function(response){
+      runService.pageList().success(function(response){
         $scope.dataList = response;
-        $location.path("/data");
       });
+    }
+    //初始化列表
+    $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
+    //条件检索
+    $scope.conditionList = function(){
+      $scope.pageQuery(1,$.dataManager.options.pageSize);
     }
     //项目运行
     $scope.runWithProject = function() {
       runService.run().success(function(response) {
         if(response.length==0){
           alert("run success");
-          $scope.dataList = runService.list();
+          $scope.message = "运行成功";
+          $scope.state = true;
+          $scope.conditionList();
           $.dataManager.refreshDataList();
         }else{
           alert("run error");
@@ -66,8 +63,4 @@
       });
     }
   });
-//  celloudApp.controller("dataPageController", function($scope,$routeParams, runService){
-//    $scope.dataList = runService.pageList($routeParams.page);
-//    alert($scope.dataList);
-//  });
 })();

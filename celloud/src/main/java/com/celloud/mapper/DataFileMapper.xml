@@ -453,14 +453,11 @@
 		where user_id = #{userId } and state = #{state }
 		<if test="condition != null">
 			and (data_key like '%${condition}%'
-			or file_name like
-			'%${condition}%'
+			or file_name like '%${condition}%'
 			or another_name like '%${condition}%'
-			or data_tags
-			like '%${condition}%'
+			or data_tags like '%${condition}%'
 			or strain like '%${condition}%'
-			or sample like
-			'%${condition}%'
+			or sample like '%${condition}%'
 			or batch like '%${condition}%')
 		</if>
 		<choose>

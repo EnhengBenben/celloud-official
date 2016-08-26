@@ -1,16 +1,9 @@
 (function(){
   celloudApp.service("runService",function($resource,$http){
       var self = this;
-      self.list = function(){
-        return $resource("data/dataPageList").get();
-      }
-      self.conditionList = function(){
+      self.pageList = function(){
         var options = $.dataManager.options;
-        return $http.get("data/dataPageListCondition",{params: {condition:options.condition,size:options.pageSize,sort:options.sort,sortDateType:options.sortDateType,sortNameType:options.sortNameType}});
-      }
-      self.pageList = function(page){
-        var options = $.dataManager.options;
-        return $resource("data/dataPageListCondition",{page:page,condition:options.condition,size:options.pageSize,sort:options.sort,sortDateType:options.sortDateType,sortNameType:options.sortNameType}).get();
+        return $http.get("data/dataPageListCondition",{params: {page:options.page,size:options.pageSize,condition:options.condition,sort:options.sort,sortDateType:options.sortDateType,sortNameType:options.sortNameType}});
       }
       self.run = function(){
         var checkedIds = $.dataManager.options.checkedIds;

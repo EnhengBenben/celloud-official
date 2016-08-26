@@ -34,10 +34,6 @@
       templateUrl: "pages/data/data_list.jsp",
       controller: "dataListController"
     })
-    .when('/data/p:page',{
-      templateUrl: "pages/data/data_list.jsp",
-      controller: "dataListController"
-    })
     .when('/expense/consume',{
       templateUrl: "pages/expense/expense_consume.jsp",
       controller: "pageQueryConsume"

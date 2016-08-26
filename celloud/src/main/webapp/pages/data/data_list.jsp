@@ -65,7 +65,7 @@
           </tr>
         </tbody>
       </table>
-      <ng-include src="'pages/partial/_partial_pagination_common.jsp'" ></ng-include>
+      <pagination page="dataList.page" change="pageQuery(page,pageSize)"></pagination>
     </div>
   <div id="data-detail-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog">
