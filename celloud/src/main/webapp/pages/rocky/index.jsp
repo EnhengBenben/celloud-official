@@ -25,7 +25,7 @@
 <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]  -->
 </head>
-<body class="container">
+<body class="container" ng-app="celloudApp" ng-controller="sidebarController">
 <header class="header">
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
@@ -208,36 +208,18 @@
 	<script src="//cdn.bootcss.com/plupload/2.1.8/i18n/zh_CN.js"></script>
 	<script src="//cdn.bootcss.com/swfobject/2.2/swfobject.min.js"></script>
 	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
-    <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
-    <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
-    <script src="<%=request.getContextPath()%>/js/message.js"></script>
-    <script src="<%=request.getContextPath()%>/js/application.js"></script>
-    <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
-    <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/user/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
-  <script src="<%=request.getContextPath()%>/js/report/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+  <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+  
+  <script src="<%=request.getContextPath()%>/js/message.js"></script>
+  <script src="<%=request.getContextPath()%>/js/application.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
-  <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
-  <script src="<%=request.getContextPath()%>/js/notice/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/notice/messageController.js"></script>
-  <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
-  <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
+  
 	<script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 	<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
