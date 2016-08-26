@@ -8,12 +8,11 @@
 		$scope.updateUserInfo = function(){
 			userService.updateUserInfo($scope.user).
 			success(function(data){
-				$scope.message = data.message;
+				$.alert(data.message);
 			}).
 			error(function(data){
-				$scope.message = data.message;
+				$.alert(data.message);
 			});
-			$scope.state = true;
 		};
 		$scope.reset = function(){
 			$scope.user = angular.copy($scope.user_bak);
