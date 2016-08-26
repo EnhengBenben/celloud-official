@@ -63,7 +63,6 @@
       if(!$scope.checkNum()){
         return ;
       }
-      $.tips("提示框aaaaaaa","提示框");
       $.confirm("确定要删除所选数据？","确认框",function(){
         runService.delete().success(function(response){
           if(response.success){
