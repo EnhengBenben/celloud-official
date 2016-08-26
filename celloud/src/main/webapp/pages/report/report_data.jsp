@@ -13,7 +13,7 @@
           <li class="search-type clearfix">
             <label>时&emsp;&emsp;间：</label>
             <div class="search-type-detail times">
-              <ul class="search-info">
+              <ul class="search-info seartch-date">
 	            <li><a class="active" href="javascript:void(0)">全部</a></li>
 	            <li><a href="javascript:void(0)">24h</a></li>
 	            <li><a href="javascript:void(0)">3d</a></li>
@@ -34,21 +34,9 @@
             <div class="search-type-detail inline-detail {{reportMoreAppTag|chevronTypeDivFilter}}" ng-init="reportMoreAppTag=true">
               <ul class="search-info">
                 <li><a class="active" href="javascript:void(0)">全部</a></li>
-                <li><a href="javascript:void(0)">HBV</a></li>
-                <li><a href="javascript:void(0)">HCV</a></li>
-                <li><a href="javascript:void(0)">NIPT</a></li>
-                <li><a href="javascript:void(0)">HBV</a></li>
-                <li><a href="javascript:void(0)">HCV</a></li>
-                <li><a href="javascript:void(0)">HBV</a></li>
-                <li><a href="javascript:void(0)">HCV</a></li>
-                <li><a href="javascript:void(0)">NIPT</a></li>
-                <li><a href="javascript:void(0)">HBV</a></li>
-                <li><a href="javascript:void(0)">HCV</a></li>
-                <li><a href="javascript:void(0)">HBV</a></li>
-                <li><a href="javascript:void(0)">HCV</a></li>
-                <li><a href="javascript:void(0)">NIPT</a></li>
-                <li><a href="javascript:void(0)">HBV</a></li>
-                <li><a href="javascript:void(0)">HCV</a></li>
+                <li ng-repeat="app in ranAppList.datas">
+                    <a class="changeApp" href="javascript:void(0)">{{app.app_name}}</a>
+                </li>
               </ul>
               <div class="search-btns">
                 <button class="btn chevron-btn" ng-click="reportMoreAppTag=changeChevronType(reportMoreAppTag)">{{reportMoreAppTag|chevronTypeTextFilter}}<i ng-class="reportMoreAppTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
@@ -67,7 +55,7 @@
 	          </div>
             </div>
           </li>
-          <li class="search-type clearfix">
+          <li class="search-type seartch-period clearfix">
             <label>状&emsp;&emsp;态：</label>
             <div class="search-type-detail">
               <ul class="search-info">

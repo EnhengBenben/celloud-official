@@ -1,0 +1,65 @@
+(function($) {
+  var show = function(type,title,message,callback) {
+    $("BODY").append('<div id="confirm-modal-div"></div>');
+    var $alert = $('<div id="confirm-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" role="alert"></div>');
+    $alert.addClass(type + "-modal");
+    var $dialog = $('<div class="modal-dialog modal-sm"></div>');
+    var $content = $('<div class="modal-content"></div>');
+    var $header = $('<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-confirm"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button><h4 class="modal-title">'+title+'</h4></div>');
+    var $body = $('<div class="modal-body"></div>');
+    var $h5 = $('<h5></h5>');
+    var $footer = $('<div class="modal-footer"><button type="reset" class="btn btn-cancel -low pull-left" data-dismiss="modal" id="confirm-cancle">取消</button><button type="submit" class="btn -low pull-right" id="confirm-ok">确定</button></div>');
+    $h5.append($('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'));
+    $h5.append($('<span>' + message + '</span>'));
+    $body.append($h5);
+    $content.append($header);
+    $content.append($body);
+    switch( type ) {
+      case 'confirm':
+        $content.append($footer);
+        $dialog.append($content);
+        $alert.append($dialog);
+        $alert.modal("show");
+        $("#confirm-modal-div").append($alert);
+        $("#confirm-ok").click(function() {
+          hide();
+          callback();
+        });
+        $("#confirm-cancle").click(function(){
+          hide();
+        });
+      break;
+      case 'tips':
+        $dialog.append($content);
+        $alert.append($dialog);
+        $alert.modal("show");
+        $("#confirm-modal-div").append($alert);
+      break;
+      $("#close-confirm").click(function(){
+        hide();
+      });
+    }
+  };
+  var hide = function(){
+    $("#confirm-modal").modal("hide");
+    $("#confirm-modal-div").remove();
+  }
+  var confirm = function(message, title, callback) {
+    if( title == null ) title = '确认框';
+    show("confirm",title, message,function(result) {
+      if( callback ) callback(result);
+    });
+  }
+  var tips = function(message, title) {
+    if( title == null ) title = '提示框';
+    show("tips",title, message,null);
+  }
+  $.extend({
+    confirm : function(message, title, callback) {
+      confirm(message, title, callback);
+    },
+    tips : function(message, title) {
+      tips(message, title);
+    }
+  });
+})(jQuery);

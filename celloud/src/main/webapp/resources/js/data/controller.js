@@ -31,14 +31,17 @@
     };
     //数据删除
     $scope.deleteData = function(){
-      runService.delete().success(function(response){
-        if(response.code == "104"){
-          alert("success");
-          $scope.dataList = runService.list();
-          $.dataManager.refreshDataList();
-        }else{
-          alert("失败");
-        }
+      $.tips("提示框aaaaaaa","提示框");
+      $.confirm("确定要删除所选数据？","确认框",function(){
+        runService.delete().success(function(response){
+          if(response.code == "104"){
+            alert("success");
+            $scope.dataList = runService.list();
+            $.dataManager.refreshDataList();
+          }else{
+            alert("失败");
+          }
+        });
       });
     };
     //跳转数据编辑

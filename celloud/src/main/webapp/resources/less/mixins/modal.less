@@ -34,6 +34,11 @@
                 opacity: 1;
             }
         }
+        .modal-footer{
+            padding: 5px 20px 20px 20px;
+            text-align: center;
+            border: none;
+        }
     }
     .modal-body{
         padding: 40px 55px;
@@ -73,13 +78,34 @@
         }
     }
     &.tips-modal{
+        .modal-body {
+            padding: 30px 50px 40px 50px;
+        }
         .modal-content h5{
-            text-align: center;
+            text-align: left;
             line-height: 30px;
+            font-size: 16px;
             >i{
                 margin-right: 20px;
-                font-size: 30px;
+                float: left;
+                font-size: 28px;
                 color: @alert-error-bg
+            }
+        }
+    }
+    &.confirm-modal{
+        .modal-body {
+            padding: 20px 40px;
+        }
+        .modal-content h5{
+            text-align: left;
+            line-height: 30px;
+            font-size: 16px;
+            >i{
+                margin-right: 20px;
+                float: left;
+                font-size: 28px;
+                color: @content-green
             }
         }
     }

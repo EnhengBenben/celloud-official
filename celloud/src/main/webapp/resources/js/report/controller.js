@@ -374,4 +374,8 @@
       });
     });
   });
+  
+  celloudApp.controller("dataReportController", function($scope,projectReportService){
+    $scope.ranAppList = projectReportService.getRanAPP();
+  });
 })();
