@@ -131,7 +131,7 @@ public class PayServiceImpl implements PayService {
 	}
 
 	@Override
-	public RechargeAlipay verifyAlipay(HttpServletRequest request) throws Exception {
+    public synchronized RechargeAlipay verifyAlipay(HttpServletRequest request) throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		Map<String, String[]> requestParams = request.getParameterMap();
 		logger.debug("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -195,10 +195,10 @@ public class PayServiceImpl implements PayService {
 					alipay.setUsername(username);
 					rechargeAlipayMapper.insert(alipay);
 					rechargeService.saveRecharge(amount, userId, RechargeType.ALIPAY, alipay.getId());
-					// 构造桌面消息
-					MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-							.send(NoticeConstants.createMessage("recharge", "充值成功", alipay.getDescription()));
-					mcu.sendMessage(userId, MessageCategoryCode.BALANCES, null, null, mu);
+                    // 构造桌面消息
+                    MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
+                            .send(NoticeConstants.createMessage("recharge", "充值成功", alipay.getDescription()));
+                    mcu.sendMessage(userId, MessageCategoryCode.BALANCES, null, null, mu);
 				} else {
 					alipay = rechargeAlipayMapper.selectByTradeNo(out_trade_no);
 				}

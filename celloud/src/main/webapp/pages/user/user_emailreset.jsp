@@ -9,7 +9,7 @@
     </ol>
     <div class="content">
       <div class="content-header">
-        <p>完善基本信息，通知邮箱及手机绑定。</p>
+        <p>完善基本信息，修改邮箱。</p>
       </div>
       <div class="content-body">
         <form class="info-form" name="emailForm" novalidate="novalidate" ng-submit="updateEmail()">
