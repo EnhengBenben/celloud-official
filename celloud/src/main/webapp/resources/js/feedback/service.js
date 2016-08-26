@@ -9,7 +9,7 @@
 				method : 'put',
 				params : {
 					id : '@id',
-					content:'@content'
+					content : '@content'
 				}
 			},
 			solve : {
@@ -22,6 +22,15 @@
 			list : {
 				url : 'feedback/list',
 				method : 'get'
+			},
+			save : {
+				url : "feedback/create",
+				method : 'put',
+				params : {
+					title:'@title',
+					content:'@content',
+					attachList:'@attachments'
+				}
 			}
 		};
 		return $resource("feedback/:id", {
