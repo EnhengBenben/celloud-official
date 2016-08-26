@@ -95,17 +95,18 @@
                </div>
                <div>
                	结束时间：{{report.end_date | date:'yyyy-MM-dd HH:mm:ss'}}
+               	{{report.userName}}
                </div>
                <div class="operate" ng-if="report.userName!='no_one'">
-                   <a class="sharefrom" title="共享" href="javascript:void()"></a><span class="shareU">{{report.userName }}</span>
-                   <a class="delete" title="删除" ng-click="cancelProjectShare(report.project_id,report.user_id)" href="javascript:void(0)"></a>
+                   <a class="sharefrom" title="共享" href="javascript:void()">共享</a><span class="shareU">{{report.userName }}</span>
+                   <a class="delete" title="删除" ng-click="cancelProjectShare(report.project_id,report.user_id)" href="javascript:void(0)">删除</a>
                </div>
                <div class="operate" ng-if="report.userName=='no_one'">
-                   <a ng-if="loginUserInSession.companyId == 6" class="projectreport" title="项目报告" target="_blank" href="{{pageContext.request.contextPath }}/report/printPgsProject?projectId={{report.project_id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
-	               <a class="pdfdown" title="PDF下载" ng-click="downPDF(report.user_id,report.app_id,report.project_id)" href="javascript:void(0)" ng-if="report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114&&report.app_id!=117"></a>
-	               <a ng-if="report.share_num==0" class="share" title="共享" ng-click="toShareModal(report.project_id,report.project_name,report.data_num)" href="javascript:void(0);"></a>
-	               <a ng-if="report.share_num!=0" class="shared" title="已共享" ng-click="shareModal(report.project_id,report.user_id,report.project_name,report.data_num)" href="javascript:void(0);"></a>
-                   <a class="delete" title="删除" ng-click="removePro(report.project_id)" href="javascript:void(0)"></a>
+                   <a ng-if="loginUserInSession.companyId == 6" class="projectreport" title="项目报告" target="_blank" href="{{pageContext.request.contextPath }}/report/printPgsProject?projectId={{report.project_id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i>项目报告</a>
+	               <a class="pdfdown" title="PDF下载" ng-click="downPDF(report.user_id,report.app_id,report.project_id)" href="javascript:void(0)" ng-if="report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114&&report.app_id!=117">PDF下载</a>
+	               <a ng-if="report.share_num==0" class="share" title="共享" ng-click="toShareModal(report.project_id,report.project_name,report.data_num)" href="javascript:void(0);">共享</a>
+	               <a ng-if="report.share_num!=0" class="shared" title="已共享" ng-click="shareModal(report.project_id,report.user_id,report.project_name,report.data_num)" href="javascript:void(0);">已共享</a>
+                   <a class="delete" title="删除" ng-click="removePro(report.project_id)" href="javascript:void(0)">删除</a>
                </div>
             </td>
             <td class="hide">

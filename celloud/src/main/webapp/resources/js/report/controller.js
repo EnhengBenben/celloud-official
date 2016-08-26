@@ -1,6 +1,5 @@
 (function(){
-  function viewDataReport(){
-    
+  function viewDataReport(userId,dataKey,fileName,appId,appName,proId,proName,obj){
   }
   celloudApp.directive('loadOver', function ($timeout) {
     return {
@@ -139,7 +138,15 @@
     }
     //删除
     $scope.removePro = function(projectId){
-      alert(projectId);
+      if(confirm("确定删除该项目报告吗？")){
+        $.get("project/deleteByState",{"projectId":projectId},function(flag){
+          if(flag ==1){
+            $scope.pageQuery(1,options.pageSize);
+          }else{
+            alert("项目报告删除失败");
+          }
+        });
+      }
     }
     
     $scope.$on('reportLoadOver', function(){
@@ -183,7 +190,6 @@
           });
           $(this).find("td").each(function(i){
             if(appId=="90"){
-              param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
               if(i!=1){
                 if(trc==4){
                   if(i==0){
@@ -201,13 +207,14 @@
                     fileName = fileName.substring(0,30) + "...";
                   }
                   $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                  $(this).find("span").bind("click",param,viewDataReport);
+                  $(this).find("span").bind("click",function(){
+                    viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                  });
                   $(this).find("span").addClass("link");
                 }
               }
             }
             if(appId=="128"||appId=="127"||appId=="126"||appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
-              param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
               if(j>0&&i==1){
                 $(this).addClass("sub");
                 var fileName = $(this).html();
@@ -219,7 +226,9 @@
                 }else{
                   $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</span>");
                 }
-                $(this).find("span").bind("click",param,viewDataReport);
+                $(this).find("span").bind("click",function(){
+                  viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                });
                 $(this).find("span").addClass("link");
               }
               if(i==0){
@@ -236,14 +245,15 @@
             }
             if(appId=="91"||appId=="95"||appId=="92"||appId=="93"||appId=="94"||appId=="86"||appId=="87"||appId=="88"||appId=="81"||appId=="83"||appId=="85"||appId=="96"||appId=="97"||appId=="98"||appId=="99"||appId=="100"||appId=="101"||appId=="102"||appId=="103"||appId=="104"||appId=="116"||appId=="119"||appId=="120"||appId=="121"||appId=="122"||appId=="124"||appId=="125"){
               if(j>0&&i==0){
-                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).next().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
                 $(this).addClass("sub");
                 var fileName = $(this).html();
                 if(fileName.length>30){
                   fileName = fileName.substring(0,30) + "...";
                 }
                 $(this).html("<span id='dataSpan"+proId+$(this).next().html()+"'>"+$(this).next().html()+" （"+fileName+"）</span>");
-                $(this).find("span").bind("click",param,viewDataReport);
+                $(this).find("span").bind("click",function(){
+                  viewDataReport(userId,$.trim($(this).next().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                });
                 $(this).find("span").addClass("link");
               }
               if(i==1){
@@ -258,7 +268,6 @@
             }
             if(appId=="80"){
               if(length==5){
-                param = {"fileName":$.trim($(this).html()),"dataKey":$.trim($(this).prev().html()),"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName};
                 if(j>0&&i==1){
                   $(this).addClass("sub");
                   var fileName = $(this).html();
@@ -266,7 +275,9 @@
                     fileName = fileName.substring(0,30) + "...";
                   }
                   $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                  $(this).find("span").bind("click",param,viewDataReport);
+                  $(this).find("span").bind("click",function(){
+                    viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                  });
                   $(this).find("span").addClass("link");
                 }
                 if(i==0){
@@ -313,7 +324,6 @@
               }
             }
             if(appId=="11"){
-              param = {"fileName":$.trim($(this).html()),"projectId":proId,"softwareId":appId,"softwareName":appName,"userId":userId,"obj":$(this),"proId":proId,"proName":proName,"dataKey":$(this).prev().html()};
               if(j>0&&i==1){
                 $(this).addClass("sub");
                 var fileName = $(this).html();
@@ -321,7 +331,9 @@
                   fileName = fileName.substring(0,30) + "...";
                 }
                 $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                $(this).find("span").bind("click",param,viewDataReport);
+                $(this).find("span").bind("click",function(){
+                  viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                });
                 $(this).find("span").addClass("link");
               }
               if(i==0){
