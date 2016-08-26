@@ -22,7 +22,7 @@
           <li class="search-type clearfix">
             <label>时&emsp;&emsp;间：</label>
             <div class="search-type-detail times">
-              <ul class="search-info">
+              <ul class="search-info seartch-date">
 	            <li><a ng-click="changeDate(0)" id="changeDate0" href="javascript:void(0)" class="changeDate active">全部</a></li>
 	            <li><a ng-click="changeDate(1)" id="changeDate1" href="javascript:void(0)" class="changeDate">24h</a></li>
 	            <li><a ng-click="changeDate(3)" id="changeDate3" href="javascript:void(0)" class="changeDate">3d</a></li>
