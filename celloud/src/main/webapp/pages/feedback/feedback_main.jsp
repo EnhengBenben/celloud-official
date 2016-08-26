@@ -78,7 +78,7 @@
 						<div class="form-group">
 							<div class="control-label form-label col-xs-2">标题：</div>
 							<div class="col-xs-7">
-								<input type="text" ng-model="unsavedFeedback.title" name="title" id="title" required ng-minlength="4" ng-maxlength="30" />
+								<input type="text" ng-trim="true" ng-model="unsavedFeedback.title" name="title" required ng-minlength="4" ng-maxlength="30" />
 								<span class="input-alert break-line" ng-show="feedbackCreateForm.title.$dirty && feedbackCreateForm.title.$error.required">请输入问题的标题！</span>
 								<!-- 长度4-30-->
 								<span class="input-alert break-line" ng-show="feedbackCreateForm.title.$dirty && (feedbackCreateForm.title.$error.minlength||feedbackCreateForm.title.$error.maxlength)">请输入4-30字的描述！</span>
@@ -91,7 +91,7 @@
 							<div class="control-label form-label col-xs-2">描述：</div>
 							<!-- 长度10-100 -->
 							<div class="col-xs-10 form-group-content">
-								<textarea rows="4" ng-model="unsavedFeedback.content" name="content" required ng-minlength="10" ng-maxlength="100"></textarea>
+								<textarea rows="4" ng-trim="true" ng-model="unsavedFeedback.content" name="content" required ng-minlength="10" ng-maxlength="100"></textarea>
 								<span class="input-alert break-line" ng-show="feedbackCreateForm.content.$dirty && feedbackCreateForm.content.$error.required">请输入问题的描述</span>
 								<span class="input-alert break-line" ng-show="feedbackCreateForm.content.$dirty && (feedbackCreateForm.content.$error.minlength||feedbackCreateForm.content.$error.maxlength)">请输入10-1000字的描述！</span>
 							</div>

@@ -12,7 +12,8 @@ $(function(){
 function _init_data(){
   $.dataManager.options = {
     condition: null,
-    pageSize: $("#data-page-size-sel").val(),
+    page : 1,
+    pageSize: 20,
     sort: 0,
     dataMax: 25,
     sortDateType: "desc",
