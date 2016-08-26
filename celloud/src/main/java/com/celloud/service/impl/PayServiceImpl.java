@@ -195,6 +195,7 @@ public class PayServiceImpl implements PayService {
 					alipay.setUsername(username);
 					rechargeAlipayMapper.insert(alipay);
 					rechargeService.saveRecharge(amount, userId, RechargeType.ALIPAY, alipay.getId());
+                    System.out.println("-----------------------充值成功---------------------------");
                     // 构造桌面消息
                     MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
                             .send(NoticeConstants.createMessage("recharge", "充值成功", alipay.getDescription()));
