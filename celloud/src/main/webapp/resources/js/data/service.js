@@ -7,10 +7,6 @@
       }
       self.run = function(){
         var checkedIds = $.dataManager.options.checkedIds;
-        if(checkedIds.length==0){
-          alert("请选择数据");
-          return;
-        }
         var dataIds = [];
         $.each(checkedIds, function(i, el){
             if($.inArray(el, dataIds) === -1) dataIds.push(el);
@@ -20,10 +16,6 @@
       self.delete = function(){
         if(confirm("确定要归档选中数据吗？")){
           var checkedIds = $.dataManager.options.checkedIds;
-          if(checkedIds.length==0){
-            alert("请选择数据");
-            return;
-          }
           var dataIds = "";
           for (var i=0;i<checkedIds.length;i++){
             dataIds += checkedIds[i] + ",";
@@ -39,5 +31,4 @@
         return $http.get("data/updateDataAndTag",{params: {fileId: dataFile.fileId,anotherName: dataFile.anotherName,batch: dataFile.batch,tagName: dataFile.tagName}});
       }
     });
-    
 }());
