@@ -13,7 +13,7 @@
         });
         return $http.get("data/runWithProject",{params: {dataIds: dataIds.toString()}});
       }
-      self.delete = function(){
+      self.deleteData = function(){
           var checkedIds = $.dataManager.options.checkedIds;
           var dataIds = "";
           for (var i=0;i<checkedIds.length;i++){
