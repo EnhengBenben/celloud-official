@@ -63,13 +63,15 @@
       if(!$scope.checkNum()){
         return ;
       }
-      runService.delete().success(function(response){
-        if(response.success){
-          $scope.conditionList();
-          $.dataManager.refreshDataList();
-        }
-        $scope.message = response.message;
-        $scope.state = true;
+      $.confirm("确定要删除所选数据？","确认框",function(){
+        runService.delete().success(function(response){
+          if(response.success){
+            $scope.conditionList();
+            $.dataManager.refreshDataList();
+          }
+          $scope.message = response.message;
+          $scope.state = true;
+        });
       });
     };
     //跳转数据编辑

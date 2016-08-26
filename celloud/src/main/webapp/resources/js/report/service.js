@@ -2,6 +2,7 @@
   celloudApp.service("projectReportService",function($resource,$http){
       var self = this;
       self.getRanAPP = function(){
+        aa = $resource("app/getRanAPP").get();
         return $resource("app/getRanAPP").get();
       }
       self.getReportList = function(){
@@ -14,5 +15,9 @@
         return $http.get("project/update",{params:{projectId:projectId,projectName:projectName}});
       }
     });
+  
+  celloudApp.service("dataReportService", function($resource){
+    var self =this;
+  });
     
 }());

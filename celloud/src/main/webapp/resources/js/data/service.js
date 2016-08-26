@@ -14,7 +14,6 @@
         return $http.get("data/runWithProject",{params: {dataIds: dataIds.toString()}});
       }
       self.delete = function(){
-        if(confirm("确定要归档选中数据吗？")){
           var checkedIds = $.dataManager.options.checkedIds;
           var dataIds = "";
           for (var i=0;i<checkedIds.length;i++){
@@ -22,7 +21,6 @@
           }
           dataIds = dataIds.substring(0, dataIds.length-1);
           return $http.get("data/delete.action",{params: {dataIds: dataIds}});
-        }
       }
       self.toEditData = function(fileId){
         return $http.get("data/toEditData",{params: {dataId: fileId}});

@@ -79,7 +79,8 @@
       controller:"settingController"
     })
     .when('/reportdata',{
-      templateUrl: "pages/report/report_data.jsp"
+      templateUrl: "pages/report/report_data.jsp",
+      controller: "dataReportController"
     })
     .when('/reportpro',{
       templateUrl: "pages/report/report_project.jsp",
