@@ -397,6 +397,38 @@
 		order by
 		f.create_date desc,f.file_name asc
 	</select>
+    <select id="findDataListsByAppId" resultMap="ResultMapWithTag">
+        select
+        <include refid="Tag_Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from tb_file f
+        left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+        left join tb_app_tag_relat apptag on filetag.tag_id = apptag.tag_id
+        where user_id = #{userId } and state = #{state } and apptag.app_id= #{appId }
+        <if test="condition != null and condition != ''">
+            and (data_key like '%${condition}%'
+            or file_name like
+            '%${condition}%'
+            or another_name like '%${condition}%'
+            or batch like '%${condition}%')
+        </if>
+        <if test="sort == 0">
+            order by f.create_date ${sortDate},f.batch
+            ${sortBatch},f.file_name
+            ${sortName}
+        </if>
+        <if test="sort == 1">
+            order by f.batch ${sortBatch},f.create_date
+            ${sortDate},f.file_name
+            ${sortName}
+        </if>
+        <if test="sort == 2">
+            order by f.file_name ${sortName},f.batch
+            ${sortBatch},f.create_date
+            ${sortDate}
+        </if>
+    </select>
 	<select id="findDataLists" resultMap="ResultMapWithTag">
 		select
 		<include refid="Tag_Base_Column_List" />

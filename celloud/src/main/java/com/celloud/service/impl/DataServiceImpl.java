@@ -69,6 +69,16 @@ public class DataServiceImpl implements DataService {
 		return new PageList<>(page, lists);
 	}
 
+    @Override
+    public PageList<DataFile> dataListByAppId(Page page, Integer userId,
+            Integer appId, String condition, Integer sort, String sortDate,
+            String sortName, String sortBatch) {
+        List<DataFile> lists = dataFileMapper.findDataListsByAppId(page, userId,
+                DataState.ACTIVE, appId, condition, sort, sortDate, sortName,
+                sortBatch);
+        return new PageList<>(page, lists);
+    }
+
 	@Override
 	public PageList<DataFile> dataLists(Page page, Integer userId, String condition, int sort, String sortDateType,
 			String sortNameType) {
