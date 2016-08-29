@@ -29,7 +29,7 @@ var messageUtils = (function(messageUtils) {
 		}
 	};
 	var openWebSocket = function() {
-		var contextPath = window.CONTEXT_PATH || "";
+		var contextPath = window.CONTEXT_PATH ||window.contextPath|| "";
 		var protocol = window.location.protocol == "https:" ? "wss://"
 				: "ws://";
 		var hostname = window.location.hostname;
