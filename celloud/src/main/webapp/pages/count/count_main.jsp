@@ -39,18 +39,6 @@
 	       </div>
 	     </div>
 	  </div>
-<!-- 		<div class="y-row operation-serve box box-success" data-spm="16"> -->
-<!-- 			<ul id="userOperaUl"> -->
-<!-- 				<li class="active" id="systeminfoTab"> -->
-<!-- 					<a href="javascript:showSysInfo()">系统统计</a> -->
-<!-- 				</li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
-<!-- 		<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17"> -->
-<!-- 			<div class="common-normal common-slide common-normals" id="sys_count_div"> -->
-				<jsp:include page="count_system.jsp"></jsp:include>
-<!-- 			</div> -->
-<!-- 		</div> -->
     </div>
   </div><!--/.row-->
 </section><!-- /.content --> --%>
@@ -62,32 +50,34 @@
       <li>统计</li>
     </ol>
     <div class="content">
-      <div class="content-header">
-        <c:if test="${companyId==6 }">
-		    <div class="info">
-	    	  <p>本页提供所有数据报告总览。</p>
-	  		</div>
-     	  </c:if>
-     	  <c:if test="${companyId==3 }">
-     	    <div class="info">
-	    	  <p>目前只提供 HBV_SNP流程的报告统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
-	  		</div>
-	  		<ul>
-		      <li><a href="javascript:void(0)" id="_down" class="hide">下载 Excel</a></li>
-	  		</ul>
-     	  </c:if>
-    	  <c:if test="${companyId==33 }">
-    	    <div class="info">
-	    	  <p>查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
-	  		</div>
-	  		<ul>
-		      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
-	  		</ul>
-	       </c:if>
-      </div>
-      <div id="countDiv">
-      
-      </div>
+    	<div class="mainpage" id="appMain">
+	      <div class="content-header">
+	        <c:if test="${companyId==6 }">
+			    <div class="info">
+		    	  <p>本页提供所有数据报告总览。</p>
+		  		</div>
+	     	  </c:if>
+	     	  <c:if test="${companyId==3 }">
+	     	    <div class="info">
+		    	  <p>目前只提供 HBV_SNP流程的报告统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+		  		</div>
+		  		<ul>
+			      <li><a href="javascript:void(0)" id="_down" class="hide">下载 Excel</a></li>
+		  		</ul>
+	     	  </c:if>
+	    	  <c:if test="${companyId==33 }">
+	    	    <div class="info">
+		    	  <p>查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+		  		</div>
+		  		<ul>
+			      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
+		  		</ul>
+		       </c:if>
+	      </div>
+	      <div id="countDiv">
+	      
+	      </div>
+	     </div>
 	</div>
 </div>
   

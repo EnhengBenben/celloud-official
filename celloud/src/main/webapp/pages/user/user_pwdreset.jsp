@@ -16,7 +16,7 @@
           <div class="info-form-group">
             <label>原密码:</label>
             <div>
-                <input name="oldPwd" placeholder="请输入原始密码" type="password" ng-model="oldPwd" required />
+                <input name="oldPwd" ng-change="checkOldPwd()" placeholder="请输入原始密码" type="password" ng-model="oldPwd" required />
                	<span class="input-alert" ng-show="pwdForm.oldPwd.$dirty && pwdForm.oldPwd.$invalid">原始密码不能为空!</span>
                	<span class="input-alert" ng-show="code==203">{{pwdMessage}}</span>
             </div>
@@ -32,7 +32,7 @@
             <label>确认密码:</label>
             <div>
                 <input name="confirmPwd" placeholder="确认密码与新密码一致" type="password" ng-model="confirmPwd" />
-               	<span class="input-alert" ng-show="newPwd!=confirmPwd">确认密码与新密码不一致!</span>
+               	<span class="input-alert" ng-show="pwdForm.confirmPwd.$dirty && newPwd!=confirmPwd">确认密码与新密码不一致!</span>
             </div>
           </div>
           <div class="info-form-group">
