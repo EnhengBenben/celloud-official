@@ -48,6 +48,7 @@
 					$scope.unsavedAttachments = [];
 					$("#new-qa-modal").modal('hide');
 					loadFeedbacks();
+					$scope.resetCreateForm ();
 				});
 			}
 		};
