@@ -16,22 +16,22 @@
           <div class="info-form-group">
             <label>原密码:</label>
             <div>
-                <input name="oldPwd" type="password" ng-model="oldPwd" required />
-               	<span class="input-alert" ng-show="pwdForm.oldPwd.$invalid">原始密码不能为空!</span>
+                <input name="oldPwd" placeholder="请输入原始密码" type="password" ng-model="oldPwd" required />
+               	<span class="input-alert" ng-show="pwdForm.oldPwd.$dirty && pwdForm.oldPwd.$invalid">原始密码不能为空!</span>
                	<span class="input-alert" ng-show="code==203">{{pwdMessage}}</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>新密码:</label>
             <div>
-                <input name="newPwd" type="password" ng-model="newPwd" ng-pattern="/^[\d\w_]{6,16}$/" required />
-               	<span class="input-alert" ng-show="pwdForm.newPwd.$invalid">密码为6-16位的字母、数字及下划线组合!</span>
+                <input name="newPwd" placeholder="请输入新密码" type="password" ng-model="newPwd" ng-pattern="/^[\d\w_]{6,16}$/" required />
+               	<span class="input-alert" ng-show="pwdForm.newPwd.$dirty && pwdForm.newPwd.$invalid">密码为6-16位的字母、数字及下划线组合!</span>
             </div>
           </div>
           <div class="info-form-group">
             <label>确认密码:</label>
             <div>
-                <input name="confirmPwd" type="password" ng-model="confirmPwd" />
+                <input name="confirmPwd" placeholder="确认密码与新密码一致" type="password" ng-model="confirmPwd" />
                	<span class="input-alert" ng-show="newPwd!=confirmPwd">确认密码与新密码不一致!</span>
             </div>
           </div>

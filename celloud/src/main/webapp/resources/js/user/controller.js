@@ -32,8 +32,9 @@
 	    		if($scope.code==203){
 	    			$scope.pwdMessage = data.message;
 	    		}else{
-	    			$scope.message = data.message;
-	    			$scope.state = true;
+//	    			$scope.message = data.message;
+//	    			$scope.state = true;
+	    			$.alert(data.message);
 	    		}
 	    	}).error(function(data) {
 
