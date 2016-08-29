@@ -152,6 +152,12 @@
 				$scope.checkSubmit = true;
 				return false;
 			}
+			if(money != parseInt(money)){
+				$scope.moneyError = "请输入整数金额！";
+				$scope.checkFlag = true;
+				$scope.checkSubmit = true;
+				return false;
+			}
 			if($.isNumeric(money)){//测试用的
 				$scope.checkFlag = false;
 				$scope.checkSubmit = false;
