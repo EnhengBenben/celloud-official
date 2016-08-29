@@ -652,6 +652,17 @@ public interface ReportService {
     public Integer updateHcvFilling(HCV hcv);
 
     /**
+     * 
+     * @author MQ
+     * @date 2016年8月29日下午4:45:10
+     * @description 根据项目id获取项目的运行状态
+     * @param projectId
+     *            项目id
+     *
+     */
+    public Integer getProjectPeriod(Integer projectId);
+
+    /**
      * 取出所有的egfr报告, 上线后可删
      */
     public List<Report> getAllEgfrReport();

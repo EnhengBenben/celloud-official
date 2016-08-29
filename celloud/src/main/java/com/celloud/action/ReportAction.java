@@ -123,6 +123,12 @@ public class ReportAction {
     @Resource
     private MedicineService medicineService;
 
+    @RequestMapping("checkPgsProject")
+    @ResponseBody
+    public Integer checkPgsProject(Integer projectId) {
+        return reportService.getProjectPeriod(projectId);
+    }
+
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("down")
 	@ResponseStatus(value = HttpStatus.OK)

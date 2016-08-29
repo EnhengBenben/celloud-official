@@ -1033,4 +1033,9 @@ public class ReportServiceImpl implements ReportService {
         return ur != null ? 1 : 0;
     }
 
+    @Override
+    public Integer getProjectPeriod(Integer projectId) {
+        return reportMapper.selectPeriodByFlag(projectId, 1);
+    }
+
 }

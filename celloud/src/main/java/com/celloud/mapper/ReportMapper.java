@@ -215,4 +215,15 @@ public interface ReportMapper {
      * 取出所有hbv详细报告
      */
     public List<Report> getAllHbvDetailReport();
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月29日下午4:46:16
+     * @description 根据flag获取报告的运行状态
+     * @param flag
+     *            0:数据报告 1:项目报告
+     *
+     */
+    public Integer selectPeriodByFlag(@Param("projectId") Integer projectId, @Param("flag") Integer flag);
 }

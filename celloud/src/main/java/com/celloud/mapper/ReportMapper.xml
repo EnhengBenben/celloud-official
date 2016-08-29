@@ -427,4 +427,10 @@
   <select id="getAllHbvDetailReport" resultMap="BaseResultMap">
     select r.* from tb_report r where r.app_id = 82 and r.print_context is not null and r.print_context != ''
   </select>
+  <select id="selectPeriodByFlag">
+  	SELECT r.period
+  	FROM tb_report r
+  	WHERE r.project_id = #{projectId}
+  	AND r.flag = #{flag}
+  </select>
 </mapper>
