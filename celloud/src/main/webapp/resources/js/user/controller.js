@@ -32,14 +32,17 @@
 	    		if($scope.code==203){
 	    			$scope.pwdMessage = data.message;
 	    		}else{
-//	    			$scope.message = data.message;
-//	    			$scope.state = true;
 	    			$.alert(data.message);
 	    		}
 	    	}).error(function(data) {
 
 			});
-		}
+		};
+		$scope.checkOldPwd = function(){
+			if($.trim($scope.oldPwd) == ""){
+				$scope.code = 0;
+			}
+		};
 	});
 	celloudApp.controller("pageQueryLog",function($scope,$rootScope,$routeParams,$location,userService){
 		$scope.pageQueryLog = function(currentPage,pageSize){
