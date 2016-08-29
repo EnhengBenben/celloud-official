@@ -29,7 +29,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="recharge in dataList.datas">
+          <tr  ng-class="{disabled:recharge.invoiceState!=0}" ng-repeat="recharge in dataList.datas">
             <td>
               <label class="checkbox-lable">
                 <input class="checkbox" type="checkbox" value="{{recharge.id}}" ng-click="rechargeIds()" name="rechargeIds" ng-disabled="recharge.invoiceState!=0">
