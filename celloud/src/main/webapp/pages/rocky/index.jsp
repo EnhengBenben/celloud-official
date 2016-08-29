@@ -84,7 +84,7 @@
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{notices.num}}</span>条新消息</p>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notices">查看所有</a>
             </div>
           </li>
            <li class="dropdown">
@@ -94,7 +94,7 @@
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{messages.num}}</span>条新消息</p>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/messages">查看所有</a>
             </div>
           </li>
           <li class="dropdown">
