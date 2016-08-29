@@ -23,6 +23,7 @@
 			expenseService.pageQueryRecharge(currentPage,pageSize).
 			success(function(dataList){
 				$scope.dataList = dataList;
+				$("input[name=checkAll]").prop("checked",false);
 			});
 		};
 		$scope.pageList = function(pageSize){
