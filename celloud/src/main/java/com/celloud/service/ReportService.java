@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Key;
 
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
@@ -39,6 +40,28 @@ import com.celloud.page.PageList;
  * @date 2015年12月25日 下午3:47:07
  */
 public interface ReportService {
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月25日下午3:39:10
+     * @description 保存一个对象到mongo中
+     * @param pgs
+     *
+     */
+    public <T> Key<T> save(T t);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月25日下午3:00:37
+     * @description 获取pgs项目报告信息
+     * @param projectId
+     *            报告id
+     * @return
+     *
+     */
+    public Pgs getPgsProjectInfo(Integer projectId);
 
 	/**
 	 * 获取TBINH下是否是野生型的数量, 0:都不是1:是野生2:不是野生
@@ -604,6 +627,17 @@ public interface ReportService {
     public Integer updatePgsFilling(Pgs pgs);
 
     /**
+     * 
+     * @author MQ
+     * @date 2016年8月26日上午10:38:21
+     * @description 修改Pgs项目报告用户填写部分
+     * @param pgs
+     * @return
+     *
+     */
+    public Integer updatePgsProjectilling(Pgs pgs);
+
+    /**
      * 取出所有的hcv报告, 上线后可删
      */
     public List<Report> getAllHcvReport();
@@ -686,6 +720,5 @@ public interface ReportService {
      *
      */
     public Integer updateHbvDetailFilling(HBV hbv);
-
 
 }

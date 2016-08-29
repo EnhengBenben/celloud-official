@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
@@ -33,8 +34,9 @@ public class ReportDaoImpl implements ReportDao {
     
     @Override
     public <T> List<T> getDataByProjectId(Class<T> clazz, Integer projectId) {
-        return dataStore.createQuery(clazz).filter("projectId", projectId).asList();
+        return dataStore.createQuery(clazz).filter("projectId", projectId).field("flag").doesNotExist().asList();
     }
+
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -137,8 +139,8 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> void saveData(T T) {
-        dataStore.save(T);
+    public <T> void saveData(T t) {
+        dataStore.save(t);
     }
 
     @Override
@@ -186,6 +188,16 @@ public class ReportDaoImpl implements ReportDao {
             Integer appId) {
         dataStore.delete(dataStore.createQuery(T).filter("dataKey", dataKey)
                 .filter("projectId", projectId).filter("appId", appId));
+    }
+
+    @Override
+    public <T> T getProjectByProjectId(Class<T> clazz, Integer projectId) {
+        return dataStore.createQuery(clazz).filter("projectId", projectId).filter("flag", 1).get();
+    }
+
+    @Override
+    public <T> Key<T> saveObj(T t) {
+        return dataStore.save(t);
     }
 
 }
