@@ -52,11 +52,6 @@
 		  $scope.pageQueryLog(1,pageSize);
 		  $location.path($scope.pageType);
 		}
-		$scope.changePage = function(page,pageSize){
-			$rootScope.pageSize = pageSize;
-			$scope.pageQueryLog(page,pageSize);
-			$location.path($scope.pageType);
-		}
 		if($routeParams.page == null){
 		  $scope.pageQueryLog(1,$rootScope.pageSize);
 		  $location.path($scope.pageType);

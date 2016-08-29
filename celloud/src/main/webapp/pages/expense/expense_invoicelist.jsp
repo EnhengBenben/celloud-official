@@ -42,7 +42,7 @@
           </tr>
         </tbody>
       </table>
-      <ng-include src="'pages/partial/_partial_pagination_common.jsp'" ></ng-include>
+      <pagination page="dataList.page" change="pageQueryInvoice(page,pageSize)"></pagination>
     </div>
   
   <div id="invoice-detail-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

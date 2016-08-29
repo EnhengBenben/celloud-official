@@ -7,9 +7,9 @@
 			});
 		}
 		$scope.pageList = function(pageSize){
-      $rootScope.pageSize = pageSize;
-      $scope.pageQueryConsume(1,pageSize);
-      $location.path($scope.pageType);
+		$rootScope.pageSize = pageSize;
+		$scope.pageQueryConsume(1,pageSize);
+		$location.path($scope.pageType);
     }
     if($routeParams.page == null){
       $scope.pageQueryConsume(1,$rootScope.pageSize);
