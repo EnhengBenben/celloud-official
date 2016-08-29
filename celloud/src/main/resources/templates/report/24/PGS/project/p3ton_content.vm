@@ -56,8 +56,8 @@
 	            <td style="width:100%"><span style="float:left;">遗传咨询:</span><div class="explainGeneticCounseling" style="width:55%;float:left;word-break: break-all;"><textarea style="height:50px;width:100%;font-size:14px;" name="projectInfo['explainGeneticCounseling']">$!{pgs.projectInfo.explainGeneticCounseling}</textarea></div></td>
 	        </tr>
 	    </table>
-	    <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.miniPng}" style="width:100%;">
-	    <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.splitPng}" style="width:100%;">
+	    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).miniPng}" style="width:100%;">
+	    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).splitPng}" style="width:100%;">
 	</div>
 	<div class="w3cbbs"></div>
 #end
