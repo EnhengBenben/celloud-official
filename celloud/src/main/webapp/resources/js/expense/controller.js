@@ -26,16 +26,16 @@
 			});
 		};
 		$scope.pageList = function(pageSize){
-      $rootScope.pageSize = pageSize;
-      $scope.pageQueryRecharge(1,pageSize);
-      $location.path($scope.pageType);
-    }
-    if($routeParams.page == null){
-      $scope.pageQueryRecharge(1,$rootScope.pageSize);
-      $location.path($scope.pageType);
-    }else{
-      $scope.pageQueryRecharge($routeParams.page,$rootScope.pageSize);
-    }
+	      $rootScope.pageSize = pageSize;
+	      $scope.pageQueryRecharge(1,pageSize);
+	      $location.path($scope.pageType);
+	    }
+	    if($routeParams.page == null){
+	      $scope.pageQueryRecharge(1,$rootScope.pageSize);
+	      $location.path($scope.pageType);
+	    }else{
+	      $scope.pageQueryRecharge($routeParams.page,$rootScope.pageSize);
+	    }
 		$scope.reset = function(){
 			$scope.invoiceForm = {};
 		};
@@ -84,12 +84,11 @@
 			expenseService.apply($scope.invoiceForm).
 			success(function(data){
 				$("#apply-invoice-modal").modal("hide");
-				$scope.state = true;
 				if(data > 0){
-					$scope.message = "申请成功!";
+					$.alert("申请成功!");
 					$scope.pageQueryRecharge(1,10);
 				}else{
-					$scope.message = "发生未知错误,请联系管理员!";
+					$.alert("发生未知错误,请联系管理员!");
 				}
 			});
 			$("#invoiceSubmit").prop("disabled",false);

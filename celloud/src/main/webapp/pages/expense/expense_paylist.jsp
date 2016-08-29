@@ -79,34 +79,34 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">公司抬头：</div>
 	            <div class="col-xs-9">
-	                <input type="text" id="invoiceHeader" name="invoiceHeader" ng-model="invoiceForm.invoiceHeader" maxlength="45" ng-model="invoiceHeader" required/>
+	                <input type="text" id="invoiceHeader" placeholder="请输入公司抬头" name="invoiceHeader" ng-model="invoiceForm.invoiceHeader" maxlength="45" required/>
 	                <span class="invoice-modal-error"></span>
-	                <span class="input-alert break-line" ng-show="invoiceForms.invoiceHeader.$invalid">公司抬头不能为空!</span>
+	                <span class="input-alert break-line" ng-show="invoiceForms.invoiceHeader.$dirty && invoiceForms.invoiceHeader.$invalid">公司抬头不能为空!</span>
 	            </div>
 	          </div>
 	          <h5>邮寄信息</h5>
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">公司地址：</div>
 	            <div class="col-xs-9">
-	                <input type="text" id="address" name="address" ng-model="invoiceForm.address" maxlength="45" ng-model="address" required/>
+	                <input type="text" id="address" placeholder="请输入公司地址" name="address" ng-model="invoiceForm.address" maxlength="45" required/>
 	                <span class="invoice-modal-error"></span>
-	                <span class="input-alert break-line" ng-show="invoiceForms.address.$invalid">公司地址不能为空!</span>
+	                <span class="input-alert break-line" ng-show="invoiceForms.address.$dirty && invoiceForms.address.$invalid">公司地址不能为空!</span>
 	            </div>
 	          </div>
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">联系人：</div>
 	            <div class="col-xs-9">
-	                <input type="text" id="contacts" name="contacts" ng-model="invoiceForm.contacts" maxlength="45" ng-model="contacts" required/>
+	                <input type="text" id="contacts" name="contacts" placeholder="请输入联系人" ng-model="invoiceForm.contacts" maxlength="45" required/>
 	                <span class="invoice-modal-error"></span>
-	                <span class="input-alert break-line" ng-show="invoiceForms.contacts.$invalid">联系人不能为空!</span>
+	                <span class="input-alert break-line" ng-show="invoiceForms.contacts.$dirty && invoiceForms.contacts.$invalid">联系人不能为空!</span>
 	            </div>
 	          </div>
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">联系方式：</div>
 	            <div class="col-xs-9">
-	                <input type="text" id="cellphone" name="cellphone" ng-model="invoiceForm.cellphone" maxlength="45" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required />
+	                <input type="text" id="cellphone" name="cellphone" placeholder="请输入联系方式" ng-model="invoiceForm.cellphone" maxlength="11" ng-model="cellphone" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required />
 	                <span class="invoice-modal-error"></span>
-	                <span class="input-alert break-line" ng-show="invoiceForms.cellphone.$invalid">请输入正确的手机号码!</span>
+	                <span class="input-alert break-line" ng-show="invoiceForms.cellphone.$dirty && invoiceForms.cellphone.$invalid">请输入正确的手机号码!</span>
 	            </div>
 	          </div>
 	          <input type="hidden" id="rechargeIds" />
