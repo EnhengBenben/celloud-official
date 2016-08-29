@@ -114,11 +114,31 @@
     }
     //显示项目名称编辑框
     $scope.toChangePname = function(projectId){
-      alert(projectId);
+      $("#showPname"+projectId).addClass("hide");
+      $("#changePname"+projectId).removeClass("hide");
     }
     //修改项目名称
     $scope.changePname = function(projectId){
-      alert(projectId);
+      var name = $("#updatePname"+projectId).val();
+      var oldName = $("#pnameSpan"+projectId).text().trim();
+      //名称修改才进行后台提交，未修改则不提交后台
+      if(name==oldName){
+          $("#showPname"+projectId).removeClass("hide");
+          $("#changePname"+projectId).addClass("hide");
+          return ;
+      }
+      projectReportService.changeProjectName(projectId,name).success(function(response){
+        if(response.success){
+          if(name.length>13){
+            name=name.substring(0,12)+"...";
+          }
+          $("#pnameSpan"+projectId).html(name);
+          $("#showPname"+projectId).removeClass("hide");
+          $("#changePname"+projectId).addClass("hide");
+        }
+        $scope.message = response.message;
+        $scope.state = true;
+      });
     }
     //取消共享来的项目
     $scope.cancelProjectShare = function(projectId,userId){

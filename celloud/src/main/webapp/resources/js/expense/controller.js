@@ -7,9 +7,9 @@
 			});
 		}
 		$scope.pageList = function(pageSize){
-      $rootScope.pageSize = pageSize;
-      $scope.pageQueryConsume(1,pageSize);
-      $location.path($scope.pageType);
+		$rootScope.pageSize = pageSize;
+		$scope.pageQueryConsume(1,pageSize);
+		$location.path($scope.pageType);
     }
     if($routeParams.page == null){
       $scope.pageQueryConsume(1,$rootScope.pageSize);
@@ -148,6 +148,12 @@
 			}
 			if(money*1 >10000){
 				$scope.moneyError = "大于10000元的充值金额，请使用公司转账方式充值！";
+				$scope.checkFlag = true;
+				$scope.checkSubmit = true;
+				return false;
+			}
+			if(money != parseInt(money)){
+				$scope.moneyError = "请输入整数金额！";
 				$scope.checkFlag = true;
 				$scope.checkSubmit = true;
 				return false;

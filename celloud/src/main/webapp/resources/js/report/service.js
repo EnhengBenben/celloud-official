@@ -11,6 +11,9 @@
       self.getReportListCondition = function(currentPage,pageSize,belongs,start,end,appId,condition){
         return $http.get("report/getReportPageList",{params: {page:currentPage,size:pageSize,condition:condition,start:start,end:end,appId:appId,belongs:belongs}});
       }
+      self.changeProjectName = function(projectId,projectName){
+        return $http.get("project/update",{params:{projectId:projectId,projectName:projectName}});
+      }
     });
   
   celloudApp.service("dataReportService", function($resource){

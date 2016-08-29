@@ -71,11 +71,11 @@
 	                    <span id="pnameSpan{{report.project_id }}">
 	                    	{{report.project_name | contextLengthFilter:'13'}}
 	                    </span>
-                    	<a ng-if="report.userName=='no_one'" ng-click="toChangePname(report.project_id)" href="javascript:void()">Edit</a>
+                    	<a ng-if="report.userName=='no_one'" ng-click="toChangePname(report.project_id)">Edit</a>
                    	</span>
                    	<span ng-if="report.userName=='no_one'" id="changePname{{report.project_id}}" class="hide">
 	                    <input type="text" value="{{report.project_name}}" ng-blur="changePname(report.project_id)" id="updatePname{{report.project_id }}" class="changeInput"/>
-	                    <img src="<%=request.getContextPath() %>/images/report/ok_blue.png" id="okUpdateImg{{report.project_id }}" class="okImg" ng-click="changePname(report.project_id)" />
+	                    <img src="<%=request.getContextPath() %>/images/report/ok_blue.png" class="okImg" ng-click="changePname(report.project_id)" />
                    	</span>
                </div>
                <div>
@@ -112,7 +112,10 @@
             <td class="hide">
 			    {{report.app_id}},{{report.app_name}},{{report.project_id}},{{report.user_id}}
 			</td>
-            <td ng-bind-html="report.context | trustHtml" class="projectContext"></td>
+            <td ng-if="report.context!=null&&report.context!=''" ng-bind-html="report.context | trustHtml" class="projectContext"></td>
+            <td ng-if="report.context==null||report.context==''" class="projectContext">
+            	运行中。。。
+            </td>
           </tr>
         </tbody>
       </table>

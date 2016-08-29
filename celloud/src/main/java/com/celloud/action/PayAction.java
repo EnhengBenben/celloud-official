@@ -82,8 +82,8 @@ public class PayAction {
 	}
 
 	@RequestMapping("recharge/jdpay")
-	public String jdpay(String pay_type, String money, Model model) {
-		model.addAttribute("params", payService.createJdpayOrder(pay_type, money));
+    public String jdpay(String pay_bank, String money, Model model) {
+        model.addAttribute("params", payService.createJdpayOrder(pay_bank, money));
 		return "pay/jdpay";
 	}
 

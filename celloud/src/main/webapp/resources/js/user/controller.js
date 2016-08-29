@@ -32,8 +32,9 @@
 	    		if($scope.code==203){
 	    			$scope.pwdMessage = data.message;
 	    		}else{
-	    			$scope.message = data.message;
-	    			$scope.state = true;
+//	    			$scope.message = data.message;
+//	    			$scope.state = true;
+	    			$.alert(data.message);
 	    		}
 	    	}).error(function(data) {
 
@@ -51,11 +52,6 @@
 		  $rootScope.pageSize = pageSize;
 		  $scope.pageQueryLog(1,pageSize);
 		  $location.path($scope.pageType);
-		}
-		$scope.changePage = function(page,pageSize){
-			$rootScope.pageSize = pageSize;
-			$scope.pageQueryLog(page,pageSize);
-			$location.path($scope.pageType);
 		}
 		if($routeParams.page == null){
 		  $scope.pageQueryLog(1,$rootScope.pageSize);

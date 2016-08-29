@@ -29,7 +29,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="recharge in dataList.datas">
+          <tr  ng-class="{disabled:recharge.invoiceState!=0}" ng-repeat="recharge in dataList.datas">
             <td>
               <label class="checkbox-lable">
                 <input class="checkbox" type="checkbox" value="{{recharge.id}}" ng-click="rechargeIds()" name="rechargeIds" ng-disabled="recharge.invoiceState!=0">
@@ -42,7 +42,7 @@
           </tr>
         </tbody>
       </table>
-      <ng-include src="'pages/partial/_partial_pagination_common.jsp'" ></ng-include>
+      <pagination page="dataList.page" change="pageQueryRecharge(page,pageSize)"></pagination>
     </div>
     
   <div id="apply-invoice-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

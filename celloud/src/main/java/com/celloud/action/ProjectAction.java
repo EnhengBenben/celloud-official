@@ -38,6 +38,7 @@ import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
+import com.celloud.utils.Response;
 import com.celloud.utils.SSHUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
@@ -86,8 +87,8 @@ public class ProjectAction {
     @ActionLog(value = "修改项目信息（项目名）", button = "修改项目")
     @RequestMapping("update")
     @ResponseBody
-    public Integer update(Project project) {
-        return projectService.update(project);
+	public Response update(Project project) {
+		return projectService.update(project) == 1 ? Response.UPDATE_SUCCESS : Response.FAIL;
     }
 
     /**
