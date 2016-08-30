@@ -91,7 +91,6 @@
     .stress {
     	font-size:14px;
     	color:@font-color;
-    	border-bottom:@font-color solid 1px;
     }
     /*数据报告*/
 	.report-result{
@@ -100,6 +99,9 @@
 		border:1px solid #e3e3e3;
 		.chapter{
 			> p{
+			}
+			> p.underline{
+				border-bottom:@font-color solid 1px;
 			}
 			> p.paragraph{
 				text-indent:25px;
@@ -118,7 +120,7 @@
 					lint-height:18px;
 				}
 				label{
-					width: 180px;
+					width: 210px;
 					font-weight:normal;
 				}
 			}
@@ -154,4 +156,11 @@
             }
         }
     }
+}
+
+@media print and (color) {
+   * {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+   }
 }

@@ -14,7 +14,7 @@
 					<div class="row">
 						<div class="col-xs-9">
 							<h2>
-								乳腺癌易感基因<small>(BRCA1/2)</small>检测报告
+								乳腺癌易感基因<small>(<i>BRCA1/2</i>)</small>检测报告
 							</h2>
 						</div>
 						<div class="col-xs-3 pull-right text-center">
@@ -95,47 +95,51 @@
 					<section>
 						<p>
 							本次BRCA基因检测共检测到
-							<span class="stress">&nbsp;$!{rocky.records.size()}&nbsp;</span>
+							<span class="stress"><u>&nbsp;$!{rocky.records.size()}&nbsp;</u></span>
 							个突变，其中致病相关突变为
-							<span class="stress">&nbsp;$!{rocky.pathogenicNum}&nbsp;</span>
+							<span class="stress"><u>&nbsp;$!{rocky.pathogenicNum}&nbsp;</u></span>
 							个。
 						</p>
-						<p>
-							#if($rocky.pathogenic) <u>本次检测在您的乳腺癌关键基因BRCA1和BRCA2上发现致病相关变异，建议您结合自己的身体状况、家族史信息，找临床医生进行进一步的检测和咨询。</u> #else <u>本次检测在您的乳腺癌关键基因BRCA1和BRCA2上未发现致病变异，因而该因素没有提高您的乳腺癌患病风险。</u> #end
-						</p>
+						<p><u>
+							#if($rocky.pathogenic) 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>上发现致病相关变异，建议您结合自己的身体状况、家族史信息，找临床医生进行进一步的检测和咨询。
+							#else 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>上未发现致病变异，因而该因素没有提高您的乳腺癌患病风险。 
+							#end
+						</u></p>
 					</section>
 				</div>
 				<h4 style="margin-top: 10px;" id="nav-part-1">Part 1 您的BRCA基因</h4>
 				<div class="report-result">
 					<section class="chapter">
-						<p class="paragraph">1990年，研究者发现了一种直接与遗传性乳腺癌有关的基因，命名为乳腺癌1号基因（Breast Cancer 1），英文简称BRCA1。1994年，又发现另外一种与乳腺癌有关的基因（Breast Cancer 2），称为BRCA2。</p>
-						<p class="paragraph">正常的BRCA1/BRCA2基因为抑癌基因，它们表达的蛋白在细胞DNA精密修复所需的酶促通路中起作用，调节细胞复制、DNA损伤修复、细胞正常生长，保护细胞不会生长失控和癌变。一些危害突变会导致这些基因或它们所表达的蛋白失去正常功能，无法修复DNA损伤，使得DNA中的异常不断累积，最终可能导致癌症的形成。</p>
-						<p class="paragraph">目前研究者们已发现了BRCA1/BRCA2基因中多达上万种的变异，这众多的变异位点中，并不是每一个变异都会导致相同的风险，产生的临床意义也不相同。参考国际癌症研究机构(International Agency for Research on Cancer,IARC)的分类标准，基因变异的临床意义分为 ：</p>
+						<p class="paragraph">1990年，研究者发现了一种直接与遗传性乳腺癌有关的基因，命名为乳腺癌1号基因（Breast Cancer 1），英文简称<i>BRCA1</i>。1994年，又发现另外一种与乳腺癌有关的基因（Breast Cancer 2），称为<i>BRCA2</i>。</p>
+						<p class="paragraph">正常的<i>BRCA1</i>/<i>BRCA2</i>基因为抑癌基因，它们表达的蛋白在细胞DNA精密修复所需的酶促通路中起作用，调节细胞复制、DNA损伤修复、细胞正常生长，保护细胞不会生长失控和癌变。一些危害突变会导致这些基因或它们所表达的蛋白失去正常功能，无法修复DNA损伤，使得DNA中的异常不断累积，最终可能导致癌症的形成。</p>
+						<p class="paragraph">目前研究者们已发现了<i>BRCA1</i>/<i>BRCA2</i>基因中多达上万种的变异，这众多的变异位点中，并不是每一个变异都会导致相同的风险，产生的临床意义也不相同。参考国际癌症研究机构(International Agency for Research on Cancer,IARC)的分类标准，基因变异的临床意义分为 ：</p>
 						<dl>
 							<dt>
-								<label>5 -- Pathogenic</label>
-								致病的
+								<label>Class 5 -- Pathogenic</label>
+								致病相关变异
 							</dt>
 							<dt>
-								<label>4 -- Likely pathogenic</label>
-								可能致病的
+								<label>Class 4 -- Likely pathogenic</label>
+								可能致病变异
 							</dt>
 							<dt>
-								<label>3 -- Uncertain significance</label>
-								致病性不明确的
+								<label>Class 3 -- Uncertain significance</label>
+								意义不明确变异
 							</dt>
 							<dt>
-								<label>2 -- Likely benign</label>
-								可能良性的
+								<label>Class 2 -- Likely benign</label>
+								可能良性变异
 							</dt>
 							<dt>
-								<label>1 -- Benign</label>
-								良性的
+								<label>Class 1 -- Benign</label>
+								良性变异
 							</dt>
 						</dl>
 						<p class="paragraph">
-							本次检测，在您的BRCA1/2基因中共发现了
-							<span class="stress">&nbsp;$!{rocky.records.size()}&nbsp;</span>
+							本次检测，在您的<i>BRCA1/2</i>基因中共发现了
+							<span class="stress"><u>&nbsp;$!{rocky.records.size()}&nbsp;</u></span>
 							个变异。它们是：
 						</p>
 						<table class="table table-main -report">
@@ -153,7 +157,7 @@
 								#foreach($record in $!rocky.records)
 								<tr>
 									<td>$!{velocityCount}</td>
-									<td>$!record.gene</td>
+									<td><i>$!record.gene</i></td>
 									<td>$!record.chromosome</td>
 									<td>$!record.acids</td>
 									<td>$!record.nucleotides</td>
@@ -172,18 +176,18 @@
 						<ul>
 							<li>致病相关变异：已证实能使癌症风险显著提高的突变。这种变异往往是移码突变，导致蛋白质不能正常表达。</li>
 							<li>可能致病变异：没有明确证据，当前认为该变异有害。</li>
-							<li>意义未知变异：不确定该变异是有害还是无影响。这是一种常见的检测结果，很多变异一开始都被分为这一类。随着证据的不断补充，这些变异会被重新分类。</li>
+							<li>意义不明确变异：不确定该变异是有害还是无影响。这是一种常见的检测结果，很多变异一开始都被分为这一类。随着证据的不断补充，这些变异会被重新分类。</li>
 							<li>可能良性变异：没有明确证据，当前认为该变异对人体无害。</li>
 							<li>良性变异：被证实为对人体无害的变异，可以被认为是“未发生突变”。</li>
 						</ul>
 						<p class="paragraph">注：致病相关变异有很高但不完全的遗传外显率，这意味着有害突变携带者有较高的癌变风险，但有的人可能最终并不患癌。</p>
-						<p class="paragraph">在您的BRCA1/2基因中，BRCA变异影响（临床意义分类）描述如下：</p>
+						<p class="paragraph">在您的<i>BRCA1/2</i>基因中，BRCA变异影响（临床意义分类）描述如下：</p>
 						<table class="table table-main -report">
 							<tbody>
 								#foreach($record in $!rocky.records)
 								<tr>
 									<td style="width: 170px;">
-										$record.gene:&nbsp;$record.acids<br>$!record.significance
+										<i>$record.gene</i>:&nbsp;$record.acids<br>$!record.significance
 									</td>
 									<td>$record.description</td>
 								</tr>
@@ -196,22 +200,24 @@
 				<div class="report-result">
 					<section class="chapter">
 						<p class="paragraph">平均来看，普通人在50岁之前患乳腺癌的风险为1.9%，70岁之前患乳腺癌的风险为7.3%。（注:患病风险数据来源于欧美人群,仅供亚洲人群参考。）</p>
-						<p class="paragraph">乳腺癌的病因尚未完全清楚，其中因相关基因突变引起的乳腺癌称为遗传性乳腺癌，这些基因包括BRCA1、BRCA2、ATM、BARD1、BRIP1、CDH1、CHEK2、MSH6、MRE11A、MUTYH、NBN、NF1、PALB2、PTEN、RAD50、RAD51C、STK11、TP533。</p>
-						<p class="paragraph">遗传性乳腺癌占全部乳腺癌的5%~10%。BRCA1和BRCA2基因是最重要的两个遗传性乳腺癌易感基因，它们引起的乳腺癌占遗传性乳腺癌的40%~45%。</p>
+						<p class="paragraph">乳腺癌的病因尚未完全清楚，其中因相关基因突变引起的乳腺癌称为遗传性乳腺癌，这些基因包括<i>BRCA1</i>、<i>BRCA2</i>、<i>ATM</i>、<i>BARD1</i>、<i>BRIP1</i>、<i>CDH1</i>、<i>CHEK2</i>、<i>MSH6</i>、<i>MRE11A</i>、<i>MUTYH</i>、<i>NBN</i>、<i>NF1</i>、<i>PALB2</i>、<i>PTEN</i>、<i>RAD50</i>、<i>RAD51C</i>、<i>STK11</i>、<i>TP533</i>。</p>
+						<p class="paragraph">遗传性乳腺癌占全部乳腺癌的5%~10%。<i>BRCA1</i>和<i>BRCA2</i>基因是最重要的两个遗传性乳腺癌易感基因，它们引起的乳腺癌占遗传性乳腺癌的40%~45%。</p>
 						<!-- 判断致病变异 -->
-						<p class="paragraph">
-							<u> #if($rocky.pathogenicNum>0) 本次检测在您的乳腺癌关键基因BRCA1和BRCA2上发现致病相关变异，该因素可能提高您的乳腺癌患病风险。建议您结合本检测结果，基于家族史及自身身体状况，找临床医生进行进一步的检测和咨询，积极管理自身健康。 #else
-								本次检测在您的乳腺癌关键基因BRCA1和BRCA2上未发现致病变异，因而该因素没有提高您的乳腺癌患病风险。建议您结合本检测结果，保持良好心态，基于家族史及自身身体状况，积极管理自身健康。 #end </u>
-						</p>
-						<!-- 判断致病变异结束 -->
-						<p class="paragraph">人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。BRCA1/BRCA2突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</p>
-						<!-- 判断致病变异 -->
-						<p class="paragraph">
-							<u> #if($rocky.pathogenicNum>0) 本次检测在您的乳腺癌关键基因BRCA1和BRCA2中检测到致病相关突变，为了分析家族遗传风险信息，建议您的直系亲属检测基因中是否存在相同的有害突变。建议您的直系亲属提高预防意识，积极进行健康管理（管理建议见part 5）。强烈建议已经确诊为乳腺癌患者的直系亲属接受此基因的突变检测。（家族史情况判定见part 4
-								增加乳腺癌危险的因素 point 2 乳腺癌家族史。 ） #else 本次检测在您的乳腺癌关键基因BRCA1和BRCA2中未检测到致病突变，在大多数情况下，您的亲属不需要进行这两个基因的突变筛查。在某些情况下，为了分析家族遗传风险信息，建议确诊为乳腺癌患者的直系亲属接受此基因的突变检测。（家族史情况判定见part 4 增加乳腺癌危险的因素 point 2 乳腺癌家族史。 ）
-								#end </u>
-						</p>
-						<!-- 判断致病变异结束 -->
+						<p class="paragraph"><u> 
+							#if($rocky.pathogenicNum>0) 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>上发现致病相关变异，该因素可能提高您的乳腺癌患病风险。建议您结合本检测结果，基于家族史及自身身体状况，找临床医生进行进一步的检测和咨询，积极管理自身健康。 
+							#else
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>上未发现致病变异，因而该因素没有提高您的乳腺癌患病风险。建议您结合本检测结果，保持良好心态，基于家族史及自身身体状况，积极管理自身健康。 
+							#end 
+						</u></p>
+						<p class="paragraph">人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。<i>BRCA1</i>/<i>BRCA2</i>突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</p>
+						<p class="paragraph"><u> 
+							#if($rocky.pathogenicNum>0) 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>中检测到致病相关突变，为了分析家族遗传风险信息，建议您的直系亲属检测基因中是否存在相同的有害突变。建议您的直系亲属提高预防意识，积极进行健康管理（管理建议见part 5）。强烈建议已经确诊为乳腺癌患者的直系亲属接受此基因的突变检测。（家族史情况判定见part 4增加乳腺癌危险的因素 point 2 乳腺癌家族史。 ） 
+							#else 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>中未检测到致病突变，在大多数情况下，您的亲属不需要进行这两个基因的突变筛查。在某些情况下，为了分析家族遗传风险信息，建议确诊为乳腺癌患者的直系亲属接受此基因的突变检测。（家族史情况判定见part 4 增加乳腺癌危险的因素 point 2 乳腺癌家族史。 ）
+							#end 
+						</u></p>
 					</section>
 				</div>
 				<h4 style="margin-top: 10px;" id="nav-part-4">Part 4 增加乳腺癌风险的因素</h4>
