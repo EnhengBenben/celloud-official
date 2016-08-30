@@ -10,8 +10,8 @@
       <th style="min-width:120px">数据编号</th>
       <th style="min-width:70px">Barcode</th>
       <th style="min-width:70px">数据别名</th>
-      <th style="min-width:80px">上传日期</th>
-      <th style="min-width:70px">APP</th>
+      <th style="min-width:90px">上传日期</th>
+      <th style="min-width:110px">APP</th>
       <th style="min-width:90px">Total_Reads</th>
       <th style="min-width:90px">Map_Reads</th>
       <th style="min-width:100px">Map_Ratio(%)</th>
