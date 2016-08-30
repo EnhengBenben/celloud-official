@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <aside class="pro-sidebar {{collapsed|proSidebarLeftFilter}}">
   <section class="s-bar">
     <ul class="pro-sidebar-menu" ng-controller="sidebarController">
@@ -15,9 +16,11 @@
       <li ng-class="{active: isActive('/user/email')}">
         <a href="#/user/email"><span>修改邮箱</span></a>
       </li>
-      <li ng-class="{active: isActive('/user/set')}">
-        <a href="#/user/set"><span>报告设置</span></a>
-      </li>
+      <shiro:hasPermission name="bsi:product">
+	      <li ng-class="{active: isActive('/user/set')}">
+	        <a href="#/user/set"><span>报告设置</span></a>
+	      </li>
+      </shiro:hasPermission>
     </ul>
   </section>
 </aside>

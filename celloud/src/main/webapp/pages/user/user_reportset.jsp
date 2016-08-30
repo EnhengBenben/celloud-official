@@ -13,12 +13,12 @@
 	      <div class="col-lg-6">
 	        <h5>医院LOGO：</h5>
 	        <div class="hospital-logo">
-	          <img ng-if="isTemp" id="tempIcon" alt="ReportSet Attachment" ng-src="{{tempPath}}"/>
-	          <img ng-if="!isTemp" id="icon" alt="ReportSet Attachment" ng-src="{{path}}"/>
+	          <img ng-if="isTemp && haveImage" id="tempIcon" alt="ReportSet Attachment" ng-src="{{tempPath}}" style="max-width: 200px;max-height: 80px;"/>
+	          <img ng-if="!isTemp && haveImage" id="icon" alt="ReportSet Attachment" ng-src="{{path}}" style="max-width: 200px;max-height: 80px;"/>
 	        </div>
 	        <p>
 	          <a href="javascript:void(0)" id="unsavedAttachmentUploadBtn"><i class="fa fa-picture-o" aria-hidden="true"></i><span>选择图片</span></a><span>
-	          （最佳尺寸140×140，可以上传高质量图片进行裁切）</span>
+	          （最佳尺寸200×80，可以上传高质量图片进行裁切）</span>
 	        </p>
 	        <button type="button" class="btn" ng-click="apply()">提交</button>
 	      </div>

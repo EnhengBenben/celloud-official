@@ -82,12 +82,14 @@
 	});
 	celloudApp.controller("setReportController",function($scope,userService){
 		$scope.icon = "";
+		$scope.haveImage = false;
 		userService.getUserCompanyIcon().
 		success(function(company){
 			$scope.icon = company.companyIcon;
 			if($scope.icon == ''){
 				$scope.isTemp = true;
 			}else{
+				$scope.haveImage = true;
 				$scope.isTemp = false;
 				$scope.path = CONTEXT_PATH + "/user/icon?file=" + $scope.icon;
 			}
@@ -136,6 +138,7 @@
 			$scope.tempPath = CONTEXT_PATH + "/user/icon/temp?file=" + response.response;
 			$scope.icon = response.response;
 			$scope.isTemp = true;
+			$scope.haveImage = true;
 			$scope.$apply();
 		});
 		unsaveUploader.init();
