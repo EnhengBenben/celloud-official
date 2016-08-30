@@ -55,6 +55,7 @@
 		$scope.resetCreateForm = function(){
 			$scope.unsavedFeedback = angular.copy({});
 			$scope.unsavedAttachments =[];
+			unsaveUploader.splice(0,unsaveUploader.files.length);
 		}
 		$scope.showAttach = function(attach){
 			$scope.currentAttach = attach;
