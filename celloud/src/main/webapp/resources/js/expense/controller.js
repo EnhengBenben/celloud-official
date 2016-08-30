@@ -152,7 +152,7 @@
 				$scope.checkSubmit = true;
 				return false;
 			}
-			if(money != parseInt(money)){
+			if(money != parseInt(money) && money != 0.01){
 				$scope.moneyError = "请输入整数金额！";
 				$scope.checkFlag = true;
 				$scope.checkSubmit = true;
