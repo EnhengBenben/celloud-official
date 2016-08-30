@@ -88,6 +88,48 @@
     	line-height:2px;
     	border-top:2px solid #3e3e3e;
     }
+    .stress {
+    	font-size:14px;
+    	color:@font-color;
+    	border-bottom:@font-color solid 1px;
+    }
+    /*数据报告*/
+	.report-result{
+		background-color: #fff;
+		padding: 15px;
+		border:1px solid #e3e3e3;
+		.chapter{
+			> p{
+			}
+			> p.paragraph{
+				text-indent:25px;
+			}
+			> dl{
+				margin-left:25px;
+				margin-bottom:20px;
+				margin-top:20px;
+				list-style:square;
+				dt{
+		    		font-weight: normal;
+		    		lint-height:18px;
+				}
+				dd{
+					margin-left:25px;
+					lint-height:18px;
+				}
+				label{
+					width: 180px;
+					font-weight:normal;
+				}
+			}
+			> ul{
+				margin-left:65px;
+				margin-bottom:20px;
+				margin-top:20px;
+				list-style:square;
+			}
+		}
+	}
 }
 
 .rocky{
