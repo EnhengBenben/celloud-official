@@ -15,6 +15,9 @@
       <li ng-class="{active: isActive('/user/email')}">
         <a href="#/user/email"><span>修改邮箱</span></a>
       </li>
+      <li ng-class="{active: isActive('/user/set')}">
+        <a href="#/user/set"><span>报告设置</span></a>
+      </li>
     </ul>
   </section>
 </aside>
