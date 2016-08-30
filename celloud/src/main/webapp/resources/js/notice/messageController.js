@@ -5,10 +5,6 @@
 			page : 1,
 			pageSize : 10
 		};
-		$scope.messages = noticeService.listMessage({
-			currentPage : pages.page,
-			pageSize : pages.pageSize
-		});
 		$scope.removeState = false;
 		$scope.readState = false;
 		var checkedNotices = [];
@@ -33,8 +29,12 @@
 			$scope.messages = noticeService.listMessage({
 				currentPage : page,
 				pageSize : pageSize
+			}, function() {
+				checkedNotices = [];
+				changeState();
 			});
-		}
+		};
+		$scope.changePage(pages.page, pages.pageSize);
 		$scope.readAll = function() {
 			noticeService.readMessage(function() {
 				reload(null, null);
@@ -108,22 +108,35 @@
 			changeState();
 		}
 	});
-	celloudApp.controller("settingController",function($scope,messageService){
-		$scope.userMessageCategoryList = messageService.getUserSetting().query();
-		$scope.updateMessageCategory = function(flag,mcId,targetName,targetVal){
-			var index = this.$index;
-			if(flag == 0){ // 第一次更改消息设置, 需要插入到关系表中
-				messageService.insertUserSetting(targetName, targetVal, mcId).
-				success(function(data){
-					$scope.userMessageCategoryList[index]['flag'] = 1;
-					$scope.userMessageCategoryList[index][targetName.toLocaleLowerCase()] = targetVal;
-				});
-			}else{ // 已经更改过消息设置, 更新自己的消息设置
-				messageService.updateUserSetting(targetName, targetVal, mcId).
-				success(function(data){
-					$scope.userMessageCategoryList[index][targetName.toLocaleLowerCase()] = targetVal;
-				});
-			}
-		}
-	});
+	celloudApp
+			.controller(
+					"settingController",
+					function($scope, messageService) {
+						$scope.userMessageCategoryList = messageService
+								.getUserSetting().query();
+						$scope.updateMessageCategory = function(flag, mcId,
+								targetName, targetVal) {
+							var index = this.$index;
+							if (flag == 0) { // 第一次更改消息设置, 需要插入到关系表中
+								messageService
+										.insertUserSetting(targetName,
+												targetVal, mcId)
+										.success(
+												function(data) {
+													$scope.userMessageCategoryList[index]['flag'] = 1;
+													$scope.userMessageCategoryList[index][targetName
+															.toLocaleLowerCase()] = targetVal;
+												});
+							} else { // 已经更改过消息设置, 更新自己的消息设置
+								messageService
+										.updateUserSetting(targetName,
+												targetVal, mcId)
+										.success(
+												function(data) {
+													$scope.userMessageCategoryList[index][targetName
+															.toLocaleLowerCase()] = targetVal;
+												});
+							}
+						}
+					});
 })();
