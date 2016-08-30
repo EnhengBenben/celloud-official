@@ -71,20 +71,38 @@
     	#if($pgsList.size() > 1)
 	        #foreach($p in $pgsList)
 	        	#set($index=$velocityCount - 1)
-		        <tr style="height:60px;">
-		            <td class="tdCenter" style="width:25%;"><div class="embryoNumber" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['embryoNumber']">#if(${pgs.projectInfo.embryoNumber.get($index)})$!{pgs.projectInfo.embryoNumber.get($index)}#else$!{p.anotherName}#end</textarea></div></td>
-		            <td class="tdCenter" style="width:25%;"><div class="result" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['result']">#if(${pgs.projectInfo.result.get($index)})$!{pgs.projectInfo.result.get($index)}#else$!{p.report}#end</textarea></div></td>
-		            <td class="tdCenter" style="width:25%;"><div class="embryoRating" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['embryoRating']">$!{pgs.projectInfo.embryoRating.get($index)}</textarea></div></td>
-	            	<td class="tdCenter" style="width:25%;"><div class="advice" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['advice']">$!{pgs.projectInfo.advice.get($index)}</textarea></div></td>
-		        </tr>
+	        	#if($p.noEnoughReads == 'false')
+			        <tr style="height:60px;">
+			            <td class="tdCenter" style="width:25%;"><div class="embryoNumber" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['embryoNumber']">#if(${pgs.projectInfo.embryoNumber.get($index)})$!{pgs.projectInfo.embryoNumber.get($index)}#else$!{p.anotherName}#end</textarea></div></td>
+			            <td class="tdCenter" style="width:25%;"><div class="result" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['result']">#if(${pgs.projectInfo.result.get($index)})$!{pgs.projectInfo.result.get($index)}#else$!{p.report}#end</textarea></div></td>
+			            <td class="tdCenter" style="width:25%;"><div class="embryoRating" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['embryoRating']">$!{pgs.projectInfo.embryoRating.get($index)}</textarea></div></td>
+		            	<td class="tdCenter" style="width:25%;"><div class="advice" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['advice']">$!{pgs.projectInfo.advice.get($index)}</textarea></div></td>
+			        </tr>
+			    #else
+			    	<tr style="height:60px;">
+			            <td class="tdCenter" style="width:25%;"><div class="embryoNumber" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['embryoNumber']">#if(${pgs.projectInfo.embryoNumber.get($index)})$!{pgs.projectInfo.embryoNumber.get($index)}#else$!{p.anotherName}#end</textarea></div></td>
+			            <td class="tdCenter" style="width:25%;"><div class="result" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['result']">#if(${pgs.projectInfo.result.get($index)})$!{pgs.projectInfo.result.get($index)}#else测序量不足，无法分析，建议重测。#end</textarea></div></td>
+			            <td class="tdCenter" style="width:25%;"><div class="embryoRating" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['embryoRating']">$!{pgs.projectInfo.embryoRating.get($index)}</textarea></div></td>
+		            	<td class="tdCenter" style="width:25%;"><div class="advice" style="word-break: break-all;width:99%;"><textarea style="width:98%;max-height:50px;height:50px;font-size:14px;" name="projectInfo['advice']">$!{pgs.projectInfo.advice.get($index)}</textarea></div></td>
+			        </tr>
+			    #end
 	        #end
         #else
-        	<tr style="height:60px;">
-	            <td class="tdCenter" style="width:25%;"><div class="embryoNumber" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['embryoNumber']">#if(${pgs.projectInfo.embryoNumber})$!{pgs.projectInfo.embryoNumber}#else$!{pgsList.get(0).anotherName}#end</textarea></div></td>
-	            <td class="tdCenter" style="width:25%;"><div class="result" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['result']">#if(${pgs.projectInfo.result})$!{pgs.projectInfo.result}#else$!{pgsList.get(0).report}#end</textarea></div></td>
-	            <td class="tdCenter" style="width:25%;"><div class="embryoRating" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['embryoRating']">$!{pgs.projectInfo.embryoRating}</textarea></div></td>
-            	<td class="tdCenter" style="width:25%;"><div class="advice" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['advice']">$!{pgs.projectInfo.advice}</textarea></div></td>
-	        </tr>
+        	#if($pgsList.get(0).noEnoughReads == 'false')
+        		<tr style="height:60px;">
+		            <td class="tdCenter" style="width:25%;"><div class="embryoNumber" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['embryoNumber']">#if(${pgs.projectInfo.embryoNumber})$!{pgs.projectInfo.embryoNumber}#else$!{pgsList.get(0).anotherName}#end</textarea></div></td>
+		            <td class="tdCenter" style="width:25%;"><div class="result" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['result']">#if(${pgs.projectInfo.result})$!{pgs.projectInfo.result}#else$!{pgsList.get(0).report}#end</textarea></div></td>
+		            <td class="tdCenter" style="width:25%;"><div class="embryoRating" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['embryoRating']">$!{pgs.projectInfo.embryoRating}</textarea></div></td>
+	            	<td class="tdCenter" style="width:25%;"><div class="advice" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['advice']">$!{pgs.projectInfo.advice}</textarea></div></td>
+		        </tr>
+        	#else
+        		<tr style="height:60px;">
+		            <td class="tdCenter" style="width:25%;"><div class="embryoNumber" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['embryoNumber']">#if(${pgs.projectInfo.embryoNumber})$!{pgs.projectInfo.embryoNumber}#else$!{pgsList.get(0).anotherName}#end</textarea></div></td>
+		            <td class="tdCenter" style="width:25%;"><div class="result" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['result']">#if(${pgs.projectInfo.result})$!{pgs.projectInfo.result}#else测序量不足，无法分析，建议重测。#end</textarea></div></td>
+		            <td class="tdCenter" style="width:25%;"><div class="embryoRating" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['embryoRating']">$!{pgs.projectInfo.embryoRating}</textarea></div></td>
+	            	<td class="tdCenter" style="width:25%;"><div class="advice" style="word-break: break-all;width:99%;"><textarea style="width:98%;height:50px;font-size:14px;" name="projectInfo['advice']">$!{pgs.projectInfo.advice}</textarea></div></td>
+		        </tr>
+        	#end
         #end
         <tr class="focus hr">
             <td colspan="4"><br/><hr/></td>
