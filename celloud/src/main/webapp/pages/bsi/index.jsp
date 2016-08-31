@@ -33,13 +33,13 @@
           </div>
         </div>
         <ul class="nav navbar-nav pull-left">
-            <shiro:hasPermission name="rocky:product">
+           <shiro:hasPermission name="rocky:product">
               <li>
                 <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
                   <i class="cubes-icon">&nbsp;</i>
                 </a>
                 <div class="dropdown-menu product-dropdown">
-                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
+                  <a href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
                 </div>
               </li>
             </shiro:hasPermission>
@@ -49,8 +49,7 @@
                   <i class="cubes-icon">&nbsp;</i>
                 </a>
                 <div class="dropdown-menu product-dropdown">
-                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="百菌探" title="百菌探"></a>
-                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
+                  <a href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/images/app/bsi.png" alt="百菌探" title="百菌探"></a>
                 </div>
               </li>
             </shiro:hasPermission>
@@ -311,7 +310,9 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-  
+  <script type="text/javascript">
+		window.contextPath = '<%=request.getContextPath()%>';
+  </script>
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>

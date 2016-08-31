@@ -38,7 +38,6 @@
           </tr>
         </tbody>
       </table>
-      {{dataPage}}
-      <ng-include src="'pages/partial/_partial_pagination_common.jsp'"></ng-include>
+      <pagination page="dataList.page" change="pageQueryConsume(page,pageSize)"></pagination>
     </div>
 </div>

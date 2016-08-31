@@ -274,7 +274,7 @@ public class DataAction {
         List<Map<String, Object>> weekAppRun = dataService.getWeekAppRun(companyId);
         List<Map<String, Object>> weekDataSize = dataService.getWeekDataSize(companyId);
         List<Map<String, Object>> weekData = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < weekUserLogin.size(); i++) {
             Map<String, Object> temp = new HashMap<String, Object>();
             temp.put("logUsername", weekUserLogin.size() > i ? weekUserLogin.get(i).get("username") : "无");
             temp.put("logCount", weekUserLogin.size() > i ? weekUserLogin.get(i).get("log_count") : 0);

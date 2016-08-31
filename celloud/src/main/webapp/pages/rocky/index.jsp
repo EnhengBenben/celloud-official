@@ -41,7 +41,7 @@
                   <i class="cubes-icon">&nbsp;</i>
                 </a>
                 <div class="dropdown-menu product-dropdown">
-                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
+                  <a href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
                 </div>
               </li>
             </shiro:hasPermission>
@@ -51,8 +51,7 @@
                   <i class="cubes-icon">&nbsp;</i>
                 </a>
                 <div class="dropdown-menu product-dropdown">
-                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="百菌探" title="百菌探"></a>
-                  <a href=""><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
+                  <a href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/images/app/bsi.png" alt="百菌探" title="百菌探"></a>
                 </div>
               </li>
             </shiro:hasPermission>
@@ -84,7 +83,7 @@
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{notices.num}}</span>条新消息</p>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notices">查看所有</a>
             </div>
           </li>
            <li class="dropdown">
@@ -94,7 +93,7 @@
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{messages.num}}</span>条新消息</p>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
+              <a class="btn-link" href="<%=request.getContextPath()%>/index#/messages">查看所有</a>
             </div>
           </li>
           <li class="dropdown">
@@ -180,11 +179,6 @@
 							<i class="celicon -upload"></i> 上传
 						</a>
 					</li>
-<!-- 					<li class="treeview"> -->
-<!-- 						<a id="to-data-a" href="javascript:void(0)" data-menu="数据"> -->
-<!-- 							<i class="celicon -data"></i> 数据 -->
-<!-- 						</a> -->
-<!-- 					</li> -->
 					<li class="treeview">
 						<a id="to-report-a" href="javascript:void(0)" data-menu="报告">
 							<i class="celicon -report"></i> 报告

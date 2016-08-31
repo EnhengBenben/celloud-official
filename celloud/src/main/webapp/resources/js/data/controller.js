@@ -15,6 +15,12 @@
     $scope.conditionList = function(){
       $scope.pageQuery(1,$.dataManager.options.pageSize);
     }
+    // 为搜索框绑定回车事件
+    $scope.doSearch = function($event){
+    	if($event.keyCode == 13){
+    		$scope.conditionList();
+    	}
+    }
     //校验选择文件数量： 0 < num <= max
     $scope.checkNum = function(){
       var checkedIds = $.dataManager.options.checkedIds;

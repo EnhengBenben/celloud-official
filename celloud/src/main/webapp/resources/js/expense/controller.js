@@ -7,9 +7,9 @@
 			});
 		}
 		$scope.pageList = function(pageSize){
-      $rootScope.pageSize = pageSize;
-      $scope.pageQueryConsume(1,pageSize);
-      $location.path($scope.pageType);
+		$rootScope.pageSize = pageSize;
+		$scope.pageQueryConsume(1,pageSize);
+		$location.path($scope.pageType);
     }
     if($routeParams.page == null){
       $scope.pageQueryConsume(1,$rootScope.pageSize);
@@ -23,19 +23,20 @@
 			expenseService.pageQueryRecharge(currentPage,pageSize).
 			success(function(dataList){
 				$scope.dataList = dataList;
+				$("input[name=checkAll]").prop("checked",false);
 			});
 		};
 		$scope.pageList = function(pageSize){
-      $rootScope.pageSize = pageSize;
-      $scope.pageQueryRecharge(1,pageSize);
-      $location.path($scope.pageType);
-    }
-    if($routeParams.page == null){
-      $scope.pageQueryRecharge(1,$rootScope.pageSize);
-      $location.path($scope.pageType);
-    }else{
-      $scope.pageQueryRecharge($routeParams.page,$rootScope.pageSize);
-    }
+	      $rootScope.pageSize = pageSize;
+	      $scope.pageQueryRecharge(1,pageSize);
+	      $location.path($scope.pageType);
+	    }
+	    if($routeParams.page == null){
+	      $scope.pageQueryRecharge(1,$rootScope.pageSize);
+	      $location.path($scope.pageType);
+	    }else{
+	      $scope.pageQueryRecharge($routeParams.page,$rootScope.pageSize);
+	    }
 		$scope.reset = function(){
 			$scope.invoiceForm = {};
 		};
@@ -84,12 +85,11 @@
 			expenseService.apply($scope.invoiceForm).
 			success(function(data){
 				$("#apply-invoice-modal").modal("hide");
-				$scope.state = true;
 				if(data > 0){
-					$scope.message = "申请成功!";
+					$.alert("申请成功!");
 					$scope.pageQueryRecharge(1,10);
 				}else{
-					$scope.message = "发生未知错误,请联系管理员!";
+					$.alert("发生未知错误,请联系管理员!");
 				}
 			});
 			$("#invoiceSubmit").prop("disabled",false);
@@ -148,6 +148,12 @@
 			}
 			if(money*1 >10000){
 				$scope.moneyError = "大于10000元的充值金额，请使用公司转账方式充值！";
+				$scope.checkFlag = true;
+				$scope.checkSubmit = true;
+				return false;
+			}
+			if(money != parseInt(money) && money != 0.01){
+				$scope.moneyError = "请输入整数金额！";
 				$scope.checkFlag = true;
 				$scope.checkSubmit = true;
 				return false;

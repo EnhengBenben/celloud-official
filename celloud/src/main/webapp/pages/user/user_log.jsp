@@ -30,6 +30,6 @@
           </tr>
 	    </tbody>
 	  </table>
-	  <pagination page="dataList.page" change="changePage(page,pageSize)"></pagination>
+	  <pagination page="dataList.page" change="pageQueryLog(page,pageSize)"></pagination>
     </div>
 </div>

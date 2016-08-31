@@ -1,87 +1,146 @@
-#override("content")
+ #override("content")
 <div class="content">
 	<div class="row">
-		<div class="col-xs-11">
-			<div class="report-content" style="padding:10px;">
+		<div class="col-xs-10">
+			<div class="report-content" style="padding: 10px;">
 				<section>
 					<div>
-						<div class="col-xs-6" style="display:inline;"><img style="width:180px;height:42px;" src="$base/images/icon/barcode.jpg"></div>
-						<div class="col-xs-6 pull-right text-right">隐私报告 - 无受检人书面授权严禁公布或分享</div><br>
+						<div class="col-xs-6" style="display: inline;">
+							<img class="barcode" src="$base/images/icon/barcode.jpg">
+						</div>
+						<div class="col-xs-6 pull-right text-right">隐私报告 - 无受检人书面授权严禁公布或分享</div>
+						<br>
 					</div>
 					<div class="row">
-						<div class="col-xs-9"><h2>乳腺癌易感基因<small>(BRCA1/2)</small>检测报告</h2></div>
+						<div class="col-xs-9">
+							<h2>
+								乳腺癌易感基因<small>(<i>BRCA1/2</i>)</small>检测报告
+							</h2>
+						</div>
 						<div class="col-xs-3 pull-right text-center">
 							<div class="pull-right">
-							技术平台&nbsp;<br><img style="width:90px;height:35px;" src="$base/images/icon/login_logo.png">
+								技术平台&nbsp;<br> <img class="logo" src="$base/images/icon/login_logo.png">
 							</div>
 						</div>
 					</div>
 				</section>
-				<hr style="height:2px;line-height:2px;border-top:2px dotted #3e3e3e;border-bottom:5px solid #3e3e3e;margin-top:0px;">
+				<hr class="title_line">
 				<section id="nav-baseinfo">
 					<form id="rockyBaseInfoForm" action="$base/report/updateRockyFilling">
-						<table class="table table-main">
+						<table class="table table-main baseinfo">
 							<input type="hidden" name="id" value="$!rocky.id">
 							<thead>
 								<tr>
-									<th style="text-align:left;width:33%;">样本信息</th>
-									<th style="text-align:left;width:33%;">报告信息</th>
-									<th style="text-align:left;width:34%;">受检者信息</th>
+									<th>样本信息</th>
+									<th>报告信息</th>
+									<th>受检者信息</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td style="text-align:left;">
-										<label style="width:50px;text-align:right;font-weight:normal;">样本类型</label>：
-										<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleType]" value="$!rocky.baseInfo.sampleType"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">送检时间</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleDeliveryTime]" value="$!rocky.baseInfo.sampleDeliveryTime"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">送检状态</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleStatus]" value="$!rocky.baseInfo.sampleStatus"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">收样中心</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[sampleCollector]" value="$!rocky.baseInfo.sampleCollector"></input>
+									<td>
+										<label>样本类型</label>
+										：
+										<input type="text" name="baseInfo[sampleType]" value="$!rocky.baseInfo.sampleType"></input>
+										<br>
+										<label>送检时间</label>
+										：
+										<input type="text" name="baseInfo[sampleDeliveryTime]" value="$!rocky.baseInfo.sampleDeliveryTime"></input>
+										<br>
+										<label>送检状态</label>
+										：
+										<input type="text" name="baseInfo[sampleStatus]" value="$!rocky.baseInfo.sampleStatus"></input>
+										<br>
+										<label>收样中心</label>
+										：
+										<input type="text" name="baseInfo[sampleCollector]" value="$!rocky.baseInfo.sampleCollector"></input>
 									</td>
-									<td style="text-align:left;">
-										<label style="width:50px;text-align:right;font-weight:normal;">报告类型</label>：
-										<span style="text-align:left;font-weight:normal;white-space: normal;">BRAC1/BRAC2</span><br>
-				    					<span style="width:50px;text-align:right;font-weight:normal;">生成时间</span>：
-				    					<label style="text-align:left;font-weight:normal;white-space: normal;">$!rocky.baseInfo.createTime</label><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">报告中心</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[reportProvider]" value="$!rocky.baseInfo.reportProvider"></input>
+									<td>
+										<label>报告类型</label>
+										：
+										<span>BRAC1/BRAC2</span>
+										<br>
+										<label>生成时间</label>
+										：
+										<span style="text-align: left; font-weight: normal; white-space: normal;">$!rocky.baseInfo.createTime</span>
+										<br>
+										<label>报告中心</label>
+										：
+										<input type="text" name="baseInfo[reportProvider]" value="$!rocky.baseInfo.reportProvider"></input>
 									</td>
-									<td style="text-align:left;">
-										<label style="width:50px;text-align:right;font-weight:normal;">受检人名</label>：
-										<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeName]" value="$!rocky.baseInfo.examineeName"></input><br>
-				          				<label style="width:50px;text-align:right;font-weight:normal;">性别</label>：
-				          				<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeGender]" value="$!rocky.baseInfo.examineeGender"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">受检人ID</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeNumber]" value="$!rocky.baseInfo.examineeNumber"></input><br>
-				    					<label style="width:50px;text-align:right;font-weight:normal;">订单编号</label>：
-				    					<input style="text-align:left;font-weight:normal;white-space: normal;" type="text" name="baseInfo[examineeOrderNumber]" value="$!rocky.baseInfo.examineeOrderNumber"></input>
+									<td style="text-align: left;">
+										<label>受检人名</label>
+										：
+										<input type="text" name="baseInfo[examineeName]" value="$!rocky.baseInfo.examineeName"></input>
+										<br>
+										<label>性别</label>
+										：
+										<input type="text" name="baseInfo[examineeGender]" value="$!rocky.baseInfo.examineeGender"></input>
+										<br>
+										<label>受检人ID</label>
+										：
+										<input type="text" name="baseInfo[examineeNumber]" value="$!rocky.baseInfo.examineeNumber"></input>
+										<br>
+										<label>订单编号</label>
+										：
+										<input type="text" name="baseInfo[examineeOrderNumber]" value="$!rocky.baseInfo.examineeOrderNumber"></input>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</form>
 				</section>
-				<h4 id="nav-result">一、检测结果：</h4>
-				<section style="border:1px solid #e3e3e3;background-color: #fff;">
-					<div class="result-div">
-						<p class="main">
-							#if($rocky.pathogenic)
-								发现<strong>致病相关</strong>突变！
-							#else
-								未发现<strong>致病相关</strong>突变！
-							#end
-						</p>
-						<p class="notice">注： 本报告中&nbsp;“致病相关”&nbsp;是指本系统采集到的已知研究结论中，受检人样本中存在的突变与疾病有相关性。</p>
-					</div>
-				</section>
-				<h4 style="margin-top:10px;" id="nav-description">二、结果说明：</h4>
+				<h4 id="nav-part-0">Part 0 您的检测结果</h4>
 				<div class="report-result">
 					<section>
 						<p>
-							<strong>变异列表</strong>
+							本次BRCA基因检测共检测到
+							<span class="stress"><u>&nbsp;$!{rocky.records.size()}&nbsp;</u></span>
+							个突变，其中致病相关突变为
+							<span class="stress"><u>&nbsp;$!{rocky.pathogenicNum}&nbsp;</u></span>
+							个。
+						</p>
+						<p><u>
+							#if($rocky.pathogenic) 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>上发现致病相关变异，建议您结合自己的身体状况、家族史信息，找临床医生进行进一步的检测和咨询。
+							#else 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>上未发现致病变异，因而该因素没有提高您的乳腺癌患病风险。 
+							#end
+						</u></p>
+					</section>
+				</div>
+				<h4 style="margin-top: 10px;" id="nav-part-1">Part 1 您的BRCA基因</h4>
+				<div class="report-result">
+					<section class="chapter">
+						<p class="paragraph">1990年，研究者发现了一种直接与遗传性乳腺癌有关的基因，命名为乳腺癌1号基因（Breast Cancer 1），英文简称<i>BRCA1</i>。1994年，又发现另外一种与乳腺癌有关的基因（Breast Cancer 2），称为<i>BRCA2</i>。</p>
+						<p class="paragraph">正常的<i>BRCA1</i>/<i>BRCA2</i>基因为抑癌基因，它们表达的蛋白在细胞DNA精密修复所需的酶促通路中起作用，调节细胞复制、DNA损伤修复、细胞正常生长，保护细胞不会生长失控和癌变。一些危害突变会导致这些基因或它们所表达的蛋白失去正常功能，无法修复DNA损伤，使得DNA中的异常不断累积，最终可能导致癌症的形成。</p>
+						<p class="paragraph">目前研究者们已发现了<i>BRCA1</i>/<i>BRCA2</i>基因中多达上万种的变异，这众多的变异位点中，并不是每一个变异都会导致相同的风险，产生的临床意义也不相同。参考国际癌症研究机构(International Agency for Research on Cancer,IARC)的分类标准，基因变异的临床意义分为 ：</p>
+						<dl>
+							<dt>
+								<label>Class 5 -- Pathogenic</label>
+								致病相关变异
+							</dt>
+							<dt>
+								<label>Class 4 -- Likely pathogenic</label>
+								可能致病变异
+							</dt>
+							<dt>
+								<label>Class 3 -- Uncertain significance</label>
+								意义不明确变异
+							</dt>
+							<dt>
+								<label>Class 2 -- Likely benign</label>
+								可能良性变异
+							</dt>
+							<dt>
+								<label>Class 1 -- Benign</label>
+								良性变异
+							</dt>
+						</dl>
+						<p class="paragraph">
+							本次检测，在您的<i>BRCA1/2</i>基因中共发现了
+							<span class="stress"><u>&nbsp;$!{rocky.records.size()}&nbsp;</u></span>
+							个变异。它们是：
 						</p>
 						<table class="table table-main -report">
 							<thead>
@@ -95,174 +154,239 @@
 								</tr>
 							</thead>
 							<tbody>
-							#foreach($record in $!rocky.records)
+								#foreach($record in $!rocky.records)
 								<tr>
-										<td>$!{velocityCount}</td>
-										<td>$!record.gene </td>
-										<td>$!record.chromosome</td>
-										<td>$!record.acids</td>
-										<td>$!record.nucleotides</td>
-										<td>$!record.significance</td>
-									</tr>
-							#end
+									<td>$!{velocityCount}</td>
+									<td><i>$!record.gene</i></td>
+									<td>$!record.chromosome</td>
+									<td>$!record.acids</td>
+									<td>$!record.nucleotides</td>
+									<td>$!record.significance</td>
+								</tr>
+								#end
 							</tbody>
 						</table>
 					</section>
-					<section>
-						<p>
-							<strong>变异描述</strong>
-						</p>
+				</div>
+				<h4 style="margin-top: 10px;" id="nav-part-2">Part 2 您的BRCA变异影响</h4>
+				<div class="report-result">
+					<section class="chapter">
+						<p class="paragraph">根据遗传学中心法则，遗传信息由DNA开始最终传向蛋白质，蛋白分子共同协作使我们的身体正常运转。发生有害突变的DNA产生异常的蛋白（蛋白分子大小或分子结构发生变化），不能行使其正常功能，最终可能导致机体发生病变。</p>
+						<p class="paragraph">参考国际癌症研究机构(International Agency for Research on Cancer,IARC)的分类标准，基因变异的临床意义分类及标准为：</p>
+						<ul>
+							<li>致病相关变异：已证实能使癌症风险显著提高的突变。这种变异往往是移码突变，导致蛋白质不能正常表达。</li>
+							<li>可能致病变异：没有明确证据，当前认为该变异有害。</li>
+							<li>意义不明确变异：不确定该变异是有害还是无影响。这是一种常见的检测结果，很多变异一开始都被分为这一类。随着证据的不断补充，这些变异会被重新分类。</li>
+							<li>可能良性变异：没有明确证据，当前认为该变异对人体无害。</li>
+							<li>良性变异：被证实为对人体无害的变异，可以被认为是“未发生突变”。</li>
+						</ul>
+						<p class="paragraph">注：致病相关变异有很高但不完全的遗传外显率，这意味着有害突变携带者有较高的癌变风险，但有的人可能最终并不患癌。</p>
+						<p class="paragraph">在您的<i>BRCA1/2</i>基因中，BRCA变异影响（临床意义分类）描述如下：</p>
 						<table class="table table-main -report">
 							<tbody>
-							#foreach($record in $!rocky.records)
+								#foreach($record in $!rocky.records)
 								<tr>
-									<td style="width: 170px;">$record.gene:&nbsp;$record.acids</td>
+									<td style="width: 170px;">
+										<i>$record.gene</i>:&nbsp;$record.acids<br>$!record.significance
+									</td>
 									<td>$record.description</td>
-									</tr>
-							#end
+								</tr>
+								#end
 							</tbody>
 						</table>
 					</section>
 				</div>
-				<h4 style="margin-top:10px;" id="nav-risk">三、风险管理：</h4>
+				<h4 style="margin-top: 10px;" id="nav-part-3">Part 3 您的风险及建议</h4>
 				<div class="report-result">
 					<section class="chapter">
-						<p>1、癌症风险评估</p><br>
-						<p>2、风险管理措施</p><br>
-						<p>3、家族其他成员风险管理</p><br>
+						<p class="paragraph">平均来看，普通人在50岁之前患乳腺癌的风险为1.9%，70岁之前患乳腺癌的风险为7.3%。（注:患病风险数据来源于欧美人群,仅供亚洲人群参考。）</p>
+						<p class="paragraph">乳腺癌的病因尚未完全清楚，其中因相关基因突变引起的乳腺癌称为遗传性乳腺癌，这些基因包括<i>BRCA1</i>、<i>BRCA2</i>、<i>ATM</i>、<i>BARD1</i>、<i>BRIP1</i>、<i>CDH1</i>、<i>CHEK2</i>、<i>MSH6</i>、<i>MRE11A</i>、<i>MUTYH</i>、<i>NBN</i>、<i>NF1</i>、<i>PALB2</i>、<i>PTEN</i>、<i>RAD50</i>、<i>RAD51C</i>、<i>STK11</i>、<i>TP533</i>。</p>
+						<p class="paragraph">遗传性乳腺癌占全部乳腺癌的5%~10%。<i>BRCA1</i>和<i>BRCA2</i>基因是最重要的两个遗传性乳腺癌易感基因，它们引起的乳腺癌占遗传性乳腺癌的40%~45%。</p>
+						<!-- 判断致病变异 -->
+						<p class="paragraph"><u> 
+							#if($rocky.pathogenicNum>0) 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>上发现致病相关变异，该因素可能提高您的乳腺癌患病风险。建议您结合本检测结果，基于家族史及自身身体状况，找临床医生进行进一步的检测和咨询，积极管理自身健康。 
+							#else
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>上未发现致病变异，因而该因素没有提高您的乳腺癌患病风险。建议您结合本检测结果，保持良好心态，基于家族史及自身身体状况，积极管理自身健康。 
+							#end 
+						</u></p>
+						<p class="paragraph">人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。<i>BRCA1</i>/<i>BRCA2</i>突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</p>
+						<p class="paragraph"><u> 
+							#if($rocky.pathogenicNum>0) 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>中检测到致病相关突变，为了分析家族遗传风险信息，建议您的直系亲属检测基因中是否存在相同的有害突变。建议您的直系亲属提高预防意识，积极进行健康管理（管理建议见part 5）。强烈建议已经确诊为乳腺癌患者的直系亲属接受此基因的突变检测。（家族史情况判定见part 4增加乳腺癌危险的因素 point 2 乳腺癌家族史。 ） 
+							#else 
+								本次检测在您的乳腺癌关键基因<i>BRCA1</i>和<i>BRCA2</i>中未检测到致病突变，在大多数情况下，您的亲属不需要进行这两个基因的突变筛查。在某些情况下，为了分析家族遗传风险信息，建议确诊为乳腺癌患者的直系亲属接受此基因的突变检测。（家族史情况判定见part 4 增加乳腺癌危险的因素 point 2 乳腺癌家族史。 ）
+							#end 
+						</u></p>
 					</section>
 				</div>
-				<h4 style="margin-top:10px;" id="nav-technology">四、技术及参考说明：</h4>
+				<h4 style="margin-top: 10px;" id="nav-part-4">Part 4 增加乳腺癌风险的因素</h4>
 				<div class="report-result">
 					<section class="chapter">
-						<p class="paragraph">华木兰BRCA Mutat Scan&#8482;检测乳腺癌易感基因BRCA1/BRCA2的外显子区及其两侧的内含子连接区。按标准操作流程从受检者的血液、口腔组织中提取基因组DNA，经定量和质检合格后用于目标区域的扩增。目标区域外显子及两侧内含子连接区的由多对特异引物扩增富集。目标区域的测序利用二代测序技术（next-generation sequencing-based , NGS）的主流平台完成。</p>
-						<p class="paragraph">华木兰BRCA Mutat Scan&#8482;分析测序数据采用自主研发流程，遗传信息解读参考美国医学遗传学与基因组学学会（ACMG）联合分子病理学学会（AMP）发布的基因变异的解读指导原则，参考数据库包括人类基因组突变数据库（HGMD），国际生物技术信息中心（NCBI）数据库，美国国立卫生研究院(National Institutes of Health，NIH)乳腺癌研究中心数据库，公司自建中国人群乳腺癌突变信息数据库及其他公共数据库如PubMed、dbSNP、1000Genomes。</p>
-						<p class="paragraph">参考国际癌症研究机构（International Agency for Research on Cancer，IARC）的五级分类标准，Celloud将基因变异的临床意义分为：</p>
-						<dl>
-							<dt>
-								<label style="width: 180px;right;font-weight:normal;">5 -- Pathogenic</label>
-								致病的
-							</dt>
-							<dt>
-								<label style="width: 180px;right;font-weight:normal;">4 -- Likely pathogenic</label>
-								可能致病的
-							</dt>
-							<dt>
-								<label style="width: 180px;right;font-weight:normal;">3 -- Uncertain significance</label>
-								致病性不明确的
-							</dt>
-							<dt>
-								<label style="width: 180px;right;font-weight:normal;">2 -- Likely benign</label>
-								可能良性的
-							</dt>
-							<dt>
-								<label style="width: 180px;right;font-weight:normal;">1 -- Benign</label>
-								良性的
-							</dt>
-						</dl>
+						<p>
+							<strong>1、性别和年龄</strong>
+						</p>
+						<p class="paragraph">女性和年龄增长是发生乳腺癌的主要危险因素。女性一生都有发生乳腺癌的风险，风险大约是男性的100倍。70岁女性患乳腺癌的短期风险大约是30岁女性的10倍。</p>
 					</section>
 					<section class="chapter">
 						<p>
-							<strong>5、Pathogenic Variants 致病突变</strong>
+							<strong>2、乳腺癌家族史</strong>
 						</p>
-						<p class="paragraph">根据已有报道知道该突变导致基因功能障碍，或者根据该突变导致蛋白功能缺失、影响蛋白相互作用而推测为致病突变。</p>
-						<p class="paragraph">已知致病</p>
-						<p class="paragraph">突变“已知”致病必须有充足的证据，包括：</p>
-						<dl>
-							<dt>a、文献中报道在某一特定种群的致病突变（如奠基者致病突变founder pathogenic variants）</dt>
-							<dt>b、在不同临床报道中不同患者的共同突变</dt>
-							<dt>c、不同家族中的基因分离</dt>
-							<dt>d、文献中的功能研究阐明：</dt>
-							<dd>a、蛋白功能缺失</dd>
-							<dd>b、蛋白功能加强</dd>
-							<dd>c、功能芯片中显示剪切异常</dd>
-							<dt>e、报道功能缺失突变明确与临床相关（包括移码突变、无义突变、剪切连接区突变）</dt>
-						</dl>
-						<p class="paragraph">预测致病</p>
-						<p class="paragraph">预测功能缺失包括移码突变、无义突变、剪切连接区突变，以及其实密码子中的改变，但是目前没有明确“知道”致病。突变氨基酸可能造成的短缺或畸形蛋白产物的影响是经过对比相似的已知、报道致病突变来预测。这种情况中，功能缺失造成疾病的机制一定是已知的。在没有其他相冲突的证据时，已知致病突变的氨基酸残基对应的碱基发生新的错意突变，该突变也被认为是预测致病突变。</p>
+						<p class="paragraph">1) 一个或多个直系亲属有乳腺癌史，如母亲或姐妹</p>
+						<p class="paragraph">2) 家族成员里有早发乳腺癌患者，发病年龄早于40岁</p>
+						<p class="paragraph">3) 家族成员里两代以上出现乳腺癌患者</p>
+						<p class="paragraph">4) 家族成员有双侧乳腺癌患者</p>
+						<p class="paragraph">5) 家族成员里有卵巢癌患者</p>
+						<p class="paragraph">6) 家族成员有男性成员乳腺癌患者</p>
+						<p class="paragraph">确凿证据表明，有乳腺癌家族史的女性，尤其是一级亲属患乳腺癌的女性，发生乳腺癌的风险升高。如果只有一名一级亲属患病，则风险翻倍；如果有两名一级亲属诊断患病，则风险增加4倍。</p>
 					</section>
 					<section class="chapter">
 						<p>
-							<strong>4、Likely Pathogenic Variants 可能致病突变</strong>
+							<strong>3、主要遗传易感性</strong>
 						</p>
-						<p class="paragraph">可能致病突变是根据其他已知致病突变预测可能致病。可能致病突变有多种证据可支持其致病性，包括：</p>
-						<dl>
-							<dt>a、突变发生在功能结构域中，或者是文献及已知致病突变证实的热点突变位置</dt>
-							<dt>b、突变发生在已知致病突变的氨基酸残基中</dt>
-							<dt>c、基于家族基因型分离研究或者认为/已知新突变与疾病相关</dt>
-							<dt>d、预测为高度保守的碱基或氨基酸并被软件预测为致病</dt>
-							<dt>e、无或者极低的等位基于频率与良性表型相关</dt>
-							<dt>f、在特异常染色体隐性遗传疾病患者中发现与已知致病突变发生反应的突变，或其他支持测试（如生化检测）</dt>
-						</dl>
+						<p class="paragraph">确凿证据表明，有乳腺癌相关遗传基因突变的女性患病风险升高，取决于基因突变、家族史和其他影响基因表达的危险因素。</p>
 					</section>
 					<section class="chapter">
 						<p>
-							<strong>3、Variants of Unknown(Uncertain) Significance 未知突变</strong>
+							<strong>4、乳腺密度</strong>
 						</p>
-						<p class="paragraph">未知突变或意义不明突变是没有充分证据，或者证据发生明显冲突，而不能确定是可能致病还是良性突变。证据不充分或者有冲突，包括以下几个方面：</p>
-						<dl>
-							<dt>a、不同功能分析显示相反的结果</dt>
-							<dt>b、与普遍表型相冲突的分离结果</dt>
-							<dt>c、在单独分析的疾病中较低的基因频率（如偏低的外显率，非孟德尔遗传等）</dt>
-							<dt>d、位于功能尚不明确的区域</dt>
-							<dt>e、缺乏充足的临床案例</dt>
-							<dt>f、缺乏足够的突变与临床表型相关的数据/证据</dt>
-						</dl>
+						<p class="paragraph">乳腺密度大的女性发生乳腺癌的风险增加。这通常是一种固有的特征，但在一定程度上可因生育、药物和酒精而改变。</p>
 					</section>
 					<section class="chapter">
 						<p>
-							<strong>2、Likely Benign Variants 可能良性突变</strong>
+							<strong>5、其他可能的危险因素</strong>
 						</p>
-						<p class="paragraph">可能良性突变是根据其他已知良性突变推测为可能产生良性影响的突变。可能良性突变有多种证据可支持其良性影响，包括：</p>
-						<dl>
-							<dt>a、突变发生的位置不处于蛋白已知突变致病区域，或者文献中指出该突变是机体可接受的</dt>
-							<dt>b、在基于家族间基因型分离的研究中未发现与疾病有明显相关性</dt>
-							<dt>c、不处于进化保守区域或软件预测为良性</dt>
-							<dt>d、在特定种族人群中基因频率低，在人群数据库中没有较大意义</dt>
-							<dt>e、该突变与其他已知造成疾病分子同时发现</dt>
-							<dt>f、与疾病信息相关的突变在正常个体中被观察到</dt>
-							<dt>g、发生在无已知功能的重复区域中的插入或缺失</dt>
-						</dl>
-					</section>
-					<section class="chapter">
-						<p>
-							<strong>1、Benign Variants 良性突变</strong>
-						</p>
-						<p class="paragraph">良性突变没有已知临床报道该突变引起特定遗传疾病。</p>
-						<p class="paragraph">评估与病例相关的人群数据来进行良性分类。在400及以上个体中，常染色体显性或X-连锁隐性疾病等位基因频率>1%，或者常染色体隐性疾病等位该基因频率>3%，没有其他相反证据证明该基因致病的话，则认为该突变为良性突变。有相冲突的证据，则根据基因和疾病的信息重新评估。在稀有疾病中，等位基因频率可适当降低。</p>
-						<p class="paragraph">在已有证据支持或计算机算法预测为良性影响时，即使缺乏独立人群数据，沉默突变及剪切连接位点外的内含子突变也被分类为良性突变。</p>
+						<p class="paragraph">1) 第一次妊娠年龄大于30岁</p>
+						<p class="paragraph">2) 单身未育或婚后不育及未哺乳的女性</p>
+						<p class="paragraph">3) 月经初潮年龄在12岁之前或停经在55岁之后的女性</p>
+						<p class="paragraph">4) 常用激素类药品或化妆品</p>
+						<p class="paragraph">5) 患某些慢性乳腺疾病，如导管上皮不典型增生、乳头状瘤病等</p>
+						<p class="paragraph">6) 由于其他疾病原因胸部接受过多次放射线照射</p>
+						<p class="paragraph">7) 反复做人工流产手术</p>
+						<p class="paragraph">8) 进食过多的动物脂肪，绝经后体重超重</p>
+						<p class="paragraph">9) 长期过量饮酒</p>
 					</section>
 				</div>
-				<h4 style="margin-top:10px;" id="nav-note">五、报告说明：</h4>
+				<h4 style="margin-top: 10px;" id="nav-part-5">Part 5 乳腺癌预防日常建议</h4>
 				<div class="report-result">
 					<section class="chapter">
-						<p class="paragraph">本报告只对本次送检样品负责。检测报告报出的是与遗传性乳腺癌易感基因 BRCA1／BRCA2相关的变异筛查结果，为实验室检测数据，不用于其他特殊风险因素的决定性分析。 报告结果不替代临床诊断结果，仅供临床参考。</p>
+						<p>
+							<strong>1、避免饮酒</strong>
+						</p>
+						<p class="paragraph">饮酒女性患乳腺癌的风险较很少饮酒者高，这种风险在绝经前女性中最为显著。目前认为，酒精可刺激体内雌激素水平上升，与乳腺癌发生有关。因此,女性尤其是绝经前的女性，应戒酒或少饮酒。</p>
+					</section>
+					<section class="chapter">
+						<p>
+							<strong>2、合理膳食</strong>
+						</p>
+						<p class="paragraph">目前认为，膳食中的碳水化合物、脂肪会增加乳腺癌的发生风险,而水果蔬菜、叶酸、维生素D和膳食纤维能降低乳腺癌的发生风险。因此，平时应多吃一些蔬菜水果等含有维生素、膳食纤维的食品，预防乳腺癌的发生。</p>
+					</section>
+					<section class="chapter">
+						<p>
+							<strong>3、积极参加体育锻炼，保持合适的体重 </strong>
+						</p>
+						<p class="paragraph">高体重是绝经后乳腺癌的危险因素，此时体内多余的脂肪会转变为雌激素，成为雌激素的主要来源，促进乳腺癌细胞的生长。要坚持体育锻炼，保持适当的体重，避免肥胖导致的乳腺癌风险增加。</p>
+					</section>
+					<section class="chapter">
+						<p>
+							<strong>4、保持心情舒畅，避免压力过大</strong>
+						</p>
+						<p class="paragraph">长期心情不畅的女性是乳腺癌的高危人群，建议大家在日常生活中保持情绪稳定,避免精神刺激,适当给自己减压,保持心情舒畅及乐观的生活态度,避免和减少精神、心理紧张因素,可以减少乳腺癌的发生。</p>
+					</section>
+					<section class="chapter">
+						<p>
+							<strong>5、定期去正规医疗机构进行体检</strong>
+						</p>
+						<p class="paragraph">建议长期饮酒、心情不畅及乳腺增生、有乳腺癌家族史、携带相关基因有害突变的人群定期进行乳腺自检，同时去正规体检机构进行相关的检查，包括 X 线检查、糖类抗原 CA153、CEA、乳腺B超等，早监测、早发现，早诊断、早治疗。</p>
 					</section>
 				</div>
-				<hr style="height:2px;line-height:2px;border-top:2px solid #3e3e3e;">
-				<section class="text-center">
-				*** 本报告为隐私报告，请妥善保管，无受检人书面授权严禁公布或分享！***
-				</section>
+				<h4 style="margin-top: 10px;" id="nav-part-6">Part 6 参考文献</h4>
+				<div class="report-result">
+					<section class="chapter">
+						<p>【1】 Holly Yan (2013-05-14). "What's the gene that led to Angelina Jolie's double mastectomy?". Health. CNN.
+						<p>
+						<p>【2】 "BRCA1 and BRCA2: Cancer Risk and Genetic Testing". National Cancer Institute. 29 May 2009.
+						<p>
+						<p>【3】effrey N. Weitzel, Veronica I. Lagos, Carey A. Cullinane, Patricia J. Gambol, Julie O. Culver, Kathleen R. Blazer, Melanie R. Palomares, Katrina J. Lowstuter, Deborah J. MacDonald
+							(2007). "Limited Family Structure and BRCA Gene Mutation Status in Single Cases of Breast Cancer". Journal of the American Medical Association 297 (23): 2587–2595. doi:10.1001/jama.297.23.2587
+						
+						<p>
+						<p>【4】Cui, J; Antoniou, AC; Dite, GS; Southey, MC; Venter, DJ; Easton, DF; Giles, GG; McCredie, MR; Hopper, JL (Feb 2001)."After BRCA1 and BRCA2-what next? Multifactorial segregation
+							analyses of three-generation, population-based Australian families affected by female breast cancer". Am J Hum Genet 68 (2): 420–31. doi:10.1086/318187.PMC 1235275. PMID 11133358
+						<p>
+						<p>【5】Morris, Joi L.; Gordon, Ora K. (2010). Positive Results: Making the Best Decisions When You're at High Risk for Breast or Ovarian Cancer. Amherst, N.Y.: Prometheus Books. ISBN
+							978-1-59102-776-8.
+						<p>
+						<p>【6】Campeau PM, Foulkes WD, Tischkowitz MD. Hereditary breast cancer: New genetic developments, new therapeutic avenues. Human Genetics 2008; 124(1):31–42.
+						<p>
+						<p>【7】Easton DF. How many more breast cancer predisposition genes are there? Breast Cancer Research 1999; 1(1):14–17. [PubMed Abstract]
+						<p>
+						<p>【8】Pal T, Permuth-Wey J, Betts JA, et al. BRCA1 and BRCA2 mutations account for a large proportion of ovarian carcinoma cases. Cancer 2005; 104(12):2807–16.
+						<p>
+						<p>【9】Howlader N, Noone AM, Krapcho M, et al. (eds). SEER Cancer Statistics Review, 1975-2011, National Cancer Institute. Bethesda, MD, http://seer.cancer.gov/csr/1975_2011/, based on
+							November 2013 SEER data submission, posted to the SEER web site, April 2014.
+						<p>
+						<p>【10】Antoniou A, Pharoah PD, Narod S, et al. Average risks of breast and ovarian cancer associated with BRCA1 or BRCA2 mutations detected in case series unselected for family history: A
+							combined analysis of 22 studies. American Journal of Human Genetics2003; 72(5):1117–1130.
+						<p>
+						<p>【11】Chen S, Parmigiani G. Meta-analysis of BRCA1 and BRCA2 penetrance. Journal of Clinical Oncology 2007; 25(11):1329–1333.
+						<p>
+					</section>
+				</div>
+				<h4 style="margin-top: 10px;" id="nav-part-7">Part 7 特别说明</h4>
+				<div class="report-result">
+					<section class="chapter">
+						<p class="paragraph">本检测的意义是通过基因测序了解遗传背景下患有某癌症的风险情况，如能在疾病未发生之前改变生活方式，积极地干预、预防，可以延缓或者阻止该疾病的发生，建议在疾病未发生前按照健康建议养成良好的生活习惯。</p>
+						<p class="paragraph">癌症遗传风险评估不等于临床诊断，其检测结果不能作为判断是否患有癌症的标准。即某癌种易感基因检测结果阳性或阴性，只代表受检者患病的风险较高或较低，而不代表其已经患有该癌症或不会患有该癌症。癌症遗传风险评估结果可作为临床医生诊断疾病时的参考资料。</p>
+						<p class="paragraph">检测结果为高风险或较高风险时，提示您较他人更易罹患此类癌症，但并不代表必定患此癌症。受检测者依据检测结果所做出的民亊行为，由受检者自行承担一切法律后果。</p>
+						<p class="paragraph">由于科技不断发展，世界范围内数以万计的科学家正在夜以继日地致力于基因与健康之间的研究，我们会保持跟进相关的研究进展，根据最新科研成果调整和丰富基因检测内容。本检测只对检测结果的当前正确性负责并承诺检测服务的准确率将保持在国际先进水平上。</p>
+						<p class="paragraph">提供样本者应对受检者与样本的一致性负责。本结果报告仅对此次送检样品负责。</p>
+					</section>
+				</div>
+				<hr style="height: 2px; line-height: 2px; border-top: 2px solid #3e3e3e;">
+				<section class="text-center">*** 本报告为隐私报告，请妥善保管，无受检人书面授权严禁公布或分享！***</section>
 			</div>
 		</div>
-		<div class="col-xs-1">
-			<div class="btn-group-vertical" style="margin:20px 0px;position: fixed;">
-				<button class="btn btn-success" id="printBtn">打印</button><br>
-				<button class="btn btn-success" id="saveBtn">保存</button><br>
+		<div class="col-xs-2">
+			<div class="btn-group-vertical" style="margin: 20px 0px; position: fixed;">
+				<button class="btn btn-success" id="printBtn">打印</button>
+				<br>
+				<button class="btn btn-success" id="saveBtn">保存</button>
+				<br>
 				<button class="btn btn-success" id="resetBtn">重置</button>
 			</div>
-			<div class="affix" style="text-align:left;bottom:100px;">
+			<div class="affix" style="text-align: left; bottom: 100px;">
 				<ul class="nav">
-					<li><a href="#nav-baseinfo">患者信息</a> </li>
-					<li><a href="#nav-result">一、检测结果</a> </li>
-					<li><a href="#nav-description">二、结果说明</a> </li>
-					<li><a href="#nav-risk">三、风险管理</a> </li>
-					<li><a href="#nav-technology">四、技术参考说明</a> </li>
-					<li><a href="#nav-note">五、报告说明</a> </li>
+					<li>
+						<a href="#nav-baseinfo">基本信息</a>
+					</li>
+					<li>
+						<a href="#nav-part-0">Part 0 您的检测结果</a>
+					</li>
+					<li>
+						<a href="#nav-part-1">Part 1 您的BRCA基因</a>
+					</li>
+					<li>
+						<a href="#nav-part-2">Part 2 您的BRCA变异影响</a>
+					</li>
+					<li>
+						<a href="#nav-part-3">Part 3 您的风险及建议</a>
+					</li>
+					<li>
+						<a href="#nav-part-4">Part 4 增加乳腺癌的风险的因素</a>
+					</li>
+					<li>
+						<a href="#nav-part-5">Part 5 乳腺癌预防日常建议</a>
+					</li>
+					<li>
+						<a href="#nav-part-6">Part 6 参考文献</a>
+					</li>
+					<li>
+						<a href="#nav-part-7">Part 7 特别说明</a>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
 </div>
-#end
-#extends("templates/report/default/123/layout.vm")
+#end #extends("templates/report/default/123/layout.vm")

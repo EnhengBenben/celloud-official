@@ -510,6 +510,7 @@ public class DataAction {
 					} else {
 						task.setProjectId(proId);
 						task.setCommand(command);
+						task.setPeriod(TaskPeriod.WAITTING);
 						taskService.updateTask(task);
 					}
 					Integer taskId = task.getTaskId();

@@ -16,8 +16,17 @@
       }
     });
   
-  celloudApp.service("dataReportService", function($resource){
-    var self =this;
+  celloudApp.service("dataReportService", function($resource,$http){
+    var self = this;
+    self.getReports = function(){
+      return $resource("report/dataReportPages").get();
+    }
+    self.getReportsByParams = function(currentPage,pageSize,condition,beginDate,endDate,batch,tagId,period,sort){
+      return $http.get("report/dataReportPages",{params:{page:currentPage,size:pageSize,condition:condition,beginDate:beginDate,endDate:endDate,tagId:tagId,batch:batch,period:period,sort:sort}});
+    }
+    self.getSearchInfos = function(){
+      return $resource("report/reportSearchInfo").get();
+    }
   });
     
 }());

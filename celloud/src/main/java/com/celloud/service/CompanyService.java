@@ -20,4 +20,14 @@ public interface CompanyService {
 	 */
 	Company selectByPrimaryKey(Integer companyId);
 
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月30日下午3:30:53
+     * @description
+     * @param company
+     *
+     */
+    int updateCompanyIcon(Company company);
+
 }

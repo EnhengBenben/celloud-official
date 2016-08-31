@@ -73,6 +73,7 @@ import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Medicine;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Tag;
 import com.celloud.model.mysql.Task;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
@@ -85,6 +86,7 @@ import com.celloud.service.ExperimentService;
 import com.celloud.service.MedicineService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.TagService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
@@ -122,6 +124,14 @@ public class ReportAction {
 	private UserService userService;
     @Resource
     private MedicineService medicineService;
+    @Resource
+    private TagService tagService;
+
+    @RequestMapping("checkPgsProject")
+    @ResponseBody
+    public Integer checkPgsProject(Integer projectId) {
+        return reportService.getProjectPeriod(projectId);
+    }
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("down")
@@ -135,6 +145,59 @@ public class ReportAction {
 		}
 		return 1;
 	}
+
+    /**
+     * 获取数据报告形式列表
+     * 
+     * @param page
+     * @param size
+     * @param sample
+     * @param condition
+     * @param sord
+     * @param batch
+     * @param period
+     * @param beginDate
+     * @param endDate
+     * @return
+     * @author leamo
+     * @date 2016年8月29日 下午3:37:38
+     */
+    @RequestMapping("dataReportPages")
+    @ResponseBody
+    public PageList<Task> dataReportPages(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String sample,
+            String condition, @RequestParam(defaultValue = "desc") String sort,
+            @RequestParam(name = "tagId", required = false) Integer tagId,
+            @RequestParam(name = "batch", required = false) String batch,
+            @RequestParam(name = "period", required = false) Integer period, String beginDate,
+            String endDate){
+        Page pager = new Page(page,size);
+        Integer userId = ConstantsData.getLoginUserId();
+        PageList<Task> plist = taskService.findAllTasks(pager, userId,
+                condition, tagId, batch,
+                period, beginDate, endDate, sort);
+        return plist;
+    }
+
+    /**
+     * 数据报告列表搜索信息列表
+     * 
+     * @return
+     * @author leamo
+     * @date 2016年8月30日 上午11:47:18
+     */
+    @RequestMapping("reportSearchInfo")
+    @ResponseBody
+    public Map<String, Object> reportSearchInfo() {
+        Integer userId = ConstantsData.getLoginUserId();
+        List<String> batchs = dataService.getBatchList(userId);
+        List<Tag> tags = tagService.findTags(userId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("batchs", batchs);
+        map.put("tags", tags);
+        return map;
+    }
 
 	/**
 	 * 获取报告模块列表
@@ -551,6 +614,23 @@ public class ReportAction {
 		return mv.addObject("mib", mib);
 	}
 
+    @RequestMapping("getMIBReportInfo")
+    @ResponseBody
+    public Map<String, Object> getMIBReportInfo(String dataKey,
+            Integer projectId, Integer appId) {
+        MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
+        Map<String, Object> map = new HashMap<>();
+        Map<String, JSONArray> mibCharList = new HashMap<>();
+        mibCharList.put("readsDistributionInfo",
+                JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        mibCharList.put("familyDistributionInfo",
+                JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        mibCharList.put("genusDistributionInfo",
+                JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        map.put("mibCharList", mibCharList);
+        map.put("mib", mib);
+        return map;
+    }
 	/**
 	 * 获取 MIB 的数据报告
 	 * 
@@ -2299,25 +2379,31 @@ public class ReportAction {
 	}
 
 	/**
-	 * 打印Pgs项目报告
-	 * 
-	 * @param appId
-	 * @param dataKey
-	 * @return
-	 * @author lin
-	 * @date 2016年1月17日下午4:47:37
-	 */
-	@ActionLog(value = "打印Pgs数据报告", button = "打印数据报告")
+     * 
+     * @author MQ
+     * @date 2016年8月25日下午1:14:09
+     * @description 打印项目报告
+     * @param projectId
+     *            项目id
+     *
+     */
+    @ActionLog(value = "打印Pgs项目报告", button = "打印数据报告")
 	@RequestMapping("printPgsProject")
 	@ResponseBody
 	public void printPgsProject(Integer projectId) {
 		List<Pgs> pgsList = reportService.getPgsProjectReport(projectId);
-		// 涉及共享，此处不能取登陆者的companyId
-		String path = ConstantsData.getLoginUser().getCompanyId() + "/PGS/project/print.vm";
+        Pgs pgs = reportService.getPgsProjectInfo(pgsList.get(0).getProjectId());
+        Map<String, Object> context = new HashMap<String, Object>();
+        if(pgs==null){
+            context.put("exists", 0);
+        } else {
+            context.put("exists", 1);
+            context.put("pgs", pgs);
+        }
+        String path = ConstantsData.getLoginUser().getCompanyId() + "/PGS/project/print.vm";
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/PGS/print.vm";
 		}
-		Map<String, Object> context = new HashMap<String, Object>();
 		context.put("pgsList", pgsList);
 		returnToVelocity(path, context, projectId);
 	}
@@ -2702,6 +2788,32 @@ public class ReportAction {
 	public Integer updatePgsFilling(Pgs pgs) {
 		return reportService.updatePgsFilling(pgs);
 	}
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月25日下午3:33:48
+     * @description
+     * @param pgs
+     * @return
+     *
+     */
+    @ActionLog(value = "打印Pgs项目报告时修改用户填写的信息", button = "修改项目报告")
+    @RequestMapping("updatePgsProjectFilling")
+    @ResponseBody
+    public String updatePgsProjectFilling(Pgs pgs, Integer exists) {
+        try {
+            if (exists == 0) { // 代表第一次保存, 需要插入到mongo中
+                pgs.setFlag(1);
+                pgs.setId(null);
+                return reportService.save(pgs).getId().toString();
+            } else { // 不是第一次保存, 更新相应的额报告
+                return reportService.updatePgsProjectilling(pgs).toString();
+            }
+        } catch (Exception e) {
+            return "0";
+        }
+    }
 
 	/**
 	 * 

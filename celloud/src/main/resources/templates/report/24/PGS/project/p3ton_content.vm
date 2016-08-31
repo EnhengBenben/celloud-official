@@ -1,0 +1,77 @@
+#if($pgsList.size() > 1)
+	#foreach($p in $pgsList)
+		<div class="look_hide title">
+		    <h1>山东大学附属生殖医院</h1>
+		    <h1>（国家辅助生殖与优生工程技术研究中心）</h1>
+		    <hr/>
+		</div>
+		<br/>
+		<div class="content">
+		    <table class="contentTable">
+		    	#set($index=$velocityCount - 1)
+		        <tr class="focus">
+		            <td style="font-size:20px;"><br/>结果解读：</td>
+		        </tr>
+		        <tr class="focus hr">
+		            <td><hr/></td>
+		        </tr>
+		        <tr>
+		            <td>胚胎编号:<span><input name="projectInfo['explainEmbryoNumber']" value="#if(${pgs.projectInfo.explainEmbryoNumber.get($index)})$!{pgs.projectInfo.explainEmbryoNumber.get($index)}#else$!{p.anotherName}#end" type="text" class="tdInput"></span></td>
+		        </tr>
+		        #if($p.noEnoughReads == 'false')
+						<tr>
+				            <td style="width:100%"><span style="float:left;">检测结果:</span><div class="explainResult" style="width:55%;float:left;word-break: break-all;"><textarea style="max-height:50px;height:50px;width:100%;font-size:14px;" name="projectInfo['explainResult']">#if(${pgs.projectInfo.explainResult.get($index)})$!{pgs.projectInfo.explainResult.get($index)}#else$!{p.report}#end</textarea></div></td>
+				        </tr>
+				        <tr>
+				            <td style="width:100%"><span style="float:left;">遗传咨询:</span><div class="explainGeneticCounseling" style="width:55%;float:left;word-break: break-all;"><textarea style="max-height:50px;height:50px;width:100%;font-size:14px;" name="projectInfo['explainGeneticCounseling']">$!{pgs.projectInfo.explainGeneticCounseling.get($index)}</textarea></div></td>
+				        </tr>
+				    </table>
+				    <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.miniPng}" style="width:100%;">
+				    <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.splitPng}" style="width:100%;">
+				#else
+						<tr>
+				            <td style="width:100%"><span style="float:left;">检测结果:</span><div class="explainResult" style="width:55%;float:left;word-break: break-all;"><textarea style="max-height:50px;height:50px;width:100%;font-size:14px;" name="projectInfo['explainResult']">#if(${pgs.projectInfo.explainResult.get($index)})$!{pgs.projectInfo.explainResult.get($index)}#else测序量不足，无法分析，建议重测。#end</textarea></div></td>
+				        </tr>
+				    </table>
+				#end
+		</div>
+		<div class="w3cbbs"></div>
+	#end
+#else
+	<div class="look_hide title">
+	    <h1>山东大学附属生殖医院</h1>
+	    <h1>（国家辅助生殖与优生工程技术研究中心）</h1>
+	    <hr/>
+	</div>
+	<br/>
+	<div class="content">
+	    <table class="contentTable">
+	    	#set($index=$velocityCount - 1)
+	        <tr class="focus">
+	            <td style="font-size:20px;"><br/>结果解读：</td>
+	        </tr>
+	        <tr class="focus hr">
+	            <td><hr/></td>
+	        </tr>
+	        <tr>
+	            <td>胚胎编号:<span><input name="projectInfo['explainEmbryoNumber']" value="#if(${pgs.projectInfo.explainEmbryoNumber})$!{pgs.projectInfo.explainEmbryoNumber}#else$!{pgsList.get(0).anotherName}#end" type="text" class="tdInput"></span></td>
+	        </tr>
+	        #if($pgsList.get(0).noEnoughReads == 'false')
+		        	<tr>
+			            <td style="width:100%"><span style="float:left;">检测结果:</span><div class="explainResult" style="width:55%;float:left;word-break: break-all;"><textarea style="height:50px;width:100%;font-size:14px;" name="projectInfo['explainResult']">#if(${pgs.projectInfo.explainResult})$!{pgs.projectInfo.explainResult}#else$!{pgsList.get(0).report}#end</textarea></div></td>
+			        </tr>
+			        <tr>
+			            <td style="width:100%"><span style="float:left;">遗传咨询:</span><div class="explainGeneticCounseling" style="width:55%;float:left;word-break: break-all;"><textarea style="height:50px;width:100%;font-size:14px;" name="projectInfo['explainGeneticCounseling']">$!{pgs.projectInfo.explainGeneticCounseling}</textarea></div></td>
+			        </tr>
+			    </table>
+			    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).miniPng}" style="width:100%;">
+			    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).splitPng}" style="width:100%;">
+	        #else
+		        	<tr>
+			            <td style="width:100%"><span style="float:left;">检测结果:</span><div class="explainResult" style="width:55%;float:left;word-break: break-all;"><textarea style="height:50px;width:100%;font-size:14px;" name="projectInfo['explainResult']">#if(${pgs.projectInfo.explainResult})$!{pgs.projectInfo.explainResult}#else测序量不足，无法分析，建议重测。#end</textarea></div></td>
+			        </tr>
+			    </table>
+	        #end
+	</div>
+	<div class="w3cbbs"></div>
+#end

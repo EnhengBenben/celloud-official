@@ -27,6 +27,10 @@
       templateUrl: "pages/user/user_emailreset.jsp",
       controller: "updateEmail"
     })
+    .when('/user/set',{
+      templateUrl: "pages/user/user_reportset.jsp",
+      controller: "setReportController"
+    })
     .when('/count',{
       templateUrl: "pages/count/count_main.jsp"
     })
@@ -89,6 +93,13 @@
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
+    })
+    .when('/reportdata/bsi',{
+      templateUrl: "pages/report/report_data_bsi.jsp"
+    })
+    .when('/reportdata/MIB',{
+      templateUrl: "pages/report/report_data_mib.jsp",
+      controller: "mibReportController"
     })
     .otherwise({redirectTo:'/'});
   });

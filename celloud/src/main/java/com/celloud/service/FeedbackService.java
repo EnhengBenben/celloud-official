@@ -83,4 +83,20 @@ public interface FeedbackService {
 	 */
 	public void saveAttach(Integer feedbackId, String name);
 
+	/**
+	 * 删除指定的工单附件
+	 * 
+	 * @param attachId
+	 * @return
+	 */
+	public boolean deleteAttach(Integer attachId);
+
+	/**
+	 * 删除指定名称的未保存的附件
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean deleteAttachTemp(String name);
+
 }
