@@ -27,6 +27,10 @@
       templateUrl: "pages/user/user_emailreset.jsp",
       controller: "updateEmail"
     })
+    .when('/user/set',{
+      templateUrl: "pages/user/user_reportset.jsp",
+      controller: "setReportController"
+    })
     .when('/count',{
       templateUrl: "pages/count/count_main.jsp"
     })

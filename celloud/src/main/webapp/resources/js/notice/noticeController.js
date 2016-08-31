@@ -5,23 +5,24 @@
 			page : 1,
 			pageSize : 10
 		};
-		$scope.notices = noticeService.listNotices({
-			currentPage : pages.page,
-			pageSize : pages.pageSize
-		});
 		$scope.noticeRemoveState = false;
 		$scope.noticeReadState = false;
+		var checkedNotices = [];
 		$scope.changePage = function(page, pageSize) {
 			pages = {
 				page : page,
 				pageSize : pageSize
 			};
-			$scope.notices = noticeService.listNotices({
+			noticeService.listNotices({
 				currentPage : page,
 				pageSize : pageSize
+			}, function(data) {
+				$scope.notices = data;
+				checkedNotices = [];
+				changeNoticeState();
 			});
-		}
-		var checkedNotices = [];
+		};
+		$scope.changePage(pages.page,pages.pageSize);
 		$scope.readNotices = function() {
 			var noticeIds = [];
 			for (i in checkedNotices) {
