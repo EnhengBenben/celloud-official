@@ -88,7 +88,7 @@ var rockyUpload = (function(rockyUpload) {
 		});
 		uploader.bind("BeforeUpload", function(uploader, file) {
 			$("#" + file.id +" .percent").html("正在上传");
-			uploader.setOption("multipart_params",{"tagId":$("#tag-info-input").val(),"batch":$("#batch-info-input").val()});
+			uploader.setOption("multipart_params",{"tagId":$("#tag-info-input").val(),"batch":$("#batch-info-input").val(),"uniqueName":file.id});
 		});
 		uploader.bind("FileUploaded", function(uploader, file, response) {
 			var res = JSON.parse(response.response);
