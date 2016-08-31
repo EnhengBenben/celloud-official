@@ -15,7 +15,7 @@
             <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
           </div>
           <div class="info-btn-group pull-right">
-            <input class="field" type="text" placeholder="搜索文件名/数据标签/文件别名" ng-model="dataCondition"/>
+            <input class="field" type="text" placeholder="搜索文件名/数据标签/文件别名" ng-model="dataCondition" ng-keypress="doSearch($event)"/>
             <a class="action" ng-click="conditionList()">搜索</a>
           </div>
         </div>
