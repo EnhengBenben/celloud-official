@@ -24,6 +24,15 @@ $.ajaxSetup ({
 		var spinnerTotal;
 		//---------------------------------------------------------------------
 		var param = null;
+		function printPgsProject(projectId){
+			$.get("report/checkPgsProject",{projectId:projectId},function(flag){
+				if(flag != 3){
+					jAlert("该项目尚未运行完毕");
+				}else{
+					window.open(CONTEXT_PATH + "/report/printPgsProject?projectId=" + projectId);
+				}
+			});
+		}
 		function downPDF(userId,appId,projectId){
 		  var path = userId + "/" + appId + "/" + projectId + "/" + projectId + ".pdf";
 			$.get("report/down",{"path":path},function(flag){

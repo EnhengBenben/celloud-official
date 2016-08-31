@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.manager.alimail.AliEmailUtils;
 import com.celloud.manager.constants.CompanyConstants;
 import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.constants.UserRole;
@@ -39,7 +40,6 @@ import com.celloud.manager.page.Page;
 import com.celloud.manager.page.PageList;
 import com.celloud.manager.service.CompanyService;
 import com.celloud.manager.utils.CityUtils;
-import com.celloud.manager.utils.EmailUtils;
 import com.celloud.manager.utils.FileTools;
 
 import net.sf.json.JSONArray;
@@ -57,6 +57,8 @@ public class CompanyAction {
     Logger logger = LoggerFactory.getLogger(CompanyAction.class);
     @Resource
     private CompanyService companyService;
+    @Resource
+    private AliEmailUtils aliEmailUtils;
 
     @RequestMapping("guide")
     public ModelAndView companyGuideCount() {
@@ -204,9 +206,8 @@ public class CompanyAction {
     @RequestMapping("sendName")
     @ResponseBody
     public int sendName(String currentName, String newName, String reason) {
-        String[] emails = new String[] { "miaoqi@celloud.cn" };
-        String content = "旧名称:" + currentName + "<br/>新名称:" + newName + "<br/>原因:" + reason;
-        EmailUtils.sendWithTitle("公司名称有异", content, emails);
+        String context = "旧名称:" + currentName + "<br/>新名称:" + newName + "<br/>原因:" + reason;
+        aliEmailUtils.simpleSend("[CelLoud] 公司名称有异", context, aliEmailUtils.getFeedbackMailTo());
         return 1;
     }
 

@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
 
@@ -1026,5 +1027,31 @@ public class ReportServiceImpl implements ReportService {
 		}
 		return ur != null ? 1 : 0;
 	}
+
+    @Override
+    public Pgs getPgsProjectInfo(Integer projectId) {
+        return reportDao.getProjectByProjectId(Pgs.class, projectId);
+    }
+
+    @Override
+    public <T> Key<T> save(T t) {
+        return reportDao.saveObj(t);
+    }
+
+    @Override
+    public Integer updatePgsProjectilling(Pgs pgs) {
+        UpdateResults ur = null;
+        if (pgs.getProjectInfo() == null) {
+            ur = reportDao.editData(Pgs.class, pgs.getId(), "projectInfo", new HashMap<String, String>());
+        } else {
+            ur = reportDao.editData(Pgs.class, pgs.getId(), "projectInfo", pgs.getProjectInfo());
+        }
+        return ur != null ? 1 : 0;
+    }
+
+    @Override
+    public Integer getProjectPeriod(Integer projectId) {
+        return reportMapper.selectPeriodByFlag(projectId, 1);
+    }
 
 }

@@ -28,7 +28,6 @@
 			<div class="col-xs-12" style="height: 350px;margin-top: 50px;" id="topDataSize"></div>
 			<div class="col-xs-11 table-div">
 				<div class="table-header hide" id="_companyName"></div>
-				<c:if test="${weekData!=null && fn:length(weekData) > 0 }">
 					<div class="table-responsive " id="dataDiv">
 						<table id="weekData" class="table table-striped table-bordered table-hover">
 							<thead>
@@ -48,6 +47,7 @@
 								</tr>
 							</thead>
 							<tbody>
+								<c:if test="${not empty weekData }">
 								<c:forEach items="${weekData }" var="data">
 									<tr>
 										<td>
@@ -72,10 +72,15 @@
 										<td>${data.fileCount }</td>
 									</tr>
 								</c:forEach>
+								</c:if>
+								<c:if test="${empty weekData }">
+									<tr>
+										<td colspan="7" style="text-align: center;">暂无数据!</td>
+									</tr>
+								</c:if>
 							</tbody>
 						</table>
 					</div>
-				</c:if>
 				<!-- PAGE CONTENT ENDS -->
 			</div>
 			<!-- /.col -->

@@ -1,13 +1,10 @@
 <form id="cmp-form">
     <section class="section0 border1 w3cbbs">
         <div class="header">
-            <img src="${base}/images/report/yanda_print.png">
-            <h1>肿瘤样本基因检测与个体化治疗分析报告</h1>
+            <h1>肿瘤样本基因检测与个体化样本分析</h1>
+            <img src="${base}/images/report/accuxam_print.png">
         </div>
         <div class="titletype">
-            <div>
-                <span>肿瘤类型：</span><span><input type="text" class="input200" id="tumorType" name="tumorType" value="$!{cmpReport.cmpFilling.tumorType}"></span>
-            </div>
             <div>
                 <span>姓</span><span style="margin-left:40px">名：</span><span><input id="patientName1" type="text" class="input200" value="$!{cmpReport.cmpFilling.patientName}"></span>
             </div>
@@ -19,6 +16,7 @@
             </div>
         </div>
         <footer>
-            检测机构：燕达国际医院临床检测二部/华点云科技
+            检测机构：艾科优美医学技术（北京）有限公司<br>
+            蛋白质药物国家工程研究中心
         </footer>
     </section>
