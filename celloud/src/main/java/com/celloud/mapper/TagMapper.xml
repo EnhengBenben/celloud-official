@@ -55,4 +55,8 @@
     set tag_name = #{tagName,jdbcType=VARCHAR}
     where tag_id = #{tagId,jdbcType=INTEGER}
   </update>
+  <select id="findTags" resultMap="BaseResultMap">
+    select tag.* from tb_tag tag,tb_task t,tb_app_tag_relat atr
+    where tag.tag_id=atr.tag_id and atr.app_id=t.app_id and t.user_id=#{userId} and t.state=#{state} group by tag_id
+  </select>
 </mapper>

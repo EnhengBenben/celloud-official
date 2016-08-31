@@ -1,5 +1,9 @@
 package com.celloud.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.mysql.Tag;
 
 public interface TagMapper {
@@ -14,4 +18,7 @@ public interface TagMapper {
     int updateByPrimaryKeySelective(Tag record);
 
     int updateByPrimaryKey(Tag record);
+
+    List<Tag> findTags(@Param("userId") Integer userId,
+            @Param("state") Integer state);
 }

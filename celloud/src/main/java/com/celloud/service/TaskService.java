@@ -209,4 +209,23 @@ public interface TaskService {
 	 */
 	public PageList<Task> findRockyTasks(Page pager, String sample, String condition, String sidx, String sord,
 			ArrayList<String> batches, ArrayList<Integer> state, Date beginDate, Date endDate);
+
+    /**
+     * 获取所有报告任务列表
+     * 
+     * @param pager
+     * @param userId
+     * @param condition
+     * @param batch
+     * @param period
+     * @param beginDate
+     * @param endDate
+     * @param sord
+     * @return
+     * @author leamo
+     * @date 2016年8月29日 下午3:17:25
+     */
+    public PageList<Task> findAllTasks(Page pager, Integer userId,
+            String condition, Integer tagId, String batch, Integer period,
+            String beginDate, String endDate, String sord);
 }

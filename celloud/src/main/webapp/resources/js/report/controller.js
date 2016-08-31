@@ -395,7 +395,82 @@
     });
   });
   
-  celloudApp.controller("dataReportController", function($scope,projectReportService){
-    $scope.ranAppList = projectReportService.getRanAPP();
+  celloudApp.controller("dataReportController", function($scope,projectReportService,dataReportService){
+    $scope.searchInfo = dataReportService.getSearchInfos();
+    console.log(typeof($scope.searchInfo));
+    $scope.reportList = dataReportService.getReports();
+    console.log($scope.searchInfo);
+    console.log($scope.reportList);
+    var options = {
+        page : 1,
+        pageSize : 20,
+        beginDate : null,
+        endDate : null,
+        tagId : null,
+        period : null,
+        batch : null,
+        condition : null,
+        sort: 'desc'
+    };
+    var paramQuqery = function(){
+      dataReportService.getReportsByParams(options.page,options.pageSize,options.condition,options.beginDate,options.endDate,options.batch,options.tagId,options.period,options.sort)
+      .success(function(dataList){
+        $scope.reportList = dataList;
+      });
+    }
+    $scope.pageQuery = function(page,pageSize){
+      options.page = page;
+      options.pageSize = pageSize;
+      paramQuqery();
+    }
+    $scope.tagsQuery = function(tagId){
+      options.tagId = tagId;
+      options.page = 1;
+      paramQuqery();
+    }
+    $scope.batchsQuery = function(batch){
+      options.batch = batch;
+      options.page = 1;
+      paramQuqery();
+    }
+    $scope.periodQuery = function(period){
+      options.period = period;
+      options.page = 1;
+      paramQuqery();
+    }
+    $scope.fullDateQuery = function(days){
+      if(days==0){
+        options.beginDate = null;
+        options.endDate = null;
+      }else{
+        var d = new Date();
+        var date = new Date(d.getTime()-1000*60*60*24*days);
+        var year = date.getFullYear(); 
+        var mounth = date.getMonth()+1;
+        var day = date.getDate(); 
+        options.beginDate = year+"-"+mounth+"-"+day+" 00:00:00";
+        options.endDate = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" 23:59:59";
+      }
+      options.page = 1;
+      paramQuqery();
+    }
+    $scope.chooseDate = function(){
+      var d = new Date();
+      var begin = $("#begin-date").val();
+      var end = $("#end-date").val();
+      end = end ? end : d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+      if(!begin){
+        $.tips("请选择开始时间！","时间错误");
+        return;
+      }
+      if(begin > end){
+        $.tips("请确认开始时间  < 结束时间！","时间错误");
+        return;
+      }
+      options.beginDate = begin + " 00:00:00";
+      options.endDate = end + " 23:59:59";
+      options.page = 1;
+      paramQuqery();
+    }
   });
 })();

@@ -39,6 +39,8 @@ public class Task {
     private String fileId;
     private String batch;
     private String sampleName;
+    private String tagName;
+    private String appName;
 
     public Integer getTaskId() {
         return taskId;
@@ -198,5 +200,21 @@ public class Task {
 
     public void setSampleName(String sampleName) {
         this.sampleName = sampleName;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
     }
 }

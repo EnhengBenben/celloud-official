@@ -14,18 +14,18 @@
             <label>时&emsp;&emsp;间：</label>
             <div class="search-type-detail times">
               <ul class="search-info seartch-date">
-	            <li><a class="active" href="javascript:void(0)">全部</a></li>
-	            <li><a href="javascript:void(0)">24h</a></li>
-	            <li><a href="javascript:void(0)">3d</a></li>
-	            <li><a href="javascript:void(0)">7d</a></li>
-	            <li><a href="javascript:void(0)">15d</a></li>
-	            <li><a href="javascript:void(0)">30d</a></li>
+	            <li><a class="active" ng-click="fullDateQuery(0)" href="javascript:void(0)">全部</a></li>
+	            <li><a ng-click="fullDateQuery(1)" href="javascript:void(0)">24h</a></li>
+	            <li><a ng-click="fullDateQuery(3)" href="javascript:void(0)">3d</a></li>
+	            <li><a ng-click="fullDateQuery(7)" href="javascript:void(0)">7d</a></li>
+	            <li><a ng-click="fullDateQuery(15)" href="javascript:void(0)">15d</a></li>
+	            <li><a ng-click="fullDateQuery(30)" href="javascript:void(0)">30d</a></li>
               </ul>
               <div class="search-btns">
-                <input type="text">
+                <input type="text" class="Wdate input" onclick="WdatePicker()" readonly="readonly" id="begin-date">
                 <span>-</span>
-                <input type="text">
-                <button class="btn btn-cancel">确定</button>
+                <input type="text" class="Wdate input" onclick="WdatePicker()" readonly="readonly" id="end-date">
+                <button class="btn btn-cancel" ng-click="chooseDate()">确定</button>
               </div>
             </div>
           </li>
@@ -33,9 +33,9 @@
             <label>产品标签：</label>
             <div class="search-type-detail inline-detail {{reportMoreAppTag|chevronTypeDivFilter}}" ng-init="reportMoreAppTag=true">
               <ul class="search-info">
-                <li><a class="active" href="javascript:void(0)">全部</a></li>
-                <li ng-repeat="app in ranAppList.datas">
-                    <a class="changeApp" href="javascript:void(0)">{{app.app_name}}</a>
+                <li><a class="active" href="javascript:void(0)" ng-click="tagsQuery(null)">全部</a></li>
+                <li ng-repeat="tag in searchInfo.tags">
+                    <a ng-click="tagsQuery(tag.tagId)" href="javascript:void(0)">{{tag.tagName}}</a>
                 </li>
               </ul>
               <div class="search-btns">
@@ -47,8 +47,10 @@
             <label>数据标签：</label>
             <div class="search-type-detail inline-detail {{reportMoreDataTag|chevronTypeDivFilter}}" ng-init="reportMoreDataTag=true">
               <ul class="search-info">
-                <li><a class="active" href="javascript:void(0)">全部</a></li>
-                <li><a href="javascript:void(0)">aaaa</a></li>
+                <li><a class="active" href="javascript:void(0)" ng-click="batchsQuery(null)">全部</a></li>
+                <li ng-repeat="batch in searchInfo.batchs">
+                    <a href="javascript:void(0)" ng-click="batchsQuery({{batch}})">{{batch}}</a>
+                </li>
               </ul>
 	          <div class="search-btns">
 	            <button class="btn chevron-btn" ng-click="reportMoreDataTag=changeChevronType(reportMoreDataTag)">{{reportMoreDataTag|chevronTypeTextFilter}}<i ng-class="reportMoreDataTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
@@ -59,14 +61,14 @@
             <label>状&emsp;&emsp;态：</label>
             <div class="search-type-detail">
               <ul class="search-info">
-                <li><a class="active" href="javascript:void(0)">全部</a></li>
-                <li><a href="javascript:void(0)">完成</a></li>
-                <li><a href="javascript:void(0)">分析中</a></li>
-                <li><a href="javascript:void(0)">等待分析</a></li>
-                <li><a href="javascript:void(0)">数据上传中</a></li>
-                <li><a href="javascript:void(0)">异常终止</a></li>
-                <li><a href="javascript:void(0)">实验中</a></li>
-                <li><a href="javascript:void(0)">送样中</a></li>
+                <li><a class="active" href="javascript:void(0)" ng-click="periodQuery(null)">全部</a></li>
+                <li><a href="javascript:void(0)" ng-click="periodQuery(2)">完成</a></li>
+                <li><a href="javascript:void(0)" ng-click="periodQuery(1)">分析中</a></li>
+                <li><a href="javascript:void(0)" ng-click="periodQuery(0)">等待分析</a></li>
+                <li><a href="javascript:void(0)" ng-click="periodQuery(3)">数据上传中</a></li>
+                <li><a href="javascript:void(0)" ng-click="periodQuery(4)">异常终止</a></li>
+                <li><a href="javascript:void(0)" ng-click="periodQuery(6)">实验中</a></li>
+                <li><a href="javascript:void(0)" ng-click="periodQuery(5)">送样中</a></li>
               </ul>
             </div>
           </li>
@@ -92,30 +94,31 @@
             <th>样品编号</th>
             <th>产品标签</th>
             <th>数据标签</th>
-            <th>生成时间</th>
+            <th>更新时间</th>
             <th>状态</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="file in dataList.datas">
+          <tr ng-repeat="task in reportList.datas">
             <td>
               <label class="checkbox-lable">
                 <input class="checkbox" type="checkbox" name="demo-checkbox1" ng-disabled="file.isRunning==1||file.tagName==null">
                 <span class="info"></span>
               </label>
             </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>2016-05-05 12:12:12</td>
+            <td>{{task.fileName}}</td>
+            <td>{{task.dataKey}}</td>
+            <td>{{task.tagName}}</td>
+            <td>{{task.batch}}</td>
+            <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{task.period}}</td>
             <td>
-              <a href="javascript:void(0)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              <a href="#/reportdata/{{task.appName}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
             </td>
           </tr>
         </tbody>
       </table>
-      <ng-include src="'pages/partial/_partial_pagination_common.jsp'" ></ng-include>
+      <pagination page="reportList.page" change="pageQuery(page,pageSize)"></pagination>
     </div>
 </div>

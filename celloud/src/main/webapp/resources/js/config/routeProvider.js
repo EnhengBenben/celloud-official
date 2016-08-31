@@ -90,6 +90,13 @@
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
     })
+    .when('/reportdata/bsi',{
+      templateUrl: "pages/report/report_data_bsi.jsp"
+    })
+    .when('/reportdata/MIB',{
+      templateUrl: "pages/report/report_data_mib.jsp",
+      controller: "mibReportController"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()
