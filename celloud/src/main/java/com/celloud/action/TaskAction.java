@@ -481,7 +481,7 @@ public class TaskAction {
             Integer taskId = task.getTaskId();
             if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
                 logger.info("任务{}运行命令：{}", taskId, command);
-                SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+                SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
                 ssh.sshSubmit(command, false);
                 taskService.updateToRunning(taskId);
             } else {
