@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -195,6 +196,20 @@ public class FeedbackAction {
 			logger.error("工单上传附件失败：{}", fileName, e);
 		}
 		return targetFile.getName();
+	}
+
+	@ActionLog(value = "删除工单附件", button = "删除")
+	@RequestMapping(value = "attach/delete", method = RequestMethod.DELETE)
+	@ResponseBody
+	public Response deleteAttach(String name, Integer attachId) {
+		boolean result = false;
+		logger.info("attachId={}", attachId);
+		if (!StringUtils.isBlank(name)) {
+			result = feedbackService.deleteAttachTemp(name);
+		} else if (attachId != null && attachId.intValue() != 0) {
+			result = feedbackService.deleteAttach(attachId);
+		}
+		return result ? Response.SUCCESS : Response.FAIL;
 	}
 
 	/**

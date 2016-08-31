@@ -192,4 +192,19 @@ public class FeedbackServiceImpl implements FeedbackService {
 		cleanAttachment();
 	}
 
+	@Override
+	public boolean deleteAttach(Integer attachId) {
+		FeedbackAttachment attachment = attachmentMapper.selectByPrimaryKey(attachId);
+		int result = attachmentMapper.deleteByPrimaryKey(attachId);
+		feedbackMapper.updateAttachState(attachment.getFeedbackId());
+		return result > 0;
+	}
+
+	@Override
+	public boolean deleteAttachTemp(String name) {
+		String path = FeedbackConstants.getAttachmentTempPath() + File.separator + name;
+		File targetFile = new File(path);
+		return targetFile.delete();
+	}
+
 }

@@ -27,9 +27,18 @@
 				url : "feedback/create",
 				method : 'put',
 				params : {
-					title:'@title',
-					content:'@content',
-					attachList:'@attachments'
+					title : '@title',
+					content : '@content',
+					attachList : '@attachments'
+				}
+			},
+			deleteAttach : {
+				url : "feedback/attach/delete",
+				method : 'post',
+				params : {
+					name : '@name',
+					_method:'delete',
+					attachId : '@attachId'
 				}
 			}
 		};
