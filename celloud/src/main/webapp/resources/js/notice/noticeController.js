@@ -13,10 +13,11 @@
 				page : page,
 				pageSize : pageSize
 			};
-			$scope.notices = noticeService.listNotices({
+			noticeService.listNotices({
 				currentPage : page,
 				pageSize : pageSize
-			}, function() {
+			}, function(data) {
+				$scope.notices = data;
 				checkedNotices = [];
 				changeNoticeState();
 			});
