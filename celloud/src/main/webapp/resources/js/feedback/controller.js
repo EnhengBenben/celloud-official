@@ -48,16 +48,27 @@
 					$scope.unsavedAttachments = [];
 					$("#new-qa-modal").modal('hide');
 					loadFeedbacks();
-					$scope.resetCreateForm ();
+					$scope.resetCreateForm();
 				});
 			}
 		};
-		$scope.resetCreateForm = function(){
+		$scope.resetCreateForm = function() {
 			$scope.unsavedFeedback = angular.copy({});
-			$scope.unsavedAttachments =[];
-			unsaveUploader.splice(0,unsaveUploader.files.length);
+			$scope.unsavedAttachments = [];
+			unsaveUploader.splice(0, unsaveUploader.files.length);
 		}
-		$scope.showAttach = function(attach){
+		$scope.deleteAttach = function(attachId, name) {
+			feedbackService.deleteAttach({
+				name : name,
+				attachId : attachId
+			}, function(data) {
+				$.alert(data.message);
+				$("#attachmentModal").modal('hide');
+				$scope.currentAttach = null;
+				$scope.change($scope.current.id);
+			});
+		}
+		$scope.showAttach = function(attach) {
 			$scope.currentAttach = attach;
 			$("#attachmentModal").modal("show");
 		}

@@ -122,14 +122,6 @@
 								<button type="reset" class="btn btn-cancel" ng-click="resetCreateForm()">重置</button>
 								<button type="submit" class="btn" ng-disabled="feedbackCreateForm.$invalid">提交</button>
 							</div>
-							<div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state">
-								<button type="button" class="close" ng-click="state=false">
-									<span aria-hidden="true">
-										<i class="fa fa-times-circle"></i>
-									</span>
-								</button>
-								<span>{{message}}</span>
-							</div>
 						</div>
 					</form>
 				</div>
@@ -152,6 +144,10 @@
 				<a ng-href="<%=request.getContextPath()%>/feedback/attach?file={{currentAttach.filePath}}" target="_blank">
 					<img alt="" class="img-responsive img-thumbnail" ng-src="<%=request.getContextPath()%>/feedback/attach?file={{currentAttach.filePath}}">
 				</a>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn" ng-click="deleteAttach(currentAttach.id)">删除</button>
+				<button type="button" class="btn btn-cancel" data-dismiss="modal">关闭</button>
 			</div>
 		</div>
 	</div>
