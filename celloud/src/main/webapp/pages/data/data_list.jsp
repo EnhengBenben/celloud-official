@@ -60,7 +60,7 @@
             <td>{{file.anotherName}}</td>
             <td>{{file.tagName}}</td>
             <td>{{file.batch}}</td>
-            <td>{{file.size}}</td>
+            <td>{{file.size | fileSizeFormat}}</td>
             <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
