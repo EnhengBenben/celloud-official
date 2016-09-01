@@ -64,6 +64,9 @@
             <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
+          <tr ng-show="dataList.datas.length == 0">
+          	<td colspan="8">暂无数据</td>
+          </tr>
         </tbody>
       </table>
       <pagination page="dataList.page" change="pageQuery(page,pageSize)"></pagination>

@@ -34,6 +34,7 @@
         </div>
         <div class="upload-content" ng-class="{hide: step!='two'}">
           <div class="info">第二步：拖拽文件到下面指定区域或者点击指定位置的选择文件，后即可自动上传文件</div>
+          <div class="info text-left">数据标签：{{batch}}&nbsp;&nbsp;产品标签：{{tagId}}</div>
           <div id="plupload-content" class="plupload-content">
             <div class="upload-text">
                 <i class="celicon -uploadgray"></i> 拖拽文件到此或者<a class="btn-link" id="choseFile">点击选择</a>文件上传
@@ -41,7 +42,8 @@
           </div>
         </div>
         <div class="upload-content" ng-class="{hide: step!='three'}">
-          <div class="info">第三步：上传完成</div>
+          <div class="info">第三步：上传中...</div>
+          <div class="info text-left">数据标签：{{batch}}&nbsp;&nbsp;产品标签：{{tagId}}</div>
           <table class="table table-main" id="upload-list-table">
             <thead>
                 <tr>
