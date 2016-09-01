@@ -12,6 +12,7 @@ var fileUpload=(function(fileUpload){
       // Maximum file size
       chunk_size : '1mb',
       dragdrop : true,
+      unique_names:true,
       drop_element : 'upload-filelist',
       // Specify what files to browse for
       filters : {

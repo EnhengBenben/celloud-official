@@ -94,10 +94,11 @@ public class UploadAction {
 	@RequestMapping("rocky")
 	@ResponseBody
 	public Map<String, String> uploadRockyFile(@RequestParam("file") CommonsMultipartFile file, Integer chunk,
-			Integer chunks, String name, Integer tagId, String batch, Integer needSplit, HttpServletRequest request) {
+			Integer chunks, String name, String uniqueName, Integer tagId, String batch, Integer needSplit,
+			HttpServletRequest request) {
 		Map<String, String> model = new HashMap<>();
 		model.put("run", "false");
-		int dataId = handleUpload(file, name, chunk, chunks, batch, request);
+		int dataId = handleUpload(file, name, uniqueName, chunk, chunks, batch, request);
 		if (dataId != 0) {
 			DataFile data = dataService.getDataById(dataId);
 			List<Integer> dataIds = rockyCheckRun(data);
@@ -170,8 +171,8 @@ public class UploadAction {
 	 * @param request
 	 * @return 文件id，如果不是最后一个chunk，则为0
 	 */
-	private int handleUpload(CommonsMultipartFile file, String name, Integer chunk, Integer chunks, String batch,
-			HttpServletRequest request) {
+	private int handleUpload(CommonsMultipartFile file, String name, String uniqueName, Integer chunk, Integer chunks,
+			String batch, HttpServletRequest request) {
 		File f = new File(PropertiesUtil.bigFilePath);
 		if (!f.exists()) {
 			boolean isTrue = f.mkdir();
@@ -179,7 +180,7 @@ public class UploadAction {
 				logger.error("路径创建失败：{}", realPath);
 			}
 		}
-		String fileName = realPath + File.separatorChar + name;
+		String fileName = realPath + File.separatorChar + uniqueName;
 		File localFile = new File(fileName);
 		this.copy(file, localFile);
 		if (chunk.equals(chunks) || chunk.equals(chunks - 1)) {
@@ -193,7 +194,7 @@ public class UploadAction {
 			if (!pf.exists()) {
 				pf.mkdirs();
 			}
-			FileTools.mvFile(realPath, name, folderByDay, newName);
+			FileTools.mvFile(realPath, uniqueName, folderByDay, newName);
 			// TODO 固定值，可以抽取处理
 			String perlPath = request.getSession().getServletContext().getRealPath("/resources")
 					+ "/plugins/getAliases.pl";
