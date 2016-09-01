@@ -55,13 +55,12 @@
       }
       runService.run().success(function(response) {
         if(response.success){
-          $scope.message = "运行成功";
+          $.alert("运行成功");
           $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
           $.dataManager.refreshDataList();
         }else{
           $scope.message = response.message;
         }
-        $scope.state = true;
       });
     };
     //数据删除
@@ -75,8 +74,7 @@
             $scope.conditionList();
             $.dataManager.refreshDataList();
           }
-          $scope.message = response.message;
-          $scope.state = true;
+          $.alert(response.message);
         });
       });
     };
@@ -96,8 +94,7 @@
           $.dataManager.refreshDataList();
           $("#data-detail-modal").modal("hide");
         }
-        $scope.message = response.message;
-        $scope.state = true;
+        $.alert(response.message);
       });
     }
   });
