@@ -65,6 +65,7 @@
   	WHERE t.tag_id = atr.tag_id
   	AND atr.app_id = a.app_id
   	AND uar.app_id = a.app_id
+  	AND uar.is_add = 1
   	AND uar.user_id = #{userId}
   	AND a.off_line = #{state}
   </select>

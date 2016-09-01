@@ -79,7 +79,7 @@
 	      <h4 class="modal-title">数据修改</h4>
 	    </div>
 	    <div class="modal-body form-modal">
-	      <form class="form-horizontal info-form" id="editDataForm">
+	      <form class="form-horizontal info-form" name="editDataForm" id="editDataForm">
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">文件名称：</div>
 	            <div class="col-xs-9">
@@ -96,25 +96,19 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">产品标签：</div>
 	            <div class="col-xs-9 form-group-content">
-	              <div class="checkbox-group" ng-repeat="app in appList">
-	                <label class="radio-lable">
-	                  <input class="radio" type="radio" name="dataTagName" value="{{app.appName}}" ng-checked="app.appName==dataFile.tagName">
-	                  <span class="info"></span>
-	                </label>
-	              	{{app.appName}}
-	              </div>
+	              <select class="checkbox-group" ng-model="appSelected" ng-options="app.appName for app in appList"></select>
 	            </div>
 	          </div>
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">数据标签：</div>
 	            <div class="col-xs-9">
-	                <input type="text" name="batch" maxlength="45" ng-model="dataFile.batch"/><span class="invoice-modal-error"></span>
+	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="45" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
 	            </div>
 	          </div>
 	          <div class="form-group">
 	            <div class="text-center">
 	                <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
-	                <button type="submit" class="btn" ng-click="submitEditData()">提交</button>
+	                <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">提交</button>
 	            </div>
 	            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
 	              <button type="button" class="close" ng-click="updateState=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>

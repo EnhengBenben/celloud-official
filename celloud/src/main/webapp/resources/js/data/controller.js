@@ -88,7 +88,7 @@
     }
     //修改数据信息
     $scope.submitEditData = function(){
-      $scope.dataFile.tagName = $("input[type='radio'][name='dataTagName']:checked").val();
+      $scope.dataFile.tagName = $scope.appSelected == undefined? "" : $scope.appSelected.appName;
       runService.submitEditData($scope.dataFile).success(function(response){
         if(response.success){
           $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);

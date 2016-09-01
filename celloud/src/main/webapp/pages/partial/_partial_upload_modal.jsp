@@ -13,7 +13,7 @@
           <div class="item" ng-class="{active: step=='three'}">3</div>
         </div>
         <div class="upload-content" ng-class="{hide: step!='one'}">
-          <div class="info">第一步：请输入文件标签，输入标签可以方便后续的数据检索及体验更加便捷的服务</div>
+          <div class="info">第一步：请输入数据标签，输入标签可以方便后续的数据检索及体验更加便捷的服务</div>
           <form class="info-form" name="first">
 	          <div class="info-form-group">
 	            <label>数据标签：</label>
