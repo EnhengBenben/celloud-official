@@ -49,7 +49,7 @@
 		      // Maximum file size
 		      chunk_size : '1mb',
 		      dragdrop : true,
-		      drop_element : 'upload-filelist',
+		      drop_element : 'plupload-content',
 		      // Specify what files to browse for
 		      filters : {
 		        max_file_size : '3gb',
