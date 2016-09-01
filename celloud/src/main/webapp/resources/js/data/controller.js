@@ -8,6 +8,7 @@
       runService.pageList().success(function(response){
         $scope.dataList = response;
       });
+      $.dataManager.refreshDataList("clean");
     }
     //初始化列表
     $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
