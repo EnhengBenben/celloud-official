@@ -5,7 +5,7 @@
     $alert.addClass(type + "-modal");
     var $dialog = $('<div class="modal-dialog modal-sm"></div>');
     var $content = $('<div class="modal-content"></div>');
-    var $header = $('<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-confirm"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button><h4 class="modal-title">'+title+'</h4></div>');
+    var $header = $('<div class="modal-header"><button type="button" class="close" aria-label="Close" id="close-confirm"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button><h4 class="modal-title">'+title+'</h4></div>');
     var $body = $('<div class="modal-body"></div>');
     var $h5 = $('<h5></h5>');
     var $footer = $('<div class="modal-footer"><button type="reset" class="btn btn-cancel -low pull-left" data-dismiss="modal" id="confirm-cancle">取消</button><button type="submit" class="btn -low pull-right" id="confirm-ok">确定</button></div>');
@@ -35,14 +35,15 @@
         $alert.modal("show");
         $("#confirm-modal-div").append($alert);
       break;
-      $("#close-confirm").click(function(){
+    }
+    $("#close-confirm").click(function(){
         hide();
       });
-    }
   };
   var hide = function(){
     $("#confirm-modal").modal("hide");
     $("#confirm-modal-div").remove();
+    $(".modal-backdrop.fade.in").remove();
   }
   var confirm = function(message, title, callback) {
     if( title == null ) title = '确认框';
