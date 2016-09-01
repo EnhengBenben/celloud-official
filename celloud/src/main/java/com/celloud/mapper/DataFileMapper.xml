@@ -108,6 +108,10 @@
 		insert into tb_file_tag_relat (file_id,tag_id)
 		select #{fileId,jdbcType=INTEGER},tag_id from tb_tag where tag_name = #{tagName,jdbcType=VARCHAR};
 	</insert>
+	<insert id="insertFileTagRelat">
+		INSERT INTO tb_file_tag_relat(file_id, tag_id)
+		VALUES(#{fileId},#{tagId})
+	</insert>
 	<insert id="insert" parameterType="com.celloud.model.mysql.DataFile">
 		insert into tb_file (file_id,
 		user_id, data_key,

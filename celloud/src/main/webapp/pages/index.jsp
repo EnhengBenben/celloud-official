@@ -184,7 +184,7 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-  <ng-include src="'pages/partial/_partial_upload_modal.jsp'" ></ng-include>
+  <ng-include src="'pages/partial/_partial_upload_modal.jsp'"></ng-include>
   <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';
   </script>
@@ -196,13 +196,16 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+  <script src="<%=request.getContextPath() %>/js/utils.js"></script>
   
   <script type="text/javascript" src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
-   <script src="<%=request.getContextPath()%>/js/alert.js"></script>
+  <script src="<%=request.getContextPath()%>/js/alert.js"></script>
   <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
   <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
+  <script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>

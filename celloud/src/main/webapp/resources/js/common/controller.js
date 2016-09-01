@@ -1,6 +1,7 @@
 (function() {
 	celloudApp.controller("sidebarController", function($scope,
 			$location, $rootScope,commonService) {
+		
 		$scope.isActive = function(viewLocation) {
 			if (viewLocation != "/") {
 				return $location.path().indexOf(viewLocation) >= 0;
@@ -23,6 +24,7 @@
 			$rootScope.errorInfo = info;
 			$("#tips-modal").modal("show");
 		}
+		
 		/**
 		 * 监听userMessage频道，有新消息时，刷新右上角提醒
 		 */

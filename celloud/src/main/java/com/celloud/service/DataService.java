@@ -63,7 +63,15 @@ public interface DataService {
 	 * @param data
 	 * @return
 	 */
-	public int updateDataInfoByFileId(DataFile data);
+    public int updateDataInfoByFileId(DataFile data);
+
+    /**
+     * 修改数据信息
+     * 
+     * @param data
+     * @return
+     */
+    public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId);
 
 	/**
 	 * 数据分页列表
