@@ -178,3 +178,21 @@
     background-color: @content-green;
     color: #fff;
 }
+
+.table-img{
+    width: 100%;
+    &.two-img{
+       tr>td{
+           width: 50%;
+           &:first-child{
+               padding-right: 5px;
+           }
+           &:last-child{
+               padding-left: 5px;
+           }
+       }
+    }
+    img{
+        width: 100%;
+    }
+}

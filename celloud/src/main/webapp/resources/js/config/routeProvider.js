@@ -97,7 +97,7 @@
     .when('/reportdata/bsi',{
       templateUrl: "pages/report/report_data_bsi.jsp"
     })
-    .when('/reportdata/MIB',{
+    .when('/reportdata/MIB/:appId/:dataKey/:proId',{
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
     })
