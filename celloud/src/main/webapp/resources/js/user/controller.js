@@ -115,7 +115,7 @@
 						title : "Image files",
 						extensions : "jpg,jpeg,png"
 					} ],
-					prevent_duplicates : true
+					prevent_duplicates : false
 				// 不允许选取重复文件
 				},
 				multi_selection : false,

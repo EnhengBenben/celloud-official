@@ -27,4 +27,9 @@ public class TagServiceImpl implements TagService {
         return tagMapper.findTags(userId, DataState.ACTIVE);
     }
 
+    @Override
+    public List<Tag> findProductTags(Integer userId) {
+        return tagMapper.selectProductTags(userId, DataState.ACTIVE);
+    }
+
 }

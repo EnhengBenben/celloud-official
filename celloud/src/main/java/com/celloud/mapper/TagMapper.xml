@@ -59,4 +59,14 @@
     select tag.* from tb_tag tag,tb_task t,tb_app_tag_relat atr
     where tag.tag_id=atr.tag_id and atr.app_id=t.app_id and t.user_id=#{userId} and t.state=#{state} group by tag_id
   </select>
+  <select id="selectProductTags" resultMap="BaseResultMap">
+  	SELECT t.*
+  	FROM tb_user_app_right uar, tb_app a, tb_app_tag_relat atr, tb_tag t
+  	WHERE t.tag_id = atr.tag_id
+  	AND atr.app_id = a.app_id
+  	AND uar.app_id = a.app_id
+  	AND uar.is_add = 1
+  	AND uar.user_id = #{userId}
+  	AND a.off_line = #{state}
+  </select>
 </mapper>

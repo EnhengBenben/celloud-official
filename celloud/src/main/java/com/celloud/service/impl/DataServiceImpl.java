@@ -53,9 +53,15 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public int updateDataInfoByFileId(DataFile data) {
+    public int updateDataInfoByFileId(DataFile data) {
 		return dataFileMapper.updateDataInfoByFileId(data);
 	}
+
+    @Override
+    public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
+        dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+        return dataFileMapper.updateDataInfoByFileId(data);
+    }
 
 	@Override
 	public List<Map<String, String>> sumData(Integer userId, String time) {
