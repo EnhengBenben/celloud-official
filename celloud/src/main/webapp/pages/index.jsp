@@ -52,7 +52,7 @@
                 </div>
               </li>
             </shiro:hasPermission>
-	      <li><a data-toggle="modal" data-target="#upload-modal"><i class="upload-icon"></i></a></li>
+	      <li><a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a></li>
 	    </ul>
 	    <ul class="nav navbar-nav pull-right">
 	      <li class="dropdown">
@@ -196,12 +196,10 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+  <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
   <script src="<%=request.getContextPath() %>/js/utils.js"></script>
-  
-  <script src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>
-  
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
   <script src="<%=request.getContextPath()%>/js/alert.js"></script>
   <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
