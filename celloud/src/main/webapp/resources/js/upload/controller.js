@@ -3,6 +3,7 @@
 		$scope.step = 'one';
 		$rootScope.getProTags = function(){
 			if($scope.step == 'one'){
+				$scope.upload.splice();
 				$rootScope.tags = uploadService.getProductTags().query();
 			}
 		}
