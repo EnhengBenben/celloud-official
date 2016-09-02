@@ -119,13 +119,8 @@
         <li>
           <a href="javascript:void(0)"><i class="sample-icon"></i><span>样本采集</span></a>
         </li>
-        <shiro:hasPermission name="count:menu">
-        	<li ng-class="{active: isActive('/count')}">
-	          <a href="#/count"><i class="count-icon"></i><span>统计</span></a>
-	        </li>
-        </shiro:hasPermission>
-        <li>
-          <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
+        <li ng-class="{active: isActive('/experiment')}">
+          <a href="#/experiment/scanStorage"><i class="experiment-icon"></i><span>实验管理</span></a>
         </li>
         <li ng-class="{active: isActive('/data')}">
           <a href="#/data"><i class="data-icon"></i><span>数据管理</span></a>
@@ -141,6 +136,11 @@
         <li ng-class="{active: isActive('/app')}">
           <a href="#/app"><i class="app-icon"></i><span>应用市场</span></a>
         </li>
+        <shiro:hasPermission name="count:menu">
+            <li ng-class="{active: isActive('/count')}">
+              <a href="#/count"><i class="count-icon"></i><span>统计</span></a>
+            </li>
+        </shiro:hasPermission>
       </ul>
       <ul class="sidebar-menu">
         <li class="header">用户中心</li>
