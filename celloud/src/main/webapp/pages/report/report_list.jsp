@@ -71,7 +71,7 @@
                         <c:if test="${report.userName=='no_one'}">
                             <div class="operate">
                                 <c:if test="${loginUserInSession.companyId == 6 || loginUserInSession.companyId == 24}">
-                                    <a class="projectreport" title="项目报告" target="_blank" onclick="printPgsProject(${report.project_id});return false;" href="javascript:void(0);"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+                                    <a class="projectreport" title="项目报告" onclick="checkPeriod(${report.project_id});" <c:if test="${report.period == 3 }">href="${pageContext.request.contextPath }/report/printPgsProject?projectId=${report.project_id}"</c:if> target="_blank"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
                                 </c:if>
                             	<c:if test="${report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114&&report.app_id!=117 }">
                                 	<a class="pdfdown" title="PDF下载" onclick="downPDF(${report.user_id},${report.app_id},${report.project_id})" href="javascript:void(0)"></a>

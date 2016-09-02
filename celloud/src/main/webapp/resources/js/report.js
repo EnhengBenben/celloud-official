@@ -24,12 +24,13 @@ $.ajaxSetup ({
 		var spinnerTotal;
 		//---------------------------------------------------------------------
 		var param = null;
-		function printPgsProject(projectId){
+		function checkPeriod(projectId){
 			$.get("report/checkPgsProject",{projectId:projectId},function(flag){
 				if(flag != 3){
 					jAlert("该项目尚未运行完毕");
+					return false;
 				}else{
-					window.open(CONTEXT_PATH + "/report/printPgsProject?projectId=" + projectId);
+					return true;
 				}
 			});
 		}
