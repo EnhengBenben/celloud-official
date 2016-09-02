@@ -620,17 +620,17 @@ public class ReportAction {
             Integer projectId, Integer appId) {
         MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
         Map<String, Object> map = new HashMap<>();
-        Map<String, JSONArray> mibCharList = new HashMap<>();
-        mibCharList.put("readsDistributionInfo",
+        map.put("readsDistributionInfo",
                 JSONArray.fromObject(mib.getReadsDistributionInfo()));
-        mibCharList.put("familyDistributionInfo",
+        map.put("familyDistributionInfo",
                 JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-        mibCharList.put("genusDistributionInfo",
+        map.put("genusDistributionInfo",
                 JSONArray.fromObject(mib.getGenusDistributionInfo()));
-        map.put("mibCharList", mibCharList);
         map.put("mib", mib);
+        map.put("uploadPath", "/upload/");
         return map;
     }
+
 	/**
 	 * 获取 MIB 的数据报告
 	 * 
@@ -2940,6 +2940,22 @@ public class ReportAction {
 		// log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
 	}
+
+    /**
+     * 获取报告图片
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "reportImage", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> reportImage(String file) throws IOException {
+        String path = SparkPro.TOOLSPATH + File.separator + file;
+        File targetFile = new File(path);
+        // log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
+        return new ResponseEntity<byte[]>(
+                FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
 
 	/**
 	 * 将Map中的数据返回到velocity模板中

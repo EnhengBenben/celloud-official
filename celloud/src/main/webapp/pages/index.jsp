@@ -197,12 +197,17 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   
-  <script type="text/javascript" src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
+  <script src="<%=request.getContextPath()%>/js/charts.js"></script>
+<%--   <script src="<%=request.getContextPath()%>/js/draw_chart.js"></script> --%>
+  
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
-   <script src="<%=request.getContextPath()%>/js/alert.js"></script>
+  <script src="<%=request.getContextPath()%>/js/alert.js"></script>
   <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
   <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
+  <script src="<%=request.getContextPath()%>/js/directive/loadOverRun.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
@@ -215,6 +220,8 @@
   <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/dataReportService.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/dataReportController.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
@@ -227,6 +234,6 @@
   <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
-  <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
+  
 </body>
 </html>

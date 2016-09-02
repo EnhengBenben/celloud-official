@@ -397,10 +397,7 @@
   
   celloudApp.controller("dataReportController", function($scope,projectReportService,dataReportService){
     $scope.searchInfo = dataReportService.getSearchInfos();
-    console.log(typeof($scope.searchInfo));
     $scope.reportList = dataReportService.getReports();
-    console.log($scope.searchInfo);
-    console.log($scope.reportList);
     var options = {
         page : 1,
         pageSize : 20,
