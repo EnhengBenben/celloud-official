@@ -195,6 +195,7 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
   <script src="<%=request.getContextPath() %>/js/utils.js"></script>

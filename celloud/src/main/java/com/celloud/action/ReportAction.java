@@ -242,6 +242,22 @@ public class ReportAction {
 		return mv;
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月4日下午4:43:42
+     * @description 获取数据报告共有数据
+     * @param projectId
+     *
+     */
+    private Map<String, Object> getCommonInfo(Integer projectId) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Project project = projectService.selectByPrimaryKey(projectId);
+        map.put("uploadPath", "/upload/");
+        map.put("project", project);
+        return map;
+	}
+
 	/**
 	 * 用于 ModelAndView 加载CMP信息
 	 * 
@@ -1086,6 +1102,27 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_egfr", projectId);
 		return mv.addObject("egfr", egfr);
 	}
+
+    @RequestMapping("getEGFRInfo")
+    @ResponseBody
+    public Map<String, Object> getEGFRInfo(String dataKey, Integer projectId, Integer appId) {
+        EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+        String mp = egfr.getMutationPosition();
+        String position = egfr.getPosition();
+        String conclusion = egfr.getConclusion();
+        if (StringUtils.isNotBlank(conclusion)) {
+            egfr.setConclusion(CustomStringUtils.htmlbr(conclusion));
+        }
+        if (StringUtils.isNotEmpty(mp)) {
+            egfr.setMutationPosition(CustomStringUtils.htmlbr(mp));
+        }
+        if (StringUtils.isNotBlank(position)) {
+            egfr.setPosition(CustomStringUtils.htmlbr(position));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("egfr", egfr);
+        return map;
+    }
 
 	/**
 	 * 获取KRAS数据报告

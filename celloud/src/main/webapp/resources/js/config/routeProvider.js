@@ -90,6 +90,10 @@
       templateUrl: "pages/report/report_project.jsp",
       controller: "projectReportController"
     })
+    .when('/reportpro/EGFR/:appId/:dataKey/:projectId',{
+      templateUrl: "pages/report/report_data_egfr.jsp",
+      controller: "egfrDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
