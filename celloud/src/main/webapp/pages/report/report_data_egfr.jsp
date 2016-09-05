@@ -1,7 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- <div>
-	<input type="hidden" value="${egfr.pos}" id="seq_length"/>
 	<div class="bg-analysis">
 		<div class="m-box">
 			<h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
@@ -116,6 +115,7 @@ function showModal(id){
 	     </section>
 	   </div>
      </div>
+     <input type="hidden" ng-model="egfr.pos" id="seq_length"/>
  </div>
 <div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog">
