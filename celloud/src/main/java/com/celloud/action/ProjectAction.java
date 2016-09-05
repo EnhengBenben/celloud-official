@@ -217,11 +217,11 @@ public class ProjectAction {
     @ActionLog(value = "删除一条共享来的项目记录，项目本身不删除", button = "删除共享项目")
     @RequestMapping("deleteShare")
     @ResponseBody
-    public boolean deleteShare(Integer projectId) {
+	public Response deleteShare(Integer projectId) {
         Integer userId = ConstantsData.getLoginUserId();
         // 删除一条共享记录，修改一条项目记录
         Integer num = projectService.deleteShareToMe(userId, projectId);
-        return num == 2;
+		return num == 2 ? Response.DELETE_SUCCESS : Response.FAIL;
     }
 
     /**

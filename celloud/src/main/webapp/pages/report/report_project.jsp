@@ -98,8 +98,8 @@
                	{{report.userName}}
                </div>
                <div class="operate" ng-if="report.userName!='no_one'">
-                   <a class="sharefrom" title="共享" href="javascript:void()">共享</a><span class="shareU">{{report.userName }}</span>
-                   <a class="delete" title="删除" ng-click="cancelProjectShare(report.project_id,report.user_id)" href="javascript:void(0)">删除</a>
+                   <a class="sharefrom" title="共享" href="javascript:void()">共享自{{report.userName }}</a> |
+                   <a class="delete" title="删除" ng-click="cancelProjectShare(report.project_id)" href="javascript:void(0)">删除</a>
                </div>
                <div class="operate" ng-if="report.userName=='no_one'">
                    <a ng-if="loginUserInSession.companyId == 6" class="projectreport" title="项目报告" target="_blank" href="{{pageContext.request.contextPath }}/report/printPgsProject?projectId={{report.project_id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i>项目报告</a>

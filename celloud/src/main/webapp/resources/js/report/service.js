@@ -2,7 +2,6 @@
   celloudApp.service("projectReportService",function($resource,$http){
       var self = this;
       self.getRanAPP = function(){
-        aa = $resource("app/getRanAPP").get();
         return $resource("app/getRanAPP").get();
       }
       self.getReportList = function(){
@@ -13,6 +12,9 @@
       }
       self.changeProjectName = function(projectId,projectName){
         return $http.get("project/update",{params:{projectId:projectId,projectName:projectName}});
+      }
+      self.cancelProjectShare = function(projectId){
+        return $http.get("project/deleteShare",{params:{projectId:projectId}});
       }
     });
   
