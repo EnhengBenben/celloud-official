@@ -27,6 +27,9 @@
     self.getSearchInfos = function(){
       return $resource("report/reportSearchInfo").get();
     }
+    self.getDataReportInfo = function(url, dataKey, projectId, appId){
+    	return $http({method:"POST",url:url,data:$.param({dataKey:dataKey,projectId:projectId,appId:appId}),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+    }
   });
     
 }());

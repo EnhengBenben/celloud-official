@@ -1,5 +1,6 @@
 (function(){
   function viewDataReport(userId,dataKey,fileName,appId,appName,proId,proName,obj){
+	  window.location.href = "#/reportpro/"+ appName + "/" + appId + "/" + dataKey + "/" + proId;
   }
   celloudApp.directive('loadOver', function ($timeout) {
     return {
@@ -12,6 +13,20 @@
             }
         }
     };
+  });
+  /**
+   * egfr数据报告controller
+   */
+  celloudApp.controller("egfrDataReportController", function($scope, $routeParams, dataReportService){
+	  dataReportService.getDataReportInfo("report/getEGFRInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(egfrInfo){
+		  $scope.egfr = egfrInfo.egfr;
+		  $scope.project = egfrInfo.project;
+		  $scope.uploadPath = egfrInfo.uploadPath;
+		  $scope.showHelp = function(){
+			  $("#helpModal").modal("show");
+		  }
+	  });
   });
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     //加载产品标签
@@ -247,7 +262,7 @@
                   $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</span>");
                 }
                 $(this).find("span").bind("click",function(){
-                  viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                  viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
                 $(this).find("span").addClass("link");
               }
@@ -397,10 +412,7 @@
   
   celloudApp.controller("dataReportController", function($scope,projectReportService,dataReportService){
     $scope.searchInfo = dataReportService.getSearchInfos();
-    console.log(typeof($scope.searchInfo));
     $scope.reportList = dataReportService.getReports();
-    console.log($scope.searchInfo);
-    console.log($scope.reportList);
     var options = {
         page : 1,
         pageSize : 20,

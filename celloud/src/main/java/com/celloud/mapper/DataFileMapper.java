@@ -48,6 +48,8 @@ public interface DataFileMapper {
 
 	int insertDataTag(DataFile dataFile);
 
+    int insertFileTagRelat(@Param("fileId") Integer fileId, @Param("tagId") Integer tagId);
+
 	/**
 	 * 检索某个项目下的所有数据
 	 * 

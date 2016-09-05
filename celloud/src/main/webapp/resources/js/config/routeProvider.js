@@ -90,6 +90,10 @@
       templateUrl: "pages/report/report_project.jsp",
       controller: "projectReportController"
     })
+    .when('/reportpro/EGFR/:appId/:dataKey/:projectId',{
+      templateUrl: "pages/report/report_data_egfr.jsp",
+      controller: "egfrDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
@@ -97,9 +101,18 @@
     .when('/reportdata/bsi',{
       templateUrl: "pages/report/report_data_bsi.jsp"
     })
-    .when('/reportdata/MIB',{
+    .when('/reportdata/MIB/:appId/:dataKey/:proId',{
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
+    })
+    .when('/experiment/scanStorage',{
+      templateUrl: "pages/experiment_scan/scan_storage.jsp"
+    })
+    .when('/experiment/tokenDNA',{
+      templateUrl: "pages/experiment_scan/token_dna.jsp"
+    })
+    .when('/experiment/createLibrary',{
+      templateUrl: "pages/experiment_scan/create_library.jsp"
     })
     .otherwise({redirectTo:'/'});
   });

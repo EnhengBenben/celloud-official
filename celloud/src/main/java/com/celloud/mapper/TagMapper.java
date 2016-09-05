@@ -21,4 +21,16 @@ public interface TagMapper {
 
     List<Tag> findTags(@Param("userId") Integer userId,
             @Param("state") Integer state);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年9月1日上午11:20:20
+     * @description 根据用户id查找产品标签
+     * @param userId
+     * @param state
+     * @return
+     *
+     */
+    List<Tag> selectProductTags(@Param("userId") Integer userId, @Param("state") Integer state);
 }

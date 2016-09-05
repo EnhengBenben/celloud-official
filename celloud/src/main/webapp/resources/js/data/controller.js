@@ -8,6 +8,7 @@
       runService.pageList().success(function(response){
         $scope.dataList = response;
       });
+      $.dataManager.refreshDataList("clean");
     }
     //初始化列表
     $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
@@ -55,13 +56,12 @@
       }
       runService.run().success(function(response) {
         if(response.success){
-          $scope.message = "运行成功";
+          $.alert("运行成功");
           $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
           $.dataManager.refreshDataList();
         }else{
           $scope.message = response.message;
         }
-        $scope.state = true;
       });
     };
     //数据删除
@@ -75,8 +75,7 @@
             $scope.conditionList();
             $.dataManager.refreshDataList();
           }
-          $scope.message = response.message;
-          $scope.state = true;
+          $.alert(response.message);
         });
       });
     };
@@ -85,19 +84,24 @@
       runService.toEditData(fileId).success(function(response){
         $scope.dataFile = response['file'];
         $scope.appList = response['appList'];
+        for(i = 0; i < $scope.appList.length; i++){
+        	if($.trim($scope.appList[i].appName) == $.trim($scope.dataFile.tagName)){
+        		$scope.appSelected = $scope.appList[i];
+        		break;
+        	}
+        }
       });
     }
     //修改数据信息
     $scope.submitEditData = function(){
-      $scope.dataFile.tagName = $("input[type='radio'][name='dataTagName']:checked").val();
+      $scope.dataFile.tagName = $scope.appSelected == undefined? "" : $scope.appSelected.appName;
       runService.submitEditData($scope.dataFile).success(function(response){
         if(response.success){
           $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
           $.dataManager.refreshDataList();
           $("#data-detail-modal").modal("hide");
         }
-        $scope.message = response.message;
-        $scope.state = true;
+        $.alert(response.message);
       });
     }
   });

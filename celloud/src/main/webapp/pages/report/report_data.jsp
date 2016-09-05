@@ -49,7 +49,7 @@
               <ul class="search-info">
                 <li><a class="active" href="javascript:void(0)" ng-click="batchsQuery(null)">全部</a></li>
                 <li ng-repeat="batch in searchInfo.batchs">
-                    <a href="javascript:void(0)" ng-click="batchsQuery({{batch}})">{{batch}}</a>
+                    <a href="javascript:void(0)" ng-click="batchsQuery(batch)">{{batch}}</a>
                 </li>
               </ul>
 	          <div class="search-btns">
@@ -114,7 +114,7 @@
             <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{task.period}}</td>
             <td>
-              <a href="#/reportdata/{{task.appName}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a href="#/reportdata/{{task.appName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
             </td>
           </tr>
         </tbody>

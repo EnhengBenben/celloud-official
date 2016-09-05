@@ -52,7 +52,7 @@
                 </div>
               </li>
             </shiro:hasPermission>
-	      <li><a data-toggle="modal" data-target="#upload-modal"><i class="upload-icon"></i></a></li>
+	      <li><a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a></li>
 	    </ul>
 	    <ul class="nav navbar-nav pull-right">
 	      <li class="dropdown">
@@ -119,13 +119,8 @@
         <li>
           <a href="javascript:void(0)"><i class="sample-icon"></i><span>样本采集</span></a>
         </li>
-        <shiro:hasPermission name="count:menu">
-        	<li ng-class="{active: isActive('/count')}">
-	          <a href="#/count"><i class="count-icon"></i><span>统计</span></a>
-	        </li>
-        </shiro:hasPermission>
-        <li>
-          <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
+        <li ng-class="{active: isActive('/experiment')}">
+          <a href="#/experiment/scanStorage"><i class="experiment-icon"></i><span>实验管理</span></a>
         </li>
         <li ng-class="{active: isActive('/data')}">
           <a href="#/data"><i class="data-icon"></i><span>数据管理</span></a>
@@ -141,6 +136,11 @@
         <li ng-class="{active: isActive('/app')}">
           <a href="#/app"><i class="app-icon"></i><span>应用市场</span></a>
         </li>
+        <shiro:hasPermission name="count:menu">
+            <li ng-class="{active: isActive('/count')}">
+              <a href="#/count"><i class="count-icon"></i><span>统计</span></a>
+            </li>
+        </shiro:hasPermission>
       </ul>
       <ul class="sidebar-menu">
         <li class="header">用户中心</li>
@@ -184,7 +184,7 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-  <ng-include src="'pages/partial/_partial_upload_modal.jsp'" ></ng-include>
+  <ng-include src="'pages/partial/_partial_upload_modal.jsp'"></ng-include>
   <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';
   </script>
@@ -195,14 +195,19 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-  
-  <script type="text/javascript" src="<%=request.getContextPath()%>/plugins/plupload-2.1.2/plupload.full.min.js"></script>
+  <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
+  <script src="<%=request.getContextPath() %>/js/utils.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
+  <script src="<%=request.getContextPath()%>/js/charts.js"></script>
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
-   <script src="<%=request.getContextPath()%>/js/alert.js"></script>
+  <script src="<%=request.getContextPath()%>/js/alert.js"></script>
   <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
   <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
+  <script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
@@ -215,6 +220,8 @@
   <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/dataReportService.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/dataReportController.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
@@ -227,6 +234,6 @@
   <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
-  <script src="<%=request.getContextPath() %>/plugins/calendar/WdatePicker.js"></script>
+  
 </body>
 </html>
