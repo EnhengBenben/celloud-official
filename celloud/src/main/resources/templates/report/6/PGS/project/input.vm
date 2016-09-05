@@ -73,7 +73,7 @@
             <td style="height:30px">
                 <div class="saId" style="width:10%;margin-left:2px;float:left;word-break: break-all;"><textarea name="projectInfo['sampleNumber']" style="width:98%;font-size:12px;">#if(${pgs.projectInfo.sampleNumber})$!{pgs.projectInfo.sampleNumber}#else$!{pgsList.get(0).anotherName}#end</textarea></div>
                 <div class="exId" style="width:10%;margin-left:14px;float:left;word-break: break-all;"><textarea name="projectInfo['experimentNumber']" style="width:98%;font-size:12px;">$!{pgs.projectInfo.experimentNumber}</textarea></div>
-                <div class="exResult" style="width:40%;margin-left:15px;float:left;word-break: break-all;"><textarea name="projectInfo['result']" style="width:98%;font-size:12px;">#if(${pgs.projectInfo.result})$!{pgs.projectInfo.result.get($index)}#else$!{pgsList.get(0).report}#end</textarea></div>
+                <div class="exResult" style="width:40%;margin-left:15px;float:left;word-break: break-all;"><textarea name="projectInfo['result']" style="width:98%;font-size:12px;">#if(${pgs.projectInfo.result})$!{pgs.projectInfo.result}#else$!{pgsList.get(0).report}#end</textarea></div>
                 <div class="exRemark" style="width:23%;margin-left:12px;float:left;word-break: break-all;"><textarea name="projectInfo['remark']" style="width:98%;font-size:12px;">$!{pgs.projectInfo.remark}</textarea></div>
             </td>
         </tr>
