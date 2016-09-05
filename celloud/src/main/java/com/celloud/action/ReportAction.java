@@ -1329,6 +1329,28 @@ public class ReportAction {
 		return mv.addObject("braf", braf);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月5日下午3:18:34
+     * @description 获取BRAF数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @RequestMapping("getBRAFInfo")
+    @ResponseBody
+    public Map<String, Object> getBRAFInfo(String dataKey, Integer projectId, Integer appId) {
+        BRAF braf = reportService.getBRAFReport(dataKey, projectId, appId);
+        String mp = braf.getMutationPosition();
+        braf.setMutationPosition(CustomStringUtils.toTable(mp));
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("braf", braf);
+        return map;
+    }
+
 	/**
 	 * 点击数据报告列表查看下一页数据报告
 	 * 

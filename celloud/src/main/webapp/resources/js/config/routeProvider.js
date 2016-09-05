@@ -102,6 +102,10 @@
 	  templateUrl: "pages/report/report_data_hcv.jsp",
 	  controller: "hcvDataReportController"
     })
+    .when('/reportpro/BRAF/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_braf.jsp",
+    	controller: "brafDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

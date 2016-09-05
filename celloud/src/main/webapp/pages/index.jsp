@@ -201,6 +201,7 @@
   <script src="<%=request.getContextPath() %>/js/utils.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report_codon.js"></script>
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
   <script src="<%=request.getContextPath()%>/js/alert.js"></script>
   <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
