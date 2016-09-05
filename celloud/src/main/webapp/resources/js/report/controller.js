@@ -1,7 +1,6 @@
 (function(){
   function viewDataReport(userId,dataKey,fileName,appId,appName,proId,proName,obj){
 	  var href = "#/reportpro/"+ appName + "/" + appId + "/" + dataKey + "/" + proId;
-	  console.log(href);
 	  window.location.href = href; 
   }
   
@@ -31,18 +30,32 @@
 		return val;
 	}
   
+  celloudApp.directive('searchVal', function ($timeout) {
+	    return {
+	        restrict: 'A',
+	        link: function(scope, element, attr) {
+	            if (scope.$last === true) {
+	                $timeout(function() {
+	                    scope.$emit('brafSearchVal');
+	                });
+	            }
+	        }
+	    };
+	  });
+  
   celloudApp.directive('loadOver', function ($timeout) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attr) {
-            if (scope.$last === true) {
-                $timeout(function() {
-                    scope.$emit('reportLoadOver');
-                });
-            }
-        }
-    };
+	    return {
+	        restrict: 'A',
+	        link: function(scope, element, attr) {
+	            if (scope.$last === true) {
+	                $timeout(function() {
+	                    scope.$emit('reportLoadOver');
+	                });
+	            }
+	        }
+	    };
   });
+  
   /**
    * egfr数据报告controller
    */
@@ -168,6 +181,56 @@
 			  Y = Y.substring(0,Y.length-1)+"]";
 			  $.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y), 0, 500, 300);
 		});
+	  });
+  });
+  /**
+   * braf数据报告controller
+   */
+  celloudApp.controller("brafDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  
+	  dataReportService.getDataReportInfo("report/getBRAFInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(brafInfo){
+		  $scope.braf = brafInfo.braf;
+		  $scope.project = brafInfo.project;
+		  $scope.uploadPath = brafInfo.uploadPath;
+		  
+		  var ele = $compile($scope.braf.mutationPosition)($scope);
+		  console.log(ele);
+		  angular.element('#report_tb').append(ele);
+		  
+//		  $scope.tempData = ['temp'];
+		  
+//		  $scope.$on("brafSearchVal",function(){
+//			  $scope.searchTable = function(){
+//				  var result = "";
+//			      $("#report_tb").find("td").each(function() {
+//			      	  var context = $(this).html();
+//			      	  var len = context.indexOf("-");
+//			      	  var before = $.trim(context.substring(len - 2, len - 1));
+//			      	  var after = $.trim(context.substring(len + 1, len + 3));
+//			      	  var d = context.indexOf(",");
+//			      	  var k = context.indexOf(")");
+//			      	  if (k == -1) {
+//			      	  	  result += after;
+//			      	  } else if (before != after) {
+//			      	  	  result += after;
+//			      	  } else {
+//			      	  	  var search = $("#_snum").val();
+//			      	  	  var r = context.substring(d + 1, k);
+//			      	  	  if (parseFloat(r) > parseFloat(search)) {
+//			      	  		  result += after;
+//			      	  	  } else {
+//			      	  		  var l = context.indexOf("|");
+//			      	  		  var r = context.indexOf("(");
+//			      	  		  result += context.substring(l + 1, r);
+//			      	  	  }
+//			      	  }
+//			      });
+//			      $("#searchResult").html(map[result]);
+//	          }
+//		  });
+		  
+		  
 	  });
   });
   
