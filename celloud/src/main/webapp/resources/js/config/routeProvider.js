@@ -1,4 +1,4 @@
- (function(){
+(function(){
   celloudApp.config(function($routeProvider){
     $routeProvider
     .when('/',{
@@ -128,4 +128,5 @@
     })
     .otherwise({redirectTo:'/'});
   });
+>>>>>>> 01e7d79d769752b5a5de43dbe77494ed207ed2c2
 })()

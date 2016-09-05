@@ -6,12 +6,14 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="sample_name" jdbcType="VARCHAR" property="sampleName" />
     <result column="is_add" jdbcType="BIT" property="isAdd" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="index" property="index" jdbcType="VARCHAR" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="state" jdbcType="BIT" property="state" />
   </resultMap>
   <sql id="Base_Column_List">
-    sample_id, user_id, sample_name, is_add, create_date, update_date, state
+    sample_id, user_id, sample_name, is_add, type, index, create_date, update_date, state
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -142,4 +144,14 @@
          #{sampleId,jdbcType=INTEGER}
     </foreach>)
   </delete>
+  <select id="getSamples" resultMap="BaseResultMap">
+    select s.* from 
+	tb_sample s,tb_sample_log sl
+	where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state}
+  </select>
+  <select id="getByNameExperState" resultMap="BaseResultMap">
+    select s.* from 
+    tb_sample s,tb_sample_log sl
+    where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and s.sample_name=#{sampleName,jdbcType=VARCHAR}
+  </select>
 </mapper>
