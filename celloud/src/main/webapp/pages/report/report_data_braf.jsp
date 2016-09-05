@@ -43,7 +43,7 @@
 				<table>
 					<tbody>
 						<tr>
-							<td ng-if="braf.mutationPosition!=null" style="width: 30%; min-width: 265px" id="report_tb">
+							<td ng-bind-html="braf.mutationPosition" ng-if="braf.mutationPosition!=null" style="width: 30%; min-width: 265px" id="report_tb">
 					    	</td>
 					    	<td ng-if="braf.mutationPosition==null" style="width: 30%; min-width: 265px" id="report_tb">
 					    		数据正常，未找到其他突变。
