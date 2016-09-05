@@ -22,14 +22,14 @@ username = 'celloud'
 password = 'CelLoud@nova'
 resultPath = '/share/data/deploy/' + version
 
-#本地各项存储路径配置
-gitBasePath = '/Users/lin/Documents/git/celloud'
-celloudPath = os.path.join(gitBasePath,'celloud/target/celloud.war')
-backstagePath = os.path.join(gitBasePath,'backstage/target/backstage.war')
-managerPath = os.path.join(gitBasePath,'manager/target/manager.war')
-pythonPath = os.path.join(gitBasePath,'python')
+#本地存储路径配置
+thisPath = os.path.realpath(__file__)
+pythonPath = os.path.abspath(os.path.join(thisPath,'..'))
+gitBasePath = os.path.abspath(os.path.join(pythonPath,'..'))
+celloudPath = os.path.join(gitBasePath,'celloud','target','celloud.war')
+backstagePath = os.path.join(gitBasePath,'backstage','target','backstage.war')
+managerPath = os.path.join(gitBasePath,'manager','target','manager.war')
 dbPath = os.path.join(gitBasePath,'dbUpgrade',version)
-parentPath = '/Users/lin'
 
 def upload(local_dir,remote_dir):
     try:
@@ -61,7 +61,7 @@ def upload(local_dir,remote_dir):
         print e
 
 print '文件整合： %s ' % datetime.datetime.now()
-sourcePath = os.path.join(parentPath,version)
+sourcePath = os.path.join(gitBasePath,version)
 os.mkdir(sourcePath)
 shutil.copy(celloudPath,sourcePath)
 

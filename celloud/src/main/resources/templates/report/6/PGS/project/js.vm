@@ -64,28 +64,28 @@ $(function(){
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
-            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+            $(this).html("<textarea name=\"projectInfo['sampleNumber']\" style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
         });
         $(".exId").each(function(){
             inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
-            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+            $(this).html("<textarea name=\"projectInfo['experimentNumber']\" style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
         });
         $(".exResult").each(function(){
             inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
-            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+            $(this).html("<textarea name=\"projectInfo['result']\" style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
         });
 		$(".exRemark").each(function(){
 		    inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
-            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+            $(this).html("<textarea name=\"projectInfo['remark']\" style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
 		});
 		$("table").find("input[class!=notbottom]").each(function(){
             $(this).css("border-bottom","1px solid #ccc");
