@@ -55,6 +55,47 @@
 		  }
 	  });
   });
+  /**
+   * kras数据报告controller
+   */
+  celloudApp.controller("krasDataReportController", function($scope, $routeParams, dataReportService){
+	  dataReportService.getDataReportInfo("report/getKRASInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(krasInfo){
+		  $scope.kras = krasInfo.kras;
+		  $scope.project = krasInfo.project;
+		  $scope.uploadPath = krasInfo.uploadPath;
+		  // 数据参数同比
+		  var length = $scope.kras.pos;
+		  if(length==0 || isNaN(length)){
+			  $("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
+		  }else{  
+			  $.get("count/krasCompare",{"length":length},function(data){
+				  var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
+				  $("#charDiv").append(div);
+				  var X = "[";
+				  var Y = "[";
+				  var value = data.split("\n");
+				  if(value.length > 1){
+					  for(var k=0;k<value.length-1;k++){
+						  var n = value[k].split("\t");
+						  X+="'"+n[0]+"',";
+						  Y+=n[1]+",";
+					  }
+				  }else{
+					  var n = data.split("\t");
+					  X+="'"+n[0]+"',";
+					  Y+=n[1]+",";
+				  }
+					  X = X.substring(0,X.length-1)+"]";
+					  Y = Y.substring(0,Y.length-1)+"]";
+					  $.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
+		    });
+		  }
+		  $scope.showHelp = function(){
+			  $("#helpModal").modal("show");
+		  }
+	  });
+  });
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     //加载产品标签
     $scope.ranAppList = projectReportService.getRanAPP();

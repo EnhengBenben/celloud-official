@@ -1150,6 +1150,23 @@ public class ReportAction {
 		return mv.addObject("kras", kras);
 	}
 
+    @RequestMapping("getKRASInfo")
+    @ResponseBody
+    public Map<String, Object> getKRASInfo(String dataKey, Integer projectId, Integer appId) {
+        KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+        String mp = kras.getMutationPosition();
+        if (StringUtils.isNotBlank(mp)) {
+            kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
+        }
+        String pos = kras.getPosition();
+        if (StringUtils.isNotBlank(pos)) {
+            kras.setPosition(CustomStringUtils.htmlbr(pos));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("kras", kras);
+        return map;
+    }
+
 	/**
 	 * 获取DPD数据报告
 	 * 

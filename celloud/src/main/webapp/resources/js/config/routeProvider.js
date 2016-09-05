@@ -94,6 +94,10 @@
       templateUrl: "pages/report/report_data_egfr.jsp",
       controller: "egfrDataReportController"
     })
+    .when('/reportpro/KRAS/:appId/:dataKey/:projectId',{
+      templateUrl: "pages/report/report_data_kras.jsp",
+      controller: "krasDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
