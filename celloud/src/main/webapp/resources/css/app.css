@@ -43,14 +43,16 @@
     height: 45px;
     line-height: 45px
 }
-.J_single.kind .list-left {
-    /* width: 116px */
-}
 .J_single .list-left {
     float: left;
     color: #333;
     width: 96px;
-    text-align: right
+    text-align: right;
+    padding-top:8px;
+}
+.J_single.kind .list-left {
+    /* width: 116px */
+    padding-top:12px;
 }
 .J_single .list-right {
     float: left;
@@ -86,12 +88,13 @@
 }
 .sort-list li {
     float: left;
-    padding: 0 20px;
+    padding: 10px 20px;
     border-right: 1px solid #eae8e8;
     text-align: center;
     font-size: 12px;
     color: #333;
-    cursor: pointer
+    cursor: pointer;
+    height: 40px;
 }
 .sort-list li.current a:link,
 .sort-list li.current a:visited {
@@ -746,7 +749,8 @@ a.reco-hd-link:hover {
 }
 .app-classify-ul li a {
     color: inherit;
-    cursor: pointer
+    cursor: pointer;
+    padding-top: 10px;
 }
 .cuxiao {
     padding: 3px 6px;
@@ -754,4 +758,7 @@ a.reco-hd-link:hover {
     font-size: 12px;
     background-color: #fc0;
     color: #000;
+}
+.pt10{
+	padding-top: 10px;
 }

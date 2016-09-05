@@ -27,8 +27,20 @@
 		<result column="isRunning" property="isRunning" jdbcType="INTEGER" />
 		<result column="reportNum" property="reportNum" jdbcType="INTEGER" />
 	</resultMap>
+	<resultMap id="ResultMapWithTag" type="com.celloud.model.mysql.DataFile"
+		extends="ResultMapWithRunState">
+		<result column="appId" property="appId" jdbcType="INTEGER" />
+		<result column="tagName" property="tagName" jdbcType="VARCHAR" />
+	</resultMap>
 	<sql id="Base_Column_List">
 		file_id, user_id, data_key, file_name, strain, size,
+		create_date, update_date,
+		path,
+		state, file_format, sample,
+		another_name, md5, batch
+	</sql>
+	<sql id="Tag_Base_Column_List">
+		f.file_id, f.user_id, data_key, file_name, strain, size,
 		create_date, update_date,
 		path,
 		state, file_format, sample,
@@ -37,14 +49,21 @@
 	<sql id="Blob_Column_List">
 		data_tags
 	</sql>
-	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
-		parameterType="java.lang.Integer">
+	<sql id="Tag_Column_List">
+		tag.tag_name tagName,apptag.app_id appId
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithTag" parameterType="java.lang.Integer">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from tb_file
-		where file_id = #{fileId,jdbcType=INTEGER}
+		,
+		<include refid="Tag_Column_List" />
+		from tb_file f
+		left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+		left join tb_tag tag on tag.tag_id = filetag.tag_id
+		left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
+		where f.file_id = #{fileId,jdbcType=INTEGER}
 	</select>
 	<select id="getDataByAnotherName" resultMap="BaseResultMap">
 		select
@@ -80,6 +99,19 @@
 		tb_file
 		where file_id = #{fileId,jdbcType=INTEGER}
 	</delete>
+	<delete id="deleteDataTag" parameterType="java.lang.Integer">
+		delete from
+		tb_file_tag_relat
+		where file_id = #{fileId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertDataTag" parameterType="com.celloud.model.mysql.DataFile">
+		insert into tb_file_tag_relat (file_id,tag_id)
+		select #{fileId,jdbcType=INTEGER},tag_id from tb_tag where tag_name = #{tagName,jdbcType=VARCHAR};
+	</insert>
+	<insert id="insertFileTagRelat">
+		INSERT INTO tb_file_tag_relat(file_id, tag_id)
+		VALUES(#{fileId},#{tagId})
+	</insert>
 	<insert id="insert" parameterType="com.celloud.model.mysql.DataFile">
 		insert into tb_file (file_id,
 		user_id, data_key,
@@ -343,10 +375,10 @@
 		},another_name=#{anotherName },file_format=#{fileFormat
 		},state=#{state },md5=#{md5 },batch=#{batch } where file_id=#{fileId }
 	</update>
-	<select id="findAllDataLists" resultMap="ResultMapWithRunState"
+	<select id="findAllDataLists" resultMap="ResultMapWithTag"
 		parameterType="java.lang.Integer">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
 		,
@@ -359,15 +391,51 @@
 		r.flag = #{reportType }
 		and r.state = #{state } and
 		r.file_id=f.file_id) isRunning
-		from tb_file
-		f
+		,
+		<include refid="Tag_Column_List" />
+		from tb_file f
+		left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+		left join tb_tag tag on tag.tag_id = filetag.tag_id
+		left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
 		where user_id = #{userId } and state = #{state }
 		order by
 		f.create_date desc,f.file_name asc
 	</select>
-	<select id="findDataLists" resultMap="ResultMapWithRunState">
+    <select id="findDataListsByAppId" resultMap="ResultMapWithTag">
+        select
+        <include refid="Tag_Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from tb_file f
+        left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+        left join tb_app_tag_relat apptag on filetag.tag_id = apptag.tag_id
+        where user_id = #{userId } and state = #{state } and apptag.app_id= #{appId }
+        <if test="condition != null and condition != ''">
+            and (data_key like '%${condition}%'
+            or file_name like
+            '%${condition}%'
+            or another_name like '%${condition}%'
+            or batch like '%${condition}%')
+        </if>
+        <if test="sort == 0">
+            order by f.create_date ${sortDate},f.batch
+            ${sortBatch},f.file_name
+            ${sortName}
+        </if>
+        <if test="sort == 1">
+            order by f.batch ${sortBatch},f.create_date
+            ${sortDate},f.file_name
+            ${sortName}
+        </if>
+        <if test="sort == 2">
+            order by f.file_name ${sortName},f.batch
+            ${sortBatch},f.create_date
+            ${sortDate}
+        </if>
+    </select>
+	<select id="findDataLists" resultMap="ResultMapWithTag">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
 		,
@@ -380,19 +448,20 @@
 		r.flag = #{reportType }
 		and r.state = #{state } and
 		r.file_id=f.file_id) isRunning
-		from tb_file
-		f
+		,
+		<include refid="Tag_Column_List" />
+		from tb_file f
+		left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+		left join tb_tag tag on tag.tag_id = filetag.tag_id
+		left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
 		where user_id = #{userId } and state = #{state }
 		<if test="condition != null">
 			and (data_key like '%${condition}%'
-			or file_name like
-			'%${condition}%'
+			or file_name like '%${condition}%'
 			or another_name like '%${condition}%'
-			or data_tags
-			like '%${condition}%'
+			or data_tags like '%${condition}%'
 			or strain like '%${condition}%'
-			or sample like
-			'%${condition}%'
+			or sample like '%${condition}%'
 			or batch like '%${condition}%')
 		</if>
 		<choose>
@@ -406,9 +475,9 @@
 			</otherwise>
 		</choose>
 	</select>
-	<select id="findDataListsSortMore" resultMap="ResultMapWithRunState">
+	<select id="findDataListsSortMore" resultMap="ResultMapWithTag">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
 		,
@@ -421,8 +490,12 @@
 		r.flag = #{reportType }
 		and r.state = #{state } and
 		r.file_id=f.file_id) isRunning
-		from tb_file
-		f
+		,
+		<include refid="Tag_Column_List" />
+		from tb_file f
+		left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+		left join tb_tag tag on tag.tag_id = filetag.tag_id
+		left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
 		where user_id = #{userId } and state = #{state }
 		<if test="condition != null">
 			and (data_key like '%${condition}%'
@@ -492,12 +565,18 @@
 		select sum(size) size from
 		tb_file where file_id in (${dataIds})
 	</select>
-	<select id="findDatasById" resultMap="ResultMapWithBLOBs">
+	<select id="findDatasById" resultMap="ResultMapWithTag">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from tb_file where file_id in (${dataIds})
+		,
+		<include refid="Tag_Column_List" />
+		from tb_file f
+		left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+		left join tb_tag tag on tag.tag_id = filetag.tag_id
+		left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
+		where f.file_id in (${dataIds})
 	</select>
 	<select id="queryDataRunning" resultType="java.lang.Integer">
 		select count(*) number

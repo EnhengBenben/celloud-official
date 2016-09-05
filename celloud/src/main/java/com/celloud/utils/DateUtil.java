@@ -23,7 +23,7 @@ public class DateUtil {
 	 * @date 2016年7月22日下午3:15:26
 	 */
 	public static Date stringToDate(String date) {
-		return stringToDate(date, YMDHMS);
+        return date == null ? null : stringToDate(date, YMDHMS);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(getDateToString());
+        System.out.println(stringToDate(null));
         System.out.println(getDateToString("yyyyMMdd"));
         System.out.println(getDateToString("yyMMdd"));
     }

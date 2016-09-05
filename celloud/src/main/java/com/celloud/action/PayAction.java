@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.Recharge;
@@ -38,20 +39,19 @@ public class PayAction {
 	private RechargeService rechargeService;
 
 	@RequestMapping("recharge")
+    @ResponseBody
 	public String recharge(Model model) {
 		BigDecimal balance = userService.selectUserById(ConstantsData.getLoginUser().getUserId()).getBalances();
 		if (balance == null) {
 			balance = new BigDecimal(0.00);
 		}
-		model.addAttribute("balance", balance);
-		return "expense/expense_recharge";
+        return balance.toString();
 	}
 
 	@RequestMapping("recharge/list")
-	public String rechargeList(Page page, Model model) {
-		PageList<Recharge> recharges = rechargeService.listRecharges(page);
-		model.addAttribute("recharges", recharges);
-		return "expense/expense_recharge_list";
+    @ResponseBody
+    public PageList<Recharge> rechargeList(Page page) {
+        return rechargeService.listRecharges(page);
 	}
 
 	@RequestMapping("recharge/alipay")
@@ -82,8 +82,8 @@ public class PayAction {
 	}
 
 	@RequestMapping("recharge/jdpay")
-	public String jdpay(String pay_type, String money, Model model) {
-		model.addAttribute("params", payService.createJdpayOrder(pay_type, money));
+    public String jdpay(String pay_bank, String money, Model model) {
+        model.addAttribute("params", payService.createJdpayOrder(pay_bank, money));
 		return "pay/jdpay";
 	}
 

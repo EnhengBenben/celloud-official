@@ -32,21 +32,20 @@ public class MessageCategoryAction {
     
     @ActionLog(value = "查看消息设置", button = "消息设置")
     @RequestMapping("setting")
-    public ModelAndView setting() {
+    @ResponseBody
+    public List<Map<String, Object>> setting() {
         logger.info("用户{}查看消息设置", ConstantsData.getLoginUserName());
         ModelAndView mv = new ModelAndView("notice/setting");
         Integer userId = ConstantsData.getLoginUserId();
-        List<Map<String, Object>> userMessageCategoryList = messageCategoryService.getMessageCategoryByUserId(userId);
-        mv.addObject("userMessageCategoryList", userMessageCategoryList);
-        return mv;
+        return messageCategoryService.getMessageCategoryByUserId(userId);
     }
 
     @ActionLog(value = "第一次更改消息设置", button = "消息开关")
     @RequestMapping("insert")
     @ResponseBody
-    public int insert(String data) {
+    public int insert(String targetName, Integer targetVal, Integer relatId) {
         Integer userId = ConstantsData.getLoginUserId();
-        return messageCategoryService.initUserMessageCategory(userId, data);
+        return messageCategoryService.initUserMessageCategory(userId, targetName, targetVal, relatId);
     }
 
     @ActionLog(value = "不是第一次更改消息设置", button = "消息开关")

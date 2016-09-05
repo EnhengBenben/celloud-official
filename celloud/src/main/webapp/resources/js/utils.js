@@ -106,25 +106,21 @@ utils.setDocSize = function(){
 		$(".bgContainer").width(winWidth);
 		$(".longbackground").width(winWidth);
 		$("#bg").width(winWidth);
-		$(".page-layout").css("min-width",winWidth);
 	}else{
 		$(".bgContainer").width(docWidth);
 		$(".longbackground").width(docWidth);
 		$("#bg").width(docWidth);
-		$(".page-layout").css("min-width",docWidth);
 	}
 	//设置高度
 	if(winHeight >= docHeight){
 		$(".bgContainer").height(winHeight);
 		$(".longbackground").height(winHeight);
 		$("#bg").height(winHeight);
-		$(".page-layout").css("min-height",winHeight);
 		$(".container").height(winHeight);
 	}else{
 		$(".bgContainer").height(docHeight);
 		$(".longbackground").height(docHeight);
 		$("#bg").height(docHeight);
-		$(".page-layout").css("min-height",docHeight);
 		$(".container").height(docHeight);
 	}
 	$(".bgContainer").css("overflow","hidden");

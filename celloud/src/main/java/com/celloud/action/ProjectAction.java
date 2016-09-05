@@ -38,6 +38,7 @@ import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
+import com.celloud.utils.Response;
 import com.celloud.utils.SSHUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
@@ -86,8 +87,8 @@ public class ProjectAction {
     @ActionLog(value = "修改项目信息（项目名）", button = "修改项目")
     @RequestMapping("update")
     @ResponseBody
-    public Integer update(Project project) {
-        return projectService.update(project);
+	public Response update(Project project) {
+		return projectService.update(project) == 1 ? Response.UPDATE_SUCCESS : Response.FAIL;
     }
 
     /**
@@ -216,11 +217,11 @@ public class ProjectAction {
     @ActionLog(value = "删除一条共享来的项目记录，项目本身不删除", button = "删除共享项目")
     @RequestMapping("deleteShare")
     @ResponseBody
-    public boolean deleteShare(Integer projectId) {
+	public Response deleteShare(Integer projectId) {
         Integer userId = ConstantsData.getLoginUserId();
         // 删除一条共享记录，修改一条项目记录
         Integer num = projectService.deleteShareToMe(userId, projectId);
-        return num == 2;
+		return num == 2 ? Response.DELETE_SUCCESS : Response.FAIL;
     }
 
     /**

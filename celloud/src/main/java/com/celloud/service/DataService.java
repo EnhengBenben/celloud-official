@@ -63,7 +63,15 @@ public interface DataService {
 	 * @param data
 	 * @return
 	 */
-	public int updateDataInfoByFileId(DataFile data);
+    public int updateDataInfoByFileId(DataFile data);
+
+    /**
+     * 修改数据信息
+     * 
+     * @param data
+     * @return
+     */
+    public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId);
 
 	/**
 	 * 数据分页列表
@@ -73,6 +81,18 @@ public interface DataService {
 	 * @return
 	 */
 	PageList<DataFile> dataAllList(Page page, Integer userId);
+
+    /**
+     * 产品中的数据分页列表
+     * 
+     * @param page
+     * @param userId
+     * @param appId
+     * @return
+     */
+    PageList<DataFile> dataListByAppId(Page page, Integer userId,
+            Integer appId, String condition, Integer sort, String sortDate,
+            String sortName, String sortBatch);
 
 	/**
 	 * 按条件检索数据列表
@@ -262,6 +282,16 @@ public interface DataService {
 	 * @date 2016年2月1日上午12:26:33
 	 */
 	public int updateByPrimaryKeySelective(DataFile record);
+
+	/**
+	 * 修改数据信息及其产品标签
+	 * 
+	 * @param record
+	 * @return
+	 * @author lin
+	 * @date 2016年8月23日下午2:30:17
+	 */
+	public int updateDataAndTag(DataFile record);
 
 	/**
 	 * 获取同一批次的成对数据

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.DataState;
 import com.celloud.mapper.ProjectMapper;
 import com.celloud.mapper.ReportMapper;
+import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Project;
 import com.celloud.service.ProjectService;
 
@@ -88,6 +89,18 @@ public class ProjectServiceImpl implements ProjectService {
         }
         return map;
     }
+
+	@Override
+	public Integer insertProject(Project project, List<DataFile> datalist) {
+		project.setProjectId(null);
+		project.setCreateDate(new Date());
+		projectMapper.insertSelective(project);
+		Integer projectId = project.getProjectId();
+		for (DataFile data : datalist) {
+			projectMapper.insertDataProjectRelat(data.getFileId(), projectId);
+		}
+		return projectId;
+	}
 
     @Override
     public Map<String, Object> findProjectInfoById(Integer projectId) {

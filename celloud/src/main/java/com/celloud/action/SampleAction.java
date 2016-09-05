@@ -10,17 +10,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.AppConstants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.SampleExperState;
 import com.celloud.model.mysql.Sample;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 import com.celloud.service.SampleService;
 import com.celloud.utils.ActionLog;
 
 /**
- * 样品收集
+ * 样品管理
  * 
  * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
  * @date 2016年6月20日 下午1:53:13
@@ -81,4 +85,94 @@ public class SampleAction {
 		List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null : Arrays.asList(sampleIds);
 		return sampleService.deleteList(list);
 	}
+
+    /**
+     * 获取采样中的样本列表
+     * 
+     * @param page
+     * @param size
+     * @return
+     * @author leamo
+     * @date 2016年9月5日 下午3:25:27
+     */
+    @RequestMapping("getSamplingList")
+    @ResponseBody
+    public PageList<Sample> getSamplingList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return getSamples(page, size, SampleExperState.SAMPLING);
+    }
+
+    /**
+     * 获取入库的样本列表
+     * 
+     * @param page
+     * @param size
+     * @return
+     * @author leamo
+     * @date 2016年9月5日 下午3:25:27
+     */
+    @RequestMapping("getScanStorageSamples")
+    @ResponseBody
+    public PageList<Sample> getScanStorageSamples(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return getSamples(page, size, SampleExperState.SCAN_STORAGE);
+    }
+
+    /**
+     * 获取提DNA的样本列表
+     * 
+     * @param page
+     * @param size
+     * @return
+     * @author leamo
+     * @date 2016年9月5日 下午3:25:27
+     */
+    @RequestMapping("getTokenDnaSamples")
+    @ResponseBody
+    public PageList<Sample> getTokenDnaSamples(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return getSamples(page, size, SampleExperState.TOKEN_DNA);
+    }
+
+    /**
+     * 获取样本列表
+     * 
+     * @param page
+     * @param size
+     * @param experState
+     * @return
+     * @author leamo
+     * @date 2016年9月5日 下午3:46:28
+     */
+    private PageList<Sample> getSamples(int page, int size, int experState) {
+        return sampleService.getSamples(new Page(page, size),
+                ConstantsData.getLoginUserId(), experState);
+    }
+
+    /**
+     * 扫码样本入库
+     * 
+     * @param sampleName
+     * @return
+     * @author leamo
+     * @date 2016年9月5日 下午4:49:53
+     */
+    @RequestMapping("toScanStorage")
+    @ResponseBody
+    public Integer toScanStorage(String sampleName) {
+        Sample sample = sampleService.getByNameExperState(
+                ConstantsData.getLoginUserId(), sampleName,
+                SampleExperState.SAMPLING);
+        if (sample != null) {
+            return sampleService.updateExperState(
+                    ConstantsData.getLoginUserId(),
+                    SampleExperState.SCAN_STORAGE,
+                    sample.getSampleId());
+        } else {
+            return 0;
+        }
+    }
 }

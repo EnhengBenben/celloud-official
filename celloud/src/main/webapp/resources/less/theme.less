@@ -1,0 +1,87 @@
+.theme(@bg-color,@font-color,@border-color){
+    .common-sidebar{
+        > .menu .treeview{
+            &.-active>a {
+                border-left: 2px solid @font-color;
+                color: @font-color;
+            }
+        }
+    }
+    .table-main>tbody>tr:hover>td,
+    .table-main>tbody>tr:hover>td>a,
+    .table-main>tbody>tr:hover>td>a>i{
+        background-color: @bg-color;
+        color: @font-color;
+    }
+    .table-main>tbody>tr:hover>td>a.disabled>i {
+        color: @light-gray;
+    }
+    .table-main>tbody>tr{
+        &:hover, &.checked{
+            >td,
+            >td>a,
+            >td>a>i{
+                background-color: @bg-color;
+                color: @font-color;
+            }
+            >td:first-child{
+                border-left: 2px solid @font-color;
+            }
+        }
+    }
+    .table-main{
+        &.-report >thead>tr>th{
+            background: @bg-color;
+            border-bottom: 1px solid @border-color;
+        }
+        &.-report {
+            .border-1(@border-color);
+            >tbody{
+                >tr>td {
+                    border-right: 1px solid @border-color;
+                    border-bottom: 1px solid @border-color;
+                    &:last-child{
+                        border-right: none;
+                    }
+                    &:first-child{
+                        text-align: center;
+                    }   
+                }
+                >tr:last-child>td{
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    .checkbox-lable .checkbox:checked + .info:after,
+    .report-content .result-div .main,
+    .step .item{
+        color: @font-color;
+    }
+    .step .item{
+        border-color: @border-color;
+    }
+}
+.rocky{
+    .theme(@rocky-bg-color,@rocky-font-color,@rocky-border-color);
+    .common-sidebar{
+        > .menu .treeview{
+            &.-active>a {
+                >.celicon{
+                    &.-sample{
+                        background-position: -351px -116px;
+                    }
+                    &.-upload{
+                        background-position: -394px -118px;
+                    }
+                    &.-data{
+                        background-position: -438px -118px;
+                    }
+                    &.-report{
+                        background-position: -476px -118px;
+                    }
+                }
+            }
+        }
+    }
+}

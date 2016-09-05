@@ -1,0 +1,31 @@
+html,body,div,section,ul,ol,a {
+    padding: 0;
+    margin: 0;
+   
+    font: 12px/1.5 "PingFang TC Light","Microsoft Yahei","Hiragino Sans GB",tahoma,arial;
+}
+input,button,a,select,textarea {
+    outline: none;
+}
+a, a:link, a:hover, a:active, a:visited {
+    text-decoration: none;
+    cursor: pointer;
+    &.disabled {
+        cursor: default;
+    }
+}
+ul,ol{
+    list-style: none;
+}
+
+.container{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    color: @gray-black;
+    background: @container-gray;
+}
+.container-fluid{
+    padding: 0;
+    margin: 0;
+}

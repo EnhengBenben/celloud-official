@@ -2,15 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<div class="content-header">
-  <ol class="breadcrumb">
-    <li>主页</li>
-    <li>应用</li>
-    <li>百菌探</li>
-    <li><a data-click="report-list" href="javascript:void(0)">报告</a></li>
-    <li id="to-my-report">报告列表</li>
-  </ol>
-</div>
 <div class="selector">
   <div id="batch-sl" class="selector-line">
     <div class="sl-key">标签：</div>

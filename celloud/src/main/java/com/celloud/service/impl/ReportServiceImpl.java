@@ -302,6 +302,22 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
+	public boolean insertProReport(Report report, List<DataFile> dataList) {
+		report.setReportId(null);
+		report.setCreateDate(new Date());
+		// 创建项目报告
+		report.setFlag(ReportType.PROJECT);
+		int success = reportMapper.insertSelective(report);
+		// 创建数据报告
+		report.setFlag(ReportType.DATA);
+		for (DataFile dataFile : dataList) {
+			report.setFileId(dataFile.getFileId());
+			success += reportMapper.insertSelective(report);
+		}
+		return success == dataList.size() + 1;
+	}
+
+	@Override
 	public String hbvCompare(Integer appId, String path) {
 		List<String> list = FileTools.fileSearch(path, String.valueOf(appId), "startWith");
 		StringBuffer sb = new StringBuffer();

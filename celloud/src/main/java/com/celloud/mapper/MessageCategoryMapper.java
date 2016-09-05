@@ -56,7 +56,8 @@ public interface MessageCategoryMapper {
      * @return
      *
      */
-    int insertUserMessageCategoryRelat(@Param("userId") Integer userId, @Param("data") String data);
+    int insertUserMessageCategoryRelat(@Param("userId") Integer userId,
+            @Param("messageCategory") MessageCategory messageCategory);
 
 
     /**

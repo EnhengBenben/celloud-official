@@ -73,6 +73,7 @@ import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Medicine;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Tag;
 import com.celloud.model.mysql.Task;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
@@ -85,6 +86,7 @@ import com.celloud.service.ExperimentService;
 import com.celloud.service.MedicineService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.TagService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
@@ -122,6 +124,8 @@ public class ReportAction {
 	private UserService userService;
     @Resource
     private MedicineService medicineService;
+    @Resource
+    private TagService tagService;
 
     @RequestMapping("checkPgsProject")
     @ResponseBody
@@ -142,6 +146,59 @@ public class ReportAction {
 		return 1;
 	}
 
+    /**
+     * 获取数据报告形式列表
+     * 
+     * @param page
+     * @param size
+     * @param sample
+     * @param condition
+     * @param sord
+     * @param batch
+     * @param period
+     * @param beginDate
+     * @param endDate
+     * @return
+     * @author leamo
+     * @date 2016年8月29日 下午3:37:38
+     */
+    @RequestMapping("dataReportPages")
+    @ResponseBody
+    public PageList<Task> dataReportPages(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String sample,
+            String condition, @RequestParam(defaultValue = "desc") String sort,
+            @RequestParam(name = "tagId", required = false) Integer tagId,
+            @RequestParam(name = "batch", required = false) String batch,
+            @RequestParam(name = "period", required = false) Integer period, String beginDate,
+            String endDate){
+        Page pager = new Page(page,size);
+        Integer userId = ConstantsData.getLoginUserId();
+        PageList<Task> plist = taskService.findAllTasks(pager, userId,
+                condition, tagId, batch,
+                period, beginDate, endDate, sort);
+        return plist;
+    }
+
+    /**
+     * 数据报告列表搜索信息列表
+     * 
+     * @return
+     * @author leamo
+     * @date 2016年8月30日 上午11:47:18
+     */
+    @RequestMapping("reportSearchInfo")
+    @ResponseBody
+    public Map<String, Object> reportSearchInfo() {
+        Integer userId = ConstantsData.getLoginUserId();
+        List<String> batchs = dataService.getBatchList(userId);
+        List<Tag> tags = tagService.findTags(userId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("batchs", batchs);
+        map.put("tags", tags);
+        return map;
+    }
+
 	/**
 	 * 获取报告模块列表
 	 * 
@@ -156,15 +213,16 @@ public class ReportAction {
 	 */
 	@ActionLog(value = "获取报告模块项目报告列表", button = "报告模块")
 	@RequestMapping("getReportPageList")
-	public ModelAndView reportPages(@RequestParam(defaultValue = "1") Integer page,
+	@ResponseBody
+	public PageList<Map<String, Object>> reportPages(@RequestParam(defaultValue = "1") Integer page,
 			@RequestParam(defaultValue = Constants.DEFAULT_PAGE_SIZE + "") Integer size, String condition, String start,
-			String end, Integer appId, Integer belongs) {
+			String end, @RequestParam(defaultValue = "0") Integer appId,
+			@RequestParam(defaultValue = "1") Integer belongs) {
 		Integer userId = ConstantsData.getLoginUserId();
-		ModelAndView mv = new ModelAndView("report/report_list");
 		Page pager = new Page(page, size);
 		PageList<Map<String, Object>> pageList = reportService.getReportPageList(userId, pager, condition, start, end,
 				appId, belongs);
-		return mv.addObject("pageList", pageList);
+		return pageList;
 	}
 
 	/**
@@ -181,6 +239,22 @@ public class ReportAction {
 		Project project = projectService.selectByPrimaryKey(projectId);
 		mv.addObject("project", project);
 		return mv;
+	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月4日下午4:43:42
+     * @description 获取数据报告共有数据
+     * @param projectId
+     *
+     */
+    private Map<String, Object> getCommonInfo(Integer projectId) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Project project = projectService.selectByPrimaryKey(projectId);
+        map.put("uploadPath", "/upload/");
+        map.put("project", project);
+        return map;
 	}
 
 	/**
@@ -554,6 +628,23 @@ public class ReportAction {
 		mv.addObject("mibCharList", mibCharList);
 		return mv.addObject("mib", mib);
 	}
+
+    @RequestMapping("getMIBReportInfo")
+    @ResponseBody
+    public Map<String, Object> getMIBReportInfo(String dataKey,
+            Integer projectId, Integer appId) {
+        MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("readsDistributionInfo",
+                JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        map.put("familyDistributionInfo",
+                JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        map.put("genusDistributionInfo",
+                JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        map.put("mib", mib);
+        map.put("uploadPath", "/upload/");
+        return map;
+    }
 
 	/**
 	 * 获取 MIB 的数据报告
@@ -966,6 +1057,26 @@ public class ReportAction {
 		return mv.addObject("hcv", hcv);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月5日上午11:05:19
+     * @description 获取HCV数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @RequestMapping("getHCVInfo")
+    @ResponseBody
+    public Map<String, Object> getHCVInfo(String dataKey, Integer projectId, Integer appId) {
+        HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("hcv", hcv);
+        return map;
+    }
+
 	@ActionLog(value = "查看Translate数据报告", button = "数据报告")
 	@RequestMapping("getTranslateReport")
 	public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
@@ -1011,6 +1122,27 @@ public class ReportAction {
 		return mv.addObject("egfr", egfr);
 	}
 
+    @RequestMapping("getEGFRInfo")
+    @ResponseBody
+    public Map<String, Object> getEGFRInfo(String dataKey, Integer projectId, Integer appId) {
+        EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+        String mp = egfr.getMutationPosition();
+        String position = egfr.getPosition();
+        String conclusion = egfr.getConclusion();
+        if (StringUtils.isNotBlank(conclusion)) {
+            egfr.setConclusion(CustomStringUtils.htmlbr(conclusion));
+        }
+        if (StringUtils.isNotEmpty(mp)) {
+            egfr.setMutationPosition(CustomStringUtils.htmlbr(mp));
+        }
+        if (StringUtils.isNotBlank(position)) {
+            egfr.setPosition(CustomStringUtils.htmlbr(position));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("egfr", egfr);
+        return map;
+    }
+
 	/**
 	 * 获取KRAS数据报告
 	 * 
@@ -1036,6 +1168,34 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_kras", projectId);
 		return mv.addObject("kras", kras);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月5日上午11:04:39
+     * @description 获取kras数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @RequestMapping("getKRASInfo")
+    @ResponseBody
+    public Map<String, Object> getKRASInfo(String dataKey, Integer projectId, Integer appId) {
+        KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+        String mp = kras.getMutationPosition();
+        if (StringUtils.isNotBlank(mp)) {
+            kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
+        }
+        String pos = kras.getPosition();
+        if (StringUtils.isNotBlank(pos)) {
+            kras.setPosition(CustomStringUtils.htmlbr(pos));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("kras", kras);
+        return map;
+    }
 
 	/**
 	 * 获取DPD数据报告
@@ -1168,6 +1328,28 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_braf", projectId);
 		return mv.addObject("braf", braf);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月5日下午3:18:34
+     * @description 获取BRAF数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @RequestMapping("getBRAFInfo")
+    @ResponseBody
+    public Map<String, Object> getBRAFInfo(String dataKey, Integer projectId, Integer appId) {
+        BRAF braf = reportService.getBRAFReport(dataKey, projectId, appId);
+        String mp = braf.getMutationPosition();
+        braf.setMutationPosition(CustomStringUtils.toTable(mp));
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("braf", braf);
+        return map;
+    }
 
 	/**
 	 * 点击数据报告列表查看下一页数据报告
@@ -2864,6 +3046,22 @@ public class ReportAction {
 		// log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
 	}
+
+    /**
+     * 获取报告图片
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "reportImage", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> reportImage(String file) throws IOException {
+        String path = SparkPro.TOOLSPATH + File.separator + file;
+        File targetFile = new File(path);
+        // log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
+        return new ResponseEntity<byte[]>(
+                FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
 
 	/**
 	 * 将Map中的数据返回到velocity模板中
