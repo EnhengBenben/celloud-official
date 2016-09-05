@@ -1,31 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <div>
-	<div class="bg-analysis">
-		<div class="m-box">
-			<h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
-			<div class="m-boxCon">
-				<div class="row" id="charDiv">
-			    </div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<script>
-$(function() {
-    $(window).manhuatoTop({
-            showHeight : 100,
-            speed : 1000
-    });
-});
-function showModal(id){
-	$("#"+id).modal("show");
-	$("#"+id).find(".modal-body").scrollTop(0);
-}
-
-</script>
- --%>
 <div class="pro-body">
     <ol class="breadcrumb">
       <li>CelLoud</li>

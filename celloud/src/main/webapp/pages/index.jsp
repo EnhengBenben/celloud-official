@@ -218,6 +218,7 @@
   <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/filter.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/dataReportService.js"></script>

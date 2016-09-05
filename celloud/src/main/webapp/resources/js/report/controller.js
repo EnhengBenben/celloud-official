@@ -1,7 +1,36 @@
 (function(){
   function viewDataReport(userId,dataKey,fileName,appId,appName,proId,proName,obj){
-	  window.location.href = "#/reportpro/"+ appName + "/" + appId + "/" + dataKey + "/" + proId;
+	  var href = "#/reportpro/"+ appName + "/" + appId + "/" + dataKey + "/" + proId;
+	  console.log(href);
+	  window.location.href = href; 
   }
+  
+  function getCountValue(key,id){
+		var num = 0;
+		var val;
+		$("#"+id).find("tr").each(function(i){
+			if(i==0){
+				$(this).find("th").each(function(j){
+					var title = $(this).html();
+					if(title==key){
+						num = j;
+					}
+				});
+			}else{
+				$(this).find("td").each(function(k){
+					if(num==k){
+						val = $(this).html();
+						if(val.indexOf(",") > 0){
+							var reg=new RegExp(",","g"); //创建正则RegExp对象  
+							val=val.replace(reg,"");  
+						}
+					}
+				});
+			}
+		});
+		return val;
+	}
+  
   celloudApp.directive('loadOver', function ($timeout) {
     return {
         restrict: 'A',
@@ -96,6 +125,52 @@
 		  }
 	  });
   });
+  /**
+   * hcv数据报告controller
+   */
+  celloudApp.controller("hcvDataReportController", function($scope, $routeParams, dataReportService){
+	  dataReportService.getDataReportInfo("report/getHCVInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(hcvInfo){
+		  $scope.hcv = hcvInfo.hcv;
+		  $scope.project = hcvInfo.project;
+		  $scope.uploadPath = hcvInfo.uploadPath;
+		  
+		  $scope.change = function(){
+			  var val = $("#_change").html();
+			  if(val=="显示更多"){
+				  $("#nomal").css("display","");
+				  $("#cfda").css("display","none");
+				  $("#_change").html("返回");
+			  }else{
+				  $("#nomal").css("display","none");
+				  $("#cfda").css("display","");
+				  $("#_change").html("显示更多");
+			  }
+		  }
+		  // 数据参数同比
+		  $.get("count/hcvCompare",{},function(data){
+			  var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
+			  $("#charDiv").append(div);
+			  var one = getCountValue("Subtype","nomal");
+			  var X = "[";
+			  var Y = "[";
+			  var value = data.split(";");
+			  for(var k=0;k<value.length-1;k++){
+			  	  var n = value[k].split(",");
+			  	  X+="'"+n[0]+"',";
+			  	  if(n[0]==one){
+			  	  	  Y+="{ dataLabels: { enabled: true, y: 0, crop: false, style: { fontWeight: 'bold', fontSize:16 }, }, y:"+ n[1]+"},";
+			  	  }else{
+			  	  	  Y+=n[1]+",";
+			  	  }
+			  }
+			  X = X.substring(0,X.length-1)+"]";
+			  Y = Y.substring(0,Y.length-1)+"]";
+			  $.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y), 0, 500, 300);
+		});
+	  });
+  });
+  
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     //加载产品标签
     $scope.ranAppList = projectReportService.getRanAPP();
@@ -379,7 +454,7 @@
                   }
                   $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
                   $(this).find("span").bind("click",function(){
-                    viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                    viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
                   $(this).find("span").addClass("link");
                 }

@@ -98,6 +98,10 @@
       templateUrl: "pages/report/report_data_kras.jsp",
       controller: "krasDataReportController"
     })
+    .when('/reportpro/HCV_Genotype/:appId/:dataKey/:projectId',{
+	  templateUrl: "pages/report/report_data_hcv.jsp",
+	  controller: "hcvDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

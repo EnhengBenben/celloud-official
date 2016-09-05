@@ -1058,6 +1058,26 @@ public class ReportAction {
 		return mv.addObject("hcv", hcv);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月5日上午11:05:19
+     * @description 获取HCV数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @RequestMapping("getHCVInfo")
+    @ResponseBody
+    public Map<String, Object> getHCVInfo(String dataKey, Integer projectId, Integer appId) {
+        HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("hcv", hcv);
+        return map;
+    }
+
 	@ActionLog(value = "查看Translate数据报告", button = "数据报告")
 	@RequestMapping("getTranslateReport")
 	public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
@@ -1150,6 +1170,17 @@ public class ReportAction {
 		return mv.addObject("kras", kras);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月5日上午11:04:39
+     * @description 获取kras数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
     @RequestMapping("getKRASInfo")
     @ResponseBody
     public Map<String, Object> getKRASInfo(String dataKey, Integer projectId, Integer appId) {
