@@ -8,15 +8,26 @@
     </ol>
     <div class="content sample">
         <div class="content-header clearfix">
-          <img src="<%=request.getContextPath()%>/images/icon/sample_scan.jpg">
-          <p>* 请持条码枪扫描样品管上的条码<br>
-              无条码样品请按以下方式操作：<br> 1. 在样品管上记录样品病历号<br> 2. 将病历号输入上面窗口后回车
-          </p>
-          <span  class="input-alert">此样品信息已经收集过，请核查或者采集下一管样品信息！</span>
-          <div class="info-btn-group">
-            <input class="field" type="text" placeholder="扫描样本编号/病历号"/>
-            <a class="action" ng-click="conditionList()">扫码提DNA</a>
-          </div>
+          <form class="form-inline">
+	          <div class="form-group">
+			    <label class="control-label" for="exampleInputEmail2">文库编码</label>
+			    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+			  </div>
+			  <div class="form-group">
+			    <label class="control-label" for="exampleInputEmail2">文库index</label>
+                <select>
+                    <option value="AG">M16s_1_1R/F</option>
+                    <option></option>
+                    <option></option>
+                </select>
+			  </div>
+			  <div class="form-group pull-right">
+			    <div class="info-btn-group">
+		            <input class="field" type="text" placeholder="扫描样本编号/病历号"/>
+		            <a class="action" ng-click="conditionList()">扫码提DNA</a>
+		          </div>
+			  </div>
+          </form>
         </div>
         <table class="table table-main">
             <thead>

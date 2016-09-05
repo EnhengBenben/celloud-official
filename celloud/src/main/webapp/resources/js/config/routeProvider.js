@@ -100,7 +100,7 @@
     .when('/reportdata/MIB/:appId/:dataKey/:proId',{
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
-    })
+    })  
     .when('/experiment/scanStorage',{
       templateUrl: "pages/experiment_scan/scan_storage.jsp"
     })

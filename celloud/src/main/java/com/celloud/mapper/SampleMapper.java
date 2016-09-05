@@ -30,4 +30,13 @@ public interface SampleMapper {
             @Param("state") Integer state);
 
     int deleteList(@Param("sampleIds") List<Integer> sampleIds);
+
+    List<Sample> getSamples(@Param("userId") Integer userId,
+            @Param("experState") Integer experState,
+            @Param("state") Integer state);
+
+    Sample getByNameExperState(@Param("userId") Integer userId,
+            @Param("sampleName") String sampleName,
+            @Param("experState") Integer experState,
+            @Param("state") Integer state);
 }

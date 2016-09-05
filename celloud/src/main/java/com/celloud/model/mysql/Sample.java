@@ -11,6 +11,10 @@ public class Sample {
 
     private Boolean isAdd;
 
+    private String type;
+
+    private String index;
+
     private Date createDate;
 
     private Date updateDate;
@@ -47,6 +51,22 @@ public class Sample {
 
     public void setIsAdd(Boolean isAdd) {
         this.isAdd = isAdd;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index == null ? null : index.trim();
     }
 
     public Date getCreateDate() {
