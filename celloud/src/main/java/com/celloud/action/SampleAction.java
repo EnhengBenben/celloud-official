@@ -112,12 +112,12 @@ public class SampleAction {
      * @author leamo
      * @date 2016年9月5日 下午3:25:27
      */
-    @RequestMapping("getToStorageSamples")
+    @RequestMapping("getScanStorageSamples")
     @ResponseBody
-    public PageList<Sample> getToStorageSamples(
+    public PageList<Sample> getScanStorageSamples(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
-        return getSamples(page, size, SampleExperState.TO_STORAGE);
+        return getSamples(page, size, SampleExperState.SCAN_STORAGE);
     }
 
     /**
@@ -129,12 +129,12 @@ public class SampleAction {
      * @author leamo
      * @date 2016年9月5日 下午3:25:27
      */
-    @RequestMapping("getToDnaSamples")
+    @RequestMapping("getTokenDnaSamples")
     @ResponseBody
-    public PageList<Sample> getToDnaSamples(
+    public PageList<Sample> getTokenDnaSamples(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
-        return getSamples(page, size, SampleExperState.TO_DNA);
+        return getSamples(page, size, SampleExperState.TOKEN_DNA);
     }
 
     /**
@@ -160,15 +160,16 @@ public class SampleAction {
      * @author leamo
      * @date 2016年9月5日 下午4:49:53
      */
-    @RequestMapping("updateToStorageSamples")
+    @RequestMapping("toScanStorage")
     @ResponseBody
-    public Integer updateToStorageSamples(String sampleName) {
+    public Integer toScanStorage(String sampleName) {
         Sample sample = sampleService.getByNameExperState(
                 ConstantsData.getLoginUserId(), sampleName,
                 SampleExperState.SAMPLING);
         if (sample != null) {
             return sampleService.updateExperState(
-                    ConstantsData.getLoginUserId(), SampleExperState.TO_STORAGE,
+                    ConstantsData.getLoginUserId(),
+                    SampleExperState.SCAN_STORAGE,
                     sample.getSampleId());
         } else {
             return 0;

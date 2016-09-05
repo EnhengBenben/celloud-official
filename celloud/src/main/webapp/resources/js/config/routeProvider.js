@@ -114,7 +114,8 @@
       controller: "mibReportController"
     })
     .when('/experiment/scanStorage',{
-      templateUrl: "pages/experiment_scan/scan_storage.jsp"
+      templateUrl: "pages/experiment_scan/scan_storage.jsp",
+      controller: "scanStorageController"
     })
     .when('/experiment/tokenDNA',{
       templateUrl: "pages/experiment_scan/token_dna.jsp"
