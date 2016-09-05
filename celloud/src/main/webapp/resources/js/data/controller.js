@@ -70,7 +70,7 @@
         return ;
       }
       $.confirm("确定要删除所选数据？","确认框",function(){
-        runService.delete().success(function(response){
+        runService.deleteData().success(function(response){
           if(response.success){
             $scope.conditionList();
             $.dataManager.refreshDataList();
@@ -84,6 +84,12 @@
       runService.toEditData(fileId).success(function(response){
         $scope.dataFile = response['file'];
         $scope.appList = response['appList'];
+        for(i = 0; i < $scope.appList.length; i++){
+        	if($.trim($scope.appList[i].appName) == $.trim($scope.dataFile.tagName)){
+        		$scope.appSelected = $scope.appList[i];
+        		break;
+        	}
+        }
       });
     }
     //修改数据信息

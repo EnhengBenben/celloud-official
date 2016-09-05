@@ -222,7 +222,6 @@ public class ReportAction {
 		Page pager = new Page(page, size);
 		PageList<Map<String, Object>> pageList = reportService.getReportPageList(userId, pager, condition, start, end,
 				appId, belongs);
-		System.out.println(pageList.getDatas().size());
 		return pageList;
 	}
 
@@ -240,6 +239,22 @@ public class ReportAction {
 		Project project = projectService.selectByPrimaryKey(projectId);
 		mv.addObject("project", project);
 		return mv;
+	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月4日下午4:43:42
+     * @description 获取数据报告共有数据
+     * @param projectId
+     *
+     */
+    private Map<String, Object> getCommonInfo(Integer projectId) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Project project = projectService.selectByPrimaryKey(projectId);
+        map.put("uploadPath", "/upload/");
+        map.put("project", project);
+        return map;
 	}
 
 	/**
@@ -1042,6 +1057,26 @@ public class ReportAction {
 		return mv.addObject("hcv", hcv);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月5日上午11:05:19
+     * @description 获取HCV数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @RequestMapping("getHCVInfo")
+    @ResponseBody
+    public Map<String, Object> getHCVInfo(String dataKey, Integer projectId, Integer appId) {
+        HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("hcv", hcv);
+        return map;
+    }
+
 	@ActionLog(value = "查看Translate数据报告", button = "数据报告")
 	@RequestMapping("getTranslateReport")
 	public ModelAndView getTranslateReport(String dataKey, Integer projectId, Integer appId) {
@@ -1087,6 +1122,27 @@ public class ReportAction {
 		return mv.addObject("egfr", egfr);
 	}
 
+    @RequestMapping("getEGFRInfo")
+    @ResponseBody
+    public Map<String, Object> getEGFRInfo(String dataKey, Integer projectId, Integer appId) {
+        EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+        String mp = egfr.getMutationPosition();
+        String position = egfr.getPosition();
+        String conclusion = egfr.getConclusion();
+        if (StringUtils.isNotBlank(conclusion)) {
+            egfr.setConclusion(CustomStringUtils.htmlbr(conclusion));
+        }
+        if (StringUtils.isNotEmpty(mp)) {
+            egfr.setMutationPosition(CustomStringUtils.htmlbr(mp));
+        }
+        if (StringUtils.isNotBlank(position)) {
+            egfr.setPosition(CustomStringUtils.htmlbr(position));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("egfr", egfr);
+        return map;
+    }
+
 	/**
 	 * 获取KRAS数据报告
 	 * 
@@ -1112,6 +1168,34 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_kras", projectId);
 		return mv.addObject("kras", kras);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月5日上午11:04:39
+     * @description 获取kras数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @RequestMapping("getKRASInfo")
+    @ResponseBody
+    public Map<String, Object> getKRASInfo(String dataKey, Integer projectId, Integer appId) {
+        KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+        String mp = kras.getMutationPosition();
+        if (StringUtils.isNotBlank(mp)) {
+            kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
+        }
+        String pos = kras.getPosition();
+        if (StringUtils.isNotBlank(pos)) {
+            kras.setPosition(CustomStringUtils.htmlbr(pos));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("kras", kras);
+        return map;
+    }
 
 	/**
 	 * 获取DPD数据报告

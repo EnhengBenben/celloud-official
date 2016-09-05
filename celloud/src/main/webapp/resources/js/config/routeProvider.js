@@ -1,4 +1,4 @@
- (function(){
+(function(){
   celloudApp.config(function($routeProvider){
     $routeProvider
     .when('/',{
@@ -90,6 +90,18 @@
       templateUrl: "pages/report/report_project.jsp",
       controller: "projectReportController"
     })
+    .when('/reportpro/EGFR/:appId/:dataKey/:projectId',{
+      templateUrl: "pages/report/report_data_egfr.jsp",
+      controller: "egfrDataReportController"
+    })
+    .when('/reportpro/KRAS/:appId/:dataKey/:projectId',{
+      templateUrl: "pages/report/report_data_kras.jsp",
+      controller: "krasDataReportController"
+    })
+    .when('/reportpro/HCV_Genotype/:appId/:dataKey/:projectId',{
+	  templateUrl: "pages/report/report_data_hcv.jsp",
+	  controller: "hcvDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
@@ -100,7 +112,7 @@
     .when('/reportdata/MIB/:appId/:dataKey/:proId',{
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
-    })  
+    })
     .when('/experiment/scanStorage',{
       templateUrl: "pages/experiment_scan/scan_storage.jsp"
     })
