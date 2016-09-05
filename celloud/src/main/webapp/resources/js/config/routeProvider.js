@@ -128,5 +128,4 @@
     })
     .otherwise({redirectTo:'/'});
   });
->>>>>>> 01e7d79d769752b5a5de43dbe77494ed207ed2c2
 })()
