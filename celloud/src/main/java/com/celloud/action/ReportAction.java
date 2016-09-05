@@ -222,7 +222,6 @@ public class ReportAction {
 		Page pager = new Page(page, size);
 		PageList<Map<String, Object>> pageList = reportService.getReportPageList(userId, pager, condition, start, end,
 				appId, belongs);
-		System.out.println(pageList.getDatas().size());
 		return pageList;
 	}
 

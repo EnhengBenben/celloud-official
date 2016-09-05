@@ -224,8 +224,15 @@
       });
     }
     //取消共享来的项目
-    $scope.cancelProjectShare = function(projectId,userId){
-      alert(projectId);
+    $scope.cancelProjectShare = function(projectId){
+      $.confirm("确定要删除该项目？","确认框",function(){
+        projectReportService.cancelProjectShare(projectId).success(function(response){
+          if(response.success){
+            $scope.pageQuery(1,options.pageSize);
+          }
+          $.alert(response.message);
+        });
+      });
     }
     //下载PDF
     $scope.downPDF = function(userId,appId,projectId){
