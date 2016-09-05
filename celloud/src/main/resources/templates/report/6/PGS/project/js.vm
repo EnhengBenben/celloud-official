@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(function(){
-    
+    var url = window.location.href.split("print")[0];
     function lookCss(){
         $(".saId").css("margin-left","0px");
         $(".exId").css("margin-left","14px");
@@ -21,7 +21,6 @@ $(function(){
         $(".exId").css("margin-top","6px");
         $(".exRemark").css("margin-top","6px");
     };
-    $("#save").hide();
 	$("#print").on("click",function(){
 		var inputVal;
 		$("table").find("input[class!=notbottom]").each(function(){
@@ -65,49 +64,63 @@ $(function(){
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
-            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+            $(this).html("<textarea name=\"projectInfo['sampleNumber']\" style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
         });
         $(".exId").each(function(){
             inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
-            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+            $(this).html("<textarea name=\"projectInfo['experimentNumber']\" style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
         });
         $(".exResult").each(function(){
             inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
-            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+            $(this).html("<textarea name=\"projectInfo['result']\" style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
         });
 		$(".exRemark").each(function(){
 		    inputVal = $(this).html();
             if(inputVal){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
-            $(this).html("<textarea style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
+            $(this).html("<textarea name=\"projectInfo['remark']\" style=\"width:98%;font-size:12px;\">"+inputVal+"</textarea>");
 		});
 		$("table").find("input[class!=notbottom]").each(function(){
             $(this).css("border-bottom","1px solid #ccc");
         });
 	});
 	$("#save").on("click",function(){
-		$("body").find("input").each(function(){
-			$(this).attr("value",$(this).val());
-		});
-		$("#resultArea").html($("#resultArea").val());
-		var url = window.location.href.split("printPGS")[0];
-		$.post(url+"updateContext",{"appId":$("#_appId").html(),"fileId":$("#_fileId").html(),"projectId":$("#_projectId").html(),"printContext":$("#pgsSave").prop("outerHTML")},function(result){
-			if(result==1){
-				$.lAlert("信息保存成功！");
-			}else{
-				$.lAlert("信息保存失败！");
-			}
-		});
-	});
-	$("#reset").on("click",function(){
-	   $("#projectForm")[0].reset();
-	});
+    	var exists = $("#exists").val();
+        $.post(url+"updatePgsProjectFilling",$("#print-form").serialize(),function(result){
+            if(result > "0"){
+                $.lAlert("信息保存成功！");
+                if(exists == 0){
+                	$("#id").val(result);
+                	$("#exists").val(1);
+                }
+            }else{
+                $.lAlert("信息保存失败！");
+            }
+        });
+    });
+
+    $("#reset").on("click",function(){
+        $.lConfirm('确认重置？', function() {
+        	var exists = $("#exists").val();
+        	if(exists==0){
+        		location = location;
+        	}else{
+	            $.post(url+"updatePgsProjectFilling",{id:$("#id").val(),exists:1},function(result){
+	                if(result==1){
+	                    location=location ;
+	                }else{
+	                    $.lAlert("信息重置失败！");
+	                }
+	            });
+            }
+        });
+    });
 });
 </script>

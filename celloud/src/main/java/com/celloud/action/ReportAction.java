@@ -123,6 +123,12 @@ public class ReportAction {
     @Resource
     private MedicineService medicineService;
 
+    @RequestMapping("checkPgsProject")
+    @ResponseBody
+    public Integer checkPgsProject(Integer projectId) {
+        return reportService.getProjectPeriod(projectId);
+    }
+
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("down")
 	@ResponseStatus(value = HttpStatus.OK)
@@ -2297,25 +2303,31 @@ public class ReportAction {
 	}
 
 	/**
-	 * 打印Pgs项目报告
-	 * 
-	 * @param appId
-	 * @param dataKey
-	 * @return
-	 * @author lin
-	 * @date 2016年1月17日下午4:47:37
-	 */
-	@ActionLog(value = "打印Pgs数据报告", button = "打印数据报告")
+     * 
+     * @author MQ
+     * @date 2016年8月25日下午1:14:09
+     * @description 打印项目报告
+     * @param projectId
+     *            项目id
+     *
+     */
+    @ActionLog(value = "打印Pgs项目报告", button = "打印数据报告")
 	@RequestMapping("printPgsProject")
 	@ResponseBody
 	public void printPgsProject(Integer projectId) {
 		List<Pgs> pgsList = reportService.getPgsProjectReport(projectId);
-		// 涉及共享，此处不能取登陆者的companyId
-		String path = ConstantsData.getLoginUser().getCompanyId() + "/PGS/project/print.vm";
+        Pgs pgs = reportService.getPgsProjectInfo(pgsList.get(0).getProjectId());
+        Map<String, Object> context = new HashMap<String, Object>();
+        if(pgs==null){
+            context.put("exists", 0);
+        } else {
+            context.put("exists", 1);
+            context.put("pgs", pgs);
+        }
+        String path = ConstantsData.getLoginUser().getCompanyId() + "/PGS/project/print.vm";
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/PGS/print.vm";
 		}
-		Map<String, Object> context = new HashMap<String, Object>();
 		context.put("pgsList", pgsList);
 		returnToVelocity(path, context, projectId);
 	}
@@ -2700,6 +2712,32 @@ public class ReportAction {
 	public Integer updatePgsFilling(Pgs pgs) {
 		return reportService.updatePgsFilling(pgs);
 	}
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月25日下午3:33:48
+     * @description
+     * @param pgs
+     * @return
+     *
+     */
+    @ActionLog(value = "打印Pgs项目报告时修改用户填写的信息", button = "修改项目报告")
+    @RequestMapping("updatePgsProjectFilling")
+    @ResponseBody
+    public String updatePgsProjectFilling(Pgs pgs, Integer exists) {
+        try {
+            if (exists == 0) { // 代表第一次保存, 需要插入到mongo中
+                pgs.setFlag(1);
+                pgs.setId(null);
+                return reportService.save(pgs).getId().toString();
+            } else { // 不是第一次保存, 更新相应的额报告
+                return reportService.updatePgsProjectilling(pgs).toString();
+            }
+        } catch (Exception e) {
+            return "0";
+        }
+    }
 
 	/**
 	 * 

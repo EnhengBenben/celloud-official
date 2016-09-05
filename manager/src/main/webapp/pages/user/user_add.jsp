@@ -57,7 +57,7 @@
         	       <div class="main_f clearfix">
 	                    <span style="font-size:22px">对不起，您的链接已超时，请重新申请！</span>
 	                    <br/><br/>
-	                    <a href="http://www.celloud.cn" class="error_return">返回首页</a>
+	                    <a href="${officialWebsite }" class="error_return">返回首页进行登录,<span id="toOfficialWeb">5</span>秒后自动跳转到首页</a>
 	                </div>
         	   </c:otherwise>
         	</c:choose>
@@ -136,8 +136,10 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 			resetVal();
 		});
 		
-		$("#save").click(function(){
+		function save(){
+			$("#save").unbind("click");
 			if(!validateAddForm()){
+				$("#save").bind("click",save);
 				return;
 			}else{
 				//验证用户名重复问题
@@ -145,12 +147,14 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 				$.post("<%=request.getContextPath() %>/addUser/checkUsername",{username:username},function(flag){
 					if(flag){
 						$(".error").html("该用户名已经存在！");
+						$("#save").bind("click",save);
 					}else{
 						$(".error").html("");
 						var email = $("#email").val();
 						$.get("<%=request.getContextPath() %>/addUser/checkEmailOne",{"email":email},function(flag){
 							if(flag){//true 校验失败
 								$(".error").html("该邮箱已经存在！");
+								$("#save").bind("click",save);
 							}else{
 								$(".error").html("");
 								var params = $("#userForm").serialize();
@@ -159,6 +163,7 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 								if(isAllow==false){
 									$("#isAllowError").css("display","");
 									$(".error").html("请阅读并同意《Celloud用户使用协议》");
+									$("#save").bind("click",save);
 									return;
 								}else{
 									$("#isAllowError").css("display","none");
@@ -166,7 +171,6 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 								$.post('<%=request.getContextPath() %>/addUser/addUser',params,function(addFlag){
 									if(addFlag){
 										$("#successDiv").css("display","");
-										$("#save").unbind();
 										countDown(3);
 									}else{
 										alert("注册失败");
@@ -177,7 +181,8 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 					}
 				});
 			}
-		});
+		}
+		$("#save").bind("click",save);
 	});
 	
 	function countDown(time){
@@ -185,15 +190,25 @@ if (!isPlaceholder()) {//不支持placeholder 用jquery来完成
 		if(--time>0){
 		   setTimeout("countDown("+time+")",1000);//设定超时时间
 		}else{
-		  var role = $("#role").val();
-		  var result = window.location.href.split("manager")[0];
-		  if(role==1){
-		    window.location.href = result + "manager/";//跳转页面
-		  }else{
-			window.location.href = result;//跳转页面
-		  }
+			window.location.href = "${officialWebsite}";//跳转页面
 		}
 	}
+	
+	function toOfficialWeb(){
+		var flag = "${flag}";
+		// 错误页面, 倒计时5秒跳转到官网
+		var time = 5;
+		if(flag=="false"){
+			setInterval(function(){
+				if(--time>0){
+					$("#toOfficialWeb").text(time);
+				}else{
+					window.location.href = "${officialWebsite}";
+				}
+			},1000);
+		}
+	}
+	toOfficialWeb();
 	
 	//重置
 	function resetVal(){

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.UpdateResults;
 
 import com.celloud.page.Page;
@@ -18,6 +19,17 @@ import com.celloud.page.PageList;
 public interface ReportDao {
 
     /**
+     * 
+     * @author MQ
+     * @date 2016年8月26日上午11:00:31
+     * @description 保存一个对象并返回key
+     * @param t
+     * @return
+     *
+     */
+    public <T> Key<T> saveObj(T t);
+
+    /**
      * @author MQ
      * @date 2016年7月7日下午3:02:47
      * @description 根据项目id查询所有的数据报告
@@ -29,7 +41,22 @@ public interface ReportDao {
     public <T> List<T> getDataByProjectId(Class<T> clazz, Integer projectId);
     
     /**
+     * 
+     * @author MQ
+     * @date 2016年8月25日下午2:53:25
+     * @description 根据项目id查询项目报告
+     * @param clazz
+     *            类型
+     * @param proejctId
+     *            项目id
+     * @return 项目对象
+     *
+     */
+    public <T> T getProjectByProjectId(Class<T> clazz, Integer projectId);
+
+    /**
      * HCV数据参数同比直接在mongo中分组
+     * 
      * @param clazz
      * @return
      */
@@ -153,11 +180,11 @@ public interface ReportDao {
     /**
      * 保存数据
      * 
-     * @param T
+     * @param t
      * @author leamo
      * @date 2016年2月23日 下午5:59:42
      */
-    public <T> void saveData(T T);
+    public <T> void saveData(T t);
 
     /**
      * 根据获取全部信息列表

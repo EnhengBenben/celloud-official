@@ -1,0 +1,16 @@
+<div class="foot">
+    <br/><br/>
+    <table class="footTable">
+        <tr>
+            <td style="width:33%;">
+                                主检人:<span><input name="projectInfo['mainInspector']" value="$!{pgs.projectInfo.mainInspector}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:33%;">
+                                审核人:<span><input name="projectInfo['audit']" value="$!{pgs.projectInfo.audit}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:33%;">
+                                报告日期:<span><input name="projectInfo['reportDate']" value="$!{pgs.projectInfo.reportDate}" type="text" class="tdInput"></span>
+            </td>
+        </tr>
+    </table>
+</div>

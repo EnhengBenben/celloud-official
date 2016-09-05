@@ -59,5 +59,9 @@ public class EmailType {
 	 * 回复意见反馈
 	 */
 	public static final String FEADBACKREPLY = "feedbackReply";
+    /**
+     * 注册成功
+     */
+    public static final String REGISTER_SUCCESS = "register_success";
 
 }

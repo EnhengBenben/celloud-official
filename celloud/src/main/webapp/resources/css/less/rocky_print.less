@@ -1,0 +1,166 @@
+@import "param.less";
+.theme(@bg-color,@font-color,@text-color,@border-color){
+    .common-sidebar{
+        > .menu .treeview{
+            &.-active>a {
+                border-left: 2px solid @font-color;
+                color: @font-color;
+            }
+        }
+    }
+    .table-main>tbody>tr>td>input{
+        font-weight:normal;
+        border-radius:0px;
+        line-height:2em;
+        border:0px;
+        border-bottom:1px solid #D4D4D4;
+        background-color:transparent; 
+    }
+    .table-main{
+        &.-report >thead>tr>th{
+            background: @bg-color;
+            border-bottom: 1px solid @border-color;
+        }
+        &.-report {
+            .border-1(@border-color);
+            >tbody{
+                >tr>td {
+                    border-right: 1px solid @border-color;
+                    border-bottom: 1px solid @border-color;
+                    &:last-child{
+                        border-right: none;
+                    }
+                    &:first-child{
+                        text-align: center;
+                    }   
+                }
+                >tr:last-child>td{
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    .checkbox-lable .checkbox:checked + .info:after,
+    .report-content .result-div .main,
+    .step .item{
+        color: @font-color;
+    }
+    .step .item{
+        border-color: @border-color;
+    }
+    .barcode{
+    	width:180px;
+    	height:42px;
+    }
+    .logo{
+    	width:90px;
+    	height:35px;
+    }
+    .title_line{
+    	height:2px;
+    	line-height:2px;
+    	border-top:2px dotted #3e3e3e;
+    	border-bottom:5px solid #3e3e3e;
+    	margin-top:0px;
+    }
+    .table-main.baseinfo{
+    	thead>tr>th{
+    		text-align:left;
+    		width:33.33333333%
+    	}
+	    tbody>tr>td{
+	    	text-align:left;
+	    	> label{
+	    		width:50px;
+	    		text-align:right;
+	    		font-weight:normal;
+	    	}
+	    	> input,span{
+	    		text-align:left;
+	    		font-weight:normal;
+	    		white-space: normal;
+	    		height:22px;
+	    	}
+	    }
+    }
+    .foot_line{
+    	height:2px;
+    	line-height:2px;
+    	border-top:2px solid #3e3e3e;
+    }
+    .stress {
+    	font-size:14px;
+    	color:@font-color;
+    }
+    /*数据报告*/
+	.report-result{
+		background-color: #fff;
+		padding: 15px;
+		border:1px solid #e3e3e3;
+		.chapter{
+			> p{
+			}
+			> p.underline{
+				border-bottom:@font-color solid 1px;
+			}
+			> p.paragraph{
+				text-indent:25px;
+			}
+			> dl{
+				margin-left:25px;
+				margin-bottom:20px;
+				margin-top:20px;
+				list-style:square;
+				dt{
+		    		font-weight: normal;
+		    		lint-height:18px;
+				}
+				dd{
+					margin-left:25px;
+					lint-height:18px;
+				}
+				label{
+					width: 210px;
+					font-weight:normal;
+				}
+			}
+			> ul{
+				margin-left:65px;
+				margin-bottom:20px;
+				margin-top:20px;
+				list-style:square;
+			}
+		}
+	}
+}
+
+.rocky{
+    .theme(@rocky-bg-color,@rocky-font-color,@rocky-text-color,@rocky-border-color);
+    .common-sidebar{
+        > .menu .treeview{
+            &.-active>a {
+                >.celicon{
+                    &.-sample{
+                        background-position: -351px -116px;
+                    }
+                    &.-upload{
+                        background-position: -394px -118px;
+                    }
+                    &.-data{
+                        background-position: -438px -118px;
+                    }
+                    &.-report{
+                        background-position: -476px -118px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media print and (color) {
+   * {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+   }
+}

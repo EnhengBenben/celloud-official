@@ -126,4 +126,14 @@ public class EmailParams {
 		feedbackTitle, feedbackCreateDate, feedbackUsername, feedbackEmail, feedbackContent, replyUserName, replyContent;
 	}
 
+    /**
+     * 注册成功
+     */
+    public static enum REGISTER_SUCCESS {
+        /**
+         * 官网链接
+         */
+        url;
+    }
+
 }
