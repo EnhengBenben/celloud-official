@@ -114,6 +114,10 @@
     	templateUrl: "pages/report/report_data_tbinh.jsp",
     	controller: "tbinhDataReportController"
     })
+    .when('/reportpro/HBV_SNP2/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_hbv.jsp",
+    	controller: "hbvDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

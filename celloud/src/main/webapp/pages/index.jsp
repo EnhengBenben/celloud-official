@@ -200,6 +200,7 @@
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
   <script src="<%=request.getContextPath() %>/js/utils.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>
   <script src="<%=request.getContextPath()%>/js/report_codon.js"></script>
   <script src="<%=request.getContextPath()%>/js/message.js"></script>

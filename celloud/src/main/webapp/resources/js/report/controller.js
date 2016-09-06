@@ -396,6 +396,181 @@
 	    $scope.searchTable("_snum2", "r2", "_sr2");
 	  });
   });
+  /**
+   * hbv数据报告controller
+   */
+  celloudApp.controller("hbvDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getHBVInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(hbvInfo){
+		  $scope.hbv = hbvInfo.hbv;
+		  $scope.project = hbvInfo.project;
+		  $scope.uploadPath = hbvInfo.uploadPath;
+		  
+		  $scope.change1 = function(){
+			  $("#nomal").css("display","");
+			  $("#cfda").css("display","none");
+		  }
+		  $scope.change2 = function(){
+			  $("#nomal").css("display","none");
+			  $("#cfda").css("display","");
+		  }
+		  $scope.showModal = function(id,flag,num){
+			  $("#_showOne").css("display","none");
+			  $("#_showMore").css("display","none");
+			  $("#_showImg").css("display","none");
+			  if(flag == 2){
+				  $("#_showImg").css("display","");
+			  }else if(flag == 1){
+				  $("#_showOne").css("display","");
+			  }else if(flag == 0){
+				  $(".y").css("display","none");
+				  if(num == 1){
+				  	$(".y1").css("display","");
+				  }else if(num == 2){
+				  	$(".y2").css("display","");
+				  }else if(num == 3){
+				  	$(".y3").css("display","");
+				  }else if(num == 4){
+				  	$(".y4").css("display","");
+				  }else if(num == 5){
+				  	$(".y5").css("display","");
+				  }else if(num == 6){
+				  	$(".y6").css("display","");
+				  }else if(num == 7){
+				  	$(".y7").css("display","");
+				  }
+				  $("#_showMore").css("display","");
+			  }
+			  $("#"+id).modal("show");
+			  $("#"+id).find(".modal-body").scrollTop(0);
+		  }
+		  
+		  $.get("count/hbvCompare",{"appId":82,"path":DATAPATH},function(data){
+				var div0 = $("<div id='char0' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
+				$("#charDiv").append(div0);
+				var sType = $("#snpType").html();
+				if(!sType){
+					sType = "";
+				}
+				var hbvtype=eval(data.split("@")[1]);
+				var aType = "[";
+				if(sType.indexOf("A")>=0){
+					aType += "['A'," + hbvtype[0]/2 + "]";
+				}
+				if(sType.indexOf("B")>=0){
+					aType += ("'null',['B'," + hbvtype[1]/2 + "]");
+				}
+				if(sType.indexOf("C")>=0){
+					aType += ("'null','null',['C'," + hbvtype[2]/2 + "]");
+				}
+				if(sType.indexOf("D")>=0){
+					for(var i = 0;i < 3;i++){
+						aType += 'null';
+					}
+					aType += ("['D'," + hbvtype[3]/2 + "]");
+				}
+				if(sType.indexOf("E")>=0){
+					for(var i = 0;i < 4;i++){
+						aType += 'null';
+					}
+					aType += ("['E'," + hbvtype[4]/2 + "]");
+				}
+				if(sType.indexOf("F")>=0){
+					for(var i = 0;i < 5;i++){
+						aType += 'null';
+					}
+					aType += ("['F'," + hbvtype[5]/2 + "]");
+				}
+				if(sType.indexOf("G")>=0){
+					for(var i = 0;i < 6;i++){
+						aType += 'null';
+					}
+					aType += ("['G'," + hbvtype[6]/2 + "G");
+				}
+				if(sType.indexOf("H")>=0){
+					for(var i = 0;i < 7;i++){
+						aType += 'null';
+					}
+					aType += ("['H'," + hbvtype[7]/2 + "H");
+				}
+				if(sType.indexOf("no match")>=0){
+					for(var i = 0;i < 8;i++){
+						aType += 'null';
+					}
+					aType += ("['比对失败'," + hbvtype[8]/2 + "]");
+				}
+				if(sType==""){
+					for(var i = 0;i < 9;i++){
+						aType += 'null';
+					}
+					aType += ("['异常数据'," + hbvtype[9]/2 + "]");
+				}
+				aType += "]";
+				$.reportChar.draw.echartsShowHBVType('char0',hbvtype,aType,45);
+				
+				
+				var result = $("#resultDiv").html();
+				if(result){
+					var temp = result.split("<br>");
+					var rType = new Array();
+					if(temp[0].indexOf("未检测到")<0){
+						rType.push("ADV");
+					}
+					if(temp.length>1 && temp[1].indexOf("未检测到")<0){
+						rType.push("TDF");
+					}
+					if(temp.length>2 && temp[2].indexOf("未检测到")<0){
+						rType.push("LAM");
+					}
+					if(temp.length>3 && temp[3].indexOf("未检测到")<0){
+						rType.push("LDT");
+					}
+					if(temp.length>4 && temp[4].indexOf("未检测到")<0){
+						rType.push("FTC");
+					}
+					if(temp.length>5 && temp[5].indexOf("未检测到")<0){
+						rType.push("ETV");
+					}
+				}
+				
+				var div1 = $("<div id='char1' class='col-lg-12' style='width: 1000px;height: 535px;margin-left:-15px;'></div>");
+				$("#charDiv").append(div1);
+				var one = getCountValue("Subtype","nomal");
+				var X = "[";
+				var Y = "[";
+				var value = data.split("@")[0].split(";");
+				var num = value.length;
+				for(var k=0;k<value.length-1;k++){
+					var n = value[k].split(",");
+					X+="'"+n[0]+"',";
+					var tag=n[0].split("_");
+					if(tag.length==rType.length){
+						var isOne = false;
+						for(var i=0;i<tag.length;i++){
+							if($.inArray(tag[i],rType)>=0){
+								isOne=true;
+							}else{
+								isOne=false;
+							}
+						}
+						if(isOne){
+							Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
+						}else{
+							Y+="'" + n[1] + "',";
+						}
+					}else if(rType.length==0&&n[0]=="none"){
+						Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
+					}else{
+						Y+="'" + n[1] + "',";
+					}
+				}
+				X = X.substring(0,X.length-1)+"]";
+				Y = Y.substring(0,Y.length-1)+"]";
+				$.reportChar.draw.echartsShowBar("char1", "耐药类型", X, Y, -45, 800, 350);
+			});
+		  
+	  });
+  });
   
   
   

@@ -19,7 +19,7 @@
         </p>
         <div class="btn-group">
 	        <a class="btn -low" target="_blank" ng-href="${pageContext.request.contextPath }/report/printHCV?projectId={{hcv.projectId }}&dataKey={{hcv.dataKey }}&appId={{hcv.appId }}">打印报告</a>
-	        <a class="btn -right" style="display: none;" href="javascript:void(0)" ng-click="change()"><i class="fa fa-folder-open-o"></i><span id="_change">显示更多</span></a>
+	        <a class="btn -middle" style="display: none;" href="javascript:void(0)" ng-click="change()"><i class="fa fa-folder-open-o"></i><span id="_change">显示更多</span></a>
         </div>
       </div>
       <div class="content-body">
