@@ -1282,15 +1282,42 @@ public class ReportAction {
 	}
 
 	/**
-	 * 获取UGT数据报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author lin
-	 * @date 2016年3月25日下午4:00:51
-	 */
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午5:11:22
+     * @description 获取DPD数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看DPD数据报告", button = "数据报告")
+    @RequestMapping("getDpdInfo")
+    @ResponseBody
+    public Map<String, Object> getDpdInfo(String dataKey, Integer projectId, Integer appId) {
+        DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
+        String mp = dpd.getMutationPosition();
+        dpd.setMutationPosition(CustomStringUtils.toTable(mp));
+        String postion = dpd.getPosition();
+        if (StringUtils.isNotBlank(postion)) {
+            dpd.setPosition(CustomStringUtils.htmlbr(postion));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("dpd", dpd);
+        return map;
+    }
+
+    /**
+     * 获取UGT数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年3月25日下午4:00:51
+     */
 	@ActionLog(value = "查看UGT数据报告", button = "数据报告")
 	@RequestMapping("getUGTReport")
 	public ModelAndView getUGTReport(String dataKey, Integer projectId, Integer appId) {

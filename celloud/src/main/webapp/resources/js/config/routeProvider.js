@@ -122,6 +122,10 @@
     	templateUrl: "pages/report/report_data_oncogene.jsp",
     	controller: "oncogeneDataReportController"
     })
+    .when('/reportpro/DPD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_dpd.jsp",
+    	controller: "dpdDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
