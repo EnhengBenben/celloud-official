@@ -571,6 +571,122 @@
 		  
 	  });
   });
+  /**
+   * oncogene数据报告controller
+   */
+  celloudApp.controller("oncogeneDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getOncogeneInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(oncogeneInfo){
+		  $scope.oncogene = oncogeneInfo.oncogene;
+		  $scope.project = oncogeneInfo.project;
+		  $scope.uploadPath = oncogeneInfo.uploadPath;
+	  });
+  });
+  /**
+   * dpd数据报告controller
+   */
+  celloudApp.controller("dpdDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getDpdInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(dpdInfo){
+		  $scope.dpd = dpdInfo.dpd;
+		  $scope.project = dpdInfo.project;
+		  $scope.uploadPath = dpdInfo.uploadPath;
+		  $scope.searchTable = function(){
+			var search = $("#_snum").val();
+			$("#_sr").html("");
+			$($scope.dpd.mutationPosition).find("td").each(function(){
+				var context = $(this).html();
+				if(search==""){
+					$("#_sr").append("<tr><td>"+context+"</tr></td>");
+				}else{
+					var len = context.indexOf("-");
+					var before = $.trim(context.substring(len-2,len-1));
+					var after = $.trim(context.substring(len+1,len+3));
+					var d = context.indexOf(",");
+					var k = context.indexOf(")");
+					if(before==after){
+						if(d>-1&&k>-1){
+							var result = context.substring(d+1,k);
+							if(parseFloat(result)<parseFloat(search)){
+								$("#_sr").append("<tr><td>"+context+"</tr></td>");
+							}
+						}else{
+							$("#_sr").append("<tr><td>"+context+"</tr></td>");
+						}
+					}else{
+						var sub = context.indexOf("|");
+						if(sub>-1){
+							if(d>-1&&k>-1){
+								var result = context.substring(d+1,k);
+								if(parseFloat(result)>parseFloat(search)){
+									var last = context.substring(k+1,context.length);
+									var l = last.indexOf("|");
+									if(l==-1){
+										l = last.length;
+									}
+									$("#_sr").append("<tr><td>"+context.substring(0,sub)+last.substring(0,l)+"</tr></td>");
+								}else{
+									$("#_sr").append("<tr><td>"+context+"</tr></td>");
+								}
+							}else{
+								$("#_sr").append("<tr><td>"+context+"</tr></td>");
+							}
+						}else{
+							$("#_sr").append("<tr><td>"+context+"</tr></td>");
+						}
+					}
+				}
+			});
+		}
+	  	$scope.searchTable();
+	  });
+  });
+  
+  /**
+   * AB_INJ数据报告controller
+   */
+  celloudApp.controller("abinjDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getABINJInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(abinjInfo){
+		  $scope.abinj = abinjInfo.abinj;
+		  $scope.project = abinjInfo.project;
+		  $scope.uploadPath = abinjInfo.uploadPath;
+	  });
+  });
+  /**
+   * UGT数据报告controller
+   */
+  celloudApp.controller("ugtDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getUGTInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(ugtInfo){
+		  $scope.ugt = ugtInfo.ugt;
+		  $scope.project = ugtInfo.project;
+		  $scope.uploadPath = ugtInfo.uploadPath;
+	  });
+  });
+  /**
+   * 16S数据报告controller
+   */
+  celloudApp.controller("16sDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/get16SInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(s16Info){
+		  $scope.s16 = s16Info.s16;
+		  $scope.project = s16Info.project;
+		  $scope.uploadPath = s16Info.uploadPath;
+		  var $table = $("<div>" + $scope.s16.resultTable + "</div>");
+		  $table.find("tr").each(function(i){
+			  if(i==0){
+			      length = $(this).find("td").length;
+			  }else{
+			      tdlength = $(this).find("td").length;
+			      if(tdlength<length){
+			        $(this).children("td").eq(1).attr("colspan",5);
+			      }
+			  }
+		  });
+		  $scope.s16.resultTable = $table.html();
+	  });
+  });
   
   
   
@@ -968,7 +1084,7 @@
                 }
                 $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
                 $(this).find("span").bind("click",function(){
-                  viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                  viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
                 $(this).find("span").addClass("link");
               }

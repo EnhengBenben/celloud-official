@@ -118,6 +118,26 @@
     	templateUrl: "pages/report/report_data_hbv.jsp",
     	controller: "hbvDataReportController"
     })
+    .when('/reportpro/oncogene/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_oncogene.jsp",
+    	controller: "oncogeneDataReportController"
+    })
+    .when('/reportpro/DPD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_dpd.jsp",
+    	controller: "dpdDataReportController"
+    })
+    .when('/reportpro/ABI_NJ/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_abinj.jsp",
+    	controller: "abinjDataReportController"
+    })
+    .when('/reportpro/UGT/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_ugt.jsp",
+    	controller: "ugtDataReportController"
+    })
+    .when('/reportpro/16S/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_16s.jsp",
+    	controller: "16sDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
