@@ -16,6 +16,13 @@
       self.cancelProjectShare = function(projectId){
         return $http.get("project/deleteShare",{params:{projectId:projectId}});
       }
+      self.projectShare = function(projectId,userNames){
+        return $http.get("project/shareProject",{params:{projectId:projectId,userNames:userNames}});
+      }
+      //检索已共享人
+      self.getShareTo = function(projectId){
+        return $http.get("project/getShareTo",{params:{projectId:projectId}});
+      }
     });
   
   celloudApp.service("dataReportService", function($resource,$http){
