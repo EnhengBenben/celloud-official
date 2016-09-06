@@ -1310,6 +1310,29 @@ public class ReportAction {
 		return mv.addObject("tbrifampicin", tbrifampicin);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日上午10:04:08
+     * @description 获取tbrifampicin数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看TBRifampicin数据报告", button = "数据报告")
+    @RequestMapping("getTBRifampicinInfo")
+    @ResponseBody
+    public Map<String, Object> getTBRifampicinInfo(String dataKey, Integer projectId, Integer appId) {
+        TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
+        String report = tbrifampicin.getReport();
+        tbrifampicin.setReport(CustomStringUtils.toTable(report));
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("tbrifampicin", tbrifampicin);
+        return map;
+    }
+
 	/**
 	 * 获取BRAF数据报告
 	 * 
