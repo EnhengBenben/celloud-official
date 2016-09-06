@@ -286,7 +286,6 @@
 				});
 		  }
 		  $scope.searchTable();
-		  
 		  $.get("count/tbCompare",{},function(data){
 				var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
 				$("#charDiv").append(div);
@@ -311,6 +310,94 @@
 		  
 	  });
   });
+  
+  
+  /**
+   * tbinh数据报告controller
+   */
+  celloudApp.controller("tbinhDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getTBINHInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(tbinhInfo){
+		  $scope.tbinh = tbinhInfo.tbinh;
+		  $scope.project = tbinhInfo.project;
+		  $scope.uploadPath = tbinhInfo.uploadPath;
+		  
+		  // 数据参数同比
+		  var mutant = tbinhInfo.mutant;
+		  var wild = tbinhInfo.wild;
+		  var neither = tbinhInfo.neither;
+		  var data = [{name:'Mutant strain',value:mutant},{name:'Wild type',value:wild},{name:'No Result',value:neither}];
+		  $.reportChar.draw.echartsShowPie("_showPie","Samples Statistic",data);
+		  
+		  $scope.searchTable = function(numId, sourceId, resultId) {
+			var search = $("#" + numId).val();
+			$("#" + resultId).html("");
+			var i = 0;
+			if(sourceId == "r1"){
+				$table = $($scope.tbinh.position);
+			}else{
+				$table = $($scope.tbinh.mutationPosition);
+			}
+			$table.find("td").each(function() {
+				var context = $(this).html();
+				if (search == "") {
+					i++;
+					$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+				} else {
+					var len = context.lastIndexOf("-");
+					var before = $.trim(context.substring(len - 2, len - 1));
+					var after = $.trim(context.substring(len + 1, len + 3));
+					var d = context.indexOf(",");
+					var k = context.indexOf(")");
+					if (before == after) {
+						if (d > -1 && k > -1) {
+							var result = context.substring(d + 1, k);
+							if (parseFloat(result) < parseFloat(search)) {
+								i++;
+								$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+							}
+						} else {
+							i++;
+							$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+						}
+					} else {
+						var sub = context.indexOf("|");
+						if (sub > -1) {
+							if (d > -1 && k > -1) {
+								var result = context.substring(d + 1, k);
+								if (parseFloat(result) > parseFloat(search)) {
+									var last = context.substring(k + 1, context.length);
+									var l = last.indexOf("|");
+									if (l == -1) {
+										l = last.length;
+									}
+									i++;
+									$("#" + resultId).append("<tr><td>" + context.substring(0, sub) + last.substring(0, l) + "</tr></td>");
+								} else {
+									i++;
+									$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+								}
+							} else {
+								i++;
+								$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+							}
+						} else {
+							i++;
+							$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+						}
+					}
+				}
+			});
+			if (i == 0) {
+				$("#" + resultId).append("<tr><td style='color:red'>没有符合筛选条件的结果</tr></td>");
+			}
+		}
+	    $scope.searchTable("_snum1", "r1", "_sr1");
+	    $scope.searchTable("_snum2", "r2", "_sr2");
+	  });
+  });
+  
+  
   
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     //加载产品标签
