@@ -126,6 +126,10 @@
     	templateUrl: "pages/report/report_data_dpd.jsp",
     	controller: "dpdDataReportController"
     })
+    .when('/reportpro/ABI_NJ/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_abinj.jsp",
+    	controller: "abinjDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

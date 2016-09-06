@@ -642,6 +642,18 @@
 	  });
   });
   
+  /**
+   * AB_INJ数据报告controller
+   */
+  celloudApp.controller("abinjDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getABINJInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(abinjInfo){
+		  $scope.abinj = abinjInfo.abinj;
+		  $scope.project = abinjInfo.project;
+		  $scope.uploadPath = abinjInfo.uploadPath;
+	  });
+  });
+  
   
   
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
@@ -1037,7 +1049,7 @@
                 }
                 $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
                 $(this).find("span").bind("click",function(){
-                  viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                  viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
                 $(this).find("span").addClass("link");
               }

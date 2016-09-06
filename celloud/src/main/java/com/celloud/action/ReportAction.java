@@ -987,6 +987,27 @@ public class ReportAction {
 		return mv.addObject("abinj", abinj);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午6:20:52
+     * @description 获取ABINJ数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看ABINJ数据报告", button = "数据报告")
+    @RequestMapping("getABINJInfo")
+    @ResponseBody
+    public Map<String, Object> getABINJInfo(String dataKey, Integer projectId, Integer appId) {
+        ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("abinj", abinj);
+        return map;
+    }
+
 	/**
 	 * 获取16S的数据报告
 	 * 
