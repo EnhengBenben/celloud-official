@@ -467,13 +467,13 @@
       if((!START && END)||(START && !END)){
         $("#_alertSpan").css("display","");
         $("#_alertSpan").html("请同时选择起始时间和结束时间");
-        alert("请同时选择起始时间和结束时间");
+        $.alert("请同时选择起始时间和结束时间");
         return ;
       }
       if(START>END){
         $("#_alertSpan").css("display","");
         $("#_alertSpan").html("起始日期不能大于结束日期");
-        alert("起始日期不能大于结束日期");
+        $.alert("起始日期不能大于结束日期");
         return ;
       }
       $scope.dateQuery();
@@ -543,7 +543,15 @@
     }
     //下载PDF
     $scope.downPDF = function(userId,appId,projectId){
-      alert(projectId);
+      var path = userId + "/" + appId + "/" + projectId + "/" + projectId + ".pdf";
+      projectReportService.downPDF(path).success(function(flag){
+        if(flag==1){
+          $.alert("没有可以下载的pdf文件");
+        }else{
+          var url = window.location.href.split("index")[0];
+          window.location.href=url+"report/down?path="+path;
+        }
+      });
     }
     //打开共享窗口
     $scope.toShareModal = function(projectId,projectName,dataNum){
@@ -595,7 +603,7 @@
           if(flag ==1){
             $scope.pageQuery(1,options.pageSize);
           }else{
-            alert("项目报告删除失败");
+            $.alert("项目报告删除失败");
           }
         });
       }
