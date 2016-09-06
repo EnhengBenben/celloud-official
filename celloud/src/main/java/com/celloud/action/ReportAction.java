@@ -1291,6 +1291,43 @@ public class ReportAction {
 				neither);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日上午11:21:31
+     * @description 获取TBINH数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看TBINH数据报告", button = "数据报告")
+    @RequestMapping("getTBINHInfo")
+    @ResponseBody
+    public Map<String, Object> getTBINHInfo(String dataKey, Integer projectId, Integer appId) {
+        TBINH tbinh = reportService.getTBINHReport(dataKey, projectId, appId);
+        String position = tbinh.getPosition();
+        tbinh.setPosition(CustomStringUtils.toTable(position));
+        String mutationPosition = tbinh.getMutationPosition();
+        tbinh.setMutationPosition(CustomStringUtils.toTable(mutationPosition));
+        // 获取userId下野生型,非野生型,两者都不是的数量
+        Integer userId = tbinh.getUserId();
+        String simpleGeneName = tbinh.getSimpleGeneName();
+        // 两者都不是
+        Integer neither = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 0);
+        // 野生型
+        Integer wild = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 1);
+        // 非野生型
+        Integer mutant = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 2);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("tbinh", tbinh);
+        map.put("wild", wild);
+        map.put("mutant", mutant);
+        map.put("neither", neither);
+        return map;
+    }
+
 	/**
 	 * 获取TBRifampicin数据报告
 	 * 
@@ -1309,6 +1346,29 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_tbrifampicin", projectId);
 		return mv.addObject("tbrifampicin", tbrifampicin);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日上午10:04:08
+     * @description 获取tbrifampicin数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看TBRifampicin数据报告", button = "数据报告")
+    @RequestMapping("getTBRifampicinInfo")
+    @ResponseBody
+    public Map<String, Object> getTBRifampicinInfo(String dataKey, Integer projectId, Integer appId) {
+        TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
+        String report = tbrifampicin.getReport();
+        tbrifampicin.setReport(CustomStringUtils.toTable(report));
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("tbrifampicin", tbrifampicin);
+        return map;
+    }
 
 	/**
 	 * 获取BRAF数据报告

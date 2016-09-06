@@ -31,6 +31,8 @@
 				pageSize : pageSize
 			}, function(data) {
 				$scope.messages = data;
+				$scope.chkall = false;
+				$scope.checkAllState = false;
 				checkedNotices = [];
 				changeState();
 			});

@@ -106,6 +106,14 @@
     	templateUrl: "pages/report/report_data_braf.jsp",
     	controller: "brafDataReportController"
     })
+    .when('/reportpro/TB-Rifampicin/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_tbrifampicin.jsp",
+    	controller: "tbRifampicinDataReportController"
+    })
+    .when('/reportpro/TB-INH/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_tbinh.jsp",
+    	controller: "tbinhDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
