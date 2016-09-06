@@ -1,3 +1,4 @@
+<%@page import="com.celloud.model.mysql.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html>
@@ -187,6 +188,7 @@
   <ng-include src="'pages/partial/_partial_upload_modal.jsp'"></ng-include>
   <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+       window.companyId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getCompanyId() %>';
   </script>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
