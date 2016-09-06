@@ -19,6 +19,8 @@
 			}, function(data) {
 				$scope.notices = data;
 				checkedNotices = [];
+				$scope.chkall = false;
+				$scope.checkNoticeAllState = false;
 				changeNoticeState();
 			});
 		};
