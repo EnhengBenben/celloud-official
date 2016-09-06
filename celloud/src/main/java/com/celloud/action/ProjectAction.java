@@ -14,20 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliSubstitution;
-import com.celloud.constants.AppDataListType;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
-import com.celloud.constants.Mod;
 import com.celloud.constants.NoticeConstants;
-import com.celloud.constants.ReportPeriod;
-import com.celloud.constants.SparkPro;
 import com.celloud.message.MessageUtils;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
-import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Project;
-import com.celloud.model.mysql.Report;
-import com.celloud.model.mysql.Task;
 import com.celloud.model.mysql.User;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
@@ -38,7 +31,6 @@ import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.Response;
-import com.celloud.utils.SSHUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
 import com.celloud.wechat.WechatParams;
@@ -66,16 +58,6 @@ public class ProjectAction {
 	@Resource
 	private MessageCategoryUtils mcu;
 
-    private static Map<String, Map<String, String>> machines = ConstantsData
-            .getMachines();
-    private static String sparkhost = machines.get("spark").get(Mod.HOST);
-    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
-    private static String sparkuserName = machines.get("spark")
-            .get(Mod.USERNAME);
-    private static String sgeHost = machines.get("158").get(Mod.HOST);
-    private static String sgePwd = machines.get("158").get(Mod.PWD);;
-    private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
-
     /**
      * 修改项目
      * 
@@ -101,43 +83,6 @@ public class ProjectAction {
     @RequestMapping("deleteByState")
     @ResponseBody
     public Integer deleteByState(Integer projectId) {
-        Report report = reportService.getReportByProjectId(projectId);
-        if (report != null && report.getPeriod() != ReportPeriod.COMPLETE) {
-            Integer appId = report.getAppId();
-            String param = SparkPro.TOOLSPATH + report.getUserId() + "/" + appId
-                    + " ProjectID" + projectId;
-            String command = null;
-            SSHUtil ssh = null;
-            if (AppDataListType.SPARK.contains(appId)) {
-                command = SparkPro.SPARKKILL + " " + param;
-                ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-                ssh.sshSubmit(command, false);
-            } else {
-                command = SparkPro.SGEKILL + " " + param;
-                ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                ssh.sshSubmit(command, false);
-            }
-            if (AppDataListType.FASTQ_PATH.contains(appId)
-                    || AppDataListType.SPLIT.contains(appId)) {
-                taskService.deleteTask(projectId);
-                Task task = taskService.findFirstTask(appId);
-                if (task != null) {
-                    int runningNum = taskService.findRunningNumByAppId(appId);
-                    App app = appService.selectByPrimaryKey(appId);
-                    if (runningNum < app.getMaxTask()
-                            || app.getMaxTask() == 0) {
-                        if (AppDataListType.SPARK.contains(appId)) {
-                            ssh = new SSHUtil(sparkhost, sparkuserName,
-                                    sparkpwd);
-                        } else {
-                            ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                        }
-                        ssh.sshSubmit(task.getCommand(), false);
-                        taskService.updateToRunning(task.getTaskId());
-                    }
-                }
-            }
-        }
         return projectService.deleteByState(projectId);
     }
 
