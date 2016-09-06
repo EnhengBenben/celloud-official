@@ -1026,6 +1026,27 @@ public class ReportAction {
 		return mv.addObject("s16", s16);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午6:48:34
+     * @description 获取16S数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看16S数据报告", button = "数据报告")
+    @RequestMapping("get16SInfo")
+    @ResponseBody
+    public Map<String, Object> get16SInfo(String dataKey, Integer projectId, Integer appId) {
+        S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("s16", s16);
+        return map;
+    }
+
 	/**
 	 * 获取PGS的数据报告
 	 * 

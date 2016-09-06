@@ -664,6 +664,29 @@
 		  $scope.uploadPath = ugtInfo.uploadPath;
 	  });
   });
+  /**
+   * 16S数据报告controller
+   */
+  celloudApp.controller("16sDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/get16SInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(s16Info){
+		  $scope.s16 = s16Info.s16;
+		  $scope.project = s16Info.project;
+		  $scope.uploadPath = s16Info.uploadPath;
+		  var $table = $("<div>" + $scope.s16.resultTable + "</div>");
+		  $table.find("tr").each(function(i){
+			  if(i==0){
+			      length = $(this).find("td").length;
+			  }else{
+			      tdlength = $(this).find("td").length;
+			      if(tdlength<length){
+			        $(this).children("td").eq(1).attr("colspan",5);
+			      }
+			  }
+		  });
+		  $scope.s16.resultTable = $table.html();
+	  });
+  });
   
   
   

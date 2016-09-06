@@ -134,6 +134,10 @@
     	templateUrl: "pages/report/report_data_ugt.jsp",
     	controller: "ugtDataReportController"
     })
+    .when('/reportpro/16S/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_16s.jsp",
+    	controller: "16sDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
