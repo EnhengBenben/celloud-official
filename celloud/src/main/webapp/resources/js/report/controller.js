@@ -702,6 +702,7 @@
   
   
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
+    $scope.companyId = companyId;
     $("#shareProjectSelect").select2({
       tags: true,
       tokenSeparators: [',', ' ']
