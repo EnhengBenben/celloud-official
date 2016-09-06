@@ -653,6 +653,17 @@
 		  $scope.uploadPath = abinjInfo.uploadPath;
 	  });
   });
+  /**
+   * UGT数据报告controller
+   */
+  celloudApp.controller("ugtDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getUGTInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(ugtInfo){
+		  $scope.ugt = ugtInfo.ugt;
+		  $scope.project = ugtInfo.project;
+		  $scope.uploadPath = ugtInfo.uploadPath;
+	  });
+  });
   
   
   

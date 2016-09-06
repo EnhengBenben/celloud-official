@@ -130,6 +130,10 @@
     	templateUrl: "pages/report/report_data_abinj.jsp",
     	controller: "abinjDataReportController"
     })
+    .when('/reportpro/UGT/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_ugt.jsp",
+    	controller: "ugtDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

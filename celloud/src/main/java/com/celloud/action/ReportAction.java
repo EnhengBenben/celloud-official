@@ -1355,6 +1355,35 @@ public class ReportAction {
 		return mv.addObject("ugt", ugt);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午6:34:06
+     * @description 获取UGT数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看UGT数据报告", button = "数据报告")
+    @RequestMapping("getUGTInfo")
+    @ResponseBody
+    public Map<String, Object> getUGTInfo(String dataKey, Integer projectId, Integer appId) {
+        UGT ugt = reportService.getUGTReport(dataKey, projectId, appId);
+        String position = ugt.getPosition();
+        if (StringUtils.isNotBlank(position)) {
+            ugt.setPosition(CustomStringUtils.htmlbr(position));
+        }
+        String mutationPosition = ugt.getMutationPosition();
+        if (StringUtils.isNotBlank(mutationPosition)) {
+            ugt.setMutationPosition(CustomStringUtils.htmlbr(mutationPosition));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("ugt", ugt);
+        return map;
+    }
+
 	/**
 	 * 点击数据报告列表查看上一页数据报告
 	 * 
