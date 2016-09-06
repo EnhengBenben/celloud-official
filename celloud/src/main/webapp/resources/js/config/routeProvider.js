@@ -118,6 +118,10 @@
     	templateUrl: "pages/report/report_data_hbv.jsp",
     	controller: "hbvDataReportController"
     })
+    .when('/reportpro/oncogene/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_oncogene.jsp",
+    	controller: "oncogeneDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

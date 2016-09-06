@@ -571,6 +571,17 @@
 		  
 	  });
   });
+  /**
+   * oncogene数据报告controller
+   */
+  celloudApp.controller("oncogeneDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getOncogeneInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(oncogeneInfo){
+		  $scope.oncogene = oncogeneInfo.oncogene;
+		  $scope.project = oncogeneInfo.project;
+		  $scope.uploadPath = oncogeneInfo.uploadPath;
+	  });
+  });
   
   
   

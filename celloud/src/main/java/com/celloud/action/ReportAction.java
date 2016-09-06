@@ -1061,6 +1061,44 @@ public class ReportAction {
 		return mv.addObject("oncogene", oncogene);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午4:34:16
+     * @description 查看Oncogene数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看Oncogene数据报告", button = "数据报告")
+    @RequestMapping("getOncogeneInfo")
+    @ResponseBody
+    public Map<String, Object> getOncogeneInfo(String dataKey, Integer projectId, Integer appId) {
+        Oncogene oncogene = reportService.getOncogeneReport(dataKey, projectId, appId);
+        if (oncogene != null) {
+            // jstl 处理 \n 很困难，就在 java 端处理
+            oncogene.setReport(CustomStringUtils.htmlbr(oncogene.getReport()));
+            oncogene.setWz1(CustomStringUtils.htmlbr(oncogene.getWz1()));
+            oncogene.setWz2(CustomStringUtils.htmlbr(oncogene.getWz2()));
+            // 排序
+            List<String> km = oncogene.getKnowMutation();
+            if (km != null) {
+                Collections.sort(km);
+                oncogene.setKnowMutation(km);
+            }
+            List<String> out = oncogene.getOut();
+            if (out != null) {
+                Collections.sort(out);
+                oncogene.setOut(out);
+            }
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("oncogene", oncogene);
+        return map;
+    }
+
 	/**
 	 * 获取HCV数据报告
 	 * 
