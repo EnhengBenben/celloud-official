@@ -214,6 +214,10 @@
   });
   
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
+    $("#shareProjectSelect").select2({
+      tags: true,
+      tokenSeparators: [',', ' ']
+    });
     //加载产品标签
     $scope.ranAppList = projectReportService.getRanAPP();
     //初始化参数
@@ -357,11 +361,46 @@
     }
     //打开共享窗口
     $scope.toShareModal = function(projectId,projectName,dataNum){
-      alert(projectId);
+      $scope.shareProjectId = projectId;
+      $scope.shareProjectName = projectName;
+      $scope.dataNum = dataNum;
+      $scope.updateState = false;
+      $("#shareProjectSelect").html("");
     }
     //打开已共享窗口
-    $scope.shareModal = function(projectId,userId,projectName,dataNum){
-      alert(projectId);
+    $scope.shareModal = function(projectId,projectName,dataNum){
+      $scope.shareProjectId = projectId;
+      $scope.shareProjectName = projectName;
+      $scope.dataNum = dataNum;
+      projectReportService.getShareTo(projectId).success(function(data){
+        $scope.updateState = false;
+        $("#shareProjectSelect").html("");
+        $("#shareProjectSelect").select2({
+          tags: true,
+          data: data,
+          tokenSeparators: [',', ' ']
+        });
+      });
+    }
+    $scope.saveShareProject = function(){
+      var proId = $scope.shareProjectId;
+      var data = $("#shareProjectSelect").select2("data");
+      var userNames = "";
+      $.each(data,function(id,value){
+        userNames += value.text + ",";
+      });
+      //全部转化成小写
+      userNames = userNames.toLowerCase();
+      userNames = userNames.substring(0, userNames.length-1);
+      projectReportService.projectShare(proId,userNames).success(function(response){
+        if(response.success){
+          $("#project-share-modal").modal("hide");
+          $scope.pageQuery(options.page,options.pageSize);
+          $scope.updateState = false;
+        }
+        $scope.updateMessage = response.message;
+        $scope.updateState = true;
+      });
     }
     //删除
     $scope.removePro = function(projectId){

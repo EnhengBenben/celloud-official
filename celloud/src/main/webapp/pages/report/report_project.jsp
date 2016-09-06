@@ -95,7 +95,6 @@
                </div>
                <div>
                	结束时间：{{report.end_date | date:'yyyy-MM-dd HH:mm:ss'}}
-               	{{report.userName}}
                </div>
                <div class="operate" ng-if="report.userName!='no_one'">
                    <a class="sharefrom" title="共享" href="javascript:void()">共享自{{report.userName }}</a> |
@@ -104,8 +103,8 @@
                <div class="operate" ng-if="report.userName=='no_one'">
                    <a ng-if="loginUserInSession.companyId == 6" class="projectreport" title="项目报告" target="_blank" href="{{pageContext.request.contextPath }}/report/printPgsProject?projectId={{report.project_id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i>项目报告</a>
 	               <a class="pdfdown" title="PDF下载" ng-click="downPDF(report.user_id,report.app_id,report.project_id)" href="javascript:void(0)" ng-if="report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114&&report.app_id!=117">PDF下载</a>
-	               <a ng-if="report.share_num==0" class="share" title="共享" ng-click="toShareModal(report.project_id,report.project_name,report.data_num)" href="javascript:void(0);">共享</a>
-	               <a ng-if="report.share_num!=0" class="shared" title="已共享" ng-click="shareModal(report.project_id,report.user_id,report.project_name,report.data_num)" href="javascript:void(0);">已共享</a>
+	               <a ng-if="report.share_num==0" data-toggle="modal" data-target="#project-share-modal" class="share" title="共享" ng-click="toShareModal(report.project_id,report.project_name,report.data_num)">共享</a>
+	               <a ng-if="report.share_num!=0" data-toggle="modal" data-target="#project-share-modal" class="shared" title="已共享" ng-click="shareModal(report.project_id,report.project_name,report.data_num)">已共享</a>
                    <a class="delete" title="删除" ng-click="removePro(report.project_id)" href="javascript:void(0)">删除</a>
                </div>
             </td>
@@ -120,4 +119,39 @@
         </tbody>
       </table>
       <pagination page="dataList.page" change="pageQuery(page,pageSize)"></pagination>
+</div>
+<div id="project-share-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	      <h4 class="modal-title">项目共享</h4>
+	      <span style="float: right;margin-right: 150px;margin-top: -14px;">项目名称：<span ng-bind="shareProjectName"></span></span>
+	    </div>
+	    <div class="modal-body form-modal">
+	      <form class="form-horizontal info-form" name="editDataForm" id="editDataForm">
+	          <div class="form-group">
+	            <div class="col-xs-12">
+	            	共计<span ng-bind="dataNum"></span>个数据文件
+	            </div>
+	          </div>
+	          <div class="form-group">
+	            <div class="col-xs-12">
+	                <select style="width: 300px;" multiple="" tabindex="-1" aria-hidden="true" id="shareProjectSelect"></select>
+	            </div>
+	          </div>
+	          <div class="form-group">
+	            <div class="text-center">
+	                <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
+	                <button type="submit" class="btn" ng-click="saveShareProject()">提交</button>
+	            </div>
+	            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
+	              <button type="button" class="close" ng-click="updateState=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	              <span>{{updateMessage}}</span>
+	            </div>
+	          </div>
+	      </form>
+	    </div>
+	  </div>
+	</div>
 </div>

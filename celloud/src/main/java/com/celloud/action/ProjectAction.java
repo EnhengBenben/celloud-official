@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.alimail.AliEmail;
@@ -153,9 +152,13 @@ public class ProjectAction {
      * @date 2016-1-7 下午7:00:10
      */
     @ActionLog(value = "将项目共享给其他用户", button = "共享项目")
-    @RequestMapping(value = "shareProject", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+	@RequestMapping(value = "shareProject")
     @ResponseBody
-    public String share(String userNames, Integer projectId) {
+	public Response share(String userNames, Integer projectId) {
+		String loginUser = ConstantsData.getLoginUserName().toLowerCase();
+		if (loginUser.equals(userNames) || userNames.indexOf(loginUser) > -1) {
+			return new Response("项目不能共享给自己！");
+		}
         String error = "";
         String userIds = "";
         if (StringUtils.isNotEmpty(userNames)) {
@@ -171,7 +174,7 @@ public class ProjectAction {
             if (StringUtils.isNotEmpty(error)) {
                 error = error.substring(0, error.length() - 1);
                 error = "用户" + error + "不存在！";
-                return error;
+				return new Response(error);
             }
         }
         Integer userId = ConstantsData.getLoginUserId();
@@ -204,7 +207,7 @@ public class ProjectAction {
 				mcu.sendMessage(shareTo.getUserId(), MessageCategoryCode.SHARE, aliEmail, params, mu);
 			}
 		}
-        return error;
+		return Response.SUCCESS;
     }
 
     /**
