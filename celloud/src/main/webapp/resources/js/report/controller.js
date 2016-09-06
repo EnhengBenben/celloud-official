@@ -687,6 +687,17 @@
 		  $scope.s16.resultTable = $table.html();
 	  });
   });
+  /**
+   * translate数据报告controller
+   */
+  celloudApp.controller("translateDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getTranslateInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(translateInfo){
+		  $scope.translate = translateInfo.translate;
+		  $scope.project = translateInfo.project;
+		  $scope.uploadPath = translateInfo.uploadPath;
+	  });
+  });
   
   
   

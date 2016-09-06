@@ -138,6 +138,10 @@
     	templateUrl: "pages/report/report_data_16s.jsp",
     	controller: "16sDataReportController"
     })
+    .when('/reportpro/translate_simplified/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_translate.jsp",
+    	controller: "translateDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

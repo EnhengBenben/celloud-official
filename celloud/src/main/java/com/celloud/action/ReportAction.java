@@ -1202,6 +1202,42 @@ public class ReportAction {
 		return mv.addObject("translate", translate);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午7:33:22
+     * @description 获取Translate数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看Translate数据报告", button = "数据报告")
+    @RequestMapping("getTranslateInfo")
+    @ResponseBody
+    public Map<String, Object> getTranslateInfo(String dataKey, Integer projectId, Integer appId) {
+        DataFile data = dataService.getDataByKey(dataKey);
+        Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
+        String path = data.getPath();
+        int MAX = 256 * 1024;
+        if (FileTools.getFileSize(path) > MAX) {
+            translate.setSource("输入序列超过256k，不再显示！");
+        } else {
+            String source = FileTools.readAppoint(data.getPath());
+            translate.setSource(source);
+        }
+        String result = translate.getResult();
+        if (result != null && result.length() > MAX) {
+            translate.setResult("输出序列超过256k，不再显示，请下载查看！");
+        } else {
+            translate.setResult(CustomStringUtils.htmlbr(result));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("translate", translate);
+        return map;
+    }
+
 	/**
 	 * 获取EGFR数据报告
 	 * 
