@@ -1,6 +1,7 @@
 package com.celloud.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -17,6 +18,7 @@ public interface SampleStorageMapper {
     List<SampleStorage> findAll(@Param("userId") Integer userId,
             @Param("state") Integer state);
 
-    List<SampleStorage> sampleListInStorage(@Param("userId") Integer userId,
+    List<Map<String, Object>> sampleListInStorage(
+            @Param("userId") Integer userId,
             @Param("state") Integer state, @Param("ssid") Integer ssid);
 }

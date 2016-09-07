@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -186,12 +187,14 @@ public class SampleServiceImple implements SampleService {
         ss.setSindex(sindex);
         ss.setSampleNum(sampleIds.size());
         ss.setCreateDate(new Date());
+        ss.setUserId(userId);
         sampleStorageMapper.insertSelective(ss);
 
         for (Integer sampleId : sampleIds) {
             updateExperState(userId, SampleExperState.IN_LIBRARY, sampleId);
         }
-        return sampleStorageMapper.addSampleStorageRelat(ss.getId(), sampleIds);
+        sampleStorageMapper.addSampleStorageRelat(ss.getId(), sampleIds);
+        return ss.getId();
     }
 
     @Override
@@ -200,5 +203,12 @@ public class SampleServiceImple implements SampleService {
         List<SampleStorage> list = sampleStorageMapper.findAll(userId,
                 DataState.ACTIVE);
         return new PageList<SampleStorage>(page, list);
+    }
+
+    @Override
+    public List<Map<String, Object>> sampleListInStorage(Integer userId,
+            Integer ssId) {
+        return sampleStorageMapper.sampleListInStorage(userId, DataState.ACTIVE,
+                ssId);
     }
 }

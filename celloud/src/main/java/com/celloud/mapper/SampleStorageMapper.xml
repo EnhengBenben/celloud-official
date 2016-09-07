@@ -75,4 +75,11 @@
   <select id="findAll" resultMap="BaseResultMap">
     select * from tb_sample_storage where user_id=#{userId} and state=#{state}
   </select>
+  <select id="sampleListInStorage" resultType="map">
+    select ss.id,ss.storage_name storageName,ss.sindex storageSindex,s.sample_name sampleName,s.`type`,ss.create_date createDate,s.sindex sampleSindex
+	from tb_sample s
+	left join tb_sample_storage_relat ssr on s.sample_id=ssr.sample_id
+	left join tb_sample_storage ss on ss.id=ssr.storage_id
+	where ss.user_id=#{userId} and ss.id=#{ssid} and s.state=#{state}
+  </select>
 </mapper>

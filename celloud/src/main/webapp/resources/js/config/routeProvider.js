@@ -189,6 +189,10 @@
       templateUrl: "pages/experiment_scan/library_list.jsp",
       controller: "storagesController"
     })
+    .when('/experiment/libraryList/:ssId',{
+      templateUrl: "pages/experiment_scan/library_detail.jsp",
+      controller: "storagesController"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()

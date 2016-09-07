@@ -1,6 +1,7 @@
 package com.celloud.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleStorage;
@@ -188,4 +189,16 @@ public interface SampleService {
             List<Integer> sampleIds, Integer userId);
 
     public PageList<SampleStorage> getSampleStorages(Page page, Integer userId);
+
+    /**
+     * 获取文库中的样本信息
+     * 
+     * @param userId
+     * @param ssId
+     * @return
+     * @author leamo
+     * @date 2016年9月7日 下午3:44:42
+     */
+    public List<Map<String, Object>> sampleListInStorage(Integer userId,
+            Integer ssId);
 }

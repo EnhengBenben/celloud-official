@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -110,4 +112,72 @@ public class ExcelUtil {
         }
     }
 
+    public static void listToExcel(List<String> header,List<Map<String, Object>> list,
+            String excelPath) {
+        if (!new File(excelPath).exists()) {
+            FileTools.createFile(excelPath);
+        }
+        // 声明一个工作薄
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        // 生成一个表格
+        HSSFSheet sheet = workbook.createSheet("sheet 1");
+        // 设置列宽和行高
+        sheet.setDefaultColumnWidth(20);
+        // 生成正文样式
+        HSSFCellStyle context = workbook.createCellStyle();
+        // 设置正文样式
+        context.setFillForegroundColor(HSSFColor.WHITE.index);// 设置背景色
+        context.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        context.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        context.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        context.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        context.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        context.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+        // 生成正文字体
+        HSSFFont font = workbook.createFont();
+        font.setColor(HSSFColor.BLACK.index);
+        font.setFontHeightInPoints((short) 10);
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+        // 把字体应用到当前的样式
+        context.setFont(font);
+        HSSFRow rowHeader = sheet.createRow(0);
+        for (int i = 0; i < header.size(); i++) {
+            HSSFCell cellHeader = rowHeader.createCell(i);
+            cellHeader.setCellStyle(context);
+            cellHeader.setCellValue(new HSSFRichTextString(header.get(i)));
+        }
+        for (int i = 0; i < list.size(); i++) {
+            Map<String, Object> map = list.get(i);
+            HSSFRow row = sheet.createRow(i + 1);
+            int j = 0;
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                String key = entry.getKey();
+                if (!key.equals("id")) {
+                    HSSFCell cell = row.createCell(j);
+                    cell.setCellStyle(context);
+                    cell.setCellValue(new HSSFRichTextString(
+                            String.valueOf(entry.getValue())));
+                    j++;
+                }
+            }
+        }
+        FileTools.createFile(excelPath);
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(excelPath);
+            workbook.write(out);
+        } catch (FileNotFoundException e1) {
+            log.error("要输出的 excel 文件不存在：" + excelPath);
+        } catch (IOException e) {
+            log.error("输出 Excel 出错：" + e);
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    log.error("关闭 Excel 输出流出错：" + e);
+                }
+            }
+        }
+    }
 }
