@@ -13,6 +13,7 @@ public class Response implements Cloneable {
 	public static final Response DELETE_SUCCESS = new Response(true, "104", "删除成功！");
 	public static final Response FILED_SUCCESS = new Response(true, "105", "归档成功！");
 	public static final Response FAIL = new Response("210", "操作失败，原因未知！");
+
 	/**
 	 * 操作是否成
 	 */
@@ -90,15 +91,8 @@ public class Response implements Cloneable {
 	}
 
 	public Response setData(Object data) {
-		Response response = null;
-		try {
-			this.data = data;
-			response = (Response) this.clone();
-			this.data = null;
-		} catch (CloneNotSupportedException e) {
-			
-		}
-		return response;
+		this.data = data;
+		return this;
 	}
 
 	public Object getData() {
