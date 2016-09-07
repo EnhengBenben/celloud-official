@@ -29,7 +29,7 @@
                 </div>
               </li>
             </shiro:hasPermission>
-<!--           <li><a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a></li> -->
+          <li><a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a></li>
         </ul>
         <ul class="nav navbar-nav pull-right">
           <li class="dropdown">
