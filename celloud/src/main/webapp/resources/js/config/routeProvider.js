@@ -117,15 +117,25 @@
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
     })
+    .when('/sampling',{
+      templateUrl: "pages/experiment_scan/sampling.jsp",
+      controller: "samplingController"
+    })
     .when('/experiment/scanStorage',{
       templateUrl: "pages/experiment_scan/scan_storage.jsp",
       controller: "scanStorageController"
     })
     .when('/experiment/tokenDNA',{
-      templateUrl: "pages/experiment_scan/token_dna.jsp"
+      templateUrl: "pages/experiment_scan/token_dna.jsp",
+      controller: "tokenDNAController"
     })
     .when('/experiment/createLibrary',{
-      templateUrl: "pages/experiment_scan/create_library.jsp"
+      templateUrl: "pages/experiment_scan/create_library.jsp",
+      controller: "buidLibraryController"
+    })
+    .when('/experiment/libraryList',{
+      templateUrl: "pages/experiment_scan/library_list.jsp",
+      controller: "storagesController"
     })
     .otherwise({redirectTo:'/'});
   });

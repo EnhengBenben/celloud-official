@@ -116,8 +116,8 @@
         <li ng-class="{active: isActive('/')}">
           <a href="#/"><i class="overview-icon"></i><span>我的工作台</span></a>
         </li>
-        <li>
-          <a href="javascript:void(0)"><i class="sample-icon"></i><span>样本采集</span></a>
+        <li ng-class="{active: isActive('/sampling')}">
+          <a href="#/sampling"><i class="sample-icon"></i><span>样本采集</span></a>
         </li>
         <li ng-class="{active: isActive('/experiment')}">
           <a href="#/experiment/scanStorage"><i class="experiment-icon"></i><span>实验管理</span></a>
@@ -214,6 +214,8 @@
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/experiment_scan/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/experiment_scan/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/user/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/data/service.js"></script>

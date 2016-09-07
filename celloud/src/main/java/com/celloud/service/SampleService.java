@@ -3,6 +3,7 @@ package com.celloud.service;
 import java.util.List;
 
 import com.celloud.model.mysql.Sample;
+import com.celloud.model.mysql.SampleStorage;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 
@@ -34,6 +35,17 @@ public interface SampleService {
      * @date 2016年6月20日 上午11:18:46
      */
     public Integer commitSamples(List<Integer> sampleIds, Integer appId, Integer userId);
+
+    /**
+     * 批量提交采样列表
+     * 
+     * @param sampleIds
+     * @param userId
+     * @return
+     * @author leamo
+     * @date 2016年9月6日 下午5:21:07
+     */
+    public Integer commitSamples(List<Integer> sampleIds, Integer userId);
 
     /**
      * 获取所有未添加的样本编号信息
@@ -104,6 +116,18 @@ public interface SampleService {
             Integer experState);
 
     /**
+     * 扫码增加样本
+     * 
+     * @param userId
+     * @param sample
+     * @return
+     * @author leamo
+     * @date 2016年9月6日 下午4:02:33
+     */
+    public Integer samplingAddSample(Integer userId, String sampleName,
+            String type, Integer tagId);
+
+    /**
      * 修改样本实验状态
      * 
      * @param userId
@@ -115,4 +139,53 @@ public interface SampleService {
      */
     public Integer updateExperState(Integer userId, Integer experState,
             Integer sampleId);
+    
+    /**
+     * 修改样本实验状态并增加index
+     * 
+     * @param userId
+     * @param experState
+     * @param sampleId
+     * @return
+     * @author leamo
+     * @date 2016年9月5日 下午4:37:38
+     */
+    public Integer updateExperStateAndIndex(Integer userId, Integer experState,
+            Integer sampleId, Integer sno);
+
+    /**
+     * 删除样本的实验过程
+     * 
+     * @param sampleLogId
+     * @return
+     * @author leamo
+     * @date 2016年9月6日 下午9:30:10
+     */
+    public Integer deleteSampleLog(Integer sampleLogId);
+
+    /**
+     * 修改样本备注
+     * 
+     * @param sampleId
+     * @param remark
+     * @return
+     * @author leamo
+     * @date 2016年9月6日 下午10:15:48
+     */
+    public Integer editRemark(Integer sampleId, String remark);
+
+    /**
+     * 构建文库
+     * 
+     * @param name
+     * @param index
+     * @param sampleIds
+     * @return
+     * @author leamo
+     * @date 2016年9月7日 上午3:00:26
+     */
+    public Integer addStorage(String name, String index,
+            List<Integer> sampleIds, Integer userId);
+
+    public PageList<SampleStorage> getSampleStorages(Page page, Integer userId);
 }

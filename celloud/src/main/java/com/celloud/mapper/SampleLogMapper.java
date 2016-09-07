@@ -1,5 +1,7 @@
 package com.celloud.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.mysql.SampleLog;
 
 public interface SampleLogMapper {
@@ -15,5 +17,6 @@ public interface SampleLogMapper {
 
     int updateByPrimaryKey(SampleLog record);
 
-    int deleteBySampleId(Integer sampleId, Integer state);
+    int deleteBySampleId(@Param("sampleId") Integer sampleId,
+            @Param("state") Integer state, @Param("userId") Integer userId);
 }

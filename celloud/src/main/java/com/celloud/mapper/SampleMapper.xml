@@ -7,13 +7,20 @@
     <result column="sample_name" jdbcType="VARCHAR" property="sampleName" />
     <result column="is_add" jdbcType="BIT" property="isAdd" />
     <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="index" property="index" jdbcType="VARCHAR" />
+    <result column="sindex" property="sindex" jdbcType="VARCHAR" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="state" jdbcType="BIT" property="state" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <resultMap id="ResultMapWithTag" type="com.celloud.model.mysql.Sample"
+      extends="BaseResultMap">
+      <result column="tag_id" property="tagId" jdbcType="INTEGER" />
+      <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
+      <result column="sampleLogId" property="sampleLogId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    sample_id, user_id, sample_name, is_add, type, index, create_date, update_date, state
+    sample_id, user_id, sample_name, is_add, type, sindex, create_date, update_date, state, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,75 +40,102 @@
       #{isAdd,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
       #{state,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Sample">
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Sample" useGeneratedKeys="true" keyProperty="sampleId">
     insert into tb_sample
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="sampleId != null">
+      <if test="sampleId != null" >
         sample_id,
       </if>
-      <if test="userId != null">
+      <if test="userId != null" >
         user_id,
       </if>
-      <if test="sampleName != null">
+      <if test="sampleName != null" >
         sample_name,
       </if>
-      <if test="isAdd != null">
+      <if test="isAdd != null" >
         is_add,
       </if>
-      <if test="createDate != null">
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="sindex != null" >
+        sindex,
+      </if>
+      <if test="createDate != null" >
         create_date,
       </if>
-      <if test="updateDate != null">
+      <if test="updateDate != null" >
         update_date,
       </if>
-      <if test="state != null">
+      <if test="state != null" >
         state,
+      </if>
+      <if test="remark != null" >
+        remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="sampleId != null">
+      <if test="sampleId != null" >
         #{sampleId,jdbcType=INTEGER},
       </if>
-      <if test="userId != null">
+      <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="sampleName != null">
+      <if test="sampleName != null" >
         #{sampleName,jdbcType=VARCHAR},
       </if>
-      <if test="isAdd != null">
+      <if test="isAdd != null" >
         #{isAdd,jdbcType=BIT},
       </if>
-      <if test="createDate != null">
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="sindex != null" >
+        #{sindex,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateDate != null">
+      <if test="updateDate != null" >
         #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="state != null">
+      <if test="state != null" >
         #{state,jdbcType=BIT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Sample">
     update tb_sample
-    <set>
-      <if test="userId != null">
+    <set >
+      <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="sampleName != null">
+      <if test="sampleName != null" >
         sample_name = #{sampleName,jdbcType=VARCHAR},
       </if>
-      <if test="isAdd != null">
+      <if test="isAdd != null" >
         is_add = #{isAdd,jdbcType=BIT},
       </if>
-      <if test="createDate != null">
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="sindex != null" >
+        sindex = #{sindex,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateDate != null">
+      <if test="updateDate != null" >
         update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="state != null">
+      <if test="state != null" >
         state = #{state,jdbcType=BIT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where sample_id = #{sampleId,jdbcType=INTEGER}
@@ -124,16 +158,18 @@
 	     #{sampleId,jdbcType=INTEGER}
     </foreach>)
   </update>
-  <select id="selectAllByUser" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_sample
-    where user_id = #{userId,jdbcType=INTEGER} and is_add = #{isAdd,jdbcType=BIT} and state = #{state,jdbcType=BIT}
-    order by create_date desc
+  <select id="selectAllByUser" resultMap="ResultMapWithTag">
+    select s.*,t.tag_id,t.tag_name
+    from tb_sample s
+    left join tb_sample_log sl on s.sample_id=sl.sample_id 
+     left join tb_sample_tag_relat st on s.sample_id=st.sample_id
+     left join tb_tag t on st.tag_id=t.tag_id
+    where sl.exper_state = #{experState}
+    and s.user_id = #{userId} and is_add = #{isAdd,jdbcType=BIT} and s.state =#{state,jdbcType=BIT}
+    order by s.create_date desc
   </select>
   <select id="selectByName" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    select *
     from tb_sample
     where user_id = #{userId,jdbcType=INTEGER} and sample_name = #{sampleName,jdbcType=VARCHAR} and state = #{state,jdbcType=BIT} limit 1
   </select>
@@ -145,13 +181,19 @@
     </foreach>)
   </delete>
   <select id="getSamples" resultMap="BaseResultMap">
-    select s.* from 
+    select s.*,sl.id sampleLogId from 
 	tb_sample s,tb_sample_log sl
-	where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state}
+	where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and sl.state=#{state}
   </select>
   <select id="getByNameExperState" resultMap="BaseResultMap">
     select s.* from 
     tb_sample s,tb_sample_log sl
     where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and s.sample_name=#{sampleName,jdbcType=VARCHAR}
+    and s.is_add = #{isAdd,jdbcType=BIT}
+    order by create_date desc
   </select>
+  <insert id="addSampleTagRelat" parameterType="java.lang.Integer">
+    insert into tb_sample_tag_relat (sample_id,tag_id)
+    values (#{sampleId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER})
+  </insert>
 </mapper>
