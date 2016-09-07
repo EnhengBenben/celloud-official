@@ -1,6 +1,9 @@
 (function(){
-  celloudApp.factory("loginCount",function($resource){
-      return $resource("count/loginCount");
+  celloudApp.service("loginCount",function($http){
+    var self = this;
+    self.loginCount = function(){
+      return $http.get("count/loginCount");
+    }
   });
     
 }());
