@@ -624,6 +624,26 @@ public class ReportAction {
 		return getSplitModelAndView("report/report_data_split", dataKey, projectId, appId);
 	}
 
+    /**
+     * 获取 Split 数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:44:45
+     */
+    @ActionLog(value = "查看split数据报告", button = "数据报告")
+    @RequestMapping("getSplitInfo")
+    @ResponseBody
+    public Map<String, Object> getSplitInfo(String dataKey, Integer projectId, Integer appId) {
+        Split split = reportService.getSplitReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("split", split);
+        map.put("splitId", split.getId().toString());
+        return map;
+    }
+
 	/**
 	 * 打印 Split 数据报告
 	 * 

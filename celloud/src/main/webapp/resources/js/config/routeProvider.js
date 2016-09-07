@@ -178,6 +178,10 @@
     	templateUrl: "pages/report/report_data_cmp.jsp",
     	controller: "cmpDataReportController"
     })
+    .when('/reportpro/split/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_split.jsp",
+    	controller: "splitDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

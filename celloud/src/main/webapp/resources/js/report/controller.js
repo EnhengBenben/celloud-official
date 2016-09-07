@@ -721,6 +721,30 @@
 	  });
   });
   /**
+   * split数据报告controller
+   */
+  celloudApp.controller("splitDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getSplitInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(splitInfo){
+		  $scope.split = splitInfo.split;
+		  $scope.project = splitInfo.project;
+		  $scope.uploadPath = splitInfo.uploadPath;
+		  
+		  $.get("count/splitCompare",{"id":splitInfo.splitId},function(data){
+	          var totalSource = JSON.stringify(data.totalSource);
+	          var totalSample = JSON.stringify(data.totalSample);
+	          var thisSource = JSON.stringify(data.thisSource);
+	          var thisSample = JSON.stringify(data.thisSample);
+	          console.log("totalSource: " + totalSource);
+	          console.log("totalSample: " + totalSample);
+	          console.log("thisSource: " + thisSource);
+	          console.log("thisSample: " + thisSample);
+	          drawScatter("sourceCharDiv",eval(totalSource),eval(thisSource),'Split源数据同比图','平均质量','序列总数');
+	          drawScatter("sampleCharDiv",eval(totalSample),eval(thisSample),'Split分离结果数据同比图','平均质量','序列总数');
+	      });
+	  });
+  });
+  /**
    * pgs数据报告controller
    */
   celloudApp.controller("pgsDataReportController", function($scope, $routeParams, $compile, dataReportService){
