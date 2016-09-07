@@ -4,21 +4,43 @@ import java.io.File;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.celloud.box.model.Newfile;
+import com.celloud.box.utils.MD5Util;
+import com.celloud.box.utils.ThreadUtil;
 import com.celloud.box.utils.UploadPath;
 
 @Service
 public class BoxServiceImpl implements BoxService {
+	private static Logger logger = LoggerFactory.getLogger(BoxServiceImpl.class);
 	@Resource
 	private OSSService ossService;
+	@Resource
+	private ApiService apiService;
 
 	@Async
 	@Override
-	public void upload2oss(Integer userId, String dataKey, String ext, File f) {
-		// TODO 修改生成objectKey的规则
-		ossService.upload(UploadPath.getObjectKey(userId, dataKey, ext), f);
+	public void finish(Integer userId, String name, Integer tagId, String batch, Integer needSplit, File file) {
+		String md5 = MD5Util.getFileMD5(file);
+		// 通知celloud有新文件上传
+		Newfile newfile = null;
+		for (int i = 0; i < 3; i++) {// 失败需重试
+			newfile = apiService.newfile(userId, name, file.length(), md5);
+			if (newfile != null) {// 成功则退出
+				break;
+			}
+			ThreadUtil.sleep(5000);// 5秒之后再重试
+		}
+		// 将文件上传到oss
+		String objectKey = UploadPath.getObjectKey(userId, newfile.getDataKey(), newfile.getExt());
+		ossService.upload(objectKey, file);
+		// TODO 通知celloud文件已经上传到oss
+		apiService.updatefile(objectKey, newfile.getFileId(), tagId, batch, needSplit);
+		logger.info("finish....................");
 	}
 
 }

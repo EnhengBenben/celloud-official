@@ -3,5 +3,6 @@ package com.celloud.box.service;
 import java.io.File;
 
 public interface BoxService {
-	public void upload2oss(Integer userId,String dataKey, String ext, File f);
+
+	public void finish(Integer userId, String name, Integer tagId, String batch, Integer needSplit, File f);
 }

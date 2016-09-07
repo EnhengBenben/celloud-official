@@ -11,7 +11,6 @@ import javax.annotation.Resource;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.celloud.box.config.OSSConfig;
 import com.celloud.box.constants.Response;
-import com.celloud.box.model.Newfile;
-import com.celloud.box.service.ApiService;
 import com.celloud.box.service.BoxService;
 import com.celloud.box.utils.UploadPath;
 
@@ -35,8 +31,6 @@ public class BoxController {
 	private Logger logger = LoggerFactory.getLogger(BoxController.class);
 	@Resource
 	private BoxService boxService;
-	@Resource
-	private ApiService apiService;
 
 	@RequestMapping("upload")
 	public Response upload(@RequestParam("file") MultipartFile file, Integer userId, Integer chunk, Integer chunks,
@@ -44,6 +38,7 @@ public class BoxController {
 		if (file == null || file.isEmpty()) {
 			return new Response("没有要上传的文件！");
 		}
+		tagId = tagId == null ? 118 : tagId;
 		logger.info("name={}\tsize={}\tlastModifiedDate={}", name, size,
 				new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(lastModifiedDate));
 		String folder = UploadPath.getPath(userId);
@@ -63,12 +58,7 @@ public class BoxController {
 			if (f == null) {
 				return new Response("文件上传失败，服务器异常！");
 			}
-			// TODO 通知celloud有新文件上传
-			Newfile newfile = apiService.newfile(userId, name, size, tagId, batch, needSplit);
-			// TODO 将文件上传到oss
-			boxService.upload2oss(userId, newfile.getDataKey(), newfile.getExt(), f);
-			logger.info("finish....................");
-			// TODO 通知celloud文件已经上传到oss
+			boxService.finish(userId, name, tagId, batch, needSplit, f);
 		}
 		return Response.SUCCESS;
 	}

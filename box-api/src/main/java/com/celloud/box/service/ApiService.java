@@ -16,19 +16,24 @@ public class ApiService {
 	@Autowired
 	private APIConfig api;
 
-	public Newfile newfile(Integer userId, String name, long size, Integer tagId, String batch, Integer needSplit) {
+	public Newfile newfile(Integer userId, String name, long size, String md5) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("userId", userId);
 		params.put("name", name);
 		params.put("size", size);
-		params.put("tagId", tagId);
-		params.put("batch", batch);
-		params.put("needSplit", needSplit);
-		ApiResponse response = HttpClientUtil.get(api.getNewfile(), params);
+		params.put("md5", md5);
+		ApiResponse response = HttpClientUtil.post(api.getNewfile(), params);
 		return new Newfile(response.getData());
 	}
 
-	public void updatefile() {
-
+	public boolean updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("objectKey", objectKey);
+		params.put("fileId", fileId);
+		params.put("tagId", tagId);
+		params.put("batch", batch);
+		params.put("needSplit", needSplit);
+		ApiResponse response = HttpClientUtil.post(api.getUpdatefile(), params);
+		return response.isSuccess();
 	}
 }
