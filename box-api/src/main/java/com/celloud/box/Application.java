@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * App启动类<br>
@@ -14,7 +16,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
-public class Application {
+@EnableAsync
+public class Application extends AsyncConfigurerSupport{
 	private static Logger logger = LoggerFactory.getLogger(Application.class);
 
 	/**

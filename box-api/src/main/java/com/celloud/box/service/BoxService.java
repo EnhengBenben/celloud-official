@@ -1,5 +1,7 @@
 package com.celloud.box.service;
 
-public interface BoxService {
+import java.io.File;
 
+public interface BoxService {
+	public void upload2oss(Integer userId,String dataKey, String ext, File f);
 }
