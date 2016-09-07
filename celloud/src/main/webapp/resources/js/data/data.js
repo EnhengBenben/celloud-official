@@ -30,7 +30,7 @@ function _init_data(){
 	  alert(obj);
     var _checked = $(obj).prop("checked");//jquery1.11获取属性
     var _dataId = $(obj).val();
-    var _valid = $(obj).prev().val();
+    var _valid = $(obj).attr("is_run");
     if(_checked){
       $.dataManager.checkData.isCheck(_dataId);
       if(_valid=="true"){
@@ -61,7 +61,7 @@ function _init_data(){
       for(var i=0;i<_checkedLength;i++) {
         if($(choicearr[i]).prop("disabled")==false){
           if($(choicearr[i]).prop("checked")==false){
-            var _valid = $(choicearr[i]).prev().val();
+            var _valid = $(choicearr[i]).attr("is_run");
             if(_valid=="true"){
               $.dataManager.options.noValidIds = $.dataManager.options.noValidIds + 1;
             }else{
