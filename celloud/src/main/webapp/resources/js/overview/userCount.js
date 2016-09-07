@@ -79,7 +79,6 @@ var userCount=(function(userCount){
   };
   self.fileMonthCount=function(){
     $.get("count/fileMonthCount",function(data){
-      $("#count-data-month-chart").width($("#count-data-day-chart").width());
       var x = "[";
       var y = [];
       $.each(data,function(index,map){
@@ -130,7 +129,6 @@ var userCount=(function(userCount){
   };
   self.fileSizeMonthCount=function(){
     $.get("count/fileSizeMonthCount",function(data){
-      $("#count-source-month-chart").width($("#count-source-day-chart").width());
       var x = "[";
       var y = [];
       $.each(data,function(index,map){
@@ -183,7 +181,6 @@ var userCount=(function(userCount){
 
   self.reportMonthCount=function(){
     $.get("count/reportMonthCount",function(data){
-      $("#count-report-month-chart").width($("#count-report-day-chart").width());
       var x = "[";
       var y = [];
       $.each(data,function(index,map){
@@ -220,7 +217,6 @@ var userCount=(function(userCount){
   
   self.appMonthCount=function(){
     $.get("count/appMonthCount",function(data){
-      $("#count-app-month-chart").width($("#count-app-day-chart").width());
       var x = "[";
       var y = [];
       $.each(data,function(index,map){
