@@ -142,6 +142,18 @@
     	templateUrl: "pages/report/report_data_translate.jsp",
     	controller: "translateDataReportController"
     })
+    .when('/reportpro/MDA-v1.4/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/JBRH-PGS/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/Sureplex-v1.4/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
