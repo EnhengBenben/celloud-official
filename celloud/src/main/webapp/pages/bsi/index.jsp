@@ -24,134 +24,8 @@
   <![endif]  -->
 </head>
 <body class="container" ng-app="celloudApp" ng-controller="sidebarController">
-  <header class="header">
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <div class="navbar-logo {{collapsed|logoMiniFilter}}">
-            <a class="logo" href="#"></a>
-          </div>
-        </div>
-        <ul class="nav navbar-nav pull-left">
-           <shiro:hasPermission name="rocky:product">
-              <li>
-                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="cubes-icon">&nbsp;</i>
-                </a>
-                <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
-                </div>
-              </li>
-            </shiro:hasPermission>
-            <shiro:hasPermission name="bsi:product">
-              <li>
-                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="cubes-icon">&nbsp;</i>
-                </a>
-                <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/images/app/bsi.png" alt="百菌探" title="百菌探"></a>
-                </div>
-              </li>
-            </shiro:hasPermission>
-          <li><a data-toggle="modal" data-target="#upload-modal"><i class="upload-icon"></i></a></li>
-        </ul>
-        <ul class="nav navbar-nav pull-right">
-          <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="code-icon"></i>
-            </a>
-            <div class="dropdown-menu code-dropdown">
-              <img alt="扫码关注" src="<%=request.getContextPath()%>/images/icon/qrcode.jpg">
-            </div>
-          </li>
-          <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="money-icon">&nbsp;</i>
-            </a>
-            <div class="dropdown-menu money-dropdown">
-              <p>账户余额：<span class="tips">{{userInfo.balances}}</span>元</p>
-              <a class="btn" href="#/expense/paydetail">立即充值</a><br>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/expense/consume">查看消费记录</a>
-            </div>
-          </li>
-          <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="bell-icon">&nbsp;</i>
-              <span class="label label-danger">{{notices.num==0?'':(notices.num+'')}}</span>
-            </a>
-            <div class="dropdown-menu message-dropdown">
-              <p> 您有<span class="tips">{{notices.num}}</span>条新消息</p>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
-            </div>
-          </li>
-           <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="bell-icon">&nbsp;</i>
-              <span class="label label-danger">{{messages.num==0?'':(''+messages.num)}}</span>
-            </a>
-            <div class="dropdown-menu message-dropdown">
-              <p> 您有<span class="tips">{{messages.num}}</span>条新消息</p>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notice/list">查看所有</a>
-            </div>
-          </li>
-          <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="user-icon">&nbsp;</i>
-            </a>
-            <div class="dropdown-menu user-dropdown">
-              <a class="btn" href="<%=request.getContextPath()%>/index#/user/base">个人信息</a>
-              <a class="btn btn-cancel" href="logout">退出</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <aside class="sidebar {{collapsed|collapsedFilter}}" id="common-sidebar">
-    <section class="s-bar">
-      <div class="sidebar-collapse">
-        <a href="javascript:void(0)" ng-click="toggleCollapse()"><i class="{{collapsed|collapsedIconFilter}}"></i></a>
-      </div>
-      <ul class="sidebar-menu">
-        <li class="header">产品与服务</li>
-        <li ng-class="{active: isActive('/')}">
-          <a href="#/"><i class="overview-icon"></i><span>我的工作台</span></a>
-        </li>
-        <li>
-          <a href="javascript:void(0)"><i class="sample-icon"></i><span>样本采集</span></a>
-        </li>
-        <li>
-          <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
-        </li>
-        <li ng-class="{active: isActive('/data')}">
-          <a href="<%=request.getContextPath()%>/index#/data"><i class="data-icon"></i><span>数据管理</span></a>
-        </li>
-        <li ng-class="{active: isActive('/report')}">
-<%--           <shiro:lacksPermission name="bsi:product"> --%>
-<!--             <a href="#/reportpro"><i class="report-icon"></i><span>报告管理</span></a> -->
-<%--           </shiro:lacksPermission> --%>
-<%--           <shiro:hasPermission name="bsi:product"> --%>
-            <a href="#/reportdata"><i class="report-icon"></i><span>报告管理</span></a>
-<%--           </shiro:hasPermission> --%>
-        </li>
-        <li ng-class="{active: isActive('/app')}">
-          <a href="<%=request.getContextPath()%>/index#/app"><i class="app-icon"></i><span>应用市场</span></a>
-        </li>
-      </ul>
-      <ul class="sidebar-menu">
-        <li class="header">用户中心</li>
-        <li ng-class="{active: isActive('/user')}">
-          <a href="<%=request.getContextPath()%>/index#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
-        </li>
-        <li ng-class="{active: isActive('/qa')}">
-          <a href="<%=request.getContextPath()%>/index#/qa"><i class="qa-icon"></i><span>问题反馈</span></a>
-        </li>
-        <li ng-class="{active: isActive('/expense')}">
-          <a href="<%=request.getContextPath()%>/index#/expense/consume"><i class="cost-icon"></i><span>费用中心</span></a>
-        </li>
-      </ul>
-    </section>
-  </aside>
+  <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include>
+  <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include>
   <div class="view-container">
     <div class="pro-body">
       <ol class="breadcrumb">
@@ -301,27 +175,60 @@
 	  </div><!-- /.modal -->
 	</div>
   </div>
+  
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
-  <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
+  <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js" type="text/javascript"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-  <script type="text/javascript">
-		window.contextPath = '<%=request.getContextPath()%>';
-  </script>
+  <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
+  <script src="<%=request.getContextPath() %>/js/utils.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
+  <script src="<%=request.getContextPath()%>/js/charts.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report_codon.js"></script>
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
+  <script src="<%=request.getContextPath()%>/js/alert.js"></script>
+  <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
+  <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
+  <script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
+  <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/experiment_scan/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/experiment_scan/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/user/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/filter.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/dataReportService.js"></script>
+  <script src="<%=request.getContextPath()%>/js/report/dataReportController.js"></script>
   <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js?version=1.1"></script>
-  <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
-  <script src="<%=request.getContextPath()%>/js/utils.js?version=1.1" type="text/javascript"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
+  <script src="<%=request.getContextPath()%>/js/notice/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/notice/messageController.js"></script>
+  <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
+  <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
+  <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/bsi_main.js?version=3.1.15" type="text/javascript"></script>
   <script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=3.1.12"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>

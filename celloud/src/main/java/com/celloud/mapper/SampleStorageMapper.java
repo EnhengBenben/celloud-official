@@ -16,4 +16,7 @@ public interface SampleStorageMapper {
 
     List<SampleStorage> findAll(@Param("userId") Integer userId,
             @Param("state") Integer state);
+
+    List<SampleStorage> sampleListInStorage(@Param("userId") Integer userId,
+            @Param("state") Integer state, @Param("ssid") Integer ssid);
 }
