@@ -710,6 +710,17 @@
 	  });
   });
   /**
+   * cmp数据报告controller
+   */
+  celloudApp.controller("cmpDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getCMPInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(cmpInfo){
+		  $scope.cmp = cmpInfo.cmp;
+		  $scope.project = cmpInfo.project;
+		  $scope.uploadPath = cmpInfo.uploadPath;
+	  });
+  });
+  /**
    * pgs数据报告controller
    */
   celloudApp.controller("pgsDataReportController", function($scope, $routeParams, $compile, dataReportService){

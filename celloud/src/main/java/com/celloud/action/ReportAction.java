@@ -289,6 +289,27 @@ public class ReportAction {
 		return getCMPModelAndView("report/report_data_cmp", dataKey, projectId, appId);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月7日下午4:30:25
+     * @description 获取CMP,CMP_199数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看CMP数据报告", button = "数据报告")
+    @RequestMapping("getCMPInfo")
+    @ResponseBody
+    public Map<String, Object> getCMPInfo(String dataKey, Integer projectId, Integer appId) {
+        CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("cmp", cmp);
+        return map;
+    }
+
 	/**
 	 * 打印 CMP简要报告
 	 * 

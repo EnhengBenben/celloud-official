@@ -170,6 +170,14 @@
     	templateUrl: "pages/report/report_data_gdd.jsp",
     	controller: "gddDataReportController"
     })
+    .when('/reportpro/CMP/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
+    .when('/reportpro/CMP_199/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
