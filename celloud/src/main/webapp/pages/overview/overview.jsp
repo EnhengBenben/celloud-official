@@ -44,7 +44,7 @@
 	  </shiro:hasPermission>
 	  <section class="overview-s">
 	    <h5 class="overview-header"><i class="mycount-icon"></i><span>使用统计</span></h5>
-	    <div class="o-count-list" ng-controller="overviewCount" id="showCount">
+	    <div class="o-count-list" ng-controller="overviewCount">
 	      <ul>
 	        <li>
 	          <div class="inner datanum">
