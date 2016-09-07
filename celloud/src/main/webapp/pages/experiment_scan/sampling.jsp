@@ -14,20 +14,7 @@
           <select class="tag-select" ng-model="selTags" ng-options="tag.tagName for tag in productTags" required>
               <option value="请选择检测类型">请选择检测类型</option>
           </select>
-          <select class="type-select" ng-model="type" required>
-	          <option value="请选择样本类型">请选择样本类型</option>
-	          <option value="血">血</option>
-	          <option value="组织液">组织液</option>
-	          <option value="引流液">引流液</option>
-	          <option value="关节液">关节液</option>
-	          <option value="心包积液">心包积液</option>
-	          <option value="胸水">胸水</option>
-	          <option value="脓液">脓液</option>
-	          <option value="脑脊液">脑脊液</option>
-	          <option value="阴道拭子">阴道拭子</option>
-	          <option value="腹水">腹水</option>
-	          <option value="尿液">尿液</option>
-	          <option value="肺泡灌洗液">肺泡灌洗液</option>
+          <select class="type-select" ng-model="type" ng-options="type for type in typeList" required>
           </select>
           <div class="info-btn-group">
             <input class="field" type="text" ng-trim="true" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
