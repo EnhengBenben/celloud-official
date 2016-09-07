@@ -1,11 +1,11 @@
 (function(){
   celloudApp.controller("overviewCount", function($scope, loginCount){
+    var width = ($(window).width()-300)/2;
+    var height = width/2.5;
+    $(".count-box-body").width(width);
+    $(".count-box-body").height(height);
     loginCount.loginCount().success(function(response){
       $scope.map = response;
-      var width = ($(window).width()-300)/2;
-      var heitht = width/2.6;
-      $(".count-box-body").width(width);
-      $(".count-box-body").height(heitht);
       userCount.fileDayCount();
       userCount.fileMonthCount();
       userCount.fileSizeDayCount();
