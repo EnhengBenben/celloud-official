@@ -108,7 +108,7 @@
 	              <a><span class="s-btn" ng-controller="fileMonthCount" id="data-month-span" onclick="userCount.dayMonthSwitch('data-month','data-day')">月</span></a>
 	            </div>
 	          </div>
-	          <div class="count-box-body" id="count-data-day-chart">
+	          <div class="count-box-body" id="count-data-day-chart" style="min-width: 100px;">
 	          </div>
 	          <div class="count-box-body hide" id="count-data-month-chart">
 	          </div>
@@ -121,7 +121,7 @@
 	              <a><span class="s-btn" ng-controller="reportMonthCount" id="report-month-span" onclick="userCount.dayMonthSwitch('report-month','report-day')">月</span></a>
 	            </div>
 	          </div>
-	          <div class="count-box-body" id="count-report-day-chart">
+	          <div class="count-box-body" id="count-report-day-chart" style="min-width: 100px;">
 	          </div>
 	          <div class="count-box-body hide" id="count-report-month-chart">
 	          </div>
@@ -136,7 +136,7 @@
 		              <a><span class="s-btn" ng-controller="fileSizeMonthCount" id="source-month-span" onclick="userCount.dayMonthSwitch('source-month','source-day')">月</span></a>
 		            </div>
 		          </div>
-		          <div class="count-box-body" id="count-source-day-chart">
+		          <div class="count-box-body" id="count-source-day-chart" style="min-width: 100px;">
 		          </div>
 		          <div class="count-box-body hide" id="count-source-month-chart">
 		          </div>
@@ -149,7 +149,7 @@
 		              <a><span class="s-btn" ng-controller="appMonthCount" id="app-month-span" onclick="userCount.dayMonthSwitch('app-month','app-day')">月</span></a>
 		            </div>
 		          </div>
-		          <div class="count-box-body" id="count-app-day-chart">
+		          <div class="count-box-body" id="count-app-day-chart" style="min-width: 100px;">
 		          </div>
 		          <div class="count-box-body hide" id="count-app-month-chart">
 		          </div>
