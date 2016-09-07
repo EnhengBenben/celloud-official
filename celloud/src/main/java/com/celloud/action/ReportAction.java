@@ -1068,6 +1068,31 @@ public class ReportAction {
 		return mv.addObject("pgs", pgs);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月7日上午9:55:49
+     * @description 获取Pgs数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看PGS数据报告", button = "数据报告")
+    @RequestMapping("getPgsInfo")
+    @ResponseBody
+    public Map<String, Object> getPgsInfo(String dataKey, Integer projectId, Integer appId) {
+        Map<String, Object> map = getCommonInfo(projectId);
+        Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
+        List<Experiment> expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
+        if (expList != null && expList.size() > 0) {
+            map.put("experiment", expList.get(0));
+        }
+        map.put("pgs", pgs);
+        return map;
+    }
+
 	/**
 	 * 获取Oncogene报告
 	 * 
