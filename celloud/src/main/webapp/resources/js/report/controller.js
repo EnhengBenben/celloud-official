@@ -900,6 +900,8 @@
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     $scope.companyId = companyId;
     $("#shareProjectSelect").select2({
+      language: "zh-CN",
+      placeholder: "请输入用户名",
       tags: true,
       tokenSeparators: [',', ' ']
     });
@@ -1069,6 +1071,8 @@
         $scope.updateState = false;
         $("#shareProjectSelect").html("");
         $("#shareProjectSelect").select2({
+          language: "zh-CN",
+          placeholder: "请输入用户名",
           tags: true,
           data: data,
           tokenSeparators: [',', ' ']
@@ -1086,15 +1090,19 @@
       userNames = userNames.toLowerCase();
       userNames = userNames.substring(0, userNames.length-1);
       projectReportService.projectShare(proId,userNames).success(function(response){
-        if(response.success){
+        $scope.updateMessage = response.message;
+        $scope.updateState = true;
+        function hideModal(){
           $("#project-share-modal").modal("hide");
           $scope.pageQuery(options.page,options.pageSize);
           $scope.updateState = false;
         }
-        $scope.updateMessage = response.message;
-        $scope.updateState = true;
+        if(response.success){
+          setTimeout(hideModal,1500);
+        }
       });
     }
+    
     //删除
     $scope.removePro = function(projectId){
       $.confirm("确定要删除该项目吗？","确认框",function(){

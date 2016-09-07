@@ -136,8 +136,8 @@
 	            </div>
 	          </div>
 	          <div class="form-group">
-	            <div class="col-xs-12">
-	                <select style="width: 300px;" multiple="" tabindex="-1" aria-hidden="true" id="shareProjectSelect"></select>
+	            <div class="col-xs-12 select-content">
+	                <select style="width: 400px;" multiple="" tabindex="-1" aria-hidden="true" id="shareProjectSelect"></select>
 	            </div>
 	          </div>
 	          <div class="form-group">
