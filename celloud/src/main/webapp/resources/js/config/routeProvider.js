@@ -158,6 +158,14 @@
     	templateUrl: "pages/report/report_data_pgs.jsp",
     	controller: "pgsDataReportController"
     })
+    .when('/reportpro/VMDA-v1.0/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/VgDNA-v1.0/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
     .when('/reportpro/GDD/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_gdd.jsp",
     	controller: "gddDataReportController"
