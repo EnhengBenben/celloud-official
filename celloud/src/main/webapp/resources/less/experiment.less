@@ -1,5 +1,3 @@
-/*收样*/
-
 .content.sample{
     .content-header{
         padding: 10px 20px;
@@ -27,9 +25,42 @@
             right: 20px;
             bottom: 10px;
         }
-        
+        >select{
+            position: absolute;
+            bottom: 10px;
+            width: 140px;
+            height: 40px;
+            font-size:14px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border: 1px solid @light-gray;
+            .border-radius(4px);
+            color: @font-gray;
+            &.type-select{
+                right: 300px;
+            }
+            &.tag-select{
+                right: 450px;
+            }
+        }
     }
     .list {
         padding-right: 0px;
+    }
+}
+.content.library .content-header{
+    >.library-name{
+        display: inline-block;
+        margin-right: 20px;
+    }
+    >select{
+        width: 140px;
+        height: 40px;
+        font-size:14px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border: 1px solid @light-gray;
+        .border-radius(4px);
+        color: @font-gray;
     }
 }

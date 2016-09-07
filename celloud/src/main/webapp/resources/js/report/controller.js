@@ -1051,15 +1051,16 @@
     }
     //删除
     $scope.removePro = function(projectId){
-      if(confirm("确定删除该项目报告吗？")){
-        $.get("project/deleteByState",{"projectId":projectId},function(flag){
+      $.confirm("确定要删除该项目吗？","确认框",function(){
+        projectReportService.deleteProject(projectId).success(function(flag){
           if(flag ==1){
             $scope.pageQuery(1,options.pageSize);
+            $.alert("项目报告删除成功");
           }else{
             $.alert("项目报告删除失败");
           }
         });
-      }
+      });
     }
     
     $scope.$on('reportLoadOver', function(){

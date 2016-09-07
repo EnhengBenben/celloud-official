@@ -13,13 +13,19 @@ public class Sample {
 
     private String type;
 
-    private String index;
+    private String sindex;
 
     private Date createDate;
 
     private Date updateDate;
 
     private Boolean state;
+
+    private String remark;
+
+    private Integer tagId;
+    private String tagName;
+    private Integer sampleLogId;
 
     public Integer getSampleId() {
         return sampleId;
@@ -61,12 +67,12 @@ public class Sample {
         this.type = type == null ? null : type.trim();
     }
 
-    public String getIndex() {
-        return index;
+    public String getSindex() {
+        return sindex;
     }
 
-    public void setIndex(String index) {
-        this.index = index == null ? null : index.trim();
+    public void setSindex(String sindex) {
+        this.sindex = sindex;
     }
 
     public Date getCreateDate() {
@@ -91,5 +97,37 @@ public class Sample {
 
     public void setState(Boolean state) {
         this.state = state;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Integer getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    public Integer getSampleLogId() {
+        return sampleLogId;
+    }
+
+    public void setSampleLogId(Integer sampleLogId) {
+        this.sampleLogId = sampleLogId;
     }
 }

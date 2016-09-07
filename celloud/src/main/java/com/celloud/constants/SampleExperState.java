@@ -9,4 +9,6 @@ public class SampleExperState {
     public static final int TOKEN_DNA = 2;
     /** 建库 */
     public static final int BUID_LIBRARY = 3;
+    /** 建库完成 */
+    public static final int IN_LIBRARY = 4;
 }

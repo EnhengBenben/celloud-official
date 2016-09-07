@@ -26,135 +26,14 @@
 <![endif]  -->
 </head>
 <body class="container" ng-app="celloudApp" ng-controller="sidebarController">
-<header class="header">
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <div class="navbar-logo {{collapsed|logoMiniFilter}}">
-            <a class="logo" href="#"></a>
-          </div>
-        </div>
-        <ul class="nav navbar-nav pull-left">
-            <shiro:hasPermission name="rocky:product">
-              <li>
-                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="cubes-icon">&nbsp;</i>
-                </a>
-                <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
-                </div>
-              </li>
-            </shiro:hasPermission>
-            <shiro:hasPermission name="bsi:product">
-              <li>
-                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="cubes-icon">&nbsp;</i>
-                </a>
-                <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/images/app/bsi.png" alt="百菌探" title="百菌探"></a>
-                </div>
-              </li>
-            </shiro:hasPermission>
-          <li><a data-toggle="modal" data-target="#upload-modal"><i class="upload-icon"></i></a></li>
-        </ul>
-        <ul class="nav navbar-nav pull-right">
-          <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="code-icon"></i>
-            </a>
-            <div class="dropdown-menu code-dropdown">
-              <img alt="扫码关注" src="<%=request.getContextPath()%>/images/icon/qrcode.jpg">
-            </div>
-          </li>
-          <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="money-icon">&nbsp;</i>
-            </a>
-            <div class="dropdown-menu money-dropdown">
-              <p>账户余额：<span class="tips">{{userInfo.balances}}</span>元</p>
-              <a class="btn" href="#/expense/paydetail">立即充值</a><br>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/expense/consume">查看消费记录</a>
-            </div>
-          </li>
-          <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="bell-icon">&nbsp;</i>
-              <span class="label label-danger">{{notices.num==0?'':(notices.num+'')}}</span>
-            </a>
-            <div class="dropdown-menu message-dropdown">
-              <p> 您有<span class="tips">{{notices.num}}</span>条新消息</p>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/notices">查看所有</a>
-            </div>
-          </li>
-           <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="bell-icon">&nbsp;</i>
-              <span class="label label-danger">{{messages.num==0?'':(''+messages.num)}}</span>
-            </a>
-            <div class="dropdown-menu message-dropdown">
-              <p> 您有<span class="tips">{{messages.num}}</span>条新消息</p>
-              <a class="btn-link" href="<%=request.getContextPath()%>/index#/messages">查看所有</a>
-            </div>
-          </li>
-          <li class="dropdown">
-            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="user-icon">&nbsp;</i>
-            </a>
-            <div class="dropdown-menu user-dropdown">
-              <a class="btn" href="<%=request.getContextPath()%>/index#/user/base">个人信息</a>
-              <a class="btn btn-cancel" href="logout">退出</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <aside class="sidebar {{collapsed|collapsedFilter}}" id="common-sidebar">
-    <section class="s-bar">
-      <div class="sidebar-collapse">
-        <a href="javascript:void(0)" ng-click="toggleCollapse()"><i class="{{collapsed|collapsedIconFilter}}"></i></a>
-      </div>
-      <ul class="sidebar-menu">
-        <li class="header">产品与服务</li>
-        <li ng-class="{active: isActive('/')}">
-          <a href="#/"><i class="overview-icon"></i><span>我的工作台</span></a>
-        </li>
-        <li>
-          <a href="javascript:void(0)"><i class="sample-icon"></i><span>样本采集</span></a>
-        </li>
-        <li>
-          <a href="javascript:void(0)"><i class="experiment-icon"></i><span>实验管理</span></a>
-        </li>
-        <li ng-class="{active: isActive('/data')}">
-          <a href="<%=request.getContextPath()%>/index#/data"><i class="data-icon"></i><span>数据管理</span></a>
-        </li>
-        <li ng-class="{active: isActive('/report')}">
-          <a href="#/reportdata"><i class="report-icon"></i><span>报告管理</span></a>
-        </li>
-        <li ng-class="{active: isActive('/app')}">
-          <a href="<%=request.getContextPath()%>/index#/app"><i class="app-icon"></i><span>应用市场</span></a>
-        </li>
-      </ul>
-      <ul class="sidebar-menu">
-        <li class="header">用户中心</li>
-        <li ng-class="{active: isActive('/user')}">
-          <a href="<%=request.getContextPath()%>/index#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
-        </li>
-        <li ng-class="{active: isActive('/qa')}">
-          <a href="<%=request.getContextPath()%>/index#/qa"><i class="qa-icon"></i><span>问题反馈</span></a>
-        </li>
-        <li ng-class="{active: isActive('/expense')}">
-          <a href="<%=request.getContextPath()%>/index#/expense/consume"><i class="cost-icon"></i><span>费用中心</span></a>
-        </li>
-      </ul>
-    </section>
-  </aside>
+  <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include>
+  <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include>
   <div class="view-container">
     <div class="pro-body">
       <ol class="breadcrumb">
         <li>CelLoud</li>
         <li>我的产品</li>
-        <li>百菌探</li>
+        <li>华木兰</li>
       </ol>
       <div class="content rocky">
 			<header class="common-menu">

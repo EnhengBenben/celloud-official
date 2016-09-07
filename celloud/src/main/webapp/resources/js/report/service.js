@@ -17,6 +17,10 @@
       self.changeProjectName = function(projectId,projectName){
         return $http.get("project/update",{params:{projectId:projectId,projectName:projectName}});
       }
+      //删除项目
+      self.deleteProject = function(projectId){
+        return $http.get("project/deleteByState",{params:{projectId:projectId}});
+      }
       //取消共享来的项目
       self.cancelProjectShare = function(projectId){
         return $http.get("project/deleteShare",{params:{projectId:projectId}});

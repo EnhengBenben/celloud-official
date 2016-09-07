@@ -3,28 +3,33 @@
 <mapper namespace="com.celloud.mapper.SampleStorageMapper" >
   <resultMap id="BaseResultMap" type="com.celloud.model.mysql.SampleStorage" >
     <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="storage_name" property="storageName" jdbcType="VARCHAR" />
-    <result column="index" property="index" jdbcType="VARCHAR" />
+    <result column="sindex" property="sindex" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="sample_num" property="sampleNum" jdbcType="INTEGER" />
+    <result column="state" jdbcType="BIT" property="state" />
   </resultMap>
   <insert id="insert" parameterType="com.celloud.model.mysql.SampleStorage" >
-    insert into tb_sample_storage (id, storage_name, index, 
-      create_date, sample_num)
-    values (#{id,jdbcType=INTEGER}, #{storageName,jdbcType=VARCHAR}, #{index,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{sampleNum,jdbcType=INTEGER})
+    insert into tb_sample_storage (id,user_id, storage_name, sindex, 
+      create_date, sample_num,state)
+    values (#{id,jdbcType=INTEGER},#{userId,jdbcType=INTEGER}, #{storageName,jdbcType=VARCHAR}, #{sindex,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{sampleNum,jdbcType=INTEGER},#{state,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.mysql.SampleStorage" >
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.SampleStorage" useGeneratedKeys="true" keyProperty="id">
     insert into tb_sample_storage
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
       <if test="storageName != null" >
         storage_name,
       </if>
-      <if test="index != null" >
-        index,
+      <if test="sindex != null" >
+        sindex,
       </if>
       <if test="createDate != null" >
         create_date,
@@ -32,16 +37,22 @@
       <if test="sampleNum != null" >
         sample_num,
       </if>
+      <if test="state != null" >
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
       <if test="storageName != null" >
         #{storageName,jdbcType=VARCHAR},
       </if>
-      <if test="index != null" >
-        #{index,jdbcType=VARCHAR},
+      <if test="sindex != null" >
+        #{sindex,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
@@ -49,6 +60,19 @@
       <if test="sampleNum != null" >
         #{sampleNum,jdbcType=INTEGER},
       </if>
+      <if test="state != null" >
+        #{state,jdbcType=BIT},
+      </if>
     </trim>
   </insert>
+  <insert id="addSampleStorageRelat" parameterType="com.celloud.model.mysql.SampleStorage" >
+    insert into tb_sample_storage_relat (sample_id, storage_id)
+    values 
+    <foreach item="sampleId" collection="sampleIds" open="(" close=")" separator=",">
+         #{sampleId,jdbcType=INTEGER},#{ssid,jdbcType=INTEGER}
+    </foreach>
+  </insert>
+  <select id="findAll" resultMap="BaseResultMap">
+    select * from tb_sample_storage where user_id=#{userId} and state=#{state}
+  </select>
 </mapper>

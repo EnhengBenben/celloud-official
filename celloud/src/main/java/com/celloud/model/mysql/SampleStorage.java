@@ -5,13 +5,17 @@ import java.util.Date;
 public class SampleStorage {
     private Integer id;
 
+    private Integer userId;
+
     private String storageName;
 
-    private String index;
+    private String sindex;
 
     private Date createDate;
 
     private Integer sampleNum;
+
+    private Boolean state;
 
     public Integer getId() {
         return id;
@@ -19,6 +23,14 @@ public class SampleStorage {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getStorageName() {
@@ -29,12 +41,12 @@ public class SampleStorage {
         this.storageName = storageName == null ? null : storageName.trim();
     }
 
-    public String getIndex() {
-        return index;
+    public String getSindex() {
+        return sindex;
     }
 
-    public void setIndex(String index) {
-        this.index = index == null ? null : index.trim();
+    public void setSindex(String sindex) {
+        this.sindex = sindex == null ? null : sindex.trim();
     }
 
     public Date getCreateDate() {
@@ -51,5 +63,13 @@ public class SampleStorage {
 
     public void setSampleNum(Integer sampleNum) {
         this.sampleNum = sampleNum;
+    }
+
+    public Boolean getState() {
+        return state;
+    }
+
+    public void setState(Boolean state) {
+        this.state = state;
     }
 }
