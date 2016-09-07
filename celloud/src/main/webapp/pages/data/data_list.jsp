@@ -34,7 +34,7 @@
           <tr>
             <th>
               <label class="checkbox-lable">
-                <input class="checkbox" type="checkbox" name="demo-checkbox1" onclick="$.dataManager.checkAll($(this), 'data-checkone')">
+                <input class="checkbox" type="checkbox" name="demo-checkbox1" id="data-checkall" onclick="$.dataManager.checkAll(this, 'data-checkone')">
                 <span class="info"></span>
               </label>
             </th>
@@ -51,8 +51,7 @@
           <tr ng-repeat="file in dataList.datas">
             <td>
               <label class="checkbox-lable">
-                <input type="hidden" value="{{file.isRunning==1||file.tagName==null}}">
-                <input class="checkbox" type="checkbox" name="data-checkone" value="{{file.fileId}}" onclick="$.dataManager.checkOneData($(this))">
+                <input class="checkbox" is_run="{{file.isRunning==1||file.tagName==null}}" type="checkbox" name="data-checkone" value="{{file.fileId}}" onclick="$.dataManager.checkOneData(this)">
                 <span class="info"></span>
               </label>
             </td>

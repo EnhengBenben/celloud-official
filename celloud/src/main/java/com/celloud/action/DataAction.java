@@ -696,8 +696,8 @@ public class DataAction {
 			StrSubstitutor sub = new StrSubstitutor(map);
 			String command = sub.replace(app.getCommand());
 			logger.info("运行命令:{}", command);
-			//			SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-			//			ssh.sshSubmit(command, false);
+			SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+			ssh.sshSubmit(command, false);
 			// 保存消费记录
 			expenseService.saveProRunExpenses(projectId, dataList);
 		}
