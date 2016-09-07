@@ -17,6 +17,8 @@
 		<result column="another_name" property="anotherName" jdbcType="VARCHAR" />
 		<result column="md5" property="md5" jdbcType="VARCHAR" />
 		<result column="batch" property="batch" jdbcType="VARCHAR" />
+		<result column="oss_path" property="ossPath" jdbcType="VARCHAR" />
+		<result column="upload_state" property="uploadState" jdbcType="INTEGER" />
 	</resultMap>
 	<resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.DataFile"
 		extends="BaseResultMap">
@@ -37,14 +39,14 @@
 		create_date, update_date,
 		path,
 		state, file_format, sample,
-		another_name, md5, batch
+		another_name, md5, batch,oss_path,upload_state
 	</sql>
 	<sql id="Tag_Base_Column_List">
 		f.file_id, f.user_id, data_key, file_name, strain, size,
 		create_date, update_date,
 		path,
 		state, file_format, sample,
-		another_name, md5, batch
+		another_name, md5, batch,oss_path,upload_state
 	</sql>
 	<sql id="Blob_Column_List">
 		data_tags
@@ -119,7 +121,7 @@
 		create_date, update_date,
 		path,
 		state, file_format, sample,
-		another_name, md5, data_tags, batch
+		another_name, md5, data_tags, batch,oss_path,upload_state
 		)
 		values (#{fileId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
 		#{dataKey,jdbcType=VARCHAR},
@@ -130,7 +132,8 @@
 		#{state,jdbcType=INTEGER},
 		#{fileFormat,jdbcType=INTEGER}, #{sample,jdbcType=VARCHAR},
 		#{anotherName,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR},
-		#{dataTags,jdbcType=LONGVARCHAR}, #{batch,jdbcType=VARCHAR}
+		#{dataTags,jdbcType=LONGVARCHAR}, #{batch,jdbcType=VARCHAR},
+		#{ossPath,jdbcType=VARCHAR}, #{uploadState,jdbcType=INTEGER}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="com.celloud.model.mysql.DataFile">
@@ -184,6 +187,12 @@
 			<if test="batch != null">
 				batch,
 			</if>
+			<if test="oss_path != null">
+				oss_path,
+			</if>
+			<if test="upload_state != null">
+				upload_state,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="fileId != null">
@@ -233,6 +242,12 @@
 			</if>
 			<if test="batch != null">
 				#{batch,jdbcType=VARCHAR},
+			</if>
+			<if test="oss_path != null">
+				#{ossPath,jdbcType=VARCHAR},
+			</if>
+			<if test="upload_state != null">
+				#{uploadState,jdbcType=INTEGER},
 			</if>
 		</trim>
 	</insert>
@@ -284,6 +299,12 @@
 			<if test="batch != null">
 				batch = #{batch,jdbcType=LONGVARCHAR},
 			</if>
+			<if test="ossPath != null">
+				oss_path = #{ossPath,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadState != null">
+				upload_state = #{uploadState,jdbcType=INTEGER},
+			</if>
 		</set>
 		where file_id = #{fileId,jdbcType=INTEGER}
 	</update>
@@ -308,7 +329,9 @@
 		md5 =
 		#{md5,jdbcType=VARCHAR},
 		data_tags = #{dataTags,jdbcType=LONGVARCHAR},
-		batch = #{batch,jdbcType=VARCHAR}
+		batch = #{batch,jdbcType=VARCHAR},
+		oss_path = #{ossPath,jdbcType=VARCHAR},
+		upload_state = #{uploadState,jdbcType=INTEGER}
 		where file_id =
 		#{fileId,jdbcType=INTEGER}
 	</update>
@@ -332,7 +355,9 @@
 		another_name = #{anotherName,jdbcType=VARCHAR},
 		md5 =
 		#{md5,jdbcType=VARCHAR},
-		batch = #{batch,jdbcType=VARCHAR}
+		batch = #{batch,jdbcType=VARCHAR},
+		oss_path = #{ossPath,jdbcType=VARCHAR},
+		upload_state = #{uploadState,jdbcType=INTEGER}
 		where file_id
 		= #{fileId,jdbcType=INTEGER}
 	</update>

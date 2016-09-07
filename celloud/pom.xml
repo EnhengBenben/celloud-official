@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>com.celloud</groupId>
 		<artifactId>root</artifactId>
@@ -12,10 +11,10 @@
 	<name>celloud Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-	    <!-- jsoup -->
-	    <dependency>
-		  <groupId>org.jsoup</groupId>
-		  <artifactId>jsoup</artifactId>
+		<!-- jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
 		</dependency>
 		<!-- 单元测试 -->
 		<dependency>
@@ -242,14 +241,19 @@
 			<version>3.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.aliyun</groupId>
-		    <artifactId>aliyun-java-sdk-core</artifactId>
-		    <version>2.2.2</version>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>2.2.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.aliyun</groupId>
-		    <artifactId>aliyun-java-sdk-dm</artifactId>
-		    <version>2.0.0-rc2</version>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-dm</artifactId>
+			<version>2.0.0-rc2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>2.2.3</version>
 		</dependency>
 	</dependencies>
 	<profiles>
