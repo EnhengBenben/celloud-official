@@ -158,6 +158,10 @@
     	templateUrl: "pages/report/report_data_pgs.jsp",
     	controller: "pgsDataReportController"
     })
+    .when('/reportpro/GDD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_gdd.jsp",
+    	controller: "gddDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

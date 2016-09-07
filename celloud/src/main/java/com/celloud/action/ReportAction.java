@@ -352,6 +352,27 @@ public class ReportAction {
 		return getCMPModelAndView("report/report_data_gdd", dataKey, projectId, appId);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月7日下午3:27:00
+     * @description 获取GDD数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看GDD数据报告", button = "数据报告")
+    @RequestMapping("getGDDInfo")
+    @ResponseBody
+    public Map<String, Object> getGDDInfo(String dataKey, Integer projectId, Integer appId) {
+        CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("cmp", cmp);
+        return map;
+    }
+
 	@ActionLog(value = "打印GDD数据报告", button = "打印报告")
 	@RequestMapping("printGDDReport")
 	@ResponseBody
