@@ -27,6 +27,7 @@ function _init_data(){
    * 选择单个数据
    */
   $.dataManager.checkOneData = function(obj){
+	  alert(obj);
     var _checked = $(obj).prop("checked");//jquery1.11获取属性
     var _dataId = $(obj).val();
     var _valid = $(obj).attr("is_run");

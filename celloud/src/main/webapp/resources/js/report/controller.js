@@ -698,6 +698,156 @@
 		  $scope.uploadPath = translateInfo.uploadPath;
 	  });
   });
+  /**
+   * pgs数据报告controller
+   */
+  celloudApp.controller("pgsDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getPgsInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(pgsInfo){
+		  $scope.pgs = pgsInfo.pgs;
+		  $scope.experiment = pgsInfo.experiment;
+		  $scope.project = pgsInfo.project;
+		  $scope.uploadPath = pgsInfo.uploadPath;
+		  
+		  $scope.editShowConclusion = function(){
+			  $("#edit-conclusion-error").addClass("hide");
+			  $("#editReportConclusion").modal("show");
+		  }
+		  $scope.saveConclusion = function(){
+			  var qualified = $("#reportConclusion").find("input:radio[name='qualified']:checked").val();
+			  if(!qualified){
+			      showAddError("请选择是否合格！");
+			      return;
+			  }
+			  $.get("experiment/updateExperiment",$("#reportConclusionForm").serialize(),function(flag){
+			      if(flag == 1){
+			    	  showAddError("保存成功,请重新打开数据报告!");
+			    	  setTimeout(function(){
+			    		  $("#reportConclusion").modal("hide");
+			    	  },2000);
+			      }else{
+			    	  showAddError("保存失败！");
+			      }
+			  });
+		  }
+		  
+		  function showEdditError(info){
+			  $("#edit-conclusionErrorInfo").html(info);
+			  $("#edit-conclusion-error").removeClass("hide");
+		  }
+		  
+		  $scope.editSaveConclusion = function(){
+			  var qualified = $("#editReportConclusion").find("input:radio[name='qualified']:checked").val();
+			  if(!qualified){
+			      showEdditError("请选择是否合格！");
+			      return;
+			  }
+			  var remarks = $("#editReportConclusion").find("textarea[name='remarks']").val();
+			  if(remarks.length>125){
+				  showEdditError("备注长度不能大于125个字符！！");
+				  return;
+			  }
+			  $.get("experiment/updateExperiment",$("#editReportConclusionForm").serialize(),function(flag){
+				  if(flag == 1){
+					  showEdditError("保存成功,请重新打开数据报告!");
+					  setTimeout(function(){
+						  $("#editReportConclusion").modal("hide");
+					  },2000);
+			      }else{
+			    	  showEdditError("保存失败！");
+			      }
+			  });
+		  }
+		  
+//		  $("#reportDiv").find("th").each(function(){
+//			  $(this).css("padding-left","20px");
+//			  $(this).css("text-align","left");
+//		  });
+//		  var num = 0;
+//		  $("#reportDiv").find("td").each(function(){
+//			  var result = $(this).text();
+//			  if(num%4==0){
+//				  $(this).css("min-width","90px");
+//			  }
+//			  if(num%4==1){
+//				  $(this).css("min-width","55px");
+//			  }
+//			  if(num%4==2){
+//				  if(result.length>85){
+//					  $(this).html(result.substring(0,84)+"...");
+//					  $(this).attr("title",result);
+//				  }
+//			  }
+//			  if(num%4==3){
+//				  if(result.length>39){
+//					  $(this).html(result.substring(0,38)+"...");
+//					  $(this).attr("title",result);
+//				  }
+//				  $(this).css("width","300px");
+//			  }
+//			  $(this).css("padding-left","20px");
+//			  $(this).css("text-align","left");
+//			  num ++;
+//		  });
+//		  var trTotal = 0;//记录总共遍历了多少个 tr
+//		  var tr = 0;//记录需要在第几个加rowspan
+//		  var count = 1;//记录需要rowspan的数目
+//		  var need = false;
+//		  $("#reportDiv").find("tr").each(function(){
+//			  var tdVal = $(this).children('td').eq(0).html();
+//			  if(tdVal.toLowerCase().indexOf("chr") == -1){
+//		      $(this).children('td').eq(2).remove();
+//		      $(this).children('td').eq(2).remove();
+//		      tr = trTotal-count;
+//		      count ++;
+//		      need = true;
+//		  }else if(need){
+//		      var rowTr = $("#reportTable tr").eq(tr);
+//		      $(rowTr).children("td").eq(0).attr("rowspan",count);
+//		      $(rowTr).children("td").eq(0).css("vertical-align","middle");
+//		      $(rowTr).children("td").eq(1).attr("rowspan",count);
+//		      $(rowTr).children("td").eq(1).css("vertical-align","middle");
+//		      count =  1;
+//		      need = false;
+//		  }
+//			  trTotal++;
+//		  });
+		  $scope.showModal = function(id){
+			  $("#"+id).modal("show");
+		  }
+		  var appId = $scope.pgs.appId;
+		  // 数据参数同比
+		  $.get("count/pgsCompare",{"appId":appId,"columns":charMap[appId]},function(data){
+			  var sp = data.split(";");
+			  $("#charResult").html("");
+			  for ( var i = 1; i < sp.length; i++) {
+				  var big = 0;
+				  var div = $("<div id='char"+i+"' class='col-lg-5' style='width: 410px;height:400px;'></div>");
+				  $("#charDiv").append(div);
+				  var ev = sp[i].split(":");
+				  var one = getCountValue(ev[0],"_table");
+				  var value = ev[1].split(",");
+				  var context="[";
+				  for(var k=0;k<value.length-1;k++){
+				  	context += "[1,"+value[k]+"],";
+				  	if(value[k]>one){
+				  		big++;
+				  	}
+				  }
+				  context+="]";
+				  var percent = 0;
+				  if(ev[0] == "Duplicate" || ev[0] == "Duplicate(%)" || ev[0] == "*SD"){
+				  	percent = Math.round(big/value.length*100);
+				  }else{
+				  	percent = 100 - Math.round(big/value.length*100);
+				  }
+				  $("#charResult").append("本数据的 "+ev[0]+" 打败了 <span class='green'>"+percent+"%</span> 的数据；");
+				  var single = "[[2,"+one+"]]";
+				  $.reportChar.draw.echartsShowScatter("char" + i, ev[0], eval(context),eval(single));
+			  }
+		  });
+	  });
+  });
   
   
   
@@ -1016,7 +1166,7 @@
                 }
                 $(this).html("<span id='dataSpan"+proId+$(this).next().html()+"'>"+$(this).next().html()+" （"+fileName+"）</span>");
                 $(this).find("span").bind("click",function(){
-                  viewDataReport(userId,$.trim($(this).next().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                  viewDataReport(userId,$.trim($(this).parent().next().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
                 $(this).find("span").addClass("link");
               }
