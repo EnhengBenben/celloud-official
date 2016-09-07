@@ -92,7 +92,7 @@
 	            <h1>{{map.countExpense}}<span>元</span></h1>
 	            <div class="footer">
 	              <span>消费总额</span>
-	              <a href="#"><span>详情</span><i class="next-icon"></i></a>
+	              <a href="#/expense/consume"><span>详情</span><i class="next-icon"></i></a>
 	            </div>
 	          </div>
 	        </li>
