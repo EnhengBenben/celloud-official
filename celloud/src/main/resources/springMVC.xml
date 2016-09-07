@@ -276,6 +276,7 @@
 		<property name="cachingEnabled" value="false" />
 	</bean>
 	<bean id="springTool" class="com.celloud.utils.SpringTool"></bean>
+	<bean id="taskUtils" class="com.celloud.utils.TaskUtils"></bean>
 	<bean id="messageUtils" class="com.celloud.message.MessageUtils"
 		scope="prototype"></bean>
 </beans>
