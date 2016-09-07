@@ -154,6 +154,10 @@
     	templateUrl: "pages/report/report_data_pgs.jsp",
     	controller: "pgsDataReportController"
     })
+    .when('/reportpro/gDNA-v1.4/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
