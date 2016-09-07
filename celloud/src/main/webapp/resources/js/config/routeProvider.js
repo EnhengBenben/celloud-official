@@ -106,6 +106,42 @@
     	templateUrl: "pages/report/report_data_braf.jsp",
     	controller: "brafDataReportController"
     })
+    .when('/reportpro/TB-Rifampicin/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_tbrifampicin.jsp",
+    	controller: "tbRifampicinDataReportController"
+    })
+    .when('/reportpro/TB-INH/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_tbinh.jsp",
+    	controller: "tbinhDataReportController"
+    })
+    .when('/reportpro/HBV_SNP2/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_hbv.jsp",
+    	controller: "hbvDataReportController"
+    })
+    .when('/reportpro/oncogene/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_oncogene.jsp",
+    	controller: "oncogeneDataReportController"
+    })
+    .when('/reportpro/DPD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_dpd.jsp",
+    	controller: "dpdDataReportController"
+    })
+    .when('/reportpro/ABI_NJ/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_abinj.jsp",
+    	controller: "abinjDataReportController"
+    })
+    .when('/reportpro/UGT/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_ugt.jsp",
+    	controller: "ugtDataReportController"
+    })
+    .when('/reportpro/16S/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_16s.jsp",
+    	controller: "16sDataReportController"
+    })
+    .when('/reportpro/translate_simplified/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_translate.jsp",
+    	controller: "translateDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

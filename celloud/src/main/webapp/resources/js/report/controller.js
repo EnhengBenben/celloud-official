@@ -1,6 +1,7 @@
 (function(){
   function viewDataReport(userId,dataKey,fileName,appId,appName,proId,proName,obj){
 	  var href = "#/reportpro/"+ appName + "/" + appId + "/" + dataKey + "/" + proId;
+	  console.log(href);
 	  window.location.href = href; 
   }
   
@@ -174,7 +175,6 @@
    * braf数据报告controller
    */
   celloudApp.controller("brafDataReportController", function($scope, $routeParams, $compile, dataReportService){
-	  
 	  dataReportService.getDataReportInfo("report/getBRAFInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
 	  success(function(brafInfo){
 		  $scope.braf = brafInfo.braf;
@@ -213,7 +213,500 @@
 	  });
   });
   
+  /**
+   * tbRifampicin数据报告controller
+   */
+  celloudApp.controller("tbRifampicinDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getTBRifampicinInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(tbrifampicinInfo){
+		  $scope.tbrifampicin = tbrifampicinInfo.tbrifampicin;
+		  $scope.project = tbrifampicinInfo.project;
+		  $scope.uploadPath = tbrifampicinInfo.uploadPath;
+		  
+		  $scope.searchTable = function(){
+			  var search = $("#_snum").val();
+				$("#_sr").html("");
+				$($scope.tbrifampicin.report).find("td").each(function() {
+					var context = $(this).html();
+					if (!search) {
+						$("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+					} else {
+						var len = context.indexOf("-");
+						var d = context.indexOf(",");
+						var k = context.indexOf(")");
+						if (len == -1) {
+							if (d > -1 && k > -1) {
+								var result = context.substring(d + 1, k);
+								if (parseFloat(result) < parseFloat(search)) {
+									$("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+								} else {
+									var kl = context.indexOf("(");
+									context = context.substring(0, kl)+ context.substring(k + 1,context.length);
+									$("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;") + "</tr></td>");
+								}
+							} else {
+								$("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+							}
+						} else {
+							var before = $.trim(context.substring(len - 2, len - 1));
+							var after = $.trim(context.substring(len + 1, len + 3));
+							if (before == after) {
+								if (d > -1 && k > -1) {
+									var result = context.substring(d + 1, k);
+									if (parseFloat(result) < parseFloat(search)) {
+										$("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+									}
+								} else {
+									$("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+								}
+							} else {
+								if (d > -1 && k > -1) {
+									var result = context.substring(d + 1, k);
+									if (parseFloat(result) > parseFloat(search)) {
+										var c = context.split("\t");
+										var c3 = c[3].substring(0, c[3].indexOf("|"));
+										var c4 = (c[4].substring(0,c[3].lastIndexOf("|") - 1) + c[4].substring(c[4].lastIndexOf(")") + 1,c[4].length)).replace("(", "");
+										var c5;
+										if (c[5].indexOf("|") == -1) {
+											c5 = c[5];
+										} else {
+											c5 = c[5].substring(0, c[5].indexOf("|"));
+										}
+										var last = c[0] + "\t" + c[1] + "\t" + c[2] + "\t" + c3 + "\t" + c4 + "\t" + c5;
+										$("#_sr").append("<tr><td>"+ last.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+									} else {
+										$("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+									}
+								} else {
+									$("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+								}
+							}
+						}
+					}
+				});
+		  }
+		  $scope.searchTable();
+		  $.get("count/tbCompare",{},function(data){
+				var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
+				$("#charDiv").append(div);
+				var X = "[";
+				var Y = "[";
+				var value = data.split("\n");
+				if(value.length > 1){
+					for(var k=0;k<value.length-1;k++){
+						var n = value[k].split("\t");
+						X+="'"+n[0]+"',";
+						Y+=n[1]+",";
+					}
+				}else{
+					var n = data.split("\t");
+					X+="'"+n[0]+"',";
+					Y+=n[1]+",";
+				}
+				X = X.substring(0,X.length-1)+"]";
+				Y = Y.substring(0,Y.length-1)+"]";
+				$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
+		});
+		  
+	  });
+  });
+  
+  
+  /**
+   * tbinh数据报告controller
+   */
+  celloudApp.controller("tbinhDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getTBINHInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(tbinhInfo){
+		  $scope.tbinh = tbinhInfo.tbinh;
+		  $scope.project = tbinhInfo.project;
+		  $scope.uploadPath = tbinhInfo.uploadPath;
+		  
+		  // 数据参数同比
+		  var mutant = tbinhInfo.mutant;
+		  var wild = tbinhInfo.wild;
+		  var neither = tbinhInfo.neither;
+		  var data = [{name:'Mutant strain',value:mutant},{name:'Wild type',value:wild},{name:'No Result',value:neither}];
+		  $.reportChar.draw.echartsShowPie("_showPie","Samples Statistic",data);
+		  
+		  $scope.searchTable = function(numId, sourceId, resultId) {
+			var search = $("#" + numId).val();
+			$("#" + resultId).html("");
+			var i = 0;
+			if(sourceId == "r1"){
+				$table = $($scope.tbinh.position);
+			}else{
+				$table = $($scope.tbinh.mutationPosition);
+			}
+			$table.find("td").each(function() {
+				var context = $(this).html();
+				if (search == "") {
+					i++;
+					$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+				} else {
+					var len = context.lastIndexOf("-");
+					var before = $.trim(context.substring(len - 2, len - 1));
+					var after = $.trim(context.substring(len + 1, len + 3));
+					var d = context.indexOf(",");
+					var k = context.indexOf(")");
+					if (before == after) {
+						if (d > -1 && k > -1) {
+							var result = context.substring(d + 1, k);
+							if (parseFloat(result) < parseFloat(search)) {
+								i++;
+								$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+							}
+						} else {
+							i++;
+							$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+						}
+					} else {
+						var sub = context.indexOf("|");
+						if (sub > -1) {
+							if (d > -1 && k > -1) {
+								var result = context.substring(d + 1, k);
+								if (parseFloat(result) > parseFloat(search)) {
+									var last = context.substring(k + 1, context.length);
+									var l = last.indexOf("|");
+									if (l == -1) {
+										l = last.length;
+									}
+									i++;
+									$("#" + resultId).append("<tr><td>" + context.substring(0, sub) + last.substring(0, l) + "</tr></td>");
+								} else {
+									i++;
+									$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+								}
+							} else {
+								i++;
+								$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+							}
+						} else {
+							i++;
+							$("#" + resultId).append("<tr><td>" + context + "</tr></td>");
+						}
+					}
+				}
+			});
+			if (i == 0) {
+				$("#" + resultId).append("<tr><td style='color:red'>没有符合筛选条件的结果</tr></td>");
+			}
+		}
+	    $scope.searchTable("_snum1", "r1", "_sr1");
+	    $scope.searchTable("_snum2", "r2", "_sr2");
+	  });
+  });
+  /**
+   * hbv数据报告controller
+   */
+  celloudApp.controller("hbvDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getHBVInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(hbvInfo){
+		  $scope.hbv = hbvInfo.hbv;
+		  $scope.project = hbvInfo.project;
+		  $scope.uploadPath = hbvInfo.uploadPath;
+		  
+		  $scope.change1 = function(){
+			  $("#nomal").css("display","");
+			  $("#cfda").css("display","none");
+		  }
+		  $scope.change2 = function(){
+			  $("#nomal").css("display","none");
+			  $("#cfda").css("display","");
+		  }
+		  $scope.showModal = function(id,flag,num){
+			  $("#_showOne").css("display","none");
+			  $("#_showMore").css("display","none");
+			  $("#_showImg").css("display","none");
+			  if(flag == 2){
+				  $("#_showImg").css("display","");
+			  }else if(flag == 1){
+				  $("#_showOne").css("display","");
+			  }else if(flag == 0){
+				  $(".y").css("display","none");
+				  if(num == 1){
+				  	$(".y1").css("display","");
+				  }else if(num == 2){
+				  	$(".y2").css("display","");
+				  }else if(num == 3){
+				  	$(".y3").css("display","");
+				  }else if(num == 4){
+				  	$(".y4").css("display","");
+				  }else if(num == 5){
+				  	$(".y5").css("display","");
+				  }else if(num == 6){
+				  	$(".y6").css("display","");
+				  }else if(num == 7){
+				  	$(".y7").css("display","");
+				  }
+				  $("#_showMore").css("display","");
+			  }
+			  $("#"+id).modal("show");
+			  $("#"+id).find(".modal-body").scrollTop(0);
+		  }
+		  
+		  $.get("count/hbvCompare",{"appId":82,"path":DATAPATH},function(data){
+				var div0 = $("<div id='char0' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
+				$("#charDiv").append(div0);
+				var sType = $("#snpType").html();
+				if(!sType){
+					sType = "";
+				}
+				var hbvtype=eval(data.split("@")[1]);
+				var aType = "[";
+				if(sType.indexOf("A")>=0){
+					aType += "['A'," + hbvtype[0]/2 + "]";
+				}
+				if(sType.indexOf("B")>=0){
+					aType += ("'null',['B'," + hbvtype[1]/2 + "]");
+				}
+				if(sType.indexOf("C")>=0){
+					aType += ("'null','null',['C'," + hbvtype[2]/2 + "]");
+				}
+				if(sType.indexOf("D")>=0){
+					for(var i = 0;i < 3;i++){
+						aType += 'null';
+					}
+					aType += ("['D'," + hbvtype[3]/2 + "]");
+				}
+				if(sType.indexOf("E")>=0){
+					for(var i = 0;i < 4;i++){
+						aType += 'null';
+					}
+					aType += ("['E'," + hbvtype[4]/2 + "]");
+				}
+				if(sType.indexOf("F")>=0){
+					for(var i = 0;i < 5;i++){
+						aType += 'null';
+					}
+					aType += ("['F'," + hbvtype[5]/2 + "]");
+				}
+				if(sType.indexOf("G")>=0){
+					for(var i = 0;i < 6;i++){
+						aType += 'null';
+					}
+					aType += ("['G'," + hbvtype[6]/2 + "G");
+				}
+				if(sType.indexOf("H")>=0){
+					for(var i = 0;i < 7;i++){
+						aType += 'null';
+					}
+					aType += ("['H'," + hbvtype[7]/2 + "H");
+				}
+				if(sType.indexOf("no match")>=0){
+					for(var i = 0;i < 8;i++){
+						aType += 'null';
+					}
+					aType += ("['比对失败'," + hbvtype[8]/2 + "]");
+				}
+				if(sType==""){
+					for(var i = 0;i < 9;i++){
+						aType += 'null';
+					}
+					aType += ("['异常数据'," + hbvtype[9]/2 + "]");
+				}
+				aType += "]";
+				$.reportChar.draw.echartsShowHBVType('char0',hbvtype,aType,45);
+				
+				
+				var result = $("#resultDiv").html();
+				if(result){
+					var temp = result.split("<br>");
+					var rType = new Array();
+					if(temp[0].indexOf("未检测到")<0){
+						rType.push("ADV");
+					}
+					if(temp.length>1 && temp[1].indexOf("未检测到")<0){
+						rType.push("TDF");
+					}
+					if(temp.length>2 && temp[2].indexOf("未检测到")<0){
+						rType.push("LAM");
+					}
+					if(temp.length>3 && temp[3].indexOf("未检测到")<0){
+						rType.push("LDT");
+					}
+					if(temp.length>4 && temp[4].indexOf("未检测到")<0){
+						rType.push("FTC");
+					}
+					if(temp.length>5 && temp[5].indexOf("未检测到")<0){
+						rType.push("ETV");
+					}
+				}
+				
+				var div1 = $("<div id='char1' class='col-lg-12' style='width: 1000px;height: 535px;margin-left:-15px;'></div>");
+				$("#charDiv").append(div1);
+				var one = getCountValue("Subtype","nomal");
+				var X = "[";
+				var Y = "[";
+				var value = data.split("@")[0].split(";");
+				var num = value.length;
+				for(var k=0;k<value.length-1;k++){
+					var n = value[k].split(",");
+					X+="'"+n[0]+"',";
+					var tag=n[0].split("_");
+					if(tag.length==rType.length){
+						var isOne = false;
+						for(var i=0;i<tag.length;i++){
+							if($.inArray(tag[i],rType)>=0){
+								isOne=true;
+							}else{
+								isOne=false;
+							}
+						}
+						if(isOne){
+							Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
+						}else{
+							Y+="'" + n[1] + "',";
+						}
+					}else if(rType.length==0&&n[0]=="none"){
+						Y+="{value : "+ n[1] +", itemStyle : {normal : {color : '#00cccc'}}},";
+					}else{
+						Y+="'" + n[1] + "',";
+					}
+				}
+				X = X.substring(0,X.length-1)+"]";
+				Y = Y.substring(0,Y.length-1)+"]";
+				$.reportChar.draw.echartsShowBar("char1", "耐药类型", X, Y, -45, 800, 350);
+			});
+		  
+	  });
+  });
+  /**
+   * oncogene数据报告controller
+   */
+  celloudApp.controller("oncogeneDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getOncogeneInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(oncogeneInfo){
+		  $scope.oncogene = oncogeneInfo.oncogene;
+		  $scope.project = oncogeneInfo.project;
+		  $scope.uploadPath = oncogeneInfo.uploadPath;
+	  });
+  });
+  /**
+   * dpd数据报告controller
+   */
+  celloudApp.controller("dpdDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getDpdInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(dpdInfo){
+		  $scope.dpd = dpdInfo.dpd;
+		  $scope.project = dpdInfo.project;
+		  $scope.uploadPath = dpdInfo.uploadPath;
+		  $scope.searchTable = function(){
+			var search = $("#_snum").val();
+			$("#_sr").html("");
+			$($scope.dpd.mutationPosition).find("td").each(function(){
+				var context = $(this).html();
+				if(search==""){
+					$("#_sr").append("<tr><td>"+context+"</tr></td>");
+				}else{
+					var len = context.indexOf("-");
+					var before = $.trim(context.substring(len-2,len-1));
+					var after = $.trim(context.substring(len+1,len+3));
+					var d = context.indexOf(",");
+					var k = context.indexOf(")");
+					if(before==after){
+						if(d>-1&&k>-1){
+							var result = context.substring(d+1,k);
+							if(parseFloat(result)<parseFloat(search)){
+								$("#_sr").append("<tr><td>"+context+"</tr></td>");
+							}
+						}else{
+							$("#_sr").append("<tr><td>"+context+"</tr></td>");
+						}
+					}else{
+						var sub = context.indexOf("|");
+						if(sub>-1){
+							if(d>-1&&k>-1){
+								var result = context.substring(d+1,k);
+								if(parseFloat(result)>parseFloat(search)){
+									var last = context.substring(k+1,context.length);
+									var l = last.indexOf("|");
+									if(l==-1){
+										l = last.length;
+									}
+									$("#_sr").append("<tr><td>"+context.substring(0,sub)+last.substring(0,l)+"</tr></td>");
+								}else{
+									$("#_sr").append("<tr><td>"+context+"</tr></td>");
+								}
+							}else{
+								$("#_sr").append("<tr><td>"+context+"</tr></td>");
+							}
+						}else{
+							$("#_sr").append("<tr><td>"+context+"</tr></td>");
+						}
+					}
+				}
+			});
+		}
+	  	$scope.searchTable();
+	  });
+  });
+  
+  /**
+   * AB_INJ数据报告controller
+   */
+  celloudApp.controller("abinjDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getABINJInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(abinjInfo){
+		  $scope.abinj = abinjInfo.abinj;
+		  $scope.project = abinjInfo.project;
+		  $scope.uploadPath = abinjInfo.uploadPath;
+	  });
+  });
+  /**
+   * UGT数据报告controller
+   */
+  celloudApp.controller("ugtDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getUGTInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(ugtInfo){
+		  $scope.ugt = ugtInfo.ugt;
+		  $scope.project = ugtInfo.project;
+		  $scope.uploadPath = ugtInfo.uploadPath;
+	  });
+  });
+  /**
+   * 16S数据报告controller
+   */
+  celloudApp.controller("16sDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/get16SInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(s16Info){
+		  $scope.s16 = s16Info.s16;
+		  $scope.project = s16Info.project;
+		  $scope.uploadPath = s16Info.uploadPath;
+		  var $table = $("<div>" + $scope.s16.resultTable + "</div>");
+		  $table.find("tr").each(function(i){
+			  if(i==0){
+			      length = $(this).find("td").length;
+			  }else{
+			      tdlength = $(this).find("td").length;
+			      if(tdlength<length){
+			        $(this).children("td").eq(1).attr("colspan",5);
+			      }
+			  }
+		  });
+		  $scope.s16.resultTable = $table.html();
+	  });
+  });
+  /**
+   * translate数据报告controller
+   */
+  celloudApp.controller("translateDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getTranslateInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(translateInfo){
+		  $scope.translate = translateInfo.translate;
+		  $scope.project = translateInfo.project;
+		  $scope.uploadPath = translateInfo.uploadPath;
+	  });
+  });
+  
+  
+  
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
+    $scope.companyId = companyId;
+    $("#shareProjectSelect").select2({
+      tags: true,
+      tokenSeparators: [',', ' ']
+    });
     //加载产品标签
     $scope.ranAppList = projectReportService.getRanAPP();
     //初始化参数
@@ -277,13 +770,13 @@
       if((!START && END)||(START && !END)){
         $("#_alertSpan").css("display","");
         $("#_alertSpan").html("请同时选择起始时间和结束时间");
-        alert("请同时选择起始时间和结束时间");
+        $.alert("请同时选择起始时间和结束时间");
         return ;
       }
       if(START>END){
         $("#_alertSpan").css("display","");
         $("#_alertSpan").html("起始日期不能大于结束日期");
-        alert("起始日期不能大于结束日期");
+        $.alert("起始日期不能大于结束日期");
         return ;
       }
       $scope.dateQuery();
@@ -353,15 +846,58 @@
     }
     //下载PDF
     $scope.downPDF = function(userId,appId,projectId){
-      alert(projectId);
+      var path = userId + "/" + appId + "/" + projectId + "/" + projectId + ".pdf";
+      projectReportService.downPDF(path).success(function(flag){
+        if(flag==1){
+          $.alert("没有可以下载的pdf文件");
+        }else{
+          var url = window.location.href.split("index")[0];
+          window.location.href=url+"report/down?path="+path;
+        }
+      });
     }
     //打开共享窗口
     $scope.toShareModal = function(projectId,projectName,dataNum){
-      alert(projectId);
+      $scope.shareProjectId = projectId;
+      $scope.shareProjectName = projectName;
+      $scope.dataNum = dataNum;
+      $scope.updateState = false;
+      $("#shareProjectSelect").html("");
     }
     //打开已共享窗口
-    $scope.shareModal = function(projectId,userId,projectName,dataNum){
-      alert(projectId);
+    $scope.shareModal = function(projectId,projectName,dataNum){
+      $scope.shareProjectId = projectId;
+      $scope.shareProjectName = projectName;
+      $scope.dataNum = dataNum;
+      projectReportService.getShareTo(projectId).success(function(data){
+        $scope.updateState = false;
+        $("#shareProjectSelect").html("");
+        $("#shareProjectSelect").select2({
+          tags: true,
+          data: data,
+          tokenSeparators: [',', ' ']
+        });
+      });
+    }
+    $scope.saveShareProject = function(){
+      var proId = $scope.shareProjectId;
+      var data = $("#shareProjectSelect").select2("data");
+      var userNames = "";
+      $.each(data,function(id,value){
+        userNames += value.text + ",";
+      });
+      //全部转化成小写
+      userNames = userNames.toLowerCase();
+      userNames = userNames.substring(0, userNames.length-1);
+      projectReportService.projectShare(proId,userNames).success(function(response){
+        if(response.success){
+          $("#project-share-modal").modal("hide");
+          $scope.pageQuery(options.page,options.pageSize);
+          $scope.updateState = false;
+        }
+        $scope.updateMessage = response.message;
+        $scope.updateState = true;
+      });
     }
     //删除
     $scope.removePro = function(projectId){
@@ -370,7 +906,7 @@
           if(flag ==1){
             $scope.pageQuery(1,options.pageSize);
           }else{
-            alert("项目报告删除失败");
+            $.alert("项目报告删除失败");
           }
         });
       }
@@ -435,7 +971,7 @@
                   }
                   $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
                   $(this).find("span").bind("click",function(){
-                    viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                    viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
                   $(this).find("span").addClass("link");
                 }
@@ -559,7 +1095,7 @@
                 }
                 $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
                 $(this).find("span").bind("click",function(){
-                  viewDataReport(userId,$.trim($(this).prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
+                  viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
                 $(this).find("span").addClass("link");
               }

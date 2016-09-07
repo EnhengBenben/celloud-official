@@ -947,6 +947,28 @@ public class ReportAction {
 		return mv.addObject("hbv", hbv);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午1:34:54
+     * @description 查看HBV数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看HBV数据报告", button = "数据报告")
+    @RequestMapping("getHBVInfo")
+    @ResponseBody
+    public Map<String, Object> getHBVInfo(String dataKey, Integer projectId, Integer appId) {
+        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
+        hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("hbv", hbv);
+        return map;
+    }
+
 	/**
 	 * 获取ABINJ的数据报告
 	 * 
@@ -965,6 +987,27 @@ public class ReportAction {
 		return mv.addObject("abinj", abinj);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午6:20:52
+     * @description 获取ABINJ数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看ABINJ数据报告", button = "数据报告")
+    @RequestMapping("getABINJInfo")
+    @ResponseBody
+    public Map<String, Object> getABINJInfo(String dataKey, Integer projectId, Integer appId) {
+        ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("abinj", abinj);
+        return map;
+    }
+
 	/**
 	 * 获取16S的数据报告
 	 * 
@@ -982,6 +1025,27 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_16s", projectId);
 		return mv.addObject("s16", s16);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午6:48:34
+     * @description 获取16S数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看16S数据报告", button = "数据报告")
+    @RequestMapping("get16SInfo")
+    @ResponseBody
+    public Map<String, Object> get16SInfo(String dataKey, Integer projectId, Integer appId) {
+        S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("s16", s16);
+        return map;
+    }
 
 	/**
 	 * 获取PGS的数据报告
@@ -1038,6 +1102,44 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_oncogene", projectId);
 		return mv.addObject("oncogene", oncogene);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午4:34:16
+     * @description 查看Oncogene数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看Oncogene数据报告", button = "数据报告")
+    @RequestMapping("getOncogeneInfo")
+    @ResponseBody
+    public Map<String, Object> getOncogeneInfo(String dataKey, Integer projectId, Integer appId) {
+        Oncogene oncogene = reportService.getOncogeneReport(dataKey, projectId, appId);
+        if (oncogene != null) {
+            // jstl 处理 \n 很困难，就在 java 端处理
+            oncogene.setReport(CustomStringUtils.htmlbr(oncogene.getReport()));
+            oncogene.setWz1(CustomStringUtils.htmlbr(oncogene.getWz1()));
+            oncogene.setWz2(CustomStringUtils.htmlbr(oncogene.getWz2()));
+            // 排序
+            List<String> km = oncogene.getKnowMutation();
+            if (km != null) {
+                Collections.sort(km);
+                oncogene.setKnowMutation(km);
+            }
+            List<String> out = oncogene.getOut();
+            if (out != null) {
+                Collections.sort(out);
+                oncogene.setOut(out);
+            }
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("oncogene", oncogene);
+        return map;
+    }
 
 	/**
 	 * 获取HCV数据报告
@@ -1099,6 +1201,42 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_translate", projectId);
 		return mv.addObject("translate", translate);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午7:33:22
+     * @description 获取Translate数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看Translate数据报告", button = "数据报告")
+    @RequestMapping("getTranslateInfo")
+    @ResponseBody
+    public Map<String, Object> getTranslateInfo(String dataKey, Integer projectId, Integer appId) {
+        DataFile data = dataService.getDataByKey(dataKey);
+        Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
+        String path = data.getPath();
+        int MAX = 256 * 1024;
+        if (FileTools.getFileSize(path) > MAX) {
+            translate.setSource("输入序列超过256k，不再显示！");
+        } else {
+            String source = FileTools.readAppoint(data.getPath());
+            translate.setSource(source);
+        }
+        String result = translate.getResult();
+        if (result != null && result.length() > MAX) {
+            translate.setResult("输出序列超过256k，不再显示，请下载查看！");
+        } else {
+            translate.setResult(CustomStringUtils.htmlbr(result));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("translate", translate);
+        return map;
+    }
 
 	/**
 	 * 获取EGFR数据报告
@@ -1222,15 +1360,42 @@ public class ReportAction {
 	}
 
 	/**
-	 * 获取UGT数据报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author lin
-	 * @date 2016年3月25日下午4:00:51
-	 */
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午5:11:22
+     * @description 获取DPD数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看DPD数据报告", button = "数据报告")
+    @RequestMapping("getDpdInfo")
+    @ResponseBody
+    public Map<String, Object> getDpdInfo(String dataKey, Integer projectId, Integer appId) {
+        DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
+        String mp = dpd.getMutationPosition();
+        dpd.setMutationPosition(CustomStringUtils.toTable(mp));
+        String postion = dpd.getPosition();
+        if (StringUtils.isNotBlank(postion)) {
+            dpd.setPosition(CustomStringUtils.htmlbr(postion));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("dpd", dpd);
+        return map;
+    }
+
+    /**
+     * 获取UGT数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author lin
+     * @date 2016年3月25日下午4:00:51
+     */
 	@ActionLog(value = "查看UGT数据报告", button = "数据报告")
 	@RequestMapping("getUGTReport")
 	public ModelAndView getUGTReport(String dataKey, Integer projectId, Integer appId) {
@@ -1246,6 +1411,35 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_ugt", projectId);
 		return mv.addObject("ugt", ugt);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午6:34:06
+     * @description 获取UGT数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看UGT数据报告", button = "数据报告")
+    @RequestMapping("getUGTInfo")
+    @ResponseBody
+    public Map<String, Object> getUGTInfo(String dataKey, Integer projectId, Integer appId) {
+        UGT ugt = reportService.getUGTReport(dataKey, projectId, appId);
+        String position = ugt.getPosition();
+        if (StringUtils.isNotBlank(position)) {
+            ugt.setPosition(CustomStringUtils.htmlbr(position));
+        }
+        String mutationPosition = ugt.getMutationPosition();
+        if (StringUtils.isNotBlank(mutationPosition)) {
+            ugt.setMutationPosition(CustomStringUtils.htmlbr(mutationPosition));
+        }
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("ugt", ugt);
+        return map;
+    }
 
 	/**
 	 * 点击数据报告列表查看上一页数据报告
@@ -1291,6 +1485,43 @@ public class ReportAction {
 				neither);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日上午11:21:31
+     * @description 获取TBINH数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看TBINH数据报告", button = "数据报告")
+    @RequestMapping("getTBINHInfo")
+    @ResponseBody
+    public Map<String, Object> getTBINHInfo(String dataKey, Integer projectId, Integer appId) {
+        TBINH tbinh = reportService.getTBINHReport(dataKey, projectId, appId);
+        String position = tbinh.getPosition();
+        tbinh.setPosition(CustomStringUtils.toTable(position));
+        String mutationPosition = tbinh.getMutationPosition();
+        tbinh.setMutationPosition(CustomStringUtils.toTable(mutationPosition));
+        // 获取userId下野生型,非野生型,两者都不是的数量
+        Integer userId = tbinh.getUserId();
+        String simpleGeneName = tbinh.getSimpleGeneName();
+        // 两者都不是
+        Integer neither = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 0);
+        // 野生型
+        Integer wild = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 1);
+        // 非野生型
+        Integer mutant = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 2);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("tbinh", tbinh);
+        map.put("wild", wild);
+        map.put("mutant", mutant);
+        map.put("neither", neither);
+        return map;
+    }
+
 	/**
 	 * 获取TBRifampicin数据报告
 	 * 
@@ -1309,6 +1540,29 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView("report/report_data_tbrifampicin", projectId);
 		return mv.addObject("tbrifampicin", tbrifampicin);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日上午10:04:08
+     * @description 获取tbrifampicin数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看TBRifampicin数据报告", button = "数据报告")
+    @RequestMapping("getTBRifampicinInfo")
+    @ResponseBody
+    public Map<String, Object> getTBRifampicinInfo(String dataKey, Integer projectId, Integer appId) {
+        TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
+        String report = tbrifampicin.getReport();
+        tbrifampicin.setReport(CustomStringUtils.toTable(report));
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("tbrifampicin", tbrifampicin);
+        return map;
+    }
 
 	/**
 	 * 获取BRAF数据报告
