@@ -26,7 +26,7 @@
             <td>{{log.ip}}</td>
             <td>{{log.address}}</td>
             <td>{{log.browser + log.browserVersion}}</td>
-            <td>{{log.os + log.osVersion}}</td>
+            <td>{{log.os}}{{log.osVersion == null ? '' : log.osVersion}}</td>
           </tr>
 	    </tbody>
 	  </table>

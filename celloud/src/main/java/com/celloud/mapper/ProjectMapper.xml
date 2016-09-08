@@ -18,7 +18,7 @@
     share_num, data_num, data_size
   </sql>
   <select id="getShareTo" resultType="map">
-  	select user_id as id,username as text from tb_user where user_id!=#{userId} and user_id in
+  	select user_id as id,username as text,'selected' as selected from tb_user where user_id!=#{userId} and user_id in
   	(select share_to from tb_project_share where project_id=#{projectId} and share_from=#{userId})
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

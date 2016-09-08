@@ -15,7 +15,7 @@ CREATE DATABASE IF NOT EXISTS `celloud` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `celloud`;
 ALTER TABLE `tb_sample`
 	ADD COLUMN `type` VARCHAR(50) NULL DEFAULT NULL COMMENT '样本类型' AFTER `is_add`,
-	ADD COLUMN `index` VARCHAR(50) NULL DEFAULT NULL COMMENT '样本index' AFTER `type`;
+	ADD COLUMN `sindex` VARCHAR(50) NULL DEFAULT NULL COMMENT '样本index' AFTER `type`;
 
 -- 导出  表 celloud.tb_sample_log 结构
 CREATE TABLE IF NOT EXISTS `tb_sample_log` (
@@ -36,12 +36,15 @@ CREATE TABLE IF NOT EXISTS `tb_sample_log` (
 
 
 -- 导出  表 celloud.tb_sample_storage 结构
-CREATE TABLE IF NOT EXISTS `tb_sample_storage` (
-  `id` int(11) NOT NULL,
-  `storage_name` varchar(50) DEFAULT NULL COMMENT '样本库名',
-  `index` varchar(50) DEFAULT NULL,
-  `create_date` datetime NOT NULL,
-  `sample_num` int(2) NOT NULL COMMENT '样本数量'
+CREATE TABLE `tb_sample_storage` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`storage_name` VARCHAR(50) NULL DEFAULT NULL COMMENT '样本库名',
+	`user_id` INT(11) NOT NULL COMMENT '用户',
+	`sindex` VARCHAR(50) NULL DEFAULT NULL,
+	`create_date` DATETIME NOT NULL,
+	`sample_num` INT(2) NOT NULL COMMENT '样本数量',
+	`state` TINYINT(1) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='样本库';
 
 -- 导出  表 celloud.tb_sample_storage_relat 结构
@@ -54,3 +57,12 @@ CREATE TABLE IF NOT EXISTS `tb_sample_storage_relat` (
   KEY `storage_id` (`storage_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='样本与库关系表';
 
+-- 导出  表 celloud.tb_sample_tag_relat 结构
+CREATE TABLE IF NOT EXISTS `tb_sample_tag_relat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sample_id` int(11) DEFAULT NULL COMMENT '样本编号',
+  `tag_id` int(11) DEFAULT NULL COMMENT '标签编号',
+  PRIMARY KEY (`id`),
+  KEY `sample_id` (`sample_id`),
+  KEY `tag_id` (`tag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='样本标签关系表';

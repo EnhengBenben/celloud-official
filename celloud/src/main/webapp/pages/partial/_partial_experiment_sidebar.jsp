@@ -12,6 +12,9 @@
       <li ng-class="{active: isActive('/experiment/createLibrary')}">
         <a href="#/experiment/createLibrary"><span>文库构建</span></a>
       </li>
+      <li ng-class="{active: isActive('/experiment/libraryList')}">
+        <a href="#/experiment/libraryList"><span>文库列表</span></a>
+      </li>
     </ul>
   </section>
 </aside>

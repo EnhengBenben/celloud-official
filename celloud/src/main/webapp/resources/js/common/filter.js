@@ -45,6 +45,11 @@
       return context.substring(0,length) + "...";
     }
   });
+  celloudApp.filter("getResultByCompare",function(){
+	  return function(input, compare, r1, r2){
+		  return input != compare ? r1 : r2;
+	  }
+  });
   /**
    * 文件大小格式化
    */

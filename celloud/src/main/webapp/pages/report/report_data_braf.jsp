@@ -32,10 +32,10 @@
 		    </div>
 	    </section>
 	    <section>
-		    <h2 style="position: relative;">
+		    <h2>
 				<i class="i-edit"></i>SNP 
-				<span class="filter" style="position: absolute;right: 80px;top:-1px;">
-					<input type="text" value="5" id="_snum" style="padding: 0; height: 35px; width: 30px">
+				<span class="filter">
+					<input type="text" value="5" id="_snum">
 					<a href="javascript:void(0)" class="btn -low" ng-click="searchTable()"><i class="i-filter"></i>筛选</a>
 				</span>
 			</h2>
@@ -63,7 +63,7 @@
 	         <h2>
 				<i class="i-edit"></i>原始序列
 			</h2>
-		    <div class="m-boxCon result" id="_result" style="word-break:break-all;">
+		    <div class="m-boxCon result" id="_result">
 		    	{{braf.seq}}
 		    </div>
          </section>

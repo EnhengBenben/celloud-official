@@ -106,6 +106,86 @@
     	templateUrl: "pages/report/report_data_braf.jsp",
     	controller: "brafDataReportController"
     })
+    .when('/reportpro/TB-Rifampicin/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_tbrifampicin.jsp",
+    	controller: "tbRifampicinDataReportController"
+    })
+    .when('/reportpro/TB-INH/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_tbinh.jsp",
+    	controller: "tbinhDataReportController"
+    })
+    .when('/reportpro/HBV_SNP2/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_hbv.jsp",
+    	controller: "hbvDataReportController"
+    })
+    .when('/reportpro/oncogene/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_oncogene.jsp",
+    	controller: "oncogeneDataReportController"
+    })
+    .when('/reportpro/DPD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_dpd.jsp",
+    	controller: "dpdDataReportController"
+    })
+    .when('/reportpro/ABI_NJ/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_abinj.jsp",
+    	controller: "abinjDataReportController"
+    })
+    .when('/reportpro/UGT/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_ugt.jsp",
+    	controller: "ugtDataReportController"
+    })
+    .when('/reportpro/16S/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_16s.jsp",
+    	controller: "16sDataReportController"
+    })
+    .when('/reportpro/translate_simplified/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_translate.jsp",
+    	controller: "translateDataReportController"
+    })
+    .when('/reportpro/MDA-v1.4/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/JBRH-PGS/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/Sureplex-v1.4/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/gDNA-v1.4/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/VMDA-v1.0/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/VgDNA-v1.0/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/GDD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_gdd.jsp",
+    	controller: "gddDataReportController"
+    })
+    .when('/reportpro/CMP/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
+    .when('/reportpro/CMP_199/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
+    .when('/reportpro/split/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_split.jsp",
+    	controller: "splitDataReportController"
+    })
+    .when('/reportdata/BSI/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_bsi.jsp",
+    	controller: "bsiDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
@@ -117,15 +197,25 @@
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
     })
+    .when('/sampling',{
+      templateUrl: "pages/experiment_scan/sampling.jsp",
+      controller: "samplingController"
+    })
     .when('/experiment/scanStorage',{
       templateUrl: "pages/experiment_scan/scan_storage.jsp",
       controller: "scanStorageController"
     })
     .when('/experiment/tokenDNA',{
-      templateUrl: "pages/experiment_scan/token_dna.jsp"
+      templateUrl: "pages/experiment_scan/token_dna.jsp",
+      controller: "tokenDNAController"
     })
     .when('/experiment/createLibrary',{
-      templateUrl: "pages/experiment_scan/create_library.jsp"
+      templateUrl: "pages/experiment_scan/create_library.jsp",
+      controller: "buidLibraryController"
+    })
+    .when('/experiment/libraryList',{
+      templateUrl: "pages/experiment_scan/library_list.jsp",
+      controller: "storagesController"
     })
     .otherwise({redirectTo:'/'});
   });

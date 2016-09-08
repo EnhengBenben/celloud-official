@@ -22,7 +22,7 @@
           <div class="info-form-group">
             <label>用户名称:</label>
             <div>
-                <span>{{user.username}}</span>
+                <span style="font-size: 14px;">{{user.username}}</span>
             </div>
           </div>
           <div class="info-form-group">
