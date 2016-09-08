@@ -55,7 +55,7 @@
           <li class="search-type clearfix">
             <label>数&emsp;&emsp;据：</label>
             <div class="search-type-detail">
-              <input type="text" placeholder="检索文件名/别名/数据编号" ng-change="changeCondition()" ng-model="reportCondition">
+              <input type="text" placeholder="检索文件名/别名/数据编号" ng-change="changeCondition()" ng-model="reportCondition" onkeydown="if(event.keyCode==13){event.keyCode=0;return false}">
             </div>
           </li>
         </ul>
