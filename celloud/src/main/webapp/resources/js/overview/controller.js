@@ -1,37 +1,20 @@
 (function(){
   celloudApp.controller("overviewCount", function($scope, loginCount){
-    $scope.map = loginCount.get();
-  });
-  
-  celloudApp.controller("fileDayCount", function(){
-    userCount.fileDayCount();
-  });
-  
-  celloudApp.controller("fileMonthCount", function(){
-    userCount.fileMonthCount();
-  });
-  
-  celloudApp.controller("fileSizeDayCount", function(){
-    userCount.fileSizeDayCount();
-  });
-  
-  celloudApp.controller("fileSizeMonthCount", function(){
-    userCount.fileSizeMonthCount();
-  });
-  
-  celloudApp.controller("reportDayCount", function(){
-    userCount.reportDayCount();
-  });
-  
-  celloudApp.controller("reportMonthCount", function(){
-    userCount.reportMonthCount();
-  });
-  
-  celloudApp.controller("appDayCount", function(){
-    userCount.appDayCount();
-  });
-  
-  celloudApp.controller("appMonthCount", function(){
-    userCount.appMonthCount();
+    var width = ($(window).width()-300)/2;
+    var height = width/2.5;
+    $(".count-box-body").width(width);
+    $(".count-box-body").height(height);
+    $("body").scrollTop(0);
+    loginCount.loginCount().success(function(response){
+      $scope.map = response;
+      userCount.fileDayCount();
+      userCount.fileMonthCount();
+      userCount.fileSizeDayCount();
+      userCount.fileSizeMonthCount();
+      userCount.reportDayCount();
+      userCount.reportMonthCount();
+      userCount.appDayCount();
+      userCount.appMonthCount();
+    });
   });
 })();

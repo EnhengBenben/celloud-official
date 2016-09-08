@@ -61,7 +61,7 @@
         </ul>
         </form>
       </div>
-      <table class="table table-main info-table pro-table" ng-init="pageType='reportpro'">
+      <table class="table table-main info-table pro-table report-table" ng-init="pageType='reportpro'">
         <tbody id="_show">
           <tr ng-repeat="report in dataList.datas" load-over>
             <td>
@@ -74,8 +74,8 @@
                     	<a title="编辑" ng-if="report.userName=='no_one'" ng-click="toChangePname(report.project_id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                    	</span>
                    	<span ng-if="report.userName=='no_one'" id="changePname{{report.project_id}}" class="hide">
-	                    <input type="text" value="{{report.project_name}}" ng-blur="changePname(report.project_id)" id="updatePname{{report.project_id }}" class="changeInput"/>
-                    	<a title="确定" ng-if="report.userName=='no_one'" ng-click="changePname(report.project_id)"><i class="fa fa-check" aria-hidden="true"></i></a>
+	                    <input style="width: 120px;" type="text" value="{{report.project_name}}" ng-blur="changePname(report.project_id)" id="updatePname{{report.project_id }}" class="changeInput"/>
+                    	<a style="float: right;" title="确定" ng-if="report.userName=='no_one'" ng-click="changePname(report.project_id)"><i class="fa fa-check" aria-hidden="true"></i></a>
                    	</span>
                </div>
                <div>
@@ -101,8 +101,8 @@
                    <a style="padding-right: 20px;" title="删除" class="delete" ng-click="cancelProjectShare(report.project_id)" href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a>
                </div>
                <div class="operate" ng-if="report.userName=='no_one'">
-                   <a style="padding-right: 20px;" title="项目报告" ng-if="report.context!=null && report.context!='' && companyId == 6" class="projectreport" target="_blank" href="report/printPgsProject?projectId={{report.project_id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
-	               <a style="padding-right: 20px;" title="PDF下载" ng-if="report.context!=null && report.context!=''" class="pdfdown" ng-click="downPDF(report.user_id,report.app_id,report.project_id)" href="javascript:void(0)" ng-if="report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114&&report.app_id!=117"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                   <a style="padding-right: 20px;" title="项目报告" ng-if="report.context!=null && report.context!='' && (companyId == 6 || companyId == 24)" class="projectreport" target="_blank" href="report/printPgsProject?projectId={{report.project_id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+	               <a style="padding-right: 20px;" title="PDF下载" ng-if="report.context!=null && report.context!='' && ((report.app_id>84&&report.app_id<89)||(report.app_id>90&&report.app_id<96)||(report.app_id>118&&report.app_id<126&&report.app_id!=123)||report.app_id==104||report.app_id==117)" class="pdfdown" ng-click="downPDF(report.user_id,report.app_id,report.project_id)" href="javascript:void(0)" ng-if="report.app_id>84&&report.app_id!=89&&report.app_id!=90&&report.app_id!=105&&report.app_id!=106&&report.app_id!=107&&report.app_id!=108&&report.app_id!=109&&report.app_id!=110&&report.app_id!=111&&report.app_id!=112&&report.app_id!=113&&report.app_id!=114&&report.app_id!=117"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
 	               <a style="padding-right: 20px;" title="报告共享" ng-if="report.share_num==0" data-toggle="modal" data-target="#project-share-modal" class="share" ng-click="toShareModal(report.project_id,report.project_name,report.data_num)"><i class="fa fa-share" aria-hidden="true"></i></a>
 	               <a style="padding-right: 20px;" title="已共享" ng-if="report.share_num!=0" data-toggle="modal" data-target="#project-share-modal" class="shared" ng-click="shareModal(report.project_id,report.project_name,report.data_num)"><i class="fa fa-share-square-o" aria-hidden="true"></i></a>
                    <a style="padding-right: 20px;" title="删除" class="delete" ng-click="removePro(report.project_id)" href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a>
@@ -136,8 +136,8 @@
 	            </div>
 	          </div>
 	          <div class="form-group">
-	            <div class="col-xs-12">
-	                <select style="width: 300px;" multiple="" tabindex="-1" aria-hidden="true" id="shareProjectSelect"></select>
+	            <div class="col-xs-12 select-content">
+	                <select style="width: 400px;" multiple="" tabindex="-1" aria-hidden="true" id="shareProjectSelect"></select>
 	            </div>
 	          </div>
 	          <div class="form-group">

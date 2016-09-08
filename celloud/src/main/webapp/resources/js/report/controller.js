@@ -699,6 +699,87 @@
 	  });
   });
   /**
+   * gdd数据报告controller
+   */
+  celloudApp.controller("gddDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getGDDInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(gddInfo){
+		  $scope.gdd = gddInfo.cmp;
+		  $scope.project = gddInfo.project;
+		  $scope.uploadPath = gddInfo.uploadPath;
+	  });
+  });
+  /**
+   * cmp数据报告controller
+   */
+  celloudApp.controller("cmpDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getCMPInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(cmpInfo){
+		  $scope.cmp = cmpInfo.cmp;
+		  $scope.project = cmpInfo.project;
+		  $scope.uploadPath = cmpInfo.uploadPath;
+	  });
+  });
+  /**
+   * bsi数据报告controller
+   */
+  celloudApp.controller("bsiDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getBSIInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(bsiInfo){
+		  $scope.bsi = bsiInfo.bsi;
+		  $scope.project = bsiInfo.project;
+		  $scope.uploadPath = bsiInfo.uploadPath;
+
+		  $scope.tab = 'patient';
+		  
+		  console.log($scope.bsi);
+		  
+		  var zh = $scope.bsi.species20.species_zh;
+		  var havestrain = "";
+		  if(zh != null && zh!= ''){
+			  havestrain += zh + ",";
+		  }
+		  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
+		  $scope.getRowspan = function(val1, val2, val3){
+			  var val0 = 1;
+			  if(val1 != null){
+				  val0++;
+			  }
+			  if(val2 != null){
+				  val0++;
+			  }
+			  if(val3 != null){
+				  val0++;
+			  }
+			  return val0;
+		  }
+	  });
+  });
+  /**
+   * split数据报告controller
+   */
+  celloudApp.controller("splitDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getSplitInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(splitInfo){
+		  $scope.split = splitInfo.split;
+		  $scope.project = splitInfo.project;
+		  $scope.uploadPath = splitInfo.uploadPath;
+		  
+		  $.get("count/splitCompare",{"id":splitInfo.splitId},function(data){
+	          var totalSource = JSON.stringify(data.totalSource);
+	          var totalSample = JSON.stringify(data.totalSample);
+	          var thisSource = JSON.stringify(data.thisSource);
+	          var thisSample = JSON.stringify(data.thisSample);
+	          console.log("totalSource: " + totalSource);
+	          console.log("totalSample: " + totalSample);
+	          console.log("thisSource: " + thisSource);
+	          console.log("thisSample: " + thisSample);
+	          drawScatter("sourceCharDiv",eval(totalSource),eval(thisSource),'Split源数据同比图','平均质量','序列总数');
+	          drawScatter("sampleCharDiv",eval(totalSample),eval(thisSample),'Split分离结果数据同比图','平均质量','序列总数');
+	      });
+	  });
+  });
+  /**
    * pgs数据报告controller
    */
   celloudApp.controller("pgsDataReportController", function($scope, $routeParams, $compile, dataReportService){
@@ -854,6 +935,8 @@
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     $scope.companyId = companyId;
     $("#shareProjectSelect").select2({
+      language: "zh-CN",
+      placeholder: "请输入用户名",
       tags: true,
       tokenSeparators: [',', ' ']
     });
@@ -1023,6 +1106,8 @@
         $scope.updateState = false;
         $("#shareProjectSelect").html("");
         $("#shareProjectSelect").select2({
+          language: "zh-CN",
+          placeholder: "请输入用户名",
           tags: true,
           data: data,
           tokenSeparators: [',', ' ']
@@ -1040,15 +1125,19 @@
       userNames = userNames.toLowerCase();
       userNames = userNames.substring(0, userNames.length-1);
       projectReportService.projectShare(proId,userNames).success(function(response){
-        if(response.success){
+        $scope.updateMessage = response.message;
+        $scope.updateState = true;
+        function hideModal(){
           $("#project-share-modal").modal("hide");
           $scope.pageQuery(options.page,options.pageSize);
           $scope.updateState = false;
         }
-        $scope.updateMessage = response.message;
-        $scope.updateState = true;
+        if(response.success){
+          setTimeout(hideModal,1500);
+        }
       });
     }
+    
     //删除
     $scope.removePro = function(projectId){
       $.confirm("确定要删除该项目吗？","确认框",function(){
