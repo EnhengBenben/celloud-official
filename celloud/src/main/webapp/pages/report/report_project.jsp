@@ -34,7 +34,7 @@
                 <input type="text" id="_searchDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;">
                 <span>-</span>
                 <input type="text" id="_endDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" style="cursor: pointer;">
-                <button class="btn btn-cancel" ng-click="chooseDate()">确定</button>
+                <button class="btn data-operate" ng-click="chooseDate()">确定</button>
               </div>
             </div>
           </li>
@@ -53,7 +53,7 @@
             </div>
           </li>
           <li class="search-type clearfix">
-            <label>数据：</label>
+            <label>数&emsp;&emsp;据：</label>
             <div class="search-type-detail">
               <input type="text" placeholder="检索文件名/别名/数据编号" ng-change="changeCondition()" ng-model="reportCondition">
             </div>
@@ -63,6 +63,7 @@
       </div>
       <table class="table table-main info-table pro-table report-table" ng-init="pageType='reportpro'">
         <tbody id="_show">
+          <tr ng-if="dataList.datas.length==0"><td style="text-align: center;">没有可以展示的报告</td></tr>
           <tr ng-repeat="report in dataList.datas" load-over>
             <td>
             	<div>

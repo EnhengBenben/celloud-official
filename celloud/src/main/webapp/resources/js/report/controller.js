@@ -1000,16 +1000,12 @@
       $(".changeDate").removeClass("active");
       START =$("#_searchDate").val();
       END = $("#_endDate").val();
-      if((!START && END)||(START && !END)){
-        $("#_alertSpan").css("display","");
-        $("#_alertSpan").html("请同时选择起始时间和结束时间");
+      if(!START || !END){
         $.alert("请同时选择起始时间和结束时间");
         return ;
       }
       if(START>END){
-        $("#_alertSpan").css("display","");
-        $("#_alertSpan").html("起始日期不能大于结束日期");
-        $.alert("起始日期不能大于结束日期");
+        $.alert("起始时间不能大于结束时间");
         return ;
       }
       $scope.dateQuery();
