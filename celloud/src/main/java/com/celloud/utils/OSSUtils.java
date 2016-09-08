@@ -37,7 +37,7 @@ public class OSSUtils {
         localFile.getParentFile().mkdirs();
         // 下载object到文件
         client.getObject(new GetObjectRequest(bucketName, objectKey), localFile);
-        logger.info("downloaded file 【{}】 to 【{}】", objectKey, path);
+        logger.debug("downloaded file 【{}】 to 【{}】", objectKey, path);
         client.shutdown();
         time = System.currentTimeMillis() - time;
         logger.info("download file {} size={} in {} ,avg spead:{}", objectKey, formatSize(localFile.length()),

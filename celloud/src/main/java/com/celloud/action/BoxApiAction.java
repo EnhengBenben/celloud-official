@@ -46,7 +46,6 @@ public class BoxApiAction {
 
 	@RequestMapping("newfile")
 	public Response newfile(Integer userId, String name, String md5, long size) {
-		System.out.println(name);
 		Map<String, Object> values = new HashMap<>();
 		int dataId = addFileInfo(userId, name);
 		String fileDataKey = DataUtil.getNewDataKey(dataId);
