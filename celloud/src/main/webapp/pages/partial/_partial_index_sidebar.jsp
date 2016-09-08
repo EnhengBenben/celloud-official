@@ -13,9 +13,11 @@
         <li ng-class="{active: isActive('/sampling')}">
           <a href="<%=request.getContextPath()%>/index#/sampling"><i class="sample-icon"></i><span>样本采集</span></a>
         </li>
-        <li ng-class="{active: isActive('/experiment')}">
-          <a href="<%=request.getContextPath()%>/index#/experiment/scanStorage"><i class="experiment-icon"></i><span>实验管理</span></a>
-        </li>
+        <shiro:hasPermission name="bsi:product">
+	        <li ng-class="{active: isActive('/experiment')}">
+	          <a href="<%=request.getContextPath()%>/index#/experiment/scanStorage"><i class="experiment-icon"></i><span>实验管理</span></a>
+	        </li>
+        </shiro:hasPermission>
         <li ng-class="{active: isActive('/data')}">
           <a href="<%=request.getContextPath()%>/index#/data"><i class="data-icon"></i><span>数据管理</span></a>
         </li>

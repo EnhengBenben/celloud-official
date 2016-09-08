@@ -26,7 +26,6 @@
 <body class="container" ng-app="celloudApp" ng-controller="sidebarController">
   <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include>
   <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include>
-  <div id="alerts" class="alerts"></div>
   <div ng-view class="view-container"></div>
   <div id="tips-modal" class="modal tips-modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-sm">
@@ -41,6 +40,7 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+  <div id="alerts" class="alerts"></div>
   <ng-include src="'pages/partial/_partial_upload_modal.jsp'"></ng-include>
   <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';

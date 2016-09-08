@@ -12,8 +12,10 @@
 		$scope.toggleCollapse = function() {
 			if ($scope.collapsed) {
 				$scope.collapsed = false;
+				$(".view-container").css("margin-left","170px");
 			} else {
 				$scope.collapsed = true;
+				$(".view-container").css("margin-left","50px");
 			}
 		};
 		$rootScope.errorInfo = "";

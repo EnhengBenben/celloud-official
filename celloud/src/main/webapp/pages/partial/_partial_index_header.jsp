@@ -15,7 +15,7 @@
                   <i class="cubes-icon">&nbsp;</i>
                 </a>
                 <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
+                  <a href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
                 </div>
               </li>
             </shiro:hasPermission>
@@ -25,7 +25,7 @@
                   <i class="cubes-icon">&nbsp;</i>
                 </a>
                 <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/images/app/bsi.png" alt="百菌探" title="百菌探"></a>
+                  <a href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探"></a>
                 </div>
               </li>
             </shiro:hasPermission>

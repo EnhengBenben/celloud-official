@@ -68,7 +68,7 @@
       return $http({method:"POST",url:'sample/addLibrary',params:{"libraryName":libraryName,"sindex":sindex,"sampleIds":sampleIds}});
     }
     self.downloadExcel = function(ssId,storageName){
-      $http.get("sample/downExperExcel",{params: {ssId:ssId,storageName:storageName}});
+      return $http.get("sample/downExperExcel",{params: {ssId:ssId,storageName:storageName}});
     }
   });
   celloudApp.service("storagesService", function($resource,$http,$routeParams){

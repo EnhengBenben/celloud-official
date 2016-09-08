@@ -14,7 +14,7 @@
 			    <li>
 			      <a href="<%=request.getContextPath()%>/bsi">
 			        <div class="inner">
-			          <img src="<%=request.getContextPath()%>/images/app/bactive.png" alt="百菌探" title="百菌探">
+			          <img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探">
 	<!-- 		        <a href="#" class="footer"><i class="setup-icon"></i></a> -->
 			        </div>
 			      </a>
@@ -34,7 +34,7 @@
 			    <li>
 			      <a href="<%=request.getContextPath()%>/rocky">
 			        <div class="inner">
-			          <img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰">
+			          <img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰">
 			        </div>
 			      </a>
 			    </li>

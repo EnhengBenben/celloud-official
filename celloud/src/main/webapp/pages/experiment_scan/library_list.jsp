@@ -22,9 +22,9 @@
                     <td>{{storage.sindex }}</td>
                     <td>{{storage.sampleNum }}</td>
                     <td>
-                        <a class="btn-link" ng-click="remove(sample.sampleLogId)">上传</a>
+                        <a class="btn-link">上传</a>
                         |
-                        <a class="btn-link" ng-click="remove(sample.sampleLogId)">下载</a>
+                        <a class="btn-link" ng-click="download(storage.id,storage.storageName)">下载</a>
                     </td>
                 </tr>
             </tbody>
