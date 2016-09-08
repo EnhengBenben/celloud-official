@@ -16,12 +16,14 @@ public class ApiService {
 	@Autowired
 	private APIConfig api;
 
-	public Newfile newfile(Integer userId, String name, long size, String md5) {
+	public Newfile newfile(Integer userId, String name, long size, String md5, Integer tagId, String batch) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("userId", userId);
 		params.put("name", name);
 		params.put("size", size);
 		params.put("md5", md5);
+		params.put("tagId", tagId);
+		params.put("batch", batch);
 		ApiResponse response = HttpClientUtil.post(api.getNewfile(), params);
 		return new Newfile(response.getData());
 	}

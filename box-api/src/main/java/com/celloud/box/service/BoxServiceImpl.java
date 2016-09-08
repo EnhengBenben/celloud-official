@@ -29,7 +29,7 @@ public class BoxServiceImpl implements BoxService {
 		// 通知celloud有新文件上传
 		Newfile newfile = null;
 		for (int i = 0; i < 3; i++) {// 失败需重试
-			newfile = apiService.newfile(userId, name, file.length(), md5);
+			newfile = apiService.newfile(userId, name, file.length(), md5, tagId, batch);
 			if (newfile != null) {// 成功则退出
 				break;
 			}
