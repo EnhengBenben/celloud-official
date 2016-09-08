@@ -67,14 +67,20 @@
       }
       return $http({method:"POST",url:'sample/addLibrary',params:{"libraryName":libraryName,"sindex":sindex,"sampleIds":sampleIds}});
     }
+    self.downloadExcel = function(ssId,storageName){
+      return $http.get("sample/downExperExcel",{params: {ssId:ssId,storageName:storageName}});
+    }
   });
-  celloudApp.service("storagesService", function($resource,$http){
+  celloudApp.service("storagesService", function($resource,$http,$routeParams){
     var self = this;
-    self.sampleList = function(){
+    self.storages = function(){
       return $resource("sample/getSampleStorages").get();
     }
     self.pageList = function(page,size){
       return $http.get("sample/getSampleStorages",{params: {page:page,size:size}});
+    }
+    self.sampleList = function(){
+      return $http.get("sample/sampleListInStorage",{params: {ssId:$routeParams.ssId}});
     }
   });
 })()

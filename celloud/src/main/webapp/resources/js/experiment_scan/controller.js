@@ -72,9 +72,6 @@
     }
     
     $scope.addLibrary = function(){
-      console.log($scope.infos.libraryName);
-      console.log($scope.sindex);
-      console.log($scope.infos.pageList.datas);
       buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
         if(data == 0){
           $scope.notPrevError = true;
@@ -86,23 +83,54 @@
         }
       });
     }
+    $scope.addAndDownLibrary = function(){
+      buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
+        if(data == 0){
+          $scope.notPrevError = true;
+        }else if(data > 0){
+          var storageName = $scope.infos.libraryName;
+          $scope.infos = buidLibraryService.infos();
+          buidLibraryService.downloadExcel(data,storageName).success(function(flag){
+            if(flag==1){
+              $.alert("没有正确生成Excel文件");
+            }else{
+              var url = window.location.href.split("index")[0];
+              window.location.href=url+"sample/downExperExcel?ssId="+data+"&storageName="+storageName;
+            }
+          });
+        }else {
+          $scope.repeatError = true;
+        }
+      });
+    }
+    
   });
   
-  celloudApp.controller("storagesController",function($scope, storagesService){
-    $scope.storages = storagesService.sampleList();
-    console.log($scope.storages);
+  celloudApp.controller("storagesController",function($scope, storagesService,buidLibraryService){
+    $scope.storages = storagesService.storages();
+    storagesService.sampleList().success(function(data){
+      $scope.sampleList = data;
+    });
+    
+    $scope.download = function(id,storageName){
+      buidLibraryService.downloadExcel(id,storageName).success(function(flag){
+        if(flag==1){
+          $.alert("没有正确生成Excel文件");
+        }else{
+          var url = window.location.href.split("index")[0];
+          window.location.href=url+"sample/downExperExcel?ssId="+id+"&storageName="+storageName;
+        }
+      });
+    }
   });
+  
   celloudApp.controller("editSampleController",function($scope, scanStorageService){
     $scope.toEditRemark = function(id,remark){
       $scope.sampleId = id;
       $scope.remark = remark;
-      console.log($scope.sampleId);
-      console.log($scope.remark);
     }
     
     $scope.editRemark = function(){
-      console.log($scope.sampleId);
-      console.log($scope.remark);
       scanStorageService.editRemark($scope.sampleId,$scope.remark).success(function(data){
         if(data > 0){
           $scope.sampleList = scanStorageService.sampleList();

@@ -34,7 +34,7 @@
         </div>
         <div class="table-opera clearfix">
             <a ng-click="addLibrary()" class="btn -low pull-right">建库</a>
-            <a id="sample-cancel" class="btn btn-cancel -low pull-right">建库并下载</a>
+            <a ng-click="addAndDownLibrary()" class="btn btn-cancel -low pull-right">建库并下载</a>
         </div>
         <table class="table table-main">
             <thead>

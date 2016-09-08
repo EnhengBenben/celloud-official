@@ -81,6 +81,7 @@
     };
     //跳转数据编辑
     $scope.toEditData = function(fileId){
+      $scope.updateState = false;
       runService.toEditData(fileId).success(function(response){
         $scope.dataFile = response['file'];
         $scope.appList = response['appList'];
@@ -94,6 +95,19 @@
     }
     //修改数据信息
     $scope.submitEditData = function(){
+      var alias = $scope.dataFile.anotherName;
+      if(alias!=null && alias.length>50){
+        $scope.updateMessage = "文件别名不能超过50个字符";
+        $scope.updateState = true;
+        return;
+      }
+      var batch = $scope.dataFile.batch;
+      if(batch!=null && batch.length>50){
+        $scope.updateMessage = "数据标签不能超过50个字符";
+        $scope.updateState = true;
+        return;
+      }
+      $scope.updateState = false;
       $scope.dataFile.tagName = $scope.appSelected == undefined? "" : $scope.appSelected.appName;
       runService.submitEditData($scope.dataFile).success(function(response){
         if(response.success){
