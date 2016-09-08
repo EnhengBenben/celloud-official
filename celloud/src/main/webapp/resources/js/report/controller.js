@@ -1,7 +1,6 @@
 (function(){
   function viewDataReport(userId,dataKey,fileName,appId,appName,proId,proName,obj){
 	  var href = "#/reportpro/"+ appName + "/" + appId + "/" + dataKey + "/" + proId;
-	  console.log(href);
 	  window.location.href = href; 
   }
   
@@ -753,6 +752,18 @@
 			  }
 			  return val0;
 		  }
+	  });
+  });
+  /**
+   * rocky数据报告controller
+   */
+  celloudApp.controller("rockyDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getRockyInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(rockyInfo){
+		  $scope.rocky = rockyInfo.rocky;
+		  $scope.project = rockyInfo.project;
+		  $scope.uploadPath = rockyInfo.uploadPath;
+
 	  });
   });
   /**

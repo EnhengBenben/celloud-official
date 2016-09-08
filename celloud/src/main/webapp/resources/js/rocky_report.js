@@ -1,12 +1,14 @@
 var $report = {
 	showReport : function(dataKey,projectId, appId ) {
 		$("#common-menu-right").html("");
-		var url = contextPath + "/report/rocky/data/report";
-		$("#container").load(url, {
-			dataKey : dataKey,
-			appId : appId,
-			projectId : projectId
-		});
+//		var url = contextPath + "/report/rocky/data/report";
+//		$("#container").load(url, {
+//			dataKey : dataKey,
+//			appId : appId,
+//			projectId : projectId
+//		});
+		var href = "#/reportdata/rocky/" + appId + "/" + dataKey + "/" + proId;
+		window.location.href = href; 
 	}
 }
 var rockyReport = (function(rockyReport) {
