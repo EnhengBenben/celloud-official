@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>{{pgs.appName}}报告</li>
     </ol>
     <div class="content">
@@ -35,11 +35,11 @@
 	        </div>
         </div>
       </div>
-      <div class="content-body">
-        <section ng-if="pgs.noEnoughReads == 'false'">
+      <div>
+        <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	        <h2>
 				<i class="i-report1"></i>数据统计
-				<div ng-if="pgs.appId != 85" style="float:right;padding-right: 30px" title="帮助" ng-click="showModal('countModal')"><i class="i-tips">帮助</i></div>
+				<div ng-if="pgs.appId != 85" style="float:right;padding-right: 30px" title="帮助" ng-click="showModal('countModal')"><i class="i-tips"></i></div>
 			</h2>
 			<div class="m-boxCon" id="_table">
 				<table class="table table-bordered table-condensed">
@@ -73,9 +73,9 @@
 				<i class="i-tips"></i>{{pgs.note}}
 			</div>
 	    </section>
-	    <section ng-if="pgs.noEnoughReads == 'false'">
+	    <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	        <h2><i class="i-edit"></i>报告
-				<div ng-if="pgs.appId != 85 && pgs.detail != null && pgs.detail.length > 0" style="float:right;padding-right: 30px" title="帮助" ng-click="showModal('reportModal')"><i class="i-tips">帮助</i></div>
+				<div ng-if="pgs.appId != 85 && pgs.detail != null && pgs.detail.length > 0" style="float:right;padding-right: 30px" title="帮助" ng-click="showModal('reportModal')"><i class="i-tips"></i></div>
 			</h2>
 			<div class="m-boxCon result" id="reportDiv">
 				<div ng-if="pgs.appId == 85">
@@ -107,14 +107,14 @@
 				{{pgs.mosaic}}
 			</div>
 	     </section>
-         <section ng-if="pgs.noEnoughReads == 'false'">
+         <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	         <h2><i class="i-dna"></i>染色体</h2>
              <div class="m-boxCon">
 				<img ng-if="pgs.miniPng != null && pgs.miniPng != ''" src="{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.miniPng}}" style="width: 100%;" id="miniPngImg">
 				<span ng-if="pgs.miniPng == null || pgs.miniPng == ''" style="color: red;">运行异常，未产生图片！</span>
              </div>
          </section>
-         <section ng-if="pgs.noEnoughReads == 'false'">
+         <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	         <h2><i class="i-dna"></i>染色体点图</h2>
              <div class="m-boxCon">
 				<a ng-if="pgs.testPng != null && pgs.testPng != ''" href="javascript:bigOrigin('{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.testPng}}','testPngImg');" >
@@ -126,14 +126,14 @@
 				</a>
              </div>
 	     </section>
-         <section ng-if="pgs.noEnoughReads == 'false'">
+         <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	         <h2><i class="i-dna"></i>染色体位置图</h2>
              <div class="m-boxCon">
 				<img ng-if="pgs.finalPng != null && pgs.finalPng != ''" src="{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.finalPng}}" style="width: 100%;" id="finalPngImg">
 				<span ng-if="pgs.finalPng == null || pgs.finalPng == ''" style="color: red;">运行异常，未产生图片！</span>
             </div>
 	     </section>
-         <section ng-if="pgs.noEnoughReads == 'false'">
+         <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 			<div ng-if="pgs.appId != 104 && pgs.appId != 116" class="bg-analysis">
 			    <div class="m-box">
 			        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
@@ -148,7 +148,7 @@
 			    </div>
 			</div>
 	     </section>
-	     <section ng-if="pgs.noEnoughReads != 'false'">
+	     <section class="m-box" ng-if="pgs.noEnoughReads != 'false'">
 	     	<h3>测序量不足，无法分析，建议重测。</h3>
 			<p>{{pgs.noEnoughReads}}</p>
 	     </section>

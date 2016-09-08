@@ -1,8 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>{{cmp.appName}}报告</li>
     </ol>
     <div class="content">
@@ -21,8 +21,8 @@
 			<a class="btn -middle" target="_blank" href="<%=request.getContextPath()%>/report/printLesscmp?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印临床报告</a>
         </div>
       </div>
-      <div class="content-body">
-        <section>
+      <div>
+        <section  class="m-box">
 	        <h2><i class="i-report1"></i>数据统计</h2>
 			<div class="m-boxCon" id="_table">
 				<p>按照测序数据质量分析报告如下：（分析日期：<span id="cmp_RunDate">{{cmp.runDate}}</span>）</p>
@@ -66,7 +66,7 @@
 				</table>
 			</div>
 	    </section>
-	    <section>
+	    <section  class="m-box">
 	        <h2><i class="i-edit"></i>报告</h2>
 			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
 				<table class="table table-main" style="width:95%;height:100px;">
@@ -142,7 +142,7 @@
 				<i class="i-tips"></i>注释： 已知突变位点，在样本中发现且有文献支持的突变位点。
 			</div>
 	     </section>
-         <section>
+         <section  class="m-box">
 	         <h2><i class="i-edit"></i>序列质量分析（见QC结果）</h2>
 			<div class="m-boxCon" id="_report" style="display: inline-block;width: 90%">
 				<div class="h2">Basic Statistics</div>

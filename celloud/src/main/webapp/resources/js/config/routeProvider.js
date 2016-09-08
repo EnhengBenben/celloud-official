@@ -178,7 +178,7 @@
     	templateUrl: "pages/report/report_data_cmp.jsp",
     	controller: "cmpDataReportController"
     })
-    .when('/reportpro/split/:appId/:dataKey/:projectId',{
+    .when('/reportdata/split/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_split.jsp",
     	controller: "splitDataReportController"
     })

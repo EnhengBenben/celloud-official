@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>TBRifampicin报告</li>
     </ol>
     <div class="content">
@@ -19,11 +19,11 @@
         </p>
         <div class="btn-group">
 	        <a class="btn -low" target="_blank" ng-href="${pageContext.request.contextPath }/report/printTBRifampicin?projectId={{tbrifampicin.projectId }}&dataKey={{tbrifampicin.dataKey }}&appId={{tbrifampicin.appId }}">打印报告</a>
-	        <a class="btn -right" ng-if="tbrifampicin.pdf != null && tbrifampicin.pdf != ''" ng-href="${pageContext.request.contextPath }/report/down?path={{tbrifampicin.userId}}/{{tbrifampicin.appId}}/{{tbrifampicin.dataKey}}/{{tbrifampicin.pdf}}">PDF下载</a>
+	        <a class="btn -middle" ng-if="tbrifampicin.pdf != null && tbrifampicin.pdf != ''" ng-href="${pageContext.request.contextPath }/report/down?path={{tbrifampicin.userId}}/{{tbrifampicin.appId}}/{{tbrifampicin.dataKey}}/{{tbrifampicin.pdf}}">PDF下载</a>
         </div>
       </div>
-      <div class="content-body">
-	    <section>
+      <div>
+	    <section class="m-box">
 		    <h2>
 				<i class="i-edit"></i>报告 
 				<span class="filter"> 
@@ -36,10 +36,10 @@
 				</table>
 			</div>
 	     </section>
-	     <section>
+	     <section class="m-box">
 	     	<div id="egfrTable" style="display: none;">{{tbrifampicin.report}}</div>
 	     </section>
-         <section>
+         <section class="m-box">
 	         <h2>
 				<i class="i-edit"></i>原始序列
 			</h2>
@@ -50,7 +50,7 @@
 				</div>
 			</div>
          </section>
-         <section>
+         <section class="m-box">
 	         <h2>
 				<i class="i-dna"></i>原始峰图
 			 </h2>
@@ -63,7 +63,7 @@
 	 		 	</a>
 	 		 </div>
 	     </section>
-	     <section>
+	     <section class="m-box">
 	         <h2>
 				<i class="i-celloud"></i>Celloud数据参数同比分析
 			 </h2>

@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>TB-INH报告</li>
     </ol>
     <div class="content">
@@ -18,15 +18,15 @@
             {{tbinh.fileName}}({{tbinh.dataKey}})
         </p>
       </div>
-      <div class="content-body">
-	    <section>
+      <div>
+	    <section class="m-box">
 		    <h2>
 				<i class="i-edit"></i>Gene Name
 			</h2>
 			<div class="m-boxCon result">{{tbinh.geneName}}</div>
 			<input type="hidden" id="_hidName" ng-model="tbinh.simpleGeneName">
 	     </section>
-         <section>
+         <section class="m-box">
 	        <h2>
 				<i class="i-edit"></i>Known mutation 
 				<span class="filter">
@@ -40,7 +40,7 @@
 				</table>
 			</div>
          </section>
-         <section>
+         <section class="m-box">
 	         <h2>
 				<i class="i-edit"></i>Unknown mutation
 				<span class="filter">
@@ -54,31 +54,31 @@
 			 	</table>
 			 </div>
 	     </section>
-	     <section>
+	     <section class="m-box">
 	     	<div id="r1" style="display: none;">{{tbinh.position}}</div>
 	     </section>
-	     <section>
+	     <section class="m-box">
 			<div id="r2" style="display: none;">{{tbinh.mutationPosition}}</div>
 	     </section>
-	     <section>
+	     <section class="m-box">
 	     	<h2>
 				<i class="i-edit"></i>Samples Statistic
 			</h2>
 			<div class="m-boxCon" id="_showPie" style="width: 400px;height:200px;"></div>
 	     </section>
-	     <section>
+	     <section class="m-box">
 	     	<h2>
 				<i class="i-edit"></i>原始序列
 			</h2>
 			<div class="m-boxCon result" id="_seq">{{tbinh.seq}}</div>
 	     </section>
-	     <section>
+	     <section class="m-box">
 	         <h2>
 				<i class="i-dna"></i>原始峰图
 			 </h2>
 		 	 <div ng-if="tbinh.original == null" class="m-boxCon">样本数据异常,无法检测</div>
-	 		 <div ng-if="tbinh.original != null" class="m-boxCon">
-	 			<a ng-repeat="original in tbinh.original" href="javascript:bigOrigin('{{uploadPath}}{{tbinh.userId}}/{{tbinh.appId}}/{{tbinh.dataKey}}/SVG/{{original}}','original{{$index+1}}');">
+	 		 <div ng-if="tbinh.original != null" class="m-boxCon"ng-repeat="original in tbinh.original">
+	 			<a href="javascript:bigOrigin('{{uploadPath}}{{tbinh.userId}}/{{tbinh.appId}}/{{tbinh.dataKey}}/SVG/{{original}}','original{{$index+1}}');">
 	 				<img name="imgSrc" src="{{uploadPath}}{{tbinh.userId}}/{{tbinh.appId}}/{{tbinh.dataKey}}/SVG/{{original}}" class="originImg" id="original{{$index+1}}"><br/>
 	 			</a>
 	 		 </div>

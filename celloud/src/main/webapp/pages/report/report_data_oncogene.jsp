@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>oncogene报告</li>
     </ol>
     <div class="content">
@@ -12,8 +12,8 @@
             {{oncogene.fileName}}({{oncogene.dataKey}})
         </p>
       </div>
-      <div class="content-body">
-        <section>
+      <div>
+        <section class="m-box">
 	        <h2>
 				<i class="i-edit"></i>一、突变点位
 			</h2>
@@ -32,7 +32,7 @@
 	    		</div>
 		    </div>
 	    </section>
-	    <section>
+	    <section class="m-box">
 	        <h2>
 				<i class="i-edit"></i>二、未突变点位
 			</h2>
@@ -40,7 +40,7 @@
 				<img ng-if="oncogene.out != null" ng-repeat="img in oncogene.out" class="imgtop" title="{{img}}" name="imgSrc" src="{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{img}}" style="width: 100%;">
 		    </div>
 	     </section>
-         <section>
+         <section class="m-box">
 	         <h2>
 				<i class="i-edit"></i>三、 参考结论
 			 </h2>
@@ -48,13 +48,13 @@
 		    	{{oncogene.conclusion}}
 		     </div>
          </section>
-         <section>
+         <section class="m-box">
 	         <h2><i class="i-edit"></i>四、 测序序列结果</h2>
 		     <div class="m-boxCon result" id="_seq">
 				{{oncogene.seq}}
 		     </div>
 	     </section>
-         <section>
+         <section class="m-box">
 	         <h2><i class="i-dna"></i>五、 测序峰图结果</h2>
 		     <div ng-if="oncogene.original['1_all_png'] != null" class="m-boxCon result">
 			 	<a href="javascript:bigOrigin('{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['1_all_png']}}','listAll1Img');" >
