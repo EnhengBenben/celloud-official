@@ -114,7 +114,7 @@
             <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{task.period}}</td>
             <td>
-              <a href="#/reportdata/{{task.appName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a href="#/reportdata/{{task.appName == '华木兰' ? 'rocky' : task.appName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
             </td>
           </tr>
         </tbody>

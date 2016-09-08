@@ -159,6 +159,15 @@
 		});
 		$scope.upload = initUploader(["plupload-content","uploadMore"]);
 		$scope.upload.init();
+		
+		window.onbeforeunload=function(){
+			var qp=$scope.upload.total;
+			var percent=qp.percent;
+			if(qp.size>0&&percent<100&&percent>0){
+				return "数据正在上传，您确定要关闭页面吗?"
+			}
+		}
+		
 	});
 	function getUploadingCount(uploader){
 		var count = 0;
