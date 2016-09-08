@@ -7,7 +7,7 @@
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li>报告管理</li>
-      <li>BSI报告</li>
+      <li>百菌探报告</li>
     </ol>
     <div class="content">
 		<div class="row rdata-content">
