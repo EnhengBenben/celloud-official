@@ -38,9 +38,14 @@ public class BoxServiceImpl implements BoxService {
 		// 将文件上传到oss
 		String objectKey = UploadPath.getObjectKey(userId, newfile.getDataKey(), newfile.getExt());
 		ossService.upload(objectKey, file);
-		// TODO 通知celloud文件已经上传到oss
-		apiService.updatefile(objectKey, newfile.getFileId(), tagId, batch, needSplit);
-		logger.info("finish....................");
+		// 通知celloud文件已经上传到oss
+		for (int i = 0; i < 3; i++) {// 失败需重试
+			boolean result = apiService.updatefile(objectKey, newfile.getFileId(), tagId, batch, needSplit);
+			if (result) {// 成功则退出
+				break;
+			}
+			ThreadUtil.sleep(5000);// 5秒之后再重试
+		}
 	}
 
 }
