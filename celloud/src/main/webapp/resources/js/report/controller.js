@@ -721,6 +721,41 @@
 	  });
   });
   /**
+   * bsi数据报告controller
+   */
+  celloudApp.controller("bsiDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getBSIInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(bsiInfo){
+		  $scope.bsi = bsiInfo.bsi;
+		  $scope.project = bsiInfo.project;
+		  $scope.uploadPath = bsiInfo.uploadPath;
+
+		  $scope.tab = 'patient';
+		  
+		  console.log($scope.bsi);
+		  
+		  var zh = $scope.bsi.species20.species_zh;
+		  var havestrain = "";
+		  if(zh != null && zh!= ''){
+			  havestrain += zh + ",";
+		  }
+		  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
+		  $scope.getRowspan = function(val1, val2, val3){
+			  var val0 = 1;
+			  if(val1 != null){
+				  val0++;
+			  }
+			  if(val2 != null){
+				  val0++;
+			  }
+			  if(val3 != null){
+				  val0++;
+			  }
+			  return val0;
+		  }
+	  });
+  });
+  /**
    * split数据报告controller
    */
   celloudApp.controller("splitDataReportController", function($scope, $routeParams, $compile, dataReportService){

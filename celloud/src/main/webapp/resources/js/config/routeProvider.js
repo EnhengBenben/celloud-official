@@ -182,6 +182,10 @@
     	templateUrl: "pages/report/report_data_split.jsp",
     	controller: "splitDataReportController"
     })
+    .when('/reportdata/BSI/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_bsi.jsp",
+    	controller: "bsiDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"

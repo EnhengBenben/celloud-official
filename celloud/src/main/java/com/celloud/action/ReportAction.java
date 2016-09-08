@@ -885,6 +885,34 @@ public class ReportAction {
 		return getBSIModelAndView("report/report_data_bsi", dataKey, projectId, appId);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月7日下午6:51:40
+     * @description 获取BSI数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看BSI数据报告", button = "数据报告")
+    @RequestMapping("getBSIInfo")
+    @ResponseBody
+    public Map<String, Object> getBSIInfo(String dataKey, Integer projectId, Integer appId) {
+        BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+        Map<String, JSONArray> mibCharList = new HashMap<>();
+        Map<String, Object> map = getCommonInfo(projectId);
+        if (bsi == null)
+            return map;
+        mibCharList.put("readsDistributionInfo", JSONArray.fromObject(bsi.getReadsDistributionInfo()));
+        mibCharList.put("familyDistributionInfo", JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
+        mibCharList.put("genusDistributionInfo", JSONArray.fromObject(bsi.getGenusDistributionInfo()));
+        map.put("bsiCharList", mibCharList);
+        map.put("bsi", bsi);
+        return map;
+    }
+
 	/**
 	 * 打印MIB报告
 	 * 
