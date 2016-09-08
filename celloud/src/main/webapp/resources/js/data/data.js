@@ -107,6 +107,9 @@ function _init_data(){
   $.dataManager.checkData = {
     isCheck: function(dataId){
       $.dataManager.options.checkedIds.push(dataId);
+      if($("input[name='data-checkone']").length==$.dataManager.options.checkedIds.length){
+        $("#data-checkall").prop("checked",true);
+      }
     },
     noCheck: function(dataId){
       $("#data-checkall").prop("checked",false);
