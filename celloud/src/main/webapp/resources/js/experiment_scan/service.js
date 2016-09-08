@@ -10,6 +10,9 @@
     self.sampling = function(sampleName,tagId,type){
       return $http({method:"POST",url:'sample/sampling',params:{"sampleName":sampleName,"tagId":tagId,"type":type}});
     }
+    self.deleteSample = function(id){
+      return $http({method:"POST",url:'sample/bsi/deleteOne',params:{"sampleId":id}});
+    }
     self.commitSample = function(sampleList){
       var sampleIds=new Array()
       for(s in sampleList){

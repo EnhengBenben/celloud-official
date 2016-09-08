@@ -36,7 +36,7 @@
                 <tr ng-repeat="sample in sampleList.datas">
                     <td>{{sample.sampleName }}</td>
                     <td>{{sample.type }}</td>
-                    <td>{{sample.createDate }}</td>
+                    <td>{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td>提DNA</td>
                     <td>{{sample.remark }}</td>
                     <td>

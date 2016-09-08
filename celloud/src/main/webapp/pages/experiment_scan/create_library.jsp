@@ -39,16 +39,20 @@
           <span class="input-alert" ng-show="notPrevError">此样本未提取DNA</span>
           <span class="input-alert" ng-show="repeatError">此样品信息已经入库，请核查或者扫描下一管样品信息！</span>
           <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入样本编号！</span>
-	      <div class="info-btn-group pull-right">
+	      <div class="info-btn-group">
             <input class="field" type="text" ng-trim="true" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
             <a class="action" ng-click="addSample()">扫码入库</a>
           </div>
+          <div class="library-btns pull-right">
+            <a ng-click="addLibrary()" class="btn -low pull-right">建库</a>
+            <a ng-click="addAndDownLibrary()" class="btn btn-reset -low pull-right">建库并下载</a>
+          </div>
         </div>
         <div class="table-opera clearfix">
-            <a ng-click="addLibrary()" class="btn -low pull-right">建库</a>
-            <a ng-click="addAndDownLibrary()" class="btn btn-cancel -low pull-right">建库并下载</a>
+           <span class="tips">提示： 每个文库最多可添加12个样本。</span>
         </div>
-        <table class="table table-main">
+        <div ng-controller="editSampleController">
+          <table class="table table-main">
             <thead>
                 <tr>
                     <th>序号</th>
@@ -62,10 +66,10 @@
             </thead>
             <tbody>
                 <tr ng-repeat="sample in infos.pageList.datas">
-                    <td>1</td>
+                    <td ng-bind="infos.pageList.datas.length - $index">1</td>
                     <td>{{sample.sampleName }}</td>
                     <td>{{sample.type }}</td>
-                    <td>{{sample.createDate }}</td>
+                    <td>{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>{{sample.sindex }}</td>
                     <td>建库</td>
                     <td>
@@ -75,6 +79,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+          </table>
+        </div>
 	</div>
 </div>

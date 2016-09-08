@@ -34,11 +34,11 @@
             </thead>
             <tbody>
                 <tr ng-repeat="sample in sampleList.datas">
-                    <td>1</td>
                     <td>{{sample.sampleName }}</td>
                     <td>{{sample.type }}</td>
-                    <td>{{sample.createDate }}</td>
-                    <td>建库</td>
+                    <td>{{sample.createDate  | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>入库</td>
+                    <td>{{sample.remark }}</td>
                     <td>
                         <a ng-click="remove(sample.sampleLogId)">
                             <i class="fa fa-times-circle" aria-hidden="true"></i>
@@ -47,6 +47,7 @@
                 </tr>
             </tbody>
           </table>
+          <pagination page="sampleList.page" change="pageQuery(page,pageSize)"></pagination>
           <div id="sample-remark-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	        <div class="modal-dialog">
 	          <div class="modal-content">
