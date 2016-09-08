@@ -45,7 +45,7 @@ public class BoxApiAction {
 	private String realPath = PropertiesUtil.bigFilePath;
 
 	@RequestMapping("newfile")
-	public Response newfile(Integer userId, String name, String md5, long size) {
+	public Response newfile(Integer userId, String name, String md5, long size, Integer tagId, String batch) {
 		Map<String, Object> values = new HashMap<>();
 		int dataId = addFileInfo(userId, name);
 		String fileDataKey = DataUtil.getNewDataKey(dataId);
@@ -55,7 +55,9 @@ public class BoxApiAction {
 		data.setDataKey(fileDataKey);
 		data.setMd5(md5);
 		data.setSize(size);
-		dataService.updateByPrimaryKeySelective(data);
+		data.setBatch(batch);
+		data.setState(DataState.ACTIVE);
+		dataService.updateDataInfoByFileIdAndTagId(data, tagId);
 		values.put("dataKey", fileDataKey);
 		values.put("fileId", dataId);
 		values.put("ext", ext);

@@ -8,7 +8,7 @@ var fileUpload=(function(fileUpload){
     var uploader = new plupload.Uploader({
       runtimes : 'html5,flash,silverlight,html4',
       browse_button : ['plupload-content','upload-more'],
-      url : "../uploadFile/uploadManyFile",
+      url : "http://localhost:9090/box/upload",
       // Maximum file size
       chunk_size : '1mb',
       dragdrop : true,
@@ -126,6 +126,13 @@ var fileUpload=(function(fileUpload){
         $fileDom_uploading.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
         $("#uploading-filelist").append($fileDom_uploading);
         handleStatus(item);
+        var params = {"size":item.size,"lastModifiedDate":item.lastModifiedDate,"name":item.name};
+		$.get("http://localhost:9090/box/checkBreakpoints",params,function(data){
+			if(data.data){
+				item.loaded = data.data;
+				$("#uploading-" + item.id +" .plupload-file-status").html((item.loaded/item.size).toFixed(2)*100+"%");
+			}
+		});
         $('#' + item.id + '.plupload_delete a').click(function(e) {
           $('#' + item.id).remove();
           $('#uploading-' + item.id).remove();
@@ -146,11 +153,6 @@ var fileUpload=(function(fileUpload){
     });
     uploader.bind("FileUploaded", function(uploader, file, response) {
       var res = response.response;
-      if(res != "1"){
-        $.get("data/run",JSON.parse(res),function(result){
-          $.report.find.condition();
-        });
-      }
       handleStatus(file);
     });
     uploader.bind("UploadComplete",function(uploader,files){
@@ -177,7 +179,7 @@ var fileUpload=(function(fileUpload){
       $("#upload-modal").modal("hide");
     });
     uploader.bind("BeforeUpload", function(uploader, file) {
-       uploader.setOption("multipart_params",{'originalName': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
+       uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
     });
     uploader.bind("Error", function(uploader, error) {
        if(error.code=='-602'){

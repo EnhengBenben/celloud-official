@@ -396,9 +396,12 @@
 	</insert>
 	<update id="updateDataInfoByFileId" parameterType="com.celloud.model.mysql.DataFile">
 		update tb_file
-		set data_key=#{dataKey },size=#{size },path=#{path
-		},another_name=#{anotherName },file_format=#{fileFormat
-		},state=#{state },md5=#{md5 },batch=#{batch } where file_id=#{fileId }
+		set data_key=#{dataKey },size=#{size },path=#{path},another_name=#{anotherName },
+		state=#{state },md5=#{md5 },batch=#{batch }
+		<if test="fileFormat != null">
+			,file_format=#{fileFormat}
+		</if>
+		where file_id=#{fileId }
 	</update>
 	<select id="findAllDataLists" resultMap="ResultMapWithTag"
 		parameterType="java.lang.Integer">
