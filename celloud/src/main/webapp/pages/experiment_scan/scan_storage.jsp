@@ -24,12 +24,11 @@
           <table class="table table-main">
             <thead>
                 <tr>
-                    <th>序号</th>
                     <th>样品编号</th>
                     <th>样品类型</th>
                     <th>采样时间</th>
-                    <th>样本index</th>
                     <th>状态</th>
+                    <th>备注</th>
                     <th>操作</th>
                 </tr>
             </thead>

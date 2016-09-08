@@ -10,19 +10,31 @@
         <div class="content-header clearfix">
 		  <div class="library-name">文库编码：{{infos.libraryName}}</div>
           <select ng-model="sindex">
-              <option value="文库index">文库index</option>
-              <option value="index1:ATCACG">index1:ATCACG</option>
-              <option value="index2:CGATGT">index2:CGATGT</option>
-              <option value="index3:TTAGGC">index3:TTAGGC</option>
-              <option value="index4:TGACCA">index4:TGACCA</option>
-              <option value="index5:ACAGTG">index5:ACAGTG</option>
-              <option value="index6:GCCAAT">index6:GCCAAT</option>
-              <option value="index7:CAGATC">index7:CAGATC</option>
-              <option value="index8:ACTTGA">index8:ACTTGA</option>
-              <option value="index9:GATCAG">index9:GATCAG</option>
-              <option value="index10:TAGCTT">index10:TAGCTT</option>
-              <option value="index11:GGCTAC">index11:GGCTAC</option>
-              <option value="index12:CTTGTA">index12:CTTGTA</option>
+            <option value="文库index">文库index</option>
+            <option value="M16s_1_1R/F:AG">M16s_1_1R/F:AG</option>
+			<option value="M16s_1_2R/F:AT">M16s_1_2R/F:AT</option>
+			<option value="M16s_1_3R/F:CA">M16s_1_3R/F:CA</option>
+			<option value="M16s_1_4R/F:CG">M16s_1_4R/F:CG</option>
+			<option value="M16s_1_5R/F:GA">M16s_1_5R/F:GA</option>
+			<option value="M16s_1_6R/F:GT">M16s_1_6R/F:GT</option>
+			<option value="M16s_1_7R/F:CTGG">M16s_1_7R/F:CTGG</option>
+			<option value="M16s_1_8R/F:CTTG">M16s_1_8R/F:CTTG</option>
+			<option value="M16s_1_9R/F:ACGT">M16s_1_9R/F:ACGT</option>
+			<option value="M16s_1_10R/F:GGCT">M16s_1_10R/F:GGCT</option>
+			<option value="M16s_1_11R/F:AAGC">M16s_1_11R/F:AAGC</option>
+			<option value="M16s_1_12R/F:CTTA">M16s_1_12R/F:CTTA</option>
+			<option value="M16s_1_13R/F:CTGT">M16s_1_13R/F:CTGT</option>
+			<option value="M16s_1_14R/F:GCAG">M16s_1_14R/F:GCAG</option>
+			<option value="M16s_1_15R/F:TCAC">M16s_1_15R/F:TCAC</option>
+			<option value="M16s_1_16R/F:AACT">M16s_1_16R/F:AACT</option>
+			<option value="M16s_1_17R/F:ACCAGAG">M16s_1_17R/F:ACCAGAG</option>
+			<option value="M16s_1_18R/F:TGAGAGT">M16s_1_18R/F:TGAGAGT</option>
+			<option value="M16s_1_19R/F:TGATACG">M16s_1_19R/F:TGATACG</option>
+			<option value="M16s_1_20R/F:GGCAGAC">M16s_1_20R/F:GGCAGAC</option>
+			<option value="M16s_1_21R/F:CTTCTAA">M16s_1_21R/F:CTTCTAA</option>
+			<option value="M16s_1_22R/F:GCATCGT">M16s_1_22R/F:GCATCGT</option>
+			<option value="M16s_1_23R/F:TCTACTG">M16s_1_23R/F:TCTACTG</option>
+			<option value="M16s_1_24R/F:TACTTCC">M16s_1_24R/F:TACTTCC</option>
           </select>
           <span class="input-alert" ng-show="notPrevError">此样本未提取DNA</span>
           <span class="input-alert" ng-show="repeatError">此样品信息已经入库，请核查或者扫描下一管样品信息！</span>

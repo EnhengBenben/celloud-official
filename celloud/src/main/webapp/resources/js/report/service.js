@@ -11,7 +11,7 @@
       }
       //条件检索报告
       self.getReportListCondition = function(currentPage,pageSize,belongs,start,end,appId,condition){
-        return $http.get("report/getReportPageList",{params: {page:currentPage,size:pageSize,condition:condition,start:start,end:end,appId:appId,belongs:belongs}});
+        return $http.get("report/getReportPageList?random="+new Date().getTime(),{params: {page:currentPage,size:pageSize,condition:condition,start:start,end:end,appId:appId,belongs:belongs}});
       }
       //修改项目名称
       self.changeProjectName = function(projectId,projectName){
