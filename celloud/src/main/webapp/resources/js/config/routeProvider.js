@@ -186,6 +186,10 @@
     	templateUrl: "pages/report/report_data_bsi.jsp",
     	controller: "bsiDataReportController"
     })
+    .when('/reportdata/rocky/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_rocky.jsp",
+    	controller: "rockyDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
