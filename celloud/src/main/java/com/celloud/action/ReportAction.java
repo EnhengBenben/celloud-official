@@ -3517,6 +3517,28 @@ public class ReportAction {
 		return mv;
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月8日上午10:26:46
+     * @description 获取乳腺癌数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "报告菜单", button = "乳腺癌报告")
+    @RequestMapping("getRockyInfo")
+    @ResponseBody
+    public Map<String, Object> getRockyInfo(String dataKey, Integer projectId, Integer appId) {
+        Map<String, Object> map = getCommonInfo(projectId);
+        Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
+        map.put("rocky", rocky);
+        log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
+        return map;
+    }
+
 	/**
 	 * 根据条件获取数据列表
 	 * 
