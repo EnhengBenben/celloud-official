@@ -89,7 +89,7 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">文件别名：</div>
 	            <div class="col-xs-9">
-	                <input type="text" ng-model="dataFile.anotherName">
+	                <input type="text" placeholder="请输入文件别名" ng-model="dataFile.anotherName" maxlength="50">
 	            </div>
 	          </div>
 	          <div class="form-group">
@@ -101,7 +101,7 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">数据标签：</div>
 	            <div class="col-xs-9">
-	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="45" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
+	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="50" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
 	            </div>
 	          </div>
 	          <div class="form-group">
