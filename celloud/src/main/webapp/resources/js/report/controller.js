@@ -1172,7 +1172,7 @@
         var th_size = 0;
         var td_size = 0;
         var tr_size = $(this).find("tr").length;
-        $(this).find("table").addClass("table table-main info-table");
+        $(this).find("table").addClass("table table-main info-table data-report-table");
         $(this).find("tr").each(function(j){
           if(j==0){
             th_size = $(this).children().length;
