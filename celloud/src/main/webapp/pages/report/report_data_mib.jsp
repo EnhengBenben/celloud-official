@@ -1,10 +1,10 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportdata">报告管理</a></li>
       <li>MIB报告</li>
     </ol>
     <div class="content">
@@ -22,9 +22,9 @@
 	        <a class="btn -low" target="_blank" ng-href="<%=request.getContextPath()%>/report/printMIBReport?projectId={{mib.projectId }}&dataKey={{mib.dataKey }}&appId={{mib.appId }}">打印报告</a>
         </div>
       </div>
-      <div class="content-body">
-        <section>
-	        <h4><i class="fa fa-bars" aria-hidden="true"></i>数据统计</h4>
+      <div>
+        <section class="m-box">
+	        <h2><i class="fa fa-bars" aria-hidden="true"></i>数据统计</h2>
 	        <table class="table table-main">
 	          <thead>
 	            <tr><th>序列总数</th><th>平均质量</th><th>平均GC含量</th></tr>
@@ -38,8 +38,8 @@
 	          </tbody>
 	        </table>
 	    </section>
-	    <section>
-	        <h4><i class="fa fa-pie-chart" aria-hidden="true"></i>Reads Distribution</h4>
+	    <section class="m-box">
+	        <h2><i class="fa fa-pie-chart" aria-hidden="true"></i>Reads Distribution</h2>
 	        <table class="table-img two-img">
 	           <tr>
 	             <td>
@@ -55,16 +55,16 @@
 	           </tr>
 	         </table>
 	     </section>
-         <section>
-	         <h4><i class="fa fa-bar-chart" aria-hidden="true"></i>Genus Distribution</h4>
+         <section class="m-box">
+	         <h2><i class="fa fa-bar-chart" aria-hidden="true"></i>Genus Distribution</h2>
 	         <div id="genus-distribution-parent" class="m-box">
 	           <img ng-if="genusDistributionInfo=='' && !mib.genusDistributionInfo.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.genusDistribution }}">
 	           <img ng-if="genusDistributionInfo=='' && mib.genusDistributionInfo.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.genusDistribution }}">
 	           <div ng-if="genusDistributionInfo!=''" id="genus-distribution-char" style="width:100%;height:330px;"></div>
 	         </div>
          </section>
-         <section>
-	         <h4><i class="fa fa-table" aria-hidden="true"></i>报告</h4>
+         <section class="m-box">
+	         <h2><i class="fa fa-table" aria-hidden="true"></i>报告</h2>
 	         <table class="table table-main" id="snp_table1">
 	           <thead>
 	             <tr>
@@ -92,8 +92,8 @@
 	           </tbody>
 	         </table>
 	     </section>
-         <section>
-	         <h4><i class="fa fa-picture-o" aria-hidden="true"></i>报告图示</h4>
+         <section class="m-box">
+	         <h2><i class="fa fa-picture-o" aria-hidden="true"></i>报告图示</h2>
 	         <div class="m-boxCon">
 	           <img ng-if="mib.pngPath.top1png!='' && !mib.pngPath.top1png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top1png }}">
 	           <img ng-if="mib.pngPath.top1png!='' && mib.pngPath.top1png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top1png }}">
@@ -117,8 +117,8 @@
 	           <img ng-if="mib.pngPath.top10png!='' && mib.pngPath.top10png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top10png }}">
 	         </div>
 	     </section>
-         <section>
-	         <h4><i class="fa fa-picture-o" aria-hidden="true"></i>序列质量分析（见QC结果）</h4>
+         <section class="m-box">
+	         <h2><i class="fa fa-picture-o" aria-hidden="true"></i>序列质量分析（见QC结果）</h2>
 	         <table class="table table-main">
 	             <thead>
 	                 <tr>

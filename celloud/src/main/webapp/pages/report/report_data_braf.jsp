@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>BRAF报告</li>
     </ol>
     <div class="content">
@@ -18,8 +18,8 @@
             {{braf.fileName}}({{braf.dataKey}})
         </p>
       </div>
-      <div class="content-body">
-        <section>
+      <div>
+        <section class="m-box">
 	        <h2>
 				<i class="i-edit"></i>突变类型
 			</h2>
@@ -31,7 +31,7 @@
 	    		<br/>
 		    </div>
 	    </section>
-	    <section>
+	    <section class="m-box">
 		    <h2>
 				<i class="i-edit"></i>SNP 
 				<span class="filter">
@@ -59,7 +59,7 @@
 				</table>
 			</div>
 	     </section>
-         <section>
+         <section class="m-box">
 	         <h2>
 				<i class="i-edit"></i>原始序列
 			</h2>
@@ -67,7 +67,7 @@
 		    	{{braf.seq}}
 		    </div>
          </section>
-         <section>
+         <section class="m-box">
 	         <h2>
 	         	<i class="i-edit"></i>原始峰图
 	         </h2>

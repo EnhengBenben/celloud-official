@@ -1,8 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportdata">报告管理</a></li>
       <li>{{split.appName}}报告</li>
     </ol>
     <div class="content">
@@ -21,8 +21,8 @@
             <a class="btn -middle" href="/report/down?path={{split.userId}}/{{split.appId}}/{{split.dataKey}}/result/split_reads.tar.gz"><i class="fa fa-cloud-download"></i>下载全部</a>
         </div>
       </div>
-      <div class="content-body">
-      	<section>
+      <div>
+      	<section class="m-box">
 	        <h2><i class="i-report1"></i>数据统计</h2>
 	        <div class="m-boxCon">
 	          <div style="display:flex;min-height:260px;">
@@ -69,7 +69,7 @@
 	            </div>
 	          </div>
 	    </section>
-	    <section>
+	    <section class="m-box">
 	        <h2><i class="i-edit"></i>结果样本详细</h2>
             <div class="m-boxCon">
                 <table class="table table-main">
@@ -98,7 +98,7 @@
                 <i class="i-tips"></i>注：点击文件名即可下载；已保存的数据可到数据管理页面查看
             </div>
 	     </section>
-         <section>
+         <section class="m-box">
 	         <h2><i class="i-edit"></i>序列质量分析（见QC结果）</h2>
             <div class="m-boxCon" id="_report" style="display: inline-block;width: 90%">
                 <div ng-if="split.basicStatistics1 == null || split.basicStatistics1 == ''">无质量分析结果</div>
@@ -160,7 +160,7 @@
                 </table>
             </div>
          </section>
-         <section>
+         <section class="m-box">
          	<!--Celloud数据参数同比分析-->
        		<div class="bg-analysis">
 	            <div class="m-box">
