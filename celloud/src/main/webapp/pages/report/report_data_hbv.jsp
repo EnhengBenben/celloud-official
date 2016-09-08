@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>HBV_SNP2报告</li>
     </ol>
     <div class="content">
@@ -24,8 +24,8 @@
             <a ng-if="hbv.pdf != zip && hbv.zip != ''" class="btn -high" href="/report/down?path={{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/{{hbv.zip}}"><i class="fa fa-cloud-download"></i>报告下载</a>
         </div>
       </div>
-      <div class="content-body">
-	    <section id="cfda">
+      <div>
+	    <section class="m-box" id="cfda">
 		    <div class="m-box w500">
 				<h2>位点突变</h2>
 				<h5 id="snpType">{{hbv.type.replace('Type','基因型')}}</h5>
@@ -37,7 +37,7 @@
 				</div>
 				<div class="m-tips">
 					<i class="i-tips"></i>
-					<div ng-if="hbv.txt204.indexOf('LAM')>-1 || hbv.txt204.indexOf('FTC')>-1 || hbv.txt204.indexOf('LDT')>-1 || hbv.txt204.indexOf('ETV')>-1">
+					<span ng-if="hbv.txt204.indexOf('LAM')>-1 || hbv.txt204.indexOf('FTC')>-1 || hbv.txt204.indexOf('LDT')>-1 || hbv.txt204.indexOf('ETV')>-1">
 						检测到
 						<span ng-if="hbv.txt204.indexOf('LDT')>-1">
 						替比夫定 LDT
@@ -52,17 +52,17 @@
 						恩替卡韦 ETV
 						</span>
 						突变
-					</div>
-					<div ng-if="hbv.txt204.indexOf('LAM')>-1 && hbv.txt204.indexOf('FTC')>-1 && hbv.txt204.indexOf('LDT')>-1 && hbv.txt204.indexOf('ETV')>-1">
+					</span>
+					<span ng-if="hbv.txt204.indexOf('LAM')<0 && hbv.txt204.indexOf('FTC')<0 && hbv.txt204.indexOf('LDT')<0 && hbv.txt204.indexOf('ETV')<0">
 						未检测到突变
-					</div>
+					</span>
 				</div>
 			</div>
 			<div class="text-center mb10 w500">
 				<a href="javascript:void(0)" ng-click="change1()" class="btn -low"><i class="i-view"></i>查看详情</a>
 			</div>
 	     </section>
-	     <section id="nomal" style="display: none;">
+	     <section class="m-box" id="nomal" style="display: none;">
 			<div class="m-box" ng-if="hbv.type == 'no match&lt;br /&gt;'">
 			 	<h2>数据异常</h2>
 			    <div class="m-boxCon">
