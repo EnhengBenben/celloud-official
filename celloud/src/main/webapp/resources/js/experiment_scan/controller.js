@@ -101,18 +101,16 @@
   
   celloudApp.controller("buidLibraryController",function($scope,scanStorageService, buidLibraryService){
     $scope.infos = buidLibraryService.infos();
-    var sno = 0;
     $scope.addSample = function(){
       var sampleList = $scope.infos.pageList.datas;
       if(sampleList.length>=12){
         $.tips("每个文库最多12个样本！")
       }else{
-        buidLibraryService.addSample($scope.sampleName,sno).success(function(data){
+        buidLibraryService.addSample($scope.sampleName,sampleList).success(function(data){
           if(data == 0){
             $scope.notPrevError = true;
           }else if(data > 0){
             $scope.infos = buidLibraryService.infos();
-            sno++;
           }else {
             $scope.repeatError = true;
           }
@@ -162,7 +160,6 @@
         }
       });
     }
-    
   });
   
   celloudApp.controller("storagesController",function($scope, storagesService,buidLibraryService){

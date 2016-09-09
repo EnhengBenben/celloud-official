@@ -62,7 +62,7 @@
           </li>
            <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="bell-icon">&nbsp;</i>
+              <i class="mail-icon">&nbsp;</i>
               <span class="label label-danger">{{messages.num==0?'':(''+messages.num)}}</span>
             </a>
             <div class="dropdown-menu message-dropdown">

@@ -115,7 +115,7 @@
 	        </div>
 	        <div class="count-box">
 	          <div class="count-box-head">
-	            <h5><i class="bar-icon"></i><span>报告总量</span></h5>
+	            <h5><i class="report-icon-min"></i><span>报告总量</span></h5>
 	            <div class="switch-btn-group pull-right">
 	              <a><span class="s-btn active" id="report-day-span" onclick="userCount.dayMonthSwitch('report-day','report-month')">日</span></a>
 	              <a><span class="s-btn" id="report-month-span" onclick="userCount.dayMonthSwitch('report-month','report-day')">月</span></a>
@@ -143,7 +143,7 @@
 		      </div>
 		      <div class="count-box">
 		        <div class="count-box-head">
-		            <h5><i class="pie-icon"></i><span>已添加APP</span></h5>
+		            <h5><i class="app-icon-min"></i><span>已添加APP</span></h5>
 		            <div class="switch-btn-group pull-right">
 		              <a><span class="s-btn active" id="app-day-span" onclick="userCount.dayMonthSwitch('app-day','app-month')">日</span></a>
 		              <a><span class="s-btn" id="app-month-span" onclick="userCount.dayMonthSwitch('app-month','app-day')">月</span></a>
