@@ -74,7 +74,6 @@ public class HttpClientUtil {
 		}
 		try {
 			httpPost.setEntity(new UrlEncodedFormEntity(urlParameters, "UTF-8"));
-			System.out.println(urlParameters.toString());
 		} catch (UnsupportedEncodingException e) {
 			logger.error("请求参数编码失败！", e);
 			return res;
