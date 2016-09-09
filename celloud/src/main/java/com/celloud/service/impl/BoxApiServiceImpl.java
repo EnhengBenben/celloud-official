@@ -56,8 +56,21 @@ public class BoxApiServiceImpl implements BoxApiService {
 		Integer userId = file.getUserId();
 		String today = DateUtil.getDateToString("yyyyMMdd");
 		String folderByDay = realPath + userId + File.separator + today;
-		updateUploadState(fileId, objectKey);
-		OSSUtils.download(objectKey, folderByDay + File.separator + newName);
+		updateUploadState(fileId, objectKey, 1);
+		boolean isDownloaded = false;
+		for (int i = 0; i < 3; i++) {
+			String md5 = OSSUtils.download(objectKey, folderByDay + File.separator + newName);
+			if (file.getMd5().equals(md5)) {
+				isDownloaded = true;
+				break;
+			} else {
+				logger.info("从oss下载文件错误，进行第{}次重试：{}", i + 1, objectKey);
+			}
+		}
+		if (!isDownloaded) {
+			updateUploadState(fileId, objectKey, 3);
+			return;
+		}
 		int fileFormat = checkFileType.checkFileType(newName, folderByDay);
 		updateFileInfo(fileId, file.getDataKey(), newName, null, null, folderByDay, batch, fileFormat, tagId);
 		if (tagId == AppConstants.APP_ID_BSI) {
@@ -65,11 +78,11 @@ public class BoxApiServiceImpl implements BoxApiService {
 		}
 	}
 
-	private void updateUploadState(Integer fileId, String objectKey) {
+	private void updateUploadState(Integer fileId, String objectKey, int state) {
 		DataFile data = new DataFile();
 		data.setFileId(fileId);
 		data.setOssPath(objectKey);
-		data.setUploadState(1);
+		data.setUploadState(state);
 		dataService.updateByPrimaryKeySelective(data);
 	}
 
@@ -103,7 +116,7 @@ public class BoxApiServiceImpl implements BoxApiService {
 			}
 		}
 		data.setState(DataState.ACTIVE);
-		return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+		return dataService.updateDataInfoByFileId(data);
 	}
 
 	@Override
