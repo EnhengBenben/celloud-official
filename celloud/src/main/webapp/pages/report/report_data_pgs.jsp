@@ -39,7 +39,7 @@
         <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	        <h2>
 				<i class="i-report1"></i>数据统计
-				<div ng-if="pgs.appId != 85" style="float:right;padding-right: 30px" title="帮助" ng-click="showModal('countModal')"><i class="i-tips"></i></div>
+				<div ng-if="pgs.appId != 85" style="line-height:38px;float:right;padding-right: 30px" title="帮助" ng-click="showModal('countModal')"><i class="i-tips"></i></div>
 			</h2>
 			<div class="m-boxCon" id="_table">
 				<table class="table table-bordered table-condensed">
@@ -75,7 +75,7 @@
 	    </section>
 	    <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	        <h2><i class="i-edit"></i>报告
-				<div ng-if="pgs.appId != 85 && pgs.detail != null && pgs.detail.length > 0" style="float:right;padding-right: 30px" title="帮助" ng-click="showModal('reportModal')"><i class="i-tips"></i></div>
+				<div ng-if="pgs.appId != 85 && pgs.detail != null && pgs.detail.length > 0" style="line-height:38px;float:right;padding-right: 30px" title="帮助" ng-click="showModal('reportModal')"><i class="i-tips"></i></div>
 			</h2>
 			<div class="m-boxCon result" id="reportDiv">
 				<div ng-if="pgs.appId == 85">

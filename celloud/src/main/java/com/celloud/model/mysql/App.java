@@ -54,6 +54,7 @@ public class App {
     private String classifyNames;
     /** APP单价 */
     private BigDecimal price;
+	private String tagName;
 
     public Integer getAppId() {
         return appId;
@@ -254,4 +255,13 @@ public class App {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+	public String getTagName() {
+		return tagName;
+	}
+
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
 }

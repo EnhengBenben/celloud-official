@@ -58,7 +58,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="text-center mb10 w500">
+			<div class="text-center mb20 w500">
 				<a href="javascript:void(0)" ng-click="change1()" class="btn -low"><i class="i-view"></i>查看详情</a>
 			</div>
 	     </section>
@@ -74,7 +74,7 @@
 				<div class="m-box">
 				 	<h2>
 				 		1.替诺福韦酯TDF突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 				    	<a ng-if="hbv.known['194_png'] != null" href="javascript:bigFigure('{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['194_10_png']}}');" >
@@ -88,7 +88,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>2.替比夫定 LDT 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 				    	<a ng-if="hbv.known['204_png'] != null" href="javascript:bigFigure('{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_10_png']}');" >
@@ -102,7 +102,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>3.阿德福韦 ADV 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,3)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,3)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 				    	<a ng-if="hbv.known['181_png'] != null" href="javascript:bigFigure('{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['181_10_png']}}');" >
@@ -122,7 +122,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>4.拉米夫定 LAM 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,4)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,4)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 						<a ng-if="hbv.known['173_png'] != null" href="javascript:bigFigure('{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_10_png']}}');" >
@@ -148,7 +148,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>5.恩曲他滨 FTC 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,5)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,5)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 						<a ng-if="hbv.known['173_png'] != null" href="javascript:bigFigure('{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_10_png']}}');" >
@@ -174,7 +174,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>6.恩替卡韦 ETV 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,6)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,6)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
 						<a ng-if="hbv.known['169_png'] != null" href="javascript:bigFigure('{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['169_10_png']}}');" >
@@ -220,7 +220,7 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）
-				 	  	<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+				 	  	<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon" id="otherPng">
 			    		<a ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" href="javascript:bigFigure('{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img.replace('png','10.png')}}');" >
@@ -232,7 +232,7 @@
 			<!--结论-->
 			<div class="m-box">
 			 	  <h2>参考结论（根据已发表文献得出以下参考结论）
-			 	  <span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+			 	  <span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 			 	  </h2>
 			    <div ng-bind-html="hbv.reporttxt.split('Other')[0]" class="m-boxCon result" id="resultDiv">
 			    </div>
@@ -244,13 +244,12 @@
 					{{hbv.seq}}
 			    </div>
 			</div>
-		    <div id="printDiv4" style="display: none;">
-				{{hbv.clinical}}
+		    <div ng-bind-html="hbv.clinical" id="printDiv4" style="display: none;">
 		    </div>
 			<!--染色体序列点图-->
 			<div class="m-box" id="printDiv3">
 				<h2><i class="i-dna"></i>原始峰图
-					<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span class="fa fa-thumbs-up"></span></div></span>
+					<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				</h2>
 			    <div ng-if="hbv.original['1_all_png'] != null" class="m-boxCon result">
 					<a href="javascript:bigOrigin('{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['1_all_png']}}','listAll1Img');" >
@@ -288,7 +287,7 @@
 			        </div>
 			    </div>
 			</div>
-			<div class="text-center mt10 mb10">
+			<div class="text-center mt10 mb20">
 				<a href="javascript:void(0)" ng-click="change2()" class="btn -low pull-center"><i class="i-view"></i>返回</a>
 			</div>
 	     </section>
