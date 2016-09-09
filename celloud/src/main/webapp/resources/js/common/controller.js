@@ -19,6 +19,10 @@
 			}
 		};
 		$rootScope.errorInfo = "";
+		$scope.refreshUserProduct = function(){
+		  $rootScope.userProduct = commonService.getProduct().get();
+		}
+		$rootScope.userProduct = commonService.getProduct().get();
 		$rootScope.userInfo = commonService.getUserInfo().get();
 		$rootScope.messages = commonService.messages.get();
 		$rootScope.notices = commonService.notices.get();

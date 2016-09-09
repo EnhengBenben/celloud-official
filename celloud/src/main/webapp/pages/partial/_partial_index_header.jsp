@@ -9,26 +9,15 @@
           </div>
         </div>
         <ul class="nav navbar-nav pull-left">
-            <shiro:hasPermission name="rocky:product">
-              <li>
-                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="cubes-icon">&nbsp;</i>
-                </a>
-                <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
-                </div>
-              </li>
-            </shiro:hasPermission>
-            <shiro:hasPermission name="bsi:product">
-              <li>
-                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="cubes-icon">&nbsp;</i>
-                </a>
-                <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探"></a>
-                </div>
-              </li>
-            </shiro:hasPermission>
+          <li ng-if="userProduct.rocky==123||userProduct.BSI==118">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="cubes-icon">&nbsp;</i>
+            </a>
+            <div class="dropdown-menu product-dropdown">
+              <a ng-if="userProduct.BSI==118" href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探"></a>
+              <a ng-if="userProduct.rocky==123" href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
+            </div>
+          </li>
           <li><a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a></li>
         </ul>
         <ul class="nav navbar-nav pull-right">

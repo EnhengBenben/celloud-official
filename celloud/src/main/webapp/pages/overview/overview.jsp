@@ -6,32 +6,19 @@
 	  <li>我的工作台</li>
 	</ol>
 	<div class="content overview">
-		<shiro:hasPermission name="bsi:product">
+		<div ng-if="userProduct.rocky==123||userProduct.BSI==118">
 		  <section class="overview-s">
 		    <h5 class="overview-header"><i class="myapp-icon"></i><span>我的产品</span></h5>
 		    <div class="o-app-list">
 			  <ul>
-			    <li>
+			    <li ng-if="userProduct.BSI==118">
 			      <a href="<%=request.getContextPath()%>/bsi">
 			        <div class="inner">
 			          <img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探">
-	<!-- 		        <a href="#" class="footer"><i class="setup-icon"></i></a> -->
 			        </div>
 			      </a>
 			    </li>
-			  </ul>
-	<!-- 		  <div class="more-app pull-right"> -->
-	<!-- 	        <a href="#" class=""> 更<br>多</a> -->
-	<!-- 	      </div> -->
-		    </div>
-		  </section>
-	  </shiro:hasPermission>
-	  <shiro:hasPermission name="rocky:product">
-		  <section class="overview-s">
-		    <h5 class="overview-header"><i class="myapp-icon"></i><span>我的产品</span></h5>
-		    <div class="o-app-list">
-			  <ul>
-			    <li>
+			    <li ng-if="userProduct.rocky==123">
 			      <a href="<%=request.getContextPath()%>/rocky">
 			        <div class="inner">
 			          <img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰">
@@ -41,7 +28,7 @@
 			  </ul>
 		    </div>
 		  </section>
-	  </shiro:hasPermission>
+	  </div>
 	  <section class="overview-s">
 	    <h5 class="overview-header"><i class="mycount-icon"></i><span>使用统计</span></h5>
 	    <div class="o-count-list" ng-controller="overviewCount">
