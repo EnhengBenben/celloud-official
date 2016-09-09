@@ -35,6 +35,10 @@ public class BoxServiceImpl implements BoxService {
 			}
 			ThreadUtil.sleep(5000);// 5秒之后再重试
 		}
+		if (newfile == null) {
+			// TODO 这里需要处理
+			return;
+		}
 		// 将文件上传到oss
 		String objectKey = UploadPath.getObjectKey(userId, newfile.getDataKey(), newfile.getExt());
 		ossService.upload(objectKey, file);
