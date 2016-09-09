@@ -104,17 +104,17 @@
 	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="50" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
 	            </div>
 	          </div>
-	          <div class="form-group">
-	            <div class="text-center">
-	                <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
-	                <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">提交</button>
-	            </div>
-	            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
-	              <button type="button" class="close" ng-click="updateState=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-	              <span>{{updateMessage}}</span>
-	            </div>
-	          </div>
+            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
+              <button type="button" class="close" ng-click="updateState=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+              <span>{{updateMessage}}</span>
+            </div>
 	      </form>
+	    </div>
+	    <div class="modal-footer">
+	      <div class="text-center">
+              <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
+              <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">提交</button>
+          </div>
 	    </div>
 	  </div>
 	</div>
