@@ -46,7 +46,7 @@
 		    	<span ng-if="egfr.mutationPosition!=null">
 		    		<p ng-bind-html="egfr.mutationPosition"></p>
 		    		<br/>
-			    	<a ng-repeat="out in egfr.out" ng-href="javascript:bigReplace('{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{out.replace('png','10.png')}}');" style="padding-right: 20px">
+			    	<a ng-repeat="out in egfr.out" ng-click="bigReplace(uploadPath+egfr.userId+'/'+egfr.appId+'/'+egfr.dataKey+'/SVG/'+out.replace('png','10.png'));" style="padding-right: 20px">
 		    			<img ng-src="{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{out}}" style="width: 156px;height: 177px;">
 		    		</a>
 		    	</span>
@@ -72,7 +72,7 @@
          <section class="m-box">
 	         <h2><i class="i-dna"></i>五、 测序峰图结果</h2>
 				<div class="m-boxCon result" ng-if="egfr.original != null">
-					<a ng-repeat="original in egfr.original" href="javascript:bigOrigin('{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{original}}','original{{$index+1}}');" >
+					<a ng-repeat="original in egfr.original" ng-click="bigOrigin(uploadPath+egfr.userId+'/'+egfr.appId+'/'+egfr.dataKey+'/SVG/'+original,original+$index+1);" >
 						<img name="imgSrc" class="originImg" src="{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{original}}" id="original{{$index+1}}"><br/>
 					</a>
 			    </div>
@@ -89,7 +89,6 @@
 	     </section>
 	   </div>
      </div>
-     <input type="hidden" ng-model="egfr.pos" id="seq_length"/>
  </div>
 <div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog">

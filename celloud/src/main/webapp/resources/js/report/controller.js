@@ -723,7 +723,6 @@
    * bsi数据报告controller
    */
   celloudApp.controller("bsiDataReportController", function($scope, $routeParams, $compile, dataReportService){
-	  alert("ddddddddd");
 	  dataReportService.getDataReportInfo("report/getBSIInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
 	  success(function(bsiInfo){
 		  $scope.bsi = bsiInfo.bsi;
