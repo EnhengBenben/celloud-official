@@ -507,7 +507,6 @@
 				aType += "]";
 				$.reportChar.draw.echartsShowHBVType('char0',hbvtype,aType,45);
 				
-				
 				var result = $("#resultDiv").html();
 				if(result){
 					var temp = result.split("<br>");
@@ -537,11 +536,18 @@
 				var one = getCountValue("Subtype","nomal");
 				var X = "[";
 				var Y = "[";
+				// value: 横坐标,纵坐标;(数组)
 				var value = data.split("@")[0].split(";");
+				// 数组的长度即几组横纵坐标
 				var num = value.length;
+				// 遍历横纵坐标数组
 				for(var k=0;k<value.length-1;k++){
+					// n[0]:横坐标的值
+					// n[1]:纵坐标的值
 					var n = value[k].split(",");
+					// X:'横坐标','横坐标',
 					X+="'"+n[0]+"',";
+					// 使用"_"分解横坐标得到tag
 					var tag=n[0].split("_");
 					if(tag.length==rType.length){
 						var isOne = false;
@@ -565,7 +571,7 @@
 				}
 				X = X.substring(0,X.length-1)+"]";
 				Y = Y.substring(0,Y.length-1)+"]";
-				$.reportChar.draw.echartsShowBar("char1", "耐药类型", X, Y, -45, 800, 350);
+				$.reportChar.draw.echartsShowBar("char1", "耐药类型", eval(X), eval(Y), -45, 800, 350);
 			});
 		  
 	  });

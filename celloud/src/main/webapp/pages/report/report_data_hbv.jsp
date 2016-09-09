@@ -244,8 +244,7 @@
 					{{hbv.seq}}
 			    </div>
 			</div>
-		    <div id="printDiv4" style="display: none;">
-				{{hbv.clinical}}
+		    <div ng-bind-html="hbv.clinical" id="printDiv4" style="display: none;">
 		    </div>
 			<!--染色体序列点图-->
 			<div class="m-box" id="printDiv3">
@@ -288,7 +287,7 @@
 			        </div>
 			    </div>
 			</div>
-			<div class="text-center mt10 mb10">
+			<div class="text-center mt10 mb20">
 				<a href="javascript:void(0)" ng-click="change2()" class="btn -low pull-center"><i class="i-view"></i>返回</a>
 			</div>
 	     </section>
