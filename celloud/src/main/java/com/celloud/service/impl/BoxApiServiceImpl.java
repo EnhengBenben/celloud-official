@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.celloud.constants.AppConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
@@ -70,10 +69,12 @@ public class BoxApiServiceImpl implements BoxApiService {
 		}
 		int fileFormat = checkFileType.checkFileType(newName, folderByDay);
 		updateFileInfo(fileId, file.getDataKey(), newName, null, null, folderByDay, batch, fileFormat, tagId);
-		if (tagId == AppConstants.APP_ID_BSI) {
+		if (tagId != null && tagId.intValue() == 1) {
+			// TODO 保险起见，这里还应该校验用户是否已经添加app
 			bsierCheckRun(batch, fileId, file.getDataKey(), needSplit, file.getFileName(), userId, fileFormat);
 		}
 	}
+
 	@Override
 	public void updateUploadState(Integer fileId, String objectKey, int state) {
 		DataFile data = new DataFile();
