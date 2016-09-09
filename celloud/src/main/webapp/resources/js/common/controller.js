@@ -11,8 +11,8 @@
 		});
 		
 		$rootScope.showZoom = function(src) {
-			var bh = $(window.parent.document).height();  
-			var bw = $(window.parent.document).width();
+			var bh = $("body").height();  
+			var bw = $("body").width();
 			$("#imageFullScreen").smartZoom({'containerClass':'zoomableContainer'});
 			$("#imageFullScreen").attr("src",src);
 			$("#fullbg").css({  
