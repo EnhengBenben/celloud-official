@@ -45,7 +45,12 @@ public class OSSUtils {
 		}
 		localFile.getParentFile().mkdirs();
 		// 下载object到文件
-		client.getObject(new GetObjectRequest(bucketName, objectKey), localFile);
+		try {
+			client.getObject(new GetObjectRequest(bucketName, objectKey), localFile);
+		} catch (Exception e) {
+			logger.error("下载文件失败:{}", objectKey, e);
+			return null;
+		}
 		logger.debug("downloaded file 【{}】 to 【{}】", objectKey, path);
 		client.shutdown();
 		time = System.currentTimeMillis() - time;

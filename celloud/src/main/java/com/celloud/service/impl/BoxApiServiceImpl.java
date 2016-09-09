@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -49,14 +48,12 @@ public class BoxApiServiceImpl implements BoxApiService {
 
 	@Async
 	@Override
-	public void updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
-			HttpServletRequest request) {
+	public void updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit) {
 		DataFile file = dataService.getDataById(fileId);
 		String newName = file.getDataKey() + FileTools.getExtName(file.getFileName());
 		Integer userId = file.getUserId();
 		String today = DateUtil.getDateToString("yyyyMMdd");
 		String folderByDay = realPath + userId + File.separator + today;
-		updateUploadState(fileId, objectKey, 1);
 		boolean isDownloaded = false;
 		for (int i = 0; i < 3; i++) {
 			String md5 = OSSUtils.download(objectKey, folderByDay + File.separator + newName);
@@ -77,8 +74,8 @@ public class BoxApiServiceImpl implements BoxApiService {
 			bsierCheckRun(batch, fileId, file.getDataKey(), needSplit, file.getFileName(), userId, fileFormat);
 		}
 	}
-
-	private void updateUploadState(Integer fileId, String objectKey, int state) {
+	@Override
+	public void updateUploadState(Integer fileId, String objectKey, int state) {
 		DataFile data = new DataFile();
 		data.setFileId(fileId);
 		data.setOssPath(objectKey);

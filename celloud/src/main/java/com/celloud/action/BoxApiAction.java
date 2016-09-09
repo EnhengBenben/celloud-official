@@ -57,7 +57,8 @@ public class BoxApiAction {
 	public Response updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
 			HttpServletRequest request) {
 		logger.info("updating file : {}", objectKey);
-		apiService.updatefile(objectKey, fileId, tagId, batch, needSplit, request);
+		apiService.updateUploadState(fileId, objectKey, 1);
+		apiService.updatefile(objectKey, fileId, tagId, batch, needSplit);
 		return Response.SUCCESS;
 	}
 
