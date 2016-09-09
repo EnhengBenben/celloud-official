@@ -160,10 +160,10 @@
   <div class="modal-dialog">
    <div class="modal-content">
 	<div class="modal-header">
-		<a class="close" data-dismiss="modal">×</a>
-		<h4>数据统计说明</h4>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+        <h4 class="modal-title">注释</h4>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body form-modal">
 		<div class="lineheight">Total_Reads：样本测序序列总数据量，分析要求数据量大于15万。</div>
 		<div class="lineheight">Map_Reads：样本序列比对到人类基因组的数据量。</div>
 		<div class="lineheight">Map_Ratio：样本序列比对到人类基因组的数据量比例。</div>

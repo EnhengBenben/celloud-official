@@ -303,7 +303,7 @@
 		<a class="close" data-dismiss="modal">×</a>
 		<h4 class="modal-title">帮助</h4>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body form-modal">
 		<div id="_showMore">
 			<div class="lineheight y y1">	1. 耐药相关的位点突变(替诺福韦酯TDF突变检测规则)：
 				<div style="line-height:1em;padding-top:10px" class="_leftShort">

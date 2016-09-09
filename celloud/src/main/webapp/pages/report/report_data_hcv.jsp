@@ -26,7 +26,7 @@
       	<section class="m-box" id="cfda">
       	    <h2><i class="i-edit"></i>检测结果</h2>
 	        <div class="m-boxCon result">
-				<table class="table table-main" id="hcvTable">
+				<table class="table table-bordered table-condensed" id="hcvTable">
 					<thead>
 						<tr>
 							<th>File Name<br>(文件名)</th>

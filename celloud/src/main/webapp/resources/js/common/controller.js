@@ -2,6 +2,62 @@
 	celloudApp.controller("sidebarController", function($scope,
 			$location, $rootScope,commonService) {
 		
+		$('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});
+		var revise = $(document).width()-$('.sidebar-menu').width();
+		$("#pageContent").css("width",revise+"px");
+		$('.sidebar-menu').resize(function(){
+			revise = $(document).width()-$(this).width();
+			$("#pageContent").css("width",revise+"px");
+		});
+		
+		$rootScope.showZoom = function(src) {
+			var bh = $(window.parent.document).height();  
+			var bw = $(window.parent.document).width();
+			$("#imageFullScreen").smartZoom({'containerClass':'zoomableContainer'});
+			$("#imageFullScreen").attr("src",src);
+			$("#fullbg").css({  
+				height:bh,  
+				width:bw,  
+				display:"block"  
+			});
+			$("#closeZoom").css("display","block");
+			$("#pageContent").show();
+		}
+		$rootScope.closeZoom = function(){
+			$('#imageFullScreen').smartZoom('destroy');
+			$("#fullbg,#pageContent,#closeZoom").hide(); 
+		}
+		/**
+	     * HBV峰图放大
+	     * @param src
+	     */
+	    $rootScope.bigFigure = function(src){
+	        $("img[id='imageFullScreen']").css("width",960);
+	        $("img[id='imageFullScreen']").css("height",144);
+	        $rootScope.showZoom(src);
+	    }
+	    /**
+	     * 原始峰图放大
+	     * @param src
+	     * @param id
+	     */
+	    $rootScope.bigOrigin = function(src,id) { 
+	        var width = $("#" + id).width();
+	        var height = $("#" + id).height();
+	        $("img[id='imageFullScreen']").css("width",width*1.5);
+	        $("img[id='imageFullScreen']").css("height",height*1.5);
+	        $rootScope.showZoom(src);
+	    }
+	    /**
+	     * 有路径替换的
+	     * @param src
+	     */
+	    $rootScope.bigReplace = function(src){
+	        $("img[id='imageFullScreen']").css("width",1050);
+	        $("img[id='imageFullScreen']").css("height",157.5);
+	        $rootScope.showZoom(src);
+	    }
+		
 		$scope.isActive = function(viewLocation) {
 			if (viewLocation != "/") {
 				return $location.path().indexOf(viewLocation) >= 0;
