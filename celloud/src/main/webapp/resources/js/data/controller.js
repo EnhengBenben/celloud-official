@@ -86,7 +86,7 @@
         $scope.dataFile = response['file'];
         $scope.appList = response['appList'];
         for(i = 0; i < $scope.appList.length; i++){
-        	if($.trim($scope.appList[i].appName) == $.trim($scope.dataFile.tagName)){
+        	if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
         		$scope.appSelected = $scope.appList[i];
         		break;
         	}
@@ -108,7 +108,7 @@
         return;
       }
       $scope.updateState = false;
-      $scope.dataFile.tagName = $scope.appSelected == undefined? "" : $scope.appSelected.appName;
+      $scope.dataFile.tagName = $scope.appSelected == undefined? "" : $scope.appSelected.tagName;
       runService.submitEditData($scope.dataFile).success(function(response){
         if(response.success){
           $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);

@@ -9,9 +9,7 @@
       <div class="table-opera">
         <div class="table-opera-content">
           <div class="opera-info">
-          	<shiro:hasPermission name="runWithProject:button">
-	            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
-			</shiro:hasPermission>
+	        <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
             <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
           </div>
           <div class="info-btn-group pull-right">
@@ -95,7 +93,7 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">产品标签：</div>
 	            <div class="col-xs-9 form-group-content">
-	              <select class="checkbox-group" ng-model="appSelected" ng-options="app.appName for app in appList"></select>
+	              <select class="checkbox-group" ng-model="appSelected" ng-options="app.tagName for app in appList"></select>
 	            </div>
 	          </div>
 	          <div class="form-group">
