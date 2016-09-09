@@ -71,7 +71,7 @@ public class DataAction {
 	private TaskService taskService;
     @Resource
     ExpensesService expenseService;
-
+    //TODO 已经在dataServciceImpl中复制了一份，这里可以删除
 	private static Map<String, Map<String, String>> machines = ConstantsData.getMachines();
 	private static String sparkhost = machines.get("spark").get(Mod.HOST);
 	private static String sparkpwd = machines.get("spark").get(Mod.PWD);
@@ -79,6 +79,7 @@ public class DataAction {
 	private static String sgeHost = machines.get("158").get(Mod.HOST);
 	private static String sgePwd = machines.get("158").get(Mod.PWD);;
 	private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
+	// 删除到这里。。。
 	private static final Response DELETE_DATA_FAIL = new Response("归档数据失败");
 
 	/**
@@ -383,8 +384,8 @@ public class DataAction {
 	}
 
 	/**
-	 * 数据运行
-	 * 
+	 * <s>数据运行,已抽离到dataService中</s><br>
+	 *  调用dataService.run();
 	 * @param dataIds
 	 * @param appIds
 	 * @return
@@ -392,6 +393,7 @@ public class DataAction {
 	@ActionLog(value = "开始运行方法，调用perl，保存任务信息", button = "开始运行")
     @RequestMapping("run")
 	@ResponseBody
+	@Deprecated
 	public String run(String dataIds, String appIds) {
 		Integer userId = ConstantsData.getLoginUserId();
 		String userName = ConstantsData.getLoginUserName();

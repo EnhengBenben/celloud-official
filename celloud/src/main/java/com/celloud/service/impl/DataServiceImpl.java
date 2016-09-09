@@ -1,24 +1,46 @@
 package com.celloud.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.text.StrSubstitutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.celloud.constants.AppDataListType;
+import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
+import com.celloud.constants.Mod;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
+import com.celloud.constants.SparkPro;
+import com.celloud.constants.TaskPeriod;
 import com.celloud.mapper.DataFileMapper;
+import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Project;
+import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.AppService;
 import com.celloud.service.DataService;
+import com.celloud.service.ExpensesService;
+import com.celloud.service.ProjectService;
+import com.celloud.service.ReportService;
+import com.celloud.service.TaskService;
+import com.celloud.utils.DataKeyListToFile;
+import com.celloud.utils.FileTools;
+import com.celloud.utils.SSHUtil;
 
 /**
  * 数据管理服务实现类
@@ -28,8 +50,28 @@ import com.celloud.service.DataService;
  */
 @Service("dataService")
 public class DataServiceImpl implements DataService {
+	private static Logger logger = LoggerFactory.getLogger(DataServiceImpl.class);
 	@Resource
 	DataFileMapper dataFileMapper;
+	@Resource
+	private DataService dataService;
+	@Resource
+	private AppService appService;
+	@Resource
+	private ProjectService projectService;
+	@Resource
+	private ReportService reportService;
+	@Resource
+	private TaskService taskService;
+	@Resource
+	ExpensesService expenseService;
+	private static Map<String, Map<String, String>> machines = ConstantsData.getMachines();
+	private static String sparkhost = machines.get("spark").get(Mod.HOST);
+	private static String sparkpwd = machines.get("spark").get(Mod.PWD);
+	private static String sparkuserName = machines.get("spark").get(Mod.USERNAME);
+	private static String sgeHost = machines.get("158").get(Mod.HOST);
+	private static String sgePwd = machines.get("158").get(Mod.PWD);;
+	private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
 
 	@Override
 	public Integer countData(Integer userId) {
@@ -53,15 +95,15 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-    public int updateDataInfoByFileId(DataFile data) {
+	public int updateDataInfoByFileId(DataFile data) {
 		return dataFileMapper.updateDataInfoByFileId(data);
 	}
 
-    @Override
-    public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
-        dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
-        return dataFileMapper.updateDataInfoByFileId(data);
-    }
+	@Override
+	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
+		dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+		return dataFileMapper.updateDataInfoByFileId(data);
+	}
 
 	@Override
 	public List<Map<String, String>> sumData(Integer userId, String time) {
@@ -75,15 +117,13 @@ public class DataServiceImpl implements DataService {
 		return new PageList<>(page, lists);
 	}
 
-    @Override
-    public PageList<DataFile> dataListByAppId(Page page, Integer userId,
-            Integer appId, String condition, Integer sort, String sortDate,
-            String sortName, String sortBatch) {
-        List<DataFile> lists = dataFileMapper.findDataListsByAppId(page, userId,
-                DataState.ACTIVE, appId, condition, sort, sortDate, sortName,
-                sortBatch);
-        return new PageList<>(page, lists);
-    }
+	@Override
+	public PageList<DataFile> dataListByAppId(Page page, Integer userId, Integer appId, String condition, Integer sort,
+			String sortDate, String sortName, String sortBatch) {
+		List<DataFile> lists = dataFileMapper.findDataListsByAppId(page, userId, DataState.ACTIVE, appId, condition,
+				sort, sortDate, sortName, sortBatch);
+		return new PageList<>(page, lists);
+	}
 
 	@Override
 	public PageList<DataFile> dataLists(Page page, Integer userId, String condition, int sort, String sortDateType,
@@ -213,11 +253,11 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public int updateDataAndTag(DataFile record) {
-		//1.清除历史标签
+		// 1.清除历史标签
 		dataFileMapper.deleteDataTag(record.getFileId());
-		//2.插入新的标签
+		// 2.插入新的标签
 		dataFileMapper.insertDataTag(record);
-		//3.修改数据信息
+		// 3.修改数据信息
 		return dataFileMapper.updateByPrimaryKeySelective(record);
 	}
 
@@ -241,5 +281,155 @@ public class DataServiceImpl implements DataService {
 		List<DataFile> lists = dataFileMapper.filterRockyList(page, ConstantsData.getLoginUserId(), DataState.ACTIVE,
 				ReportType.DATA, ReportPeriod.COMPLETE, sample, condition, sidx, sord);
 		return new PageList<>(page, lists);
+	}
+
+	@Override
+	public String run(String dataIds, String appIds) {
+		Integer userId = ConstantsData.getLoginUserId();
+		String userName = ConstantsData.getLoginUserName();
+		String result = "";
+		logger.info("用户{}使用数据{}运行APP{}", userName, dataIds, appIds);
+		String[] dataIdArr = dataIds.split(",");
+        String[] appIdArrs = appIds.split(",");
+		List<Integer> appIdList = new ArrayList<>();
+		for (String s : appIdArrs) {
+			appIdList.add(Integer.parseInt(s));
+		}
+		if (!appService.checkPriceToRun(appIdList, userId)) {
+			logger.info("{}的余额不足，提醒充值后再运行", userName);
+			return "1";
+		}
+
+		// 公共项目信息
+		Project project = new Project();
+		String proName = new Date().getTime() + "";
+		project.setUserId(userId);
+		project.setProjectName(proName);
+		project.setDataNum(dataIdArr.length);
+		project.setDataSize(dataService.queryFileSize(dataIds));
+
+		// 公共报告信息
+		Report report = new Report();
+		report.setUserId(userId);
+
+		List<DataFile> dataList = dataService.findDatasById(dataIds);
+
+		// 构建运行所需dataListFile文件路径
+		Map<String, String> dataFilePathMap = new HashMap<>();// 针对按数据投递APP
+		String dataFilePath = "";// 针对按项目投递APP
+
+		List<Integer> list_tmp = new ArrayList<>(appIdList);
+		list_tmp.retainAll(AppDataListType.FASTQ_PATH);
+		if (list_tmp.size() > 0) {
+			dataFilePathMap = DataKeyListToFile.onlyFastqPath(dataList);
+			project.setDataNum(Integer.parseInt(dataFilePathMap.get("dataReportNum")));
+			dataFilePathMap.remove("dataReportNum");
+		} else {
+			list_tmp = new ArrayList<>(appIdList);
+			list_tmp.retainAll(AppDataListType.ONLY_PATH);
+			if (list_tmp.size() > 0) {
+				dataFilePath = DataKeyListToFile.onlyPath(dataList);
+			} else {
+				list_tmp = new ArrayList<>(appIdList);
+				list_tmp.retainAll(AppDataListType.PATH_AND_NAME);
+				if (list_tmp.size() > 0) {
+					dataFilePath = DataKeyListToFile.containName(dataList);
+				} else {
+					list_tmp = new ArrayList<>(appIdList);
+					list_tmp.retainAll(AppDataListType.SPLIT);
+					if (list_tmp.size() > 0) {
+						dataFilePathMap = DataKeyListToFile.toSplit(dataList);
+						project.setDataNum(1);
+					}
+				}
+			}
+		}
+		// 批量创建项目
+		Map<Integer, Integer> appProMap = projectService.insertMultipleProject(project, appIdList, dataIdArr);
+		if (appProMap == null) {
+			result = "项目创建失败";
+			logger.info("{}{}", userName, result);
+			return result;
+		}
+
+		// 批量创建报告
+		List<Integer> failAppIdList = reportService.insertMultipleProReport(report, appProMap, dataIdArr);
+		if (failAppIdList.size() > 0) {
+			result = appService.findAppNamesByIds(failAppIdList.toString()) + "创建报告失败";
+			logger.info("{}{}", userName, result);
+			return result;
+		}
+
+		// 运行APP详细信息
+		List<App> appList = appService.findAppsByIds(appIds);
+		String bp = SparkPro.TOOLSPATH + userId + "/";
+		for (App app : appList) {
+			Integer appId = app.getAppId();
+			Integer proId = appProMap.get(appId);
+			String appPath = bp + appId + "/";
+			if (!FileTools.checkPath(appPath)) {
+				new File(appPath).mkdirs();
+			}
+			if (AppDataListType.FASTQ_PATH.contains(appId) || AppDataListType.SPLIT.contains(appId)) {
+				int runningNum;
+				SSHUtil ssh = null;
+				Boolean iswait;
+				if (AppDataListType.SPARK.contains(appId)) {
+					runningNum = taskService.findRunningNumByAppId(AppDataListType.SPARK);
+					ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+					iswait = runningNum < SparkPro.MAXTASK;
+					logger.info("APP{}任务投递到spark", appId);
+				} else {
+					runningNum = taskService.findRunningNumByAppId(appId);
+					ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+					iswait = runningNum < app.getMaxTask() || app.getMaxTask() == 0;
+				}
+				for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
+					String dataKey = entry.getKey();
+					String dataListFile = entry.getValue();
+					Map<String, String> map = CommandKey.getMap(dataListFile, appPath, proId);
+					StrSubstitutor sub = new StrSubstitutor(map);
+					String command = sub.replace(app.getCommand());
+					Task task = taskService.findTaskByDataKeyAndApp(dataKey, appId);
+					if (task == null) {
+						task = new Task();
+						task.setProjectId(proId);
+						task.setUserId(userId);
+						task.setAppId(appId);
+						task.setDataKey(dataKey);
+						task.setCommand(command);
+						taskService.create(task);
+					} else {
+						task.setProjectId(proId);
+						task.setCommand(command);
+						task.setPeriod(TaskPeriod.WAITTING);
+						taskService.updateTask(task);
+					}
+					Integer taskId = task.getTaskId();
+					if (iswait) {
+						logger.info("任务{}运行命令：{}", taskId, command);
+						ssh.sshSubmit(command, false);
+						taskService.updateToRunning(taskId);
+					} else {
+						logger.info("数据{}排队运行{}", dataKey, app.getAppName());
+					}
+				}
+				// 保存消费记录
+				expenseService.saveRunExpenses(proId, appId, userId, dataList);
+			} else {
+				// SGE
+				logger.info("celloud 直接向 SGE 投递任务");
+				Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
+				StrSubstitutor sub = new StrSubstitutor(map);
+				String command = sub.replace(app.getCommand());
+				logger.info("运行命令:{}", command);
+				SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+				ssh.sshSubmit(command, false);
+				// 保存消费记录
+				expenseService.saveProRunExpenses(proId, dataList);
+			}
+		}
+
+		return result;
 	}
 }

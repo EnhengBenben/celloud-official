@@ -14,7 +14,7 @@ var fileUpload=(function(fileUpload){
 			  var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
 			  config = "http://"+config.intranetAddress+":"+port+context;
 			  var response = $.ajax(config+"/box/alive",{async: false}).responseText;
-			  if(JSON.parse(response).success){
+			  if(response && JSON.parse(response).success){
 				  box=config;
 				  break;
 			  }
