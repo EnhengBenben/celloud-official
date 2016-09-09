@@ -1171,7 +1171,7 @@
         var th_size = 0;
         var td_size = 0;
         var tr_size = $(this).find("tr").length;
-        $(this).find("table").addClass("table table-main info-table");
+        $(this).find("table").addClass("table table-main info-table data-report-table");
         $(this).find("tr").each(function(j){
           if(j==0){
             th_size = $(this).children().length;
@@ -1193,10 +1193,10 @@
             }
           }
           $(this).mouseover(function(){
-            $(this).find("span").addClass("link_hover");
+            $(this).find("a").addClass("link_hover");
           });
           $(this).mouseout(function(){
-            $(this).find("span").removeClass("link_hover");
+            $(this).find("a").removeClass("link_hover");
           });
           $(this).find("td").each(function(i){
             if(appId=="90"){
@@ -1216,11 +1216,11 @@
                   if(fileName.length>30){
                     fileName = fileName.substring(0,30) + "...";
                   }
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                  $(this).find("span").bind("click",function(){
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  $(this).find("a").bind("click",function(){
                     viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
-                  $(this).find("span").addClass("link");
+                  $(this).find("a").addClass("btn-link");
                 }
               }
             }
@@ -1232,14 +1232,14 @@
                   fileName = fileName.substring(0,30) + "...";
                 }
                 if(appId!="114"&&appId!="118"){
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
                 }else{
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</span>");
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</a>");
                 }
-                $(this).find("span").bind("click",function(){
+                $(this).find("a").bind("click",function(){
                   viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
-                $(this).find("span").addClass("link");
+                $(this).find("a").addClass("btn-link");
               }
               if(i==0){
                 $(this).addClass("hide");
@@ -1260,11 +1260,11 @@
                 if(fileName.length>30){
                   fileName = fileName.substring(0,30) + "...";
                 }
-                $(this).html("<span id='dataSpan"+proId+$(this).next().html()+"'>"+$(this).next().html()+" （"+fileName+"）</span>");
-                $(this).find("span").bind("click",function(){
+                $(this).html("<a id='dataSpan"+proId+$(this).next().html()+"'>"+$(this).next().html()+" （"+fileName+"）</a>");
+                $(this).find("a").bind("click",function(){
                   viewDataReport(userId,$.trim($(this).parent().next().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
-                $(this).find("span").addClass("link");
+                $(this).find("a").addClass("btn-link");
               }
               if(i==1){
                 $(this).addClass("hide");
@@ -1284,11 +1284,11 @@
                   if(fileName.length>30){
                     fileName = fileName.substring(0,30) + "...";
                   }
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                  $(this).find("span").bind("click",function(){
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  $(this).find("a").bind("click",function(){
                     viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
-                  $(this).find("span").addClass("link");
+                  $(this).find("a").addClass("btn-link");
                 }
                 if(i==0){
                   $(this).addClass("hide");
@@ -1310,9 +1310,9 @@
               if(length==7){
                 if(j>0&&j%2==1&&i==0){
                   $(this).addClass("sub");
-                  $(this).html("<span id='dataSpan"+proId+$(this).html()+"'>"+$(this).html()+"</span>");
-                  $(this).find("span").bind("click",viewNext);
-                  $(this).find("span").addClass("link");
+                  $(this).html("<a id='dataSpan"+proId+$(this).html()+"'>"+$(this).html()+"</a>");
+                  $(this).find("a").bind("click",viewNext);
+                  $(this).find("a").addClass("btn-link");
                 }
               }else if(length==8){
                 if(i==1){
@@ -1327,9 +1327,9 @@
                   if(fileName.length>30){
                     fileName = fileName.substring(0,30) + "...";
                   }
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                  $(this).find("span").bind("click",viewNext);
-                  $(this).find("span").addClass("link");
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  $(this).find("a").bind("click",viewNext);
+                  $(this).find("a").addClass("btn-link");
                 }
               }
             }
@@ -1340,11 +1340,11 @@
                 if(fileName.length>30){
                   fileName = fileName.substring(0,30) + "...";
                 }
-                $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                $(this).find("span").bind("click",function(){
+                $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                $(this).find("a").bind("click",function(){
                   viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
-                $(this).find("span").addClass("link");
+                $(this).find("a").addClass("btn-link");
               }
               if(i==0){
                 $(this).addClass("hide");

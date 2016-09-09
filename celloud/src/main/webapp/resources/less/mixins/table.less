@@ -131,6 +131,20 @@
             border-bottom: none;
         }
     }
+    &.data-report-table >tbody{
+        >tr>td {
+            &:first-child{
+                text-align: left;
+            }
+        }
+        >tr:first-child{
+            >td {
+	            font-weight: bold;
+	            color: @font-black;
+	            background: @silver-gray;
+	        }
+        }
+    }
     &.pro-table>tbody>tr>td {
         &:first-child{
             text-align: left;

@@ -29,6 +29,7 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.SampleService;
 import com.celloud.utils.ActionLog;
+import com.celloud.utils.DateUtil;
 import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
@@ -188,8 +189,8 @@ public class SampleAction {
         PageList<Sample> pageList = getSamples(1, 12, SampleExperState.BUID_LIBRARY);
         map.put("pageList", pageList);
         SecureRandom s = new SecureRandom();
-        map.put("libraryName",
-                "MiLib" + String.format("%04d", s.nextInt(9999)));
+        map.put("libraryName", DateUtil.getDateToString()
+                + String.format("%02d", s.nextInt(99)));
         return map;
     }
 

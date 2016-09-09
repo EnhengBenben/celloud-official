@@ -164,6 +164,7 @@ var appStore=(function(appStore){
 				$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
 				$("#toAddApp").removeClass("btn-celloud-success").addClass("btn-celloud-close");
 				self.getMyApp();
+				self.refreshProduct();
 			}
 		});
 	};
@@ -178,9 +179,21 @@ var appStore=(function(appStore){
 					$("#toAddApp").removeClass("btn-celloud-close").addClass("btn-celloud-success");
 				}
 				self.getMyApp();
+				self.refreshProduct();
 			}
 		});
 	};
+	
+	//调用angularjs中的方法刷新产品
+	self.refreshProduct = function(){
+	  //通过controller来获取Angular应用
+	  var appElement = document.querySelector('[ng-controller=sidebarController]')
+	  var element = angular.element(appElement);
+	  //获取$scope
+	  var $scope = element.scope();
+	  //调用$scope中的方法
+	  $scope.refreshUserProduct();
+	}
 	return self;
 })(appStore);
 

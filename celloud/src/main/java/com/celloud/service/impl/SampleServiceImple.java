@@ -166,8 +166,9 @@ public class SampleServiceImple implements SampleService {
     @Override
     public Integer deleteSampleLog(Integer sampleLogId) {
         SampleLog sl = sampleLogMapper.selectByPrimaryKey(sampleLogId);
-        sl.setState(DataState.ACTIVE);
-        sampleLogMapper.updateByPrimaryKey(sl);
+        Integer experState = sl.getExperState() - 1;
+        sampleLogMapper.updateStateBySampleId(sl.getSampleId(),
+                DataState.ACTIVE, sl.getUserId(), experState);
         return sampleLogMapper.deleteByPrimaryKey(sampleLogId);
     }
 

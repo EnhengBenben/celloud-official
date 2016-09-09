@@ -21,10 +21,33 @@
         }
       })
     }
+    $scope.deleteSample = function(id){
+      samplingService.deleteSample(id).success(function(data){
+        if(data > 0){
+          $scope.sampleList = samplingService.sampleList();
+          $.alert("删除样本成功");
+        }else {
+          $.alert("删除样本失败");
+        }
+      })
+    }
   });
   
   celloudApp.controller("scanStorageController", function($scope, scanStorageService){
     $scope.sampleList = scanStorageService.sampleList();
+    var pages = {
+      page : 1,
+      pageSize : 10
+    };
+    $scope.pageQuery = function(page,pageSize){
+      pages = {
+        page : page,
+        pageSize : pageSize
+      };
+      scanStorageService.pageList(page,pageSize).success(function(data){
+        $scope.sampleList = scanStorageService.sampleList();
+      });
+    }
     
     $scope.scanStorage = function(){
       scanStorageService.scanStorage($scope.sampleName).success(function(data){
@@ -37,9 +60,20 @@
         }
       });
     }
+    
+    $scope.remove = function(id){
+      scanStorageService.remove(id).success(function(data){
+        if(data > 0){
+          $scope.sampleList = scanStorageService.sampleList();
+          $.alert("样本删除成功");
+        }else{
+          $.alert("样本删除失败");
+        }
+      });
+    }
   });
   
-  celloudApp.controller("tokenDNAController",function($scope, tokenDNAService){
+  celloudApp.controller("tokenDNAController",function($scope,scanStorageService, tokenDNAService){
     $scope.sampleList = tokenDNAService.sampleList();
     
     $scope.tokenDNA = function(){
@@ -53,20 +87,43 @@
         }
       });
     }
+    $scope.remove = function(id){
+      scanStorageService.remove(id).success(function(data){
+        if(data > 0){
+          $scope.sampleList = tokenDNAService.sampleList();
+          $.alert("样本删除成功");
+        }else{
+          $.alert("样本删除失败");
+        }
+      });
+    }
   });
   
-  celloudApp.controller("buidLibraryController",function($scope, buidLibraryService){
+  celloudApp.controller("buidLibraryController",function($scope,scanStorageService, buidLibraryService){
     $scope.infos = buidLibraryService.infos();
-    var sno = 0;
     $scope.addSample = function(){
-      buidLibraryService.addSample($scope.sampleName,sno).success(function(data){
-        if(data == 0){
-          $scope.notPrevError = true;
-        }else if(data > 0){
+      var sampleList = $scope.infos.pageList.datas;
+      if(sampleList.length>=12){
+        $.tips("每个文库最多12个样本！")
+      }else{
+        buidLibraryService.addSample($scope.sampleName,sampleList).success(function(data){
+          if(data == 0){
+            $scope.notPrevError = true;
+          }else if(data > 0){
+            $scope.infos = buidLibraryService.infos();
+          }else {
+            $scope.repeatError = true;
+          }
+        });
+      }
+    }
+    $scope.remove = function(id){
+      scanStorageService.remove(id).success(function(data){
+        if(data > 0){
           $scope.infos = buidLibraryService.infos();
-          sno++;
-        }else {
-          $scope.repeatError = true;
+          $.alert("样本删除成功");
+        }else{
+          $.alert("样本删除失败");
         }
       });
     }
@@ -103,7 +160,6 @@
         }
       });
     }
-    
   });
   
   celloudApp.controller("storagesController",function($scope, storagesService,buidLibraryService){
@@ -139,17 +195,6 @@
           $.alert("样本修改失败");
         }
         $("#sample-remark-modal").modal("hide");
-      });
-    }
-    
-    $scope.remove = function(id){
-      scanStorageService.remove(id).success(function(data){
-        if(data > 0){
-          $scope.sampleList = scanStorageService.sampleList();
-          $.alert("样本删除成功");
-        }else{
-          $.alert("样本删除失败");
-        }
       });
     }
   });
