@@ -51,7 +51,7 @@
           </li>
            <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="bell-icon">&nbsp;</i>
+              <i class="mail-icon">&nbsp;</i>
               <span class="label label-danger">{{messages.num==0?'':(''+messages.num)}}</span>
             </a>
             <div class="dropdown-menu message-dropdown">
@@ -65,7 +65,7 @@
             </a>
             <div class="dropdown-menu user-dropdown">
               <a class="btn" href="<%=request.getContextPath()%>/index#/user/base">个人信息</a>
-              <a class="btn btn-cancel" href="logout">退出</a>
+              <a class="btn btn-reset" href="logout">退出</a>
             </div>
           </li>
         </ul>
