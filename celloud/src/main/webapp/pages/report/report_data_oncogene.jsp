@@ -57,27 +57,27 @@
          <section class="m-box">
 	         <h2><i class="i-dna"></i>五、 测序峰图结果</h2>
 		     <div ng-if="oncogene.original['1_all_png'] != null" class="m-boxCon result">
-			 	<a href="javascript:bigOrigin('{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['1_all_png']}}','listAll1Img');" >
+			 	<a ng-click="bigOrigin(uploadPath + '/' + oncogene.userId + '/' + oncogene.appId + '/' + oncogene.dataKey + '/SVG/' + oncogene.original['1_all_png'],'listAll1Img');" >
 			 		<img name="imgSrc" src="{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['1_all_png']}}" class="originImg" id="listAll1Img">
 			 	</a>
 		     </div>
 		     <div ng-if="oncogene.original['2_all_png'] != null" class="m-boxCon result">
-		 		<a href="javascript:bigOrigin('{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['2_all_png']}}','listAll2Img');" >
+		 		<a ng-click="bigOrigin(uploadPath + '/' + oncogene.userId + '/' + oncogene.appId + '/' + oncogene.dataKey + '/SVG/' + oncogene.original['2_all_png'],'listAll2Img');" >
 		 			<img name="imgSrc" src="{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['2_all_png']}}" class="originImg" id="listAll2Img">
 		 		</a>
 		     </div>
 			 <div ng-if="oncogene.original['3_all_png'] != null" class="m-boxCon result">
-			 	<a href="javascript:bigOrigin('{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['3_all_png']}}','listAll3Img');" >
+			 	<a ng-click="bigOrigin(uploadPath + '/' + oncogene.userId + '/' + oncogene.appId + '/' + oncogene.dataKey + '/SVG/' + oncogene.original['3_all_png'],'listAll3Img');" >
 			 		<img name="imgSrc" src="{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['3_all_png']}}" class="originImg" id="listAll3Img">
 			 	</a>
 			 </div>
 		     <div ng-if="oncogene.original['4_all_png'] != null" class="m-boxCon result">
-		 		<a href="javascript:bigOrigin('{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['4_all_png']}}','listAll4Img');" >
+		 		<a ng-click="bigOrigin(uploadPath + '/' + oncogene.userId + '/' + oncogene.appId + '/' + oncogene.dataKey + '/SVG/' + oncogene.original['4_all_png'],'listAll4Img');" >
 		 			<img name="imgSrc" src="{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['4_all_png']}}" class="originImg" id="listAll4Img">
 		 		</a>
 		     </div>
 		     <div ng-if="oncogene.original['5_all_png'] != null" class="m-boxCon result">
-		 		<a href="javascript:bigOrigin('{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['5_all_png']}}','listAll5Img');" >
+		 		<a ng-click="bigOrigin(uploadPath + '/' + oncogene.userId + '/' + oncogene.appId + '/' + oncogene.dataKey + '/SVG/' + oncogene.original['5_all_png'],'listAll5Img');" >
 		 			<img name="imgSrc" src="{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{oncogene.original['5_all_png']}}" class="originImg" id="listAll5Img">
 		 		</a>
 		     </div>
