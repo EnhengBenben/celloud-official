@@ -129,22 +129,18 @@
              <div class="m-boxCon">
 				<img ng-if="pgs.finalPng != null && pgs.finalPng != ''" src="{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.finalPng}}" style="width: 100%;" id="finalPngImg">
 				<span ng-if="pgs.finalPng == null || pgs.finalPng == ''" style="color: red;">运行异常，未产生图片！</span>
-            </div>
+             </div>
 	     </section>
-         <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
-			<div ng-if="pgs.appId != 104 && pgs.appId != 116" class="bg-analysis">
-			    <div class="m-box">
-			        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
-			        <div class="m-boxCon">
-			        	<div class="row" id="charDiv">
-			        	</div>
-			        </div>
-			        <div class="m-tips">
-			        	<i class="i-tips"></i>
-			        	<span id="charResult"></span>
-			        </div>
-			    </div>
-			</div>
+	     <section ng-if="pgs.noEnoughReads == 'false' && pgs.appId != 104 && pgs.appId != 116" class="m-box">
+	         <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
+	         <div class="m-boxCon">
+	        	<div class="row" id="charDiv">
+	        	</div>
+	         </div>
+	         <div class="m-tips">
+	        	<i class="i-tips"></i>
+	        	<span id="charResult"></span>
+	         </div>
 	     </section>
 	     <section class="m-box" ng-if="pgs.noEnoughReads != 'false'">
 	     	<h3>测序量不足，无法分析，建议重测。</h3>
