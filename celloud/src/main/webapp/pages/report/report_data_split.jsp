@@ -13,10 +13,11 @@
         <p> 应用名称：
         	{{split.appName}}
         </p>
-        <p ng-repeat="data in split.data"> 文件名称：
+        <p ng-repeat="data in split.data">
+        	{{$index == 0 ? '文件名称：' : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}}
             {{data.fileName}}({{data.dataKey}})
         </p>
-        <div class="btn-group">
+        <div class="btn-groups">
         	<a class="btn -low" href="javascript:printSplit({{split.projectId}},{{split.dataKey}},{{split.appId}})"><i class="fa fa-print"></i>打印报告</a>
             <a class="btn -middle" href="/report/down?path={{split.userId}}/{{split.appId}}/{{split.dataKey}}/result/split_reads.tar.gz"><i class="fa fa-cloud-download"></i>下载全部</a>
         </div>

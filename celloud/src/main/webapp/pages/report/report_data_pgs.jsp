@@ -17,22 +17,20 @@
         <p> 文件名称：
             {{pgs.anotherName != null ? pgs.anotherName : pgs.fileName}}({{pgs.dataKey}})
         </p>
-        <div class="btn-group">
+        <div class="btn-groups">
         	<a class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=0"><i class="fa fa-print"></i>打印报告</a>
             <a ng-if="pgs.splitPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=1"><i class="fa fa-print"></i>点图报告</a>                  
             <a ng-if="pgs.pdf != null" class="btn -middle" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.pdf}}" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
             <a ng-if="pgs.finalPng!=null && pgs.finalPng!=''" class="btn -high" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.finalPng}}" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a>
-	        <div ng-if="experiment != null">
-	        	<br/>
-		        <div style="padding-top: 13px;">
-		        	<a ng-if="experiment.qualified == null" class="btn -low" href="javascript:void(0)" ng-click="showConclusion()"><i class="fa fa-edit"></i>结果判定</a>
-		        	<a ng-if="experiment.qualified==0 || experiment.qualified==1" class="btn -low" href="javascript:void(0)">
-			        	<span ng-if="experiment.qualified == 1">无效</span>
-			        	<span ng-if="experiment.qualified == 0">有效</span>
-		        	</a>
-		        	<a ng-if="experiment.qualified==0 || experiment.qualified==1" class="btn -low" href="javascript:void(0)" ng-click="editShowConclusion()"><i class="fa fa-edit"></i>结果修改</a>
-		        </div>
-	        </div>
+            <br/>
+            <div class="mt3">
+	        	<a ng-if="experiment != null && experiment.qualified == null" class="btn -low" href="javascript:void(0)" ng-click="showConclusion()"><i class="fa fa-edit"></i>结果判定</a>
+	        	<a ng-if="experiment != null && (experiment.qualified==0 || experiment.qualified==1)" class="btn -low" href="javascript:void(0)">
+		        	<span ng-if="experiment.qualified == 1">无效</span>
+		        	<span ng-if="experiment.qualified == 0">有效</span>
+	        	</a>
+	        	<a ng-if="experiment != null && (experiment.qualified==0 || experiment.qualified==1)" class="btn -low" href="javascript:void(0)" ng-click="editShowConclusion()"><i class="fa fa-edit"></i>结果修改</a>
+            </div>
         </div>
       </div>
       <div>

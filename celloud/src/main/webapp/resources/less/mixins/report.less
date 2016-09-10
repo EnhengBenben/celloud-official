@@ -43,7 +43,6 @@
 .mreport .i-view{display:inline-block;*display:inline;*zoom:1; width:14px; height:14px; vertical-align:middle; margin-right:9px; background-position:-160px -20px;}
 .mreport .i-back{display:inline-block;*display:inline;*zoom:1; width:14px; height:12px; vertical-align:middle; margin-right:9px; background-position:-180px -20px;}
 
-
 .mreport .m-box .table th,.m-box .table td{border:1px solid #d8e2f0; height:30px; line-height:30px; text-align:center;font-weight: normal;}
 .mreport .table_ th{border:1px solid #d8e2f0;border-left:none; height:30px; line-height:25px; max-width:230px; word-break:break-all;word-wrap:break-word;}
 .mreport .table_ th{ color:#333; text-align:center}
@@ -60,6 +59,9 @@
 }
 .mreport .mb20 {
 	margin-bottom: 20px;
+}
+.mreport .mt3{
+	margin-top: 3px;
 }
 
 .mreport .table td {
@@ -112,3 +114,30 @@
     position: relative;
     padding-left:10px
 }
+
+/*btn*/
+.content-header{
+        position: relative;
+        min-height: 40px;
+        margin-bottom: 10px;
+        padding: 20px;
+        font-size: 14px;
+        color: @font-black;
+        background-color: @content-gray;
+        >p{
+            margin: 0;
+        }
+        .description{
+            font-size: 12px;
+            color: @dark-gray;
+        }
+        >.btn-groups{
+        	.btn{
+        		margin-left: 1px;
+        		border-radius: 6px;
+        	}
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    }

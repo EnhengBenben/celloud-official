@@ -17,7 +17,7 @@
         <p> 文件名称：
             {{egfr.fileName}}({{egfr.dataKey}})
         </p>
-        <div class="btn-group">
+        <div class="btn-groups">
 	        <a class="btn -low" target="_blank" ng-href="${pageContext.request.contextPath }/report/printEGFR?projectId={{egfr.projectId }}&dataKey={{egfr.dataKey }}&appId={{egfr.appId }}">打印报告</a>
 	        <a class="btn -middle" ng-if="egfr.pdf != null && egfr.pdf != ''" ng-href="${pageContext.request.contextPath }/report/down?path={{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/{{egfr.pdf}}">PDF下载</a>
         </div>

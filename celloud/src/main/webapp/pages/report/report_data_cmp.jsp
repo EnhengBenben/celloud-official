@@ -16,7 +16,7 @@
         <p ng-repeat="data in cmp.data"> 文件名称：
             {{data.fileName}}({{data.dataKey}})
         </p>
-        <div class="btn-group">
+        <div class="btn-groups">
         	<a class="btn -low" target="_blank" href="<%=request.getContextPath()%>/report/printMorecmp?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印科研报告</a>
 			<a class="btn -middle" target="_blank" href="<%=request.getContextPath()%>/report/printLesscmp?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印临床报告</a>
         </div>

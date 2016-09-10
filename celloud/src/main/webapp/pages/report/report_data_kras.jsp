@@ -17,7 +17,7 @@
         <p> 文件名称：
             {{kras.fileName}}({{kras.dataKey}})
         </p>
-        <div class="btn-group">
+        <div class="btn-groups">
 	        <a class="btn -low" target="_blank" ng-href="${pageContext.request.contextPath }/report/printKRAS?projectId={{kras.projectId }}&dataKey={{kras.dataKey }}&appId={{kras.appId }}">打印报告</a>
 	        <a class="btn -middle" ng-if="kras.pdf != null && kras.pdf != ''" ng-href="${pageContext.request.contextPath }/report/down?path={{kras.userId}}/{{kras.appId}}/{{kras.dataKey}}/{{kras.pdf}}">PDF下载</a>
         </div>

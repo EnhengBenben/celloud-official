@@ -17,7 +17,7 @@
         <p> 文件名称：
             {{tbrifampicin.fileName}}({{tbrifampicin.dataKey}})
         </p>
-        <div class="btn-group">
+        <div class="btn-groups">
 	        <a class="btn -low" target="_blank" ng-href="${pageContext.request.contextPath }/report/printTBRifampicin?projectId={{tbrifampicin.projectId }}&dataKey={{tbrifampicin.dataKey }}&appId={{tbrifampicin.appId }}">打印报告</a>
 	        <a class="btn -middle" ng-if="tbrifampicin.pdf != null && tbrifampicin.pdf != ''" ng-href="${pageContext.request.contextPath }/report/down?path={{tbrifampicin.userId}}/{{tbrifampicin.appId}}/{{tbrifampicin.dataKey}}/{{tbrifampicin.pdf}}">PDF下载</a>
         </div>

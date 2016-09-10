@@ -17,7 +17,7 @@
         <p> 文件名称：
             {{hcv.fileName}}({{hcv.dataKey}})
         </p>
-        <div class="btn-group">
+        <div class="btn-groups">
 	        <a class="btn -low" target="_blank" ng-href="${pageContext.request.contextPath }/report/printHCV?projectId={{hcv.projectId }}&dataKey={{hcv.dataKey }}&appId={{hcv.appId }}">打印报告</a>
 	        <a class="btn -middle" style="display: none;" href="javascript:void(0)" ng-click="change()"><i class="fa fa-folder-open-o"></i><span id="_change">显示更多</span></a>
         </div>

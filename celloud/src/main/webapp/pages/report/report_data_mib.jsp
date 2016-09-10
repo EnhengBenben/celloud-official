@@ -18,7 +18,7 @@
         <p> 检测结果：
             {{mib.conclusion}}
         </p>
-        <div class="btn-group">
+        <div class="btn-groups">
 	        <a class="btn -low" target="_blank" ng-href="<%=request.getContextPath()%>/report/printMIBReport?projectId={{mib.projectId }}&dataKey={{mib.dataKey }}&appId={{mib.appId }}">打印报告</a>
         </div>
       </div>
