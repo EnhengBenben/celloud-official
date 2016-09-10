@@ -25,7 +25,7 @@
         </div>
       </div>
       <div>
-	    <section class="m-box" id="cfda">
+	    <section id="cfda">
 		    <div class="m-box w500">
 				<h2>位点突变</h2>
 				<h5 id="snpType">{{hbv.type.replace('Type','基因型')}}</h5>
@@ -62,7 +62,7 @@
 				<a href="javascript:void(0)" ng-click="change1()" class="btn -low"><i class="i-view"></i>查看详情</a>
 			</div>
 	     </section>
-	     <section class="m-box" id="nomal" style="display: none;">
+	     <section id="nomal" style="display: none;">
 			<div class="m-box" ng-if="hbv.type == 'no match&lt;br /&gt;'">
 			 	<h2>数据异常</h2>
 			    <div class="m-boxCon">
