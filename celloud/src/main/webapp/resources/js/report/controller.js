@@ -782,6 +782,23 @@
 		  $scope.project = splitInfo.project;
 		  $scope.uploadPath = splitInfo.uploadPath;
 		  
+		  var printReport = {
+		      main: function(method,param){
+		    	$.get(method,param,function(responseText){
+		    	  var obj = window.open("");
+		        	obj.document.write(responseText);
+		        	obj.document.close();
+		      	});
+		      },
+		      mongoParam: function(projectId,dataKey,appId){
+		    	var _param = {"projectId":projectId,"dataKey":dataKey,"appId":appId};
+		      	return _param;
+		      }
+		  }
+		  $scope.printSplit = function(projectId,dataKey,appId){
+			  printReport.main("report/printSplitReport",printReport.mongoParam(projectId,dataKey,appId));
+		  }
+		  
 		  $.get("count/splitCompare",{"id":splitInfo.splitId},function(data){
 	          var totalSource = JSON.stringify(data.totalSource);
 	          var totalSample = JSON.stringify(data.totalSample);

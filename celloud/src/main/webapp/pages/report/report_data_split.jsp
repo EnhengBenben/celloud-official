@@ -18,7 +18,7 @@
             {{data.fileName}}({{data.dataKey}})
         </p>
         <div class="btn-groups">
-        	<a class="btn -low" href="javascript:printSplit({{split.projectId}},{{split.dataKey}},{{split.appId}})"><i class="fa fa-print"></i>打印报告</a>
+        	<a class="btn -low" ng-click="printSplit(split.projectId,split.dataKey,split.appId)"><i class="fa fa-print"></i>打印报告</a>
             <a class="btn -middle" href="/report/down?path={{split.userId}}/{{split.appId}}/{{split.dataKey}}/result/split_reads.tar.gz"><i class="fa fa-cloud-download"></i>下载全部</a>
         </div>
       </div>
