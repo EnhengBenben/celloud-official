@@ -142,7 +142,7 @@
 	        	<span id="charResult"></span>
 	         </div>
 	     </section>
-	     <section class="m-box" ng-if="pgs.noEnoughReads != 'false'">
+	     <section class="m-box" ng-if="pgs != undefined && pgs.noEnoughReads != 'false'">
 	     	<h3>测序量不足，无法分析，建议重测。</h3>
 			<p>{{pgs.noEnoughReads}}</p>
 	     </section>
