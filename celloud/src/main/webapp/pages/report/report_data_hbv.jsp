@@ -278,14 +278,12 @@
 			    </div>
 			</div>
 			<!--Celloud数据参数同比分析-->
-			<div class="bg-analysis">
-			    <div class="m-box">
-			        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
-			        <div class="m-boxCon">
-			        	<div class="row" id="charDiv">
-				        </div>
+		    <div class="m-box">
+		        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
+		        <div class="m-boxCon">
+		        	<div class="row" id="charDiv">
 			        </div>
-			    </div>
+		        </div>
 			</div>
 			<div class="text-center mt10 mb20">
 				<a href="javascript:void(0)" ng-click="change2()" class="btn -low pull-center"><i class="i-view"></i>返回</a>
