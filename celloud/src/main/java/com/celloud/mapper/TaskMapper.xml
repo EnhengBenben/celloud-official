@@ -563,7 +563,7 @@
             and (f.file_name like concat('%',#{condition},'%')
             or s.sample_name like concat('%',#{condition},'%')
         </if>
-        <if test="period != null and period!=''">
+        <if test="period != null">
             and t.period=#{period}
         </if>
         <if test="tagId != null and tagId!=''">
