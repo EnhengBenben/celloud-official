@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<table class="table table-main no-padding-left">
+<table class="table table-main no-padding-left count-table">
   <thead>
     <tr>
       <th style="min-width:50px;">序号</th>
