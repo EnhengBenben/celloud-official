@@ -44,7 +44,7 @@
 <ul>
     <li><lable>样本种类：</lable>
         <span id="sample-type-text" class="print"></span>
-        <select id="sample-type" class="width-80" name='baseInfo["sampleType"]'>
+        <select id="sample-type" class="width-80" name='baseInfo["sampleType"]' onchange="changeTitleInfo()">
           <option value="血液">血液</option>
           <option value="尿">尿</option>
           <option value="腹水">腹水</option>
@@ -84,5 +84,13 @@ $(document).ready(function(){
     $("#reset-info").on("click",function(){
         $("#print-form")[0].reset();
     });
+    function changeTitleInfo(){
+    	var val=$("#sample-type option:selected").val();
+    	if(val=="血液"){
+    		$("#bsi_title_info").html("血流");
+    	}else{
+    		$("#bsi_title_info").html(val);
+    	}
+    }
 });
 </script>
