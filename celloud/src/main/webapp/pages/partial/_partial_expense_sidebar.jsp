@@ -2,7 +2,7 @@
 <aside class="pro-sidebar {{collapsed|proSidebarLeftFilter}}">
   <section class="s-bar">
     <ul class="pro-sidebar-menu" ng-controller="sidebarController">
-      <li class="header">费用设置</li>
+      <li class="pro-sidebar-header">费用设置</li>
       <li ng-class="{active: isActive('/expense/consume')}">
         <a di-href="#/expense/consume"><span>消费记录</span></a>
       </li>

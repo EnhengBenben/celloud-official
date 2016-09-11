@@ -2,7 +2,7 @@
 <aside class="pro-sidebar {{collapsed|proSidebarLeftFilter}}">
   <section class="s-bar">
     <ul class="pro-sidebar-menu" ng-controller="sidebarController">
-      <li class="header">消息管理</li>
+      <li class="pro-sidebar-header">消息管理</li>
       <li ng-class="{active: isActive('/messages')}">
         <a di-href="#/messages"><span>消息提醒</span></a>
       </li>
