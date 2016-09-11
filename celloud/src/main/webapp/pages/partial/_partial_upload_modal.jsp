@@ -22,7 +22,7 @@
 	            </div>
 	          </div>
 	          <div class="info-form-group">
-	            <label>产品标签:</label>
+	            <label>产品标签：</label>
 	            <div>
 	              <select ng-model="tagSelected" name="productTag" ng-options="tag.tagName for tag in tags" required>
                   </select>
