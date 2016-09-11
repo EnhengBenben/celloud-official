@@ -1796,7 +1796,6 @@ public class ReportAction {
 		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
 		// 涉及共享，此处不能取登陆者的companyId
 		String path = pgs.getCompanyId() + "/PGS/print.vm";
-        path = "2222/Pgs/print.vm";
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/PGS/print.vm";
 		}

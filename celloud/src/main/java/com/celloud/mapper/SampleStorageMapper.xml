@@ -68,8 +68,10 @@
   <insert id="addSampleStorageRelat" parameterType="com.celloud.model.mysql.SampleStorage" >
     insert into tb_sample_storage_relat (sample_id, storage_id)
     values 
-    <foreach item="sampleId" collection="sampleIds" open="(" close=")" separator=",">
-         #{sampleId,jdbcType=INTEGER},#{ssid,jdbcType=INTEGER}
+    <foreach collection="sampleIds" item="sampleId" index="index"
+        separator=",">
+        (#{sampleId,jdbcType=INTEGER},
+        #{ssid,jdbcType=INTEGER})
     </foreach>
   </insert>
   <select id="findAll" resultMap="BaseResultMap">

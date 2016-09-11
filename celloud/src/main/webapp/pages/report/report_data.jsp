@@ -65,10 +65,10 @@
                 <li><a href="javascript:void(0)" ng-click="periodQuery(2)">完成</a></li>
                 <li><a href="javascript:void(0)" ng-click="periodQuery(1)">分析中</a></li>
                 <li><a href="javascript:void(0)" ng-click="periodQuery(0)">等待分析</a></li>
-                <li><a href="javascript:void(0)" ng-click="periodQuery(3)">数据上传中</a></li>
+                <li><a href="javascript:void(0)" ng-click="periodQuery(3)">数据不完整</a></li>
                 <li><a href="javascript:void(0)" ng-click="periodQuery(4)">异常终止</a></li>
-                <li><a href="javascript:void(0)" ng-click="periodQuery(6)">实验中</a></li>
-                <li><a href="javascript:void(0)" ng-click="periodQuery(5)">送样中</a></li>
+<!--                 <li><a href="javascript:void(0)" ng-click="periodQuery(6)">实验中</a></li> -->
+<!--                 <li><a href="javascript:void(0)" ng-click="periodQuery(5)">送样中</a></li> -->
               </ul>
             </div>
           </li>
@@ -112,7 +112,7 @@
             <td>{{task.tagName}}</td>
             <td>{{task.batch}}</td>
             <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td>{{task.period == 1 ? '正在运行' : '运行完成'}}</td>
+            <td>{{task.period | taskPeriodFilter}}</td>
             <td>
               <a ng-if="task.period == 1" ng-class="{disabled:task.period == 1}"><i class="fa fa-eye" aria-hidden="true"></i></a>
               <a ng-if="task.period == 2" href="#/reportdata/{{task.appName == '华木兰' ? 'rocky' : task.appName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>

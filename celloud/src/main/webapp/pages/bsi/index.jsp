@@ -178,12 +178,13 @@
 	</div>
   </div>
   <div id="fullbg"></div> 
-  <div id="pageContent" class="pageContent">
+  <div id="pageContent" class="pageContent hide">
     <a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
     <img id="imageFullScreen" src="">
   </div>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
