@@ -63,24 +63,31 @@
         $("#tips-modal").modal("show");
         return;
       }
-      $.confirm("请保证所选数据为配对数据！","确认框",function(){
-        var checkedIds = $.dataManager.options.checkedIds;
-        if(checkedIds.length!=$.dataManager.options.validIds){
-          $rootScope.errorInfo = "数据选择异常，请刷新页面后重新选择！";
-          $("#tips-modal").modal("show");
-          return;
-        }
-        runService.run().success(function(response) {
-          if(response.success){
-            $.alert("运行成功");
-            $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
-            $.dataManager.refreshDataList();
-          }else{
-            $scope.message = response.message;
-          }
+      if($.dataManager.options.isPair!=0){
+        $.confirm("请保证所选数据为配对数据！","确认框",function(){
+          $scope.run();
         });
-      });
+      }else{
+        $scope.run();
+      }
     };
+    $scope.run = function(){
+      var checkedIds = $.dataManager.options.checkedIds;
+      if(checkedIds.length!=$.dataManager.options.validIds){
+        $rootScope.errorInfo = "数据选择异常，请刷新页面后重新选择！";
+        $("#tips-modal").modal("show");
+        return;
+      }
+      runService.run().success(function(response) {
+        if(response.success){
+          $.alert("运行成功");
+          $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
+          $.dataManager.refreshDataList();
+        }else{
+          $scope.message = response.message;
+        }
+      });
+    }
     //数据删除
     $scope.deleteData = function(){
       if(!$scope.checkNum()){

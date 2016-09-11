@@ -61,6 +61,7 @@ public class DefaultMessageHandler implements MessageHandler {
     private void sendMessage(WebSocketSession session, TextMessage message) {
         if (session.isOpen()) {
             try {
+                logger.info("开始为用户发送消息");
                 session.sendMessage(message);
             } catch (IOException e) {
                 logger.error("发送消息给【{}】失败：{}", getUsernameFromSession(session), message.getPayload(), e);
