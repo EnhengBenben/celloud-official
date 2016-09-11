@@ -10,6 +10,7 @@
         }else {
           $scope.sampleList = samplingService.sampleList();
         }
+        $scope.sampleName = "";
       })
     }
     $scope.commitSample = function(){
@@ -52,12 +53,13 @@
     $scope.scanStorage = function(){
       scanStorageService.scanStorage($scope.sampleName).success(function(data){
         if(data == 0){
-          $scope.notPrevError = true;
+          $.alert("系统中无此样本信息，请确认是已采样样本！")
         }else if(data > 0){
           $scope.sampleList = scanStorageService.sampleList();
         }else {
-          $scope.repeatError = true;
+          $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！")
         }
+        $scope.sampleName = "";
       });
     }
     
@@ -79,12 +81,13 @@
     $scope.tokenDNA = function(){
       tokenDNAService.tokenDNA($scope.sampleName).success(function(data){
         if(data == 0){
-          $scope.notPrevError = true;
+          $.alert("此样本未入库");
         }else if(data > 0){
           $scope.sampleList = tokenDNAService.sampleList();
         }else {
-          $scope.repeatError = true;
+          $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
         }
+        $scope.sampleName = "";
       });
     }
     $scope.remove = function(id){
@@ -107,15 +110,16 @@
         $.tips("每个文库最多12个样本！")
       }else{
         buidLibraryService.addSample($scope.sampleName,sampleList).success(function(data){
-          if(data == 0){
-            $scope.notPrevError = true;
-          }else if(data > 0){
+          if(data > 0){
             $scope.infos = buidLibraryService.infos();
+          }else if(data == 0){
+            $.alert("此样本未提取DNA");
           }else {
-            $scope.repeatError = true;
+            $.alert("此样品信息已经入库，请核查或者扫描下一管样品信息！");
           }
         });
       }
+      $scope.sampleName = "";
     }
     $scope.remove = function(id){
       scanStorageService.remove(id).success(function(data){

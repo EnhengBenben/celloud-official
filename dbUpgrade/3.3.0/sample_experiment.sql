@@ -16,6 +16,7 @@ USE `celloud`;
 ALTER TABLE `tb_sample`
 	ADD COLUMN `type` VARCHAR(50) NULL DEFAULT NULL COMMENT '样本类型' AFTER `is_add`,
 	ADD COLUMN `sindex` VARCHAR(50) NULL DEFAULT NULL COMMENT '样本index' AFTER `type`;
+	ADD COLUMN `remark` TEXT NULL DEFAULT NULL COMMENT '备注' AFTER `state`;
 
 -- 导出  表 celloud.tb_sample_log 结构
 CREATE TABLE IF NOT EXISTS `tb_sample_log` (
