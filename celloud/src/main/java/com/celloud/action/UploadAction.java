@@ -101,6 +101,10 @@ public class UploadAction {
 		int dataId = handleUpload(file, name, uniqueName, chunk, chunks, batch, request);
 		if (dataId != 0) {
 			DataFile data = dataService.getDataById(dataId);
+			//TODO 写死的华木兰标签信息
+			data.setTagId(2);
+			data.setTagName("华木兰");
+			dataService.updateDataAndTag(data);
 			List<Integer> dataIds = rockyCheckRun(data);
 			if (dataIds.size() > 0) {
 				model.put("run", "true");
