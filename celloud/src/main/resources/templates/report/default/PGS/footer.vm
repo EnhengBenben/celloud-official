@@ -1,4 +1,4 @@
-<li class="left">检测人：<span><input name="baseInfo['detection']" value="$!pgs.baseInfo.detection" type="text" class="input-mini" /></span></li>
+<li class="left">检测人：<span><input name="baseInfo['detection']" value="#if($pgs.baseInfo.detection)$!pgs.baseInfo.detection#else#if($pgs.appId==121 and $pgs.userId==41)孙方西#else#end#end" type="text" class="input-mini" /></span></li>
 <li class="left">复核人：<span><input name="baseInfo['review']" value="$!pgs.baseInfo.review" type="text" class="input-mini" /></span></li>
 <li class="left">审核人：<span><input name="baseInfo['audit']" value="$!pgs.baseInfo.audit" type="text" class="input-mini" /></span></li>
 <li class="right pull-right">日期：<span><input name="baseInfo['date']" value="$!pgs.baseInfo.date" type="text" class="input-small" /></span></li>
