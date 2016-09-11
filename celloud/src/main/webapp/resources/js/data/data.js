@@ -23,7 +23,8 @@ function _init_data(){
     isRun: 0,
     isTag: 0,
     isBSI: 0,
-    isRocky: 0
+    isRocky: 0,
+    isPair:0
   };
   
   /**
@@ -36,6 +37,7 @@ function _init_data(){
     var _isTag = $(obj).attr("is_tag");
     var _isBSI = $(obj).attr("is_bsi");
     var _isRocky = $(obj).attr("is_rocky");
+    var _isPair = $(obj).attr("is_pair");
     if(_checked){
       $.dataManager.checkData.isCheck(_dataId);
       if(_isRun=="true"){
@@ -46,6 +48,8 @@ function _init_data(){
         $.dataManager.options.isBSI = $.dataManager.options.isBSI + 1;
       }else if(_isRocky=="true"){
         $.dataManager.options.isRocky = $.dataManager.options.isRocky + 1;
+      }else if(_isPair=="true"){
+        $.dataManager.options.isPair = $.dataManager.options.isPair + 1;
       }else{
         $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
       }
@@ -59,6 +63,8 @@ function _init_data(){
         $.dataManager.options.isBSI = $.dataManager.options.isBSI - 1;
       }else if(_isRocky=="true"){
         $.dataManager.options.isRocky = $.dataManager.options.isRocky - 1;
+      }else if(_isPair=="true"){
+        $.dataManager.options.isPair = $.dataManager.options.isPair - 1;
       }else{
         $.dataManager.options.validIds = $.dataManager.options.validIds - 1;
       }
@@ -82,6 +88,7 @@ function _init_data(){
             var _isTag = $(choicearr[i]).attr("is_tag");
             var _isBSI = $(choicearr[i]).attr("is_bsi");
             var _isRocky = $(choicearr[i]).attr("is_rocky");
+            var _isPair = $(choicearr[i]).attr("is_pair");
             if(_isRun=="true"){
               $.dataManager.options.isRun = $.dataManager.options.isRun + 1;
             }else if(_isTag=="true"){
@@ -90,6 +97,8 @@ function _init_data(){
               $.dataManager.options.isBSI = $.dataManager.options.isBSI + 1;
             }else if(_isRocky=="true"){
               $.dataManager.options.isRocky = $.dataManager.options.isRocky + 1;
+            }else if(_isPair=="true"){
+              $.dataManager.options.isPair = $.dataManager.options.isPair + 1;
             }else{
               $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
             }
@@ -108,6 +117,7 @@ function _init_data(){
       $.dataManager.options.isTag = 0;
       $.dataManager.options.isBSI = 0;
       $.dataManager.options.isRocky = 0;
+      $.dataManager.options.isPair = 0;
       $.dataManager.options.validIds = 0;
       $.dataManager.editBtn.disable();
     }
@@ -129,6 +139,7 @@ function _init_data(){
     $.dataManager.options.isTag = 0;
     $.dataManager.options.isBSI = 0;
     $.dataManager.options.isRocky = 0;
+    $.dataManager.options.isPair = 0;
     $.dataManager.options.validIds = 0;
     $.dataManager.editBtn.update();
     $.dataManager.cleanCheckbox("demo-checkbox1");
