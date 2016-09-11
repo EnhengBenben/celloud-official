@@ -621,8 +621,8 @@
 	</select>
 	<select id="getBatchList" resultType="java.lang.String">
 		select batch from tb_file
-		where user_id=#{userId} and state=#{state} group
-		by batch
+		where user_id=#{userId} and state=#{state} and batch is not null and batch !=''
+		group by batch
 	</select>
 	<select id="filterRockyList" resultMap="ResultMapWithRunState"
 		parameterType="java.lang.Integer">
