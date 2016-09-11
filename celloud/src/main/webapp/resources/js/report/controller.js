@@ -180,35 +180,37 @@
 		  $scope.project = brafInfo.project;
 		  $scope.uploadPath = brafInfo.uploadPath;
 		  
-		  var $table = $($scope.braf.mutationPosition);
-		  $scope.searchTable = function(){
-			  var result = "";
-			  $table.find("td").each(function() {
-		      	  var context = $(this).html();
-		      	  var len = context.indexOf("-");
-		      	  var before = $.trim(context.substring(len - 2, len - 1));
-		      	  var after = $.trim(context.substring(len + 1, len + 3));
-		      	  var d = context.indexOf(",");
-		      	  var k = context.indexOf(")");
-		      	  if (k == -1) {
-		      	  	  result += after;
-		      	  } else if (before != after) {
-		      	  	  result += after;
-		      	  } else {
-		      	  	  var search = $("#_snum").val();
-		      	  	  var r = context.substring(d + 1, k);
-		      	  	  if (parseFloat(r) > parseFloat(search)) {
-		      	  		  result += after;
-		      	  	  } else {
-		      	  		  var l = context.indexOf("|");
-		      	  		  var r = context.indexOf("(");
-		      	  		  result += context.substring(l + 1, r);
-		      	  	  }
-		      	  }
-		      });
-		      $("#searchResult").html(map[result]);
-          }
-		  $scope.searchTable();
+		  if($scope.braf != undefined){
+			  var $table = $($scope.braf.mutationPosition);
+			  $scope.searchTable = function(){
+				  var result = "";
+				  $table.find("td").each(function() {
+			      	  var context = $(this).html();
+			      	  var len = context.indexOf("-");
+			      	  var before = $.trim(context.substring(len - 2, len - 1));
+			      	  var after = $.trim(context.substring(len + 1, len + 3));
+			      	  var d = context.indexOf(",");
+			      	  var k = context.indexOf(")");
+			      	  if (k == -1) {
+			      	  	  result += after;
+			      	  } else if (before != after) {
+			      	  	  result += after;
+			      	  } else {
+			      	  	  var search = $("#_snum").val();
+			      	  	  var r = context.substring(d + 1, k);
+			      	  	  if (parseFloat(r) > parseFloat(search)) {
+			      	  		  result += after;
+			      	  	  } else {
+			      	  		  var l = context.indexOf("|");
+			      	  		  var r = context.indexOf("(");
+			      	  		  result += context.substring(l + 1, r);
+			      	  	  }
+			      	  }
+			      });
+			      $("#searchResult").html(map[result]);
+	          }
+			  $scope.searchTable();
+		  }
 	  });
   });
   

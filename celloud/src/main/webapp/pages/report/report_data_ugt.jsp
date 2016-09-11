@@ -44,7 +44,7 @@
          <section class="m-box">
 	         <h2><i class="i-dna"></i>原始峰图</h2>
 			 <div ng-if="ugt.original != null" ng-repeat="original in ugt.original" class="m-boxCon result">
-				<a href="javascript:bigOrigin('{{uploadPath}}{{ugt.userId}}/{{ugt.appId}}/{{ugt.dataKey}}/SVG/{{original}}','original{{$index+1}}');" >
+				<a ng-click="bigOrigin(uploadPath + ugt.userId + '/' + ugt.appId + '/' + ugt.dataKey + '/SVG/' + original,'original' + $index+1);" >
 					<img src="{{uploadPath}}{{ugt.userId}}/{{ugt.appId}}/{{ugt.dataKey}}/SVG/{{original}}" class="originImg" id="original{{$index+1}}">
 				</a>
 		     </div>

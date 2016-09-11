@@ -44,7 +44,7 @@
 				<i class="i-edit"></i>原始序列
 			</h2>
 		    <div class="m-boxCon result">
-				<div ng-if="tbrifampicin.seq == null || tbrifampicin.seq == ''" style="color: red;">程序分析异常，没有得到任何结果</div>
+				<div ng-if="tbrifampicin != undefined && (tbrifampicin.seq == null || tbrifampicin.seq == '')" style="color: red;">程序分析异常，没有得到任何结果</div>
 				<div ng-if="tbrifampicin.seq != null">
 			    	{{tbrifampicin.seq}}
 				</div>
@@ -54,11 +54,11 @@
 	         <h2>
 				<i class="i-dna"></i>原始峰图
 			 </h2>
-		 	 <div ng-if="tbrifampicin.original == null" class="m-boxCon">
+		 	 <div ng-if="tbrifampicin != null && tbrifampicin.original == null" class="m-boxCon">
 			 	<div style="color: red;">程序分析异常，没有得到任何结果</div>
 		 	 </div>
 	 		 <div ng-if="tbrifampicin.original != null" ng-repeat="original in tbrifampicin.original" class="m-boxCon">
-	 			<a href="javascript:bigOrigin('{{uploadPath}}{{tbrifampicin.userId}}/{{tbrifampicin.appId}}/{{tbrifampicin.dataKey}}/SVG/{{original}}','original{{$index+1}}');">
+	 			<a ng-click="bigOrigin(uploadPath + tbrifampicin.userId + '/' + tbrifampicin.appId + '/' + tbrifampicin.dataKey + '/SVG/' + original,'original' + $index+1);">
 	 				<img name="imgSrc" src="{{uploadPath}}{{tbrifampicin.userId}}/{{tbrifampicin.appId}}/{{tbrifampicin.dataKey}}/SVG/{{original}}" class="originImg" id="original{{$index+1}}">
 	 		 	</a>
 	 		 </div>

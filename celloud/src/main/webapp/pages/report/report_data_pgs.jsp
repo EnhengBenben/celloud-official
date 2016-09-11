@@ -115,11 +115,11 @@
          <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	         <h2><i class="i-dna"></i>染色体点图</h2>
              <div class="m-boxCon">
-				<a ng-if="pgs.testPng != null && pgs.testPng != ''" href="javascript:bigOrigin('{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.testPng}}','testPngImg');" >
+				<a ng-if="pgs.testPng != null && pgs.testPng != ''" ng-click="bigOrigin(uploadPath + pgs.userId + '/' + pgs.appId + '/' + pgs.dataKey + '/' + pgs.testPng,'testPngImg');" >
 					<img src="{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.testPng}}" style="width: 100%;" id="testPngImg">
 				</a>
 				<span ng-if="pgs.testPng == null || pgs.testPng == ''" style="color: red;">运行异常，未产生图片！</span>
-				<a ng-if="pgs.hrpng != null && pgs.hrpng != ''" href="javascript:bigOrigin('{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.hrpng}}','HRPngImg');" >
+				<a ng-if="pgs.hrpng != null && pgs.hrpng != ''" ng-click="bigOrigin(uploadPath + pgs.userId + '/' + pgs.appId + '/' + pgs.dataKey + '/' + pgs.hrpng,'HRPngImg');" >
 					<img src="{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.hrpng}}" style="width: 100%;" id="HRPngImg">
 				</a>
              </div>
