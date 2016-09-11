@@ -61,7 +61,7 @@
         </ul>
         </form>
       </div>
-      <table class="table table-main info-table pro-table report-table" ng-init="pageType='reportpro'">
+      <table class="table table-main info-table pro-table no-hover" ng-init="pageType='reportpro'">
         <tbody id="_show">
           <tr ng-if="dataList.datas.length==0"><td style="text-align: center;">没有可以展示的报告</td></tr>
           <tr ng-repeat="report in dataList.datas" load-over>

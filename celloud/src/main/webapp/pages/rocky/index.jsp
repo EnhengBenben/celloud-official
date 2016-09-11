@@ -71,10 +71,14 @@
 			</div>
 	    </div>
 	</div>
-	<script type="text/javascript">
-		window.contextPath = '<%=request.getContextPath()%>';
-	</script>
-  
+  <div id="fullbg"></div> 
+  <div id="pageContent" class="pageContent hide">
+    <a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
+    <img id="imageFullScreen" src="">
+  </div>
+  <script type="text/javascript">
+	window.contextPath = '<%=request.getContextPath()%>';
+  </script>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -87,10 +91,11 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
-  <script src="<%=request.getContextPath() %>/js/utils.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
+  <script src="<%=request.getContextPath()%>/js/utils.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>
   <script src="<%=request.getContextPath()%>/js/report_codon.js"></script>
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
