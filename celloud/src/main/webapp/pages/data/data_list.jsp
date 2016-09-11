@@ -53,7 +53,7 @@
                 <span class="info"></span>
               </label>
             </td>
-            <td title="{{file.fileName}}">{{file.fileName}} <i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i></td>
+            <td title="{{file.fileName}}"><i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i> {{file.fileName}}</td>
             <td>{{file.anotherName}}</td>
             <td>{{file.tagName}}</td>
             <td>{{file.batch}}</td>
