@@ -6,7 +6,7 @@
         <a href="javascript:void(0)" ng-click="toggleCollapse()"><i class="{{collapsed|collapsedIconFilter}}"></i></a>
       </div>
       <ul class="sidebar-menu">
-        <li class="header">产品与服务</li>
+        <li class="sidebar-header">产品与服务</li>
         <li ng-class="{active: isActive('/')}">
           <a di-href="<%=request.getContextPath()%>/index#/"><i class="overview-icon"></i><span>我的工作台</span></a>
         </li>
@@ -41,7 +41,7 @@
         </shiro:hasPermission>
       </ul>
       <ul class="sidebar-menu">
-        <li class="header">用户中心</li>
+        <li class="sidebar-header">用户中心</li>
         <li ng-class="{active: isActive('/user')}">
           <a di-href="<%=request.getContextPath()%>/index#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>

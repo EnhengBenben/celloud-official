@@ -2,6 +2,7 @@
     position:absolute;
     top: 0;
     left: 0;
+    margin: 0;
     padding-top:0px;
     padding-left:0px;
     padding-right:0px;
@@ -52,4 +53,12 @@
   cursor: pointer;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
+}
+.zoomableContainer{
+	overflow: hidden;
+    position: relative;
+    top: 0px;
+    left: 0px;
+	width: 100% !important;
+	height: 100%!important;
 }
