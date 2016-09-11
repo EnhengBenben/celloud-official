@@ -114,7 +114,8 @@
             <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{task.period == 1 ? '正在运行' : '运行完成'}}</td>
             <td>
-              <a ng-disabled="task.period == 1" href="#/reportdata/{{task.appName == '华木兰' ? 'rocky' : task.appName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a ng-if="task.period == 1" ng-class="{disabled:task.period == 1}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a ng-if="task.period == 2" href="#/reportdata/{{task.appName == '华木兰' ? 'rocky' : task.appName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
             </td>
           </tr>
         </tbody>
