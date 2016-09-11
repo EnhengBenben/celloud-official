@@ -297,8 +297,8 @@
   <div class="modal-dialog">
    <div class="modal-content">
 	<div class="modal-header">
-		<a class="close" data-dismiss="modal">×</a>
-		<h4 class="modal-title">帮助</h4>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+        <h4 class="modal-title">帮助</h4>
 	</div>
 	<div class="modal-body form-modal">
 		<div id="_showMore">
