@@ -69,7 +69,7 @@
 	    <section  class="m-box">
 	        <h2><i class="i-edit"></i>报告</h2>
 			<div class="m-boxCon" id="_report" style="display: inline-block;width: 100%">
-				<table class="table table-main" style="width:95%;height:100px;">
+				<table class="table table-main no-hover" style="width:95%;height:100px;">
 			   		<tr>
 	   					<td ng-if="cmp.cmpGeneResult=='' || cmp.cmpGeneResult==null || cmp.cmpGeneResult=='null'">未检测到相关突变位点</td>
 		   				<td ng-if="cmp.cmpGeneResult.length >= 2 && cmp.cmpGeneResult!='' && cmp.cmpGeneResult!=null && cmp.cmpGeneResult!='null'" width="46%" valign="top" height="100%">
