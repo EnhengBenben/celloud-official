@@ -25,6 +25,11 @@ $(document).ready(function() {
 	if (companyId == 6) {
 		$.get("count/pgsCount",function(responseText){
 			$("#countDiv").html(responseText);
+			var url = $("#downUrl").val();
+      if(url){
+        $("#_down").attr("href", url);
+        $("#_down").removeClass("hide");
+      }
 			spinner.stop();
 		});
 	} else if (companyId == 3) {

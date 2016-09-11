@@ -67,6 +67,8 @@ import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ReportService;
+import com.celloud.utils.CustomStringUtils;
+import com.celloud.utils.DateUtil;
 import com.celloud.utils.ExcelUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
@@ -646,7 +648,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public List<Pgs> pgsCount(Integer userId) {
+	public Map<String, Object> pgsCount(Integer userId) {
 		List<Pgs> pgsList = reportDao.getAppList(Pgs.class, userId);
 		// TODO 将mongodb中查询出来的日期回退8小时
 		// 要彻底解决此问题，需要
@@ -660,7 +662,31 @@ public class ReportServiceImpl implements ReportService {
 				p.setUploadDate(c.getTime());
 			}
 		}
-		return pgsList;
+		Map<String, Object> result = new HashMap<>();
+		// TODO 考虑前台下载时 js导出excel
+		long l = new Date().getTime();
+		String txt = String.valueOf(l + ".txt");
+		String fileName = String.valueOf(l + ".xls");
+		String path = PropertiesUtil.outputPath + txt;
+		String excelpath = PropertiesUtil.outputPath + fileName;
+		result.put("fileName", fileName);
+		result.put("data", pgsList);
+		FileTools.createFile(path);
+		FileTools.appendWrite(path,
+				"数据编号\tBarcode\t数据别名\t上传日期\tAPP\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
+		StringBuffer line = new StringBuffer();
+		for (Pgs pgs : pgsList) {
+			line.append(pgs.getDataKey()).append("\t").append(CustomStringUtils.getBarcode(pgs.getFileName()))
+					.append("\t").append(pgs.getAnotherName()).append("\t")
+					.append(DateUtil.getDateToString(pgs.getUploadDate(), "yyyy-MM-dd")).append("\t")
+					.append(pgs.getAppName()).append("\t").append(pgs.getTotalReads()).append("\t")
+					.append(pgs.getMapReads()).append("\t").append(pgs.getMapRatio()).append("\t")
+					.append(pgs.getDuplicate()).append("\t").append(pgs.getGcCount()).append("\t").append(pgs.getSd())
+					.append("\n");
+		}
+		FileTools.appendWrite(path, line.toString());
+		ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
+		return result;
 	}
 
 	@Override
