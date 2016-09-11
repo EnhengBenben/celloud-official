@@ -86,7 +86,7 @@
 					var $fileDom_upload = $('<tr class="plupload_delete" id="upload-' + item.id + '">');
 					$fileDom_upload.append($('<td class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></td>'));
 					$fileDom_upload.append($('<td class="plupload-file-size">'+getSize(item.size)+'</td>'));
-					$fileDom_upload.append($('<td class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
+					$fileDom_upload.append($('<td class="plupload-file-action"><a href="#" style="display: block;line-height: 30px;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
 					$fileDom_upload.append($('</tr>'));
 					$("#upload-list-tbody").append($fileDom_upload);
 					// 第三步
@@ -95,7 +95,7 @@
 					$fileDom_uploading.append($('<td class="plupload-file-status">_</td>'));
 					$fileDom_uploading.append($('<td class="plupload-file-surplus">_</td>'));
 					$fileDom_uploading.append($('<td class="plupload_file_speed">_</td>'));
-					$fileDom_uploading.append($('<td class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
+					$fileDom_uploading.append($('<td class="plupload-file-action"><a href="#" style="display: block;line-height: 30px;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
 					$fileDom_uploading.append($('</tr>'));
 					$("#uploading-list-tbody").append($fileDom_uploading);
 					
