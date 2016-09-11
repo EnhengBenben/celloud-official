@@ -24,8 +24,8 @@
           </form>
         </div>
         <div class="sample-btns clearfix">
-          <a ng-click="commitSample()" class="btn -low pull-right">提交样本</a>
-          <a id="sample-cancel" class="btn btn-reset -low pull-right">取消</a>
+          <a ng-click="commitSample()" class="btn -low pull-right" ng-disabled="sampleList.length <= 0">提交样本</a>
+          <a id="sample-cancel" class="btn btn-reset -low pull-right" ng-disabled="sampleList.length <= 0">取消</a>
         </div>
         <form id="sample-form" method="post">
           <table class="table table-main">

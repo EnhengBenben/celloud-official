@@ -42,8 +42,8 @@
             <a class="action" ng-click="addSample()">扫码入库</a>
           </div>
           <div class="library-btns pull-right">
-            <a ng-click="addLibrary()" class="btn -low pull-right">建库</a>
-            <a ng-click="addAndDownLibrary()" class="btn btn-reset -low pull-right">建库并下载</a>
+            <a ng-click="addLibrary()" class="btn -low pull-right" ng-disabled="infos.pageList.datas.length <= 0">建库</a>
+            <a ng-click="addAndDownLibrary()" class="btn btn-reset -low pull-right" ng-disabled="infos.pageList.datas.length <= 0">建库并下载</a>
           </div>
         </div>
         <div class="table-opera clearfix">
