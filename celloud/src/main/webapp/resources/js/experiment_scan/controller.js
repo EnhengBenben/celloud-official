@@ -78,6 +78,20 @@
   celloudApp.controller("tokenDNAController",function($scope,scanStorageService, tokenDNAService){
     $scope.sampleList = tokenDNAService.sampleList();
     
+    var pages = {
+        page : 1,
+        pageSize : 10
+      };
+      $scope.pageQuery = function(page,pageSize){
+        pages = {
+          page : page,
+          pageSize : pageSize
+        };
+        tokenDNAService.pageList(page,pageSize).success(function(data){
+          $scope.sampleList = tokenDNAService.sampleList();
+        });
+      }
+    
     $scope.tokenDNA = function(){
       tokenDNAService.tokenDNA($scope.sampleName).success(function(data){
         if(data == 0){
@@ -134,13 +148,12 @@
     
     $scope.addLibrary = function(){
       buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
-        if(data == 0){
-          $scope.notPrevError = true;
-        }else if(data > 0){
+        if(data > 0){
           $scope.infos = buidLibraryService.infos();
-          sno++;
+          $.alert("建库成功！");
         }else {
           $scope.repeatError = true;
+          $.alert("建库失败！");
         }
       });
     }
@@ -157,6 +170,7 @@
             }else{
               var url = window.location.href.split("index")[0];
               window.location.href=url+"sample/downExperExcel?ssId="+data+"&storageName="+storageName;
+              $.alert("建库并下载成功！");
             }
           });
         }else {
@@ -171,7 +185,19 @@
     storagesService.sampleList().success(function(data){
       $scope.sampleList = data;
     });
-    
+    var pages = {
+        page : 1,
+        pageSize : 10
+      };
+      $scope.pageQuery = function(page,pageSize){
+        pages = {
+          page : page,
+          pageSize : pageSize
+        };
+        storagesService.pageList(page,pageSize).success(function(data){
+          $scope.storages = storagesService.storages();
+        });
+      }
     $scope.download = function(id,storageName){
       buidLibraryService.downloadExcel(id,storageName).success(function(flag){
         if(flag==1){
@@ -179,6 +205,7 @@
         }else{
           var url = window.location.href.split("index")[0];
           window.location.href=url+"sample/downExperExcel?ssId="+id+"&storageName="+storageName;
+          $.alert("下载Excel文件成功！");
         }
       });
     }

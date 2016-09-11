@@ -104,7 +104,7 @@ public class SampleServiceImple implements SampleService {
     @Override
     public PageList<Sample> getSamples(Page page, Integer userId,
             Integer experState) {
-        List<Sample> list = sampleMapper.getSamples(userId, experState,
+        List<Sample> list = sampleMapper.getSamples(page, userId, experState,
                 DataState.ACTIVE);
         return new PageList<>(page, list);
     }
@@ -208,7 +208,7 @@ public class SampleServiceImple implements SampleService {
     @Override
     public PageList<SampleStorage> getSampleStorages(Page page,
             Integer userId) {
-        List<SampleStorage> list = sampleStorageMapper.findAll(userId,
+        List<SampleStorage> list = sampleStorageMapper.findAll(page, userId,
                 DataState.ACTIVE);
         return new PageList<SampleStorage>(page, list);
     }
