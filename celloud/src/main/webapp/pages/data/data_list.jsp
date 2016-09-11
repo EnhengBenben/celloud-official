@@ -30,7 +30,7 @@
       <table class="table table-main" ng-init="pageType='data'">
         <thead>
           <tr>
-            <th>
+            <th class="th-checkoutbox">
               <label class="checkbox-lable">
                 <input class="checkbox" type="checkbox" name="demo-checkbox1" id="data-checkall" onclick="$.dataManager.checkAll(this, 'data-checkone')">
                 <span class="info"></span>
