@@ -14,7 +14,8 @@
   <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/css/celloud.min.css" rel="stylesheet" type="text/css">
+  <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" />
+  <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
   <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
   <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
   <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
@@ -39,12 +40,12 @@
 		    <div class="topbar-menu">
 		      <header class="common-menu">
                 <div class="common-menu-logo">
-                    <img alt="华木兰" src="<%=request.getContextPath()%>/images/app/bsi.png">
+                    <img alt="百菌探" src="<%=request.getContextPath()%>/images/app/bsi.png">
                 </div>
                 <hr class="-left">
                 <div id="common-menu-center" class="info">
                   <div id="common-menu" class="common-menu-btn pull-left">
-                    <a class="item-btn" id="to-sample-a" href="javascript:void(0)"><i class="celicon my-sample-icon"></i><br>收样</a>
+<!--                     <a class="item-btn" id="to-sample-a" href="javascript:void(0)"><i class="celicon my-sample-icon"></i><br>收样</a> -->
                     <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)">
                       <i class="celicon my-upload-icon"></i><br>上传
                       <canvas id="upload-progress" class="upload-progress" width="64" height="64"></canvas>
@@ -176,7 +177,11 @@
 	  </div><!-- /.modal -->
 	</div>
   </div>
-  
+  <div id="fullbg"></div> 
+  <div id="pageContent" class="pageContent">
+    <a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
+    <img id="imageFullScreen" src="">
+  </div>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -189,8 +194,8 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
-  <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
   <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/js/utils.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>

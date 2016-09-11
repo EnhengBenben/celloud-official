@@ -12,8 +12,6 @@
           <p>* 请持条码枪扫描样品管上的条码<br>
               无条码样品请按以下方式操作：<br> 1. 在样品管上记录样品病历号<br> 2. 将病历号输入上面窗口后回车
           </p>
-          <span class="input-alert" ng-show="notPrevError">此样本未入库</span>
-          <span class="input-alert" ng-show="repeatError">此样品信息已经收集过，请核查或者采集下一管样品信息！</span>
           <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入样本编号！</span>
           <div class="info-btn-group">
             <input class="field" type="text" ng-trim="true" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
@@ -63,9 +61,7 @@
 		                   <div class="control-label form-label col-xs-2">备注：</div>
 		                   <!-- 长度10-100 -->
 		                   <div class="col-xs-10 form-group-content">
-		                       <textarea rows="4" ng-trim="true" ng-model="remark" name="remark" required ng-maxlength="100">
-		                        {{remark}}
-		                       </textarea>
+		                       <textarea rows="4" ng-trim="true" ng-model="remark" name="remark" required ng-maxlength="100">{{remark}}</textarea>
 		                       <span class="input-alert break-line" ng-show="sampleForm.remark.$dirty && sampleForm.remark.$error.required">请输入问题的描述</span>
 		                       <span class="input-alert break-line" ng-show="sampleForm.remark.$dirty && (sampleForm.remark.$error.maxlength)">请输入小于1000字的描述！</span>
 		                   </div>

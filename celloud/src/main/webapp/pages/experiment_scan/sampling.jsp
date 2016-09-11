@@ -11,7 +11,6 @@
               无条码样品请按以下方式操作：<br> 1. 在样品管上记录样品病历号<br> 2. 将病历号输入上面窗口后回车
           </p>
           <form name="samplingForm">
-            <span class="input-alert" ng-show="repeatError">此样品信息已经收集过，请核查或者采集下一管样品信息！</span>
             <span class="input-alert" ng-show="samplingForm.$invalid">需要输入完整信息</span>
             <select class="tag-select" ng-model="selTags" ng-options="tag.tagName for tag in productTags" required>
               <option value="请选择检测类型">请选择检测类型</option>

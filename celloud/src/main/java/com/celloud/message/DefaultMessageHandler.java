@@ -35,6 +35,7 @@ public class DefaultMessageHandler implements MessageHandler {
         Collection<WebSocketSession> sessions = SystemWebSocketHandler.getSessions(username);
         TextMessage tm = new TextMessage(message);
         for (WebSocketSession session : sessions) {
+            logger.info("给用户{}发送消息", username);
             sendMessage(session, tm);
         }
     }

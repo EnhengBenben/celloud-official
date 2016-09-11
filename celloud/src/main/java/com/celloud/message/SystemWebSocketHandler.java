@@ -75,6 +75,7 @@ public class SystemWebSocketHandler implements WebSocketHandler {
 		List<WebSocketSession> sessions = new ArrayList<>();
 		for (WebSocketSession wss : userSessions.values()) {
 			if (username.equals(getUsernameFromSession(wss))) {
+                logger.info("获取到用户");
 				sessions.add(wss);
 			}
 		}

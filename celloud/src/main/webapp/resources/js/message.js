@@ -57,6 +57,7 @@ var messageUtils = (function(messageUtils) {
 			}
 		};
 		self.ws.onmessage = function(e) {
+			console.log("来消息了啊!!!!!!!!!!!!!!");
 			var message = JSON.parse(e.data);
 			var channels = self.messageChannels[message.channel] || [];
 			if (channels.length <= 0) {
@@ -114,6 +115,7 @@ var messageUtils = (function(messageUtils) {
 		return new Notification(title, options);
 	};
 	self.notify = function(title, message, options, events) {
+		console.log("来消息了啊!!!!!!!!!!!!!!");
 		if (!("Notification" in window)) {
 			console.log("This browser does not support desktop notification");
 			return;

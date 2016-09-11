@@ -36,8 +36,6 @@
 			<option value="M16s_1_23R/F:TCTACTG">M16s_1_23R/F:TCTACTG</option>
 			<option value="M16s_1_24R/F:TACTTCC">M16s_1_24R/F:TACTTCC</option>
           </select>
-          <span class="input-alert" ng-show="notPrevError">此样本未提取DNA</span>
-          <span class="input-alert" ng-show="repeatError">此样品信息已经入库，请核查或者扫描下一管样品信息！</span>
           <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入样本编号！</span>
 	      <div class="info-btn-group">
             <input class="field" type="text" ng-trim="true" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
