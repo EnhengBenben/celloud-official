@@ -190,6 +190,7 @@ public class TaskAction {
         String pubName = "";
         String batch = "";
         String fname = "";
+        Integer tagId = 0;
         for (DataFile d_tmp : dataList) {
             String filename = d_tmp.getFileName();
             fname = d_tmp.getFileName();
@@ -197,6 +198,7 @@ public class TaskAction {
                 pubName = filename.substring(0, filename.lastIndexOf("."));
             }
             batch = d_tmp.getBatch();
+            tagId = d_tmp.getTagId();
         }
         if (appId == 113) {
             String inPath = reportPath + "result/split/";
@@ -239,8 +241,10 @@ public class TaskAction {
                             data.setState(DataState.ACTIVE);
                             data.setBatch(batch);
                             data.setMd5(MD5Util.getFileMD5(filePath));
-                            dataService.updateDataInfoByFileId(data);
-                            if (secs.contains("bsier")) {
+                            dataService.updateDataInfoByFileIdAndTagId(data,
+                                    tagId);
+                            // TODO 需要去掉写死的自动运行
+                            if (secs.contains("bsier") && tagId == 1) {
                                 toRunSplitData(userId, data);
                             }
                         }
