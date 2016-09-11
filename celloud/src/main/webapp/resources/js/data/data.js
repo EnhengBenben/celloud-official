@@ -50,6 +50,7 @@ function _init_data(){
         $.dataManager.options.isRocky = $.dataManager.options.isRocky + 1;
       }else if(_isPair=="true"){
         $.dataManager.options.isPair = $.dataManager.options.isPair + 1;
+        $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
       }else{
         $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
       }
@@ -65,6 +66,7 @@ function _init_data(){
         $.dataManager.options.isRocky = $.dataManager.options.isRocky - 1;
       }else if(_isPair=="true"){
         $.dataManager.options.isPair = $.dataManager.options.isPair - 1;
+        $.dataManager.options.validIds = $.dataManager.options.validIds - 1;
       }else{
         $.dataManager.options.validIds = $.dataManager.options.validIds - 1;
       }
@@ -99,6 +101,7 @@ function _init_data(){
               $.dataManager.options.isRocky = $.dataManager.options.isRocky + 1;
             }else if(_isPair=="true"){
               $.dataManager.options.isPair = $.dataManager.options.isPair + 1;
+              $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
             }else{
               $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
             }
