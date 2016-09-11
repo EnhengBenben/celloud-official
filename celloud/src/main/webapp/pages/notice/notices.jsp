@@ -7,7 +7,7 @@
 	<ol class="breadcrumb">
 		<li>CelLoud</li>
 		<li>消息管理</li>
-		<li>消息提醒</li>
+		<li>系统公告</li>
 	</ol>
 	<div class="content" ng-controller="noticeController">
 		<div class="table-opera">
