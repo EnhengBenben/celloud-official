@@ -38,6 +38,9 @@
                     <td>入库</td>
                     <td>{{sample.remark }}</td>
                     <td>
+                        <a data-toggle="modal" data-target="#sample-remark-modal" ng-click="toEditRemark(sample.sampleId,sample.remark)">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
                         <a ng-click="remove(sample.sampleLogId)">
                             <i class="fa fa-times-circle" aria-hidden="true"></i>
                         </a>
@@ -59,9 +62,7 @@
 	                     <div class="control-label form-label col-xs-2">备注：</div>
 	                     <!-- 长度10-100 -->
 	                     <div class="col-xs-10 form-group-content">
-	                         <textarea rows="4" ng-trim="true" ng-model="remark" name="remark" required ng-maxlength="100">
-	                          {{remark}}
-	                         </textarea>
+	                         <textarea rows="4" ng-trim="true" ng-model="remark" name="remark" required ng-maxlength="100">{{remark}}</textarea>
 	                         <span class="input-alert break-line" ng-show="sampleForm.remark.$dirty && sampleForm.remark.$error.required">请输入问题的描述</span>
 	                         <span class="input-alert break-line" ng-show="sampleForm.remark.$dirty && (sampleForm.remark.$error.maxlength)">请输入小于1000字的描述！</span>
 	                     </div>
