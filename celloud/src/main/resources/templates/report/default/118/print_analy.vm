@@ -14,7 +14,7 @@
     </a>
   </div>
     <div class="title-content">
-      <div class="title">细菌性血流感染检测报告</div>
+      <div class="title">细菌性<span id="bsi_title_info">血流</span>感染检测报告</div>
       <div class="sub-title">分析报告</div>
     </div>
     <form id="print-form">
