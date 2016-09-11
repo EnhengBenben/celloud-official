@@ -148,13 +148,12 @@
     
     $scope.addLibrary = function(){
       buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
-        if(data == 0){
-          $scope.notPrevError = true;
-        }else if(data > 0){
+        if(data > 0){
           $scope.infos = buidLibraryService.infos();
-          sno++;
+          $.alert("建库成功！");
         }else {
           $scope.repeatError = true;
+          $.alert("建库失败！");
         }
       });
     }
@@ -171,6 +170,7 @@
             }else{
               var url = window.location.href.split("index")[0];
               window.location.href=url+"sample/downExperExcel?ssId="+data+"&storageName="+storageName;
+              $.alert("建库并下载成功！");
             }
           });
         }else {
@@ -205,6 +205,7 @@
         }else{
           var url = window.location.href.split("index")[0];
           window.location.href=url+"sample/downExperExcel?ssId="+id+"&storageName="+storageName;
+          $.alert("下载Excel文件成功！");
         }
       });
     }
