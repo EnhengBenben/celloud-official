@@ -33,6 +33,7 @@ public class DefaultMessageHandler implements MessageHandler {
      */
     private void sendMessage(String username, String message) {
         Collection<WebSocketSession> sessions = SystemWebSocketHandler.getSessions(username);
+        logger.info("给用户{}发送消息", username);
         TextMessage tm = new TextMessage(message);
         for (WebSocketSession session : sessions) {
             sendMessage(session, tm);

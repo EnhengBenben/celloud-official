@@ -114,6 +114,7 @@ var messageUtils = (function(messageUtils) {
 		return new Notification(title, options);
 	};
 	self.notify = function(title, message, options, events) {
+		console.log("来消息了啊!!!!!!!!!!!!!!");
 		if (!("Notification" in window)) {
 			console.log("This browser does not support desktop notification");
 			return;
