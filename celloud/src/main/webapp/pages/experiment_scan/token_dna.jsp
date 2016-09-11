@@ -48,6 +48,7 @@
                 </tr>
             </tbody>
           </table>
+          <pagination page="sampleList.page" change="pageQuery(page,pageSize)"></pagination>
           <div id="sample-remark-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		      <div class="modal-dialog">
 		        <div class="modal-content">

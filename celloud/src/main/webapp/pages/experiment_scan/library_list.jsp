@@ -29,5 +29,6 @@
                 </tr>
             </tbody>
         </table>
+        <pagination page="storages.page" change="pageQuery(page,pageSize)"></pagination>
 	</div>
 </div>

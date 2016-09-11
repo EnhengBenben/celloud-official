@@ -78,6 +78,20 @@
   celloudApp.controller("tokenDNAController",function($scope,scanStorageService, tokenDNAService){
     $scope.sampleList = tokenDNAService.sampleList();
     
+    var pages = {
+        page : 1,
+        pageSize : 10
+      };
+      $scope.pageQuery = function(page,pageSize){
+        pages = {
+          page : page,
+          pageSize : pageSize
+        };
+        tokenDNAService.pageList(page,pageSize).success(function(data){
+          $scope.sampleList = tokenDNAService.sampleList();
+        });
+      }
+    
     $scope.tokenDNA = function(){
       tokenDNAService.tokenDNA($scope.sampleName).success(function(data){
         if(data == 0){
@@ -171,7 +185,19 @@
     storagesService.sampleList().success(function(data){
       $scope.sampleList = data;
     });
-    
+    var pages = {
+        page : 1,
+        pageSize : 10
+      };
+      $scope.pageQuery = function(page,pageSize){
+        pages = {
+          page : page,
+          pageSize : pageSize
+        };
+        storagesService.pageList(page,pageSize).success(function(data){
+          $scope.storages = storagesService.storages();
+        });
+      }
     $scope.download = function(id,storageName){
       buidLibraryService.downloadExcel(id,storageName).success(function(flag){
         if(flag==1){
