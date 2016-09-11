@@ -171,10 +171,10 @@ public class AppAction {
 		List<App> appList = appService.getMyAppList(userId);
 		for (App app : appList) {
 			if (app.getAppId().equals(118)) {
-				map.put(app.getAppName(), app.getAppId());
+				map.put("app" + app.getAppId(), app.getAppId());
 			}
 			if (app.getAppId().equals(123)) {
-				map.put(app.getAppName(), app.getAppId());
+				map.put("app" + app.getAppId(), app.getAppId());
 			}
 		}
 		return map;
