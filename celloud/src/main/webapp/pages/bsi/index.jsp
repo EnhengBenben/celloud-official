@@ -26,8 +26,8 @@
   <![endif]  -->
 </head>
 <body class="container" ng-app="celloudApp" ng-controller="sidebarController">
-  <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include>
-  <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include>
+  <jsp:include page="../partial/_partial_index_header.jsp"></jsp:include>
+  <jsp:include page="../partial/_partial_index_sidebar.jsp"></jsp:include>
   <div class="view-container">
     <div class="pro-body">
       <ol class="breadcrumb">

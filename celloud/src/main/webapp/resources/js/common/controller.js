@@ -59,11 +59,6 @@
 	    }
 		
 		$scope.isActive = function(viewLocation) {
-		  if ($scope.collapsed) {
-		    $(".view-container").css("margin-left","50px");
-      } else {
-        $(".view-container").css("margin-left","170px");
-      }
 			if (viewLocation != "/") {
 				return $location.path().indexOf(viewLocation) >= 0;
 			}
@@ -73,10 +68,8 @@
 		$scope.toggleCollapse = function() {
 			if ($scope.collapsed) {
 				$scope.collapsed = false;
-				$(".view-container").css("margin-left","170px");
 			} else {
 				$scope.collapsed = true;
-				$(".view-container").css("margin-left","50px");
 			}
 		};
 		$rootScope.errorInfo = "";

@@ -54,10 +54,10 @@
 		        <div class="modal-content">
 		          <div class="modal-header">
 		            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-		            <h4 class="modal-title">编辑备注</h4>
+		            <h4 class="modal-title" ng-init="exper_state=2">编辑备注</h4>
 		          </div>
 		          <div class="modal-body form-modal">
-		            <form class="form-horizontal info-form" name="sampleForm" ng-submit="editRemark(sampleForm.$valid)">
+		            <form class="form-horizontal info-form" name="sampleForm" ng-submit="editRemark(sampleForm.$invalid)">
 		               <div class="form-group">
 		                   <div class="control-label form-label col-xs-2">备注：</div>
 		                   <!-- 长度10-100 -->

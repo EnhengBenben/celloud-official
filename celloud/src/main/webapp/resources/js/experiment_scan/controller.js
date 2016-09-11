@@ -211,7 +211,7 @@
     }
   });
   
-  celloudApp.controller("editSampleController",function($scope, scanStorageService){
+  celloudApp.controller("editSampleController",function($scope, scanStorageService, tokenDNAService){
     $scope.toEditRemark = function(id,remark){
       $scope.sampleId = id;
       $scope.remark = remark;
@@ -224,7 +224,7 @@
     $scope.editRemark = function(){
       scanStorageService.editRemark($scope.sampleId,$scope.remark).success(function(data){
         if(data > 0){
-          $scope.sampleList = scanStorageService.sampleList();
+          $scope.sampleList = $scope.exper_state == 1? scanStorageService.sampleList():tokenDNAService.sampleList();
           $.alert("样本修改成功");
         }else{
           $.alert("样本修改失败");
