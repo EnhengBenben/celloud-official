@@ -1367,6 +1367,7 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .selector .multisl-btns{
 	width: 100%;
+	padding: 20px;
 	text-align: center;
 }
 .selector .sl-judge{
