@@ -510,7 +510,7 @@ public interface ReportService {
 	 * @return
 	 * @date 2016-1-10 上午12:36:22
 	 */
-	public List<Pgs> pgsCount(Integer userId);
+	public Map<String, Object> pgsCount(Integer userId);
 
 	/**
 	 * CMP 统计
