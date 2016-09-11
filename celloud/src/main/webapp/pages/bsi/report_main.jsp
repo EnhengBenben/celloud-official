@@ -44,7 +44,7 @@
 	      </div>
 	      <div class="sl-val-content">
 	        <div class="celicon on_check checkbox checkbox-un hide"></div>
-	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>分析中</span></a>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>正在分析</span></a>
 	      </div>
 	      <div class="sl-val-content">
 	        <div class="celicon on_check checkbox checkbox-un hide"></div>
@@ -52,7 +52,7 @@
 	      </div>
 	      <div class="sl-val-content">
 	        <div class="celicon on_check checkbox checkbox-un hide"></div>
-	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据上传中</span></a>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据不完整</span></a>
 	      </div>
 	      <div class="sl-val-content">
 	        <div class="celicon on_check checkbox checkbox-un hide"></div>

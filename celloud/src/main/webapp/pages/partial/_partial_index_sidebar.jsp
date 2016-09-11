@@ -10,14 +10,16 @@
         <li ng-class="{active: isActive('/')}">
           <a di-href="<%=request.getContextPath()%>/index#/"><i class="overview-icon"></i><span>我的工作台</span></a>
         </li>
-        <li ng-class="{active: isActive('/sampling')}">
-          <a di-href="<%=request.getContextPath()%>/index#/sampling"><i class="sample-icon"></i><span>样本采集</span></a>
-        </li>
-        <shiro:hasPermission name="bsi:product">
+        <shiro:hasAnyRoles name="bsier,rocky">
+            <li ng-class="{active: isActive('/sampling')}">
+              <a di-href="<%=request.getContextPath()%>/index#/sampling"><i class="sample-icon"></i><span>样本采集</span></a>
+            </li>
+        </shiro:hasAnyRoles>
+        <shiro:hasAnyRoles name="bsier">
 	        <li ng-class="{active: isActive('/experiment')}">
 	          <a di-href="<%=request.getContextPath()%>/index#/experiment/scanStorage"><i class="experiment-icon"></i><span>实验管理</span></a>
 	        </li>
-        </shiro:hasPermission>
+        </shiro:hasAnyRoles>
         <li ng-class="{active: isActive('/data')}">
           <a di-href="<%=request.getContextPath()%>/index#/data"><i class="data-icon"></i><span>数据管理</span></a>
         </li>
