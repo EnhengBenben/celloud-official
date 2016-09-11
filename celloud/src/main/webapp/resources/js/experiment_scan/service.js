@@ -58,8 +58,12 @@
     self.infos = function(){
       return $resource("sample/getBuidLibrarySamples").get();
     }
-    self.addSample = function(sampleName,sno){
-      return $http({method:"POST",url:'sample/addSampleToLibrary',params:{"sampleName":sampleName,"sno":sno}});
+    self.addSample = function(sampleName,sampleList){
+      var sindexs=new Array();
+      for(s in sampleList){
+         sindexs.push(sampleList[s].sindex);
+      }
+      return $http({method:"POST",url:'sample/addSampleToLibrary',params:{"sampleName":sampleName,"sindexs":sindexs}});
     }
     self.addLibrary = function(libraryName,sindex,sampleList){
       var sampleIds=new Array();

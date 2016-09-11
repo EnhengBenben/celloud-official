@@ -130,10 +130,17 @@ public class SampleServiceImple implements SampleService {
 
     @Override
     public Integer updateExperStateAndIndex(Integer userId, Integer experState,
-            Integer sampleId, Integer sno) {
+            Integer sampleId, List<String> sindexList) {
+        List<String> indexList = new ArrayList<>();
+        indexList.addAll(SampleIndex.index);
+        if (sindexList != null) {
+            for (String s : sindexList) {
+                indexList.remove(s);
+            }
+        }
         Sample s = new Sample();
         s.setSampleId(sampleId);
-        s.setSindex(SampleIndex.index.get(sno));
+        s.setSindex(indexList.get(0));
         sampleMapper.updateByPrimaryKeySelective(s);
 
         sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED, userId);

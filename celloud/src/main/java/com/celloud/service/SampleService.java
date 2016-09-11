@@ -152,7 +152,7 @@ public interface SampleService {
      * @date 2016年9月5日 下午4:37:38
      */
     public Integer updateExperStateAndIndex(Integer userId, Integer experState,
-            Integer sampleId, Integer sno);
+            Integer sampleId, List<String> sindexList);
 
     /**
      * 删除样本的实验过程

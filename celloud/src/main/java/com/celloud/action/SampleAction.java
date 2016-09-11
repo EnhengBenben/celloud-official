@@ -206,7 +206,8 @@ public class SampleAction {
      */
     @RequestMapping("addSampleToLibrary")
     @ResponseBody
-    public Integer addSampleToLibrary(String sampleName, Integer sno) {
+    public Integer addSampleToLibrary(String sampleName,
+            String[] sindexs) {
         Sample prevSamp = sampleService.getByNameExperState(
                 ConstantsData.getLoginUserId(), sampleName,
                 SampleExperState.TOKEN_DNA);
@@ -217,9 +218,11 @@ public class SampleAction {
                 SampleExperState.BUID_LIBRARY);
         if (currentSamp != null)
             return -1;
+        List<String> sindexList = sindexs == null || sindexs.length <= 0 ? null
+                : Arrays.asList(sindexs);
         return sampleService.updateExperStateAndIndex(
                 ConstantsData.getLoginUserId(), SampleExperState.BUID_LIBRARY,
-                prevSamp.getSampleId(), sno);
+                prevSamp.getSampleId(), sindexList);
     }
 
     @RequestMapping("addLibrary")
