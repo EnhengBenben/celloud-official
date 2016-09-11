@@ -57,6 +57,7 @@ var messageUtils = (function(messageUtils) {
 			}
 		};
 		self.ws.onmessage = function(e) {
+			console.log("来消息了啊!!!!!!!!!!!!!!");
 			var message = JSON.parse(e.data);
 			var channels = self.messageChannels[message.channel] || [];
 			if (channels.length <= 0) {
