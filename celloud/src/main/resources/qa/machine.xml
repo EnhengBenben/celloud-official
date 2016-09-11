@@ -12,6 +12,6 @@
         <HOST>192.168.100.110</HOST>
         <PORT>22</PORT>
         <USERNAME>root</USERNAME>
-        <PWD>CelLoud1010CelLoud1010</PWD>
+        <PWD>root@CelLoud1010</PWD>
     </machine>
 </machines>

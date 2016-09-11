@@ -1,5 +1,5 @@
 (function() {
-	celloudApp.controller("fileUpload", function($scope, $rootScope, uploadService) {
+	celloudApp.controller("fileUpload", function($route, $location, $scope, $rootScope, uploadService) {
 		$scope.step = 'one';
 		$rootScope.getProTags = function(){
 			if($scope.step == 'one'){
@@ -137,6 +137,9 @@
 					$("#upload-list-tbody").children().remove();
 					$("#uploading-list-tbody").children().remove();
 					$("#upload-modal").modal("hide");
+					if($location.path() == '/data'){
+						$route.reload();
+					}
 				}
 			});
 			uploader.bind("BeforeUpload", function(uploader, file) {
