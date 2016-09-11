@@ -49,7 +49,7 @@
           <tr ng-repeat="file in dataList.datas">
             <td>
               <label class="checkbox-lable">
-                <input class="checkbox" is_run="{{file.isRunning==1||file.tagName==null}}" type="checkbox" name="data-checkone" value="{{file.fileId}}" onclick="$.dataManager.checkOneData(this)">
+                <input class="checkbox" is_run="{{file.isRunning==1}}" is_tag="{{file.tagName==null}}" is_bsi="{{file.tagName=='百菌探'}}" is_rocky="{{file.tagName=='华木兰'}}" type="checkbox" name="data-checkone" value="{{file.fileId}}" onclick="$.dataManager.checkOneData(this)">
                 <span class="info"></span>
               </label>
             </td>
