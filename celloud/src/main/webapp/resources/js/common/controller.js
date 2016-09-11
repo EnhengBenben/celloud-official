@@ -62,6 +62,11 @@
 	    }
 		
 		$scope.isActive = function(viewLocation) {
+		  if ($scope.collapsed) {
+		    $(".view-container").css("margin-left","50px");
+      } else {
+        $(".view-container").css("margin-left","170px");
+      }
 			if (viewLocation != "/") {
 				return $location.path().indexOf(viewLocation) >= 0;
 			}
