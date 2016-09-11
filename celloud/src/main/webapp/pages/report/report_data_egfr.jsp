@@ -59,8 +59,7 @@
 	         <h2>
 				<i class="i-edit"></i>三、 参考结论
 			</h2>
-		    <div class="m-boxCon result" id="_result">
-		    	{{egfr.conclusion}}
+		    <div ng-bind-html="egfr.conclusion" class="m-boxCon result" id="_result">
 		    </div>
          </section>
          <section class="m-box">
@@ -72,7 +71,7 @@
          <section class="m-box">
 	         <h2><i class="i-dna"></i>五、 测序峰图结果</h2>
 				<div class="m-boxCon result" ng-if="egfr.original != null">
-					<a ng-repeat="original in egfr.original" ng-click="bigOrigin(uploadPath+egfr.userId+'/'+egfr.appId+'/'+egfr.dataKey+'/SVG/'+original,original+$index+1);" >
+					<a ng-repeat="original in egfr.original" ng-click="bigOrigin(uploadPath+egfr.userId+'/'+egfr.appId+'/'+egfr.dataKey+'/SVG/'+original,'original'+($index+1));" >
 						<br/>
 						<img name="imgSrc" class="originImg" src="{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{original}}" id="original{{$index+1}}"><br/>
 					</a>

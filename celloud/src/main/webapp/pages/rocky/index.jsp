@@ -102,6 +102,7 @@
   <script src="<%=request.getContextPath()%>/js/alert.js"></script>
   <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
+  <script src="<%=request.getContextPath()%>/js/directive/href.js"></script>
   <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
   <script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>

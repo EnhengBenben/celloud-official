@@ -1436,21 +1436,29 @@
       paramQuqery();
     }
     $scope.tagsQuery = function(tagId){
+      $(".tagsQuery").removeClass("active");
+      $("#tagsQuery"+tagId).addClass("active");
       options.tagId = tagId;
       options.page = 1;
       paramQuqery();
     }
     $scope.batchsQuery = function(batch){
+      $(".batchsQuery").removeClass("active");
+      $("#batchsQuery"+batch).addClass("active");
       options.batch = batch;
       options.page = 1;
       paramQuqery();
     }
     $scope.periodQuery = function(period){
+      $(".periodQuery").removeClass("active");
+      $("#periodQuery"+period).addClass("active");
       options.period = period;
       options.page = 1;
       paramQuqery();
     }
     $scope.fullDateQuery = function(days){
+      $(".fullDateQuery").removeClass("active");
+      $("#fullDateQuery"+days).addClass("active");
       if(days==0){
         options.beginDate = null;
         options.endDate = null;
@@ -1467,6 +1475,7 @@
       paramQuqery();
     }
     $scope.chooseDate = function(){
+      $(".fullDateQuery").removeClass("active");
       var d = new Date();
       var begin = $("#begin-date").val();
       var end = $("#end-date").val();

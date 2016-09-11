@@ -72,7 +72,7 @@
 	         	<i class="i-edit"></i>原始峰图
 	         </h2>
 			 <div class="m-boxCon result" ng-if="braf.original != null">
-				<a ng-repeat="original in braf.original" ng-click="bigOrigin(uploadPath + braf.userId + '/' + braf.appId + '/' + braf.dataKey + '/SVG/' + original,'original' + $index+1);" >
+				<a ng-repeat="original in braf.original" ng-click="bigOrigin(uploadPath + braf.userId + '/' + braf.appId + '/' + braf.dataKey + '/SVG/' + original,'original' + ($index+1));" >
 					<br/>
 					<img name="imgSrc" class="originImg" src="{{uploadPath}}{{braf.userId}}/{{braf.appId}}/{{braf.dataKey}}/SVG/{{original}}" id="original{{$index+1}}"><br/>
 				</a>

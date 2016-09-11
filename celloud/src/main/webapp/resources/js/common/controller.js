@@ -32,6 +32,7 @@
 	     * @param src
 	     */
 	    $rootScope.bigFigure = function(src){
+	    	alert(src);
 	        $("img[id='imageFullScreen']").css("width",960);
 	        $("img[id='imageFullScreen']").css("height",144);
 	        $rootScope.showZoom(src);
@@ -44,6 +45,8 @@
 	    $rootScope.bigOrigin = function(src,id) { 
 	        var width = $("#" + id).width();
 	        var height = $("#" + id).height();
+	        alert(width);
+	        alert(height);
 	        $("img[id='imageFullScreen']").css("width",width*1.5);
 	        $("img[id='imageFullScreen']").css("height",height*1.5);
 	        $rootScope.showZoom(src);
@@ -53,6 +56,7 @@
 	     * @param src
 	     */
 	    $rootScope.bigReplace = function(src){
+	    	alert(src);
 	        $("img[id='imageFullScreen']").css("width",1050);
 	        $("img[id='imageFullScreen']").css("height",157.5);
 	        $rootScope.showZoom(src);

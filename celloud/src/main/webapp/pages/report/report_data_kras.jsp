@@ -66,7 +66,7 @@
          <section class="m-box">
 	         <h2><i class="i-dna"></i>五、 测序峰图结果</h2>
 			 <div class="m-boxCon result" ng-if="kras.original != null" ng-repeat="original in kras.original">
-				<a ng-click="bigOrigin(uploadPath + kras.userId + '/' + kras.appId + '/' + kras.dataKey + '/SVG/' + original,'original' + $index+1);" >
+				<a ng-click="bigOrigin(uploadPath + kras.userId + '/' + kras.appId + '/' + kras.dataKey + '/SVG/' + original,'original' + ($index+1));" >
 					<img name="imgSrc" class="originImg" src="{{uploadPath}}{{kras.userId}}/{{kras.appId}}/{{kras.dataKey}}/SVG/{{original}}" id="original{{$index+1}}"><br/>
 				</a>
 		     </div>
