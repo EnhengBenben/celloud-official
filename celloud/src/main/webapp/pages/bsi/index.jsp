@@ -178,7 +178,7 @@
 	</div>
   </div>
   <div id="fullbg"></div> 
-  <div id="pageContent" class="pageContent">
+  <div id="pageContent" class="pageContent hide">
     <a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
     <img id="imageFullScreen" src="">
   </div>
