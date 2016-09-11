@@ -104,29 +104,33 @@
 		  }
 		  return p;
 		}
+		
+		
+		/**
+		 * 监听userMessage频道，有新消息时，刷新右上角提醒
+		 */
+		messageUtils.subscribe("userMessage", function(data) {
+			$rootScope.messages = commonService.messages.get();
+			console.log("监听userMessage");
+			messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
+				"onclick" : function() {
+					var notification = this;
+					notification.close();
+				}
+			});
+		});
+		/**
+		 * 监听userNotice频道，有新消息时，刷新右上角提醒
+		 */
+		messageUtils.subscribe("userNotice", function(data) {
+			$rootScope.notices = commonService.notices.get();
+			console.log("监听userNotice");
+			messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
+				"onclick" : function() {
+					var notification = this;
+					notification.close();
+				}
+			});
+		});
 	});
 })();
-/**
- * 监听userMessage频道，有新消息时，刷新右上角提醒
- */
-messageUtils.subscribe("userMessage", function(data) {
-	$rootScope.messages = commonService.messages.get();
-	messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
-		"onclick" : function() {
-			var notification = this;
-			notification.close();
-		}
-	});
-});
-/**
- * 监听userNotice频道，有新消息时，刷新右上角提醒
- */
-messageUtils.subscribe("userNotice", function(data) {
-	$rootScope.notices = commonService.notices.get();
-	messageUtils.notify(data.noticeTitle, data.noticeContext, {}, {
-		"onclick" : function() {
-			var notification = this;
-			notification.close();
-		}
-	});
-});
