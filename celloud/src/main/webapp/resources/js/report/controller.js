@@ -1245,7 +1245,7 @@
                   $(this).find("a").bind("click",function(){
                     viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
-                  $(this).find("a").addClass("btn-link");
+//                  $(this).find("a").addClass("btn-link");
                 }
               }
             }

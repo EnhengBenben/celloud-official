@@ -14,8 +14,7 @@
   <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" />
-  <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css" rel="stylesheet">
   <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
   <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
   <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
