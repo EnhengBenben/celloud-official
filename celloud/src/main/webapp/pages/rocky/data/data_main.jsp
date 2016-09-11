@@ -5,7 +5,7 @@
 <table class="table table-main">
 	<thead>
 		<tr>
-			<th width="40"></th>
+			<th class="th-checkoutbox"></th>
 			<th width="140">
 				<input id="data-sample-filter" type="text" placeholder="样本编号/病历号" value="${sampleFilter}">
 			</th>

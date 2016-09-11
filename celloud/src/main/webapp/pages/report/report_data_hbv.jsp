@@ -297,8 +297,8 @@
   <div class="modal-dialog">
    <div class="modal-content">
 	<div class="modal-header">
-		<a class="close" data-dismiss="modal">×</a>
-		<h4 class="modal-title">帮助</h4>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+        <h4 class="modal-title">帮助</h4>
 	</div>
 	<div class="modal-body form-modal">
 		<div id="_showMore">
@@ -339,9 +339,9 @@
 			</div>
 			<div class="lineheight">
 				2. 突变结果举例解释：“M204M|V {A-A|G(67|33,2.1);G-G|T(72|28,2.5)}” ：
-				<div class="_leftShort">（1）“M”表示野生型编码氨基酸为M；“204”表示氨基酸位点为204；“M|V”表示由原来的野生型M变为V；</div>
-				<div class="_leftShort">（2）“{A-A|G(67|33,2.1);G-G|T(72|28,2.5)} ” 表示碱基的变化，其中一个位点由原来的A变为A|G杂合，比例为67比33；另一个碱基由原来的G变为G|T杂合，比例为72比28。</div>
-	    		<div class="_leftShort">（3）比例值说明：A-A|G(67|33,2.1)，2.1为67和33的比值，该比例并不代表样本中该位点A和G的真实数量比例，只是代表该位点是A的可能性为67%，是G的可能性为33%。如果没有“(67|33,2.1）”出现，认为该位点100%发生突变。如果是A-A|G，说明该位点为A的可能性大；如果为A-G|A，说明该位点为G的 可能性大。当野生型的碱基（即A）的可能性大于突变碱基（即G）的可能性时，如果比值小于5我们认为该位点是突变；如果突变碱基（即G）的可能性大于野生型的碱基（即A）的可能性时，不论比值多少都认为发生了突变。</div>
+				<div class="_leftShort" style="line-height:25px;">（1）“M”表示野生型编码氨基酸为M；“204”表示氨基酸位点为204；“M|V”表示由原来的野生型M变为V；</div>
+				<div class="_leftShort" style="line-height:25px;">（2）“{A-A|G(67|33,2.1);G-G|T(72|28,2.5)} ” 表示碱基的变化，其中一个位点由原来的A变为A|G杂合，比例为67比33；另一个碱基由原来的G变为G|T杂合，比例为72比28。</div>
+	    		<div class="_leftShort" style="line-height:25px;">（3）比例值说明：A-A|G(67|33,2.1)，2.1为67和33的比值，该比例并不代表样本中该位点A和G的真实数量比例，只是代表该位点是A的可能性为67%，是G的可能性为33%。如果没有“(67|33,2.1）”出现，认为该位点100%发生突变。如果是A-A|G，说明该位点为A的可能性大；如果为A-G|A，说明该位点为G的 可能性大。当野生型的碱基（即A）的可能性大于突变碱基（即G）的可能性时，如果比值小于5我们认为该位点是突变；如果突变碱基（即G）的可能性大于野生型的碱基（即A）的可能性时，不论比值多少都认为发生了突变。</div>
 	        </div>
 			<div class="lineheight">3. “ *Wild Type: GCT ” 表示该位点的野生型为GCT</div>
 			<div class="lineheight">4. 峰图中的 “ * ” 表示该位置的碱基发生了突变</div>
@@ -351,7 +351,7 @@
 			<div class="lineheight">峰图中的 “ * ” 表示该位置的碱基发生了突变</div>
 		</div>
 		<div id="_showImg">
-			<img class="imgtop" src="${pageContext.request.contextPath }/app/image?file=HBV_explain.png" width="550px">
+			<img class="imgtop" src="${pageContext.request.contextPath }/app/image?file=HBV_explain.png" width="100%">
 		</div>
 	</div>
 	<div class="modal-footer">

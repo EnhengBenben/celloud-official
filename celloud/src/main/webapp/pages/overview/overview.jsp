@@ -6,19 +6,19 @@
 	  <li>我的工作台</li>
 	</ol>
 	<div class="content overview">
-		<div ng-if="userProduct.rocky==123||userProduct.BSI==118">
+		<div ng-if="userProduct.app123==123||userProduct.app118==118">
 		  <section class="overview-s">
 		    <h5 class="overview-header"><i class="myapp-icon"></i><span>我的产品</span></h5>
 		    <div class="o-app-list">
 			  <ul>
-			    <li ng-if="userProduct.BSI==118">
+			    <li ng-if="userProduct.app118==118">
 			      <a href="<%=request.getContextPath()%>/bsi">
 			        <div class="inner">
 			          <img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探">
 			        </div>
 			      </a>
 			    </li>
-			    <li ng-if="userProduct.rocky==123">
+			    <li ng-if="userProduct.app123==123">
 			      <a href="<%=request.getContextPath()%>/rocky">
 			        <div class="inner">
 			          <img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰">

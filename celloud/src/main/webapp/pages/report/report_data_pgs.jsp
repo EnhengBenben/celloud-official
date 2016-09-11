@@ -181,8 +181,8 @@
   <div class="modal-dialog">
    <div class="modal-content">
 	<div class="modal-header">
-		<a class="close" data-dismiss="modal">×</a>
-		<h4>报告说明</h4>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+        <h4 class="modal-title">报告说明</h4>
 	</div>
 	<div class="modal-body">
 		<div class="lineheight">Aneuploidy：染色体异倍性及异常区域。</div>

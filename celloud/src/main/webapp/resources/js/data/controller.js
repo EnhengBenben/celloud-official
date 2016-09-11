@@ -43,25 +43,42 @@
       if(!$scope.checkNum()){
         return ;
       }
-      if($.dataManager.options.noValidIds!=0){
-        $rootScope.errorInfo = "运行所勾选的数据必须有产品标签并且不处于运行状态！";
+      if($.dataManager.options.isRun!=0){
+        $rootScope.errorInfo = "所勾选的数据必须不处于运行状态！";
         $("#tips-modal").modal("show");
         return;
       }
-      var checkedIds = $.dataManager.options.checkedIds;
-      if(checkedIds.length!=$.dataManager.options.validIds){
-        $rootScope.errorInfo = "数据选择异常，请刷新页面后重新选择！";
+      if($.dataManager.options.isTag!=0){
+        $rootScope.errorInfo = "所勾选的数据必须有产品标签！";
         $("#tips-modal").modal("show");
         return;
       }
-      runService.run().success(function(response) {
-        if(response.success){
-          $.alert("运行成功");
-          $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
-          $.dataManager.refreshDataList();
-        }else{
-          $scope.message = response.message;
+      if($.dataManager.options.isBSI!=0){
+        $rootScope.errorInfo = "所勾选的数据产品标签不能为百菌探！";
+        $("#tips-modal").modal("show");
+        return;
+      }
+      if($.dataManager.options.isRocky!=0){
+        $rootScope.errorInfo = "所勾选的数据产品标签不能为华木兰！";
+        $("#tips-modal").modal("show");
+        return;
+      }
+      $.confirm("请保证所选数据为配对数据！","确认框",function(){
+        var checkedIds = $.dataManager.options.checkedIds;
+        if(checkedIds.length!=$.dataManager.options.validIds){
+          $rootScope.errorInfo = "数据选择异常，请刷新页面后重新选择！";
+          $("#tips-modal").modal("show");
+          return;
         }
+        runService.run().success(function(response) {
+          if(response.success){
+            $.alert("运行成功");
+            $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
+            $.dataManager.refreshDataList();
+          }else{
+            $scope.message = response.message;
+          }
+        });
       });
     };
     //数据删除

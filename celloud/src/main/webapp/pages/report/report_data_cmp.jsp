@@ -17,8 +17,8 @@
             {{data.fileName}}({{data.dataKey}})
         </p>
         <div class="btn-groups">
-        	<a class="btn -low" target="_blank" href="<%=request.getContextPath()%>/report/printMorecmp?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印科研报告</a>
-			<a class="btn -middle" target="_blank" href="<%=request.getContextPath()%>/report/printLesscmp?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印临床报告</a>
+        	<a class="btn -low" target="_blank" href="<%=request.getContextPath()%>/report/printMoreCMPReport?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印科研报告</a>
+			<a class="btn -middle" target="_blank" href="<%=request.getContextPath()%>/report/printLessCMPReport?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印临床报告</a>
         </div>
       </div>
       <div>

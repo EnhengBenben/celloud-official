@@ -32,7 +32,6 @@
 	     * @param src
 	     */
 	    $rootScope.bigFigure = function(src){
-	    	alert(src);
 	        $("img[id='imageFullScreen']").css("width",960);
 	        $("img[id='imageFullScreen']").css("height",144);
 	        $rootScope.showZoom(src);
@@ -43,8 +42,6 @@
 	     * @param id
 	     */
 	    $rootScope.bigOrigin = function(src,id) { 
-	    	alert(src);
-	    	alert(id);
 	        var width = $("#" + id).width();
 	        var height = $("#" + id).height();
 	        $("img[id='imageFullScreen']").css("width",width*1.5);
