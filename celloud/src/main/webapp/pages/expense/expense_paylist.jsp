@@ -17,7 +17,7 @@
       <table class="table table-main" ng-init="pageType='expense/paylist'">
         <thead>
           <tr>
-            <th>
+            <th class="th-checkoutbox">
               <label class="checkbox-lable">
                 <input class="checkbox" type="checkbox" name="checkAll" id="checkAll" >
                 <span class="info"></span>

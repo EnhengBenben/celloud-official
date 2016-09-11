@@ -84,7 +84,7 @@
       <table class="table table-main">
         <thead>
           <tr>
-            <th>
+            <th class="th-checkoutbox">
               <label class="checkbox-lable">
                 <input class="checkbox" type="checkbox" name="demo-checkbox1">
                 <span class="info"></span>

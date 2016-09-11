@@ -27,7 +27,7 @@
 			<table class="table table-main">
 				<thead>
 					<tr>
-						<th style="width: 30px;">
+						<th class="th-checkoutbox">
 							<label class="checkbox-lable">
 								<input class="checkbox" type="checkbox" ng-model="checkAllState" ng-change="checkAll(checkAllState)">
 								<span class="info"></span>

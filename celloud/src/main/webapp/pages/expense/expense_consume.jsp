@@ -25,7 +25,7 @@
           <tr>
             <th>消费时间</th>
             <th>消费明细</th>
-            <th>消费C币</th>
+            <th>消费（元）</th>
             <th>备注</th>
           </tr>
         </thead>
