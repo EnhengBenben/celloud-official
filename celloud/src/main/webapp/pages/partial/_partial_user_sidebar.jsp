@@ -2,7 +2,7 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <aside class="pro-sidebar {{collapsed|proSidebarLeftFilter}}">
   <section class="s-bar">
-    <ul class="pro-sidebar-menu" ng-controller="sidebarController">
+    <ul class="pro-sidebar-menu">
       <li class="pro-sidebar-header">账户管理</li>
       <li ng-class="{active: isActive('user/base')}">
         <a di-href="#/user/base"><span>基本信息</span></a>

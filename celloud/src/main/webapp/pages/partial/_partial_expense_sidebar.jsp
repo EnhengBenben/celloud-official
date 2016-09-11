@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <aside class="pro-sidebar {{collapsed|proSidebarLeftFilter}}">
   <section class="s-bar">
-    <ul class="pro-sidebar-menu" ng-controller="sidebarController">
+    <ul class="pro-sidebar-menu">
       <li class="pro-sidebar-header">费用设置</li>
       <li ng-class="{active: isActive('/expense/consume')}">
         <a di-href="#/expense/consume"><span>消费记录</span></a>
