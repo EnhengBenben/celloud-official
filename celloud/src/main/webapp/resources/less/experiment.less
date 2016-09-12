@@ -1,4 +1,10 @@
 .content.sample{
+    .sample-btns {
+        padding-bottom: 10px;
+        .btn{
+            margin-left: 20px;
+        }
+    }
     .content-header{
         padding: 10px 20px;
         >img{
@@ -20,12 +26,12 @@
             right: 20px;
             bottom: 60px;
         }
-        >.info-btn-group{
+        .info-btn-group{
             position: absolute;
             right: 20px;
             bottom: 10px;
         }
-        >select{
+        select{
             position: absolute;
             bottom: 10px;
             width: 140px;
@@ -54,7 +60,7 @@
         margin-right: 20px;
     }
     >select{
-        width: 140px;
+        width: 215px;
         height: 40px;
         font-size:14px;
         padding-left: 10px;
@@ -62,5 +68,14 @@
         border: 1px solid @light-gray;
         .border-radius(4px);
         color: @font-gray;
+    }
+    .info-btn-group{
+        display: inline-block;
+    }
+    .library-btns{
+        padding: 5px 0px;
+        .btn{
+            margin-left: 20px;
+        }
     }
 }

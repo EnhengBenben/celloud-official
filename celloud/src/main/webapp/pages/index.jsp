@@ -15,8 +15,10 @@
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" />
-  <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css" rel="stylesheet">
+<%--   <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" /> --%>
+<!--   <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script> -->
+  <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
   <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
   <!-- [if It IE 9]>
   <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -24,9 +26,10 @@
   <![endif]  -->
 </head>
 <body class="container" ng-app="celloudApp" ng-controller="sidebarController">
-  <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include>
-  <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include>
-  <div id="alerts" class="alerts"></div>
+<!--   <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include> -->
+<!--   <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include> -->
+  <jsp:include page="partial/_partial_index_header.jsp"></jsp:include>
+  <jsp:include page="partial/_partial_index_sidebar.jsp"></jsp:include>
   <div ng-view class="view-container"></div>
   <div id="tips-modal" class="modal tips-modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-sm">
@@ -41,6 +44,13 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+  <!-- 放大图片所需的div -->
+  <div id="fullbg"></div> 
+  <div id="pageContent" class="pageContent">
+	<a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
+	<img id="imageFullScreen" src="">
+  </div>
+  <div id="alerts" class="alerts"></div>
   <ng-include src="'pages/partial/_partial_upload_modal.jsp'"></ng-include>
   <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';
@@ -51,14 +61,17 @@
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
-  <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js" type="text/javascript"></script>
+  <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js"></script>
+  <script src="//cdn.bootcss.com/select2/4.0.3/js/i18n/zh-CN.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
-  <script src="<%=request.getContextPath() %>/js/utils.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
+  <script src="<%=request.getContextPath()%>/js/utils.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>
@@ -67,6 +80,7 @@
   <script src="<%=request.getContextPath()%>/js/alert.js"></script>
   <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
+  <script src="<%=request.getContextPath()%>/js/directive/href.js"></script>
   <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
   <script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>

@@ -45,6 +45,11 @@
       return context.substring(0,length) + "...";
     }
   });
+  celloudApp.filter("getResultByCompare",function(){
+	  return function(input, compare, r1, r2){
+		  return input != compare ? r1 : r2;
+	  }
+  });
   /**
    * 文件大小格式化
    */
@@ -75,4 +80,25 @@
       return $sce.trustAsHtml(text);
     };
   }]);
+  
+  celloudApp.filter("taskPeriodFilter",function(){
+    return function(period){
+      if(period == 0){
+        return "等待分析";
+      }else if(period == 1){
+        return "分析中";
+      }else if(period == 2){
+        return "完成";
+      }else if(period == 3){
+        return "数据不完整";
+      }else if(period == 4){
+        return "异常终止";
+      }else if(period == 5){
+        return "送样中";
+      }else if(period == 6){
+        return "实验中";
+      }
+      return "";
+    }
+  });
 })();

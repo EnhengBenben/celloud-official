@@ -24,6 +24,7 @@ $(function () {
   $("#to-report-a").on("click",function(){
     $.report.find.main(0);
     $.base.itemBtnToggleActive($(this));
+    $("#report-list-li").removeClass("hide");
   });
   $("body").on("click",'[data-click="report-list"]',function(){
     $.report.find.main(1);

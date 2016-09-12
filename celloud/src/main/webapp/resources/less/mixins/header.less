@@ -1,4 +1,5 @@
 .header{
+    position: fixed;
     width: 100%;
     height: 50px;
     z-index: 1030;
@@ -55,11 +56,15 @@
             color: #fff;
         }
         .btn-link{
+            padding: 0;
             margin-top: 10px;
             height: 10px;
             line-height: 10px;
             font-size: 10px;
             color: @dark-gray;
+        }
+        >p{
+            white-space: nowrap;
         }
     }
     .code-dropdown{
@@ -68,19 +73,20 @@
         }
     }
     .message-dropdown{
-        padding: 20px 0px;
+        padding: 20px 10px;
     }
     .money-dropdown{
         min-width: 130px;
-        padding: 14px 0px;
+        padding: 14px 10px;
     }
     .user-dropdown{
-        padding: 20px 0px;
-        .btn-cancel{
+        padding: 20px 10px;
+        .btn-reset{
             margin-top: 10px;
         }
     }
     .product-dropdown{
+        left: 0;
         padding: 0;
         min-height: 40px;
         a{

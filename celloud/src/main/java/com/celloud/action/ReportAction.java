@@ -289,6 +289,27 @@ public class ReportAction {
 		return getCMPModelAndView("report/report_data_cmp", dataKey, projectId, appId);
 	}
 
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月7日下午4:30:25
+     * @description 获取CMP,CMP_199数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看CMP数据报告", button = "数据报告")
+    @RequestMapping("getCMPInfo")
+    @ResponseBody
+    public Map<String, Object> getCMPInfo(String dataKey, Integer projectId, Integer appId) {
+        CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("cmp", cmp);
+        return map;
+    }
+
 	/**
 	 * 打印 CMP简要报告
 	 * 
@@ -351,6 +372,27 @@ public class ReportAction {
 	public ModelAndView getGDDReport(String dataKey, Integer projectId, Integer appId) {
 		return getCMPModelAndView("report/report_data_gdd", dataKey, projectId, appId);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月7日下午3:27:00
+     * @description 获取GDD数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看GDD数据报告", button = "数据报告")
+    @RequestMapping("getGDDInfo")
+    @ResponseBody
+    public Map<String, Object> getGDDInfo(String dataKey, Integer projectId, Integer appId) {
+        CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("cmp", cmp);
+        return map;
+    }
 
 	@ActionLog(value = "打印GDD数据报告", button = "打印报告")
 	@RequestMapping("printGDDReport")
@@ -581,6 +623,26 @@ public class ReportAction {
 	public ModelAndView getSplitReport(String dataKey, Integer projectId, Integer appId) {
 		return getSplitModelAndView("report/report_data_split", dataKey, projectId, appId);
 	}
+
+    /**
+     * 获取 Split 数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:44:45
+     */
+    @ActionLog(value = "查看split数据报告", button = "数据报告")
+    @RequestMapping("getSplitInfo")
+    @ResponseBody
+    public Map<String, Object> getSplitInfo(String dataKey, Integer projectId, Integer appId) {
+        Split split = reportService.getSplitReport(dataKey, projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("split", split);
+        map.put("splitId", split.getId().toString());
+        return map;
+    }
 
 	/**
 	 * 打印 Split 数据报告
@@ -822,6 +884,34 @@ public class ReportAction {
 	public ModelAndView getBSIReport(String dataKey, Integer projectId, Integer appId) {
 		return getBSIModelAndView("report/report_data_bsi", dataKey, projectId, appId);
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月7日下午6:51:40
+     * @description 获取BSI数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看BSI数据报告", button = "数据报告")
+    @RequestMapping("getBSIInfo")
+    @ResponseBody
+    public Map<String, Object> getBSIInfo(String dataKey, Integer projectId, Integer appId) {
+        BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+        Map<String, JSONArray> mibCharList = new HashMap<>();
+        Map<String, Object> map = getCommonInfo(projectId);
+        if (bsi == null)
+            return map;
+        mibCharList.put("readsDistributionInfo", JSONArray.fromObject(bsi.getReadsDistributionInfo()));
+        mibCharList.put("familyDistributionInfo", JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
+        mibCharList.put("genusDistributionInfo", JSONArray.fromObject(bsi.getGenusDistributionInfo()));
+        map.put("bsiCharList", mibCharList);
+        map.put("bsi", bsi);
+        return map;
+    }
 
 	/**
 	 * 打印MIB报告
@@ -3426,6 +3516,28 @@ public class ReportAction {
 		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return mv;
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月8日上午10:26:46
+     * @description 获取乳腺癌数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "报告菜单", button = "乳腺癌报告")
+    @RequestMapping("getRockyInfo")
+    @ResponseBody
+    public Map<String, Object> getRockyInfo(String dataKey, Integer projectId, Integer appId) {
+        Map<String, Object> map = getCommonInfo(projectId);
+        Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
+        map.put("rocky", rocky);
+        log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
+        return map;
+    }
 
 	/**
 	 * 根据条件获取数据列表

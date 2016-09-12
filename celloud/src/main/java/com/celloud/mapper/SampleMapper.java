@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.mysql.Sample;
+import com.celloud.page.Page;
 
 public interface SampleMapper {
     int deleteByPrimaryKey(Integer sampleId);
@@ -32,7 +33,7 @@ public interface SampleMapper {
 
     int deleteList(@Param("sampleIds") List<Integer> sampleIds);
 
-    List<Sample> getSamples(@Param("userId") Integer userId,
+    List<Sample> getSamples(Page page, @Param("userId") Integer userId,
             @Param("experState") Integer experState,
             @Param("state") Integer state);
 

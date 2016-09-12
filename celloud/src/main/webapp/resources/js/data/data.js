@@ -20,28 +20,53 @@ function _init_data(){
     sortNameType: "asc",
     checkedIds: [],
     validIds: 0,
-    noValidIds: 0
+    isRun: 0,
+    isTag: 0,
+    isBSI: 0,
+    isRocky: 0,
+    isPair:0
   };
   
   /**
    * 选择单个数据
    */
   $.dataManager.checkOneData = function(obj){
-	  alert(obj);
     var _checked = $(obj).prop("checked");//jquery1.11获取属性
     var _dataId = $(obj).val();
-    var _valid = $(obj).prev().val();
+    var _isRun = $(obj).attr("is_run");
+    var _isTag = $(obj).attr("is_tag");
+    var _isBSI = $(obj).attr("is_bsi");
+    var _isRocky = $(obj).attr("is_rocky");
+    var _isPair = $(obj).attr("is_pair");
     if(_checked){
       $.dataManager.checkData.isCheck(_dataId);
-      if(_valid=="true"){
-        $.dataManager.options.noValidIds = $.dataManager.options.noValidIds + 1;
+      if(_isRun=="true"){
+        $.dataManager.options.isRun = $.dataManager.options.isRun + 1;
+      }else if(_isTag=="true"){
+        $.dataManager.options.isTag = $.dataManager.options.isTag + 1;
+      }else if(_isBSI=="true"){
+        $.dataManager.options.isBSI = $.dataManager.options.isBSI + 1;
+      }else if(_isRocky=="true"){
+        $.dataManager.options.isRocky = $.dataManager.options.isRocky + 1;
+      }else if(_isPair=="true"){
+        $.dataManager.options.isPair = $.dataManager.options.isPair + 1;
+        $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
       }else{
         $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
       }
     }else{
       $.dataManager.checkData.noCheck(_dataId);
-      if(_valid=="true"){
-        $.dataManager.options.noValidIds = $.dataManager.options.noValidIds - 1;
+      if(_isRun=="true"){
+        $.dataManager.options.isRun = $.dataManager.options.isRun - 1;
+      }else if(_isTag=="true"){
+        $.dataManager.options.isTag = $.dataManager.options.isTag - 1;
+      }else if(_isBSI=="true"){
+        $.dataManager.options.isBSI = $.dataManager.options.isBSI - 1;
+      }else if(_isRocky=="true"){
+        $.dataManager.options.isRocky = $.dataManager.options.isRocky - 1;
+      }else if(_isPair=="true"){
+        $.dataManager.options.isPair = $.dataManager.options.isPair - 1;
+        $.dataManager.options.validIds = $.dataManager.options.validIds - 1;
       }else{
         $.dataManager.options.validIds = $.dataManager.options.validIds - 1;
       }
@@ -61,9 +86,22 @@ function _init_data(){
       for(var i=0;i<_checkedLength;i++) {
         if($(choicearr[i]).prop("disabled")==false){
           if($(choicearr[i]).prop("checked")==false){
-            var _valid = $(choicearr[i]).prev().val();
-            if(_valid=="true"){
-              $.dataManager.options.noValidIds = $.dataManager.options.noValidIds + 1;
+            var _isRun = $(choicearr[i]).attr("is_run");
+            var _isTag = $(choicearr[i]).attr("is_tag");
+            var _isBSI = $(choicearr[i]).attr("is_bsi");
+            var _isRocky = $(choicearr[i]).attr("is_rocky");
+            var _isPair = $(choicearr[i]).attr("is_pair");
+            if(_isRun=="true"){
+              $.dataManager.options.isRun = $.dataManager.options.isRun + 1;
+            }else if(_isTag=="true"){
+              $.dataManager.options.isTag = $.dataManager.options.isTag + 1;
+            }else if(_isBSI=="true"){
+              $.dataManager.options.isBSI = $.dataManager.options.isBSI + 1;
+            }else if(_isRocky=="true"){
+              $.dataManager.options.isRocky = $.dataManager.options.isRocky + 1;
+            }else if(_isPair=="true"){
+              $.dataManager.options.isPair = $.dataManager.options.isPair + 1;
+              $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
             }else{
               $.dataManager.options.validIds = $.dataManager.options.validIds + 1;
             }
@@ -78,7 +116,11 @@ function _init_data(){
       }
     }else{
       $("[name='"+name+"']").prop("checked",false);
-      $.dataManager.options.noValidIds = 0;
+      $.dataManager.options.isRun = 0;
+      $.dataManager.options.isTag = 0;
+      $.dataManager.options.isBSI = 0;
+      $.dataManager.options.isRocky = 0;
+      $.dataManager.options.isPair = 0;
       $.dataManager.options.validIds = 0;
       $.dataManager.editBtn.disable();
     }
@@ -96,7 +138,11 @@ function _init_data(){
    */
   $.dataManager.refreshDataList = function(name){
     $.dataManager.options.checkedIds = new Array();
-    $.dataManager.options.noValidIds = 0;
+    $.dataManager.options.isRun = 0;
+    $.dataManager.options.isTag = 0;
+    $.dataManager.options.isBSI = 0;
+    $.dataManager.options.isRocky = 0;
+    $.dataManager.options.isPair = 0;
     $.dataManager.options.validIds = 0;
     $.dataManager.editBtn.update();
     $.dataManager.cleanCheckbox("demo-checkbox1");
@@ -108,6 +154,9 @@ function _init_data(){
   $.dataManager.checkData = {
     isCheck: function(dataId){
       $.dataManager.options.checkedIds.push(dataId);
+      if($("input[name='data-checkone']").length==$.dataManager.options.checkedIds.length){
+        $("#data-checkall").prop("checked",true);
+      }
     },
     noCheck: function(dataId){
       $("#data-checkall").prop("checked",false);

@@ -117,14 +117,14 @@
 								</ul>
 							</div>
 						</div>
-						<div class="form-group form-btns">
-							<div class="text-center">
-								<button type="reset" class="btn btn-cancel" ng-click="resetCreateForm()">重置</button>
-								<button type="submit" class="btn" ng-disabled="feedbackCreateForm.$invalid">提交</button>
-							</div>
-						</div>
 					</form>
 				</div>
+				<div class="modal-footer">
+			        <div class="text-center">
+                        <button type="reset" class="btn btn-cancel -low" ng-click="resetCreateForm()">重置</button>
+                        <button type="submit" class="btn -low" ng-click="saveFeedback(feedbackCreateForm.$valid)" ng-disabled="feedbackCreateForm.$invalid">提交</button>
+                    </div>
+			    </div>
 			</div>
 		</div>
 	</div>

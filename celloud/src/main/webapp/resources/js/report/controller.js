@@ -1,7 +1,6 @@
 (function(){
   function viewDataReport(userId,dataKey,fileName,appId,appName,proId,proName,obj){
 	  var href = "#/reportpro/"+ appName + "/" + appId + "/" + dataKey + "/" + proId;
-	  console.log(href);
 	  window.location.href = href; 
   }
   
@@ -181,35 +180,37 @@
 		  $scope.project = brafInfo.project;
 		  $scope.uploadPath = brafInfo.uploadPath;
 		  
-		  var $table = $($scope.braf.mutationPosition);
-		  $scope.searchTable = function(){
-			  var result = "";
-			  $table.find("td").each(function() {
-		      	  var context = $(this).html();
-		      	  var len = context.indexOf("-");
-		      	  var before = $.trim(context.substring(len - 2, len - 1));
-		      	  var after = $.trim(context.substring(len + 1, len + 3));
-		      	  var d = context.indexOf(",");
-		      	  var k = context.indexOf(")");
-		      	  if (k == -1) {
-		      	  	  result += after;
-		      	  } else if (before != after) {
-		      	  	  result += after;
-		      	  } else {
-		      	  	  var search = $("#_snum").val();
-		      	  	  var r = context.substring(d + 1, k);
-		      	  	  if (parseFloat(r) > parseFloat(search)) {
-		      	  		  result += after;
-		      	  	  } else {
-		      	  		  var l = context.indexOf("|");
-		      	  		  var r = context.indexOf("(");
-		      	  		  result += context.substring(l + 1, r);
-		      	  	  }
-		      	  }
-		      });
-		      $("#searchResult").html(map[result]);
-          }
-		  $scope.searchTable();
+		  if($scope.braf != undefined){
+			  var $table = $($scope.braf.mutationPosition);
+			  $scope.searchTable = function(){
+				  var result = "";
+				  $table.find("td").each(function() {
+			      	  var context = $(this).html();
+			      	  var len = context.indexOf("-");
+			      	  var before = $.trim(context.substring(len - 2, len - 1));
+			      	  var after = $.trim(context.substring(len + 1, len + 3));
+			      	  var d = context.indexOf(",");
+			      	  var k = context.indexOf(")");
+			      	  if (k == -1) {
+			      	  	  result += after;
+			      	  } else if (before != after) {
+			      	  	  result += after;
+			      	  } else {
+			      	  	  var search = $("#_snum").val();
+			      	  	  var r = context.substring(d + 1, k);
+			      	  	  if (parseFloat(r) > parseFloat(search)) {
+			      	  		  result += after;
+			      	  	  } else {
+			      	  		  var l = context.indexOf("|");
+			      	  		  var r = context.indexOf("(");
+			      	  		  result += context.substring(l + 1, r);
+			      	  	  }
+			      	  }
+			      });
+			      $("#searchResult").html(map[result]);
+	          }
+			  $scope.searchTable();
+		  }
 	  });
   });
   
@@ -508,7 +509,6 @@
 				aType += "]";
 				$.reportChar.draw.echartsShowHBVType('char0',hbvtype,aType,45);
 				
-				
 				var result = $("#resultDiv").html();
 				if(result){
 					var temp = result.split("<br>");
@@ -538,11 +538,18 @@
 				var one = getCountValue("Subtype","nomal");
 				var X = "[";
 				var Y = "[";
+				// value: 横坐标,纵坐标;(数组)
 				var value = data.split("@")[0].split(";");
+				// 数组的长度即几组横纵坐标
 				var num = value.length;
+				// 遍历横纵坐标数组
 				for(var k=0;k<value.length-1;k++){
+					// n[0]:横坐标的值
+					// n[1]:纵坐标的值
 					var n = value[k].split(",");
+					// X:'横坐标','横坐标',
 					X+="'"+n[0]+"',";
+					// 使用"_"分解横坐标得到tag
 					var tag=n[0].split("_");
 					if(tag.length==rType.length){
 						var isOne = false;
@@ -566,7 +573,7 @@
 				}
 				X = X.substring(0,X.length-1)+"]";
 				Y = Y.substring(0,Y.length-1)+"]";
-				$.reportChar.draw.echartsShowBar("char1", "耐药类型", X, Y, -45, 800, 350);
+				$.reportChar.draw.echartsShowBar("char1", "耐药类型", eval(X), eval(Y), -45, 800, 350);
 			});
 		  
 	  });
@@ -696,6 +703,116 @@
 		  $scope.translate = translateInfo.translate;
 		  $scope.project = translateInfo.project;
 		  $scope.uploadPath = translateInfo.uploadPath;
+	  });
+  });
+  /**
+   * gdd数据报告controller
+   */
+  celloudApp.controller("gddDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getGDDInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(gddInfo){
+		  $scope.gdd = gddInfo.cmp;
+		  $scope.project = gddInfo.project;
+		  $scope.uploadPath = gddInfo.uploadPath;
+	  });
+  });
+  /**
+   * cmp数据报告controller
+   */
+  celloudApp.controller("cmpDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getCMPInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(cmpInfo){
+		  $scope.cmp = cmpInfo.cmp;
+		  $scope.project = cmpInfo.project;
+		  $scope.uploadPath = cmpInfo.uploadPath;
+	  });
+  });
+  /**
+   * bsi数据报告controller
+   */
+  celloudApp.controller("bsiDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getBSIInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(bsiInfo){
+		  $scope.bsi = bsiInfo.bsi;
+		  $scope.project = bsiInfo.project;
+		  $scope.uploadPath = bsiInfo.uploadPath;
+
+		  $scope.tab = 'patient';
+		  
+		  console.log($scope.bsi);
+		  
+		  var zh = $scope.bsi.species20.species_zh;
+		  var havestrain = "";
+		  if(zh != null && zh!= ''){
+			  havestrain += zh + ",";
+		  }
+		  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
+		  $scope.getRowspan = function(val1, val2, val3){
+			  var val0 = 1;
+			  if(val1 != null){
+				  val0++;
+			  }
+			  if(val2 != null){
+				  val0++;
+			  }
+			  if(val3 != null){
+				  val0++;
+			  }
+			  return val0;
+		  }
+	  });
+  });
+  /**
+   * rocky数据报告controller
+   */
+  celloudApp.controller("rockyDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getRockyInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(rockyInfo){
+		  $scope.rocky = rockyInfo.rocky;
+		  $scope.project = rockyInfo.project;
+		  $scope.uploadPath = rockyInfo.uploadPath;
+
+	  });
+  });
+  /**
+   * split数据报告controller
+   */
+  celloudApp.controller("splitDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getSplitInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(splitInfo){
+		  $scope.split = splitInfo.split;
+		  $scope.project = splitInfo.project;
+		  $scope.uploadPath = splitInfo.uploadPath;
+		  
+		  var printReport = {
+		      main: function(method,param){
+		    	$.get(method,param,function(responseText){
+		    	  var obj = window.open("");
+		        	obj.document.write(responseText);
+		        	obj.document.close();
+		      	});
+		      },
+		      mongoParam: function(projectId,dataKey,appId){
+		    	var _param = {"projectId":projectId,"dataKey":dataKey,"appId":appId};
+		      	return _param;
+		      }
+		  }
+		  $scope.printSplit = function(projectId,dataKey,appId){
+			  printReport.main("report/printSplitReport",printReport.mongoParam(projectId,dataKey,appId));
+		  }
+		  
+		  $.get("count/splitCompare",{"id":splitInfo.splitId},function(data){
+	          var totalSource = JSON.stringify(data.totalSource);
+	          var totalSample = JSON.stringify(data.totalSample);
+	          var thisSource = JSON.stringify(data.thisSource);
+	          var thisSample = JSON.stringify(data.thisSample);
+	          console.log("totalSource: " + totalSource);
+	          console.log("totalSample: " + totalSample);
+	          console.log("thisSource: " + thisSource);
+	          console.log("thisSample: " + thisSample);
+	          drawScatter("sourceCharDiv",eval(totalSource),eval(thisSource),'Split源数据同比图','平均质量','序列总数');
+	          drawScatter("sampleCharDiv",eval(totalSample),eval(thisSample),'Split分离结果数据同比图','平均质量','序列总数');
+	      });
 	  });
   });
   /**
@@ -854,6 +971,8 @@
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     $scope.companyId = companyId;
     $("#shareProjectSelect").select2({
+      language: "zh-CN",
+      placeholder: "请输入用户名",
       tags: true,
       tokenSeparators: [',', ' ']
     });
@@ -917,16 +1036,12 @@
       $(".changeDate").removeClass("active");
       START =$("#_searchDate").val();
       END = $("#_endDate").val();
-      if((!START && END)||(START && !END)){
-        $("#_alertSpan").css("display","");
-        $("#_alertSpan").html("请同时选择起始时间和结束时间");
+      if(!START || !END){
         $.alert("请同时选择起始时间和结束时间");
         return ;
       }
       if(START>END){
-        $("#_alertSpan").css("display","");
-        $("#_alertSpan").html("起始日期不能大于结束日期");
-        $.alert("起始日期不能大于结束日期");
+        $.alert("起始时间不能大于结束时间");
         return ;
       }
       $scope.dateQuery();
@@ -1023,6 +1138,8 @@
         $scope.updateState = false;
         $("#shareProjectSelect").html("");
         $("#shareProjectSelect").select2({
+          language: "zh-CN",
+          placeholder: "请输入用户名",
           tags: true,
           data: data,
           tokenSeparators: [',', ' ']
@@ -1040,15 +1157,19 @@
       userNames = userNames.toLowerCase();
       userNames = userNames.substring(0, userNames.length-1);
       projectReportService.projectShare(proId,userNames).success(function(response){
-        if(response.success){
+        $scope.updateMessage = response.message;
+        $scope.updateState = true;
+        function hideModal(){
           $("#project-share-modal").modal("hide");
           $scope.pageQuery(options.page,options.pageSize);
           $scope.updateState = false;
         }
-        $scope.updateMessage = response.message;
-        $scope.updateState = true;
+        if(response.success){
+          setTimeout(hideModal,1500);
+        }
       });
     }
+    
     //删除
     $scope.removePro = function(projectId){
       $.confirm("确定要删除该项目吗？","确认框",function(){
@@ -1075,7 +1196,7 @@
         var th_size = 0;
         var td_size = 0;
         var tr_size = $(this).find("tr").length;
-        $(this).find("table").addClass("table table-main info-table");
+        $(this).find("table").addClass("table table-main info-table data-report-table");
         $(this).find("tr").each(function(j){
           if(j==0){
             th_size = $(this).children().length;
@@ -1097,10 +1218,10 @@
             }
           }
           $(this).mouseover(function(){
-            $(this).find("span").addClass("link_hover");
+            $(this).find("a").addClass("link_hover");
           });
           $(this).mouseout(function(){
-            $(this).find("span").removeClass("link_hover");
+            $(this).find("a").removeClass("link_hover");
           });
           $(this).find("td").each(function(i){
             if(appId=="90"){
@@ -1120,11 +1241,11 @@
                   if(fileName.length>30){
                     fileName = fileName.substring(0,30) + "...";
                   }
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                  $(this).find("span").bind("click",function(){
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  $(this).find("a").bind("click",function(){
                     viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
-                  $(this).find("span").addClass("link");
+//                  $(this).find("a").addClass("btn-link");
                 }
               }
             }
@@ -1136,14 +1257,14 @@
                   fileName = fileName.substring(0,30) + "...";
                 }
                 if(appId!="114"&&appId!="118"){
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
                 }else{
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</span>");
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</a>");
                 }
-                $(this).find("span").bind("click",function(){
+                $(this).find("a").bind("click",function(){
                   viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
-                $(this).find("span").addClass("link");
+                $(this).find("a").addClass("btn-link");
               }
               if(i==0){
                 $(this).addClass("hide");
@@ -1164,11 +1285,11 @@
                 if(fileName.length>30){
                   fileName = fileName.substring(0,30) + "...";
                 }
-                $(this).html("<span id='dataSpan"+proId+$(this).next().html()+"'>"+$(this).next().html()+" （"+fileName+"）</span>");
-                $(this).find("span").bind("click",function(){
+                $(this).html("<a id='dataSpan"+proId+$(this).next().html()+"'>"+$(this).next().html()+" （"+fileName+"）</a>");
+                $(this).find("a").bind("click",function(){
                   viewDataReport(userId,$.trim($(this).parent().next().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
-                $(this).find("span").addClass("link");
+                $(this).find("a").addClass("btn-link");
               }
               if(i==1){
                 $(this).addClass("hide");
@@ -1188,11 +1309,11 @@
                   if(fileName.length>30){
                     fileName = fileName.substring(0,30) + "...";
                   }
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                  $(this).find("span").bind("click",function(){
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  $(this).find("a").bind("click",function(){
                     viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
-                  $(this).find("span").addClass("link");
+                  $(this).find("a").addClass("btn-link");
                 }
                 if(i==0){
                   $(this).addClass("hide");
@@ -1214,9 +1335,9 @@
               if(length==7){
                 if(j>0&&j%2==1&&i==0){
                   $(this).addClass("sub");
-                  $(this).html("<span id='dataSpan"+proId+$(this).html()+"'>"+$(this).html()+"</span>");
-                  $(this).find("span").bind("click",viewNext);
-                  $(this).find("span").addClass("link");
+                  $(this).html("<a id='dataSpan"+proId+$(this).html()+"'>"+$(this).html()+"</a>");
+                  $(this).find("a").bind("click",viewNext);
+                  $(this).find("a").addClass("btn-link");
                 }
               }else if(length==8){
                 if(i==1){
@@ -1231,9 +1352,9 @@
                   if(fileName.length>30){
                     fileName = fileName.substring(0,30) + "...";
                   }
-                  $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                  $(this).find("span").bind("click",viewNext);
-                  $(this).find("span").addClass("link");
+                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  $(this).find("a").bind("click",viewNext);
+                  $(this).find("a").addClass("btn-link");
                 }
               }
             }
@@ -1244,11 +1365,11 @@
                 if(fileName.length>30){
                   fileName = fileName.substring(0,30) + "...";
                 }
-                $(this).html("<span id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</span>");
-                $(this).find("span").bind("click",function(){
+                $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                $(this).find("a").bind("click",function(){
                   viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
-                $(this).find("span").addClass("link");
+                $(this).find("a").addClass("btn-link");
               }
               if(i==0){
                 $(this).addClass("hide");
@@ -1315,21 +1436,29 @@
       paramQuqery();
     }
     $scope.tagsQuery = function(tagId){
+      $(".tagsQuery").removeClass("active");
+      $("#tagsQuery"+tagId).addClass("active");
       options.tagId = tagId;
       options.page = 1;
       paramQuqery();
     }
     $scope.batchsQuery = function(batch){
+      $(".batchsQuery").removeClass("active");
+      $("#batchsQuery"+batch).addClass("active");
       options.batch = batch;
       options.page = 1;
       paramQuqery();
     }
     $scope.periodQuery = function(period){
+      $(".periodQuery").removeClass("active");
+      $("#periodQuery"+period).addClass("active");
       options.period = period;
       options.page = 1;
       paramQuqery();
     }
     $scope.fullDateQuery = function(days){
+      $(".fullDateQuery").removeClass("active");
+      $("#fullDateQuery"+days).addClass("active");
       if(days==0){
         options.beginDate = null;
         options.endDate = null;
@@ -1346,6 +1475,7 @@
       paramQuqery();
     }
     $scope.chooseDate = function(){
+      $(".fullDateQuery").removeClass("active");
       var d = new Date();
       var begin = $("#begin-date").val();
       var end = $("#end-date").val();

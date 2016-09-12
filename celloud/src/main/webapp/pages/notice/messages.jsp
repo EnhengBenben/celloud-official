@@ -5,7 +5,7 @@
 	<ol class="breadcrumb">
 		<li>CelLoud</li>
 		<li>消息管理</li>
-		<li>系统公告</li>
+		<li>消息提醒</li>
 	</ol>
 	<div class="content" ng-controller="messageController">
 		<div class="table-opera">
@@ -27,7 +27,7 @@
 			<table class="table table-main">
 				<thead>
 					<tr>
-						<th style="width: 30px;">
+						<th class="th-checkoutbox">
 							<label class="checkbox-lable">
 								<input class="checkbox" type="checkbox" ng-model="checkAllState" ng-change="checkAll(checkAllState)">
 								<span class="info"></span>

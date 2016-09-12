@@ -156,6 +156,30 @@ public class AppAction {
         return mv;
     }
 
+	/**
+	 * 获取用户的产品
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年9月9日下午1:53:11
+	 */
+	@RequestMapping("getProduct")
+	@ResponseBody
+	public Map<String, Object> getProduct() {
+		Integer userId = ConstantsData.getLoginUserId();
+		Map<String, Object> map = new HashMap<>();
+		List<App> appList = appService.getMyAppList(userId);
+		for (App app : appList) {
+			if (app.getAppId().equals(118)) {
+				map.put("app" + app.getAppId(), app.getAppId());
+			}
+			if (app.getAppId().equals(123)) {
+				map.put("app" + app.getAppId(), app.getAppId());
+			}
+		}
+		return map;
+	}
+
     @ActionLog(value = "用户添加APP，即允许在数据管理运行中显示", button = "添加APP")
     @ResponseBody
     @RequestMapping("addApp")

@@ -32,6 +32,7 @@
         white-space: nowrap!important;
         overflow: hidden;
         > li{
+            margin: 1px 0px;
             width: 100%;
             a{
                 .transition-2(transform 0.3s ease-in-out, padding-left 0.3s ease-in-out);
@@ -39,13 +40,16 @@
                 text-align: left;
             }
             &:hover>a, &.active>a {
+                .transition-2(transform 0.3s ease-in-out, padding-left 0.3s ease-in-out);
                 padding-left: 33px; 
                 color: @content-green;
                 background: @gray-black;
                 border-left: 2px solid @content-green;
             }
         }
-        .header{
+        .sidebar-header{
+            margin: 0;
+            margin-bottom: -1px;
             height: 30px;
             line-height: 28px;
             text-align: center;
@@ -64,7 +68,7 @@
                     padding-left: 13px; 
                 }                
             }
-            >.header{
+            >.sidebar-header{
                 color: @dark-black;
             }
         }

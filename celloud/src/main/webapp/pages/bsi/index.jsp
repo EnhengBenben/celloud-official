@@ -14,9 +14,10 @@
   <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/css/celloud.min.css" rel="stylesheet" type="text/css">
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css" rel="stylesheet">
   <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
   <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
+  <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
   <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
   <!-- [if It IE 9]>
   <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -24,8 +25,8 @@
   <![endif]  -->
 </head>
 <body class="container" ng-app="celloudApp" ng-controller="sidebarController">
-  <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include>
-  <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include>
+  <jsp:include page="../partial/_partial_index_header.jsp"></jsp:include>
+  <jsp:include page="../partial/_partial_index_sidebar.jsp"></jsp:include>
   <div class="view-container">
     <div class="pro-body">
       <ol class="breadcrumb">
@@ -38,12 +39,12 @@
 		    <div class="topbar-menu">
 		      <header class="common-menu">
                 <div class="common-menu-logo">
-                    <img alt="华木兰" src="<%=request.getContextPath()%>/images/app/bsi.png">
+                    <img alt="百菌探" src="<%=request.getContextPath()%>/images/app/bsi.png">
                 </div>
                 <hr class="-left">
                 <div id="common-menu-center" class="info">
                   <div id="common-menu" class="common-menu-btn pull-left">
-                    <a class="item-btn" id="to-sample-a" href="javascript:void(0)"><i class="celicon my-sample-icon"></i><br>收样</a>
+<!--                     <a class="item-btn" id="to-sample-a" href="javascript:void(0)"><i class="celicon my-sample-icon"></i><br>收样</a> -->
                     <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)">
                       <i class="celicon my-upload-icon"></i><br>上传
                       <canvas id="upload-progress" class="upload-progress" width="64" height="64"></canvas>
@@ -175,9 +176,14 @@
 	  </div><!-- /.modal -->
 	</div>
   </div>
-  
+  <div id="fullbg"></div> 
+  <div id="pageContent" class="pageContent hide">
+    <a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
+    <img id="imageFullScreen" src="">
+  </div>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
@@ -188,16 +194,18 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
-  <script src="<%=request.getContextPath() %>/js/utils.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
+  <script src="<%=request.getContextPath()%>/js/utils.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>
   <script src="<%=request.getContextPath()%>/js/report_codon.js"></script>
   <script src="<%=request.getContextPath()%>/js/message.js"></script>
   <script src="<%=request.getContextPath()%>/js/alert.js"></script>
   <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
   <script src="<%=request.getContextPath()%>/js/application.js"></script>
+  <script src="<%=request.getContextPath()%>/js/directive/href.js"></script>
   <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
   <script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>

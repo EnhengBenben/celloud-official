@@ -1,6 +1,7 @@
 package com.celloud.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleStorage;
@@ -151,7 +152,7 @@ public interface SampleService {
      * @date 2016年9月5日 下午4:37:38
      */
     public Integer updateExperStateAndIndex(Integer userId, Integer experState,
-            Integer sampleId, Integer sno);
+            Integer sampleId, List<String> sindexList);
 
     /**
      * 删除样本的实验过程
@@ -188,4 +189,16 @@ public interface SampleService {
             List<Integer> sampleIds, Integer userId);
 
     public PageList<SampleStorage> getSampleStorages(Page page, Integer userId);
+
+    /**
+     * 获取文库中的样本信息
+     * 
+     * @param userId
+     * @param ssId
+     * @return
+     * @author leamo
+     * @date 2016年9月7日 下午3:44:42
+     */
+    public List<Map<String, Object>> sampleListInStorage(Integer userId,
+            Integer ssId);
 }

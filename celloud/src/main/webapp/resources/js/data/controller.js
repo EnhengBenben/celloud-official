@@ -43,11 +43,35 @@
       if(!$scope.checkNum()){
         return ;
       }
-      if($.dataManager.options.noValidIds!=0){
-        $rootScope.errorInfo = "运行所勾选的数据必须有产品标签并且不处于运行状态！";
+      if($.dataManager.options.isRun!=0){
+        $rootScope.errorInfo = "所勾选的数据必须不处于运行状态！";
         $("#tips-modal").modal("show");
         return;
       }
+      if($.dataManager.options.isTag!=0){
+        $rootScope.errorInfo = "所勾选的数据必须有产品标签！";
+        $("#tips-modal").modal("show");
+        return;
+      }
+      if($.dataManager.options.isBSI!=0){
+        $rootScope.errorInfo = "所勾选的数据产品标签不能为百菌探！";
+        $("#tips-modal").modal("show");
+        return;
+      }
+      if($.dataManager.options.isRocky!=0){
+        $rootScope.errorInfo = "所勾选的数据产品标签不能为华木兰！";
+        $("#tips-modal").modal("show");
+        return;
+      }
+      if($.dataManager.options.isPair!=0){
+        $.confirm("请保证所选数据为配对数据！","确认框",function(){
+          $scope.run();
+        });
+      }else{
+        $scope.run();
+      }
+    };
+    $scope.run = function(){
       var checkedIds = $.dataManager.options.checkedIds;
       if(checkedIds.length!=$.dataManager.options.validIds){
         $rootScope.errorInfo = "数据选择异常，请刷新页面后重新选择！";
@@ -63,7 +87,7 @@
           $scope.message = response.message;
         }
       });
-    };
+    }
     //数据删除
     $scope.deleteData = function(){
       if(!$scope.checkNum()){
@@ -81,11 +105,12 @@
     };
     //跳转数据编辑
     $scope.toEditData = function(fileId){
+      $scope.updateState = false;
       runService.toEditData(fileId).success(function(response){
         $scope.dataFile = response['file'];
         $scope.appList = response['appList'];
         for(i = 0; i < $scope.appList.length; i++){
-        	if($.trim($scope.appList[i].appName) == $.trim($scope.dataFile.tagName)){
+        	if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
         		$scope.appSelected = $scope.appList[i];
         		break;
         	}
@@ -94,7 +119,20 @@
     }
     //修改数据信息
     $scope.submitEditData = function(){
-      $scope.dataFile.tagName = $scope.appSelected == undefined? "" : $scope.appSelected.appName;
+      var alias = $scope.dataFile.anotherName;
+      if(alias!=null && alias.length>50){
+        $scope.updateMessage = "文件别名不能超过50个字符";
+        $scope.updateState = true;
+        return;
+      }
+      var batch = $scope.dataFile.batch;
+      if(batch!=null && batch.length>50){
+        $scope.updateMessage = "数据标签不能超过50个字符";
+        $scope.updateState = true;
+        return;
+      }
+      $scope.updateState = false;
+      $scope.dataFile.tagName = $scope.appSelected == undefined? "" : $scope.appSelected.tagName;
       runService.submitEditData($scope.dataFile).success(function(response){
         if(response.success){
           $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);

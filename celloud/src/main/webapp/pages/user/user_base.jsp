@@ -13,12 +13,12 @@
       </div>
       <div class="content-body">
         <form class="info-form" name="userForm" novalidate="novalidate" ng-submit="updateUserInfo()">
-          <div class="info-form-group avatar">
+          <%-- <div class="info-form-group avatar">
             <label for="photo">头像:</label>
             <div>
               <img src="<%=request.getContextPath()%>/images/avatar/01.png" role="button" class="img-circle" alt="头像图片" title="头像预览，保存后生效"  id="user-image"/>
             </div>
-          </div>
+          </div> --%>
           <div class="info-form-group">
             <label>用户名称:</label>
             <div>

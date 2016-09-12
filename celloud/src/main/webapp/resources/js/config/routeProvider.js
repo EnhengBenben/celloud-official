@@ -158,6 +158,38 @@
     	templateUrl: "pages/report/report_data_pgs.jsp",
     	controller: "pgsDataReportController"
     })
+    .when('/reportpro/VMDA-v1.0/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/VgDNA-v1.0/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportpro/GDD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_gdd.jsp",
+    	controller: "gddDataReportController"
+    })
+    .when('/reportpro/CMP/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
+    .when('/reportpro/CMP_199/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
+    .when('/reportdata/split/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_split.jsp",
+    	controller: "splitDataReportController"
+    })
+    .when('/reportdata/BSI/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_bsi.jsp",
+    	controller: "bsiDataReportController"
+    })
+    .when('/reportdata/rocky/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_rocky.jsp",
+    	controller: "rockyDataReportController"
+    })
     .when('/app',{
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
@@ -187,6 +219,10 @@
     })
     .when('/experiment/libraryList',{
       templateUrl: "pages/experiment_scan/library_list.jsp",
+      controller: "storagesController"
+    })
+    .when('/experiment/libraryList/:ssId',{
+      templateUrl: "pages/experiment_scan/library_detail.jsp",
       controller: "storagesController"
     })
     .otherwise({redirectTo:'/'});

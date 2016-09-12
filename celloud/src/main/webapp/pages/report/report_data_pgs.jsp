@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>{{pgs.appName}}报告</li>
     </ol>
     <div class="content">
@@ -17,29 +17,27 @@
         <p> 文件名称：
             {{pgs.anotherName != null ? pgs.anotherName : pgs.fileName}}({{pgs.dataKey}})
         </p>
-        <div class="btn-group">
+        <div class="btn-groups">
         	<a class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=0"><i class="fa fa-print"></i>打印报告</a>
             <a ng-if="pgs.splitPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=1"><i class="fa fa-print"></i>点图报告</a>                  
             <a ng-if="pgs.pdf != null" class="btn -middle" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.pdf}}" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
             <a ng-if="pgs.finalPng!=null && pgs.finalPng!=''" class="btn -high" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.finalPng}}" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a>
-	        <div ng-if="experiment != null">
-	        	<br/>
-		        <div style="padding-top: 13px;">
-		        	<a ng-if="experiment.qualified == null" class="btn -low" href="javascript:void(0)" ng-click="showConclusion()"><i class="fa fa-edit"></i>结果判定</a>
-		        	<a ng-if="experiment.qualified==0 || experiment.qualified==1" class="btn -low" href="javascript:void(0)">
-			        	<span ng-if="experiment.qualified == 1">无效</span>
-			        	<span ng-if="experiment.qualified == 0">有效</span>
-		        	</a>
-		        	<a ng-if="experiment.qualified==0 || experiment.qualified==1" class="btn -low" href="javascript:void(0)" ng-click="editShowConclusion()"><i class="fa fa-edit"></i>结果修改</a>
-		        </div>
-	        </div>
+            <br/>
+            <div class="mt3">
+	        	<a ng-if="experiment != null && experiment.qualified == null" class="btn -low" href="javascript:void(0)" ng-click="showConclusion()"><i class="fa fa-edit"></i>结果判定</a>
+	        	<a ng-if="experiment != null && (experiment.qualified==0 || experiment.qualified==1)" class="btn -low" href="javascript:void(0)">
+		        	<span ng-if="experiment.qualified == 1">无效</span>
+		        	<span ng-if="experiment.qualified == 0">有效</span>
+	        	</a>
+	        	<a ng-if="experiment != null && (experiment.qualified==0 || experiment.qualified==1)" class="btn -low" href="javascript:void(0)" ng-click="editShowConclusion()"><i class="fa fa-edit"></i>结果修改</a>
+            </div>
         </div>
       </div>
-      <div class="content-body">
-        <section ng-if="pgs.noEnoughReads == 'false'">
+      <div>
+        <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	        <h2>
 				<i class="i-report1"></i>数据统计
-				<div ng-if="pgs.appId != 85" style="float:right;padding-right: 30px" title="帮助" ng-click="showModal('countModal')"><i class="i-tips">帮助</i></div>
+				<div ng-if="pgs.appId != 85" style="line-height:38px;float:right;padding-right: 30px" title="帮助" ng-click="showModal('countModal')"><i class="i-tips"></i></div>
 			</h2>
 			<div class="m-boxCon" id="_table">
 				<table class="table table-bordered table-condensed">
@@ -73,9 +71,9 @@
 				<i class="i-tips"></i>{{pgs.note}}
 			</div>
 	    </section>
-	    <section ng-if="pgs.noEnoughReads == 'false'">
+	    <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	        <h2><i class="i-edit"></i>报告
-				<div ng-if="pgs.appId != 85 && pgs.detail != null && pgs.detail.length > 0" style="float:right;padding-right: 30px" title="帮助" ng-click="showModal('reportModal')"><i class="i-tips">帮助</i></div>
+				<div ng-if="pgs.appId != 85 && pgs.detail != null && pgs.detail.length > 0" style="line-height:38px;float:right;padding-right: 30px" title="帮助" ng-click="showModal('reportModal')"><i class="i-tips"></i></div>
 			</h2>
 			<div class="m-boxCon result" id="reportDiv">
 				<div ng-if="pgs.appId == 85">
@@ -107,48 +105,44 @@
 				{{pgs.mosaic}}
 			</div>
 	     </section>
-         <section ng-if="pgs.noEnoughReads == 'false'">
+         <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	         <h2><i class="i-dna"></i>染色体</h2>
              <div class="m-boxCon">
 				<img ng-if="pgs.miniPng != null && pgs.miniPng != ''" src="{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.miniPng}}" style="width: 100%;" id="miniPngImg">
 				<span ng-if="pgs.miniPng == null || pgs.miniPng == ''" style="color: red;">运行异常，未产生图片！</span>
              </div>
          </section>
-         <section ng-if="pgs.noEnoughReads == 'false'">
+         <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	         <h2><i class="i-dna"></i>染色体点图</h2>
              <div class="m-boxCon">
-				<a ng-if="pgs.testPng != null && pgs.testPng != ''" href="javascript:bigOrigin('{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.testPng}}','testPngImg');" >
+				<a ng-if="pgs.testPng != null && pgs.testPng != ''" ng-click="bigOrigin(uploadPath + pgs.userId + '/' + pgs.appId + '/' + pgs.dataKey + '/' + pgs.testPng,'testPngImg');" >
 					<img src="{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.testPng}}" style="width: 100%;" id="testPngImg">
 				</a>
 				<span ng-if="pgs.testPng == null || pgs.testPng == ''" style="color: red;">运行异常，未产生图片！</span>
-				<a ng-if="pgs.hrpng != null && pgs.hrpng != ''" href="javascript:bigOrigin('{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.hrpng}}','HRPngImg');" >
+				<a ng-if="pgs.hrpng != null && pgs.hrpng != ''" ng-click="bigOrigin(uploadPath + pgs.userId + '/' + pgs.appId + '/' + pgs.dataKey + '/' + pgs.hrpng,'HRPngImg');" >
 					<img src="{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.hrpng}}" style="width: 100%;" id="HRPngImg">
 				</a>
              </div>
 	     </section>
-         <section ng-if="pgs.noEnoughReads == 'false'">
+         <section class="m-box" ng-if="pgs.noEnoughReads == 'false'">
 	         <h2><i class="i-dna"></i>染色体位置图</h2>
              <div class="m-boxCon">
 				<img ng-if="pgs.finalPng != null && pgs.finalPng != ''" src="{{uploadPath}}{{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.finalPng}}" style="width: 100%;" id="finalPngImg">
 				<span ng-if="pgs.finalPng == null || pgs.finalPng == ''" style="color: red;">运行异常，未产生图片！</span>
-            </div>
+             </div>
 	     </section>
-         <section ng-if="pgs.noEnoughReads == 'false'">
-			<div ng-if="pgs.appId != 104 && pgs.appId != 116" class="bg-analysis">
-			    <div class="m-box">
-			        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
-			        <div class="m-boxCon">
-			        	<div class="row" id="charDiv">
-			        	</div>
-			        </div>
-			        <div class="m-tips">
-			        	<i class="i-tips"></i>
-			        	<span id="charResult"></span>
-			        </div>
-			    </div>
-			</div>
+	     <section ng-if="pgs.noEnoughReads == 'false' && pgs.appId != 104 && pgs.appId != 116" class="m-box">
+	         <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
+	         <div class="m-boxCon">
+	        	<div class="row" id="charDiv">
+	        	</div>
+	         </div>
+	         <div class="m-tips">
+	        	<i class="i-tips"></i>
+	        	<span id="charResult"></span>
+	         </div>
 	     </section>
-	     <section ng-if="pgs.noEnoughReads != 'false'">
+	     <section class="m-box" ng-if="pgs != undefined && pgs.noEnoughReads != 'false'">
 	     	<h3>测序量不足，无法分析，建议重测。</h3>
 			<p>{{pgs.noEnoughReads}}</p>
 	     </section>
@@ -160,10 +154,10 @@
   <div class="modal-dialog">
    <div class="modal-content">
 	<div class="modal-header">
-		<a class="close" data-dismiss="modal">×</a>
-		<h4>数据统计说明</h4>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+        <h4 class="modal-title">注释</h4>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body form-modal">
 		<div class="lineheight">Total_Reads：样本测序序列总数据量，分析要求数据量大于15万。</div>
 		<div class="lineheight">Map_Reads：样本序列比对到人类基因组的数据量。</div>
 		<div class="lineheight">Map_Ratio：样本序列比对到人类基因组的数据量比例。</div>
@@ -187,8 +181,8 @@
   <div class="modal-dialog">
    <div class="modal-content">
 	<div class="modal-header">
-		<a class="close" data-dismiss="modal">×</a>
-		<h4>报告说明</h4>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+        <h4 class="modal-title">报告说明</h4>
 	</div>
 	<div class="modal-body">
 		<div class="lineheight">Aneuploidy：染色体异倍性及异常区域。</div>

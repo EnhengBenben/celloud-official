@@ -30,6 +30,7 @@
 	<resultMap id="ResultMapWithTag" type="com.celloud.model.mysql.DataFile"
 		extends="ResultMapWithRunState">
 		<result column="appId" property="appId" jdbcType="INTEGER" />
+		<result column="tagId" property="tagId" jdbcType="INTEGER" />
 		<result column="tagName" property="tagName" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
@@ -50,7 +51,7 @@
 		data_tags
 	</sql>
 	<sql id="Tag_Column_List">
-		tag.tag_name tagName,apptag.app_id appId
+		tag.tag_id tagId,tag.tag_name tagName,apptag.app_id appId
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="ResultMapWithTag" parameterType="java.lang.Integer">
 		select
@@ -88,10 +89,17 @@
 	</select>
 	<select id="selectByDataKeys" resultMap="ResultMapWithBLOBs">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from tb_file
+		,
+        <include refid="Tag_Column_List" />
+        from tb_file f
+        left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+        left join tb_tag tag on tag.tag_id = filetag.tag_id
+        left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
+<!--         where f.file_id = #{fileId,jdbcType=INTEGER} -->
+<!-- 		from tb_file -->
 		where data_key in (${dataKey})
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -613,8 +621,8 @@
 	</select>
 	<select id="getBatchList" resultType="java.lang.String">
 		select batch from tb_file
-		where user_id=#{userId} and state=#{state} group
-		by batch
+		where user_id=#{userId} and state=#{state} and batch is not null and batch !=''
+		group by batch
 	</select>
 	<select id="filterRockyList" resultMap="ResultMapWithRunState"
 		parameterType="java.lang.Integer">

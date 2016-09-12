@@ -84,5 +84,13 @@ $(document).ready(function(){
     $("#reset-info").on("click",function(){
         $("#print-form")[0].reset();
     });
+    $("#sample-type").on("change",function(){
+    	var val=$("#sample-type option:selected").val();
+    	if(val=="血液"){
+    		$("#bsi_title_info").html("血流");
+    	}else{
+    		$("#bsi_title_info").html(val);
+    	}
+    });
 });
 </script>

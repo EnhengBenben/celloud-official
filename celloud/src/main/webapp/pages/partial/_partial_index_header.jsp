@@ -9,27 +9,16 @@
           </div>
         </div>
         <ul class="nav navbar-nav pull-left">
-            <shiro:hasPermission name="rocky:product">
-              <li>
-                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="cubes-icon">&nbsp;</i>
-                </a>
-                <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰"></a>
-                </div>
-              </li>
-            </shiro:hasPermission>
-            <shiro:hasPermission name="bsi:product">
-              <li>
-                <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="cubes-icon">&nbsp;</i>
-                </a>
-                <div class="dropdown-menu product-dropdown">
-                  <a href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/images/app/bsi.png" alt="百菌探" title="百菌探"></a>
-                </div>
-              </li>
-            </shiro:hasPermission>
-<!--           <li><a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a></li> -->
+          <li ng-if="userProduct.app123==123||userProduct.app118==118">
+            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="cubes-icon">&nbsp;</i>
+            </a>
+            <div class="dropdown-menu product-dropdown">
+              <a ng-if="userProduct.app118==118" href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探"></a>
+              <a ng-if="userProduct.app123==123" href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
+            </div>
+          </li>
+          <li><a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a></li>
         </ul>
         <ul class="nav navbar-nav pull-right">
           <li class="dropdown">
@@ -62,7 +51,7 @@
           </li>
            <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="bell-icon">&nbsp;</i>
+              <i class="mail-icon">&nbsp;</i>
               <span class="label label-danger">{{messages.num==0?'':(''+messages.num)}}</span>
             </a>
             <div class="dropdown-menu message-dropdown">
@@ -76,7 +65,7 @@
             </a>
             <div class="dropdown-menu user-dropdown">
               <a class="btn" href="<%=request.getContextPath()%>/index#/user/base">个人信息</a>
-              <a class="btn btn-cancel" href="logout">退出</a>
+              <a class="btn btn-reset" href="logout">退出</a>
             </div>
           </li>
         </ul>

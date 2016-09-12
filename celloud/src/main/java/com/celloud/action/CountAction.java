@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.TimeState;
-import com.celloud.model.mongo.Pgs;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExpensesService;
@@ -357,8 +356,8 @@ public class CountAction {
 	@RequestMapping("pgsCount")
 	public ModelAndView pgsCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Pgs> list = reportService.pgsCount(userId);
-		return new ModelAndView("count/count_pgs").addObject("list", list);
+		Map<String, Object> map = reportService.pgsCount(userId);
+		return new ModelAndView("count/count_pgs").addObject("map", map);
 	}
 
 	/**

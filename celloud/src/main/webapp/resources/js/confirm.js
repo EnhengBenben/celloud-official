@@ -1,6 +1,10 @@
 (function($) {
   var show = function(type,title,message,callback) {
-    $("BODY").append('<div id="confirm-modal-div"></div>');
+    if(!$("#confirm-modal-div").html()){
+      $("BODY").append('<div id="confirm-modal-div"></div>');
+    }else{
+      $("#confirm-modal-div").html("")
+    }
     var $alert = $('<div id="confirm-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" role="alert"></div>');
     $alert.addClass(type + "-modal");
     var $dialog = $('<div class="modal-dialog modal-sm"></div>');
@@ -42,8 +46,6 @@
   };
   var hide = function(){
     $("#confirm-modal").modal("hide");
-    $("#confirm-modal-div").remove();
-    $(".modal-backdrop.fade.in").remove();
   }
   var confirm = function(message, title, callback) {
     if( title == null ) title = '确认框';

@@ -11,7 +11,7 @@
       <div class="notice-content">
         <div class="notice-body">
 	        <h5>消息提醒设置</h5>
-	        <table class="table table-main notice-table">
+	        <table class="table table-main notice-table no-hover">
 	          <thead>
 	            <tr>
 	              <th></th>
