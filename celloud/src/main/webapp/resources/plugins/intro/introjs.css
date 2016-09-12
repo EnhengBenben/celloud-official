@@ -11,7 +11,7 @@
   background: radial-gradient(center,ellipse cover,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.9) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66000000',endColorstr='#e6000000',GradientType=1);
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-  filter: alpha(opacity=50);
+  filter: alpha(opacity=40);
   -webkit-transition: all 0.3s ease-out;
      -moz-transition: all 0.3s ease-out;
       -ms-transition: all 0.3s ease-out;
@@ -49,13 +49,13 @@ tr.introjs-showElement > th {
 
 .introjs-helperLayer {
   position: absolute;
+  width: 140px;
+  height: 180px;
+  top: 0px;
+  left: 135px;
   z-index: 9999998;
   background-color: #FFF;
-  background-color: rgba(255,255,255,.9);
-  border: 1px solid #777;
-  border: 1px solid rgba(0,0,0,.5);
-  border-radius: 4px;
-  box-shadow: 0 2px 15px rgba(0,0,0,.4);
+  background: url("focus_bg.png") no-repeat;
   -webkit-transition: all 0.3s ease-out;
      -moz-transition: all 0.3s ease-out;
       -ms-transition: all 0.3s ease-out;
@@ -186,15 +186,8 @@ tr.introjs-showElement > th {
 
 .introjs-tooltip {
   position: absolute;
+  top: 40px;
   visibility: visible;
-/*   margin-top: -10px; */
-/*   padding: 10px; */
-/*   background-image:url("scyd.png"); */
-/*   background-color: white; */
-/*   min-width: 480px; */
-/*   max-width: 300px; */
-/*   border-radius: 3px; */
-/*   box-shadow: 0 1px 10px rgba(0,0,0,.4); */
   -webkit-transition: opacity 0.1s ease-out;
      -moz-transition: opacity 0.1s ease-out;
       -ms-transition: opacity 0.1s ease-out;
@@ -203,6 +196,7 @@ tr.introjs-showElement > th {
 }
 
 .introjs-tooltipbuttons {
+  margin: 10px -10px;
   text-align: right;
   white-space: nowrap;
 }
@@ -215,25 +209,13 @@ tr.introjs-showElement > th {
   position: relative;
   overflow: visible;
   display: inline-block;
-/*   padding: 0.3em 0.8em; */
-/*   border: 1px solid #d4d4d4; */
   margin: 0;
-/*   text-decoration: none; */
-/*   text-shadow: 1px 1px 0 #fff; */
-/*   font: 11px/normal sans-serif; */
-/*   color: #333; */
   white-space: nowrap;
   cursor: pointer;
   outline: none;
-/*   background-color: #ececec; */
-/*   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#ececec)); */
-/*   background-image: -moz-linear-gradient(#f4f4f4, #ececec); */
-/*   background-image: -o-linear-gradient(#f4f4f4, #ececec); */
-/*   background-image: linear-gradient(#f4f4f4, #ececec); */
   -webkit-background-clip: padding;
   -moz-background-clip: padding;
   -o-background-clip: padding-box;
-  /*background-clip: padding-box;*/ /* commented out due to Opera 11.10 bug */
   -webkit-border-radius: 0.2em;
   -moz-border-radius: 0.2em;
   border-radius: 0.2em;
@@ -241,20 +223,6 @@ tr.introjs-showElement > th {
   zoom: 1;
   *display: inline;
   margin-top: 10px;
-}
-
-.introjs-button:hover {
-/*   border-color: #bcbcbc; */
-/*   text-decoration: none; */
-/*   box-shadow: 0px 1px 1px #e3e3e3; */
-}
-
-.introjs-button:focus,
-.introjs-button:active {
-/*   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ececec), to(#f4f4f4)); */
-/*   background-image: -moz-linear-gradient(#ececec, #f4f4f4); */
-/*   background-image: -o-linear-gradient(#ececec, #f4f4f4); */
-/*   background-image: linear-gradient(#ececec, #f4f4f4); */
 }
 
 /* overrides extra padding on button elements in Firefox */
@@ -265,21 +233,17 @@ tr.introjs-showElement > th {
 
 .introjs-skipbutton {
   margin-right: 5px;
-  background-image: url("yes.png");
-  width:106px;
-  height:84px;
+  background-image: url("ikow.png");
+  width:70px;
+  height:27px;
   float: left
 }
 
 .introjs-prevbutton {
   margin-right: 5px;
-  background-image: url("no.png");
-  width: 159px;;
-  height:74px
-/*   -webkit-border-radius: 0.2em 0 0 0.2em; */
-/*   -moz-border-radius: 0.2em 0 0 0.2em; */
-/*   border-radius: 0.2em 0 0 0.2em; */
-/*   border-right: none; */
+  background-image: url("update.png");
+  width: 89px;;
+  height:27px
 }
 
 .introjs-nextbutton {
@@ -287,9 +251,6 @@ tr.introjs-showElement > th {
   background-image: url("no.png");
   width:169px;
   height:74px
-/*   -webkit-border-radius: 0 0.2em 0.2em 0; */
-/*   -moz-border-radius: 0 0.2em 0.2em 0; */
-/*   border-radius: 0 0.2em 0.2em 0; */
 }
 
 .introjs-disabled, .introjs-disabled:hover, .introjs-disabled:focus {
