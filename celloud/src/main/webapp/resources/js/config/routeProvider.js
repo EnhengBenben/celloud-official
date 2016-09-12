@@ -194,6 +194,10 @@
       templateUrl: "pages/app/app_main.jsp",
       controller: "toAppStore"
     })
+    .when('/app/detail/:pid',{
+      templateUrl: "pages/app/app_detail_main.jsp",
+      controller: "toAppDetail"
+    })
     .when('/reportdata/bsi',{
       templateUrl: "pages/report/report_data_bsi.jsp"
     })
