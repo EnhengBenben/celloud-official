@@ -43,6 +43,19 @@
     };
   });
   
+  celloudApp.directive('pgsOver', function ($timeout) {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attr) {
+        if (scope.$last === true) {
+          $timeout(function() {
+            scope.$emit('pgsLoadOver');
+          });
+        }
+      }
+    };
+  });
+  
   /**
    * egfr数据报告controller
    */
@@ -738,13 +751,9 @@
 		  $scope.uploadPath = bsiInfo.uploadPath;
 
 		  $scope.tab = 'patient';
-		  
-		  console.log($scope.bsi);
-		  
-		  var zh = $scope.bsi.species20.species_zh;
 		  var havestrain = "";
-		  if(zh != null && zh!= ''){
-			  havestrain += zh + ",";
+		  for(var i=0;i<$scope.bsi.species_20.length;i++){
+		    havestrain += $scope.bsi.species_20[i].species_zh + ",";
 		  }
 		  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		  $scope.getRowspan = function(val1, val2, val3){
@@ -819,6 +828,57 @@
    * pgs数据报告controller
    */
   celloudApp.controller("pgsDataReportController", function($scope, $routeParams, $compile, dataReportService){
+    $scope.$on('pgsLoadOver', function(){
+      var num = 0;
+      $("#reportDiv").find("td").each(function(){
+        var result = $(this).text();
+        if(num%4==0){
+          $(this).css("min-width","90px");
+        }
+        if(num%4==1){
+          $(this).css("min-width","55px");
+        }
+        if(num%4==2){
+          if(result.length>85){
+            $(this).html(result.substring(0,84)+"...");
+            $(this).attr("title",result);
+          }
+        }
+        if(num%4==3){
+          if(result.length>39){
+            $(this).html(result.substring(0,38)+"...");
+            $(this).attr("title",result);
+          }
+          $(this).css("width","300px");
+        }
+        $(this).css("padding-left","20px");
+        $(this).css("text-align","left");
+        num ++;
+      });
+      var trTotal = 0;//记录总共遍历了多少个 tr
+      var tr = 0;//记录需要在第几个加rowspan
+      var count = 1;//记录需要rowspan的数目
+      var need = false;
+      $("#reportDiv").find("tr").each(function(){
+        var tdVal = $(this).children('td').eq(0).html();
+        if(tdVal.toLowerCase().indexOf("chr") == -1){
+          $(this).children('td').eq(2).remove();
+          $(this).children('td').eq(2).remove();
+          tr = trTotal-count;
+          count ++;
+          need = true;
+        }else if(need){
+            var rowTr = $("#reportTable tr").eq(tr);
+            $(rowTr).children("td").eq(0).attr("rowspan",count);
+            $(rowTr).children("td").eq(0).css("vertical-align","middle");
+            $(rowTr).children("td").eq(1).attr("rowspan",count);
+            $(rowTr).children("td").eq(1).css("vertical-align","middle");
+            count =  1;
+            need = false;
+        }
+        trTotal++;
+      });
+    })
 	  dataReportService.getDataReportInfo("report/getPgsInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
 	  success(function(pgsInfo){
 		  $scope.pgs = pgsInfo.pgs;
@@ -880,55 +940,7 @@
 //			  $(this).css("padding-left","20px");
 //			  $(this).css("text-align","left");
 //		  });
-//		  var num = 0;
-//		  $("#reportDiv").find("td").each(function(){
-//			  var result = $(this).text();
-//			  if(num%4==0){
-//				  $(this).css("min-width","90px");
-//			  }
-//			  if(num%4==1){
-//				  $(this).css("min-width","55px");
-//			  }
-//			  if(num%4==2){
-//				  if(result.length>85){
-//					  $(this).html(result.substring(0,84)+"...");
-//					  $(this).attr("title",result);
-//				  }
-//			  }
-//			  if(num%4==3){
-//				  if(result.length>39){
-//					  $(this).html(result.substring(0,38)+"...");
-//					  $(this).attr("title",result);
-//				  }
-//				  $(this).css("width","300px");
-//			  }
-//			  $(this).css("padding-left","20px");
-//			  $(this).css("text-align","left");
-//			  num ++;
-//		  });
-//		  var trTotal = 0;//记录总共遍历了多少个 tr
-//		  var tr = 0;//记录需要在第几个加rowspan
-//		  var count = 1;//记录需要rowspan的数目
-//		  var need = false;
-//		  $("#reportDiv").find("tr").each(function(){
-//			  var tdVal = $(this).children('td').eq(0).html();
-//			  if(tdVal.toLowerCase().indexOf("chr") == -1){
-//		      $(this).children('td').eq(2).remove();
-//		      $(this).children('td').eq(2).remove();
-//		      tr = trTotal-count;
-//		      count ++;
-//		      need = true;
-//		  }else if(need){
-//		      var rowTr = $("#reportTable tr").eq(tr);
-//		      $(rowTr).children("td").eq(0).attr("rowspan",count);
-//		      $(rowTr).children("td").eq(0).css("vertical-align","middle");
-//		      $(rowTr).children("td").eq(1).attr("rowspan",count);
-//		      $(rowTr).children("td").eq(1).css("vertical-align","middle");
-//		      count =  1;
-//		      need = false;
-//		  }
-//			  trTotal++;
-//		  });
+
 		  $scope.showModal = function(id){
 			  $("#"+id).modal("show");
 		  }
@@ -1245,7 +1257,7 @@
                   $(this).find("a").bind("click",function(){
                     viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
-//                  $(this).find("a").addClass("btn-link");
+                  $(this).find("a").addClass("btn-link");
                 }
               }
             }

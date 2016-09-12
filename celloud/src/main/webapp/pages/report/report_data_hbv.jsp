@@ -77,7 +77,7 @@
 				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-				    	<a ng-if="hbv.known['194_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['194_10_png']);" >
+				    	<a ng-if="hbv.known['194_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['194_10_png']);" >
 							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['194_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['194_png'] == null" class="imgmiss">
@@ -91,7 +91,7 @@
 				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
+				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
@@ -105,13 +105,13 @@
 				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,3)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-				    	<a ng-if="hbv.known['181_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['181_10_png']);" >
+				    	<a ng-if="hbv.known['181_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['181_10_png']);" >
 							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['181_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['181_png'] == null" class="imgmiss">
 							181位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['236_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['236_10_png']);" >
+						<a ng-if="hbv.known['236_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['236_10_png']);" >
 							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['236_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['236_png'] == null" class="imgmiss">
@@ -125,19 +125,19 @@
 				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,4)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-						<a ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
+						<a ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
 							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['173_png'] == null" class="imgmiss">
 							173位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
+						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
 							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
 							180位点测序失败，建议重测。
 						</div>
-				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
+				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 							<img style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
@@ -151,19 +151,19 @@
 				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,5)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-						<a ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
+						<a ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
 							<img style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['173_png'] == null" class="imgmiss">
 							173位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
+						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
 							<img style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
 							180位点测序失败，建议重测。
 						</div>
-				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
+				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 							<img style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
@@ -177,37 +177,37 @@
 				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,6)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-						<a ng-if="hbv.known['169_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['169_10_png']);" >
+						<a ng-if="hbv.known['169_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['169_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['169_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['169_png'] == null" class="imgmiss">
 							169位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
+						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
 							180位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['184_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['184_10_png']);" >
+						<a ng-if="hbv.known['184_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['184_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['184_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['184_png'] == null" class="imgmiss">
 							184位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['202_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['202_10_png']);" >
+						<a ng-if="hbv.known['202_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['202_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['202_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['202_png'] == null" class="imgmiss">
 							202位点测序失败，建议重测。
 						</div>
-				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
+				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
 							204位点测序失败，建议重测。
 						</div>
-				    	<a ng-if="hbv.known['250_png'] != null" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['250_10_png']);" >
+				    	<a ng-if="hbv.known['250_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['250_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['250_png']}}" height="170px;" width="150px;">
 						</a>
 						<div ng-if="hbv.known['250_png'] == null" class="imgmiss">
@@ -223,7 +223,7 @@
 				 	  	<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				 	</h2>
 				    <div class="m-boxCon" id="otherPng">
-			    		<a ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + img.replace('png','10.png'));" >
+			    		<a ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + img.replace('png','10.png'));" >
 							<img class="imgtop" title="{{img}}" name="imgSrc" style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img}}" height="170px;" width="150px;">
 						</a>
 				    </div>
@@ -252,27 +252,27 @@
 					<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
 				</h2>
 			    <div ng-if="hbv.original['1_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['1_all_png'],'listAll1Img');" >
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['1_all_png'],'listAll1Img');" >
 						<img class="imgtop originImg" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['1_all_png']}}" id="listAll1Img">
 					</a>
 			    </div>
 			    <div ng-if="hbv.original['2_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['2_all_png'],'listAll2Img');" >
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['2_all_png'],'listAll2Img');" >
 						<img class="imgtop originImg" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['2_all_png']}}" id="listAll2Img">
 					</a>
 			    </div>
 			    <div ng-if="hbv.original['3_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['3_all_png'],'listAll3Img');" >
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['3_all_png'],'listAll3Img');" >
 						<img class="imgtop originImg" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['3_all_png']}}" id="listAll3Img">
 					</a>
 			    </div>
 			     <div ng-if="hbv.original['4_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['4_all_png'],'listAll4Img');" >
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['4_all_png'],'listAll4Img');" >
 						<img class="imgtop originImg" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['4_all_png']}}" id="listAll4Img">
 					</a>
 			    </div>
 			    <div ng-if="hbv.original['5_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure(uploadPathhbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['5_all_png'],'listAll5Img');" >
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['5_all_png'],'listAll5Img');" >
 						<img class="imgtop originImg" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['5_all_png']}}" id="listAll5Img">
 					</a>
 			    </div>

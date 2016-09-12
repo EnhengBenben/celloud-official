@@ -70,6 +70,7 @@
 			changeState();
 		}
 		$scope.checkOne = function(notice, state) {
+			alert(state);
 			if (state) {
 				checkedNotices.push(notice);
 			} else {

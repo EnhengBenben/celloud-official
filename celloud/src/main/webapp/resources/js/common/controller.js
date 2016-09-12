@@ -1,6 +1,7 @@
 (function() {
+  var intro;
 	celloudApp.controller("sidebarController", function($scope,
-			$location, $rootScope,commonService) {
+			$location, $rootScope, $timeout, commonService) {
 		
 		$('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});
 		var revise = $(document).width()-$('.sidebar-menu').width();
@@ -9,7 +10,6 @@
 			revise = $(document).width()-$(this).width();
 			$("#pageContent").css("width",revise+"px");
 		});
-		
 		$rootScope.showZoom = function(src) {
 			var bh = $("body").height();  
 			var bw = $("body").width();
@@ -84,8 +84,6 @@
 			$rootScope.errorInfo = info;
 			$("#tips-modal").modal("show");
 		}
-		
-		
 		/**
 		 * 修改更多按钮
 		 */
@@ -132,5 +130,15 @@
 				}
 			});
 		});
+		$timeout(function () {
+		  if(window.navigation==1){
+	      intro = introJs();
+	      intro.setOption('tooltipPosition', 'bottom');
+	      intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+	      intro.setOption('showStepNumbers', false);
+	      intro.setOption('showButtons', true);
+	      intro.start();
+	    }
+    }, 1000);
 	});
 })();
