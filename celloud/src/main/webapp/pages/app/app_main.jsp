@@ -62,12 +62,12 @@
   			<ul>
 			  <div ng-if="appList == null || appList == ''" class="col-md-12">结果为空 </div>
 			  <li ng-if="appList != null" ng-repeat="app in appList">
-			      <a href="#">
+			      <a ng-href="{{'#/app/detail/' + app.appId}}">
 			        <img ng-src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" alt="">
 			      </a>
 			      <div class="intro">
 			        <h6 style="overflow: hidden;" title="{{app.appName}}">
-			          <a class="reco-hd-link"  ng-href="{{'#/app/detail/' + app.appId}}">
+			          <a class="reco-hd-link" ng-href="{{'#/app/detail/' + app.appId}}">
 			          	{{app.appName}}
 			          </a>
 			        </h6>
