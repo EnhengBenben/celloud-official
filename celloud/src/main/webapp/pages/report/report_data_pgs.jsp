@@ -85,7 +85,7 @@
 					</div>
 					<div ng-if="pgs.detail != null && pgs.detail.length > 0">
 						<table class='table table-main' id="reportTable">
-							<tr ng-repeat="info in pgs.detail">
+							<tr ng-repeat="info in pgs.detail" pgs-over>
 							    <td ng-if="info.length == 1 || info.length == 2 || info.length == 3 || info.length == 4">{{info[0]}}</td>
 							    <td ng-if="info.length == 2 || info.length == 3 || info.length == 4">{{info[1]}}</td>
 							    <td ng-if="info.length == 3 || info.length == 4">{{info[2]}}</td>
