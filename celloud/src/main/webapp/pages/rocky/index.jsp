@@ -16,7 +16,7 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/css/celloud.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/rocky_main.min.css" rel="stylesheet">
 <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
 <!-- [if It IE 9]>

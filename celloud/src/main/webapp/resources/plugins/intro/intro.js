@@ -480,7 +480,7 @@
         tooltipLayer.style.bottom = (targetOffset.height +  20) + 'px';
         break;
       case 'right':
-        tooltipLayer.style.left = (targetOffset.width + 20) + 'px';
+        tooltipLayer.style.left = (targetOffset.width + 100) + 'px';
         if (targetOffset.top + tooltipOffset.height > windowSize.height) {
           // In this case, right would have fallen below the bottom of the screen.
           // Modify so that the bottom of the tooltip connects with the target
@@ -682,10 +682,10 @@
       }
 
       //set new position to helper layer
-      helperLayer.setAttribute('style', 'width: ' + (elementPosition.width  + widthHeightPadding)  + 'px; ' +
-                                        'height:' + (elementPosition.height + widthHeightPadding)  + 'px; ' +
-                                        'top:'    + (elementPosition.top    - 5)   + 'px;' +
-                                        'left: '  + (elementPosition.left   - 5)   + 'px;');
+      helperLayer.setAttribute('style', 'width: ' + (elementPosition.width  + widthHeightPadding + 100)  + 'px; ' +
+                                        'height:' + (elementPosition.height + widthHeightPadding+100)  + 'px; ' +
+                                        'top:'    + (elementPosition.top)   + 'px;' +
+                                        'left: '  + (elementPosition.left   - 35)   + 'px;');
 
     }
   }
@@ -918,10 +918,10 @@
 
       prevTooltipButton.onclick = function() {
     	  $.get("user/updateInfo",{"navigation":0});
-    	  if(intro != null){
-    		  intro.exit();
-    		  intro = null;
-    	  }
+//    	  if(intro != null){
+//    		  intro.exit();
+//    		  intro = null;
+//    	  }
     	  if (self._introItems.length - 1 == self._currentStep && typeof (self._introCompleteCallback) === 'function') {
               self._introCompleteCallback.call(self);
             }

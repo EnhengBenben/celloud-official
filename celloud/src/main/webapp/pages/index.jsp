@@ -15,7 +15,8 @@
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath()%>/css/celloud.min.css" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3" rel="stylesheet">
 <%--   <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" /> --%>
 <!--   <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script> -->
   <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
@@ -52,11 +53,12 @@
   </div>
   <div id="alerts" class="alerts"></div>
   <ng-include src="'pages/partial/_partial_upload_modal.jsp'"></ng-include>
-  <script type="text/javascript">
-       window.CONTEXT_PATH = '<%=request.getContextPath()%>';
-       window.companyId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getCompanyId() %>';
-  </script>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/intro/intro.js?version=1.1"></script>
+  <script type="text/javascript">
+     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+     window.companyId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getCompanyId() %>';
+  </script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
@@ -113,5 +115,8 @@
   <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
+  <script type="text/javascript">
+	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
+  </script>
 </body>
 </html>
