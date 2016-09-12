@@ -332,8 +332,8 @@
 		    </div>
 		    <div id="report-pagination" class="report-pagination"></div> --%>
 		    <div class="report-btn-group pull-right">
-		       <a class="btn" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
-		       <a class="btn hide" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
+		       <a class="btn" ng-class="{hide : tab == 'analy'}" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
+		       <a class="btn" ng-class="{hide : tab == 'patient'}" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
 		       <a class="btn" href="javascript:void(0)"><i class="fa fa-cloud-download"></i>导出</a>
 			   <a class="btn" href="javascript:void(0)"><i class="fa fa-group"></i>发布</a>
 			   <a class="btn" href="javascript:void(0)"><i class="fa fa-share-square-o"></i>分享</a>
