@@ -1,0 +1,316 @@
+.modal{
+    .modal-dialog{
+        margin: 80px auto;
+        width: 500px;
+    }
+    .modal-sm{
+        width: 300px;
+    }
+    .modal-md{
+        width: 650px;
+    }
+    .modal-lg{
+        width: 900px;
+    }
+    .modal-content{
+        width: 100%;
+        border: none;
+        background-color: @content-gray;
+        .modal-header{
+            height: 40px;
+            background-color: @gray-black;
+            .border-radius(5px 5px 0px 0px);
+            color: @light-gray;
+            padding: 15px 15px;
+            >h4{
+                line-height: 0.5;
+                font-size: 14px;
+            }
+            >.close{
+                margin-top: -10px;
+                width:20px;
+                height: 20px;
+                color: @light-gray;
+                opacity: 1;
+            }
+        }
+        .modal-footer{
+            padding: 5px 20px 20px 20px;
+            text-align: center;
+            border: none;
+            >.text-center{
+                >.btn-cancel{
+                    margin-right: 20px;
+                }
+            }
+        }
+    }
+    .modal-body{
+    	._help{
+    		text-align: justify;
+    		text-indent: -1.2em;
+    		font-size: 14px;
+    	}
+    	.lineheight{
+    		padding-top: 10px;
+    		line-height: 30px;
+    	}
+        padding: 40px 55px;
+    }
+    .form-modal{
+        padding: 20px 40px;
+        .form-group{
+            margin-bottom: 5px;
+        }
+        h5{
+            margin-top: 20px;
+        }
+        .form-label{
+            padding-right: 0;
+        }
+        .info-form-group{
+            padding-left: 28px;
+        }
+        .form-group-content{
+            min-height: 30px;
+            line-height: 30px;
+        }
+        input,textarea,select{
+            width: 100%;
+            .border-radius(6px);
+        }
+        .btn{
+            width: 90px;
+            height: 30px;
+        }
+        .btn-cancel{
+            margin-right: 20px;
+        }
+        .checkbox-group{
+            min-width: 120px;
+            display: inline-block;
+        }
+    }
+    &.tips-modal{
+        .modal-body {
+            padding: 30px 50px 40px 50px;
+        }
+        .modal-content h5{
+            text-align: left;
+            line-height: 30px;
+            font-size: 14px;
+            >i{
+                margin-right: 6px;
+                float: left;
+                font-size: 28px;
+                color: @alert-error-bg
+            }
+        }
+    }
+    &.confirm-modal{
+        .modal-body {
+            padding: 20px 40px;
+        }
+        .modal-content h5{
+            text-align: left;
+            line-height: 30px;
+            font-size: 16px;
+            >i{
+                margin-right: 20px;
+                float: left;
+                font-size: 28px;
+                color: @content-green
+            }
+        }
+    }
+}
+.upload-modal{
+    /*上传页面步骤*/
+    .step{
+        position: relative;
+        height: 42px;
+        > .item {
+            width: 42px;
+            height: 42px;
+            float: left;
+            text-align: center;
+            line-height: 30px;
+            font-size: 14px;
+            border: 6px solid @light-gray;
+            .border-radius(99em);
+            background-color: #fff;
+            &.active{
+                color: @content-green;
+                border-color: @content-green;
+            }
+        }
+        hr{
+            width: 218px;
+            margin-top: 21px;
+            float: left;
+            border: 2px solid @light-gray;
+            &.active{
+                border-color: @content-green;
+            }
+        }
+    }
+    .upload-content{
+        margin: auto;
+        width: 100%;
+        padding-top: 10px;
+        text-align: center;
+        > .info{
+            height: 42px;
+            padding-left: 10px;
+            line-height: 42px;
+            font-size: 14px;
+            color: @font-gray;
+            text-align: center;
+        }
+        >form{
+            width: 280px;
+            margin: 0px auto;
+            
+        }
+        input{
+            margin-bottom: 5px;
+            width: 200px;
+            height: 30px;
+            padding: 0px 10px;
+            .border-radius(3px);
+            font-size: 14px;
+        }
+        select{
+        	margin-bottom: 5px;
+            width: 200px;
+            height: 30px;
+            .border-radius(3px);
+            font-size: 14px;
+        }
+        .btn{
+            margin-top: 50px;
+        }
+        .plupload-content {
+            position: relative;
+            margin: 20px 0px 10px 0px;
+            width: 100%;
+            height:120px;
+            text-align: center;
+            .border-1(@light-gray);
+            .border-radius(10px);
+            cursor: pointer;
+            background-color: #fff;
+            
+        }
+        .plupload-content .upload-text{
+            position: absolute;
+            width: 100%;
+            line-height: 20px;
+            font-size: 14px;
+            color: @silver-gray;
+            margin: 37px auto;
+        }
+    }
+    p{
+        text-align: left;
+        span{
+            margin: -3px -50px 0px -37px;
+            font-size:12px;
+            color: @silver-gray;
+            -webkit-transform:scale(0.85);
+            -moz-transform:scale(0.85);
+            -o-transform:scale(0.85);
+            display: block;
+        }
+    }
+    .upload-container{
+        margin: 10px 0px 5px 0px;
+        background-color: #fff;
+        height:120px;
+        width: 100%;
+        border: 1px solid #dcdcdc;
+    }
+    .upload-container .plupload-content {
+        text-align: center;
+        width: 100%;
+        height: 120px;
+        cursor: pointer;
+    }
+    .upload-container .plupload-content .upload-text{
+        color: #c8c8c8;
+        font-size: 14px;
+        position: absolute;
+        top: 50px;
+        left: 70px;
+    }
+    .upload-container .plupload-filelist {
+        border: none;
+        height: 120px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        overflow-y: auto;
+    }
+    .upload-container .plupload-filelist li {
+        font-size: 12px;
+        color: #323232;
+        height: 20px;
+        width: 100%;
+    }
+    .upload-container .plupload-filelist>li:nth-of-type(even) {
+        background: rgb(248,248,248);
+    }
+    .upload-container .plupload-filelist>li:nth-of-type(odd) {
+        background: rgb(255,255,255);
+    }
+    .upload-container .plupload-filelist>li>div{
+         float: left;
+         text-align: left;
+         padding-left: 5px;
+    }
+    .upload-container .plupload-filelist>li .plupload-file-name{
+        width: 190px;
+        word-break:keep-all;/* 不换行 */
+        white-space:nowrap;/* 不换行 */
+        overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+        text-overflow:ellipsis;
+    }
+    .upload-container .plupload-filelist>li .plupload-file-surplus,
+    .upload-container .plupload-filelist>li .plupload-file-size{
+        width: 60px;
+        text-align: center;
+    }
+    .upload-container .plupload-filelist>li .plupload-file-status{
+        width: 40px;
+        text-align: center;
+    }
+    .upload-container .plupload-filelist>li .plupload-file-action{
+        width: 30px;
+        float: right;
+        text-align: center;
+    }
+    .plupload-file-action a,
+    .plupload-file-action a:hover,
+    .plupload-file-action a:active{
+        color: #323232;
+    }
+    .step-three-content .upload-container .plupload-filelist{
+        height: 120px;
+    }
+    .step-three-content .plupload-filelist>li:first-child{
+        background: #dddddd;
+        color:#323232;
+        font-weight: bold;
+    }
+    .step-three-content .plupload-filelist>li:first-child div{
+        text-align: center;
+    }
+    .step-three-content .upload-status{
+        font-size: 14px;
+        color: #2c3e50;
+        text-align: left;
+    }
+    .step-three-content .btn{
+        margin-top: 26px;
+    }
+}

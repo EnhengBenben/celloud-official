@@ -1,33 +1,48 @@
 package com.celloud.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
+import com.celloud.constants.CompanyConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mysql.ActionLog;
+import com.celloud.model.mysql.Company;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
 import com.celloud.service.ActionLogService;
+import com.celloud.service.CompanyService;
 import com.celloud.service.UserService;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.MD5Util;
@@ -57,21 +72,116 @@ public class UserAction {
 	private WechatUtils wechatUtils;
 	@Resource
 	private MessageCategoryUtils mcu;
+    @Resource
+    private CompanyService companyService;
 	private static final Response EMAIL_IN_USE = new Response("202", "邮箱已存在");
 	private static final Response UPDATE_BASEINFO_FAIL = new Response("修改用户信息失败");
 	private static final Response UPDATE_PASSWORD_FAIL = new Response("修改用户密码失败");
 	private static final Response WRONG_PASSWORD = new Response("203", "原始密码错误");
+    private Logger logger = LoggerFactory.getLogger(UserAction.class);
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月30日下午3:37:41
+     * @description 更新公司logo
+     * @param company
+     * @return
+     *
+     */
+    @RequestMapping("setCompanyIcon")
+    @ResponseBody
+    public int setCompanyIcon(Company company) {
+        company.setCompanyId(ConstantsData.getLoginCompanyId());
+        return companyService.updateCompanyIcon(company);
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月30日下午3:07:40
+     * @description 获取公司的icon名称
+     * @return
+     *
+     */
+    @RequestMapping("getCompanyIcon")
+    @ResponseBody
+    public Company getCompanyIcon() {
+        Company company = companyService.selectByPrimaryKey(ConstantsData.getLoginCompanyId());
+        if (StringUtils.isBlank(company.getCompanyIcon())) {
+            company.setCompanyIcon("");
+        }
+        return company;
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月30日下午3:00:21
+     * @description 获取已保存的公司logo
+     * @param file
+     *
+     */
+    @RequestMapping(value = "icon")
+    public ResponseEntity<byte[]> attach(String file) throws IOException {
+        String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
+        File targetFile = new File(path);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
+    }
+
+    /**
+     * 
+     * @author MQ
+     * @date 2016年8月30日下午3:00:06
+     * @description 获取已上传未保存的公司logo
+     * @param file
+     *
+     */
+    @RequestMapping(value = "icon/temp")
+    public ResponseEntity<byte[]> attachTemp(String file) throws IOException {
+        String path = CompanyConstants.getCompanyIconTempPath() + File.separator + file;
+        File targetFile = new File(path);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
+    }
 
 	/**
-	 * 跳转到账号管理菜单，并初始化数据
-	 * 
-	 * @return
-	 */
+     * 
+     * @author MQ
+     * @date 2016年8月30日下午2:13:07
+     * @description
+     * @param file
+     * @param fileName
+     * @return
+     *
+     */
+    @RequestMapping(value = "uploadCompanyIcon")
+    @ResponseBody
+    public String attach(@RequestParam("file") CommonsMultipartFile file, String fileName) {
+        String type = fileName.substring(fileName.lastIndexOf("."));
+        File targetFile = new File(CompanyConstants.getCompanyIconTempPath(), new ObjectId().toString() + type);
+        targetFile.getParentFile().mkdirs();
+        try {
+            file.transferTo(targetFile);
+        } catch (Exception e) {
+            logger.error("用户上传公司logo失败：{}", fileName, e);
+        }
+        return targetFile.getName();
+    }
+
+    /**
+     * 跳转到账号管理菜单，并初始化数据
+     * 
+     * @return
+     */
 	@RequestMapping("info")
-	public ModelAndView info() {
+    @ResponseBody
+    public User info() {
 		int userId = ConstantsData.getLoginUserId();
-		User user = userService.selectUserById(userId);
-		return new ModelAndView("user/user_main").addObject("user", user);
+        return userService.selectUserById(userId);
 	}
 
 	/**
@@ -128,12 +238,12 @@ public class UserAction {
 	 * @return
 	 */
 	@RequestMapping("logInfo")
-	public ModelAndView logInfo(Page page) {
+    @ResponseBody
+    public PageList<ActionLog> logInfo(Page page) {
 		if (page == null) {
 			page = new Page();
 		}
-		PageList<ActionLog> pageList = logService.findLogs(ConstantsData.getLoginUserId(), page);
-		return new ModelAndView("user/user_log_list").addObject("pageList", pageList);
+        return logService.findLogs(ConstantsData.getLoginUserId(), page);
 	}
 
 	/**

@@ -1,31 +1,29 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<div>
-	<div class="m-file">
-		<dl class="dl-horizontal datareport-title">
-          <dt>项目名称：</dt>
-          <dd>${project.projectName}</dd>
-          <dt>应用名称：</dt>
-          <dd>${s16.appName}</dd>
-          <dt>文件名称：</dt>
-          <dd class="force-break">${s16.fileName}(${s16.dataKey})</dd>
-        </dl>
-	</div>
-	<div class="m-box">
-		<h2><i class="i-report1"></i>数据统计</h2>
-		<div class="m-boxCon" id="16sResult">
-			${s16.resultTable }
-		</div>
-	</div>
-</div>
-<script type="text/javascript">
-$("#16sResult").find("tr").each(function(i){
-  if(i==0){
-    length = $(this).find("td").length;
-  }else{
-    tdlength = $(this).find("td").length;
-    if(tdlength<length){
-      $(this).children("td").eq(1).attr("colspan",5);
-    }
-  }
-});
-</script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div class="pro-body mreport">
+    <ol class="breadcrumb">
+      <li>CelLoud</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
+      <li>s16报告</li>
+    </ol>
+    <div class="content">
+      <div class="content-header">
+        <p> 项目名称：
+            {{project.projectName}}
+        </p>
+        <p> 应用名称：
+        	{{s16.appName}}
+        </p>
+        <p> 文件名称：
+            {{s16.fileName}}({{s16.dataKey}})
+        </p>
+      </div>
+      <div>
+        <section class="m-box">
+	        <h2><i class="i-report1"></i>数据统计</h2>
+			<div ng-bind-html="s16.resultTable" class="m-boxCon" id="16sResult">
+			</div>
+	    </section>
+	   </div>
+     </div>
+ </div>

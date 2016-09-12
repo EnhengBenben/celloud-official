@@ -23,7 +23,7 @@ public interface PayService {
 	 * @param request
 	 * @return
 	 */
-	public RechargeAlipay verifyAlipay(HttpServletRequest request) throws Exception;
+    public RechargeAlipay verifyAlipay(HttpServletRequest request) throws Exception;
 
 	/**
 	 * 创建京东网关支付的订单

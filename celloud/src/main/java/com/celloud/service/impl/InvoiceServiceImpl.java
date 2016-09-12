@@ -44,6 +44,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             money = money.add(recharge.getAmount());
         }
         invoice.setMoney(money);
+        invoice.setInvoiceState(0);
         // 插入数据库
         int num = invoiceMapper.insertAndSetId(invoice);
         // 更新充值记录表外键值

@@ -79,7 +79,7 @@ public class DataAction {
 	private static String sgeHost = machines.get("158").get(Mod.HOST);
 	private static String sgePwd = machines.get("158").get(Mod.PWD);;
 	private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
-	private static final Response DELETE_DATA_FAIL = new Response("删除数据失败");
+	private static final Response DELETE_DATA_FAIL = new Response("归档数据失败");
 
 	/**
 	 * 检索某个项目下的所有数据
@@ -115,6 +115,15 @@ public class DataAction {
 		return mv;
 	}
 
+    @RequestMapping("dataPageList")
+    @ResponseBody
+    public PageList<DataFile> dataPageList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        Page pager = new Page(page, size);
+        return dataService.dataAllList(pager, ConstantsData.getLoginUserId());
+    }
+
 	/**
 	 * 根据条件获取数据列表
 	 * 
@@ -132,9 +141,12 @@ public class DataAction {
 	 * @return
 	 */
 	@ActionLog(value = "条件检索数据列表", button = "数据管理搜索/分页")
-	@RequestMapping("dataList.action")
-	public ModelAndView dataList(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
+	@RequestMapping("dataPageListCondition")
+	@ResponseBody
+	public PageList<DataFile> dataPageListCondition(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "") String condition,
+            @RequestParam(defaultValue = "0") int sort,
 			@RequestParam(defaultValue = "desc") String sortDateType,
 			@RequestParam(defaultValue = "asc") String sortNameType) {
 		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
@@ -145,33 +157,12 @@ public class DataAction {
 			m.appendReplacement(con_sb, rep);
 		}
 		m.appendTail(con_sb);
-		ModelAndView mv = new ModelAndView("data/data_list");
 		Page pager = new Page(page, size);
 		PageList<DataFile> dataList = dataService.dataLists(pager, ConstantsData.getLoginUserId(), con_sb.toString(),
 				sort, sortDateType, sortNameType);
-		mv.addObject("dataList", dataList);
-		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
-		return mv;
-	}
 
-	/**
-	 * 获取全部数据列表
-	 * 
-	 * @param session
-	 * @param page
-	 * @param size
-	 * @return
-	 */
-	@ActionLog(value = "打开BSI我的数据页面", button = "我的数据")
-	@RequestMapping("bsiDataAllList")
-	public ModelAndView bsiDataAllList(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "20") int size) {
-		ModelAndView mv = new ModelAndView("bsi/data_list");
-		Page pager = new Page(page, size);
-		PageList<DataFile> dataList = dataService.dataAllList(pager, ConstantsData.getLoginUserId());
-		mv.addObject("pageList", dataList);
-		logger.info("用户{}打开我的数据", ConstantsData.getLoginUserName());
-		return mv;
+		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
+		return dataList;
 	}
 
 	/**
@@ -196,18 +187,11 @@ public class DataAction {
 			@RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
 			@RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
 			@RequestParam(defaultValue = "asc") String sortName) {
-		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
-		Matcher m = p.matcher(condition);
-		StringBuffer con_sb = new StringBuffer();
-		while (m.find()) {
-			String rep = "\\\\" + m.group(0);
-			m.appendReplacement(con_sb, rep);
-		}
-		m.appendTail(con_sb);
 		ModelAndView mv = new ModelAndView("bsi/data_list");
 		Page pager = new Page(page, size);
-		PageList<DataFile> dataList = dataService.dataLists(pager, ConstantsData.getLoginUserId(), con_sb.toString(),
-				sort, sortDate, sortBatch, sortName);
+        PageList<DataFile> dataList = dataService.dataListByAppId(pager,
+                ConstantsData.getLoginUserId(), AppConstants.APP_ID_BSI,
+                condition, sort, sortDate, sortName, sortBatch);
 		mv.addObject("pageList", dataList);
 		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
 		return mv;
@@ -304,7 +288,7 @@ public class DataAction {
 		if (dataIds != null && !dataIds.equals(""))
 			result = dataService.delete(dataIds);
 		logger.info("用户{}删除数据{}{}", ConstantsData.getLoginUserName(), dataIds, result);
-		return result > 0 ? Response.DELETE_SUCCESS : DELETE_DATA_FAIL;
+		return result > 0 ? Response.FILED_SUCCESS : DELETE_DATA_FAIL;
 	}
 
 	/**
@@ -323,6 +307,26 @@ public class DataAction {
 		mv.addObject("dataList", dataList);
 		logger.info("用户{}打开分别修改数据列表Modal", ConstantsData.getLoginUserName(), dataIds);
 		return mv;
+	}
+
+	@ActionLog(value = "跳转数据编辑", button = "数据编辑")
+	@RequestMapping("toEditData")
+	@ResponseBody
+	public Map<String, Object> toEditData(Integer dataId) {
+		logger.info("用户{}打开修改数据弹窗，id={}", ConstantsData.getLoginUserName(), dataId);
+		Map<String, Object> map = new HashMap<>();
+		DataFile file = dataService.getDataById(dataId);
+		List<App> apps = appService.findAppsByFormat(ConstantsData.getLoginUserId(), file.getFileFormat());
+		map.put("file", file);
+		map.put("appList", apps);
+		return map;
+	}
+
+	@ActionLog(value = "数据编辑", button = "数据编辑")
+	@RequestMapping("updateDataAndTag")
+	@ResponseBody
+	public Response updateDataAndTag(DataFile data) {
+		return dataService.updateDataAndTag(data) == 1 ? Response.UPDATE_SUCCESS : Response.FAIL;
 	}
 
 	/**
@@ -534,6 +538,169 @@ public class DataAction {
 			}
 		}
 
+		return result;
+	}
+
+	@ActionLog(value = "runWithProject", button = "运行")
+	@RequestMapping("runWithProject")
+	@ResponseBody
+	public Response runWithProject(String dataIds) {
+		//1. 检索数据详情
+		List<DataFile> dataList = dataService.findDatasById(dataIds);
+		//2. 数据分组
+		Map<Integer, List<DataFile>> map = new HashMap<>();
+		for (DataFile dataFile : dataList) {
+			Integer appId = dataFile.getAppId();
+			List<DataFile> list = null;
+			if (map.containsKey(appId)) {
+				list = map.get(appId);
+			} else {
+				list = new ArrayList<>();
+			}
+			list.add(dataFile);
+			map.put(appId, list);
+		}
+		//3. 校验余额
+		Integer userId = ConstantsData.getLoginUserId();
+		String userName = ConstantsData.getLoginUserName();
+		List<Integer> appIdList = new ArrayList<>();
+		for (Integer appId : map.keySet()) {
+			appIdList.add(appId);
+		}
+		if (!appService.checkPriceToRun(appIdList, userId)) {
+			String result = "余额不足，请充值后再运行";
+			logger.info(userName + result);
+			return new Response(result);
+		}
+		//4. 运行
+		StringBuffer result = new StringBuffer();
+		for (Entry<Integer, List<DataFile>> entry : map.entrySet()) {
+			String back = runSingleProject(entry.getKey(), entry.getValue());
+			if (back != null) {
+				result.append(back).append(";");
+			}
+		}
+		return Response.SUCCESS;
+	}
+
+	private String runSingleProject(Integer appId, List<DataFile> dataList) {
+		Integer userId = ConstantsData.getLoginUserId();
+		String userName = ConstantsData.getLoginUserName();
+
+		//1. 创建项目信息
+		Project project = new Project();
+		String proName = new Date().getTime() + "";
+		project.setUserId(userId);
+		project.setProjectName(proName);
+		project.setDataNum(dataList.size());
+		Long size = 0l;
+		for (DataFile dataFile : dataList) {
+			size += dataFile.getSize();
+		}
+		project.setDataSize(String.valueOf(size));
+
+		//2. 创建报告信息
+		Report report = new Report();
+		report.setUserId(userId);
+		report.setAppId(appId);
+
+		//3. 创建dataListFile
+		Map<String, String> dataFilePathMap = new HashMap<>();// 针对按数据投递APP
+		String dataFilePath = "";// 针对按项目投递APP
+		if (AppDataListType.FASTQ_PATH.contains(appId)) {
+			dataFilePathMap = DataKeyListToFile.onlyFastqPath(dataList);
+			project.setDataNum(Integer.parseInt(dataFilePathMap.get("dataReportNum")));
+			dataFilePathMap.remove("dataReportNum");
+		} else if (AppDataListType.ONLY_PATH.contains(appId)) {
+			dataFilePath = DataKeyListToFile.onlyPath(dataList);
+		} else if (AppDataListType.PATH_AND_NAME.contains(appId)) {
+			dataFilePath = DataKeyListToFile.containName(dataList);
+		} else if (AppDataListType.SPLIT.contains(appId)) {
+			dataFilePathMap = DataKeyListToFile.toSplit(dataList);
+			project.setDataNum(1);
+		}
+
+		//4. 创建项目
+		String result = null;
+		Integer projectId = projectService.insertProject(project, dataList);
+		if (projectId == null) {
+			result = "项目创建失败";
+			logger.info("{}{}", userName, result);
+			return result;
+		}
+
+		//5. 创建报告
+		report.setProjectId(projectId);
+		boolean reportState = reportService.insertProReport(report, dataList);
+		if (!reportState) {
+			result = appId + "报告创建失败";
+			logger.info("{}{}", userName, result);
+			return result;
+		}
+
+		//6. 投递
+		App app = appService.selectByPrimaryKey(appId);
+		String appPath = SparkPro.TOOLSPATH + userId + "/" + appId + "/";
+		if (!FileTools.checkPath(appPath)) {
+			new File(appPath).mkdirs();
+		}
+		if (AppDataListType.FASTQ_PATH.contains(appId) || AppDataListType.SPLIT.contains(appId)) {
+			int runningNum;
+			SSHUtil ssh = null;
+			Boolean iswait;
+			if (AppDataListType.SPARK.contains(appId)) {
+				runningNum = taskService.findRunningNumByAppId(AppDataListType.SPARK);
+				ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
+				iswait = runningNum < SparkPro.MAXTASK;
+				logger.info("APP{}任务投递到spark", appId);
+			} else {
+				runningNum = taskService.findRunningNumByAppId(appId);
+				ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+				iswait = runningNum < app.getMaxTask() || app.getMaxTask() == 0;
+			}
+			for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
+				String dataKey = entry.getKey();
+				String dataListFile = entry.getValue();
+				Map<String, String> map = CommandKey.getMap(dataListFile, appPath, projectId);
+				StrSubstitutor sub = new StrSubstitutor(map);
+				String command = sub.replace(app.getCommand());
+				Task task = taskService.findTaskByDataKeyAndApp(dataKey, appId);
+				if (task == null) {
+					task = new Task();
+					task.setProjectId(projectId);
+					task.setUserId(userId);
+					task.setAppId(appId);
+					task.setDataKey(dataKey);
+					task.setCommand(command);
+					taskService.create(task);
+				} else {
+					task.setProjectId(projectId);
+					task.setCommand(command);
+					taskService.updateTask(task);
+				}
+				Integer taskId = task.getTaskId();
+				if (iswait) {
+					logger.info("任务{}运行命令：{}", taskId, command);
+					ssh.sshSubmit(command, false);
+					taskService.updateToRunning(taskId);
+				} else {
+					logger.info("数据{}排队运行{}", dataKey, app.getAppName());
+				}
+			}
+			// 保存消费记录
+			expenseService.saveRunExpenses(projectId, appId, userId, dataList);
+		} else {
+			// SGE
+			logger.info("celloud 直接向 SGE 投递任务");
+			Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, projectId);
+			StrSubstitutor sub = new StrSubstitutor(map);
+			String command = sub.replace(app.getCommand());
+			logger.info("运行命令:{}", command);
+			SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
+			ssh.sshSubmit(command, false);
+			// 保存消费记录
+			expenseService.saveProRunExpenses(projectId, dataList);
+		}
 		return result;
 	}
 

@@ -1,0 +1,344 @@
+@import "param.less";
+header,footer,nav,div,section,aside,article,p {
+    border: 1px dotted #f0f0f0;
+    border-radius: 5px;
+}
+html,body,div,section,ul {
+    padding: 0;
+    margin: 0;
+    font: 12px/1.5 "Microsoft Yahei","Hiragino Sans GB",tahoma,arial;
+}
+input,button,a,select,textarea {
+    outline: none;
+}
+a, a:link, a:hover, a:active, a:visited {
+    text-decoration: none;
+    cursor: pointer;
+    &.disabled {
+        cursor: default;
+    }
+}
+ul,ol{
+    list-style: none;
+}
+.container{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background: #f0f0f0;
+}
+.main-header,
+.main-sidebar{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+.main-header{
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    z-index: 1030;
+    > .logo {
+        display: block;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        float: left;
+    }
+    > .logo img{
+        width: 30px;
+    }
+    > .navbar{
+        margin-left: 50px;
+        margin-bottom: 0px;
+        border: none;
+    }
+    > .navbar .menu{
+        height: 50px;
+        float: right;
+        > .nav{
+            height: 50px;
+            margin: 0px;
+            padding: 0px;
+            > li{
+               display: inline-block;
+            }
+        }
+    }
+    > .navbar .menu a{
+        width: 50px;
+        height: 50px;
+        padding: 0px;
+        line-height: 50px;
+        font-size: 16px;
+        color: @bg-gray;
+        text-align: center;
+        &:hover{
+            color: @font-gray;
+            background: @bg-gray;
+        }
+    }
+}
+.main-sidebar{
+    width: 50px;
+    min-height: 100%;
+    padding-top: 50px;
+    background: #222d32;
+    > .menu{
+        width: 100%;
+        min-height: 500px;
+        padding: 32px 0px;
+        background: #1a2226;
+    }
+    > .menu .treeview{
+        width: 100%;
+        height: 50px;
+        display: block;
+        &.-active>a {
+            border-left: 2px solid @bactive-color;
+            color: #fff;
+            background: #222d32;
+        }
+    }
+    > .menu .treeview>a{
+        width: 100%;
+        height: 50px;
+        display: block;
+        line-height: 50px;
+        padding: 0px 10px;
+    }
+}
+.main-container{
+    height: 100%;
+    padding: 50px 15px 0px 65px;
+    .header{
+        .breadcrumb {
+            margin-bottom: 0;
+            padding: 10px 0px;
+            color: @font-gray;
+            background: none;
+        }
+       .breadcrumb>li+li:before{
+            padding: 0 5px 0px 0px;
+            color: rgb(150,150,150);
+            content: "＞";
+        }
+    }
+    .content{
+        position: relative;
+        height: 100%;
+    }
+}
+/*banner */
+.common-menu { 
+    position: relative;
+    width: 100%;
+    height: 80px;
+    background: @main-color;
+    > .logo {
+        width: 170px;
+        padding: 10px 0px;
+        float: left;
+    }
+    > .logo img{
+        height: 60px;
+        display: block;
+        margin: auto auto;
+    }
+    hr{
+        &.-left{
+            float: left;
+        }
+        &.-right{
+            float: right;
+        }
+        height: 70px;
+        width: 0px;
+        margin: 5px 0px;
+        display: inline-block;
+        border-left:1px solid #fff;
+        border-right:1px solid #f2f2f2;
+    }
+    > .info{
+        height: 80px;
+        padding: 20px 18px;
+        float: left;
+        .info-form {
+            float: left;
+        }
+        .errortip{
+            height: 26px;
+            margin: 14px 0px 0px 20px;
+            padding: 0px 20px;
+            display: inline-block;
+            line-height: 26px;
+            color: @font-black;
+            font-size: 12px;
+            float: left;
+            .border-radius(6px);
+            background-color:@error-bg;
+        }
+        .errortip a {
+            padding-left: 20px;
+            color: @font-black;
+        }
+    }
+    > .searchs{
+        width: 240px;
+        height: 80px;
+        display: block;
+        float: right;
+        padding: 20px;
+        >.btns{
+            margin-top: 10px;
+        }
+    }
+}
+.common-sidebar{
+    position: absolute;
+    width: 170px;
+    height: 100%;
+    background: @bg-gray;
+    > .menu{
+        width: 100%;
+        padding: 0px;
+        font-size: 14px;
+    }
+    > .menu .treeview{
+        width: 100%;
+        height: 40px;
+        display: block;
+        line-height: 40px;
+        padding-left: -2px;
+        text-align: center;
+        font-size: 14px;
+        &.-active>a {
+            border-left: 2px solid @font-gray;
+            color: @font-gray;
+            background: @main-color;
+        }
+    }
+    > .menu .treeview>a{
+        width: 100%;
+        height: 40px;
+        display: block;
+        color: @bg-black;
+        > i {
+            margin-right: 20px;
+        }
+    }
+}
+.common-container{
+    position: relative;
+    height: 100%;
+    margin-left: 170px;
+    padding: 20px 0px 0px 20px;
+    .content{
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        background-color: @main-color;
+    }
+    .statistic{
+        font-size: 12px;
+        color: #323232;
+        margin-top: 10px;
+        > span{
+            margin-left: 20px;
+        }
+    }
+}
+/*上传页面*/
+.upload-content{
+    margin: auto;
+    padding: 30px 0px;
+    max-width: 648px;
+    .form-inline{
+        margin-top: 30px;
+        text-align: left;
+        padding-left: 52px;
+    }
+    .form-control{
+        width: 300px;
+    }
+    
+    .upload-container{
+        
+    }
+    .plupload-content {
+        position: relative;
+        margin: 20px 0px 10px 0px;
+        width: 100%;
+        height:120px;
+        text-align: center;
+        border: 1px solid @bg-gray;
+        .border-radius(10px);
+        cursor: pointer;
+        background-color: #fff;
+        
+    }
+    .plupload-content .upload-text{
+        position: absolute;
+        width: 100%;
+        line-height: 20px;
+        font-size: 14px;
+        color: @font-s-gray;
+        margin: 37px auto;
+        .celicon {
+            margin-right: 5px;
+            margin-bottom: -3px;
+        }
+    }
+}
+/*收样*/
+.sample{
+    margin: 0px;
+    padding: 0px;
+    .info {
+        display: block;
+        padding: 20px;
+        font-size: 12px;
+        color: @font-gray;
+        background-color: @main-color;
+        > img{
+            margin: 10px 0px 20px 0px;
+             width:100%;
+        }
+    }
+    .list {
+        padding-right: 0px;
+    }
+}
+
+.report-content{
+    padding: 30px;
+    text-align: left;
+    h4 {
+        margin: 0px;
+        padding-bottom: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+        color: @font-black;
+    }
+    .result-div{
+        margin-bottom: 10px;
+        width: 100%;
+        height: 100px;
+        padding: 30px;
+        .border-1(bg-gray);
+        background-color: #fff;
+        .main{
+            font-size: 18px;
+            strong{
+                padding: 0px 4px;
+            }
+        }
+    }
+    >.notice {
+        font-size: 12px;
+        color: @font-gray;
+        text-indent: 2em;
+    }
+}

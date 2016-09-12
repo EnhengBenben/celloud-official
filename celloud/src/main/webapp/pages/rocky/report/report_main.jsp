@@ -113,9 +113,9 @@
 	<div class="selector-line">
 		<div class="sl-key">时间：</div>
 		<div class="sl-val">
-			<input id="report-begindate-search" type="text" class="Wdate" onclick="WdatePicker()" readonly="readonly" placeholder="  年    月    日">
+			<input id="report-begindate-search" type="text" class="Wdate" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'report-enddate-search\')}'})" readonly="readonly" placeholder="  年    月    日">
 			-
-			<input id="report-enddate-search" type="text" class="Wdate" onclick="WdatePicker()" readonly="readonly" placeholder="  年    月    日">
+			<input id="report-enddate-search" type="text" class="Wdate" onclick="WdatePicker({minDate:'#F{$dp.$D(\'report-begindate-search\')}',maxDate:'%y-%M-%d'})" readonly="readonly" placeholder="  年    月    日">
 			<button data-click="report-date-search" class="sl-btn">确定</button>
 		</div>
 	</div>
@@ -131,7 +131,7 @@
 	<table class="table table-main">
 		<thead>
 			<tr>
-				<th width="40"></th>
+				<th class="th-checkoutbox"></th>
 				<th width="140">
 					<input id="report-sample-filter" type="text" placeholder="样本编号/病历号" value="${sampleFilter }">
 				</th>

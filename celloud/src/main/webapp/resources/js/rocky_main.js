@@ -58,5 +58,5 @@ $(function() {
 		$("#common-menu-center").html("");
 		$("#common-menu-right").load("pages/rocky/report/report_menu_search.jsp");
 	});
-	$("#to-sample-a").trigger("click");
+	$("#to-upload-a").trigger("click");
 });

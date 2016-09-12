@@ -116,7 +116,7 @@
   </select>
   <insert id="insertUserMessageCategoryRelat">
     insert into tb_user_message_category_relat(email, window, wechat, message_category_id, user_id) values 
-        (${data},#{userId})
+        (#{messageCategory.email},#{messageCategory.window},#{messageCategory.wechat},#{messageCategory.id},#{userId})
   </insert>
   <update id="updateSwitch">
     update tb_user_message_category_relat
@@ -133,7 +133,7 @@
   </select>
   <select id="findUserMessageCategoryNotInIds" resultType="java.util.HashMap">
     select mc.id mcId, mc.code, mc.name, mc.email, mc.window, mc.wechat, 0 flag
-    from tb_message_category mc 
+    from tb_message_category mc
     where mc.id not in (${ids})
   </select>
   <select id="findUserMessageCategoryBeanByUserId" resultType="com.celloud.model.mysql.MessageCategory">

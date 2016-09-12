@@ -41,6 +41,15 @@ public class DataFile implements Serializable{
     private Integer isRunning;
     /** 报告数量 */
     private Integer reportNum;
+	/**
+	 * appId
+	 */
+	private Integer appId;
+    private Integer tagId;
+	/**
+	 * tagName
+	 */
+	private String tagName;
 
     public Integer getFileId() {
         return fileId;
@@ -185,4 +194,29 @@ public class DataFile implements Serializable{
     public void setBatch(String batch) {
         this.batch = batch;
     }
+
+	public Integer getAppId() {
+		return appId;
+	}
+
+	public void setAppId(Integer appId) {
+		this.appId = appId;
+	}
+
+	public String getTagName() {
+		return tagName;
+	}
+
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
+    public Integer getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
+    }
+
 }

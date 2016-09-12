@@ -3,27 +3,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<table class="table_">
+<table class="table table-main no-padding-left count-table">
   <thead>
     <tr>
-      <th style="min-width:40px">序号</th>
-      <th style="min-width:120px">数据编号</th>
-      <th style="min-width:70px">Barcode</th>
-      <th style="min-width:70px">数据别名</th>
-      <th style="min-width:70px">上传日期</th>
-      <th style="min-width:70px">APP</th>
-      <th style="min-width:90px">Total_Reads</th>
-      <th style="min-width:90px">Map_Reads</th>
-      <th style="min-width:100px">Map_Ratio(%)</th>
-      <th style="min-width:80px">Duplicate</th>
-      <th style="min-width:100px">GC_Count(%)</th>
-      <th style="min-width:60px">*SD</th>
+      <th style="min-width:50px;">序号</th>
+      <th style="width:120px">数据编号</th>
+      <th style="width:70px">Barcode</th>
+      <th style="width:70px">数据别名</th>
+      <th style="width:90px">上传日期</th>
+      <th style="width:110px">APP</th>
+      <th style="width:90px">Total_Reads</th>
+      <th style="width:90px">Map_Reads</th>
+      <th style="width:100px">Map_Ratio(%)</th>
+      <th style="width:80px">Duplicate</th>
+      <th style="width:100px">GC_Count(%)</th>
+      <th style="width:60px">*SD</th>
     </tr>
   </thead>
   <tbody>
   <c:choose>
-  	<c:when test="${list.size()>0}">
-  	  <c:forEach items="${list }" var="pgs" varStatus="pgsSta">
+  	<c:when test="${map.data.size()>0}">
+  	  <c:forEach items="${map.data }" var="pgs" varStatus="pgsSta">
 	    <tr>
 	      <td align="center"><c:out value="${pgsSta.index}"/></td>
 	      <td align="center">${pgs.dataKey }</td>
@@ -40,7 +40,7 @@
 	      	</c:choose>
 	      </td>
 	      <td align="center">${pgs.anotherName }</td>
-	      <td align="center"><fmt:formatDate value="${pgs.uploadDate }" type="date"/> </td>
+	      <td align="center"><fmt:formatDate value="${pgs.uploadDate }" pattern="yyyy-MM-dd"/> </td>
 	      <td align="center">${pgs.appName }</td>
 	      <td align="center">${pgs.totalReads }</td>
 	      <td align="center">${pgs.mapReads }</td>
@@ -59,3 +59,6 @@
   </c:choose>
   </tbody>
 </table>
+<c:if test="${map.data.size()>0}">
+	<input type="hidden" value="count/download?fileName=${map.fileName }" id="downUrl"></input>
+</c:if>

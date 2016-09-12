@@ -1,0 +1,95 @@
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 170px;
+    min-height: 100%;
+    color: @silver-gray;
+    background: @dark-black;
+    padding-top: 50px;
+    z-index: 810;
+    .transition-2(transform 0.3s ease-in-out, width 0.3s ease-in-out);
+    a{
+        width: 100%;
+        display: block;
+        line-height: 40px;
+        color: @silver-gray;
+        span{
+            padding-left: 18px;
+        }
+    }
+    .sidebar-collapse{
+        width: 100%;
+        height: 30px;
+        a{
+            line-height: 30px;
+            text-align: center;
+        }
+    }
+    .sidebar-menu{
+        width: 100%;
+        padding-bottom: 38px;
+        white-space: nowrap!important;
+        overflow: hidden;
+        > li{
+            margin: 1px 0px;
+            width: 100%;
+            a{
+                .transition-2(transform 0.3s ease-in-out, padding-left 0.3s ease-in-out);
+                padding-left: 35px;
+                text-align: left;
+            }
+            &:hover>a, &.active>a {
+                .transition-2(transform 0.3s ease-in-out, padding-left 0.3s ease-in-out);
+                padding-left: 33px; 
+                color: @content-green;
+                background: @gray-black;
+                border-left: 2px solid @content-green;
+            }
+        }
+        .sidebar-header{
+            margin: 0;
+            margin-bottom: -1px;
+            height: 30px;
+            line-height: 28px;
+            text-align: center;
+            color: @light-gray;
+            .border-t-b-1(@gray-black);
+        }
+    }
+    &.collapsed{
+        width: 50px;
+        .sidebar-menu{
+            > li{
+                a{
+                    padding-left: 16px;
+                }
+                &:hover>a, &.active>a {
+                    padding-left: 13px; 
+                }                
+            }
+            >.sidebar-header{
+                color: @dark-black;
+            }
+        }
+    }
+}
+@media (max-width: 767px){
+    .sidebar{
+        width: 50px;
+        padding-top: 100px;
+        .sidebar-menu{
+            > li{
+                a{
+                    padding-left: 16px;
+                }
+                &:hover>a, &.active>a {
+                    padding-left: 13px; 
+                }                
+            }
+            >.header{
+                color: @dark-black;
+            }
+        }
+    }
+}

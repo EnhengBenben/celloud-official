@@ -1,4 +1,3 @@
-@import "param.less";
 /*搜索框 */
 .search-form { position: relative;
     > .field {
@@ -350,6 +349,7 @@
 .btn{
     height: 30px;
     line-height: 18px;
+    min-width: 66px;
     padding: 0px 18px;
     display: inline-block;
     color: #fff;
@@ -366,6 +366,7 @@
     }
     &.-confirm {
         background-color: @bg-black;
+        border: none;
     }
     &.-lg{
         height: 30px;
@@ -418,7 +419,7 @@
         line-height: 1;
     }
     .checkbox:checked + .info:after{
-        width:12px
+        width:12px;
         height:12px;
         color: @font-gray;
         content: "✔";

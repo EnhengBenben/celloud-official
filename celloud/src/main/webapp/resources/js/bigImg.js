@@ -24,6 +24,7 @@ function bigOrigin(src,id) {
  * @param src
  */
 function bigReplace(src){
+	alert("ddddddddddddddddd");
   $("img[id='imageFullScreen']").css("width",1050);
   $("img[id='imageFullScreen']").css("height",157.5);
   showZoom(src);

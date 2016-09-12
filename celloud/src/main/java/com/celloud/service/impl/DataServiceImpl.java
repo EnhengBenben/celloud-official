@@ -53,9 +53,15 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public int updateDataInfoByFileId(DataFile data) {
+    public int updateDataInfoByFileId(DataFile data) {
 		return dataFileMapper.updateDataInfoByFileId(data);
 	}
+
+    @Override
+    public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
+        dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+        return dataFileMapper.updateDataInfoByFileId(data);
+    }
 
 	@Override
 	public List<Map<String, String>> sumData(Integer userId, String time) {
@@ -68,6 +74,16 @@ public class DataServiceImpl implements DataService {
 				ReportPeriod.COMPLETE);
 		return new PageList<>(page, lists);
 	}
+
+    @Override
+    public PageList<DataFile> dataListByAppId(Page page, Integer userId,
+            Integer appId, String condition, Integer sort, String sortDate,
+            String sortName, String sortBatch) {
+        List<DataFile> lists = dataFileMapper.findDataListsByAppId(page, userId,
+                DataState.ACTIVE, appId, condition, sort, sortDate, sortName,
+                sortBatch);
+        return new PageList<>(page, lists);
+    }
 
 	@Override
 	public PageList<DataFile> dataLists(Page page, Integer userId, String condition, int sort, String sortDateType,
@@ -192,6 +208,16 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public int updateByPrimaryKeySelective(DataFile record) {
+		return dataFileMapper.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public int updateDataAndTag(DataFile record) {
+		//1.清除历史标签
+		dataFileMapper.deleteDataTag(record.getFileId());
+		//2.插入新的标签
+		dataFileMapper.insertDataTag(record);
+		//3.修改数据信息
 		return dataFileMapper.updateByPrimaryKeySelective(record);
 	}
 

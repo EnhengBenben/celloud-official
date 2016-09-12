@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<section class="content-header">
-  <h1>
-    <small>&nbsp;</small>
-  </h1>
+<%-- <section class="content-header">
   <ol class="breadcrumb">
     <li><a href="javascript:void(0)"><i class="fa fa-heartbeat"></i> 统计</a></li>
     <li class="active">全部</li>
@@ -42,21 +39,44 @@
 	       </div>
 	     </div>
 	  </div>
-<!-- 		<div class="y-row operation-serve box box-success" data-spm="16"> -->
-<!-- 			<ul id="userOperaUl"> -->
-<!-- 				<li class="active" id="systeminfoTab"> -->
-<!-- 					<a href="javascript:showSysInfo()">系统统计</a> -->
-<!-- 				</li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
-<!-- 		<div class="y-row" style="padding: 20px 10px; background-color: #fff;" data-spm="17"> -->
-<!-- 			<div class="common-normal common-slide common-normals" id="sys_count_div"> -->
-<%-- 				<jsp:include page="count_system.jsp"></jsp:include> --%>
-<!-- 			</div> -->
-<!-- 		</div> -->
     </div>
   </div><!--/.row-->
-</section><!-- /.content -->
+</section><!-- /.content --> --%>
+
+<div class="pro-body">
+	<input type="hidden" id="sessionCompanyId" value="${companyId }">
+    <ol class="breadcrumb">
+      <li>CelLoud</li>
+      <li>统计</li>
+    </ol>
+    <div class="content">
+    	<div class="mainpage" id="appMain">
+	      <div class="content-header">
+	        <c:if test="${companyId==6 }">
+			    <div class="info">
+		    	  <p>本页提供所有数据报告总览。若表格中信息显示不完全，请下载Excel文件查看。</p>
+		  		</div>
+	     	  </c:if>
+	     	  <c:if test="${companyId==3 }">
+	     	    <div class="info">
+		    	  <p>目前只提供 HBV_SNP流程的报告统计；查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+		  		</div>
+	     	  </c:if>
+	    	  <c:if test="${companyId==33 }">
+	    	    <div class="info">
+		    	  <p>查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
+		  		</div>
+		       </c:if>
+		  		<ul>
+			      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
+		  		</ul>
+	      </div>
+	      <div id="countDiv">
+	      
+	      </div>
+	     </div>
+	</div>
+</div>
   
 <div class="modal modal-green-header" id="seqModal">
  <div class="modal-dialog">

@@ -1,5 +1,8 @@
 package com.celloud.action;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -8,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.NoticeConstants;
 import com.celloud.model.mysql.Notice;
@@ -25,35 +27,34 @@ public class NoticeAction {
 	private NoticeService noticeService;
 
 	@ActionLog(value = "获取未读消息")
+	@ResponseBody
 	@RequestMapping("lastUnread/{type}")
-	public String lastUnread(@PathVariable String type, Model model) {
+	public Map<String, Object> lastUnread(@PathVariable String type) {
+		// TODO 修改service和mapper，改为只查询数量
+		PageList<Notice> pageList = null;
 		if (NoticeConstants.TYPE_MESSAGE.equals(type)) {
-			PageList<Notice> pageList = noticeService.findLastUnreadMessage();
-			model.addAttribute("messageList", pageList);
+			pageList = noticeService.findLastUnreadMessage();
 		} else {
-			PageList<Notice> pageList = noticeService.findLastUnreadNotice();
-			model.addAttribute("noticeList", pageList);
+			pageList = noticeService.findLastUnreadNotice();
 			type = NoticeConstants.TYPE_NOTICE;
 		}
-		model.addAttribute("type", type);
-		return "notice/lastUnread";
+		Map<String, Object> map = new HashMap<>();
+		map.put("num", pageList.getPage().getRowCount());
+		return map;
 	}
 
 	@ActionLog(value = "获取消息", button = "查看所有")
+	@ResponseBody
 	@RequestMapping("list/{type}")
-	public ModelAndView list(@PathVariable String type, Page page) {
-		ModelAndView mv = new ModelAndView("notice/list");
+	public PageList<Notice> list(@PathVariable String type, Page page) {
+		PageList<Notice> pageList = null;
 		if (NoticeConstants.TYPE_MESSAGE.equals(type)) {
-			PageList<Notice> pageList = noticeService.findLastMessage(page);
-			mv.addObject("messageList", pageList);
+			pageList = noticeService.findLastMessage(page);
 		} else {
-			page.setPageSize(5);
-			PageList<Notice> pageList = noticeService.findLastNotice(page);
-			mv.addObject("noticeList", pageList);
+			pageList = noticeService.findLastNotice(page);
 			type = NoticeConstants.TYPE_NOTICE;
 		}
-		mv.addObject("type", type);
-		return mv;
+		return pageList;
 	}
 
 	@ActionLog(value = "获取一个消息")

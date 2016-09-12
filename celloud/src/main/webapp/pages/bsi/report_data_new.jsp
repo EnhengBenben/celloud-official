@@ -2,21 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div class="content-header">
-  <ol class="breadcrumb">
-    <li>主页</li>
-    <li>应用</li>
-    <li>百菌探</li>
-    <li><a data-click="report-list" href="javascript:void(0)">报告</a></li>
-    <li>
-      <c:forEach items="${bsi.data}" var="data">
-          ${data.fileName}&nbsp;&nbsp;&nbsp;
-      </c:forEach>
-    </li>
-  </ol>
-</div>
-<div class="content">
-  <div class="pull-left">
+<div class="row rdata-content">
+  <div class="col-sm-10">
 	  <ul id="myTabs" class="nav nav-tabs" role="tablist">
 	    <li role="presentation" class="active"><a href="#patient-report" id="patient-tab" aria-controls="patient-report" role="tab" data-toggle="tab">患者报告</a></li>
 	    <li role="presentation"><a href="#analy-report" id="analy-tab" aria-controls="analy-report" role="tab" data-toggle="tab">分析报告</a></li>
@@ -480,7 +467,7 @@
 	    </ul>
 	  </div>
   </div>
-  <div class="report-opera pull-right">
+  <div class="report-opera col-sm-2">
     <div class="nav-pub">
       <div >
         <c:if test="${pageList.datas.size()>0}">

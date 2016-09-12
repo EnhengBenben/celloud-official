@@ -55,19 +55,20 @@ public class AppAction {
     @ActionLog(value = "获取用户已经运行过数据的APP列表（项目报告页面检索框用）", button = "报告管理")
     @ResponseBody
     @RequestMapping("getRanAPP")
-    public List<Map<String, String>> getRanAPP() {
-        return appService.getRanAPP(ConstantsData.getLoginUserId());
+	public PageList<Map<String, String>> getRanAPP() {
+		PageList<Map<String, String>> pageList = new PageList<>();
+		List<Map<String, String>> list = appService.getRanAPP(ConstantsData.getLoginUserId());
+		pageList.setDatas(list);
+		return pageList;
     }
 
     @ActionLog(value = "打开应用市场首页", button = "应用市场")
     @RequestMapping("toAppStore")
-    public ModelAndView toAppStore() {
+    @ResponseBody
+    public List<Classify> toAppStore() {
         log.info("用户{}查看应用市场", ConstantsData.getLoginUserName());
-        ModelAndView mv = new ModelAndView("app/app_main");
         /** 一级分类列表 */
-        List<Classify> pclassifys = classifyService.getClassify(ClassifyFloor.root);
-        mv.addObject("pclassifys", pclassifys);
-        return mv;
+        return classifyService.getClassify(ClassifyFloor.root);
     }
 
     @ActionLog(value = "APP首页查看指定一级分类的子分类", button = "APP一级分类按钮")
@@ -154,6 +155,30 @@ public class AppAction {
         mv.addObject("appList", appList);
         return mv;
     }
+
+	/**
+	 * 获取用户的产品
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年9月9日下午1:53:11
+	 */
+	@RequestMapping("getProduct")
+	@ResponseBody
+	public Map<String, Object> getProduct() {
+		Integer userId = ConstantsData.getLoginUserId();
+		Map<String, Object> map = new HashMap<>();
+		List<App> appList = appService.getMyAppList(userId);
+		for (App app : appList) {
+			if (app.getAppId().equals(118)) {
+				map.put("app" + app.getAppId(), app.getAppId());
+			}
+			if (app.getAppId().equals(123)) {
+				map.put("app" + app.getAppId(), app.getAppId());
+			}
+		}
+		return map;
+	}
 
     @ActionLog(value = "用户添加APP，即允许在数据管理运行中显示", button = "添加APP")
     @ResponseBody

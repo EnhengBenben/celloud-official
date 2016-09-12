@@ -10,25 +10,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliSubstitution;
-import com.celloud.constants.AppDataListType;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
-import com.celloud.constants.Mod;
 import com.celloud.constants.NoticeConstants;
-import com.celloud.constants.ReportPeriod;
-import com.celloud.constants.SparkPro;
 import com.celloud.message.MessageUtils;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
-import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Project;
-import com.celloud.model.mysql.Report;
-import com.celloud.model.mysql.Task;
 import com.celloud.model.mysql.User;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
@@ -38,7 +30,7 @@ import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
-import com.celloud.utils.SSHUtil;
+import com.celloud.utils.Response;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
 import com.celloud.wechat.WechatParams;
@@ -66,16 +58,6 @@ public class ProjectAction {
 	@Resource
 	private MessageCategoryUtils mcu;
 
-    private static Map<String, Map<String, String>> machines = ConstantsData
-            .getMachines();
-    private static String sparkhost = machines.get("spark").get(Mod.HOST);
-    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
-    private static String sparkuserName = machines.get("spark")
-            .get(Mod.USERNAME);
-    private static String sgeHost = machines.get("158").get(Mod.HOST);
-    private static String sgePwd = machines.get("158").get(Mod.PWD);;
-    private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
-
     /**
      * 修改项目
      * 
@@ -86,8 +68,8 @@ public class ProjectAction {
     @ActionLog(value = "修改项目信息（项目名）", button = "修改项目")
     @RequestMapping("update")
     @ResponseBody
-    public Integer update(Project project) {
-        return projectService.update(project);
+	public Response update(Project project) {
+		return projectService.update(project) == 1 ? Response.UPDATE_SUCCESS : Response.FAIL;
     }
 
     /**
@@ -101,43 +83,6 @@ public class ProjectAction {
     @RequestMapping("deleteByState")
     @ResponseBody
     public Integer deleteByState(Integer projectId) {
-        Report report = reportService.getReportByProjectId(projectId);
-        if (report != null && report.getPeriod() != ReportPeriod.COMPLETE) {
-            Integer appId = report.getAppId();
-            String param = SparkPro.TOOLSPATH + report.getUserId() + "/" + appId
-                    + " ProjectID" + projectId;
-            String command = null;
-            SSHUtil ssh = null;
-            if (AppDataListType.SPARK.contains(appId)) {
-                command = SparkPro.SPARKKILL + " " + param;
-                ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-                ssh.sshSubmit(command, false);
-            } else {
-                command = SparkPro.SGEKILL + " " + param;
-                ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                ssh.sshSubmit(command, false);
-            }
-            if (AppDataListType.FASTQ_PATH.contains(appId)
-                    || AppDataListType.SPLIT.contains(appId)) {
-                taskService.deleteTask(projectId);
-                Task task = taskService.findFirstTask(appId);
-                if (task != null) {
-                    int runningNum = taskService.findRunningNumByAppId(appId);
-                    App app = appService.selectByPrimaryKey(appId);
-                    if (runningNum < app.getMaxTask()
-                            || app.getMaxTask() == 0) {
-                        if (AppDataListType.SPARK.contains(appId)) {
-                            ssh = new SSHUtil(sparkhost, sparkuserName,
-                                    sparkpwd);
-                        } else {
-                            ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-                        }
-                        ssh.sshSubmit(task.getCommand(), false);
-                        taskService.updateToRunning(task.getTaskId());
-                    }
-                }
-            }
-        }
         return projectService.deleteByState(projectId);
     }
 
@@ -152,9 +97,13 @@ public class ProjectAction {
      * @date 2016-1-7 下午7:00:10
      */
     @ActionLog(value = "将项目共享给其他用户", button = "共享项目")
-    @RequestMapping(value = "shareProject", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+	@RequestMapping(value = "shareProject")
     @ResponseBody
-    public String share(String userNames, Integer projectId) {
+	public Response share(String userNames, Integer projectId) {
+		String loginUser = ConstantsData.getLoginUserName().toLowerCase();
+		if (loginUser.equals(userNames) || userNames.indexOf(loginUser) > -1) {
+			return new Response("项目不能共享给自己！");
+		}
         String error = "";
         String userIds = "";
         if (StringUtils.isNotEmpty(userNames)) {
@@ -170,7 +119,7 @@ public class ProjectAction {
             if (StringUtils.isNotEmpty(error)) {
                 error = error.substring(0, error.length() - 1);
                 error = "用户" + error + "不存在！";
-                return error;
+				return new Response(error);
             }
         }
         Integer userId = ConstantsData.getLoginUserId();
@@ -203,7 +152,7 @@ public class ProjectAction {
 				mcu.sendMessage(shareTo.getUserId(), MessageCategoryCode.SHARE, aliEmail, params, mu);
 			}
 		}
-        return error;
+		return Response.SUCCESS;
     }
 
     /**
@@ -216,11 +165,11 @@ public class ProjectAction {
     @ActionLog(value = "删除一条共享来的项目记录，项目本身不删除", button = "删除共享项目")
     @RequestMapping("deleteShare")
     @ResponseBody
-    public boolean deleteShare(Integer projectId) {
+	public Response deleteShare(Integer projectId) {
         Integer userId = ConstantsData.getLoginUserId();
         // 删除一条共享记录，修改一条项目记录
         Integer num = projectService.deleteShareToMe(userId, projectId);
-        return num == 2;
+		return num == 2 ? Response.DELETE_SUCCESS : Response.FAIL;
     }
 
     /**

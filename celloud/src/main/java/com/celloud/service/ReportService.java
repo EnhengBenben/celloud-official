@@ -29,6 +29,7 @@ import com.celloud.model.mongo.TBRifampicin;
 import com.celloud.model.mongo.TaskQueue;
 import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
+import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Report;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -424,6 +425,8 @@ public interface ReportService {
 	 */
 	public List<Integer> insertMultipleProReport(Report report, Map<Integer, Integer> appProId, String[] dataIds);
 
+	public boolean insertProReport(Report report, List<DataFile> dataList);
+
 	/**
 	 * HBV 数据参数同比
 	 * 
@@ -507,7 +510,7 @@ public interface ReportService {
 	 * @return
 	 * @date 2016-1-10 上午12:36:22
 	 */
-	public List<Pgs> pgsCount(Integer userId);
+	public Map<String, Object> pgsCount(Integer userId);
 
 	/**
 	 * CMP 统计

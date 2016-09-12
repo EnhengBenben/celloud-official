@@ -28,6 +28,7 @@
 		queue-capacity="10" />
 	<mvc:resources mapping="/js/**" location="/resources/js/" />
 	<mvc:resources mapping="/css/**" location="/resources/css/" />
+	<mvc:resources mapping="/less/**" location="/resources/less/" />
 	<mvc:resources mapping="/images/**" location="/resources/img/" />
 	<mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
@@ -275,6 +276,7 @@
 		<property name="cachingEnabled" value="false" />
 	</bean>
 	<bean id="springTool" class="com.celloud.utils.SpringTool"></bean>
+	<bean id="taskUtils" class="com.celloud.utils.TaskUtils"></bean>
 	<bean id="messageUtils" class="com.celloud.message.MessageUtils"
 		scope="prototype"></bean>
 </beans>

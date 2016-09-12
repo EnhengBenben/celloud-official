@@ -2,15 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<div class="content-header">
-  <ol class="breadcrumb">
-    <li>主页</li>
-    <li>应用</li>
-    <li>百菌探</li>
-    <li><a data-click="report-list" href="javascript:void(0)">报告</a></li>
-    <li id="to-my-report">报告列表</li>
-  </ol>
-</div>
 <div class="selector">
   <div id="batch-sl" class="selector-line">
     <div class="sl-key">标签：</div>
@@ -53,7 +44,7 @@
 	      </div>
 	      <div class="sl-val-content">
 	        <div class="celicon on_check checkbox checkbox-un hide"></div>
-	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>分析中</span></a>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>正在分析</span></a>
 	      </div>
 	      <div class="sl-val-content">
 	        <div class="celicon on_check checkbox checkbox-un hide"></div>
@@ -61,7 +52,7 @@
 	      </div>
 	      <div class="sl-val-content">
 	        <div class="celicon on_check checkbox checkbox-un hide"></div>
-	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据上传中</span></a>
+	        <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据不完整</span></a>
 	      </div>
 	      <div class="sl-val-content">
 	        <div class="celicon on_check checkbox checkbox-un hide"></div>

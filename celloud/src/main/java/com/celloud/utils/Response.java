@@ -11,6 +11,7 @@ public class Response {
     public static final Response SAVE_SUCCESS = new Response(true, "102", "保存成功！");
     public static final Response UPDATE_SUCCESS = new Response(true, "103", "修改成功！");
     public static final Response DELETE_SUCCESS = new Response(true, "104", "删除成功！");
+	public static final Response FILED_SUCCESS = new Response(true, "105", "归档成功！");
     public static final Response FAIL = new Response("210", "操作失败，原因未知！");
     /**
      * 操作是否成

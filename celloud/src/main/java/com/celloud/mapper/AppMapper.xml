@@ -4,6 +4,7 @@
   <resultMap id="miniBaseMap" type="com.celloud.model.mysql.App">
     <id column="app_id" property="appId" jdbcType="INTEGER" />
     <result column="app_name" property="appName" jdbcType="VARCHAR" />
+    <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
     <result column="data_num" property="dataNum" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="BaseResultMap" type="com.celloud.model.mysql.App" extends="miniBaseMap" >
@@ -379,10 +380,12 @@
 	group by time order by time desc
   </select>
   <select id="findAppsByFormat" resultMap="miniBaseMap">
-    select a.app_id,app_name,data_num 
+    select a.app_id,app_name,data_num,tag_name
     from tb_app a 
     left join tb_app_format_relat af on a.app_id = af.app_id 
     left join tb_user_app_right ua on a.app_id=ua.app_id 
+    left join tb_app_tag_relat tr on a.app_id = tr.app_id
+    left join tb_tag tag on tr.tag_id = tag.tag_id
     where af.format_id = #{formatId} and a.off_line = #{offLine} and ua.user_id=#{userId} and ua.is_add=#{isAdd}
   </select>
   <select id="findAppsByIds" resultMap="BaseResultMap">

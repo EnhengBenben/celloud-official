@@ -29,7 +29,7 @@ var messageUtils = (function(messageUtils) {
 		}
 	};
 	var openWebSocket = function() {
-		var contextPath = window.CONTEXT_PATH || "";
+		var contextPath = window.CONTEXT_PATH ||window.contextPath|| "";
 		var protocol = window.location.protocol == "https:" ? "wss://"
 				: "ws://";
 		var hostname = window.location.hostname;
@@ -166,5 +166,5 @@ messageUtils.addCloseListener(function() {
  * 订阅某频道的消息，当有消息发到这个频道时执行。
  */
 messageUtils.subscribe("userMessage", function(data) {
-	
+	console.log("消息来了!");
 });

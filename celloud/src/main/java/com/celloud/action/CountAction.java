@@ -1,5 +1,8 @@
 package com.celloud.action;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.TimeState;
-import com.celloud.model.mongo.Pgs;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
+import com.celloud.service.ExpensesService;
 import com.celloud.service.ReportService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.FileTools;
@@ -41,6 +44,8 @@ public class CountAction {
 	private ReportService reportService;
 	@Resource
 	private AppService appService;
+	@Resource
+	private ExpensesService expensesService;
 
 	/**
 	 * 控制台统计
@@ -49,18 +54,41 @@ public class CountAction {
 	 */
     @ActionLog(value = "打开celloud控制台首页，获取统计信息", button = "总览")
 	@RequestMapping("loginCount")
-	public ModelAndView loginCount() {
-		ModelAndView mv = new ModelAndView("count/count_user");
+	@ResponseBody
+	public Map<String, Object> loginCount() {
 		Integer userId = ConstantsData.getLoginUserId();
 		Integer countData = dataService.countData(userId);
 		Long sumData = dataService.sumData(userId);
 		Integer countReport = reportService.countReport(userId);
+		if (countReport == null) {
+			countReport = 0;
+		}
 		Integer countApp = appService.countMyApp(userId);
-		mv.addObject("countData", countData);
-		mv.addObject("sumData", sumData);
-		mv.addObject("countReport", countReport);
-		mv.addObject("countApp", countApp);
-		return mv;
+		DecimalFormat df = new DecimalFormat("#.00");
+		String size = null;
+		String format = null;
+		if (sumData == null) {
+			size = "0";
+			format = "K";
+		} else if (sumData > 1073741824) {
+			size = df.format(sumData / 1073741824f);
+			format = "G";
+		} else if (sumData > 1048576) {
+			size = df.format(sumData / 1048576f);
+			format = "M";
+		} else {
+			size = df.format(sumData / 1024f);
+			format = "K";
+		}
+		BigDecimal countExpense = expensesService.getUserTotalExpenses(userId);
+		Map<String, Object> map = new HashMap<>();
+		map.put("countData", countData);
+		map.put("sumData", size);
+		map.put("format", format);
+		map.put("countApp", countApp);
+		map.put("countReport", countReport);
+		map.put("countExpense", countExpense.longValue());
+		return map;
 	}
 
 	/**
@@ -328,8 +356,8 @@ public class CountAction {
 	@RequestMapping("pgsCount")
 	public ModelAndView pgsCount() {
 		Integer userId = ConstantsData.getLoginUserId();
-		List<Pgs> list = reportService.pgsCount(userId);
-		return new ModelAndView("count/count_pgs").addObject("list", list);
+		Map<String, Object> map = reportService.pgsCount(userId);
+		return new ModelAndView("count/count_pgs").addObject("map", map);
 	}
 
 	/**

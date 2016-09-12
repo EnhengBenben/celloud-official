@@ -1,0 +1,93 @@
+.search-box{
+    width: 100%;
+    margin-bottom: 10px;
+    .search-type-list{
+        margin: 0;
+        width: 100%;
+        padding: 0;
+        background: @content-gray; 
+        a{
+            padding: 2px 4px;
+            color: @search-box-a;
+            &.active{
+                .border-1(@content-green);
+            }
+        }
+        .search-type{
+            margin: 0;
+            width: 100%;
+            padding: 0;
+            display: block;
+            >label{
+                position: absolute;
+                margin: 0;
+                padding: 0px 60px 0px 20px;
+                left: 20px;                
+                display: inline-block;
+                line-height: 34px;
+                font-weight: 500; 
+            }
+        }
+        .search-type-detail{
+            position: relative;
+            width: 100%;
+            min-height: 34px;
+            float: left;
+            padding-left: 140px;
+            padding-right: 90px;
+            &.times{
+                padding-right: 310px;
+            }
+            &.inline-detail{
+                height: 34px;
+                .text-overflow();
+            }
+            &.more{
+                height: auto;
+                overflow: auto;
+            }
+            >input{
+                margin-top: 5px;
+                width: 180px;
+            }
+        }
+        .search-info{
+            display: inline-block;
+        }
+        .search-info>li{
+            width: 120px;
+            float: left;
+            line-height: 34px;
+            display: inline-block;
+        }
+        .seartch-date>li:last-child{
+            width: 35px;   
+        }
+        .seartch-period{
+            padding-right: 0;
+        }
+        .search-btns{
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            input{
+                width: 100px;
+            }
+            span{
+                margin: 0;
+                width: 15px;
+                display: inline-block;
+                line-height: 24px;
+                text-align: center;
+            }
+        }
+        >li+li:before{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: block;
+            content: "";
+            .border-top-1(@light-gray);
+        }
+    }
+}
