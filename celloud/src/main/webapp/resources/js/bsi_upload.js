@@ -33,7 +33,7 @@ var fileUpload=(function(fileUpload){
       max_retries : 5,
       multiple_queues : true,
       // Flash settings
-      flash_swf_url : '//cdn.bootcss.com/plupload/2.1.4/Moxie.swf'
+      flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf'
     });
     uploader.init();
     uploader.bind("StateChanged", function() {

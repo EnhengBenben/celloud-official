@@ -50,7 +50,7 @@ var rockyUpload = (function(rockyUpload) {
 			},
 			max_retries : 5,
 			multiple_queues : true,
-			flash_swf_url : '//cdn.bootcss.com/plupload/2.1.4/Moxie.swf'
+			flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf'
 		});
 		uploader.init();
 		$(document).on("click", "[data-click='del-upload-file']", function() {
