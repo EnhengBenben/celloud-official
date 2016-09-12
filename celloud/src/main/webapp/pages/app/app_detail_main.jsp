@@ -19,7 +19,7 @@
 						<div class="product-info-top-wrap">
 					  	  <div class="product-info-hd clearfix">
 					        <div class="view">
-					          <img src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}">
+					          <img ng-src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}">
 					        </div>
 					        <div class="itemInfo">
 					          <h5>{{app.appName}}
@@ -78,7 +78,7 @@
 					                 <div class="app-detail-imgcontainer">
 					                 <div class="carousel-inner">
 					                    <div ng-repeat="screen in screenList" class="item" ng-class="{active:$index==0}">
-					                      <img style="height:200px;width:100%" src="<%=request.getContextPath()%>/app/screen?file={{screen.screenName}}" alt="First slide">
+					                      <img style="height:200px;width:100%" ng-src="<%=request.getContextPath()%>/app/screen?file={{screen.screenName}}" alt="First slide">
 					                    </div>
 					                 </div>
 					                 <a class="left carousel-control" href="#appScreen" data-slide="prev">
@@ -106,7 +106,7 @@
 			  <div ng-if="appList == null || appList == ''" class="col-md-12">结果为空 </div>
 			  <li ng-if="appList != null" ng-repeat="app in appList">
 			      <a href="#">
-			        <img src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" alt="">
+			        <img ng-src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" alt="">
 			      </a>
 			      <div class="intro">
 			        <h6 style="overflow: hidden;" title="{{app.appName}}">
@@ -123,7 +123,7 @@
 		</div>
 	</section>
 </div>
-<script src="<%=request.getContextPath()%>/js/app.js?version=1.0" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/app.js?version=1.1" type="text/javascript"></script>
 <script type="text/javascript">
 	var session_userId = <%=session.getAttribute("userId")%>;
 	var sessionUserName = "<%=session.getAttribute("userName")%>";
