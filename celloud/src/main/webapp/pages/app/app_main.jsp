@@ -37,11 +37,11 @@
 			                    	  <div class="detail">
 			                      		<div class="picbox">
 			                        	  <div class="pic">
-			                          		<p><a ng-href="{{'#/app/detail/' + app.appId}}"><img src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" width="48px;" height="48px;"></a></p>
+			                          		<p><a ng-href="{{'#/app/detail/' + app.appId}}"><img ng-src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" width="48px;" height="48px;"></a></p>
 			                        	  </div>
 			                      		</div>
 			                      		<p class="appname">{{app.appName}}</p>
-			                      		<p class="company">{{app.createDate | date:'yyyy-MM-dd'}}<fmt:formatDate value="${app.createDate }" type="date"/></p>
+			                      		<p class="company">{{app.createDate | date:'yyyy-MM-dd'}}</p>
 			                    	  </div>
 			                    	  <div class="button" style="color: #ff6600"> <a ng-href="{{'#/app/detail/' + app.appId}}">查看详情<i class="fa fa-arrow-circle-o-right"></i></a> </div>
 			                    	  <span class="app_mark"></span>
@@ -63,7 +63,7 @@
 			  <div ng-if="appList == null || appList == ''" class="col-md-12">结果为空 </div>
 			  <li ng-if="appList != null" ng-repeat="app in appList">
 			      <a href="#">
-			        <img src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" alt="">
+			        <img ng-src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" alt="">
 			      </a>
 			      <div class="intro">
 			        <h6 style="overflow: hidden;" title="{{app.appName}}">
@@ -80,7 +80,7 @@
 		</div>
 	</section>
 </div>
-<script src="<%=request.getContextPath()%>/js/app.js?version=1.0" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/app.js?version=1.1" type="text/javascript"></script>
 <script type="text/javascript">
 	var session_userId = <%=session.getAttribute("userId")%>;
 	var sessionUserName = "<%=session.getAttribute("userName")%>";
