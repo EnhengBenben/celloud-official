@@ -9,8 +9,6 @@
       <li>首页</li>
     </ol>
 	<section class="content">
-		<input type="hidden" id="defaultPid" value="{{pclassifys[0].classifyId}}">
-		<input type="hidden" id="defaultPname" value="{{pclassifys[0].classifyName}}">
 		<div class="row">
 		  <div class="col-xs-10">
 			<div class="mainpage" id="appMain">
@@ -20,16 +18,64 @@
 		  		</div>
 		  		<ul id="appClassifyUl" class="app-classify-ul" data-step="2" data-intro="" data-position="bottom" data-img="checkapp.png">
 			  	 	<li id="classifypidLi{{pc.classifyId}}" ng-repeat="pc in pclassifys">
-			  	 	<a href="javascript:void(0)" ng-click="toSclassifyApp(pc.classifyId,'pc.classifyName')">{{pc.classifyName}}</a></li>
+			  	 	<a href="javascript:void(0)" ng-click="toSclassifyApp(pc.classifyId,pc.classifyName)">{{pc.classifyName}}</a></li>
 		  		</ul>
 			  </div>
-			  <div id="sclassify">
-			    
+			  <div id="sclassify" ng-if="sclassifys.length > 0">
+	  	    	  <div ng-repeat="sc in sclassifys" ng-if="classifyAppMap[sc.classifyId].length > 0" class="y-row" style="padding-bottom: 20px;"  data-spm="17">
+		      		<div class="common-normal common-slide common-normals">
+		        	  <div class="normal-tit normal-title">
+		         		<p class="link"><a class="bc-a-tit" href="javascript:void(0);" ng-click="toMoreApp(sc.classifyPid,sc.classifyId,1,1)" title="">获取更多&gt;</a></p>
+		         		<h4>{{sc.classifyName}}</h4>
+		        	  </div>
+		        	  <div class="normal-slide">
+		          		<div class="J_tab">
+		            	  <div class="tab-content">
+		              		<div class="tab-pannel">
+					    	  <ul class="slide-con guess-like-box">
+				              		<li ng-repeat="app in classifyAppMap[sc.classifyId]" ng-if="$index < 5">
+			                    	  <div class="detail">
+			                      		<div class="picbox">
+			                        	  <div class="pic">
+			                          		<p><a ng-href="{{'#/app/detail/' + app.appId}}"><img src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" width="48px;" height="48px;"></a></p>
+			                        	  </div>
+			                      		</div>
+			                      		<p class="appname">{{app.appName}}</p>
+			                      		<p class="company">{{app.createDate | date:'yyyy-MM-dd'}}<fmt:formatDate value="${app.createDate }" type="date"/></p>
+			                    	  </div>
+			                    	  <div class="button" style="color: #ff6600"> <a ng-href="{{'#/app/detail/' + app.appId}}">查看详情<i class="fa fa-arrow-circle-o-right"></i></a> </div>
+			                    	  <span class="app_mark"></span>
+			                  		</li>
+		                	  </ul>
+		              		</div>
+		            	  </div>
+		          		</div>
+		        	  </div>
+		      		</div>
+		    	  </div>
 			  </div>
 			</div>
 		  </div>
 		  <div class="col-xs-2 pull-right myApplist" id="myAppDiv">
-		  	
+		  <div class="nominate" style="display: block;">
+		  <h5>已添加的APP</h5>
+  			<ul>
+			  <div ng-if="appList == null || appList == ''" class="col-md-12">结果为空 </div>
+			  <li ng-if="appList != null" ng-repeat="app in appList">
+			      <a href="#">
+			        <img src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" alt="">
+			      </a>
+			      <div class="intro">
+			        <h6 style="overflow: hidden;" title="{{app.appName}}">
+			          <a class="reco-hd-link"  ng-href="{{'#/app/detail/' + app.appId}}">
+			          	{{app.appName}}
+			          </a>
+			        </h6>
+			       	<p><a href="javascript:void(0);" ng-click="removeApp(app.appId)" >取消添加</a></p>
+			      </div>
+			   </li>
+		   </ul>
+		  </div>
 		  </div>
 		</div>
 	</section>
