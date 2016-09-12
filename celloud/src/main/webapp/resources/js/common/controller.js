@@ -1,7 +1,7 @@
 (function() {
   var intro;
 	celloudApp.controller("sidebarController", function($scope,
-			$location, $rootScope,commonService) {
+			$location, $rootScope, $timeout, commonService) {
 		
 		$('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});
 		var revise = $(document).width()-$('.sidebar-menu').width();
@@ -130,13 +130,15 @@
 				}
 			});
 		});
-		if(window.navigation==1){
-      intro = introJs();
-      intro.setOption('tooltipPosition', 'bottom');
-      intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-      intro.setOption('showStepNumbers', false);
-      intro.setOption('showButtons', true);
-      intro.start();
-   }
+		$timeout(function () {
+		  if(window.navigation==1){
+	      intro = introJs();
+	      intro.setOption('tooltipPosition', 'bottom');
+	      intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+	      intro.setOption('showStepNumbers', false);
+	      intro.setOption('showButtons', true);
+	      intro.start();
+	    }
+    }, 1000);
 	});
 })();
