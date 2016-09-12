@@ -18,10 +18,12 @@
 			  </ul>
 			  <div id="myTabContent" class="tab-content">
 			    <div role="tabpanel" class="tab-pane" ng-class="{active : tab == 'patient'}" id="patient-report" aria-labelledby="patient-tab">
-			      <h4>检测结果：{{bsi.species_20}}</h4>
-			      <div class="test-info" ng-if="bsi.species_20 != null" ng-repeat="species20 in bsi.species_20">
+			      <h4>检测结果：</h4>
+			      <div class="test-info" ng-if="bsi.species_20 != null">
+			        <span ng-repeat="species20 in bsi.species_20">
 		              <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
 		              <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
+		            </span>
 			      </div>
 			      <h4>检测范围(20种)：</h4>
 			      <table class="table table-main">
@@ -64,51 +66,71 @@
 			    </div>
 			    <div role="tabpanel" class="tab-pane analy-tab"  ng-class="{active : tab == 'analy'}" id="analy-report" aria-labelledby="analy-tab">
 			      <h4>1. 检测结果：</h4>
-			      <div class="test-info">
-			      	<span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
-		            <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
-			      </div>
+			      <div class="test-info" ng-if="bsi.species_20 != null">
+                    <span ng-repeat="species20 in bsi.species_20">
+                      <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
+                      <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
+                    </span>
+                  </div>
 			      <table class="table table-20species">
 			        <tbody>
 			         <tr>
 			           <td class="title" rowspan="3">革兰氏阳性</td>
 		               <td ng-if="havestrain.indexOf('屎肠球菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		                              屎肠球菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('屎肠球菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                               屎肠球菌
 		               </td>
 		               <td ng-if="havestrain.indexOf('粪肠球菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		                                  粪肠球菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('粪肠球菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 			                          粪肠球菌
 			           </td>
 		               <td ng-if="havestrain.indexOf('肺炎链球菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               肺炎链球菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('肺炎链球菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                                     肺炎链球菌
 		               </td>
 		               <td ng-if="havestrain.indexOf('艰难梭状芽胞杆菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               艰难梭状芽胞杆菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('艰难梭状芽胞杆菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                               艰难梭状芽胞杆菌
 		               </td>
 			         </tr>
 			         <tr>
 		               <td ng-if="havestrain.indexOf('人葡萄球菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               人葡萄球菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('人葡萄球菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                              人葡萄球菌
 		               </td>
 		               <td ng-if="havestrain.indexOf('表皮葡萄球菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               表皮葡萄球菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('表皮葡萄球菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 			                           表皮葡萄球菌
 			           </td>
 		               <td ng-if="havestrain.indexOf('溶血性葡萄球菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               溶血性葡萄球菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('溶血性葡萄球菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 			                          溶血性葡萄球菌
 			           </td>
 		               <td ng-if="havestrain.indexOf('金黄色酿脓葡萄球菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               金黄色酿脓葡萄球菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('金黄色酿脓葡萄球菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                              金黄色酿脓葡萄球菌
 		               </td>
 			         </tr>
 			         <tr>
 		               <td ng-if="havestrain.indexOf('结核分枝杆菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               结核分枝杆菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('结核分枝杆菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                             结核分枝杆菌
 		               </td>
@@ -119,50 +141,72 @@
 			         <tr>
 			           <td class="title" rowspan="3">革兰氏阴性</td>
 		               <td ng-if="havestrain.indexOf('大肠埃希菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+                                       大肠埃希菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('大肠埃希菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                               大肠埃希菌
 		               </td>
 		               <td ng-if="havestrain.indexOf('鲍曼不动杆菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               鲍曼不动杆菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('鲍曼不动杆菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 			                          鲍曼不动杆菌
 			           </td>
 		               <td ng-if="havestrain.indexOf('肺炎克雷伯氏菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               肺炎克雷伯氏菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('肺炎克雷伯氏菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 			                           肺炎克雷伯氏菌
 			           </td>
 		               <td ng-if="havestrain.indexOf('嗜麦芽窄食单胞菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               嗜麦芽窄食单胞菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('嗜麦芽窄食单胞菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                              嗜麦芽窄食单胞菌
 		               </td>
 			         </tr>
 			         <tr>
 		               <td ng-if="havestrain.indexOf('阴沟肠杆菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               阴沟肠杆菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('阴沟肠杆菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                              阴沟肠杆菌
 		               </td>
 		               <td ng-if="havestrain.indexOf('粘质沙雷氏菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		                粘质沙雷氏菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('粘质沙雷氏菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 			                           粘质沙雷氏菌
 			           </td>
 		               <td ng-if="havestrain.indexOf('奇异变形杆菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               奇异变形杆菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('奇异变形杆菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                               奇异变形杆菌
 		               </td>
 		               <td ng-if="havestrain.indexOf('洋葱伯克霍尔德菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               洋葱伯克霍尔德菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('洋葱伯克霍尔德菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                               洋葱伯克霍尔德菌
 		               </td>
 			         </tr>
 			         <tr>
 		               <td ng-if="havestrain.indexOf('产气肠杆菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               产气肠杆菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('产气肠杆菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 		                              产气肠杆菌
 		               </td>
 		               <td ng-if="havestrain.indexOf('铜绿假单胞菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               铜绿假单胞菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('铜绿假单胞菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 			                           铜绿假单胞菌
 			           </td>
 		               <td ng-if="havestrain.indexOf('肠炎沙门氏菌') > -1" class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+		               肠炎沙门氏菌
+                       </td>
 		               <td ng-if="havestrain.indexOf('肠炎沙门氏菌') < 0"><i class="fa fa-circle-o" aria-hidden="true"></i>
 			                           肠炎沙门氏菌
 			           </td>
@@ -180,24 +224,24 @@
 			          </tr>
 			        </thead>
 			        <tbody>
-			          <c:set var="seqNum" scope="page" value="0"/>
+			          <%-- <c:set var="seqNum" scope="page" value="0"/> --%>
 			               <tr ng-if="bsi.species_20 != null" ng-init="srowspan = 1" ng-repeat="species20 in bsi.species_20">
-			                 <td class="title" rowspan="getRowspan(species20.seq2,species20.seq3,species20.seq4)">
+			                 <td class="title" rowspan="getRowspan({{species20.seq2}},{{species20.seq3}},{{species20.seq4}})">
 			                 	<span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
 		              			<span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
 			                   <br>
 			                   <svg width="200" height="20">
 			                     <g>
-			                       <rect x="0" y="0" width="50" height="20" fill="{{species20.site1 | getResultByCompare:'0,0','#8c8c8c','#fff'}}"
+			                       <rect x="0" y="0" width="50" height="20" fill="{{species20.site1 | getResultByCompare:'0,0':'#8c8c8c':'#fff'}}"
 				                     style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
 				                   <text x="8" y="15">V1-V2</text>
-				                   <rect x="50" y="0" width="50" height="20" fill="{{species20.site2 | getResultByCompare:'0,0','#dcdcdc','#fff'}}"
+				                   <rect x="50" y="0" width="50" height="20" fill="{{species20.site2 | getResultByCompare:'0,0':'#dcdcdc':'#fff'}}"
 			                         style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
 			                       <text x="58" y="15">V3-V4</text>
-			                       <rect x="100" y="0" width="50" height="20" fill="{{species20.site3 | getResultByCompare:'0,0','#323232','#fff'}}"
+			                       <rect x="100" y="0" width="50" height="20" fill="{{species20.site3 | getResultByCompare:'0,0':'#323232':'#fff'}}"
 			                         style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
 				                   <text x="108" y="15">V5-V6</text>
-				                   <rect x="150" y="0" width="50" height="20" fill="{{species20.site4 | getResultByCompare:'0,0','#c8c8c8','#fff'}}"
+				                   <rect x="150" y="0" width="50" height="20" fill="{{species20.site4 | getResultByCompare:'0,0':'#c8c8c8':'#fff'}}"
 			                         style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
 				                   <text x="158" y="15">V7-V8</text>
 			                     </g>

@@ -901,14 +901,17 @@ public class ReportAction {
     @ResponseBody
     public Map<String, Object> getBSIInfo(String dataKey, Integer projectId, Integer appId) {
         BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
-        Map<String, JSONArray> mibCharList = new HashMap<>();
+        // Map<String, JSONArray> mibCharList = new HashMap<>();
         Map<String, Object> map = getCommonInfo(projectId);
         if (bsi == null)
             return map;
-        mibCharList.put("readsDistributionInfo", JSONArray.fromObject(bsi.getReadsDistributionInfo()));
-        mibCharList.put("familyDistributionInfo", JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
-        mibCharList.put("genusDistributionInfo", JSONArray.fromObject(bsi.getGenusDistributionInfo()));
-        map.put("bsiCharList", mibCharList);
+        // mibCharList.put("readsDistributionInfo",
+        // JSONArray.fromObject(bsi.getReadsDistributionInfo()));
+        // mibCharList.put("familyDistributionInfo",
+        // JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
+        // mibCharList.put("genusDistributionInfo",
+        // JSONArray.fromObject(bsi.getGenusDistributionInfo()));
+        // map.put("bsiCharList", mibCharList);
         map.put("bsi", bsi);
         return map;
     }
