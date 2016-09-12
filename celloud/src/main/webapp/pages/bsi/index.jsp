@@ -181,6 +181,10 @@
     <a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
     <img id="imageFullScreen" src="">
   </div>
+  <script type="text/javascript">
+     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+     window.companyId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getCompanyId() %>';
+  </script>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
