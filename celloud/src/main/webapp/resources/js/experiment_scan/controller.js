@@ -3,6 +3,14 @@
     $scope.sampleList = samplingService.sampleList();
     $scope.productTags = samplingService.getProductTags();
     $scope.typeList = ["血","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
+    $scope.doOnKeyPress= function($event){
+    	if($event.keyCode == 13){
+    		if($scope.sampleName==''||$scope.sampleName==undefined||$scope.selTags==undefined||$scope.type==undefined){
+    		}else{
+    			$scope.addSample();
+    		}
+    	}
+    }
     $scope.addSample = function(){
       samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type).success(function(data){
         if(data == 2){
@@ -50,6 +58,15 @@
       });
     }
     
+    $scope.doOnKeyPress= function($event){
+    	if($event.keyCode == 13){
+    		if($scope.sampleName==''||$scope.sampleName==undefined){
+    		}else{
+    			$scope.scanStorage();
+    		}
+    	}
+    }
+    
     $scope.scanStorage = function(){
       scanStorageService.scanStorage($scope.sampleName).success(function(data){
         if(data == 0){
@@ -90,6 +107,15 @@
         tokenDNAService.pageList(page,pageSize).success(function(data){
           $scope.sampleList = tokenDNAService.sampleList();
         });
+      }
+      
+      $scope.doOnKeyPress= function($event){
+      	if($event.keyCode == 13){
+      		if($scope.sampleName==''||$scope.sampleName==undefined){
+      		}else{
+      			$scope.tokenDNA();
+      		}
+      	}
       }
     
     $scope.tokenDNA = function(){

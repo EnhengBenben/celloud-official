@@ -93,7 +93,7 @@
       if(!$scope.checkNum()){
         return ;
       }
-      $.confirm("确定要删除所选数据？","确认框",function(){
+      $.confirm("确定要归档所选数据？","确认框",function(){
         runService.deleteData().success(function(response){
           if(response.success){
             $scope.conditionList();
