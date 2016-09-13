@@ -44,7 +44,7 @@
           <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
               <i class="bell-icon">&nbsp;</i>
-              <span class="label label-danger">{{notices.num==0?'':(notices.num+'')}}</span>
+              <span class="label label-danger" ng-bind="notices.num==0?'':(notices.num+'')"></span>
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{notices.num}}</span>条新消息</p>
@@ -54,7 +54,7 @@
            <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
               <i class="mail-icon">&nbsp;</i>
-              <span class="label label-danger">{{messages.num==0?'':(''+messages.num)}}</span>
+              <span class="label label-danger" ng-bind="messages.num==0?'':(''+messages.num)"></span>
             </a>
             <div class="dropdown-menu message-dropdown">
               <p> 您有<span class="tips">{{messages.num}}</span>条新消息</p>
