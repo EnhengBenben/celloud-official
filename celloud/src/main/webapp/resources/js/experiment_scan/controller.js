@@ -68,6 +68,10 @@
     }
     
     $scope.scanStorage = function(){
+    	if($scope.sampleName == "" || $scope.sampleName == undefined){
+    		$.alert("请输入样本信息！");
+    		return false;
+    	}
       scanStorageService.scanStorage($scope.sampleName).success(function(data){
         if(data == 0){
           $.alert("系统中无此样本信息，请确认是已采样样本！")
