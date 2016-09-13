@@ -123,6 +123,10 @@
       }
     
     $scope.tokenDNA = function(){
+    	if($scope.sampleName == "" || $scope.sampleName == undefined){
+    		$.alert("请输入样本信息！");
+    		return false;
+    	}
       tokenDNAService.tokenDNA($scope.sampleName).success(function(data){
         if(data == 0){
           $.alert("此样本未入库");
