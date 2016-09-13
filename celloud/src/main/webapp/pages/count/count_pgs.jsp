@@ -6,16 +6,16 @@
 <table class="table table-main no-padding-left count-table">
   <thead>
     <tr>
-      <th style="min-width:50px;">序号</th>
+      <th style="width:50px;">序号</th>
       <th style="width:120px">数据编号</th>
       <th style="width:70px">Barcode</th>
       <th style="width:70px">数据别名</th>
-      <th style="width:90px">上传日期</th>
+      <th style="width:80px">上传日期</th>
       <th style="width:110px">APP</th>
       <th style="width:90px">Total_Reads</th>
       <th style="width:90px">Map_Reads</th>
-      <th style="width:100px">Map_Ratio(%)</th>
-      <th style="width:80px">Duplicate</th>
+      <th style="width:110px">Map_Ratio(%)</th>
+      <th style="width:65px">Duplicate</th>
       <th style="width:100px">GC_Count(%)</th>
       <th style="width:60px">*SD</th>
     </tr>
