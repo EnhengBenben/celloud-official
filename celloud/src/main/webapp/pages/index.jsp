@@ -87,7 +87,7 @@
   <script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/app/controller.js?v=3.3.1.1"></script>
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
