@@ -103,7 +103,7 @@
   <script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/dataReportService.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/dataReportController.js"></script>
-  <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
+  <script src="<%=request.getContextPath()%>/js/config/routeProvider.js?v=3.3.0"></script>
   <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
