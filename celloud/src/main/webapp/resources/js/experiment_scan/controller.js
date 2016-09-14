@@ -54,7 +54,7 @@
         pageSize : pageSize
       };
       scanStorageService.pageList(page,pageSize).success(function(data){
-    	  $rootScope.sampleList = scanStorageService.sampleList();
+    	  $rootScope.sampleList = data;
       });
     }
     
@@ -109,7 +109,7 @@
           pageSize : pageSize
         };
         tokenDNAService.pageList(page,pageSize).success(function(data){
-          $rootScope.sampleList = tokenDNAService.sampleList();
+          $rootScope.sampleList = data
         });
       }
       
@@ -229,7 +229,7 @@
           pageSize : pageSize
         };
         storagesService.pageList(page,pageSize).success(function(data){
-          $scope.storages = storagesService.storages();
+          $scope.storages = data;
         });
       }
     $scope.download = function(id,storageName){
