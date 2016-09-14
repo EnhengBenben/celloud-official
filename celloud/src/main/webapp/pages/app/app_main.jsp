@@ -18,7 +18,7 @@
 		  		</div>
 		  		<ul id="appClassifyUl" class="app-classify-ul" data-step="2" data-intro="" data-position="bottom" data-img="checkapp.png">
 			  	 	<li id="classifypidLi{{pc.classifyId}}" ng-repeat="pc in pclassifys">
-			  	 	<a href="javascript:void(0)" ng-click="toSclassifyApp(pc.classifyId,pc.classifyName)">{{pc.classifyName}}</a></li>
+			  	 	<a href="javascript:void(0)" ng-click="toSclassifyApp(pc.classifyId,pc.classifyName)" ng-bind="pc.classifyName"></a></li>
 		  		</ul>
 			  </div>
 			  <div id="sclassify" ng-if="sclassifys.length > 0">
@@ -26,7 +26,7 @@
 		      		<div class="common-normal common-slide common-normals">
 		        	  <div class="normal-tit normal-title">
 		         		<p class="link"><a class="bc-a-tit" href="javascript:void(0);" ng-click="toMoreApp(sc.classifyPid,sc.classifyId,1,1)" title="">获取更多&gt;</a></p>
-		         		<h4>{{sc.classifyName}}</h4>
+		         		<h4 ng-bind="sc.classifyName"></h4>
 		        	  </div>
 		        	  <div class="normal-slide">
 		          		<div class="J_tab">
@@ -40,8 +40,8 @@
 			                          		<p><a ng-href="{{'#/app/detail/' + app.appId}}"><img ng-src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}" width="48px;" height="48px;"></a></p>
 			                        	  </div>
 			                      		</div>
-			                      		<p class="appname">{{app.appName}}</p>
-			                      		<p class="company">{{app.createDate | date:'yyyy-MM-dd'}}</p>
+			                      		<p class="appname" ng-bind="app.appName"></p>
+			                      		<p class="company" ng-bind="app.createDate | date:'yyyy-MM-dd'"></p>
 			                    	  </div>
 			                    	  <div class="button" style="color: #ff6600"> <a ng-href="{{'#/app/detail/' + app.appId}}">查看详情<i class="fa fa-arrow-circle-o-right"></i></a> </div>
 			                    	  <span class="app_mark"></span>
