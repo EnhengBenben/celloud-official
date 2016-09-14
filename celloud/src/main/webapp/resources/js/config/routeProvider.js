@@ -277,6 +277,10 @@
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
     })
+    .when('/reportpro/MIB/:appId/:dataKey/:proId',{
+      templateUrl: "pages/report/report_data_mib.jsp",
+      controller: "mibReportController"
+    })
     .when('/sampling',{
       templateUrl: "pages/experiment_scan/sampling.jsp",
       controller: "samplingController"
