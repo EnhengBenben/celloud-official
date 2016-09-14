@@ -1,5 +1,5 @@
 (function(){
-  celloudApp.controller("samplingController", function($scope, samplingService){
+  celloudApp.controller("samplingController", function($rootScope, $scope, samplingService){
     $scope.sampleList = samplingService.sampleList();
     $scope.productTags = samplingService.getProductTags();
     $scope.typeList = ["血","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
@@ -42,8 +42,8 @@
     }
   });
   
-  celloudApp.controller("scanStorageController", function($scope, scanStorageService){
-    $scope.sampleList = scanStorageService.sampleList();
+  celloudApp.controller("scanStorageController", function($rootScope, $scope, scanStorageService){
+	  $rootScope.sampleList = scanStorageService.sampleList();
     var pages = {
       page : 1,
       pageSize : 10
@@ -54,7 +54,7 @@
         pageSize : pageSize
       };
       scanStorageService.pageList(page,pageSize).success(function(data){
-        $scope.sampleList = scanStorageService.sampleList();
+    	  $rootScope.sampleList = scanStorageService.sampleList();
       });
     }
     
@@ -76,7 +76,7 @@
         if(data == 0){
           $.alert("系统中无此样本信息，请确认是已采样样本！")
         }else if(data > 0){
-          $scope.sampleList = scanStorageService.sampleList();
+          $rootScope.sampleList = scanStorageService.sampleList();
         }else {
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！")
         }
@@ -87,7 +87,7 @@
     $scope.remove = function(id){
       scanStorageService.remove(id).success(function(data){
         if(data > 0){
-          $scope.sampleList = scanStorageService.sampleList();
+          $rootScope.sampleList = scanStorageService.sampleList();
           $.alert("样本删除成功");
         }else{
           $.alert("样本删除失败");
@@ -96,8 +96,8 @@
     }
   });
   
-  celloudApp.controller("tokenDNAController",function($scope,scanStorageService, tokenDNAService){
-    $scope.sampleList = tokenDNAService.sampleList();
+  celloudApp.controller("tokenDNAController",function($rootScope, $scope,scanStorageService, tokenDNAService){
+	$rootScope.sampleList = tokenDNAService.sampleList();
     
     var pages = {
         page : 1,
@@ -109,7 +109,7 @@
           pageSize : pageSize
         };
         tokenDNAService.pageList(page,pageSize).success(function(data){
-          $scope.sampleList = tokenDNAService.sampleList();
+          $rootScope.sampleList = tokenDNAService.sampleList();
         });
       }
       
@@ -131,7 +131,7 @@
         if(data == 0){
           $.alert("此样本未入库");
         }else if(data > 0){
-          $scope.sampleList = tokenDNAService.sampleList();
+          $rootScope.sampleList = tokenDNAService.sampleList();
         }else {
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
         }
@@ -141,7 +141,7 @@
     $scope.remove = function(id){
       scanStorageService.remove(id).success(function(data){
         if(data > 0){
-          $scope.sampleList = tokenDNAService.sampleList();
+          $rootScope.sampleList = tokenDNAService.sampleList();
           $.alert("样本删除成功");
         }else{
           $.alert("样本删除失败");
@@ -150,7 +150,7 @@
     }
   });
   
-  celloudApp.controller("buidLibraryController",function($scope,scanStorageService, buidLibraryService){
+  celloudApp.controller("buidLibraryController",function($rootScope, $scope,scanStorageService, buidLibraryService){
     $scope.infos = buidLibraryService.infos();
     $scope.addSample = function(){
       var sampleList = $scope.infos.pageList.datas;
@@ -214,7 +214,7 @@
     }
   });
   
-  celloudApp.controller("storagesController",function($scope, storagesService,buidLibraryService){
+  celloudApp.controller("storagesController",function($rootScope, $scope, storagesService,buidLibraryService){
     $scope.storages = storagesService.storages();
     storagesService.sampleList().success(function(data){
       $scope.sampleList = data;
@@ -245,7 +245,7 @@
     }
   });
   
-  celloudApp.controller("editSampleController",function($scope, scanStorageService, tokenDNAService){
+  celloudApp.controller("editSampleController",function($rootScope, $scope, scanStorageService, tokenDNAService){
     $scope.toEditRemark = function(id,remark){
       $scope.sampleId = id;
       $scope.remark = remark;
@@ -258,7 +258,7 @@
     $scope.editRemark = function(){
       scanStorageService.editRemark($scope.sampleId,$scope.remark).success(function(data){
         if(data > 0){
-          $scope.sampleList = $scope.exper_state == 1? scanStorageService.sampleList():tokenDNAService.sampleList();
+          $rootScope.sampleList = $scope.exper_state == 1? scanStorageService.sampleList():tokenDNAService.sampleList();
           $.alert("样本修改成功");
         }else{
           $.alert("样本修改失败");

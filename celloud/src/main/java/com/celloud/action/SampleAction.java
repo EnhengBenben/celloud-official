@@ -153,7 +153,8 @@ public class SampleAction {
     public PageList<Sample> getScanStorageSamples(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
-        return getSamples(page, size, SampleExperState.SCAN_STORAGE);
+        PageList<Sample> pageList = getSamples(page, size, SampleExperState.SCAN_STORAGE);
+        return pageList;
     }
 
     @ActionLog(value = "扫码样本入库", button = "扫码入库")
@@ -297,16 +298,19 @@ public class SampleAction {
      */
     private Integer changeType(String sampleName, int prevType,
             int currentType) {
+        // 判断是否已经存在上一个状态的样本
         Sample sampling = sampleService.getByNameExperState(
                 ConstantsData.getLoginUserId(), sampleName,
                 prevType);
         if (sampling == null)
             return 0;
+        // 判断是否已经存在一个相同的样本
         Sample scanStorage = sampleService.getByNameExperState(
                 ConstantsData.getLoginUserId(), sampleName,
                 currentType);
         if (scanStorage != null)
             return -1;
+        // 如果存在上一个状态并且不存在当前状态, 则更新状态
         return sampleService.updateExperState(ConstantsData.getLoginUserId(),
                 currentType, sampling.getSampleId());
     }
