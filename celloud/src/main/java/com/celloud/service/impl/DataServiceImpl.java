@@ -277,7 +277,7 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public String run(Integer userId, String dataIds, String appIds) {
+	public String updateToRun(Integer userId, String dataIds, String appIds) {
 		String result = "";
 		logger.info("用户{}使用数据{}运行APP{}", userId, dataIds, appIds);
 		String[] dataIdArr = dataIds.split(",");

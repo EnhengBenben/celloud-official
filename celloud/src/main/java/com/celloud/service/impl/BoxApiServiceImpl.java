@@ -64,11 +64,13 @@ public class BoxApiServiceImpl implements BoxApiService {
 			return;
 		}
 		int fileFormat = checkFileType.checkFileType(newName, folderByDay);
-		//TODO fileFormat 是空
+		// TODO fileFormat 是空
 		updateFileInfo(fileId, file.getDataKey(), newName, null, null, folderByDay, batch, fileFormat, tagId);
 		if (tagId != null && tagId.intValue() == 1) {
 			// TODO 保险起见，这里还应该校验用户是否已经添加app
-			updateBSIerCheckRun(batch, fileId, file.getDataKey(), needSplit, file.getFileName(), userId, fileFormat);
+			String result = updateBSIerCheckRun(batch, fileId, file.getDataKey(), needSplit, file.getFileName(), userId,
+					fileFormat);
+			System.out.println(result);
 		}
 	}
 
@@ -82,7 +84,8 @@ public class BoxApiServiceImpl implements BoxApiService {
 		dataService.updateByPrimaryKeySelective(data);
 	}
 
-	private int updateFileInfo(Integer dataId, String dataKey, String newName, String perlPath, String outPath,
+	@Override
+	public int updateFileInfo(Integer dataId, String dataKey, String newName, String perlPath, String outPath,
 			String folderByDay, String batch, Integer fileFormat, Integer tagId) {
 		DataFile data = new DataFile();
 		data.setFileId(dataId);
@@ -151,7 +154,11 @@ public class BoxApiServiceImpl implements BoxApiService {
 			boolean hasIndex = false;
 			dataIds = new ArrayList<>();
 			for (DataFile d : dlist) {
+				logger.info("{}\t\t{}\t\t{}", d.getFileName(), d.getPath(), d.getOssPath());
 				String name_tmp = d.getFileName();
+				if (d.getPath() == null) {
+					return "1";
+				}
 				if (name_tmp.contains("R1")) {
 					hasR1 = true;
 				} else if (name_tmp.contains("R2")) {
@@ -169,18 +176,18 @@ public class BoxApiServiceImpl implements BoxApiService {
 			task.setAppId(appId);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (needSplit == 1 && hasR1 && hasR2 && hasIndex) {
-				dataService.run(userId, StringUtils.join(dataIds.toArray(), ","), appId + "");
+				dataService.updateToRun(userId, StringUtils.join(dataIds.toArray(), ","), appId + "");
 				return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
 						+ "\"}";
 			} else if (needSplit != 1 && hasR1 && hasR2) {
 				task.setAppId(appId);
 				taskService.addOrUpdateUploadTaskByParam(task, isR1);
-				dataService.run(userId, StringUtils.join(dataIds.toArray(), ","), appId + "");
+				dataService.updateToRun(userId, StringUtils.join(dataIds.toArray(), ","), appId + "");
 				return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
 						+ "\"}";
 			}
 		} else if (fileFormat == FileFormat.YASUO && needSplit == null) {
-			dataService.run(userId, dataId + "", appId + "");
+			dataService.updateToRun(userId, dataId + "", appId + "");
 			return "{\"dataIds\":" + dataId + ",\"appIds\":\"" + appId + "\"}";
 		}
 		return "1";

@@ -332,6 +332,6 @@ public interface DataService {
 	 * @param appIds
 	 * @return
 	 */
-	public String run(Integer userId, String dataIds, String appIds);
+	public String updateToRun(Integer userId, String dataIds, String appIds);
 
 }

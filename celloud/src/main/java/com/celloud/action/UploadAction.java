@@ -77,19 +77,19 @@ public class UploadAction {
 	private ExperimentService expService;
 	@Resource
 	private TaskService taskService;
-    @Resource
-    private TagService tagService;
+	@Resource
+	private TagService tagService;
 	private String realPath = PropertiesUtil.bigFilePath;
 	/**
 	 * 用于判断数据格式
 	 */
 	CheckFileTypeUtil checkFileType = new CheckFileTypeUtil();
 
-    @RequestMapping("getProductTag")
-    @ResponseBody
-    public List<Tag> getProductTag() {
-        return tagService.findProductTags(ConstantsData.getLoginUserId());
-    }
+	@RequestMapping("getProductTag")
+	@ResponseBody
+	public List<Tag> getProductTag() {
+		return tagService.findProductTags(ConstantsData.getLoginUserId());
+	}
 
 	@RequestMapping("rocky")
 	@ResponseBody
@@ -258,7 +258,7 @@ public class UploadAction {
 										+ fileDataKey;
 								int fileFormat = checkFileType.checkFileType(newName, folderByDay);
 								updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay, batch,
-                                        fileFormat, tagId);
+										fileFormat, tagId);
 								Subject sub = SecurityUtils.getSubject();
 								// MessageUtils.get()
 								// .on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants.createMessage("upload",
@@ -484,46 +484,46 @@ public class UploadAction {
 		return dataService.updateDataInfoByFileId(data);
 	}
 
-    /**
-     * 修改文件信息带产品标签
-     * 
-     * @param dataId
-     * @param dataKey
-     * @param newName
-     * @return
-     */
-    private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath,
-            String folderByDay, String batch, int fileFormat, int tagId) {
-        DataFile data = new DataFile();
-        data.setFileId(dataId);
-        String filePath = folderByDay + File.separator + newName;
-        data.setSize(FileTools.getFileSize(filePath));
-        data.setDataKey(dataKey);
-        data.setPath(filePath);
-        data.setMd5(MD5Util.getFileMD5(filePath));
-        data.setBatch(batch);
-        data.setFileFormat(fileFormat);
-        if (fileFormat == FileFormat.BAM) {
-            String anotherName = getAnotherName(filePath, dataKey, perlPath, outPath);
-            data.setAnotherName(anotherName);
-            // 绑定实验流程
-            if (!StringUtils.isBlank(anotherName)) {
-                Integer userId = ConstantsData.getLoginUserId();
-                List<Experiment> expList = expService.getUnRelatList(userId, anotherName);
-                if (expList != null && expList.size() == 1) {
-                    Experiment exp = expList.get(0);
-                    exp.setFileId(dataId);
-                    exp.setDataKey(dataKey);
-                    expService.updateByPrimaryKeySelective(exp);
-                    logger.info("用户{}数据{}自动绑定成功", userId, dataId);
-                } else {
-                    logger.error("用户{}数据{}自动绑定失败", userId, dataId);
-                }
-            }
-        }
-        data.setState(DataState.ACTIVE);
-        return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
-    }
+	/**
+	 * 修改文件信息带产品标签
+	 * 
+	 * @param dataId
+	 * @param dataKey
+	 * @param newName
+	 * @return
+	 */
+	private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath,
+			String folderByDay, String batch, int fileFormat, int tagId) {
+		DataFile data = new DataFile();
+		data.setFileId(dataId);
+		String filePath = folderByDay + File.separator + newName;
+		data.setSize(FileTools.getFileSize(filePath));
+		data.setDataKey(dataKey);
+		data.setPath(filePath);
+		data.setMd5(MD5Util.getFileMD5(filePath));
+		data.setBatch(batch);
+		data.setFileFormat(fileFormat);
+		if (fileFormat == FileFormat.BAM) {
+			String anotherName = getAnotherName(filePath, dataKey, perlPath, outPath);
+			data.setAnotherName(anotherName);
+			// 绑定实验流程
+			if (!StringUtils.isBlank(anotherName)) {
+				Integer userId = ConstantsData.getLoginUserId();
+				List<Experiment> expList = expService.getUnRelatList(userId, anotherName);
+				if (expList != null && expList.size() == 1) {
+					Experiment exp = expList.get(0);
+					exp.setFileId(dataId);
+					exp.setDataKey(dataKey);
+					expService.updateByPrimaryKeySelective(exp);
+					logger.info("用户{}数据{}自动绑定成功", userId, dataId);
+				} else {
+					logger.error("用户{}数据{}自动绑定失败", userId, dataId);
+				}
+			}
+		}
+		data.setState(DataState.ACTIVE);
+		return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+	}
 
 	private String getAnotherName(String filePath, String fileDataKey, String perlPath, String outPath) {
 		String anotherName = null;

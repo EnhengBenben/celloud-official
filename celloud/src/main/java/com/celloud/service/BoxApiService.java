@@ -26,4 +26,7 @@ public interface BoxApiService {
 	public String getAnotherName(String filePath, String fileDataKey, String perlPath, String outPath);
 
 	public void updateUploadState(Integer fileId, String objectKey, int state, String path);
+
+	public int updateFileInfo(Integer dataId, String dataKey, String newName, String perlPath, String outPath,
+			String folderByDay, String batch, Integer fileFormat, Integer tagId);
 }
