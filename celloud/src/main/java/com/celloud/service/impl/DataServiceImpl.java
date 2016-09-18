@@ -11,8 +11,6 @@ import java.util.Map.Entry;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.text.StrSubstitutor;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -39,9 +37,9 @@ import com.celloud.service.ExpensesService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
+import com.celloud.utils.AppSubmitUtil;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.HttpURLUtils;
 
 /**
  * 数据管理服务实现类
@@ -394,12 +392,7 @@ public class DataServiceImpl implements DataService {
 					Integer taskId = task.getTaskId();
 					if (iswait) {
 						logger.info("任务{}运行命令：{}", taskId, command);
-						List<NameValuePair> params = new ArrayList<>();
-						params.add(new BasicNameValuePair("list", dataListFile));
-						params.add(new BasicNameValuePair("exposePath", appPath));
-						params.add(new BasicNameValuePair("projectID", String.valueOf(proId)));
-						//TODO path
-						HttpURLUtils.httpPostRequest("http://192.168.22.32:8080/API/service/split", params);
+						AppSubmitUtil.http(appId, dataListFile, appPath, proId);
 						taskService.updateToRunning(taskId);
 					} else {
 						logger.info("数据{}排队运行{}", dataKey, app.getAppName());
@@ -414,12 +407,7 @@ public class DataServiceImpl implements DataService {
 				StrSubstitutor sub = new StrSubstitutor(map);
 				String command = sub.replace(app.getCommand());
 				logger.info("运行命令:{}", command);
-				List<NameValuePair> params = new ArrayList<>();
-				params.add(new BasicNameValuePair("list", dataFilePath));
-				params.add(new BasicNameValuePair("exposePath", appPath));
-				params.add(new BasicNameValuePair("projectID", String.valueOf(proId)));
-				//TODO path
-				HttpURLUtils.httpPostRequest("http://192.168.22.32:8080/API/service/split", params);
+				AppSubmitUtil.http(appId, dataFilePath, appPath, proId);
 				// 保存消费记录
 				expenseService.saveProRunExpenses(proId, dataList);
 			}
