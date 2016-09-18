@@ -263,7 +263,15 @@
     $scope.editRemark = function(){
       scanStorageService.editRemark($scope.sampleId,$scope.remark).success(function(data){
         if(data > 0){
-          $rootScope.sampleList = $scope.exper_state == 1? scanStorageService.sampleList():tokenDNAService.sampleList();
+          if($scope.exper_state == 1){
+        	  scanStorageService.pageList($scope.pages.page,$scope.pages.pageSize).success(function(data){
+            	  $rootScope.sampleList = data;
+              });
+          }else{
+        	  tokenDNAService.pageList($scope.pages.page,$scope.pages.pageSize).success(function(data){
+                  $rootScope.sampleList = data
+                });
+          }
           $.alert("样本修改成功");
         }else{
           $.alert("样本修改失败");
