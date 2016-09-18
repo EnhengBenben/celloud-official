@@ -5,6 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,20 +31,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class HttpClientUtil {
 	private static final Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
 
+	/**
+	 * 发起GET方式请求
+	 * 
+	 * @param url
+	 * @param params
+	 * @return
+	 */
 	public static ApiResponse get(String url, Map<String, Object> params) {
 		ApiResponse res = ApiResponse.ERROR;
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		URI uri;
 		try {
 			URIBuilder builder = new URIBuilder(url);
-			if (params != null && !params.isEmpty()) {
-				for (Map.Entry<String, Object> entry : params.entrySet()) {
-					if (entry.getValue() != null) {
-						builder.addParameter(entry.getKey(), String.valueOf(entry.getValue()));
-					}
-				}
-			}
+			List<NameValuePair> urlParameters = parseParams(params);
+			builder.addParameters(urlParameters);
 			uri = builder.build();
+			logger.info(uri.toString());
 		} catch (URISyntaxException e) {
 			logger.error("uri构建失败！", e);
 			return res;
@@ -60,19 +65,19 @@ public class HttpClientUtil {
 		return res;
 	}
 
+	/**
+	 * 发起POST方式请求
+	 * 
+	 * @param url
+	 * @param params
+	 * @return
+	 */
 	public static ApiResponse post(String url, Map<String, Object> params) {
 		ApiResponse res = ApiResponse.ERROR;
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpPost httpPost = new HttpPost(url);
-		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-		if (params != null) {
-			for (Map.Entry<String, Object> entry : params.entrySet()) {
-				if (entry.getValue() != null) {
-					urlParameters.add(new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue())));
-				}
-			}
-		}
 		try {
+			List<NameValuePair> urlParameters = parseParams(params);
 			httpPost.setEntity(new UrlEncodedFormEntity(urlParameters, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			logger.error("请求参数编码失败！", e);
@@ -90,6 +95,12 @@ public class HttpClientUtil {
 		return res;
 	}
 
+	/**
+	 * 将get/post方式请求的response转换成自定义的ApiResponse
+	 * 
+	 * @param response
+	 * @return
+	 */
 	private static ApiResponse parseResponse(CloseableHttpResponse response) {
 		ApiResponse res = ApiResponse.ERROR;
 		String result;
@@ -108,6 +119,53 @@ public class HttpClientUtil {
 		return res;
 	}
 
+	/**
+	 * 将Map类型的请求参数转换成Name-Value形式
+	 * 
+	 * @param params
+	 * @return
+	 */
+	private static List<NameValuePair> parseParams(Map<String, Object> params) {
+		List<NameValuePair> pairs = new ArrayList<>();
+		if (params == null) {
+			return pairs;
+		}
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			Object value = entry.getValue();
+			String name = entry.getKey();
+			if (value == null) {
+				continue;
+			}
+			if (value.getClass().isArray()) {// 处理数组
+				Object[] objects = (Object[]) value;
+				for (Object o : objects) {
+					if (o == null) {
+						continue;
+					}
+					pairs.add(new BasicNameValuePair(name, o.toString()));
+				}
+			} else if (value instanceof Collection) {// 处理集合
+				@SuppressWarnings("unchecked")
+				List<Object> set = new ArrayList<>((Collection<Object>) value);
+				for (Object o : set) {
+					if (o == null) {
+						continue;
+					}
+					pairs.add(new BasicNameValuePair(name, o.toString()));
+				}
+			} else {
+				pairs.add(new BasicNameValuePair(name, value.toString()));
+			}
+		}
+		return pairs;
+	}
+
+	/**
+	 * 关闭请求
+	 * 
+	 * @param client
+	 * @param response
+	 */
 	private static void close(CloseableHttpClient client, CloseableHttpResponse response) {
 		try {
 			if (client != null) {
@@ -122,7 +180,13 @@ public class HttpClientUtil {
 	}
 
 	public static void main(String[] args) {
-		ApiResponse res = HttpClientUtil.get("http://localhost:8080/celloud/api/box/newfile", null);
+		Map<String, Object> params = new HashMap<>();
+		params.put("b", new Byte[] { 1, 2, 3, 4, 5 });
+		params.put("size", 123);
+		params.put("name", "a.txt");
+		params.put("userId", "12");
+		params.put("tagId", "1");
+		ApiResponse res = HttpClientUtil.get("http://localhost:8080/celloud/api/box/newfile", params);
 		Newfile file = new Newfile(res.getData());
 		System.out.println(file.getDataKey());
 		System.out.println(file.getExt());
