@@ -1,5 +1,6 @@
 package com.celloud.action;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -18,13 +19,16 @@ import com.celloud.model.mysql.DataFile;
 import com.celloud.service.BoxApiService;
 import com.celloud.service.DataService;
 import com.celloud.utils.DataUtil;
+import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.Response;
 
 @RestController
 @RequestMapping("api/box")
 public class BoxApiAction {
 	private static Logger logger = LoggerFactory.getLogger(BoxApiAction.class);
+	private String realPath = PropertiesUtil.bigFilePath;
 
 	@Resource
 	private DataService dataService;
@@ -57,8 +61,14 @@ public class BoxApiAction {
 	public Response updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
 			HttpServletRequest request) {
 		logger.info("updating file : {}", objectKey);
-		apiService.updateUploadState(fileId, objectKey, 1);
-		apiService.updatefile(objectKey, fileId, tagId, batch, needSplit);
+		DataFile file = dataService.getDataById(fileId);
+		Integer userId = file.getUserId();
+		String today = DateUtil.getDateToString("yyyyMMdd");
+		String folderByDay = realPath + userId + File.separator + today;
+		String newName = file.getDataKey() + FileTools.getExtName(file.getFileName());
+		String path = folderByDay + File.separator + newName;
+		apiService.updateUploadState(fileId, objectKey, 1, path);
+		apiService.updatefile(objectKey, fileId, tagId, batch, needSplit, newName, folderByDay);
 		return Response.SUCCESS;
 	}
 

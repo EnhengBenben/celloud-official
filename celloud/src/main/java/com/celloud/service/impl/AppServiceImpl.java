@@ -135,7 +135,7 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public Boolean checkPriceToRun(List<Integer> appIds, Integer userId) {
-        User user = userMapper.selectByPrimaryKey(userId);
+		User user = userMapper.selectUserByIdNotIcon(userId);
         BigDecimal appPrice = BigDecimal.ZERO;
         for (Integer id : appIds) {
             Price price = priceMapper.selectByItemId(id, PriceType.isApp);

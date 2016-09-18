@@ -11,6 +11,8 @@ import java.util.Map.Entry;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,6 @@ import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
-import com.celloud.constants.Mod;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
@@ -40,7 +41,7 @@ import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.SSHUtil;
+import com.celloud.utils.HttpURLUtils;
 
 /**
  * 数据管理服务实现类
@@ -65,13 +66,6 @@ public class DataServiceImpl implements DataService {
 	private TaskService taskService;
 	@Resource
 	ExpensesService expenseService;
-	private static Map<String, Map<String, String>> machines = ConstantsData.getMachines();
-	private static String sparkhost = machines.get("spark").get(Mod.HOST);
-	private static String sparkpwd = machines.get("spark").get(Mod.PWD);
-	private static String sparkuserName = machines.get("spark").get(Mod.USERNAME);
-	private static String sgeHost = machines.get("158").get(Mod.HOST);
-	private static String sgePwd = machines.get("158").get(Mod.PWD);;
-	private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
 
 	@Override
 	public Integer countData(Integer userId) {
@@ -232,7 +226,6 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public List<Map<String, String>> countDataFile(Integer userId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -284,19 +277,17 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public String run(String dataIds, String appIds) {
-		Integer userId = ConstantsData.getLoginUserId();
-		String userName = ConstantsData.getLoginUserName();
+	public String run(Integer userId, String dataIds, String appIds) {
 		String result = "";
-		logger.info("用户{}使用数据{}运行APP{}", userName, dataIds, appIds);
+		logger.info("用户{}使用数据{}运行APP{}", userId, dataIds, appIds);
 		String[] dataIdArr = dataIds.split(",");
-        String[] appIdArrs = appIds.split(",");
+		String[] appIdArrs = appIds.split(",");
 		List<Integer> appIdList = new ArrayList<>();
 		for (String s : appIdArrs) {
 			appIdList.add(Integer.parseInt(s));
 		}
 		if (!appService.checkPriceToRun(appIdList, userId)) {
-			logger.info("{}的余额不足，提醒充值后再运行", userName);
+			logger.info("{}的余额不足，提醒充值后再运行", userId);
 			return "1";
 		}
 
@@ -311,9 +302,7 @@ public class DataServiceImpl implements DataService {
 		// 公共报告信息
 		Report report = new Report();
 		report.setUserId(userId);
-
 		List<DataFile> dataList = dataService.findDatasById(dataIds);
-
 		// 构建运行所需dataListFile文件路径
 		Map<String, String> dataFilePathMap = new HashMap<>();// 针对按数据投递APP
 		String dataFilePath = "";// 针对按项目投递APP
@@ -348,7 +337,7 @@ public class DataServiceImpl implements DataService {
 		Map<Integer, Integer> appProMap = projectService.insertMultipleProject(project, appIdList, dataIdArr);
 		if (appProMap == null) {
 			result = "项目创建失败";
-			logger.info("{}{}", userName, result);
+			logger.info("{}{}", userId, result);
 			return result;
 		}
 
@@ -356,7 +345,7 @@ public class DataServiceImpl implements DataService {
 		List<Integer> failAppIdList = reportService.insertMultipleProReport(report, appProMap, dataIdArr);
 		if (failAppIdList.size() > 0) {
 			result = appService.findAppNamesByIds(failAppIdList.toString()) + "创建报告失败";
-			logger.info("{}{}", userName, result);
+			logger.info("{}{}", userId, result);
 			return result;
 		}
 
@@ -372,16 +361,13 @@ public class DataServiceImpl implements DataService {
 			}
 			if (AppDataListType.FASTQ_PATH.contains(appId) || AppDataListType.SPLIT.contains(appId)) {
 				int runningNum;
-				SSHUtil ssh = null;
 				Boolean iswait;
 				if (AppDataListType.SPARK.contains(appId)) {
 					runningNum = taskService.findRunningNumByAppId(AppDataListType.SPARK);
-					ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
 					iswait = runningNum < SparkPro.MAXTASK;
 					logger.info("APP{}任务投递到spark", appId);
 				} else {
 					runningNum = taskService.findRunningNumByAppId(appId);
-					ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
 					iswait = runningNum < app.getMaxTask() || app.getMaxTask() == 0;
 				}
 				for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
@@ -408,7 +394,12 @@ public class DataServiceImpl implements DataService {
 					Integer taskId = task.getTaskId();
 					if (iswait) {
 						logger.info("任务{}运行命令：{}", taskId, command);
-						ssh.sshSubmit(command, false);
+						List<NameValuePair> params = new ArrayList<>();
+						params.add(new BasicNameValuePair("list", dataListFile));
+						params.add(new BasicNameValuePair("exposePath", appPath));
+						params.add(new BasicNameValuePair("projectID", String.valueOf(proId)));
+						//TODO path
+						HttpURLUtils.httpPostRequest("http://192.168.22.32:8080/API/service/split", params);
 						taskService.updateToRunning(taskId);
 					} else {
 						logger.info("数据{}排队运行{}", dataKey, app.getAppName());
@@ -423,8 +414,12 @@ public class DataServiceImpl implements DataService {
 				StrSubstitutor sub = new StrSubstitutor(map);
 				String command = sub.replace(app.getCommand());
 				logger.info("运行命令:{}", command);
-				SSHUtil ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-				ssh.sshSubmit(command, false);
+				List<NameValuePair> params = new ArrayList<>();
+				params.add(new BasicNameValuePair("list", dataFilePath));
+				params.add(new BasicNameValuePair("exposePath", appPath));
+				params.add(new BasicNameValuePair("projectID", String.valueOf(proId)));
+				//TODO path
+				HttpURLUtils.httpPostRequest("http://192.168.22.32:8080/API/service/split", params);
 				// 保存消费记录
 				expenseService.saveProRunExpenses(proId, dataList);
 			}

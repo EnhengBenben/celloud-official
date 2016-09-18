@@ -26,12 +26,10 @@ import com.celloud.service.DataService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.CheckFileTypeUtil;
-import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.OSSUtils;
 import com.celloud.utils.PerlUtils;
-import com.celloud.utils.PropertiesUtil;
 
 @Service
 public class BoxApiServiceImpl implements BoxApiService {
@@ -42,20 +40,18 @@ public class BoxApiServiceImpl implements BoxApiService {
 	private ExperimentService expService;
 	@Resource
 	private TaskService taskService;
-	private String realPath = PropertiesUtil.bigFilePath;
 	CheckFileTypeUtil checkFileType = new CheckFileTypeUtil();
 
 	@Async
 	@Override
-	public void updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit) {
+	public void updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
+			String newName, String folderByDay) {
 		DataFile file = dataService.getDataById(fileId);
-		String newName = file.getDataKey() + FileTools.getExtName(file.getFileName());
 		Integer userId = file.getUserId();
-		String today = DateUtil.getDateToString("yyyyMMdd");
-		String folderByDay = realPath + userId + File.separator + today;
 		boolean isDownloaded = false;
+		String path = folderByDay + File.separator + newName;
 		for (int i = 0; i < 3; i++) {
-			String md5 = OSSUtils.download(objectKey, folderByDay + File.separator + newName);
+			String md5 = OSSUtils.download(objectKey, path);
 			if (file.getMd5().equals(md5)) {
 				isDownloaded = true;
 				break;
@@ -64,23 +60,25 @@ public class BoxApiServiceImpl implements BoxApiService {
 			}
 		}
 		if (!isDownloaded) {
-			updateUploadState(fileId, objectKey, 3);
+			updateUploadState(fileId, objectKey, 3, path);
 			return;
 		}
 		int fileFormat = checkFileType.checkFileType(newName, folderByDay);
+		//TODO fileFormat 是空
 		updateFileInfo(fileId, file.getDataKey(), newName, null, null, folderByDay, batch, fileFormat, tagId);
 		if (tagId != null && tagId.intValue() == 1) {
 			// TODO 保险起见，这里还应该校验用户是否已经添加app
-			bsierCheckRun(batch, fileId, file.getDataKey(), needSplit, file.getFileName(), userId, fileFormat);
+			updateBSIerCheckRun(batch, fileId, file.getDataKey(), needSplit, file.getFileName(), userId, fileFormat);
 		}
 	}
 
 	@Override
-	public void updateUploadState(Integer fileId, String objectKey, int state) {
+	public void updateUploadState(Integer fileId, String objectKey, int state, String path) {
 		DataFile data = new DataFile();
 		data.setFileId(fileId);
 		data.setOssPath(objectKey);
 		data.setUploadState(state);
+		data.setPath(path);
 		dataService.updateByPrimaryKeySelective(data);
 	}
 
@@ -118,8 +116,8 @@ public class BoxApiServiceImpl implements BoxApiService {
 	}
 
 	@Override
-	public String bsierCheckRun(String batch, Integer dataId, String dataKey, Integer needSplit, String originalName,
-			Integer userId, Integer fileFormat) {
+	public String updateBSIerCheckRun(String batch, Integer dataId, String dataKey, Integer needSplit,
+			String originalName, Integer userId, Integer fileFormat) {
 		logger.info("判断是否数据{}上传完即刻运行", originalName);
 		Integer appId;
 		if (needSplit == null) {
@@ -171,18 +169,18 @@ public class BoxApiServiceImpl implements BoxApiService {
 			task.setAppId(appId);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (needSplit == 1 && hasR1 && hasR2 && hasIndex) {
-				dataService.run(StringUtils.join(dataIds.toArray(), ","), appId + "");
+				dataService.run(userId, StringUtils.join(dataIds.toArray(), ","), appId + "");
 				return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
 						+ "\"}";
 			} else if (needSplit != 1 && hasR1 && hasR2) {
 				task.setAppId(appId);
 				taskService.addOrUpdateUploadTaskByParam(task, isR1);
-				dataService.run(StringUtils.join(dataIds.toArray(), ","), appId + "");
+				dataService.run(userId, StringUtils.join(dataIds.toArray(), ","), appId + "");
 				return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
 						+ "\"}";
 			}
 		} else if (fileFormat == FileFormat.YASUO && needSplit == null) {
-			dataService.run(dataId + "", appId + "");
+			dataService.run(userId, dataId + "", appId + "");
 			return "{\"dataIds\":" + dataId + ",\"appIds\":\"" + appId + "\"}";
 		}
 		return "1";
