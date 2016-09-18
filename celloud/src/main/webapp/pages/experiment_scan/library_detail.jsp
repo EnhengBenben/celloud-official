@@ -25,12 +25,12 @@
                     <td>{{s.storageSindex }}</td>
                     <td>{{s.sampleName }}</td>
                     <td>{{s.type }}</td>
-                    <td>{{s.createDate }}</td>
+                    <td>{{s.createDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td>{{s.sampleSindex }}</td>
                     <td>
                         <a class="btn-link" ng-click="remove(sample.sampleLogId)">上传</a>
                         |
-                        <a class="btn-link" ng-click="remove(sample.sampleLogId)">下载</a>
+                        <a class="btn-link" ng-click="download(s.id,s.storageName)">下载</a>
                     </td>
                 </tr>
             </tbody>
