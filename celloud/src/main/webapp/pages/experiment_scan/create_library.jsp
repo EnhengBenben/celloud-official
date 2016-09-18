@@ -26,7 +26,7 @@
           </select>
           <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入样本编号！</span>
 	      <div class="info-btn-group">
-            <input class="field" type="text" ng-trim="true" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
+            <input class="field" type="text" ng-trim="true" ng-model="sampleName" ng-keypress="doOnKeyPress($event)" required placeholder="扫描样本编号/病历号"/>
             <a class="action" ng-click="addSample()">扫码入库</a>
           </div>
           <div class="library-btns pull-right">

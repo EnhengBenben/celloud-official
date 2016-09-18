@@ -3,15 +3,8 @@
     $scope.sampleList = samplingService.sampleList();
     $scope.productTags = samplingService.getProductTags();
     $scope.typeList = ["血","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
-    $scope.doOnKeyPress= function($event){
-    	if($event.keyCode == 13){
-    		if($scope.sampleName==''||$scope.sampleName==undefined||$scope.selTags==undefined||$scope.type==undefined){
-    		}else{
-    			$scope.addSample();
-    		}
-    	}
-    }
     $scope.addSample = function(){
+    	console.log("lwrafaf");
       samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type).success(function(data){
         if(data == 2){
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
@@ -152,10 +145,23 @@
   
   celloudApp.controller("buidLibraryController",function($rootScope, $scope,scanStorageService, buidLibraryService){
     $scope.infos = buidLibraryService.infos();
+    
+    $scope.doOnKeyPress= function($event){
+    	if($event.keyCode == 13){
+    		if($scope.sampleName==''||$scope.sampleName==undefined || $scope.sindex == '' || $scope.sindex == undefined){
+    			$.alert("请输入样本信息");
+    		}else{
+    			$scope.addSample();
+    		}
+    	}
+    }
+    
     $scope.addSample = function(){
       var sampleList = $scope.infos.pageList.datas;
       if(sampleList.length>=12){
         $.tips("每个文库最多12个样本！")
+      }else if($scope.sampleName == '' || $scope.sampleName == undefined){
+    	  $.alert("请输入样本信息");
       }else{
         buidLibraryService.addSample($scope.sampleName,sampleList).success(function(data){
           if(data > 0){
