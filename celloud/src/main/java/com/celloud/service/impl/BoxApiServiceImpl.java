@@ -70,7 +70,7 @@ public class BoxApiServiceImpl implements BoxApiService {
 			// TODO 保险起见，这里还应该校验用户是否已经添加app
 			String result = updateBSIerCheckRun(batch, fileId, file.getDataKey(), needSplit, file.getFileName(), userId,
 					fileFormat);
-			System.out.println(result);
+			logger.debug("bsi check run result: {}", result);
 		}
 	}
 
@@ -154,7 +154,6 @@ public class BoxApiServiceImpl implements BoxApiService {
 			boolean hasIndex = false;
 			dataIds = new ArrayList<>();
 			for (DataFile d : dlist) {
-				logger.info("{}\t\t{}\t\t{}", d.getFileName(), d.getPath(), d.getOssPath());
 				String name_tmp = d.getFileName();
 				if (d.getPath() == null) {
 					return "1";

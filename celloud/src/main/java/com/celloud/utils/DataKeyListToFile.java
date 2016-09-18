@@ -138,7 +138,6 @@ public class DataKeyListToFile {
 		String dataKey = "";
 		for (DataFile data : dataList) {
 			String path = data.getPath();
-			System.out.println(data.getFileName() + "\t\t" + data.getPath() + "\t\t" + data.getBatch());
 			if (path.endsWith(".lis") || path.endsWith(".txt")) {
 				endPath = path;
 			} else {
