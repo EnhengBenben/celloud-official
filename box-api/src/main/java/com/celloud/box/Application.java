@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
-public class Application extends AsyncConfigurerSupport{
+public class Application extends AsyncConfigurerSupport {
 	private static Logger logger = LoggerFactory.getLogger(Application.class);
 
 	/**
@@ -32,7 +32,8 @@ public class Application extends AsyncConfigurerSupport{
 	// }
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication application = new SpringApplication(Application.class);
+		application.run(args);
 		logger.info("Application is Running ...");
 	}
 }

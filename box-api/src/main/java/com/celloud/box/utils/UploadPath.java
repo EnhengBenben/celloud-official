@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UploadPath {
-	private static final String PATH = "/share/data/upload";
+	private static String PATH = null;
 	private static final char S = File.separatorChar;
 
 	/**
@@ -14,11 +14,7 @@ public class UploadPath {
 	 * @return
 	 */
 	private static String getRootPath() {
-		if ('/' == S) {
-			return PATH;
-		} else {
-			return System.getProperty("user.home");
-		}
+		return PATH != null ? PATH : '/' == S ? "/share/data/upload" : System.getProperty("user.home");
 	}
 
 	/**
@@ -56,6 +52,10 @@ public class UploadPath {
 	public static String getObjectKey(Integer userId, String dataKey, String ext) {
 		return userId + "/" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/" + dataKey
 				+ (ext.startsWith(".") ? ext : "." + ext);
+	}
+
+	public static void setRootPath(String path) {
+		PATH = path;
 	}
 
 	public static void main(String[] args) {

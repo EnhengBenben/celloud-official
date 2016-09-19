@@ -24,13 +24,14 @@ import com.celloud.box.utils.UploadPath;
 
 @RestController
 @RequestMapping("box")
-@CrossOrigin(origins = { "http://localhost:8080","http://127.0.0.1:8080", "https://www.celloud.cn", "https://celloud.cn",
-		"https://www.celloud.cc", "https://celloud.cc", "https://www.genecode.cn",
+@CrossOrigin(origins = { "http://localhost:8080", "http://127.0.0.1:8080", "https://www.celloud.cn",
+		"https://celloud.cn", "https://www.celloud.cc", "https://celloud.cc", "https://www.genecode.cn",
 		"https://genecode.cn" }, methods = { RequestMethod.POST, RequestMethod.GET }, allowedHeaders = { "*" })
 public class BoxController {
 	private Logger logger = LoggerFactory.getLogger(BoxController.class);
 	@Resource
 	private BoxService boxService;
+
 	@RequestMapping("alive")
 	public Response alive() {
 		logger.info("checking alive...");
