@@ -41,6 +41,10 @@ public class Pgs extends Base {
     private String testPng;
     private String miniPng;
     private String finalPng;
+    private String reportSplitPng;
+    private String reportMiniPng;
+    private String reportTestPng;
+    private String reportFinalPng;
 	private String HRPng;
     private String note;
     private List<List<String>> detail;
@@ -311,6 +315,38 @@ public class Pgs extends Base {
 
     public void setFlag(Integer flag) {
         this.flag = flag;
+    }
+
+    public String getReportSplitPng() {
+        return reportSplitPng;
+    }
+
+    public void setReportSplitPng(String reportSplitPng) {
+        this.reportSplitPng = reportSplitPng;
+    }
+
+    public String getReportMiniPng() {
+        return reportMiniPng;
+    }
+
+    public void setReportMiniPng(String reportMiniPng) {
+        this.reportMiniPng = reportMiniPng;
+    }
+
+    public String getReportTestPng() {
+        return reportTestPng;
+    }
+
+    public void setReportTestPng(String reportTestPng) {
+        this.reportTestPng = reportTestPng;
+    }
+
+    public String getReportFinalPng() {
+        return reportFinalPng;
+    }
+
+    public void setReportFinalPng(String reportFinalPng) {
+        this.reportFinalPng = reportFinalPng;
     }
 
 }
