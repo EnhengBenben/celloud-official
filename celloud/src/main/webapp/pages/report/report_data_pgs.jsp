@@ -18,10 +18,13 @@
             {{pgs.anotherName != null ? pgs.anotherName : pgs.fileName}}({{pgs.dataKey}})
         </p>
         <div class="btn-groups">
-        	<a class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=0"><i class="fa fa-print"></i>打印报告</a>
-            <a ng-if="pgs.splitPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=1"><i class="fa fa-print"></i>点图报告</a>                  
-            <a ng-if="pgs.pdf != null" class="btn -middle" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.pdf}}" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
-            <a ng-if="pgs.finalPng!=null && pgs.finalPng!=''" class="btn -high" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.finalPng}}" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a>
+        	<a class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=0"><i class="fa fa-print"></i>打印报告一</a>
+            <a ng-if="pgs.splitPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=1"><i class="fa fa-print"></i>点图报告一</a>                  
+        	<a ng-if="pgs.miniPng != null && pgs.splitPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=2"><i class="fa fa-print"></i>打印报告二</a>
+            <a ng-if="pgs.reportMiniPng != null && pgs.reportSplitPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=3"><i class="fa fa-print"></i>点图报告二</a>                  
+            
+            <!-- <a ng-if="pgs.pdf != null" class="btn -middle" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.pdf}}" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+            <a ng-if="pgs.finalPng!=null && pgs.finalPng!=''" class="btn -high" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.finalPng}}" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a> -->
             <br/>
             <div class="mt3">
 	        	<a ng-if="experiment != null && experiment.qualified == null" class="btn -low" href="javascript:void(0)" ng-click="showConclusion()"><i class="fa fa-edit"></i>结果判定</a>
