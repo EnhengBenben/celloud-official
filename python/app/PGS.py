@@ -92,6 +92,8 @@ class PGS:
 				elif(x == 'report.mosaic.txt'):
 					mosaic = readAll(os.path.join(path,"report.mosaic.txt"))
 					result['mosaic'] = mosaic
+				elif(x.endswith('.png') and ('report.txt' in x)):
+					result['report' + x.split('.')[-2].capitalize() + 'Png'] = x
 				elif(x.endswith('.png')):
 					##此处处理所有png
 					result[pgs[x.split('.')[-2] + 'Png']] = x
@@ -99,3 +101,10 @@ class PGS:
 					result['pdf'] = x
 			result[pgs['no_enough_reads']] = no_enough_reads
 		return result
+if __name__ == '__main__':
+	pgs = PGS.getInstance()
+	re = pgs.getResult('G:\\16091800137373','PGS','a.ab1',None)
+	print re
+	#mo = mongo.getInstance()
+	#objId = mo.put(re,'HBV')
+	#createHTML('/Users/lin/23/82/1','aaaa.ab1',re['type'],re['other'],re['reporttxt'])

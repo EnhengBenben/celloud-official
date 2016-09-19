@@ -1178,19 +1178,11 @@ public class ReportAction {
     public Map<String, Object> getPgsInfo(String dataKey, Integer projectId, Integer appId) {
         Map<String, Object> map = getCommonInfo(projectId);
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        if (pgs == null) {
-            System.out.println("dataKey:" + dataKey);
-            System.out.println("projectId" + projectId);
-            System.out.println("appId:" + appId);
-        } else {
-            List<Experiment> expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
-            if (expList != null && expList.size() > 0) {
-                map.put("experiment", expList.get(0));
-            }
+        List<Experiment> expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
+        if (expList != null && expList.size() > 0) {
+            map.put("experiment", expList.get(0));
         }
-        if (map != null) {
-            map.put("pgs", pgs);
-        }
+        map.put("pgs", pgs);
         return map;
     }
 
