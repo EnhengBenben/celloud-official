@@ -86,7 +86,7 @@
       templateUrl: "pages/report/report_data.jsp",
       controller: "dataReportController"
     })
-    .when('/reportpro',{
+    .when('/reportpro/:page/:pageSize/:belongs/:changeDate/:start/:end/:app/:condition',{
       templateUrl: "pages/report/report_project.jsp",
       controller: "projectReportController"
     })

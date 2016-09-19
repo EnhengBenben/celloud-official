@@ -995,44 +995,52 @@
     //加载产品标签
     $scope.ranAppList = projectReportService.getRanAPP();
     //初始化参数
-    var options = {
-        page : 1,
-        pageSize : 10,
-        belongs : 1,
-        start : null,
-        end : null,
-        app : 0,
-        condition : null
+    $rootScope.projectOptions = {
+	  page : $routeParams.page,
+	  pageSize : $routeParams.pageSize,
+	  belongs : $routeParams.belongs,
+	  changeDate : $routeParams.changeDate,
+	  start : $routeParams.start,
+	  end : $routeParams.end,
+	  app : $routeParams.app,
+	  condition : $routeParams.condition
     };
     //分页检索主方法
     $scope.pageQuery = function(currentPage,pageSize){
-      var belongs = options.belongs;
-      var start = options.start;
-      var end = options.end;
-      var app = options.app;
-      var condition = options.condition;
-      options.pageSize = pageSize;
-      projectReportService.getReportListCondition(currentPage,pageSize,belongs,start,end,app,condition).
+      var belongs = $rootScope.projectOptions.belongs;
+      var start = $rootScope.projectOptions.start=='all'?null:$rootScope.projectOptions.start + " 00:00:00";
+      var end = $rootScope.projectOptions.end=='all'?null:$rootScope.projectOptions.end + " 23:59:59";
+      var app = $rootScope.projectOptions.app;
+      var condition = $rootScope.projectOptions.condition=='all'?null:$rootScope.projectOptions.condition;
+      $rootScope.projectOptions.pageSize = pageSize;
+      $rootScope.projectOptions.page = currentPage;
+      projectReportService.getReportListCondition($rootScope.projectOptions.page,$rootScope.projectOptions.pageSize,belongs,start,end,app,condition).
         success(function(dataList){
           $scope.dataList = dataList;
         });
     }
-    $scope.pageQuery(options.page,options.pageSize);
+    $rootScope.goBack = function(){
+    	var belongs = $rootScope.projectOptions.belongs;
+    	var changeDate = $rootScope.projectOptions.changeDate;
+        var start = $rootScope.projectOptions.start;
+        var end = $rootScope.projectOptions.end;
+        var app = $rootScope.projectOptions.app;
+        var condition = $rootScope.projectOptions.condition;
+        var pageSize = $rootScope.projectOptions.pageSize;
+        var page = $rootScope.projectOptions.page;
+    	window.location.href = CONTEXT_PATH + "/index#/reportpro/"+page+"/"+pageSize+"/"+belongs+"/"+changeDate+"/"+start+"/"+end+"/"+app+"/"+condition;
+    }
+    $scope.pageQuery($rootScope.projectOptions.page,$rootScope.projectOptions.pageSize);
     //切换所属
     $scope.changeBelongs = function(id){
-      $(".belongs").removeClass("active");
-      $("#belongs"+id).addClass("active");
-      options.belongs = id;
-      $scope.pageQuery(1,options.pageSize);
+      $rootScope.projectOptions.belongs = id;
+      $scope.pageQuery(1,$rootScope.projectOptions.pageSize);
     }
     var START = null;
     var END = null;
     //设定时间检索
     $scope.changeDate = function(flag){
-      $("#_searchDate").val("");
-      $("#_endDate").val("");
-      $(".changeDate").removeClass("active");
-      $("#changeDate"+flag).addClass("active");
+      $rootScope.projectOptions.changeDate = flag;
       if(flag==0){
         START = null;
         END = null;
@@ -1049,7 +1057,6 @@
     }
     //自定义时间检索
     $scope.chooseDate = function(){
-      $(".changeDate").removeClass("active");
       START =$("#_searchDate").val();
       END = $("#_endDate").val();
       if(!START || !END){
@@ -1060,31 +1067,30 @@
         $.alert("起始时间不能大于结束时间");
         return ;
       }
+      $rootScope.projectOptions.changeDate = -1;
       $scope.dateQuery();
     }
     //时间检索入口
     $scope.dateQuery = function(){
       if(START != null){
-        START = START+" 00:00:00";
+    	  $rootScope.projectOptions.start = START;
       }
       if(END != null){
-        END = END+" 23:59:59";
+    	  $rootScope.projectOptions.end = END;
       }
-      options.start = START;
-      options.end = END;
-      $scope.pageQuery(1,options.pageSize);
+      $scope.pageQuery(1,$rootScope.projectOptions.pageSize);
     }
     //根据appId精确检索
     $scope.changeApp = function(appId){
       $(".changeApp").removeClass("active");
       $("#changeApp" + appId).addClass("active");
-      options.app = appId;
-      $scope.pageQuery(1,options.pageSize);
+      $rootScope.projectOptions.app = appId;
+      $scope.pageQuery(1,$rootScope.projectOptions.pageSize);
     }
     //数据检索
     $scope.changeCondition = function(){
-      options.condition = $scope.reportCondition;
-      $scope.pageQuery(1,options.pageSize);
+    	$rootScope.projectOptions.condition = $scope.reportCondition;
+      $scope.pageQuery(1,$rootScope.projectOptions.pageSize);
     }
     //显示项目名称编辑框
     $scope.toChangePname = function(projectId){
@@ -1119,7 +1125,7 @@
       $.confirm("确定要删除该项目？","确认框",function(){
         projectReportService.cancelProjectShare(projectId).success(function(response){
           if(response.success){
-            $scope.pageQuery(1,options.pageSize);
+            $scope.pageQuery(1,$rootScope.projectOptions.pageSize);
           }
           $.alert(response.message);
         });
@@ -1177,7 +1183,7 @@
         $scope.updateState = true;
         function hideModal(){
           $("#project-share-modal").modal("hide");
-          $scope.pageQuery(options.page,options.pageSize);
+          $scope.pageQuery($rootScope.projectOptions.page,$rootScope.projectOptions.pageSize);
           $scope.updateState = false;
         }
         if(response.success){
@@ -1191,7 +1197,7 @@
       $.confirm("确定要删除该项目吗？","确认框",function(){
         projectReportService.deleteProject(projectId).success(function(flag){
           if(flag ==1){
-            $scope.pageQuery(1,options.pageSize);
+            $scope.pageQuery(1,$rootScope.projectOptions.pageSize);
             $.alert("项目报告删除成功");
           }else{
             $.alert("项目报告删除失败");
