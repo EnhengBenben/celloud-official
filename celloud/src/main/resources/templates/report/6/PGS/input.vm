@@ -38,7 +38,15 @@
     </tr>
     <tr>
         <td style="height:30px">
-            <strong style="font-size:14px;">检测结果：</strong><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;"><img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:99%;"><strong>该样本检测结果显示:</strong><br/>
+            <strong style="font-size:14px;">检测结果：</strong>
+            #if($flag==0 || $flag==1 || $flag==2)
+            	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;">
+            	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:99%;">
+            #elseif($flag==3)
+            	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportMiniPng}" style="width:100%;">
+            	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportSplitPng}" style="width:99%;">
+            #end
+            <strong>该样本检测结果显示:</strong><br/>
             <div id="result">
                 <textarea style="width:99%" id="resultArea" name="baseInfo['result']">#if($pgs.baseInfo.result)$!pgs.baseInfo.result#else${pgs.report}#end</textarea>
             <div>
