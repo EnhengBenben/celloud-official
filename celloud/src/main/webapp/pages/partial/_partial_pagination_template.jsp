@@ -67,7 +67,7 @@
 			<span>共&nbsp;&nbsp;{{page.rowCount}}&nbsp;&nbsp;条</span>
 		</li>
 		<li>
-			每页 <select id="page-size-sel" ng-model="pageSize" ng-change="change({page:1,pageSize:pageSize})">
+			每页 <select class="form-control" id="page-size-sel" ng-model="pageSize" ng-change="change({page:1,pageSize:pageSize})">
 				<option value="10" ng-selected="page.pageSize == 10">10</option>
 				<option value="20" ng-selected="page.pageSize == 20">20</option>
 				<option value="30" ng-selected="page.pageSize == 30">30</option>
