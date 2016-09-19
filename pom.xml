@@ -297,7 +297,6 @@
 		<module>celloud</module>
 		<module>backstage</module>
 		<module>manager</module>
-    <module>box-api</module>
   </modules>
 
 </project>
