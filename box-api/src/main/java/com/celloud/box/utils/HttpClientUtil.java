@@ -11,7 +11,6 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.celloud.box.constants.ApiResponse;
-import com.celloud.box.model.Newfile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HttpClientUtil {
@@ -208,18 +206,4 @@ public class HttpClientUtil {
 		return HttpClients.createDefault();
 	}
 
-	public static void main(String[] args) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("b", new Byte[] { 1, 2, 3, 4, 5 });
-		params.put("size", 123);
-		params.put("name", "a.txt");
-		params.put("userId", "12");
-		params.put("tagId", "1");
-		ApiResponse res = HttpClientUtil.get("http://localhost:8080/celloud/api/box/newfile", params);
-		Newfile file = new Newfile(res.getData());
-		System.out.println(file.getDataKey());
-		System.out.println(file.getExt());
-		System.out.println(file.getNewName());
-		System.out.println(file.getFileId());
-	}
 }
