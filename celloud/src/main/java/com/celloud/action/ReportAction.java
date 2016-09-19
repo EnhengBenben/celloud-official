@@ -901,14 +901,17 @@ public class ReportAction {
     @ResponseBody
     public Map<String, Object> getBSIInfo(String dataKey, Integer projectId, Integer appId) {
         BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
-        Map<String, JSONArray> mibCharList = new HashMap<>();
+        // Map<String, JSONArray> mibCharList = new HashMap<>();
         Map<String, Object> map = getCommonInfo(projectId);
         if (bsi == null)
             return map;
-        mibCharList.put("readsDistributionInfo", JSONArray.fromObject(bsi.getReadsDistributionInfo()));
-        mibCharList.put("familyDistributionInfo", JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
-        mibCharList.put("genusDistributionInfo", JSONArray.fromObject(bsi.getGenusDistributionInfo()));
-        map.put("bsiCharList", mibCharList);
+        // mibCharList.put("readsDistributionInfo",
+        // JSONArray.fromObject(bsi.getReadsDistributionInfo()));
+        // mibCharList.put("familyDistributionInfo",
+        // JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
+        // mibCharList.put("genusDistributionInfo",
+        // JSONArray.fromObject(bsi.getGenusDistributionInfo()));
+        // map.put("bsiCharList", mibCharList);
         map.put("bsi", bsi);
         return map;
     }
@@ -3516,6 +3519,28 @@ public class ReportAction {
 		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return mv;
 	}
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月8日上午10:26:46
+     * @description 获取乳腺癌数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "报告菜单", button = "乳腺癌报告")
+    @RequestMapping("getRockyInfo")
+    @ResponseBody
+    public Map<String, Object> getRockyInfo(String dataKey, Integer projectId, Integer appId) {
+        Map<String, Object> map = getCommonInfo(projectId);
+        Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
+        map.put("rocky", rocky);
+        log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
+        return map;
+    }
 
 	/**
 	 * 根据条件获取数据列表

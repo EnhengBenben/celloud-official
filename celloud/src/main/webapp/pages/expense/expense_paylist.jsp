@@ -17,7 +17,7 @@
       <table class="table table-main" ng-init="pageType='expense/paylist'">
         <thead>
           <tr>
-            <th>
+            <th class="th-checkoutbox">
               <label class="checkbox-lable">
                 <input class="checkbox" type="checkbox" name="checkAll" id="checkAll" >
                 <span class="info"></span>
@@ -110,13 +110,19 @@
 	            </div>
 	          </div>
 	          <input type="hidden" id="rechargeIds" />
-	          <div class="form-group">
-	            <div class="text-center">
-	                <button type="button" class="btn btn-cancel" ng-click="reset()">重置</button>
-	                <button type="submit" class="btn" ng-disabled="invoiceForms.$invalid" id="invoiceSubmit" >提交</button>
-	            </div>
-	          </div>
+<!-- 	          <div class="form-group"> -->
+<!-- 	            <div class="text-center"> -->
+<!-- 	                <button type="button" class="btn btn-cancel" ng-click="reset()">重置</button> -->
+<!-- 	                <button type="submit" class="btn" ng-disabled="invoiceForms.$invalid" id="invoiceSubmit" >提交</button> -->
+<!-- 	            </div> -->
+<!-- 	          </div> -->
 	      </form>
+        </div>
+        <div class="modal-footer">
+            <div class="text-center">
+                <button type="button" class="btn btn-cancel" ng-click="reset()">重置</button>
+                <button type="submit" class="btn" ng-click="apply()" ng-disabled="invoiceForms.$invalid" id="invoiceSubmit" >提交</button>
+            </div>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

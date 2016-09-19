@@ -60,7 +60,7 @@
 	<%-- 		              <span class="sync_price" id="price_cmjz000559" code="cmjz000559" servicepackage="" inquerytype="cloudmarket">${app.price }</span> --%>
 	<!-- 		              <font id="price_unit_cmjz000559">&nbsp;C</font> -->
 			            </p>
-			            <a class="xq" href="javascript:appStore.toAppDetail(${app.appId })" style="display: none;">查看详情</a>
+			            <a class="xq" href="#/app/detail/${app.appId }" style="display: none;">查看详情</a>
 			          </div>
 			          <div class="box-star">
 			            <div class="unlinedate"> 上线时间：
@@ -75,12 +75,12 @@
 			          </div>
 			          <div class="box-info-wrap">
 			            <div class="box-pic" <c:if test="${status.first}"> data-step="2" data-intro="" data-position="right" data-img="appDetail.png" </c:if>>
-			              <a href="javascript:appStore.toAppDetail(${app.appId })">
+			              <a href="#/app/detail/${app.appId }">
 			                <img alt="产品logo" src="<%=request.getContextPath()%>/app/image?file=${app.pictureName}">
 			              </a>
 			            </div>
 			            <div class="box-info">
-			              <h4><a href="javascript:appStore.toAppDetail(${app.appId })">${app.appName }</a></h4>
+			              <h4><a href="#/app/detail/${app.appId }">${app.appName }</a></h4>
 			              <p>${app.intro }</p>
 	<%-- 		              <p class="label">标签：${app.description }</p><!-- 标签内容待定 --> --%>
 			            </div>
@@ -111,7 +111,7 @@
 				</c:if>
 				<!-- 显示第一页 -->
 				<c:choose>
-				  <c:when test="${appPageList.page.currentPage==1}"><li class="active"><a href="#">1</a></li></c:when>
+				  <c:when test="${appPageList.page.currentPage==1}"><li class="active"><a href="javascript:void(0);">1</a></li></c:when>
 				  <c:otherwise><li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },1,${classifyFloor })">1</a></li></c:otherwise>
 				</c:choose>
 				
@@ -130,7 +130,7 @@
 						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">${appPageList.page.currentPage-1 }</a></li>
 					</c:if>
 					<c:if test="${appPageList.page.currentPage>1&&appPageList.page.currentPage<appPageList.page.totalPage}">
-						<li class="active"><a href="#">${appPageList.page.currentPage }</a></li>
+						<li class="active"><a href="javascript:void(0);">${appPageList.page.currentPage }</a></li>
 					</c:if>
 					<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>1}">
 						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+1 },${classifyFloor })">${appPageList.page.currentPage+1 }</a></li>
@@ -183,7 +183,7 @@
 						<c:forEach begin="${appPageList.page.totalPage-8}" step="1" end="${appPageList.page.totalPage-1}" var="step">
 						  <c:choose>
 				      		<c:when test="${step==appPageList.page.currentPage}">	
-								<li class="active"><a href="#">${step }</a></li>
+								<li class="active"><a href="javascript:void(0);">${step }</a></li>
 							</c:when>
 							<c:otherwise>
 								<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
@@ -195,7 +195,7 @@
 						<c:forEach begin="2" step="1" end="${appPageList.page.totalPage-1}" var="step">
 						  <c:choose>
 				      		<c:when test="${step==appPageList.page.currentPage}">	
-								<li class="active"><a href="#">${step }</a></li>
+								<li class="active"><a href="javascript:void(0);">${step }</a></li>
 							</c:when>
 							<c:otherwise>
 								<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
@@ -211,7 +211,7 @@
 				</c:if>
 				<c:choose>
 	      		  <c:when test="${appPageList.page.currentPage==appPageList.page.totalPage&&appPageList.page.totalPage>1}">	
-					<li class="active"><a href="#">${appPageList.page.totalPage }</a></li>
+					<li class="active"><a href="javascript:void(0);">${appPageList.page.totalPage }</a></li>
 				  </c:when>
 				  <c:otherwise>
 					<c:if test="${appPageList.page.totalPage>1}">	

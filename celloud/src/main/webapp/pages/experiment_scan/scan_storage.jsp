@@ -12,11 +12,9 @@
           <p>* 请持条码枪扫描样品管上的条码<br>
               无条码样品请按以下方式操作：<br> 1. 在样品管上记录样品病历号<br> 2. 将病历号输入上面窗口后回车
           </p>
-          <span class="input-alert" ng-show="notPrevError">系统中无此样本信息，请确认是已采样样本！</span>
-          <span class="input-alert" ng-show="repeatError">此样品信息已经收集过，请核查或者采集下一管样品信息！</span>
           <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入样本编号！</span>
           <div class="info-btn-group">
-            <input class="field" type="text" ng-trim="true" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
+            <input class="field" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
             <a class="action" ng-click="scanStorage()">扫码入库</a>
           </div>
         </div>
@@ -24,23 +22,25 @@
           <table class="table table-main">
             <thead>
                 <tr>
-                    <th>序号</th>
                     <th>样品编号</th>
                     <th>样品类型</th>
                     <th>采样时间</th>
-                    <th>样本index</th>
                     <th>状态</th>
+                    <th>备注</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="sample in sampleList.datas">
-                    <td>1</td>
                     <td>{{sample.sampleName }}</td>
                     <td>{{sample.type }}</td>
-                    <td>{{sample.createDate }}</td>
-                    <td>建库</td>
+                    <td>{{sample.createDate  | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>入库</td>
+                    <td>{{sample.remark }}</td>
                     <td>
+                        <a data-toggle="modal" data-target="#sample-remark-modal" ng-click="toEditRemark(sample.sampleId,sample.remark)">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </a>
                         <a ng-click="remove(sample.sampleLogId)">
                             <i class="fa fa-times-circle" aria-hidden="true"></i>
                         </a>
@@ -48,12 +48,14 @@
                 </tr>
             </tbody>
           </table>
+          
+          <pagination page="sampleList.page" change="pageQuery(page,pageSize)"></pagination>
           <div id="sample-remark-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	        <div class="modal-dialog">
 	          <div class="modal-content">
 	            <div class="modal-header">
 	              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-	              <h4 class="modal-title">编辑备注</h4>
+	              <h4 class="modal-title" ng-init="exper_state=1">编辑备注</h4>
 	            </div>
 	            <div class="modal-body form-modal">
 	              <form class="form-horizontal info-form" name="sampleForm" ng-submit="editRemark(sampleForm.$valid)">
@@ -61,9 +63,7 @@
 	                     <div class="control-label form-label col-xs-2">备注：</div>
 	                     <!-- 长度10-100 -->
 	                     <div class="col-xs-10 form-group-content">
-	                         <textarea rows="4" ng-trim="true" ng-model="remark" name="remark" required ng-maxlength="100">
-	                          {{remark}}
-	                         </textarea>
+	                         <textarea rows="4" ng-trim="true" ng-model="remark" name="remark" required ng-maxlength="100">{{remark}}</textarea>
 	                         <span class="input-alert break-line" ng-show="sampleForm.remark.$dirty && sampleForm.remark.$error.required">请输入问题的描述</span>
 	                         <span class="input-alert break-line" ng-show="sampleForm.remark.$dirty && (sampleForm.remark.$error.maxlength)">请输入小于1000字的描述！</span>
 	                     </div>

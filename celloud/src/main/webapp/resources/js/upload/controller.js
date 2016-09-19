@@ -1,5 +1,5 @@
 (function() {
-	celloudApp.controller("fileUpload", function($scope, $rootScope, uploadService) {
+	celloudApp.controller("fileUpload", function($route, $location, $scope, $rootScope, uploadService) {
 		$scope.step = 'one';
 		$rootScope.getProTags = function(){
 			if($scope.step == 'one'){
@@ -86,7 +86,7 @@
 					var $fileDom_upload = $('<tr class="plupload_delete" id="upload-' + item.id + '">');
 					$fileDom_upload.append($('<td class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></td>'));
 					$fileDom_upload.append($('<td class="plupload-file-size">'+getSize(item.size)+'</td>'));
-					$fileDom_upload.append($('<td class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
+					$fileDom_upload.append($('<td class="plupload-file-action"><a href="#" style="display: block;line-height: 30px;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
 					$fileDom_upload.append($('</tr>'));
 					$("#upload-list-tbody").append($fileDom_upload);
 					// 第三步
@@ -95,7 +95,7 @@
 					$fileDom_uploading.append($('<td class="plupload-file-status">_</td>'));
 					$fileDom_uploading.append($('<td class="plupload-file-surplus">_</td>'));
 					$fileDom_uploading.append($('<td class="plupload_file_speed">_</td>'));
-					$fileDom_uploading.append($('<td class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
+					$fileDom_uploading.append($('<td class="plupload-file-action"><a href="#" style="display: block;line-height: 30px;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
 					$fileDom_uploading.append($('</tr>'));
 					$("#uploading-list-tbody").append($fileDom_uploading);
 					
@@ -137,6 +137,9 @@
 					$("#upload-list-tbody").children().remove();
 					$("#uploading-list-tbody").children().remove();
 					$("#upload-modal").modal("hide");
+					if($location.path() == '/data'){
+						$route.reload();
+					}
 				}
 			});
 			uploader.bind("BeforeUpload", function(uploader, file) {
@@ -159,6 +162,15 @@
 		});
 		$scope.upload = initUploader(["plupload-content","uploadMore"]);
 		$scope.upload.init();
+		
+		window.onbeforeunload=function(){
+			var qp=$scope.upload.total;
+			var percent=qp.percent;
+			if(qp.size>0&&percent<100&&percent>0){
+				return "数据正在上传，您确定要关闭页面吗?"
+			}
+		}
+		
 	});
 	function getUploadingCount(uploader){
 		var count = 0;

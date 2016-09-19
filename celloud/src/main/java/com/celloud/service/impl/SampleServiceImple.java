@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -103,7 +104,7 @@ public class SampleServiceImple implements SampleService {
     @Override
     public PageList<Sample> getSamples(Page page, Integer userId,
             Integer experState) {
-        List<Sample> list = sampleMapper.getSamples(userId, experState,
+        List<Sample> list = sampleMapper.getSamples(page, userId, experState,
                 DataState.ACTIVE);
         return new PageList<>(page, list);
     }
@@ -129,10 +130,17 @@ public class SampleServiceImple implements SampleService {
 
     @Override
     public Integer updateExperStateAndIndex(Integer userId, Integer experState,
-            Integer sampleId, Integer sno) {
+            Integer sampleId, List<String> sindexList) {
+        List<String> indexList = new ArrayList<>();
+        indexList.addAll(SampleIndex.index);
+        if (sindexList != null) {
+            for (String s : sindexList) {
+                indexList.remove(s);
+            }
+        }
         Sample s = new Sample();
         s.setSampleId(sampleId);
-        s.setSindex(SampleIndex.index.get(sno));
+        s.setSindex(indexList.get(0));
         sampleMapper.updateByPrimaryKeySelective(s);
 
         sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED, userId);
@@ -165,8 +173,9 @@ public class SampleServiceImple implements SampleService {
     @Override
     public Integer deleteSampleLog(Integer sampleLogId) {
         SampleLog sl = sampleLogMapper.selectByPrimaryKey(sampleLogId);
-        sl.setState(DataState.ACTIVE);
-        sampleLogMapper.updateByPrimaryKey(sl);
+        Integer experState = sl.getExperState() - 1;
+        sampleLogMapper.updateStateBySampleId(sl.getSampleId(),
+                DataState.ACTIVE, sl.getUserId(), experState);
         return sampleLogMapper.deleteByPrimaryKey(sampleLogId);
     }
 
@@ -186,19 +195,28 @@ public class SampleServiceImple implements SampleService {
         ss.setSindex(sindex);
         ss.setSampleNum(sampleIds.size());
         ss.setCreateDate(new Date());
+        ss.setUserId(userId);
         sampleStorageMapper.insertSelective(ss);
 
         for (Integer sampleId : sampleIds) {
             updateExperState(userId, SampleExperState.IN_LIBRARY, sampleId);
         }
-        return sampleStorageMapper.addSampleStorageRelat(ss.getId(), sampleIds);
+        sampleStorageMapper.addSampleStorageRelat(ss.getId(), sampleIds);
+        return ss.getId();
     }
 
     @Override
     public PageList<SampleStorage> getSampleStorages(Page page,
             Integer userId) {
-        List<SampleStorage> list = sampleStorageMapper.findAll(userId,
+        List<SampleStorage> list = sampleStorageMapper.findAll(page, userId,
                 DataState.ACTIVE);
         return new PageList<SampleStorage>(page, list);
+    }
+
+    @Override
+    public List<Map<String, Object>> sampleListInStorage(Integer userId,
+            Integer ssId) {
+        return sampleStorageMapper.sampleListInStorage(userId, DataState.ACTIVE,
+                ssId);
     }
 }

@@ -6,42 +6,29 @@
 	  <li>我的工作台</li>
 	</ol>
 	<div class="content overview">
-		<shiro:hasPermission name="bsi:product">
+		<div ng-if="userProduct.app123==123||userProduct.app118==118">
 		  <section class="overview-s">
 		    <h5 class="overview-header"><i class="myapp-icon"></i><span>我的产品</span></h5>
 		    <div class="o-app-list">
 			  <ul>
-			    <li>
+			    <li ng-if="userProduct.app118==118">
 			      <a href="<%=request.getContextPath()%>/bsi">
 			        <div class="inner">
-			          <img src="<%=request.getContextPath()%>/images/app/bactive.png" alt="百菌探" title="百菌探">
-	<!-- 		        <a href="#" class="footer"><i class="setup-icon"></i></a> -->
+			          <img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探">
 			        </div>
 			      </a>
 			    </li>
-			  </ul>
-	<!-- 		  <div class="more-app pull-right"> -->
-	<!-- 	        <a href="#" class=""> 更<br>多</a> -->
-	<!-- 	      </div> -->
-		    </div>
-		  </section>
-	  </shiro:hasPermission>
-	  <shiro:hasPermission name="rocky:product">
-		  <section class="overview-s">
-		    <h5 class="overview-header"><i class="myapp-icon"></i><span>我的产品</span></h5>
-		    <div class="o-app-list">
-			  <ul>
-			    <li>
+			    <li ng-if="userProduct.app123==123">
 			      <a href="<%=request.getContextPath()%>/rocky">
 			        <div class="inner">
-			          <img src="<%=request.getContextPath()%>/images/app/rocky.png" alt="华木兰" title="华木兰">
+			          <img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰">
 			        </div>
 			      </a>
 			    </li>
 			  </ul>
 		    </div>
 		  </section>
-	  </shiro:hasPermission>
+	  </div>
 	  <section class="overview-s">
 	    <h5 class="overview-header"><i class="mycount-icon"></i><span>使用统计</span></h5>
 	    <div class="o-count-list" ng-controller="overviewCount">
@@ -115,7 +102,7 @@
 	        </div>
 	        <div class="count-box">
 	          <div class="count-box-head">
-	            <h5><i class="bar-icon"></i><span>报告总量</span></h5>
+	            <h5><i class="report-icon-min"></i><span>报告总量</span></h5>
 	            <div class="switch-btn-group pull-right">
 	              <a><span class="s-btn active" id="report-day-span" onclick="userCount.dayMonthSwitch('report-day','report-month')">日</span></a>
 	              <a><span class="s-btn" id="report-month-span" onclick="userCount.dayMonthSwitch('report-month','report-day')">月</span></a>
@@ -143,7 +130,7 @@
 		      </div>
 		      <div class="count-box">
 		        <div class="count-box-head">
-		            <h5><i class="pie-icon"></i><span>已添加APP</span></h5>
+		            <h5><i class="app-icon-min"></i><span>已添加APP</span></h5>
 		            <div class="switch-btn-group pull-right">
 		              <a><span class="s-btn active" id="app-day-span" onclick="userCount.dayMonthSwitch('app-day','app-month')">日</span></a>
 		              <a><span class="s-btn" id="app-month-span" onclick="userCount.dayMonthSwitch('app-month','app-day')">月</span></a>

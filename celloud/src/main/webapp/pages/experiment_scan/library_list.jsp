@@ -18,16 +18,17 @@
             </thead>
             <tbody>
                 <tr ng-repeat="storage in storages.datas">
-                    <td>{{storage.storageName }}</td>
+                    <td><a class="btn-link" ng-href="#/experiment/libraryList/{{storage.id}}">{{storage.storageName }}</a></td>
                     <td>{{storage.sindex }}</td>
                     <td>{{storage.sampleNum }}</td>
                     <td>
-                        <a class="btn-link" ng-click="remove(sample.sampleLogId)">上传</a>
+                        <a class="btn-link">上传</a>
                         |
-                        <a class="btn-link" ng-click="remove(sample.sampleLogId)">下载</a>
+                        <a class="btn-link" ng-click="download(storage.id,storage.storageName)">下载</a>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <pagination page="storages.page" change="pageQuery(page,pageSize)"></pagination>
 	</div>
 </div>

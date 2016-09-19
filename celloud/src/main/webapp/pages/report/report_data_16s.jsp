@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>s16报告</li>
     </ol>
     <div class="content">
@@ -18,8 +18,8 @@
             {{s16.fileName}}({{s16.dataKey}})
         </p>
       </div>
-      <div class="content-body">
-        <section>
+      <div>
+        <section class="m-box">
 	        <h2><i class="i-report1"></i>数据统计</h2>
 			<div ng-bind-html="s16.resultTable" class="m-boxCon" id="16sResult">
 			</div>

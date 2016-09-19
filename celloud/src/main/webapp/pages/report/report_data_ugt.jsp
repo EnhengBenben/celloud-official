@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>UGT报告</li>
     </ol>
     <div class="content">
@@ -18,15 +18,15 @@
             {{ugt.fileName}}({{ugt.dataKey}})
         </p>
       </div>
-      <div class="content-body">
-        <section>
+      <div>
+        <section class="m-box">
 	        <h2><i class="i-edit"></i>突变类型</h2>
 		    <div class="m-boxCon result">
 	    		<span ng-if="ugt.position!=null && ugt.position!=''">{{ugt.position}}</span>
 	    		<span ng-if="ugt.position==null || ugt.position==''">未检测到突变</span>
 		    </div>
 	    </section>
-	    <section>
+	    <section class="m-box">
 			<h2>
 				<i class="i-edit"></i>SNP
 			</h2>
@@ -35,16 +35,16 @@
 		    	<span ng-if="ugt.mutationPosition == null">数据正常，未找到其他突变。</span>
 		    </div>
 	     </section>
-	     <section>
+	     <section class="m-box">
 	     	<h2><i class="i-edit"></i>原始序列</h2>
 		    <div class="m-boxCon result" id="_seq">
 				{{ugt.seq}}
 		    </div>
 	     </section>
-         <section>
+         <section class="m-box">
 	         <h2><i class="i-dna"></i>原始峰图</h2>
 			 <div ng-if="ugt.original != null" ng-repeat="original in ugt.original" class="m-boxCon result">
-				<a href="javascript:bigOrigin('{{uploadPath}}{{ugt.userId}}/{{ugt.appId}}/{{ugt.dataKey}}/SVG/{{original}}','original{{$index+1}}');" >
+				<a ng-click="bigOrigin(uploadPath + ugt.userId + '/' + ugt.appId + '/' + ugt.dataKey + '/SVG/' + original,'original' + ($index+1));" >
 					<img src="{{uploadPath}}{{ugt.userId}}/{{ugt.appId}}/{{ugt.dataKey}}/SVG/{{original}}" class="originImg" id="original{{$index+1}}">
 				</a>
 		     </div>

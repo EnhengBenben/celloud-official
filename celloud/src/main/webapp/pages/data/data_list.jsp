@@ -9,9 +9,7 @@
       <div class="table-opera">
         <div class="table-opera-content">
           <div class="opera-info">
-          	<shiro:hasPermission name="runWithProject:button">
-	            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
-			</shiro:hasPermission>
+	        <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
             <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
           </div>
           <div class="info-btn-group pull-right">
@@ -32,7 +30,7 @@
       <table class="table table-main" ng-init="pageType='data'">
         <thead>
           <tr>
-            <th>
+            <th class="th-checkoutbox">
               <label class="checkbox-lable">
                 <input class="checkbox" type="checkbox" name="demo-checkbox1" id="data-checkall" onclick="$.dataManager.checkAll(this, 'data-checkone')">
                 <span class="info"></span>
@@ -51,11 +49,11 @@
           <tr ng-repeat="file in dataList.datas">
             <td>
               <label class="checkbox-lable">
-                <input class="checkbox" is_run="{{file.isRunning==1||file.tagName==null}}" type="checkbox" name="data-checkone" value="{{file.fileId}}" onclick="$.dataManager.checkOneData(this)">
+                <input class="checkbox" is_run="{{file.isRunning==1}}" is_tag="{{file.tagName==null}}" is_bsi="{{file.tagName=='百菌探'}}" is_rocky="{{file.tagName=='华木兰'}}" is_pair="{{file.tagName=='CMP'||file.tagName=='CMP_199'||file.tagName=='GDD'||file.tagName=='split'||file.tagName=='AccuSeqα'||file.tagName=='AccuSeqα199'||file.tagName=='AccuSeqΩ'}}" type="checkbox" name="data-checkone" value="{{file.fileId}}" onclick="$.dataManager.checkOneData(this)">
                 <span class="info"></span>
               </label>
             </td>
-            <td title="{{file.fileName}}">{{file.fileName}} <i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i></td>
+            <td title="{{file.fileName}}"><i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i> {{file.fileName}}</td>
             <td>{{file.anotherName}}</td>
             <td>{{file.tagName}}</td>
             <td>{{file.batch}}</td>
@@ -89,32 +87,32 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">文件别名：</div>
 	            <div class="col-xs-9">
-	                <input type="text" ng-model="dataFile.anotherName">
+	                <input type="text" placeholder="请输入文件别名" ng-model="dataFile.anotherName" maxlength="50">
 	            </div>
 	          </div>
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">产品标签：</div>
 	            <div class="col-xs-9 form-group-content">
-	              <select class="checkbox-group" ng-model="appSelected" ng-options="app.appName for app in appList"></select>
+	              <select class="checkbox-group" ng-model="appSelected" ng-options="app.tagName for app in appList"></select>
 	            </div>
 	          </div>
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">数据标签：</div>
 	            <div class="col-xs-9">
-	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="45" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
+	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="50" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
 	            </div>
 	          </div>
-	          <div class="form-group">
-	            <div class="text-center">
-	                <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
-	                <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">提交</button>
-	            </div>
-	            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
-	              <button type="button" class="close" ng-click="updateState=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-	              <span>{{updateMessage}}</span>
-	            </div>
-	          </div>
+            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
+              <button type="button" class="close" ng-click="updateState=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+              <span>{{updateMessage}}</span>
+            </div>
 	      </form>
+	    </div>
+	    <div class="modal-footer">
+	      <div class="text-center">
+              <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
+              <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">提交</button>
+          </div>
 	    </div>
 	  </div>
 	</div>

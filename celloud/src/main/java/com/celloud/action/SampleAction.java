@@ -1,5 +1,6 @@
 package com.celloud.action;
 
+import java.io.File;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,11 +11,13 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.AppConstants;
@@ -26,6 +29,10 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.SampleService;
 import com.celloud.utils.ActionLog;
+import com.celloud.utils.DateUtil;
+import com.celloud.utils.ExcelUtil;
+import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
 
 /**
  * 样品管理
@@ -146,7 +153,8 @@ public class SampleAction {
     public PageList<Sample> getScanStorageSamples(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
-        return getSamples(page, size, SampleExperState.SCAN_STORAGE);
+        PageList<Sample> pageList = getSamples(page, size, SampleExperState.SCAN_STORAGE);
+        return pageList;
     }
 
     @ActionLog(value = "扫码样本入库", button = "扫码入库")
@@ -182,8 +190,8 @@ public class SampleAction {
         PageList<Sample> pageList = getSamples(1, 12, SampleExperState.BUID_LIBRARY);
         map.put("pageList", pageList);
         SecureRandom s = new SecureRandom();
-        map.put("libraryName",
-                "MiLib" + String.format("%04d", s.nextInt(9999)));
+        map.put("libraryName", DateUtil.getDateToString()
+                + String.format("%02d", s.nextInt(99)));
         return map;
     }
 
@@ -199,7 +207,8 @@ public class SampleAction {
      */
     @RequestMapping("addSampleToLibrary")
     @ResponseBody
-    public Integer addSampleToLibrary(String sampleName, Integer sno) {
+    public Integer addSampleToLibrary(String sampleName,
+            String[] sindexs) {
         Sample prevSamp = sampleService.getByNameExperState(
                 ConstantsData.getLoginUserId(), sampleName,
                 SampleExperState.TOKEN_DNA);
@@ -210,9 +219,11 @@ public class SampleAction {
                 SampleExperState.BUID_LIBRARY);
         if (currentSamp != null)
             return -1;
+        List<String> sindexList = sindexs == null || sindexs.length <= 0 ? null
+                : Arrays.asList(sindexs);
         return sampleService.updateExperStateAndIndex(
                 ConstantsData.getLoginUserId(), SampleExperState.BUID_LIBRARY,
-                prevSamp.getSampleId(), sno);
+                prevSamp.getSampleId(), sindexList);
     }
 
     @RequestMapping("addLibrary")
@@ -221,7 +232,16 @@ public class SampleAction {
             Integer[] sampleIds) {
         List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null
                 : Arrays.asList(sampleIds);
-        return sampleService.addStorage(libraryName, sindex, list, ConstantsData.getLoginUserId());
+        Integer ssId = sampleService.addStorage(libraryName, sindex, list,
+                ConstantsData.getLoginUserId());
+        List<String> header = Arrays.asList("文库编号", "文库index", "样品编号", "样品类型",
+                "建库时间", "样本index");
+        ExcelUtil.listToExcel(header,
+                sampleService.sampleListInStorage(
+                        ConstantsData.getLoginUserId(), ssId),
+                PropertiesUtil.experimentExcelPath + libraryName + ssId
+                        + ".xls");
+        return ssId;
     }
 
     @RequestMapping("getSampleStorages")
@@ -231,6 +251,28 @@ public class SampleAction {
             @RequestParam(defaultValue = "20") int size) {
         return sampleService.getSampleStorages(new Page(page, size),
                 ConstantsData.getLoginUserId());
+    }
+
+    @RequestMapping("sampleListInStorage")
+    @ResponseBody
+    public List<Map<String, Object>> sampleListInStorage(Integer ssId) {
+        return sampleService.sampleListInStorage(ConstantsData.getLoginUserId(),
+                ssId);
+    }
+
+    @ActionLog(value = "下载excel", button = "下载excel")
+    @RequestMapping("downExperExcel")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public Integer downExperExcel(String storageName, Integer ssId) {
+        String filePath = PropertiesUtil.experimentExcelPath + storageName
+                + ssId
+                + ".xls";
+        if (new File(filePath).exists()) {
+            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+            return 0;
+        }
+        return 1;
     }
 
     /**
@@ -256,16 +298,19 @@ public class SampleAction {
      */
     private Integer changeType(String sampleName, int prevType,
             int currentType) {
+        // 判断是否已经存在上一个状态的样本
         Sample sampling = sampleService.getByNameExperState(
                 ConstantsData.getLoginUserId(), sampleName,
                 prevType);
         if (sampling == null)
             return 0;
+        // 判断是否已经存在一个相同的样本
         Sample scanStorage = sampleService.getByNameExperState(
                 ConstantsData.getLoginUserId(), sampleName,
                 currentType);
         if (scanStorage != null)
             return -1;
+        // 如果存在上一个状态并且不存在当前状态, 则更新状态
         return sampleService.updateExperState(ConstantsData.getLoginUserId(),
                 currentType, sampling.getSampleId());
     }

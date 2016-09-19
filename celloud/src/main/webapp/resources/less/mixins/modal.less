@@ -38,9 +38,23 @@
             padding: 5px 20px 20px 20px;
             text-align: center;
             border: none;
+            >.text-center{
+                >.btn-cancel{
+                    margin-right: 20px;
+                }
+            }
         }
     }
     .modal-body{
+    	._help{
+    		text-align: justify;
+    		text-indent: -1.2em;
+    		font-size: 14px;
+    	}
+    	.lineheight{
+    		padding-top: 10px;
+    		line-height: 30px;
+    	}
         padding: 40px 55px;
     }
     .form-modal{
@@ -84,9 +98,9 @@
         .modal-content h5{
             text-align: left;
             line-height: 30px;
-            font-size: 16px;
+            font-size: 14px;
             >i{
-                margin-right: 20px;
+                margin-right: 6px;
                 float: left;
                 font-size: 28px;
                 color: @alert-error-bg
@@ -158,11 +172,18 @@
             margin: 0px auto;
             
         }
-        input,select{
+        input{
             margin-bottom: 5px;
             width: 200px;
             height: 30px;
             padding: 0px 10px;
+            .border-radius(3px);
+            font-size: 14px;
+        }
+        select{
+        	margin-bottom: 5px;
+            width: 200px;
+            height: 30px;
             .border-radius(3px);
             font-size: 14px;
         }

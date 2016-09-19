@@ -10,6 +10,9 @@
     self.sampling = function(sampleName,tagId,type){
       return $http({method:"POST",url:'sample/sampling',params:{"sampleName":sampleName,"tagId":tagId,"type":type}});
     }
+    self.deleteSample = function(id){
+      return $http({method:"POST",url:'sample/bsi/deleteOne',params:{"sampleId":id}});
+    }
     self.commitSample = function(sampleList){
       var sampleIds=new Array()
       for(s in sampleList){
@@ -55,8 +58,12 @@
     self.infos = function(){
       return $resource("sample/getBuidLibrarySamples").get();
     }
-    self.addSample = function(sampleName,sno){
-      return $http({method:"POST",url:'sample/addSampleToLibrary',params:{"sampleName":sampleName,"sno":sno}});
+    self.addSample = function(sampleName,sampleList){
+      var sindexs=new Array();
+      for(s in sampleList){
+         sindexs.push(sampleList[s].sindex);
+      }
+      return $http({method:"POST",url:'sample/addSampleToLibrary',params:{"sampleName":sampleName,"sindexs":sindexs}});
     }
     self.addLibrary = function(libraryName,sindex,sampleList){
       var sampleIds=new Array();
@@ -67,14 +74,20 @@
       }
       return $http({method:"POST",url:'sample/addLibrary',params:{"libraryName":libraryName,"sindex":sindex,"sampleIds":sampleIds}});
     }
+    self.downloadExcel = function(ssId,storageName){
+      return $http.get("sample/downExperExcel",{params: {ssId:ssId,storageName:storageName}});
+    }
   });
-  celloudApp.service("storagesService", function($resource,$http){
+  celloudApp.service("storagesService", function($resource,$http,$routeParams){
     var self = this;
-    self.sampleList = function(){
+    self.storages = function(){
       return $resource("sample/getSampleStorages").get();
     }
     self.pageList = function(page,size){
       return $http.get("sample/getSampleStorages",{params: {page:page,size:size}});
+    }
+    self.sampleList = function(){
+      return $http.get("sample/sampleListInStorage",{params: {ssId:$routeParams.ssId}});
     }
   });
 })()

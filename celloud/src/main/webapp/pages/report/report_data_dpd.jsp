@@ -1,9 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body">
+<div class="pro-body mreport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportpro">报告管理</a></li>
       <li>DPD报告</li>
     </ol>
     <div class="content">
@@ -18,15 +18,15 @@
             {{dpd.fileName}}({{dpd.dataKey}})
         </p>
       </div>
-      <div class="content-body">
-        <section>
+      <div>
+        <section class="m-box">
 	        <h2><i class="i-edit"></i>突变类型</h2>
 		    <div class="m-boxCon result">
 	    		<span ng-if="dpd.position != null && dpd.position != ''">{{dpd.position}}</span>
 	    		<span ng-if="dpd.position == null || dpd.position == ''">未检测到突变</span>
 		    </div>
 	    </section>
-	    <section>
+	    <section class="m-box">
 			<h2>
 				<i class="i-edit"></i>SNP
 				<span class="filter">
@@ -39,22 +39,22 @@
 				</table>
 		    </div>
 	     </section>
-	     <section>
+	     <section class="m-box">
 	     	<div id="egfrTable" style="display: none;">
 		    	<span ng-if="dpd.mutationPosition != null">{{dpd.mutationPosition}}</span>
 		    	<span ng-if="dpd.mutationPosition == null">数据正常，未找到其他突变。</span>
 			</div>
 	     </section>
-         <section>
+         <section class="m-box">
 	         <h2><i class="i-edit"></i>原始序列</h2>
 		     <div class="m-boxCon result" id="_seq">
 				{{dpd.seq}}
 		     </div>
          </section>
-         <section>
+         <section class="m-box">
 	         <h2><i class="i-dna"></i>原始峰图</h2>
 	 		 <div ng-if="dpd.original!=null" ng-repeat="original in dpd.original" class="m-boxCon result">
- 				<a href="javascript:bigOrigin('{{uploadPath}}{{dpd.userId}}/{{dpd.appId}}/{{dpd.dataKey}}/SVG/{{original}}','original{{$index+1}}');" >
+ 				<a ng-click="bigOrigin(uploadPath + dpd.userId + '/' + dpd.appId + '/' + dpd.dataKey + '/SVG/' + original,'original' + ($index+1));" >
  					<img name="imgSrc" class="originImg" src="{{uploadPath}}{{dpd.userId}}/{{dpd.appId}}/{{dpd.dataKey}}/SVG/{{original}}" id="original{{$index+1}}">
  				</a>
 	 	     </div>

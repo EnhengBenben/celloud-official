@@ -50,6 +50,7 @@ public class DataFile implements Serializable {
 	 * appId
 	 */
 	private Integer appId;
+	private Integer tagId;
 	/**
 	 * tagName
 	 */
@@ -229,6 +230,14 @@ public class DataFile implements Serializable {
 
 	public void setUploadState(Integer uploadState) {
 		this.uploadState = uploadState;
+	}
+
+	public Integer getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(Integer tagId) {
+		this.tagId = tagId;
 	}
 
 }

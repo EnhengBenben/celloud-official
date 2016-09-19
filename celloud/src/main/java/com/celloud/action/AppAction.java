@@ -72,8 +72,8 @@ public class AppAction {
     }
 
     @ActionLog(value = "APP首页查看指定一级分类的子分类", button = "APP一级分类按钮")
-    @RequestMapping("toSclassifyApp")
-    public ModelAndView toSclassifyApp(Integer paramId) {
+    @RequestMapping("toSclassifyApp_bak")
+    public ModelAndView toSclassifyApp_bak(Integer paramId) {
         log.info("{}在APP首页查看{}的子分类", ConstantsData.getLoginUserName(), paramId);
         ModelAndView mv = new ModelAndView("app/app_classify");
         Integer userId = ConstantsData.getLoginUserId();
@@ -97,6 +97,35 @@ public class AppAction {
         mv.addObject("sclassifys", sclassifys);
         mv.addObject("classifyAppMap", classifyAppMap);
         return mv;
+    }
+
+    @ActionLog(value = "APP首页查看指定一级分类的子分类", button = "APP一级分类按钮")
+    @RequestMapping("toSclassifyApp")
+    @ResponseBody
+    public Map<String, Object> toSclassifyApp(Integer paramId) {
+        log.info("{}在APP首页查看{}的子分类", ConstantsData.getLoginUserName(), paramId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        Integer userId = ConstantsData.getLoginUserId();
+        List<Classify> sclassifys = null;
+        if (paramId == ClassifyFloor.js) {
+            /** 小软件 */
+            Classify clas = classifyService.getClassifyById(paramId);
+            sclassifys = new ArrayList<>();
+            sclassifys.add(clas);
+        } else {
+            /** 第一个一级分类的子分类 */
+            sclassifys = classifyService.getClassify(paramId);
+        }
+        /** 二级分类下的app */
+        Map<Integer, List<App>> classifyAppMap = new HashMap<>();
+        for (Classify c : sclassifys) {
+            Integer cid = c.getClassifyId();
+            List<App> appList = appService.getAppByClassify(cid, userId);
+            classifyAppMap.put(cid, appList);
+        }
+        map.put("sclassifys", sclassifys);
+        map.put("classifyAppMap", classifyAppMap);
+        return map;
     }
 
     @ActionLog(value = "查看分类指定分类下的所有APP列表页面", button = "APP获取更多")
@@ -133,8 +162,8 @@ public class AppAction {
     }
 
     @ActionLog(value = "查看指定APP详细信息", button = "APP详细")
-    @RequestMapping("appDetail")
-    public ModelAndView getAppById(Integer paramId) {
+    @RequestMapping("appDetail_bak")
+    public ModelAndView getAppById_bak(Integer paramId) {
         log.info("用户{}查看APP{}详细信息", ConstantsData.getLoginUserName(), paramId);
         ModelAndView mv = new ModelAndView("app/app_detail");
         Integer userId = ConstantsData.getLoginUserId();
@@ -145,9 +174,23 @@ public class AppAction {
         return mv;
     }
 
+    @ActionLog(value = "查看指定APP详细信息", button = "APP详细")
+    @RequestMapping("appDetail")
+    @ResponseBody
+    public Map<String, Object> getAppById(Integer paramId) {
+        log.info("用户{}查看APP{}详细信息", ConstantsData.getLoginUserName(), paramId);
+        Map<String, Object> map = new HashMap<String, Object>();
+        Integer userId = ConstantsData.getLoginUserId();
+        App app = appService.getAppById(paramId, userId);
+        List<Screen> screenList = screenService.getScreenByAppId(paramId);
+        map.put("app", app);
+        map.put("screenList", screenList);
+        return map;
+    }
+
     @ActionLog(value = "查看用户已添加的APP", button = "应用市场")
-    @RequestMapping("myApps")
-    public ModelAndView getMyApp() {
+    @RequestMapping("getMyApp_bak")
+    public ModelAndView getMyApp_bak() {
         log.info("用户{}查看已添加的APP", ConstantsData.getLoginUserName());
         ModelAndView mv = new ModelAndView("app/app_added");
         Integer userId = ConstantsData.getLoginUserId();
@@ -155,6 +198,40 @@ public class AppAction {
         mv.addObject("appList", appList);
         return mv;
     }
+
+    @ActionLog(value = "查看用户已添加的APP", button = "应用市场")
+    @RequestMapping("myApps")
+    @ResponseBody
+    public List<App> getMyApp() {
+        log.info("用户{}查看已添加的APP", ConstantsData.getLoginUserName());
+        Integer userId = ConstantsData.getLoginUserId();
+        List<App> appList = appService.getMyAppList(userId);
+        return appList;
+    }
+
+	/**
+	 * 获取用户的产品
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年9月9日下午1:53:11
+	 */
+	@RequestMapping("getProduct")
+	@ResponseBody
+	public Map<String, Object> getProduct() {
+		Integer userId = ConstantsData.getLoginUserId();
+		Map<String, Object> map = new HashMap<>();
+		List<App> appList = appService.getMyAppList(userId);
+		for (App app : appList) {
+			if (app.getAppId().equals(118)) {
+				map.put("app" + app.getAppId(), app.getAppId());
+			}
+			if (app.getAppId().equals(123)) {
+				map.put("app" + app.getAppId(), app.getAppId());
+			}
+		}
+		return map;
+	}
 
     @ActionLog(value = "用户添加APP，即允许在数据管理运行中显示", button = "添加APP")
     @ResponseBody

@@ -32,6 +32,9 @@
                 border: none;
                 .border-radius(6px);
             }
+            &.th-checkoutbox{
+            	width:40px;
+            }
         }
     }
     >tbody {
@@ -56,8 +59,10 @@
             }
             >a {
                 margin: 0px 5px;
-                font-size: 16px;
                 color: @font-gray;
+                i{
+                    font-size: 16px;
+                }
             }
             >a.disabled {
                 color: @light-gray;
@@ -131,6 +136,20 @@
             border-bottom: none;
         }
     }
+    &.data-report-table >tbody{
+        >tr>td {
+            &:first-child{
+                text-align: left;
+            }
+        }
+        >tr:first-child{
+            >td {
+	            font-weight: bold;
+	            color: @font-black;
+	            background: @silver-gray;
+	        }
+        }
+    }
     &.pro-table>tbody>tr>td {
         &:first-child{
             text-align: left;
@@ -171,10 +190,29 @@
             }
         }
     }
+    &.no-padding-left{
+    	>thead {
+        	>tr>th {
+		    	padding-left:0;
+        	}
+        }
+    	>tbody {
+        	>tr>td {
+		    	padding-left:0;
+        	}
+        }
+    }
+    &.count-table{
+    	>tbody {
+        	>tr>td {
+		    	max-width: 140px;
+        	}
+        }
+    }
 }
-.table-main:not(.notice-table,.report-table)>tbody>tr:hover>td,
-.table-main:not(.notice-table,.report-table)>tbody>tr:hover>td>a,
-.table-main:not(.notice-table,.report-table)>tbody>tr:hover>td>a>i{
+.table-main:not(.no-hover)>tbody>tr:hover>td,
+.table-main:not(.no-hover)>tbody>tr:hover>td>a,
+.table-main:not(.no-hover)>tbody>tr:hover>td>a>i{
     background-color: @content-green;
     color: #fff;
 }

@@ -9,5 +9,8 @@
 		}
 		self.messages = $resource("notice/lastUnread/message");
 		self.notices = $resource("notice/lastUnread/notice");
+		self.getProduct = function(){
+		  return $resource("app/getProduct?random="+new Date().getTime());
+		}
 	});
 }());
