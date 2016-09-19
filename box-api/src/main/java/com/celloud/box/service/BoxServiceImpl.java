@@ -50,7 +50,7 @@ public class BoxServiceImpl implements BoxService {
 			}
 			ThreadUtil.sleep(5000);// 5秒之后再重试
 		}
-		logger.info("文件已上传到celloud");
+		logger.info("文件已上传到celloud:{}", name);
 	}
 
 }

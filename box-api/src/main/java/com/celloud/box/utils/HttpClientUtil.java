@@ -4,11 +4,18 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.net.ssl.SSLContext;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
@@ -17,9 +24,12 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +50,7 @@ public class HttpClientUtil {
 	 */
 	public static ApiResponse get(String url, Map<String, Object> params) {
 		ApiResponse res = ApiResponse.ERROR;
-		CloseableHttpClient httpClient = HttpClients.createDefault();
+		CloseableHttpClient httpClient = createClient(url);
 		URI uri;
 		try {
 			URIBuilder builder = new URIBuilder(url);
@@ -74,7 +84,7 @@ public class HttpClientUtil {
 	 */
 	public static ApiResponse post(String url, Map<String, Object> params) {
 		ApiResponse res = ApiResponse.ERROR;
-		CloseableHttpClient httpClient = HttpClients.createDefault();
+		CloseableHttpClient httpClient = createClient(url);
 		HttpPost httpPost = new HttpPost(url);
 		try {
 			List<NameValuePair> urlParameters = parseParams(params);
@@ -177,6 +187,25 @@ public class HttpClientUtil {
 		} catch (IOException e) {
 
 		}
+	}
+
+	public static CloseableHttpClient createClient(String url) {
+		if (url == null || url.trim().length() <= 5 || !url.trim().toLowerCase().startsWith("https")) {
+			return HttpClients.createDefault();
+		}
+		try {
+			SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+				// 信任所有
+				public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+					return true;
+				}
+			}).build();
+			SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
+			return HttpClients.custom().setSSLSocketFactory(sslsf).build();
+		} catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException e) {
+			logger.error("创建安全链接失败");
+		}
+		return HttpClients.createDefault();
 	}
 
 	public static void main(String[] args) {
