@@ -1178,7 +1178,10 @@ public class ReportAction {
     public Map<String, Object> getPgsInfo(String dataKey, Integer projectId, Integer appId) {
         Map<String, Object> map = getCommonInfo(projectId);
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        List<Experiment> expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
+        List<Experiment> expList = null;
+        if (pgs != null) {
+            expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
+        }
         if (expList != null && expList.size() > 0) {
             map.put("experiment", expList.get(0));
         }
