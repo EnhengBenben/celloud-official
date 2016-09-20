@@ -30,8 +30,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.manager.alimail.AliEmailUtils;
-import com.celloud.manager.constants.CompanyConstants;
 import com.celloud.manager.constants.ConstantsData;
+import com.celloud.manager.constants.IconConstants;
 import com.celloud.manager.constants.UserRole;
 import com.celloud.manager.model.App;
 import com.celloud.manager.model.Company;
@@ -41,6 +41,7 @@ import com.celloud.manager.page.PageList;
 import com.celloud.manager.service.CompanyService;
 import com.celloud.manager.utils.CityUtils;
 import com.celloud.manager.utils.FileTools;
+import com.celloud.manager.utils.PropertiesUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -170,7 +171,7 @@ public class CompanyAction {
         ModelAndView mv = new ModelAndView("company/company_detail");
         Company company = companyService.getCompanyById(companyId);
         mv.addObject("company", company);
-		String path = CompanyConstants.getReportTemplatePath() + File.separator + companyId;
+		String path = PropertiesUtil.reportTemplatePath + File.separator + companyId;
         HashSet<String> pdfPathList = FileTools.getFiles(path, ".pdf");
         mv.addObject("pdfPathList", pdfPathList);
         return mv;
@@ -180,7 +181,7 @@ public class CompanyAction {
     public void reportPdf(HttpServletResponse response, Integer companyId, String pdfName) {
         response.setContentType("application/pdf");
         pdfName = pdfName.replaceAll("`", "&");
-        String path = CompanyConstants.getReportTemplatePath() + File.separator + companyId + File.separator + pdfName;
+		String path = PropertiesUtil.reportTemplatePath + File.separator + companyId + File.separator + pdfName;
         FileInputStream in = null;
         ServletOutputStream out = null;
         try {
@@ -220,7 +221,7 @@ public class CompanyAction {
      */
     @RequestMapping(value = "icon", method = RequestMethod.GET)
     public ResponseEntity<byte[]> companyIcon(String file) throws IOException {
-        String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
+		String path = IconConstants.getCompanyPath(file);
         File targetFile = new File(path);
         logger.info("医院logo绝对路径{}", targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
@@ -255,7 +256,7 @@ public class CompanyAction {
     public String upload(@RequestParam("file") CommonsMultipartFile file, HttpSession session) {
         String fileName = file.getOriginalFilename();
         String type = fileName.substring(fileName.lastIndexOf("."));
-        File targetFile = new File(CompanyConstants.getCompanyIconTempPath(), new ObjectId().toString() + type);
+		File targetFile = new File(IconConstants.getTempPath(new ObjectId().toString() + type));
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
@@ -276,7 +277,7 @@ public class CompanyAction {
      */
     @RequestMapping(value = "icon/temp", method = RequestMethod.GET)
     public ResponseEntity<byte[]> companyIconTemp(String file) throws IOException {
-        String path = CompanyConstants.getCompanyIconTempPath() + File.separator + file;
+		String path = IconConstants.getTempPath(file);
         File targetFile = new File(path);
         logger.info("医院logo临时目录的绝对路径{}", targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);

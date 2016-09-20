@@ -37,11 +37,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.AppConstants;
-import com.celloud.constants.CompanyConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
-import com.celloud.constants.DeptConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.ABINJ;
@@ -3396,9 +3394,8 @@ public class ReportAction {
 	@ActionLog(value = "获取用户所属医院logo", button = "打印数据报告")
 	@RequestMapping(value = "company/icon", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> companyIcon(String file) throws IOException {
-		String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
+		String path = IconConstants.getCompanyPath(file);
 		File targetFile = new File(path);
-		// log.info("医院logo绝对路径{}",targetFile.getAbsolutePath());
 		if (targetFile.isFile()) {
 			return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
 		} else {
@@ -3416,9 +3413,8 @@ public class ReportAction {
 	@ActionLog(value = "获取用户所属部门logo", button = "打印数据报告")
 	@RequestMapping(value = "dept/icon", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> deptIcon(String file) throws IOException {
-		String path = DeptConstants.getDeptIconPath() + File.separator + file;
+		String path = IconConstants.getDeptPath(file);
 		File targetFile = new File(path);
-		// log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
 	}
 
@@ -3495,7 +3491,7 @@ public class ReportAction {
 			String endDate) throws ParseException {
 		ModelAndView mv = new ModelAndView("rocky/report/report_main");
 		Integer userId = ConstantsData.getLoginUserId();
-		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		Page pager = new Page(page, size);
 		PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, batches, periods,

@@ -2,19 +2,16 @@ package com.celloud.backstage.service.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
-import com.celloud.backstage.constants.CompanyConstants;
 import com.celloud.backstage.constants.DataState;
+import com.celloud.backstage.constants.IconConstants;
 import com.celloud.backstage.mapper.CompanyMapper;
 import com.celloud.backstage.model.Company;
 import com.celloud.backstage.page.Page;
@@ -50,18 +47,18 @@ public class CompanyServiceImpl implements CompanyService {
         int result= companyMapper.updateCompany(company);
         if(result>0){
             if(StringUtils.isNotBlank(deleteIcon)&&!deleteIcon.equals(companyIcon)){
-                 FileUtils.deleteQuietly(new File(CompanyConstants.getCompanyIconPath(deleteIcon)));
+				FileUtils.deleteQuietly(new File(IconConstants.getCompanyPath(deleteIcon)));
             }
             if(StringUtils.isNotBlank(companyIcon)&&!companyIcon.equals(deleteIcon)){
                 try {
-                    FileUtils.moveFile(new File(CompanyConstants.getCompanyIconTempPath() + File.separator + companyIcon),
-                            new File(CompanyConstants.getCompanyIconPath(companyIcon)));
+					FileUtils.moveFile(new File(IconConstants.getTempPath(companyIcon)),
+							new File(IconConstants.getCompanyPath(companyIcon)));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-        cleanCompanyIconTemp();
+		IconConstants.cleanTemp();
         return result;
     }
 
@@ -71,9 +68,9 @@ public class CompanyServiceImpl implements CompanyService {
         String companyIcon=company.getCompanyIcon();
         if(StringUtils.isNotBlank(companyIcon)){
             try {
-                FileUtils.moveFile(new File(CompanyConstants.getCompanyIconTempPath() + File.separator + companyIcon),
-                        new File(CompanyConstants.getCompanyIconPath(companyIcon)));
-                cleanCompanyIconTemp();
+				FileUtils.moveFile(new File(IconConstants.getTempPath(companyIcon)),
+						new File(IconConstants.getCompanyPath(companyIcon)));
+				IconConstants.cleanTemp();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -91,7 +88,7 @@ public class CompanyServiceImpl implements CompanyService {
         String companyIcon=company.getCompanyIcon();
         if(result>0){
             if(StringUtils.isNotBlank(companyIcon)){
-                FileUtils.deleteQuietly(new File(CompanyConstants.getCompanyIconPath(companyIcon)));
+				FileUtils.deleteQuietly(new File(IconConstants.getCompanyPath(companyIcon)));
             }
         }
         return result;
@@ -105,31 +102,6 @@ public class CompanyServiceImpl implements CompanyService {
         return companyMapper.getCompanyById(companyId,DataState.ACTIVE);
     }
     
-    private void cleanCompanyIconTemp(){
-        String path = CompanyConstants.getCompanyIconTempPath();
-        File tempDir = new File(path);
-        if (tempDir == null || !tempDir.exists()) {
-            return;
-        }
-        if (tempDir.isFile()) {
-            tempDir.delete();
-            return;
-        }
-        File[] tempFiles = tempDir.listFiles();
-        if(tempFiles==null||tempFiles.length==0){
-            return ;
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -7);
-        Date date = calendar.getTime();
-        for (File file : tempFiles) {
-            ObjectId id = new ObjectId(file.getName().substring(0, file.getName().indexOf(".")));
-            if (date.after(id.getDate())) {
-                file.delete();
-            }
-        }
-    }
-
     @Override
     public List<Company> getAllCompany() {
         return companyMapper.getComanyList(DataState.ACTIVE);
