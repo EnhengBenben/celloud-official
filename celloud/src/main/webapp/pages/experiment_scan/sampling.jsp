@@ -17,7 +17,7 @@
             <select class="type-select" name="type" ng-model="type" ng-options="type for type in typeList" required>
             </select>
             <div class="info-btn-group">
-              <input class="field" type="text" ng-trim="true" name="sampleName" ng-model="sampleName" placeholder="扫描样本编号/病历号" ng-keypress="doOnKeyPress($event)" required/>
+              <input class="field" type="text" ng-trim="true" name="sampleName" ng-model="sampleName" placeholder="扫描样本编号/病历号" required/>
               <button class="btn action" ng-click="addSample()" ng-disabled="samplingForm.$invalid">添加</button>
             </div>
           </form>
