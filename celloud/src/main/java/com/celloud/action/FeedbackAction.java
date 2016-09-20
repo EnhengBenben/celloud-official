@@ -106,9 +106,9 @@ public class FeedbackAction {
 		List<String> list = attachList == null || attachList.length <= 0 ? null : Arrays.asList(attachList);
 		int result = feedbackService.insert(null, feedback, list);
 		if (result > 0) {
-			return Response.SAVE_SUCCESS;
+			return Response.SUCCESS_SAVE();
 		}
-		return Response.FAIL;
+		return Response.FAIL();
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class FeedbackAction {
 	@ResponseBody
 	public Response reply(@PathVariable int feedbackId, String content) {
 		boolean result = feedbackService.insertReply(feedbackId, content);
-		return result ? Response.SUCCESS.setData(feedbackId) : Response.FAIL;
+		return result ? Response.SUCCESS(feedbackId) : Response.FAIL();
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class FeedbackAction {
 	@ResponseBody
 	public Response solve(@PathVariable int feedbackId) {
 		boolean result = feedbackService.solve(feedbackId);
-		return result ? Response.SUCCESS.setData(feedbackId) : Response.FAIL;
+		return result ? Response.SUCCESS(feedbackId) : Response.FAIL();
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class FeedbackAction {
 		} else if (attachId != null && attachId.intValue() != 0) {
 			result = feedbackService.deleteAttach(attachId);
 		}
-		return result ? Response.SUCCESS : Response.FAIL;
+		return result ? Response.SUCCESS() : Response.FAIL();
 	}
 
 	/**

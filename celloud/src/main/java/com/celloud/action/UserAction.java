@@ -72,116 +72,116 @@ public class UserAction {
 	private WechatUtils wechatUtils;
 	@Resource
 	private MessageCategoryUtils mcu;
-    @Resource
-    private CompanyService companyService;
+	@Resource
+	private CompanyService companyService;
 	private static final Response EMAIL_IN_USE = new Response("202", "邮箱已存在");
 	private static final Response UPDATE_BASEINFO_FAIL = new Response("修改用户信息失败");
 	private static final Response UPDATE_PASSWORD_FAIL = new Response("修改用户密码失败");
 	private static final Response WRONG_PASSWORD = new Response("203", "原始密码错误");
-    private Logger logger = LoggerFactory.getLogger(UserAction.class);
-
-    /**
-     * 
-     * @author MQ
-     * @date 2016年8月30日下午3:37:41
-     * @description 更新公司logo
-     * @param company
-     * @return
-     *
-     */
-    @RequestMapping("setCompanyIcon")
-    @ResponseBody
-    public int setCompanyIcon(Company company) {
-        company.setCompanyId(ConstantsData.getLoginCompanyId());
-        return companyService.updateCompanyIcon(company);
-    }
-
-    /**
-     * 
-     * @author MQ
-     * @date 2016年8月30日下午3:07:40
-     * @description 获取公司的icon名称
-     * @return
-     *
-     */
-    @RequestMapping("getCompanyIcon")
-    @ResponseBody
-    public Company getCompanyIcon() {
-        Company company = companyService.selectByPrimaryKey(ConstantsData.getLoginCompanyId());
-        if (StringUtils.isBlank(company.getCompanyIcon())) {
-            company.setCompanyIcon("");
-        }
-        return company;
-    }
-
-    /**
-     * 
-     * @author MQ
-     * @date 2016年8月30日下午3:00:21
-     * @description 获取已保存的公司logo
-     * @param file
-     *
-     */
-    @RequestMapping(value = "icon")
-    public ResponseEntity<byte[]> attach(String file) throws IOException {
-        String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
-        File targetFile = new File(path);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_PNG);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
-    }
-
-    /**
-     * 
-     * @author MQ
-     * @date 2016年8月30日下午3:00:06
-     * @description 获取已上传未保存的公司logo
-     * @param file
-     *
-     */
-    @RequestMapping(value = "icon/temp")
-    public ResponseEntity<byte[]> attachTemp(String file) throws IOException {
-        String path = CompanyConstants.getCompanyIconTempPath() + File.separator + file;
-        File targetFile = new File(path);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_PNG);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
-    }
+	private Logger logger = LoggerFactory.getLogger(UserAction.class);
 
 	/**
-     * 
-     * @author MQ
-     * @date 2016年8月30日下午2:13:07
-     * @description
-     * @param file
-     * @param fileName
-     * @return
-     *
-     */
-    @RequestMapping(value = "uploadCompanyIcon")
-    @ResponseBody
-    public String attach(@RequestParam("file") CommonsMultipartFile file, String fileName) {
-        String type = fileName.substring(fileName.lastIndexOf("."));
-        File targetFile = new File(CompanyConstants.getCompanyIconTempPath(), new ObjectId().toString() + type);
-        targetFile.getParentFile().mkdirs();
-        try {
-            file.transferTo(targetFile);
-        } catch (Exception e) {
-            logger.error("用户上传公司logo失败：{}", fileName, e);
-        }
-        return targetFile.getName();
-    }
+	 * 
+	 * @author MQ
+	 * @date 2016年8月30日下午3:37:41
+	 * @description 更新公司logo
+	 * @param company
+	 * @return
+	 *
+	 */
+	@RequestMapping("setCompanyIcon")
+	@ResponseBody
+	public int setCompanyIcon(Company company) {
+		company.setCompanyId(ConstantsData.getLoginCompanyId());
+		return companyService.updateCompanyIcon(company);
+	}
 
-    /**
-     * 跳转到账号管理菜单，并初始化数据
-     * 
-     * @return
-     */
+	/**
+	 * 
+	 * @author MQ
+	 * @date 2016年8月30日下午3:07:40
+	 * @description 获取公司的icon名称
+	 * @return
+	 *
+	 */
+	@RequestMapping("getCompanyIcon")
+	@ResponseBody
+	public Company getCompanyIcon() {
+		Company company = companyService.selectByPrimaryKey(ConstantsData.getLoginCompanyId());
+		if (StringUtils.isBlank(company.getCompanyIcon())) {
+			company.setCompanyIcon("");
+		}
+		return company;
+	}
+
+	/**
+	 * 
+	 * @author MQ
+	 * @date 2016年8月30日下午3:00:21
+	 * @description 获取已保存的公司logo
+	 * @param file
+	 *
+	 */
+	@RequestMapping(value = "icon")
+	public ResponseEntity<byte[]> attach(String file) throws IOException {
+		String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
+		File targetFile = new File(path);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @author MQ
+	 * @date 2016年8月30日下午3:00:06
+	 * @description 获取已上传未保存的公司logo
+	 * @param file
+	 *
+	 */
+	@RequestMapping(value = "icon/temp")
+	public ResponseEntity<byte[]> attachTemp(String file) throws IOException {
+		String path = CompanyConstants.getCompanyIconTempPath() + File.separator + file;
+		File targetFile = new File(path);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @author MQ
+	 * @date 2016年8月30日下午2:13:07
+	 * @description
+	 * @param file
+	 * @param fileName
+	 * @return
+	 *
+	 */
+	@RequestMapping(value = "uploadCompanyIcon")
+	@ResponseBody
+	public String attach(@RequestParam("file") CommonsMultipartFile file, String fileName) {
+		String type = fileName.substring(fileName.lastIndexOf("."));
+		File targetFile = new File(CompanyConstants.getCompanyIconTempPath(), new ObjectId().toString() + type);
+		targetFile.getParentFile().mkdirs();
+		try {
+			file.transferTo(targetFile);
+		} catch (Exception e) {
+			logger.error("用户上传公司logo失败：{}", fileName, e);
+		}
+		return targetFile.getName();
+	}
+
+	/**
+	 * 跳转到账号管理菜单，并初始化数据
+	 * 
+	 * @return
+	 */
 	@RequestMapping("info")
-    @ResponseBody
-    public User info() {
+	@ResponseBody
+	public User info() {
 		int userId = ConstantsData.getLoginUserId();
-        return userService.selectUserById(userId);
+		return userService.selectUserById(userId);
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class UserAction {
 		}
 		user = userService.selectUserById(user.getUserId());
 		request.getSession().setAttribute(Constants.SESSION_LOGIN_USER, user);
-		return Response.SAVE_SUCCESS.setData(user);
+		return Response.SUCCESS_SAVE(user);
 	}
 
 	/**
@@ -229,7 +229,7 @@ public class UserAction {
 				.set(WechatParams.PWD_UPDATE.productName.name(), "平台账号", null)
 				.set(WechatParams.PWD_UPDATE.time.name(), DateUtil.getDateToString(DateUtil.YMDHMS), null);
 		mcu.sendMessage(user.getUserId(), MessageCategoryCode.UPDATEPWD, null, params, null);
-		return result > 0 ? Response.SAVE_SUCCESS : UPDATE_PASSWORD_FAIL;
+		return result > 0 ? Response.SUCCESS_SAVE() : UPDATE_PASSWORD_FAIL;
 	}
 
 	/**
@@ -238,12 +238,12 @@ public class UserAction {
 	 * @return
 	 */
 	@RequestMapping("logInfo")
-    @ResponseBody
-    public PageList<ActionLog> logInfo(Page page) {
+	@ResponseBody
+	public PageList<ActionLog> logInfo(Page page) {
 		if (page == null) {
 			page = new Page();
 		}
-        return logService.findLogs(ConstantsData.getLoginUserId(), page);
+		return logService.findLogs(ConstantsData.getLoginUserId(), page);
 	}
 
 	/**

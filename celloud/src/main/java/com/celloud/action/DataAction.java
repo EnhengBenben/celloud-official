@@ -289,7 +289,7 @@ public class DataAction {
 		if (dataIds != null && !dataIds.equals(""))
 			result = dataService.delete(dataIds);
 		logger.info("用户{}删除数据{}{}", ConstantsData.getLoginUserName(), dataIds, result);
-		return result > 0 ? Response.FILED_SUCCESS : DELETE_DATA_FAIL;
+		return result > 0 ? Response.SUCCESS_FILED() : DELETE_DATA_FAIL;
 	}
 
 	/**
@@ -327,7 +327,7 @@ public class DataAction {
 	@RequestMapping("updateDataAndTag")
 	@ResponseBody
 	public Response updateDataAndTag(DataFile data) {
-		return dataService.updateDataAndTag(data) == 1 ? Response.UPDATE_SUCCESS : Response.FAIL;
+		return dataService.updateDataAndTag(data) == 1 ? Response.SUCCESS_UPDATE() : Response.FAIL();
 	}
 
 	/**
@@ -582,7 +582,7 @@ public class DataAction {
 				result.append(back).append(";");
 			}
 		}
-		return Response.SUCCESS;
+		return Response.SUCCESS();
 	}
 
 	private String runSingleProject(Integer appId, List<DataFile> dataList) {

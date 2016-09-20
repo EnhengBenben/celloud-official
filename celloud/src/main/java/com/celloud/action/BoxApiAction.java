@@ -54,7 +54,7 @@ public class BoxApiAction {
 		values.put("fileId", dataId);
 		values.put("ext", ext);
 		values.put("newName", fileDataKey + ext);
-		return Response.SUCCESS.setData(values);
+		return Response.SUCCESS(values);
 	}
 
 	@RequestMapping("updatefile")
@@ -69,7 +69,7 @@ public class BoxApiAction {
 		String path = folderByDay + File.separator + newName;
 		apiService.updateUploadState(fileId, objectKey, 1, path);
 		apiService.updatefile(objectKey, fileId, tagId, batch, needSplit, newName, folderByDay);
-		return Response.SUCCESS;
+		return Response.SUCCESS();
 	}
 
 	/**
