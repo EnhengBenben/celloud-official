@@ -82,7 +82,7 @@
       templateUrl: "pages/notice/notice_set.jsp",
       controller:"settingController"
     })
-    .when('/reportdata',{
+    .when('/reportdata/:page/:pageSize/:fullDate/:beginDate/:endDate/:tagId/:period/:batch/:condition',{
       templateUrl: "pages/report/report_data.jsp",
       controller: "dataReportController"
     })
