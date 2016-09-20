@@ -147,7 +147,7 @@
     
     $scope.doOnKeyPress= function($event){
     	if($event.keyCode == 13){
-    		if($scope.sampleName==''||$scope.sampleName==undefined || $scope.sindex == '' || $scope.sindex == undefined){
+    		if($scope.sampleName==''||$scope.sampleName==undefined){
     			$.alert("请输入样本信息");
     		}else{
     			$scope.addSample();
