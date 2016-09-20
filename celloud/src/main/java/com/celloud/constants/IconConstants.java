@@ -136,7 +136,7 @@ public class IconConstants {
 	 * @date 2016年9月20日上午11:38:09
 	 */
 	public static String getCompanyPath(String name) {
-		return screenPath + File.separator + name;
+		return companyPath + File.separator + name;
 	}
 
 	/**
