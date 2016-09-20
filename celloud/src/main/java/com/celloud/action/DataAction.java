@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.AppConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
@@ -190,7 +190,7 @@ public class DataAction {
 		ModelAndView mv = new ModelAndView("bsi/data_list");
 		Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataListByAppId(pager,
-                ConstantsData.getLoginUserId(), AppConstants.APP_ID_BSI,
+                ConstantsData.getLoginUserId(), IconConstants.APP_ID_BSI,
                 condition, sort, sortDate, sortName, sortBatch);
 		mv.addObject("pageList", dataList);
 		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
@@ -206,7 +206,7 @@ public class DataAction {
 		Page pager = new Page(page, size);
 		Integer userId = ConstantsData.getLoginUserId();
 		PageList<DataFile> dataList = dataService.filterRockyList(pager, sample, condition, sidx, sord);
-		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		periodMap.put("uploaded", batchList.size());
 		mv.addObject("periodMap", periodMap);

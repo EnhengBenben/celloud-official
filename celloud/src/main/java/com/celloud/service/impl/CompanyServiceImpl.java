@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.celloud.constants.CompanyConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.mapper.CompanyMapper;
 import com.celloud.model.mysql.Company;
 import com.celloud.service.CompanyService;
@@ -29,8 +29,8 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             String filename = company.getCompanyIcon();
             if (StringUtils.isNotBlank(filename)) {
-                FileUtils.moveFile(new File(CompanyConstants.getCompanyIconTempPath() + File.separator + filename),
-                    new File(CompanyConstants.getCompanyIconPath() + File.separator + filename));
+				FileUtils.moveFile(new File(IconConstants.getTempPath(filename)),
+						new File(IconConstants.getCompanyPath(filename)));
                 return cm.updateByPrimaryKeySelective(company);
             }
         } catch (IOException e) {

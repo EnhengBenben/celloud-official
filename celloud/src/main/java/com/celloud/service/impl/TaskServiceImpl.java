@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.celloud.constants.AppConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.ReportPeriod;
@@ -289,7 +289,7 @@ public class TaskServiceImpl implements TaskService {
             Date beginDate, Date endDate) {
         List<Task> list = taskMapper.findRockyTasks(pager,
                 ConstantsData.getLoginUserId(), DataState.ACTIVE,
-                AppConstants.APP_ID_ROCKY, sample, condition, sidx, sord,
+                IconConstants.APP_ID_ROCKY, sample, condition, sidx, sord,
                 batches, periods, beginDate, endDate);
         return new PageList<>(pager, list);
     }
