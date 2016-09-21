@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.backstage.constants.DeptConstants;
+import com.celloud.backstage.constants.IconConstants;
 import com.celloud.backstage.model.Dept;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
@@ -72,7 +72,7 @@ public class DeptAction {
     public String upload(@RequestParam("file") CommonsMultipartFile file, HttpSession session) {
         String fileName = file.getOriginalFilename();
         String type = fileName.substring(fileName.lastIndexOf("."));
-        File targetFile = new File(DeptConstants.getDeptIconTempPath(), new ObjectId().toString() + type);
+		File targetFile = new File(IconConstants.getTempPath(new ObjectId().toString() + type));
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
@@ -93,7 +93,7 @@ public class DeptAction {
      */
     @RequestMapping(value = "dept/icon/temp", method = RequestMethod.GET)
     public ResponseEntity<byte[]> deptIconTemp(String file) throws IOException {
-        String path = DeptConstants.getDeptIconTempPath() + File.separator + file;
+		String path = IconConstants.getTempPath(file);
         File targetFile = new File(path);
         logger.info("部门logo临时目录的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
@@ -108,7 +108,7 @@ public class DeptAction {
      */
     @RequestMapping(value = "dept/icon", method = RequestMethod.GET)
     public ResponseEntity<byte[]> deptIcon(String file) throws IOException {
-        String path = DeptConstants.getDeptIconPath() + File.separator + file;
+		String path = IconConstants.getDeptPath(file);
         File targetFile = new File(path);
         logger.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);

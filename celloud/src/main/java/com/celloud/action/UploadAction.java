@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.celloud.constants.AppConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
@@ -77,19 +77,19 @@ public class UploadAction {
 	private ExperimentService expService;
 	@Resource
 	private TaskService taskService;
-    @Resource
-    private TagService tagService;
+	@Resource
+	private TagService tagService;
 	private String realPath = PropertiesUtil.bigFilePath;
 	/**
 	 * 用于判断数据格式
 	 */
 	CheckFileTypeUtil checkFileType = new CheckFileTypeUtil();
 
-    @RequestMapping("getProductTag")
-    @ResponseBody
-    public List<Tag> getProductTag() {
-        return tagService.findProductTags(ConstantsData.getLoginUserId());
-    }
+	@RequestMapping("getProductTag")
+	@ResponseBody
+	public List<Tag> getProductTag() {
+		return tagService.findProductTags(ConstantsData.getLoginUserId());
+	}
 
 	@RequestMapping("rocky")
 	@ResponseBody
@@ -109,7 +109,7 @@ public class UploadAction {
 			if (dataIds.size() > 0) {
 				model.put("run", "true");
 				model.put("dataIds", StringUtils.join(dataIds.toArray(), ","));
-				model.put("appIds", AppConstants.APP_ID_ROCKY.toString());
+				model.put("appIds", IconConstants.APP_ID_ROCKY.toString());
 			}
 		}
 		return model;
@@ -154,7 +154,7 @@ public class UploadAction {
 			task.setDataKey(data.getDataKey());
 			task.setPeriod(TaskPeriod.UPLOADING);// TODO 小心处理这个状态，将关系到数据的统计
 			task.setParams(pubName);
-			task.setAppId(AppConstants.APP_ID_ROCKY);
+			task.setAppId(IconConstants.APP_ID_ROCKY);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
 				logger.info("数据{}上传完可以运行", originalName);
@@ -262,7 +262,7 @@ public class UploadAction {
 										+ fileDataKey;
 								int fileFormat = checkFileType.checkFileType(newName, folderByDay);
 								updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay, batch,
-                                        fileFormat, tagId);
+										fileFormat, tagId);
 								Subject sub = SecurityUtils.getSubject();
 								// MessageUtils.get()
 								// .on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants.createMessage("upload",
@@ -488,46 +488,46 @@ public class UploadAction {
 		return dataService.updateDataInfoByFileId(data);
 	}
 
-    /**
-     * 修改文件信息带产品标签
-     * 
-     * @param dataId
-     * @param dataKey
-     * @param newName
-     * @return
-     */
-    private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath,
-            String folderByDay, String batch, int fileFormat, int tagId) {
-        DataFile data = new DataFile();
-        data.setFileId(dataId);
-        String filePath = folderByDay + File.separator + newName;
-        data.setSize(FileTools.getFileSize(filePath));
-        data.setDataKey(dataKey);
-        data.setPath(filePath);
-        data.setMd5(MD5Util.getFileMD5(filePath));
-        data.setBatch(batch);
-        data.setFileFormat(fileFormat);
-        if (fileFormat == FileFormat.BAM) {
-            String anotherName = getAnotherName(filePath, dataKey, perlPath, outPath);
-            data.setAnotherName(anotherName);
-            // 绑定实验流程
-            if (!StringUtils.isBlank(anotherName)) {
-                Integer userId = ConstantsData.getLoginUserId();
-                List<Experiment> expList = expService.getUnRelatList(userId, anotherName);
-                if (expList != null && expList.size() == 1) {
-                    Experiment exp = expList.get(0);
-                    exp.setFileId(dataId);
-                    exp.setDataKey(dataKey);
-                    expService.updateByPrimaryKeySelective(exp);
-                    logger.info("用户{}数据{}自动绑定成功", userId, dataId);
-                } else {
-                    logger.error("用户{}数据{}自动绑定失败", userId, dataId);
-                }
-            }
-        }
-        data.setState(DataState.ACTIVE);
-        return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
-    }
+	/**
+	 * 修改文件信息带产品标签
+	 * 
+	 * @param dataId
+	 * @param dataKey
+	 * @param newName
+	 * @return
+	 */
+	private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath,
+			String folderByDay, String batch, int fileFormat, int tagId) {
+		DataFile data = new DataFile();
+		data.setFileId(dataId);
+		String filePath = folderByDay + File.separator + newName;
+		data.setSize(FileTools.getFileSize(filePath));
+		data.setDataKey(dataKey);
+		data.setPath(filePath);
+		data.setMd5(MD5Util.getFileMD5(filePath));
+		data.setBatch(batch);
+		data.setFileFormat(fileFormat);
+		if (fileFormat == FileFormat.BAM) {
+			String anotherName = getAnotherName(filePath, dataKey, perlPath, outPath);
+			data.setAnotherName(anotherName);
+			// 绑定实验流程
+			if (!StringUtils.isBlank(anotherName)) {
+				Integer userId = ConstantsData.getLoginUserId();
+				List<Experiment> expList = expService.getUnRelatList(userId, anotherName);
+				if (expList != null && expList.size() == 1) {
+					Experiment exp = expList.get(0);
+					exp.setFileId(dataId);
+					exp.setDataKey(dataKey);
+					expService.updateByPrimaryKeySelective(exp);
+					logger.info("用户{}数据{}自动绑定成功", userId, dataId);
+				} else {
+					logger.error("用户{}数据{}自动绑定失败", userId, dataId);
+				}
+			}
+		}
+		data.setState(DataState.ACTIVE);
+		return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+	}
 
 	private String getAnotherName(String filePath, String fileDataKey, String perlPath, String outPath) {
 		String anotherName = null;

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.AppConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
@@ -71,7 +71,7 @@ public class DataAction {
 	private TaskService taskService;
     @Resource
     ExpensesService expenseService;
-
+    //TODO 已经在dataServciceImpl中复制了一份，这里可以删除
 	private static Map<String, Map<String, String>> machines = ConstantsData.getMachines();
 	private static String sparkhost = machines.get("spark").get(Mod.HOST);
 	private static String sparkpwd = machines.get("spark").get(Mod.PWD);
@@ -79,6 +79,7 @@ public class DataAction {
 	private static String sgeHost = machines.get("158").get(Mod.HOST);
 	private static String sgePwd = machines.get("158").get(Mod.PWD);;
 	private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
+	// 删除到这里。。。
 	private static final Response DELETE_DATA_FAIL = new Response("归档数据失败");
 
 	/**
@@ -190,7 +191,7 @@ public class DataAction {
 		ModelAndView mv = new ModelAndView("bsi/data_list");
 		Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataListByAppId(pager,
-                ConstantsData.getLoginUserId(), AppConstants.APP_ID_BSI,
+                ConstantsData.getLoginUserId(), IconConstants.APP_ID_BSI,
                 condition, sort, sortDate, sortName, sortBatch);
 		mv.addObject("pageList", dataList);
 		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
@@ -206,7 +207,7 @@ public class DataAction {
 		Page pager = new Page(page, size);
 		Integer userId = ConstantsData.getLoginUserId();
 		PageList<DataFile> dataList = dataService.filterRockyList(pager, sample, condition, sidx, sord);
-		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		periodMap.put("uploaded", batchList.size());
 		mv.addObject("periodMap", periodMap);
@@ -288,7 +289,7 @@ public class DataAction {
 		if (dataIds != null && !dataIds.equals(""))
 			result = dataService.delete(dataIds);
 		logger.info("用户{}删除数据{}{}", ConstantsData.getLoginUserName(), dataIds, result);
-		return result > 0 ? Response.FILED_SUCCESS : DELETE_DATA_FAIL;
+		return result > 0 ? Response.SUCCESS_FILED() : DELETE_DATA_FAIL;
 	}
 
 	/**
@@ -326,7 +327,7 @@ public class DataAction {
 	@RequestMapping("updateDataAndTag")
 	@ResponseBody
 	public Response updateDataAndTag(DataFile data) {
-		return dataService.updateDataAndTag(data) == 1 ? Response.UPDATE_SUCCESS : Response.FAIL;
+		return dataService.updateDataAndTag(data) == 1 ? Response.SUCCESS_UPDATE() : Response.FAIL();
 	}
 
 	/**
@@ -383,8 +384,8 @@ public class DataAction {
 	}
 
 	/**
-	 * 数据运行
-	 * 
+	 * <s>数据运行,已抽离到dataService中</s><br>
+	 *  调用dataService.run();
 	 * @param dataIds
 	 * @param appIds
 	 * @return
@@ -392,6 +393,7 @@ public class DataAction {
 	@ActionLog(value = "开始运行方法，调用perl，保存任务信息", button = "开始运行")
     @RequestMapping("run")
 	@ResponseBody
+	@Deprecated
 	public String run(String dataIds, String appIds) {
 		Integer userId = ConstantsData.getLoginUserId();
 		String userName = ConstantsData.getLoginUserName();
@@ -580,7 +582,7 @@ public class DataAction {
 				result.append(back).append(";");
 			}
 		}
-		return Response.SUCCESS;
+		return Response.SUCCESS();
 	}
 
 	private String runSingleProject(Integer appId, List<DataFile> dataList) {
