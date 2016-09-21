@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.backstage.constants.AppConstants;
+import com.celloud.backstage.constants.IconConstants;
 import com.celloud.backstage.model.App;
 import com.celloud.backstage.model.Classify;
 import com.celloud.backstage.model.Company;
@@ -98,7 +98,7 @@ public class AppAction {
     public String upload(@RequestParam("file") CommonsMultipartFile file, HttpSession session) {
         String fileName = file.getOriginalFilename();
         String type = fileName.substring(fileName.lastIndexOf("."));
-        File targetFile = new File(AppConstants.getAppTempPath(), new ObjectId().toString() + type);
+		File targetFile = new File(IconConstants.getTempPath(new ObjectId().toString() + type));
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
@@ -119,7 +119,7 @@ public class AppAction {
      */
     @RequestMapping(value = "app/icon/temp", method = RequestMethod.GET)
     public ResponseEntity<byte[]> pictureTemp(String file) throws IOException {
-        String path = AppConstants.getAppTempPath() + File.separator + file;
+		String path = IconConstants.getTempPath(file);
         File targetFile = new File(path);
         logger.info("app图片临时目录的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
@@ -134,7 +134,7 @@ public class AppAction {
      */
     @RequestMapping(value = "app/icon", method = RequestMethod.GET)
     public ResponseEntity<byte[]> appIcon(String file) throws IOException {
-        String path = AppConstants.getAppPicturePath() + File.separator + file;
+		String path = IconConstants.getAppPath(file);
         File targetFile = new File(path);
         logger.info("app图标的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
@@ -149,7 +149,7 @@ public class AppAction {
      */
     @RequestMapping(value = "app/screen", method = RequestMethod.GET)
     public ResponseEntity<byte[]> appScreen(String file) throws IOException {
-        String path = AppConstants.getAppScreenPath() + File.separator + file;
+		String path = IconConstants.getScreenPath(file);
         File targetFile = new File(path);
         logger.info("app截图的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);

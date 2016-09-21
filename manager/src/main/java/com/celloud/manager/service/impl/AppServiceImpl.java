@@ -3,7 +3,6 @@ package com.celloud.manager.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,14 +10,13 @@ import javax.annotation.Resource;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.celloud.manager.constants.AppConstants;
 import com.celloud.manager.constants.AppOffline;
 import com.celloud.manager.constants.AppPermission;
+import com.celloud.manager.constants.IconConstants;
 import com.celloud.manager.constants.PriceType;
 import com.celloud.manager.mapper.AppMapper;
 import com.celloud.manager.mapper.PriceMapper;
@@ -116,8 +114,8 @@ public class AppServiceImpl implements AppService {
             if (appId != null) {
                 String pictureName = app.getPictureName();
                 if (StringUtils.isNotBlank(pictureName)) {
-                    FileUtils.moveFile(new File(AppConstants.getAppTempPath() + File.separator + pictureName),
-                            new File(AppConstants.geAppPicturePath(pictureName)));
+					FileUtils.moveFile(new File(IconConstants.getTempPath(pictureName)),
+							new File(IconConstants.getAppPath(pictureName)));
                 }
                 if (screenNames != null && screenNames.length > 0) {
                     for (String screenName : screenNames) {
@@ -126,8 +124,8 @@ public class AppServiceImpl implements AppService {
                         screen.setScreenName(screenName);
                         int result = screenMapper.insertScreen(screen);
                         if (result > 0) {
-                            FileUtils.moveFile(new File(AppConstants.getAppTempPath() + File.separator + screenName),
-                                    new File(AppConstants.geAppScreenPath(screenName)));
+							FileUtils.moveFile(new File(IconConstants.getTempPath(screenName)),
+									new File(IconConstants.getAppPath(screenName)));
                         }
                     }
 
@@ -138,7 +136,7 @@ public class AppServiceImpl implements AppService {
                 if (calssifyIds != null && calssifyIds.length > 0) {
                     appMapper.insertAppClassifyBatch(appId, calssifyIds);
                 }
-                cleanAppTemp();
+				IconConstants.cleanTemp();
                 flag = 1;
             }
 
@@ -182,15 +180,15 @@ public class AppServiceImpl implements AppService {
             @SuppressWarnings("unused")
             int result = appMapper.updateApp(a);
             if (StringUtils.isNotBlank(oldPictureName) && !oldPictureName.equals(newPictureName)) {
-                File delFile = new File(AppConstants.geAppPicturePath(oldPictureName));
+				File delFile = new File(IconConstants.getAppPath(oldPictureName));
                 if (delFile.exists()) {
                     FileUtils.deleteQuietly(delFile);
                 }
             }
             if (StringUtils.isNotBlank(newPictureName) && !newPictureName.equals(oldPictureName)) {
                 try {
-                    FileUtils.moveFile(new File(AppConstants.getAppTempPath() + File.separator + newPictureName),
-                            new File(AppConstants.geAppPicturePath(newPictureName)));
+					FileUtils.moveFile(new File(IconConstants.getTempPath(newPictureName)),
+							new File(IconConstants.getAppPath(newPictureName)));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -215,43 +213,18 @@ public class AppServiceImpl implements AppService {
                     screen.setScreenName(screenName);
                     int r = screenMapper.insertScreen(screen);
                     if (r > 0) {
-                        FileUtils.moveFile(new File(AppConstants.getAppTempPath() + File.separator + screenName),
-                                new File(AppConstants.geAppScreenPath(screenName)));
+						FileUtils.moveFile(new File(IconConstants.getTempPath(screenName)),
+								new File(IconConstants.getScreenPath(screenName)));
                     }
                 }
 
             }
-            cleanAppTemp();
+			IconConstants.cleanTemp();
             flag = 1;
         } catch (Exception e) {
             logger.error("更新App异常：{}", e.getMessage());
         }
         return flag;
-    }
-
-    private void cleanAppTemp() {
-        String path = AppConstants.getAppTempPath();
-        File tempDir = new File(path);
-        if (tempDir == null || !tempDir.exists()) {
-            return;
-        }
-        if (tempDir.isFile()) {
-            tempDir.delete();
-            return;
-        }
-        File[] tempFiles = tempDir.listFiles();
-        if (tempFiles == null || tempFiles.length == 0) {
-            return;
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -7);
-        Date date = calendar.getTime();
-        for (File file : tempFiles) {
-            ObjectId id = new ObjectId(file.getName().substring(0, file.getName().indexOf(".")));
-            if (date.after(id.getDate())) {
-                file.delete();
-            }
-        }
     }
 
     @Override

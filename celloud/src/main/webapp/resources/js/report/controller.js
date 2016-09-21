@@ -995,47 +995,55 @@
     //加载产品标签
     $scope.ranAppList = projectReportService.getRanAPP();
     //初始化参数
-    var options = {
-        page : 1,
-        pageSize : 10,
-        belongs : 1,
-        start : null,
-        end : null,
-        app : 0,
-        condition : null
+    $scope.projectOptions = {
+	  page : $routeParams.page,
+	  pageSize : $routeParams.pageSize,
+	  belongs : $routeParams.belongs,
+	  changeDate : $routeParams.changeDate,
+	  start : $routeParams.start,
+	  end : $routeParams.end,
+	  app : $routeParams.app,
+	  condition : $routeParams.condition
     };
     //分页检索主方法
     $scope.pageQuery = function(currentPage,pageSize){
-      var belongs = options.belongs;
-      var start = options.start;
-      var end = options.end;
-      var app = options.app;
-      var condition = options.condition;
-      options.pageSize = pageSize;
-      projectReportService.getReportListCondition(currentPage,pageSize,belongs,start,end,app,condition).
+      var belongs = $scope.projectOptions.belongs;
+      var start = $scope.projectOptions.start=='all'?null:$scope.projectOptions.start + " 00:00:00";
+      var end = $scope.projectOptions.end=='all'?null:$scope.projectOptions.end + " 23:59:59";
+      var app = $scope.projectOptions.app;
+      var condition = $scope.projectOptions.condition=='all'?null:$scope.projectOptions.condition;
+      $scope.projectOptions.pageSize = pageSize;
+      $scope.projectOptions.page = currentPage;
+      projectReportService.getReportListCondition($scope.projectOptions.page,$scope.projectOptions.pageSize,belongs,start,end,app,condition).
         success(function(dataList){
           $scope.dataList = dataList;
         });
     }
-    $scope.pageQuery(options.page,options.pageSize);
+    $rootScope.goBack = function(){
+    	var belongs = $scope.projectOptions.belongs;
+    	var changeDate = $scope.projectOptions.changeDate;
+        var start = $scope.projectOptions.start;
+        var end = $scope.projectOptions.end;
+        var app = $scope.projectOptions.app;
+        var condition = $scope.projectOptions.condition;
+        var pageSize = $scope.projectOptions.pageSize;
+        var page = $scope.projectOptions.page;
+    	window.location.href = CONTEXT_PATH + "/index#/reportpro/"+page+"/"+pageSize+"/"+belongs+"/"+changeDate+"/"+start+"/"+end+"/"+app+"/"+condition;
+    }
+    $scope.pageQuery($scope.projectOptions.page,$scope.projectOptions.pageSize);
     //切换所属
     $scope.changeBelongs = function(id){
-      $(".belongs").removeClass("active");
-      $("#belongs"+id).addClass("active");
-      options.belongs = id;
-      $scope.pageQuery(1,options.pageSize);
+      $scope.projectOptions.belongs = id;
+      $scope.pageQuery(1,$scope.projectOptions.pageSize);
     }
     var START = null;
     var END = null;
     //设定时间检索
     $scope.changeDate = function(flag){
-      $("#_searchDate").val("");
-      $("#_endDate").val("");
-      $(".changeDate").removeClass("active");
-      $("#changeDate"+flag).addClass("active");
+      $scope.projectOptions.changeDate = flag;
       if(flag==0){
-        START = null;
-        END = null;
+        START = 'all';
+        END = 'all';
       }else{
         var d = new Date();
         var date = new Date(d.getTime()-1000*60*60*24*flag);
@@ -1049,7 +1057,6 @@
     }
     //自定义时间检索
     $scope.chooseDate = function(){
-      $(".changeDate").removeClass("active");
       START =$("#_searchDate").val();
       END = $("#_endDate").val();
       if(!START || !END){
@@ -1060,31 +1067,30 @@
         $.alert("起始时间不能大于结束时间");
         return ;
       }
+      $scope.projectOptions.changeDate = -1;
       $scope.dateQuery();
     }
     //时间检索入口
     $scope.dateQuery = function(){
       if(START != null){
-        START = START+" 00:00:00";
+    	  $scope.projectOptions.start = START;
       }
       if(END != null){
-        END = END+" 23:59:59";
+    	  $scope.projectOptions.end = END;
       }
-      options.start = START;
-      options.end = END;
-      $scope.pageQuery(1,options.pageSize);
+      $scope.pageQuery(1,$scope.projectOptions.pageSize);
     }
     //根据appId精确检索
     $scope.changeApp = function(appId){
       $(".changeApp").removeClass("active");
       $("#changeApp" + appId).addClass("active");
-      options.app = appId;
-      $scope.pageQuery(1,options.pageSize);
+      $scope.projectOptions.app = appId;
+      $scope.pageQuery(1,$scope.projectOptions.pageSize);
     }
     //数据检索
     $scope.changeCondition = function(){
-      options.condition = $scope.reportCondition;
-      $scope.pageQuery(1,options.pageSize);
+    	$scope.projectOptions.condition = $scope.reportCondition;
+      $scope.pageQuery(1,$scope.projectOptions.pageSize);
     }
     //显示项目名称编辑框
     $scope.toChangePname = function(projectId){
@@ -1119,7 +1125,7 @@
       $.confirm("确定要删除该项目？","确认框",function(){
         projectReportService.cancelProjectShare(projectId).success(function(response){
           if(response.success){
-            $scope.pageQuery(1,options.pageSize);
+            $scope.pageQuery(1,$scope.projectOptions.pageSize);
           }
           $.alert(response.message);
         });
@@ -1177,7 +1183,7 @@
         $scope.updateState = true;
         function hideModal(){
           $("#project-share-modal").modal("hide");
-          $scope.pageQuery(options.page,options.pageSize);
+          $scope.pageQuery($scope.projectOptions.page,$scope.projectOptions.pageSize);
           $scope.updateState = false;
         }
         if(response.success){
@@ -1191,7 +1197,7 @@
       $.confirm("确定要删除该项目吗？","确认框",function(){
         projectReportService.deleteProject(projectId).success(function(flag){
           if(flag ==1){
-            $scope.pageQuery(1,options.pageSize);
+            $scope.pageQuery(1,$scope.projectOptions.pageSize);
             $.alert("项目报告删除成功");
           }else{
             $.alert("项目报告删除失败");
@@ -1426,72 +1432,87 @@
     });
   });
   
-  celloudApp.controller("dataReportController", function($scope,projectReportService,dataReportService){
+  celloudApp.controller("dataReportController", function($rootScope, $routeParams, $scope,projectReportService,dataReportService){
     $scope.searchInfo = dataReportService.getSearchInfos();
-    $scope.reportList = dataReportService.getReports();
-    var options = {
-        page : 1,
-        pageSize : 20,
-        beginDate : null,
-        endDate : null,
-        tagId : null,
-        period : null,
-        batch : null,
-        condition : null,
-        sort: 'desc'
+    
+    $scope.dataOptions = {
+	  page : $routeParams.page,
+	  pageSize : $routeParams.pageSize,
+	  fullDate : $routeParams.fullDate,
+	  beginDate : $routeParams.beginDate,
+	  endDate : $routeParams.endDate,
+	  tagId : $routeParams.tagId,
+      period : $routeParams.period,
+      batch : $routeParams.batch,
+      condition : $routeParams.condition,
+      sort: 'desc'
     };
+    
+    
     var paramQuqery = function(){
-      dataReportService.getReportsByParams(options.page,options.pageSize,options.condition,options.beginDate,options.endDate,options.batch,options.tagId,options.period,options.sort)
+    	var beginDate = $scope.dataOptions.beginDate=='all'?null:$scope.dataOptions.beginDate + " 00:00:00";
+    	var endDate = $scope.dataOptions.endDate=='all'?null:$scope.dataOptions.endDate+" 23:59:59";
+    	var tagId = $scope.dataOptions.tagId=='all'?null:$scope.dataOptions.tagId;
+    	var period = $scope.dataOptions.period=='all'?null:$scope.dataOptions.period;
+    	var batch = $scope.dataOptions.batch=='all'?null:$scope.dataOptions.batch;
+    	var condition = $scope.dataOptions.condition=='all'?null:$scope.dataOptions.condition;
+      dataReportService.getReportsByParams($scope.dataOptions.page,$scope.dataOptions.pageSize,condition,beginDate,endDate,batch,tagId,period,$scope.dataOptions.sort)
       .success(function(dataList){
         $scope.reportList = dataList;
       });
     }
+    
+    $rootScope.goBack = function(){
+    	var page = $scope.dataOptions.page;
+    	var pageSize = $scope.dataOptions.pageSize;
+    	var fullDate = $scope.dataOptions.fullDate;
+    	var beginDate = $scope.dataOptions.beginDate;
+    	var endDate = $scope.dataOptions.endDate;
+    	var tagId = $scope.dataOptions.tagId;
+    	var period = $scope.dataOptions.period;
+    	var batch = $scope.dataOptions.batch;
+    	var condition = $scope.dataOptions.condition;
+    	window.location.href = CONTEXT_PATH + "/index#/reportdata/" + page + "/" + pageSize + "/" + fullDate + "/" + beginDate + "/" + endDate + "/" + tagId + "/" + period + "/" + batch + "/" + condition;
+    }
+    
     $scope.pageQuery = function(page,pageSize){
-      options.page = page;
-      options.pageSize = pageSize;
+      $scope.dataOptions.page = page;
+      $scope.dataOptions.pageSize = pageSize;
       paramQuqery();
     }
     $scope.tagsQuery = function(tagId){
-      $(".tagsQuery").removeClass("active");
-      $("#tagsQuery"+tagId).addClass("active");
-      options.tagId = tagId;
-      options.page = 1;
+      $scope.dataOptions.tagId = tagId;
+      $scope.dataOptions.page = 1;
       paramQuqery();
     }
     $scope.batchsQuery = function(batch){
-      $(".batchsQuery").removeClass("active");
-      $("#batchsQuery"+batch).addClass("active");
-      options.batch = batch;
-      options.page = 1;
+      $scope.dataOptions.batch = batch;
+      $scope.dataOptions.page = 1;
       paramQuqery();
     }
     $scope.periodQuery = function(period){
-      $(".periodQuery").removeClass("active");
-      $("#periodQuery"+period).addClass("active");
-      options.period = period;
-      options.page = 1;
+      $scope.dataOptions.period = period;
+      $scope.dataOptions.page = 1;
       paramQuqery();
     }
     $scope.fullDateQuery = function(days){
-      $(".fullDateQuery").removeClass("active");
-      $("#fullDateQuery"+days).addClass("active");
+    	$scope.dataOptions.fullDate = days;
       if(days==0){
-        options.beginDate = null;
-        options.endDate = null;
+    	$scope.dataOptions.beginDate = 'all';
+    	$scope.dataOptions.endDate = 'all';
       }else{
         var d = new Date();
         var date = new Date(d.getTime()-1000*60*60*24*days);
         var year = date.getFullYear(); 
         var mounth = date.getMonth()+1;
         var day = date.getDate(); 
-        options.beginDate = year+"-"+mounth+"-"+day+" 00:00:00";
-        options.endDate = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+" 23:59:59";
+        $scope.dataOptions.beginDate = year+"-"+mounth+"-"+day;
+        $scope.dataOptions.endDate = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
       }
-      options.page = 1;
+      $scope.dataOptions.page = 1;
       paramQuqery();
     }
     $scope.chooseDate = function(){
-      $(".fullDateQuery").removeClass("active");
       var d = new Date();
       var begin = $("#begin-date").val();
       var end = $("#end-date").val();
@@ -1504,10 +1525,12 @@
         $.tips("请确认开始时间  < 结束时间！","时间错误");
         return;
       }
-      options.beginDate = begin + " 00:00:00";
-      options.endDate = end + " 23:59:59";
-      options.page = 1;
+      $scope.dataOptions.fullDate = -1;
+      $scope.dataOptions.beginDate = begin;
+      $scope.dataOptions.endDate = end;
+      $scope.dataOptions.page = 1;
       paramQuqery();
     }
+    paramQuqery();
   });
 })();

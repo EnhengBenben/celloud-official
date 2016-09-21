@@ -30,8 +30,8 @@
 	            <option value="BSL11:GGCTAC">BSL11:GGCTAC</option>
 	            <option value="BSL12:CTTGTA">BSL12:CTTGTA</option>
 	        </select>
-            <button ng-click="addLibrary()" class="btn -low pull-right" ng-disabled="infos.pageList.datas.length <= 0">建库</button>
-            <button ng-click="addAndDownLibrary()" class="btn btn-reset -low pull-right" ng-disabled="infos.pageList.datas.length <= 0">建库并下载</button>
+            <button ng-click="addLibrary()" class="btn -low pull-right" ng-disabled="infos.pageList.datas.length <= 0 || sindex=='' || sindex==undefined">建库</button>
+            <button ng-click="addAndDownLibrary()" class="btn btn-reset -low pull-right" ng-disabled="infos.pageList.datas.length <= 0 || sindex=='' || sindex==undefined">建库并下载</button>
           </div>
         </div>
         <div class="table-opera clearfix">

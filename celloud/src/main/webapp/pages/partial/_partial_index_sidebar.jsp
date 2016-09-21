@@ -25,10 +25,10 @@
         </li>
         <li ng-class="{active: isActive('/report')}">
             <shiro:hasPermission name="runWithProject:button">
-                <a di-href="<%=request.getContextPath()%>/index#/reportpro"><i class="report-icon"></i><span>报告管理</span></a>
+                <a di-href="<%=request.getContextPath()%>/index#/reportpro/1/10/1/0/all/all/0/all"><i class="report-icon"></i><span>报告管理</span></a>
             </shiro:hasPermission>
             <shiro:hasPermission name="runWithData:button">
-                <a di-href="<%=request.getContextPath()%>/index#/reportdata"><i class="report-icon"></i><span>报告管理</span></a>
+                <a di-href="<%=request.getContextPath()%>/index#/reportdata/1/20/0/all/all/all/all/all/all"><i class="report-icon"></i><span>报告管理</span></a>
             </shiro:hasPermission>
         </li>
         <li ng-class="{active: isActive('/app')}">

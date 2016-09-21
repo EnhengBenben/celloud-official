@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.celloud.constants.AppConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
@@ -109,7 +109,7 @@ public class UploadAction {
 			if (dataIds.size() > 0) {
 				model.put("run", "true");
 				model.put("dataIds", StringUtils.join(dataIds.toArray(), ","));
-				model.put("appIds", AppConstants.APP_ID_ROCKY.toString());
+				model.put("appIds", IconConstants.APP_ID_ROCKY.toString());
 			}
 		}
 		return model;
@@ -154,7 +154,7 @@ public class UploadAction {
 			task.setDataKey(data.getDataKey());
 			task.setPeriod(TaskPeriod.UPLOADING);// TODO 小心处理这个状态，将关系到数据的统计
 			task.setParams(pubName);
-			task.setAppId(AppConstants.APP_ID_ROCKY);
+			task.setAppId(IconConstants.APP_ID_ROCKY);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
 				logger.info("数据{}上传完可以运行", originalName);

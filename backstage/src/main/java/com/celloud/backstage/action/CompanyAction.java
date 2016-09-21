@@ -31,13 +31,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.backstage.constants.CompanyConstants;
+import com.celloud.backstage.constants.IconConstants;
 import com.celloud.backstage.model.Company;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.AppService;
 import com.celloud.backstage.service.CompanyService;
 import com.celloud.backstage.utils.CityUtils;
+import com.celloud.backstage.utils.PropertiesUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -100,7 +101,7 @@ public class CompanyAction {
             HttpSession session) {
         String fileName = file.getOriginalFilename();
         String type = fileName.substring(fileName.lastIndexOf("."));
-        File targetFile = new File(CompanyConstants.getCompanyIconTempPath(),
+		File targetFile = new File(IconConstants.getTempPath(),
                 new ObjectId().toString() + type);
         if (!targetFile.exists()) {
             targetFile.mkdirs();
@@ -123,8 +124,7 @@ public class CompanyAction {
     @RequestMapping(value = "icon/temp", method = RequestMethod.GET)
     public ResponseEntity<byte[]> companyIconTemp(String file)
             throws IOException {
-        String path = CompanyConstants.getCompanyIconTempPath() + File.separator
-                + file;
+		String path = IconConstants.getTempPath(file);
         File targetFile = new File(path);
         logger.info("医院logo临时目录的绝对路径{}", targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(
@@ -140,8 +140,7 @@ public class CompanyAction {
      */
     @RequestMapping(value = "icon", method = RequestMethod.GET)
     public ResponseEntity<byte[]> companyIcon(String file) throws IOException {
-        String path = CompanyConstants.getCompanyIconPath() + File.separator
-                + file;
+		String path = IconConstants.getCompanyPath(file);
         File targetFile = new File(path);
         logger.info("医院logo绝对路径{}", targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(
@@ -178,7 +177,7 @@ public class CompanyAction {
     public String uploadPdf(@RequestParam("file") CommonsMultipartFile file,
             String name, String newName, Integer chunk, Integer chunks,
             IdsList ids, HttpServletRequest request) {
-        String tmpPath = CompanyConstants.getReportTemplatePath() + "tmpPath";
+		String tmpPath = PropertiesUtil.reportTemplatePath + "tmpPath";
         File f = new File(tmpPath);
         if (!f.exists()) {
             boolean isTrue = f.mkdir();
@@ -192,8 +191,7 @@ public class CompanyAction {
         if (chunk.equals(chunks) || chunk.equals(chunks - 1)) {
             if (ids.getIds() != null) {
                 for (Integer cid : ids.getIds()) {
-                    String realPath = CompanyConstants.getReportTemplatePath()
-                            + cid;
+					String realPath = PropertiesUtil.reportTemplatePath + cid;
                     File f1 = new File(realPath);
                     if (!f1.exists()) {
                         boolean isTrue = f1.mkdir();

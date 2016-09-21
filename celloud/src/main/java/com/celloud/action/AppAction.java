@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.AppConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.ClassifyFloor;
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.App;
@@ -260,9 +260,8 @@ public class AppAction {
      */
     @RequestMapping(value = "image", method = RequestMethod.GET)
     public ResponseEntity<byte[]> appImage(String file) throws IOException {
-        String path = AppConstants.getAppPicturePath() + File.separator + file;
+		String path = IconConstants.getAppPath(file);
         File targetFile = new File(path);
-        //log.debug("app图标的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
     
@@ -275,9 +274,8 @@ public class AppAction {
      */
     @RequestMapping(value = "screen", method = RequestMethod.GET)
     public ResponseEntity<byte[]> appScreen(String file) throws IOException {
-        String path = AppConstants.getAppScreenPath() + File.separator + file;
+		String path = IconConstants.getScreenPath(file);
         File targetFile = new File(path);
-        //log.info("app截图的绝对路径{}",targetFile.getAbsolutePath());
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
 }
