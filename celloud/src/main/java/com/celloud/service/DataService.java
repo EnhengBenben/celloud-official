@@ -63,15 +63,15 @@ public interface DataService {
 	 * @param data
 	 * @return
 	 */
-    public int updateDataInfoByFileId(DataFile data);
+	public int updateDataInfoByFileId(DataFile data);
 
-    /**
-     * 修改数据信息
-     * 
-     * @param data
-     * @return
-     */
-    public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId);
+	/**
+	 * 修改数据信息
+	 * 
+	 * @param data
+	 * @return
+	 */
+	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId);
 
 	/**
 	 * 数据分页列表
@@ -82,17 +82,16 @@ public interface DataService {
 	 */
 	PageList<DataFile> dataAllList(Page page, Integer userId);
 
-    /**
-     * 产品中的数据分页列表
-     * 
-     * @param page
-     * @param userId
-     * @param appId
-     * @return
-     */
-    PageList<DataFile> dataListByAppId(Page page, Integer userId,
-            Integer appId, String condition, Integer sort, String sortDate,
-            String sortName, String sortBatch);
+	/**
+	 * 产品中的数据分页列表
+	 * 
+	 * @param page
+	 * @param userId
+	 * @param appId
+	 * @return
+	 */
+	PageList<DataFile> dataListByAppId(Page page, Integer userId, Integer appId, String condition, Integer sort,
+			String sortDate, String sortName, String sortBatch);
 
 	/**
 	 * 按条件检索数据列表
@@ -325,4 +324,14 @@ public interface DataService {
 	 * @return
 	 */
 	public PageList<DataFile> filterRockyList(Page pager, String sample, String condition, String sidx, String sord);
+
+	/**
+	 * 数据运行
+	 * 
+	 * @param dataIds
+	 * @param appIds
+	 * @return
+	 */
+	public String updateToRun(Integer userId, String dataIds, String appIds);
+
 }

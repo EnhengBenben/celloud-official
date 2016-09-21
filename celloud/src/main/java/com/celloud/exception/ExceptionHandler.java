@@ -23,26 +23,26 @@ import com.celloud.sendcloud.EmailType;
  * @date 2015年12月23日 下午4:11:36
  */
 public class ExceptionHandler implements HandlerExceptionResolver {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Resource
-    private EmailUtils emailUtils;
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Resource
+	private EmailUtils emailUtils;
 	@Resource
 	private AliEmailUtils aliEmailUtils;
 
-    @Override
-    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
-            Exception exception) {
+	@Override
+	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
+			Exception exception) {
 		String errorInfo = emailUtils.getError(request, exception);
 		AliEmail aliEmail = AliEmail.template(EmailType.EXCEPTION)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.EXCEPTION.context.name(), errorInfo));
 		aliEmailUtils.simpleSend(aliEmail, emailUtils.getErrorMailTo());
 
-        response.setHeader("exceptionstatus", "exception");
-        if (exception instanceof BusinessException) {
-            return new ModelAndView("errors/business").addObject("exception", exception);
-        }
-        logger.error("系统出现未捕获的异常！", exception);
-        return new ModelAndView("errors/error").addObject("exception", exception);
-    }
+		response.setHeader("exceptionstatus", "exception");
+		if (exception instanceof BusinessException) {
+			return new ModelAndView("errors/business").addObject("exception", exception);
+		}
+		logger.error("系统出现未捕获的异常:" + request.getRequestURI(), exception);
+		return new ModelAndView("errors/error").addObject("exception", exception);
+	}
 
 }
