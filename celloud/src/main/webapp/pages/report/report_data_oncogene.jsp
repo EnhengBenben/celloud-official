@@ -19,8 +19,7 @@
 			</h2>
 		    <div class="m-boxCon result">
 		    	<div id="knowResult">
-			    	<span ng-if="oncogene.wz1 != null && oncogene.wz1 != ''">
-			    		{{oncogene.wz1}}
+			    	<span ng-if="oncogene.wz1 != null && oncogene.wz1 != ''" ng-bind-html="oncogene.wz1 | trustHtml">
 			    	</span>
 			    	<span ng-if="oncogene.wz1 == null && oncogene.wz1 == ''">
 		    			未检测到突变
@@ -28,7 +27,7 @@
 		    	</div>
 		    	<br/>
 	    		<div ng-if="oncogene.knowMutation!=null" ng-repeat="img in oncogene.knowMutation">
-			    	<img name="know" src="{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{img}" style="width: 100%;">
+			    	<img name="know" src="{{uploadPath}}/{{oncogene.userId}}/{{oncogene.appId}}/{{oncogene.dataKey}}/SVG/{{img}}" style="width: 100%;">
 	    		</div>
 		    </div>
 	    </section>
