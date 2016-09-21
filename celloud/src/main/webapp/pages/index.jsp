@@ -115,6 +115,7 @@
   <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
+<%--   <script src="<%=request.getContextPath()%>/js/main.min.js"></script> --%>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
   </script>
