@@ -33,6 +33,7 @@ public class ConstantsData {
 	private static Logger logger = LoggerFactory.getLogger(ConstantsData.class);
 	public static Map<String, Map<String, String>> machines = null;
 	private static Properties systemProperties;
+	private static Properties bioinfoServices;
 
 	/**
 	 * 获取所有机器列表(如果内存中已存在，则直接使用内存中的；如果内存中不存在，则加载配置文件)
@@ -196,6 +197,17 @@ public class ConstantsData {
 			}
 		}
 		return properties;
+	}
+
+	public static void loadBioinfoServices() {
+		bioinfoServices = loadProperties(Constants.BIOINFO_SERVICES_PROPERTIES_FILE);
+	}
+
+	public static String getBioinfoService(String app) {
+		if (bioinfoServices == null) {
+			loadBioinfoServices();
+		}
+		return bioinfoServices == null ? null : bioinfoServices.getProperty(app);
 	}
 
 	public static void loadSystemProperties() {

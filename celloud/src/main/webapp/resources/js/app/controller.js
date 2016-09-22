@@ -106,10 +106,21 @@
 					appService.getMyApp().
 					success(function(data){
 						$scope.appList = data;
+						$scope.refreshProduct();
 					});
 				}
 			});
 		};
+		
+		$scope.refreshProduct = function(){
+			//通过controller来获取Angular应用
+		    var appElement = document.querySelector('[ng-controller=sidebarController]')
+		    var element = angular.element(appElement);
+		    //获取$scope
+		    var $scope = element.scope();
+		    //调用$scope中的方法
+		    $scope.refreshUserProduct();
+		}
 		
 		appService.toAppStore().
 		success(function(data){
@@ -137,6 +148,16 @@
 			});
 		});
 		
+		$scope.refreshProduct = function(){
+			//通过controller来获取Angular应用
+		    var appElement = document.querySelector('[ng-controller=sidebarController]')
+		    var element = angular.element(appElement);
+		    //获取$scope
+		    var $scope = element.scope();
+		    //调用$scope中的方法
+		    $scope.refreshUserProduct();
+		}
+		
 		$scope.toAppMoreDetail = function(id){
 			$("#toAppMoreDetailUl li").removeClass("select");
 			$("#"+id).addClass("select");
@@ -152,6 +173,7 @@
 					appService.getMyApp().
 					success(function(data){
 						$scope.appList = data;
+						$scope.refreshProduct();
 					});
 				}
 			});
@@ -172,6 +194,7 @@
 					appService.getMyApp().
 					success(function(data){
 						$scope.appList = data;
+						$scope.refreshProduct();
 					});
 				}
 			});

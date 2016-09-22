@@ -16,7 +16,7 @@
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
-  <link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.2" rel="stylesheet">
 <%--   <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" /> --%>
 <!--   <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script> -->
   <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
@@ -87,7 +87,7 @@
   <script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
+  <script src="<%=request.getContextPath()%>/js/app/controller.js?v=3.3.1.1"></script>
   <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
@@ -103,7 +103,7 @@
   <script src="<%=request.getContextPath()%>/js/report/controller.js?v=3.3.0.1"></script>
   <script src="<%=request.getContextPath()%>/js/report/dataReportService.js"></script>
   <script src="<%=request.getContextPath()%>/js/report/dataReportController.js"></script>
-  <script src="<%=request.getContextPath()%>/js/config/routeProvider.js?v=3.3.0.2"></script>
+  <script src="<%=request.getContextPath()%>/js/config/routeProvider.js?v=3.3.2"></script>
   <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
   <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
@@ -115,6 +115,7 @@
   <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
   <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
+<%--   <script src="<%=request.getContextPath()%>/js/main.min.js"></script> --%>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
   </script>

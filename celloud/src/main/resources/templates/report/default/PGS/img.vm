@@ -3,4 +3,8 @@
 	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;">
 #elseif($flag==1)
 	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;">
+#elseif($flag==2)
+	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportMiniPng}" style="width:100%;">
+#elseif($flag==3)
+	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportSplitPng}" style="width:100%;">
 #end

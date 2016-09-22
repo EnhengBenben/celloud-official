@@ -2,6 +2,7 @@
 .pagination{
     width: 100%;
     margin: 0;
+    height: 70px;
     .pages{
         margin-right: 10px;
         .first-page> a,.last-page> a{
@@ -84,8 +85,10 @@
             content: "|";
         }
         select{
+            display: inline-block;
             height: 20px;
             width: 65px;
+            padding: 3px 4px;
             .border-radius(10px);
             .border-1(@dark-gray);
             font-size: 12px;
