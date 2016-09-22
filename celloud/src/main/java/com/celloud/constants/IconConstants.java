@@ -38,7 +38,7 @@ public class IconConstants {
 	 */
 	public static final Integer APP_ID_BSI = 118;
 
-	public static synchronized Properties loadProperties() {
+	static {
 		properties = new Properties();
 		InputStream inputStream = IconConstants.class.getClassLoader().getResourceAsStream(PROPERTIES_PATH);
 		try {
@@ -51,7 +51,6 @@ public class IconConstants {
 		} catch (IOException e) {
 			logger.error("加载配置文件失败：{}", PROPERTIES_PATH, e);
 		}
-		return properties;
 	}
 
 	/**
@@ -137,7 +136,7 @@ public class IconConstants {
 	 * @date 2016年9月20日上午11:38:09
 	 */
 	public static String getCompanyPath(String name) {
-		return screenPath + File.separator + name;
+		return companyPath + File.separator + name;
 	}
 
 	/**

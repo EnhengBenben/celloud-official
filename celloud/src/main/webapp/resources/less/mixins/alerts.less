@@ -21,9 +21,9 @@
     z-index:5;
 }
 .message-alert{
-    min-width: 130px;
+    position: relative;
     height: 22px;
-    padding: 0px 20px;
+    padding: 0px 40px 0px  20px;
     margin-left: 10px;
     margin-bottom: 10px;
     line-height: 20px;
@@ -32,8 +32,13 @@
     .border-radius(6px);
     
     .close{
-        top: -1px;
-        right: -15px;
+        position: absolute;
+        top: 0;
+        right: 5px;
         line-height: 20px;
+    }
+    >span{
+        display: inline-block;
+        min-width: 80px;
     }
 }
