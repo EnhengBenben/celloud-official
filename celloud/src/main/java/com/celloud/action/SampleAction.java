@@ -118,7 +118,6 @@ public class SampleAction {
     @RequestMapping("getSamplingList")
     @ResponseBody
     public List<Sample> getSamplingList() {
-        System.out.println("-------获取采样中的样本列表--------------");
         return sampleService.allUnaddSample(ConstantsData.getLoginUserId());
     }
 
