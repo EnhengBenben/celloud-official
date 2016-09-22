@@ -37,9 +37,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.IconConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.ABINJ;
@@ -682,9 +682,18 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView(path, projectId);
 		if (mib == null)
 			return mv;
-		mibCharList.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
-		mibCharList.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-		mibCharList.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        mibCharList.put("readsDistributionInfo",
+                mib.getReadsDistributionInfo() != null
+                        ? JSONArray.fromObject(mib.getReadsDistributionInfo())
+                        : new JSONArray());
+        mibCharList.put("familyDistributionInfo",
+                mib.getFamilyDistributionInfo() != null
+                        ? JSONArray.fromObject(mib.getFamilyDistributionInfo())
+                        : new JSONArray());
+        mibCharList.put("genusDistributionInfo",
+                mib.getGenusDistributionInfo() != null
+                        ? JSONArray.fromObject(mib.getGenusDistributionInfo())
+                        : new JSONArray());
 		mv.addObject("mibCharList", mibCharList);
 		return mv.addObject("mib", mib);
 	}
@@ -768,9 +777,18 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView(path, projectId);
 		if (bsi == null)
 			return mv;
-		mibCharList.put("readsDistributionInfo", JSONArray.fromObject(bsi.getReadsDistributionInfo()));
-		mibCharList.put("familyDistributionInfo", JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
-		mibCharList.put("genusDistributionInfo", JSONArray.fromObject(bsi.getGenusDistributionInfo()));
+        mibCharList.put("readsDistributionInfo",
+                bsi.getReadsDistributionInfo() != null
+                        ? JSONArray.fromObject(bsi.getReadsDistributionInfo())
+                        : new JSONArray());
+        mibCharList.put("familyDistributionInfo",
+                bsi.getFamilyDistributionInfo() != null
+                        ? JSONArray.fromObject(bsi.getFamilyDistributionInfo())
+                        : new JSONArray());
+        mibCharList.put("genusDistributionInfo",
+                bsi.getGenusDistributionInfo() != null
+                        ? JSONArray.fromObject(bsi.getGenusDistributionInfo())
+                        : new JSONArray());
 		mv.addObject("bsiCharList", mibCharList);
 		return mv.addObject("bsi", bsi);
 	}
