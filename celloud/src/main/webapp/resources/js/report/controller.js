@@ -1003,7 +1003,7 @@
 	  start : $routeParams.start,
 	  end : $routeParams.end,
 	  app : $routeParams.app,
-	  condition : $routeParams.condition
+	  condition : $routeParams.condition == 'all' ? '' : $routeParams.condition
     };
     //分页检索主方法
     $scope.pageQuery = function(currentPage,pageSize){
@@ -1011,7 +1011,7 @@
       var start = $scope.projectOptions.start=='all'?null:$scope.projectOptions.start + " 00:00:00";
       var end = $scope.projectOptions.end=='all'?null:$scope.projectOptions.end + " 23:59:59";
       var app = $scope.projectOptions.app;
-      var condition = $scope.projectOptions.condition=='all'?null:$scope.projectOptions.condition;
+      var condition = $scope.projectOptions.condition==''?null:$scope.projectOptions.condition;
       $scope.projectOptions.pageSize = pageSize;
       $scope.projectOptions.page = currentPage;
       projectReportService.getReportListCondition($scope.projectOptions.page,$scope.projectOptions.pageSize,belongs,start,end,app,condition).
@@ -1089,7 +1089,6 @@
     }
     //数据检索
     $scope.changeCondition = function(){
-    	$scope.projectOptions.condition = $scope.reportCondition;
       $scope.pageQuery(1,$scope.projectOptions.pageSize);
     }
     //显示项目名称编辑框
@@ -1530,6 +1529,9 @@
       $scope.dataOptions.endDate = end;
       $scope.dataOptions.page = 1;
       paramQuqery();
+    }
+    $scope.conditionQuery = function(){
+    	
     }
     paramQuqery();
   });
