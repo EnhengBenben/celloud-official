@@ -43,13 +43,13 @@
 	        <table class="table-img two-img">
 	           <tr>
 	             <td>
-	               <img ng-if="readsDistributionInfo=='' && !mib.readsDistribution.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.readsDistribution }}">
-	               <img ng-if="readsDistributionInfo=='' && mib.readsDistribution.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.readsDistribution }}">
+	               <img ng-if="readsDistributionInfo=='' && !mib.readsDistribution.contains('Tools') && mib.readsDistribution!=null" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.readsDistribution }}">
+	               <img ng-if="readsDistributionInfo=='' && mib.readsDistribution.contains('Tools') && mib.readsDistribution!=null" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.readsDistribution }}">
 	               <div ng-if="readsDistributionInfo!=''" id="reads-distribution-char" style="width:100%;height:330px;"></div>
 	             </td>
 	             <td>
-	               <img ng-if="familyDistributionInfo=='' && !mib.familyDistribution.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.familyDistribution }}">
-	               <img ng-if="familyDistributionInfo=='' && mib.familyDistribution.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.familyDistribution }}">
+	               <img ng-if="familyDistributionInfo=='' && !mib.familyDistribution.contains('Tools') && mib.familyDistribution!=null" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.familyDistribution }}">
+	               <img ng-if="familyDistributionInfo=='' && mib.familyDistribution.contains('Tools') && mib.familyDistribution!=null" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.familyDistribution }}">
 	               <div ng-if="familyDistributionInfo!=''" id="family-distribution-char" style="width:100%;height:330px;"></div>
 	             </td>
 	           </tr>
@@ -58,8 +58,8 @@
          <section class="m-box">
 	         <h2><i class="fa fa-bar-chart" aria-hidden="true"></i>Genus Distribution</h2>
 	         <div id="genus-distribution-parent" class="m-box">
-	           <img ng-if="genusDistributionInfo=='' && !mib.genusDistributionInfo.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.genusDistribution }}">
-	           <img ng-if="genusDistributionInfo=='' && mib.genusDistributionInfo.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.genusDistribution }}">
+	           <img ng-if="genusDistributionInfo=='' && !mib.genusDistributionInfo.contains('Tools') && mib.genusDistribution!=null" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.genusDistribution }}">
+	           <img ng-if="genusDistributionInfo=='' && mib.genusDistributionInfo.contains('Tools') && mib.genusDistribution!=null" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.genusDistribution }}">
 	           <div ng-if="genusDistributionInfo!=''" id="genus-distribution-char" style="width:100%;height:330px;"></div>
 	         </div>
          </section>
@@ -95,26 +95,26 @@
          <section class="m-box">
 	         <h2><i class="fa fa-picture-o" aria-hidden="true"></i>报告图示</h2>
 	         <div class="m-boxCon">
-	           <img ng-if="mib.pngPath.top1png!='' && !mib.pngPath.top1png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top1png }}">
-	           <img ng-if="mib.pngPath.top1png!='' && mib.pngPath.top1png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top1png }}">
-			   <img ng-if="mib.pngPath.top2png!='' && !mib.pngPath.top2png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top2png }}">
-	           <img ng-if="mib.pngPath.top2png!='' && mib.pngPath.top2png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top2png }}">
-	           <img ng-if="mib.pngPath.top3png!='' && !mib.pngPath.top3png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top3png }}">
-	           <img ng-if="mib.pngPath.top3png!='' && mib.pngPath.top3png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top3png }}">
-	           <img ng-if="mib.pngPath.top4png!='' && !mib.pngPath.top4png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top4png }}">
-	           <img ng-if="mib.pngPath.top4png!='' && mib.pngPath.top4png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top4png }}">
-	           <img ng-if="mib.pngPath.top5png!='' && !mib.pngPath.top5png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top5png }}">
-	           <img ng-if="mib.pngPath.top5png!='' && mib.pngPath.top5png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top5png }}">
-	           <img ng-if="mib.pngPath.top6png!='' && !mib.pngPath.top6png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top6png }}">
-	           <img ng-if="mib.pngPath.top6png!='' && mib.pngPath.top6png.contains('Tools')"  ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top6png }}">
-	           <img ng-if="mib.pngPath.top7png!='' && !mib.pngPath.top7png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top7png }}">
-	           <img ng-if="mib.pngPath.top7png!='' && mib.pngPath.top7png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top7png }}">
-	           <img ng-if="mib.pngPath.top8png!='' && !mib.pngPath.top8png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top8png }}">
-	           <img ng-if="mib.pngPath.top8png!='' && mib.pngPath.top8png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top8png }}">
-	           <img ng-if="mib.pngPath.top9png!='' && !mib.pngPath.top9png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top9png }}">
-	           <img ng-if="mib.pngPath.top9png!='' && mib.pngPath.top9png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top9png }}">
-	           <img ng-if="mib.pngPath.top10png!='' && !mib.pngPath.top10png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top10png }}">
-	           <img ng-if="mib.pngPath.top10png!='' && mib.pngPath.top10png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top10png }}">
+	           <img ng-if="mib.pngPath.top1png!=null && mib.pngPath.top1png!='' && !mib.pngPath.top1png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top1png }}">
+	           <img ng-if="mib.pngPath.top1png!=null && mib.pngPath.top1png!='' && mib.pngPath.top1png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top1png }}">
+			   <img ng-if="mib.pngPath.top2png!=null && mib.pngPath.top2png!='' && !mib.pngPath.top2png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top2png }}">
+	           <img ng-if="mib.pngPath.top2png!=null && mib.pngPath.top2png!='' && mib.pngPath.top2png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top2png }}">
+	           <img ng-if="mib.pngPath.top3png!=null && mib.pngPath.top3png!='' && !mib.pngPath.top3png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top3png }}">
+	           <img ng-if="mib.pngPath.top3png!=null && mib.pngPath.top3png!='' && mib.pngPath.top3png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top3png }}">
+	           <img ng-if="mib.pngPath.top4png!=null && mib.pngPath.top4png!='' && !mib.pngPath.top4png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top4png }}">
+	           <img ng-if="mib.pngPath.top4png!=null && mib.pngPath.top4png!='' && mib.pngPath.top4png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top4png }}">
+	           <img ng-if="mib.pngPath.top5png!=null && mib.pngPath.top5png!='' && !mib.pngPath.top5png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top5png }}">
+	           <img ng-if="mib.pngPath.top5png!=null && mib.pngPath.top5png!='' && mib.pngPath.top5png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top5png }}">
+	           <img ng-if="mib.pngPath.top6png!=null && mib.pngPath.top6png!='' && !mib.pngPath.top6png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top6png }}">
+	           <img ng-if="mib.pngPath.top6png!=null && mib.pngPath.top6png!='' && mib.pngPath.top6png.contains('Tools')"  ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top6png }}">
+	           <img ng-if="mib.pngPath.top7png!=null && mib.pngPath.top7png!='' && !mib.pngPath.top7png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top7png }}">
+	           <img ng-if="mib.pngPath.top7png!=null && mib.pngPath.top7png!='' && mib.pngPath.top7png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top7png }}">
+	           <img ng-if="mib.pngPath.top8png!=null && mib.pngPath.top8png!='' && !mib.pngPath.top8png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top8png }}">
+	           <img ng-if="mib.pngPath.top8png!=null && mib.pngPath.top8png!='' && mib.pngPath.top8png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top8png }}">
+	           <img ng-if="mib.pngPath.top9png!=null && mib.pngPath.top9png!='' && !mib.pngPath.top9png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top9png }}">
+	           <img ng-if="mib.pngPath.top9png!=null && mib.pngPath.top9png!='' && mib.pngPath.top9png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top9png }}">
+	           <img ng-if="mib.pngPath.top10png!=null && mib.pngPath.top10png!='' && !mib.pngPath.top10png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.pngPath.top10png }}">
+	           <img ng-if="mib.pngPath.top10png!=null && mib.pngPath.top10png!='' && mib.pngPath.top10png.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.pngPath.top10png }}">
 	         </div>
 	     </section>
          <section class="m-box">
@@ -167,22 +167,22 @@
 	         <table class="table-img two-img">
 	           <tr>
 	             <td>
-	               <img ng-if="mib.qualityPath1!='' && !mib.qualityPath1.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.qualityPath1 }}">
-	               <img ng-if="mib.qualityPath1!='' && mib.qualityPath1.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.qualityPath1 }}">
+	               <img ng-if="mib.qualityPath1!=null && mib.qualityPath1!='' && !mib.qualityPath1.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.qualityPath1 }}">
+	               <img ng-if="mib.qualityPath1!=null && mib.qualityPath1!='' && mib.qualityPath1.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.qualityPath1 }}">
 	             </td>
 	             <td>
-	               <img ng-if="mib.qualityPath2!='' && !mib.qualityPath2.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.qualityPath2 }}">
-	               <img ng-if="mib.qualityPath2!='' && mib.qualityPath2.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.qualityPath2 }}">
+	               <img ng-if="mib.qualityPath2!=null && mib.qualityPath2!='' && !mib.qualityPath2.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.qualityPath2 }}">
+	               <img ng-if="mib.qualityPath2!=null && mib.qualityPath2!='' && mib.qualityPath2.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.qualityPath2 }}">
 	             </td>
 	           </tr>
 	           <tr>
 	             <td>
-	               <img ng-if="mib.seqContentPath1!='' && !mib.seqContentPath1.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.seqContentPath1 }}">
-	               <img ng-if="mib.seqContentPath1!='' && mib.seqContentPath1.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.seqContentPath1 }}">
+	               <img ng-if="mib.seqContentPath1!=null && mib.seqContentPath1!='' && !mib.seqContentPath1.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.seqContentPath1 }}">
+	               <img ng-if="mib.seqContentPath1!=null && mib.seqContentPath1!='' && mib.seqContentPath1.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.seqContentPath1 }}">
 	             </td>
 	             <td>
-	               <img ng-if="mib.seqContentPath2!='' && !mib.seqContentPath2.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.seqContentPath2 }}">
-	               <img ng-if="mib.seqContentPath2!='' && mib.seqContentPath2.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.seqContentPath2 }}">
+	               <img ng-if="mib.seqContentPath2!=null && mib.seqContentPath2!='' && !mib.seqContentPath2.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{uploadPath+'/'+mib.userId+'/'+mib.appId+'/'+mib.dataKey+'/'+mib.seqContentPath2 }}">
+	               <img ng-if="mib.seqContentPath2!=null && mib.seqContentPath2!='' && mib.seqContentPath2.contains('Tools')" ng-src="<%=request.getContextPath()%>/report/reportImage?file={{mib.seqContentPath2 }}">
 	             </td>
 	           </tr>
 	         </table>
