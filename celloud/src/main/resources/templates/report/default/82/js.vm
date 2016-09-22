@@ -60,6 +60,7 @@ $(function(){
         var inputVal;
         $("#printMain").find("input[type='text']").each(function(){
             inputVal = $(this).val();
+            inputName = $(this).attr("name");
             var cl = $(this).attr("class"); 
             if(cl){
                 if(cl.indexOf('havebefore')>-1){
@@ -70,15 +71,16 @@ $(function(){
                 	if(cl.indexOf('_light')>-1){
                 		append = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
                 	}
-                    $(this).parent().html("突变型:<span name='print' class='"+cl+"'>"+inputVal+"</span>"+append);
+                    $(this).parent().html("突变型:<span tempName=\""+inputName+"\" name='print' class='"+cl+"'>"+inputVal+"</span>"+append);
                 }else{
-                    $(this).parent().html("<span name='print' class='"+cl+"'>"+inputVal+"</span>");
+                    $(this).parent().html("<span tempName=\""+inputName+"\" name='print' class='"+cl+"'>"+inputVal+"</span>");
                 }
             }else{
-                $(this).parent().html("<span name='print'>"+inputVal+"</span>");
+                $(this).parent().html("<span tempName=\""+inputName+"\" name='print'>"+inputVal+"</span>");
             }
         });
         var sex = $("input[type='radio']:checked").val();
+        var sexName = $("input[type='radio']").attr("name");
         $("#_sex").html(sex);
         $("a[name='change']").hide();
         $("hr[name='change']").hide();
@@ -92,11 +94,13 @@ $(function(){
             $("h1").css("padding","0 0 5px 0");
         }
         inputVal = $("#des").children().val();
+        desName = $("#des").children().attr("name");
         if(inputVal){
             inputVal = inputVal.replace(/\n/g,"<br/>");
             $("#des").html(inputVal);
         }
         inputVal = $("#des1").children().val();
+        des1Name = $("#des1").children().attr("name");
         var oldInputVal = inputVal
         if(inputVal){
             inputVal = inputVal.replace(/\n/g,"<br/>&nbsp;&nbsp;&nbsp;");
@@ -109,11 +113,11 @@ $(function(){
         inputVal = $("#des").html();
         if(inputVal){
             inputVal = inputVal.replace(/<br>/g,"\n");
-            $("#des").html("<textarea rows=\"6\">"+inputVal+"</textarea>");
+            $("#des").html("<textarea name=\""+desName+"\" rows=\"6\">"+inputVal+"</textarea>");
         }
         inputVal = $("#des1").html();
         if(inputVal){
-            $("#des1").html("<textarea rows=\"5\">"+oldInputVal+"</textarea>");
+            $("#des1").html("<textarea name=\""+des1Name+"\" rows=\"5\">"+oldInputVal+"</textarea>");
         }
         if(_flag==1){
             $("h1").css("padding","40px 0 5px 0");
@@ -127,6 +131,7 @@ $(function(){
         $("hr[name='change']").show();
         $("body").find("span[name='print']").each(function(){
             inputVal = $(this).html();
+            inputName = $(this).attr("tempName");
             var cl = $(this).attr("class");
             if(cl){
               if(cl.indexOf('havebefore')>=0){
@@ -137,20 +142,21 @@ $(function(){
             	if(cl.indexOf('_light')>-1){
             		append = "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
             	}
-                $(this).parent().html("突变型:<input type='text' class='"+cl+"' value='"+inputVal+"'>"+append);
+                $(this).parent().html("突变型:<input name=\""+inputName+"\" type='text' class='"+cl+"' value='"+inputVal+"'>"+append);
               }else{
-                $(this).parent().html("<input type='text' class='"+cl+"' value='"+inputVal+"'>");
+                $(this).parent().html("<input name=\""+inputName+"\" type='text' class='"+cl+"' value='"+inputVal+"'>");
               }
             }else{
-                $(this).parent().html("<input type='text' value='"+inputVal+"'>");
+                $(this).parent().html("<input name=\""+inputName+"\" type='text' value='"+inputVal+"'>");
             }
         });
         
         $("body").find("span[name='print']").each(function(){
             inputVal = $(this).html();
-            $(this).parent().html("<input type='text' value='"+inputVal+"'>");
+            inputName = $(this).attr("tempName");
+            $(this).parent().html("<input name=\""+inputName+"\" type='text' value='"+inputVal+"'>");
         });
-        $("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+        $("#_sex").html("<input type='radio' name=\""+sexName+"\" value='男'>男<input type='radio' name=\""+sexName+"\" value='女'>女");
         $("input[type='radio'][value="+sex+"]").attr("checked",true);  
     });
     
