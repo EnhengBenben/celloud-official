@@ -26,33 +26,35 @@
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]  -->
 </head>
-<body class="container" ng-app="celloudApp" ng-controller="sidebarController">
-<!--   <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include> -->
-<!--   <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include> -->
-  <jsp:include page="partial/_partial_index_header.jsp"></jsp:include>
-  <jsp:include page="partial/_partial_index_sidebar.jsp"></jsp:include>
-  <div ng-view class="view-container"></div>
-  <div id="tips-modal" class="modal tips-modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-          <h4 class="modal-title">提示</h4>
-        </div>
-        <div class="modal-body">
-          <h5><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{errorInfo}}</h5>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-  <!-- 放大图片所需的div -->
-  <div id="fullbg"></div> 
-  <div id="pageContent" class="pageContent">
-	<a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
-	<img id="imageFullScreen" src="">
+<body ng-app="celloudApp" ng-controller="sidebarController">
+  <div class="container">
+	<!--   <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include> -->
+	<!--   <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include> -->
+	  <jsp:include page="partial/_partial_index_header.jsp"></jsp:include>
+	  <jsp:include page="partial/_partial_index_sidebar.jsp"></jsp:include>
+	  <div ng-view class="view-container"></div>
+	  <div id="tips-modal" class="modal tips-modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	    <div class="modal-dialog modal-sm">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	          <h4 class="modal-title">提示</h4>
+	        </div>
+	        <div class="modal-body">
+	          <h5><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{errorInfo}}</h5>
+	        </div>
+	      </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	  </div><!-- /.modal -->
+	  <!-- 放大图片所需的div -->
+	  <div id="fullbg"></div> 
+	  <div id="pageContent" class="pageContent">
+		<a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
+		<img id="imageFullScreen" src="">
+	  </div>
+      <div id="alerts" class="alerts"></div>
+      <ng-include src="'pages/partial/_partial_upload_modal.jsp'"></ng-include>
   </div>
-  <div id="alerts" class="alerts"></div>
-  <ng-include src="'pages/partial/_partial_upload_modal.jsp'"></ng-include>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/intro/intro.js?version=1.1"></script>
   <script type="text/javascript">
