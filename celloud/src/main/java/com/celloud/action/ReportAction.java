@@ -682,18 +682,18 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView(path, projectId);
 		if (mib == null)
 			return mv;
-        mibCharList.put("readsDistributionInfo",
-                mib.getReadsDistributionInfo() != null
-                        ? JSONArray.fromObject(mib.getReadsDistributionInfo())
-                        : new JSONArray());
-        mibCharList.put("familyDistributionInfo",
-                mib.getFamilyDistributionInfo() != null
-                        ? JSONArray.fromObject(mib.getFamilyDistributionInfo())
-                        : new JSONArray());
-        mibCharList.put("genusDistributionInfo",
-                mib.getGenusDistributionInfo() != null
-                        ? JSONArray.fromObject(mib.getGenusDistributionInfo())
-                        : new JSONArray());
+        if (mib.getReadsDistributionInfo() != null
+                && mib.getReadsDistributionInfo().size() > 0)
+            mibCharList.put("readsDistributionInfo",
+                    JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        if (mib.getFamilyDistributionInfo() != null
+                && mib.getFamilyDistributionInfo().size() > 0)
+            mibCharList.put("familyDistributionInfo",
+                    JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        if (mib.getGenusDistributionInfo() != null
+                && mib.getGenusDistributionInfo().size() > 0)
+            mibCharList.put("genusDistributionInfo",
+                    JSONArray.fromObject(mib.getGenusDistributionInfo()));
 		mv.addObject("mibCharList", mibCharList);
 		return mv.addObject("mib", mib);
 	}
@@ -704,12 +704,18 @@ public class ReportAction {
             Integer projectId, Integer appId) {
         MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
         Map<String, Object> map = new HashMap<>();
-        map.put("readsDistributionInfo",
-                JSONArray.fromObject(mib.getReadsDistributionInfo()));
-        map.put("familyDistributionInfo",
-                JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-        map.put("genusDistributionInfo",
-                JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        if (mib.getReadsDistributionInfo() != null
+                && mib.getReadsDistributionInfo().size() > 0)
+            map.put("readsDistributionInfo",
+                    JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        if (mib.getFamilyDistributionInfo() != null
+                && mib.getFamilyDistributionInfo().size() > 0)
+            map.put("familyDistributionInfo",
+                    JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        if (mib.getGenusDistributionInfo() != null
+                && mib.getGenusDistributionInfo().size() > 0)
+            map.put("genusDistributionInfo",
+                    JSONArray.fromObject(mib.getGenusDistributionInfo()));
         map.put("mib", mib);
         map.put("uploadPath", "/upload/");
         return map;
@@ -752,9 +758,18 @@ public class ReportAction {
 		MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
 		Map<String, Object> context = new HashMap<String, Object>();
 		if (mib != null) {
-			context.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
-			context.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-			context.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
+            if (mib.getReadsDistributionInfo() != null
+                    && mib.getReadsDistributionInfo().size() > 0)
+                context.put("readsDistributionInfo",
+                        JSONArray.fromObject(mib.getReadsDistributionInfo()));
+            if (mib.getFamilyDistributionInfo() != null
+                    && mib.getFamilyDistributionInfo().size() > 0)
+                context.put("familyDistributionInfo",
+                        JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+            if (mib.getGenusDistributionInfo() != null
+                    && mib.getGenusDistributionInfo().size() > 0)
+                context.put("genusDistributionInfo",
+                        JSONArray.fromObject(mib.getGenusDistributionInfo()));
 			context.put("mib", mib);
 		}
 		returnToVelocity(path, context, projectId);
@@ -777,18 +792,9 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView(path, projectId);
 		if (bsi == null)
 			return mv;
-        mibCharList.put("readsDistributionInfo",
-                bsi.getReadsDistributionInfo() != null
-                        ? JSONArray.fromObject(bsi.getReadsDistributionInfo())
-                        : new JSONArray());
-        mibCharList.put("familyDistributionInfo",
-                bsi.getFamilyDistributionInfo() != null
-                        ? JSONArray.fromObject(bsi.getFamilyDistributionInfo())
-                        : new JSONArray());
-        mibCharList.put("genusDistributionInfo",
-                bsi.getGenusDistributionInfo() != null
-                        ? JSONArray.fromObject(bsi.getGenusDistributionInfo())
-                        : new JSONArray());
+		mibCharList.put("readsDistributionInfo", JSONArray.fromObject(bsi.getReadsDistributionInfo()));
+		mibCharList.put("familyDistributionInfo", JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
+		mibCharList.put("genusDistributionInfo", JSONArray.fromObject(bsi.getGenusDistributionInfo()));
 		mv.addObject("bsiCharList", mibCharList);
 		return mv.addObject("bsi", bsi);
 	}
