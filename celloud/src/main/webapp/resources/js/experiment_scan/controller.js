@@ -1,14 +1,17 @@
 (function(){
-  celloudApp.controller("samplingController", function($rootScope, $scope, samplingService){
-    $scope.sampleList = samplingService.sampleList();
+  celloudApp.controller("samplingController", function($scope, samplingService){
     $scope.productTags = samplingService.getProductTags();
     $scope.typeList = ["血","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
+    var refreshList = function(){
+      $scope.sampleList = samplingService.sampleList();
+    }
+    refreshList();
     $scope.addSample = function(){
       samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type).success(function(data){
         if(data == 2){
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
         }else {
-          $scope.sampleList = samplingService.sampleList();
+          refreshList();
         }
         $scope.sampleName = "";
       })
@@ -16,7 +19,7 @@
     $scope.commitSample = function(){
       samplingService.commitSample($scope.sampleList).success(function(data){
         if(data > 0){
-          $scope.sampleList = samplingService.sampleList();
+          refreshList();
         }else {
           $.alert("样本已提交");
         }
@@ -25,7 +28,7 @@
     $scope.deleteSample = function(id){
       samplingService.deleteSample(id).success(function(data){
         if(data > 0){
-          $scope.sampleList = samplingService.sampleList();
+          refreshList();
           $.alert("删除样本成功");
         }else {
           $.alert("删除样本失败");
@@ -34,7 +37,7 @@
     }
   });
   
-  celloudApp.controller("scanStorageController", function($rootScope, $scope, scanStorageService){
+  celloudApp.controller("scanStorageController", function($scope, scanStorageService){
     $scope.pages = {
       page : 1,
       pageSize : 20
@@ -45,7 +48,7 @@
         pageSize : pageSize
       };
       scanStorageService.pageList($scope.pages.page,$scope.pages.pageSize).success(function(data){
-    	  $rootScope.sampleList = data;
+        $scope.sampleList = data;
       });
     }
     
@@ -67,7 +70,7 @@
         if(data == 0){
           $.alert("系统中无此样本信息，请确认是已采样样本！")
         }else if(data > 0){
-          $rootScope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
+          $scope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
         }else {
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！")
         }
@@ -86,10 +89,10 @@
       });
     }
     
-    $rootScope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
+    $scope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
   });
   
-  celloudApp.controller("tokenDNAController",function($rootScope, $scope,scanStorageService, tokenDNAService){
+  celloudApp.controller("tokenDNAController",function($scope,scanStorageService, tokenDNAService){
       $scope.pages = {
         page : 1,
         pageSize : 20
@@ -100,7 +103,7 @@
           pageSize : pageSize
         };
         tokenDNAService.pageList($scope.pages.page,$scope.pages.pageSize).success(function(data){
-          $rootScope.sampleList = data
+          $scope.sampleList = data
         });
       }
       
@@ -122,7 +125,7 @@
           if(data == 0){
             $.alert("此样本未入库");
           }else if(data > 0){
-            $rootScope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
+            $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
           }else {
             $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
           }
@@ -132,17 +135,17 @@
       $scope.remove = function(id){
         scanStorageService.remove(id).success(function(data){
           if(data > 0){
-            $rootScope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
+            $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
             $.alert("样本删除成功");
           }else{
             $.alert("样本删除失败");
           }
         });
       }
-      $rootScope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
+      $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
   });
   
-  celloudApp.controller("buidLibraryController",function($rootScope, $scope,scanStorageService, buidLibraryService){
+  celloudApp.controller("buidLibraryController",function($scope,scanStorageService, buidLibraryService){
     $scope.infos = buidLibraryService.infos();
     
     $scope.doOnKeyPress= function($event){
@@ -219,7 +222,7 @@
     }
   });
   
-  celloudApp.controller("storagesController",function($rootScope, $scope, storagesService,buidLibraryService){
+  celloudApp.controller("storagesController",function($scope, storagesService,buidLibraryService){
     $scope.storages = storagesService.storages();
     storagesService.sampleList().success(function(data){
       $scope.sampleList = data;
@@ -250,7 +253,7 @@
     }
   });
   
-  celloudApp.controller("editSampleController",function($rootScope, $scope, scanStorageService, tokenDNAService){
+  celloudApp.controller("editSampleController",function($scope, scanStorageService, tokenDNAService){
     $scope.toEditRemark = function(id,remark){
       $scope.sampleId = id;
       $scope.remark = remark;
@@ -265,12 +268,12 @@
         if(data > 0){
           if($scope.exper_state == 1){
         	  scanStorageService.pageList($scope.pages.page,$scope.pages.pageSize).success(function(data){
-            	  $rootScope.sampleList = data;
-              });
+        	    $scope.sampleList = data;
+            });
           }else{
         	  tokenDNAService.pageList($scope.pages.page,$scope.pages.pageSize).success(function(data){
-                  $rootScope.sampleList = data
-                });
+        	    $scope.sampleList = data
+            });
           }
           $.alert("样本修改成功");
         }else{
