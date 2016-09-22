@@ -110,7 +110,7 @@
               </label>
             </td>
             <td>{{task.fileName}}</td>
-            <td>{{task.dataKey}}</td>
+            <td>{{task.sampleName}}</td>
             <td>{{task.tagName}}</td>
             <td>{{task.batch}}</td>
             <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
