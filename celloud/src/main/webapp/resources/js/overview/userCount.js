@@ -208,7 +208,7 @@ var userCount=(function(userCount){
           x += "'" + map.time + "',";
           y[y.length]=Number(map.num);
         }
-      })
+      });
       x = x.substring(0,x.length-1);
       x += "]";
       self.lineModal("count-app-day-chart","日已添加APP运行次数",eval(x),y,"日APP运行次数");

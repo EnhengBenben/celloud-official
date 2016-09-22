@@ -77,7 +77,7 @@
           <li class="search-type clearfix">
             <label>样本编码：</label>
             <div class="search-type-detail">
-              <input type="text" placeholder="扫码或输入编号">
+              <input ng-change="conditionQuery()" ng-model="dataOptions.condition" type="text" placeholder="扫码或输入编号">
             </div>
           </li>
         </ul>
