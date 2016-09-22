@@ -561,7 +561,7 @@
 		where t.user_id=#{userId} and t.state=#{state} and f.state=#{state} 
         <if test="condition != null and condition!=''">
             and (f.file_name like concat('%',#{condition},'%')
-            or s.sample_name like concat('%',#{condition},'%')
+            or s.sample_name like concat('%',#{condition},'%'))
         </if>
         <if test="period != null">
             and t.period=#{period}

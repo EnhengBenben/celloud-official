@@ -1028,6 +1028,7 @@
         var condition = $scope.projectOptions.condition;
         var pageSize = $scope.projectOptions.pageSize;
         var page = $scope.projectOptions.page;
+        condition == ''?condition = 'all': condition = condition;
     	window.location.href = CONTEXT_PATH + "/index#/reportpro/"+page+"/"+pageSize+"/"+belongs+"/"+changeDate+"/"+start+"/"+end+"/"+app+"/"+condition;
     }
     $scope.pageQuery($scope.projectOptions.page,$scope.projectOptions.pageSize);
@@ -1443,7 +1444,7 @@
 	  tagId : $routeParams.tagId,
       period : $routeParams.period,
       batch : $routeParams.batch,
-      condition : $routeParams.condition,
+      condition : $routeParams.condition == 'all'?'':$routeParams.condition,
       sort: 'desc'
     };
     
@@ -1454,7 +1455,7 @@
     	var tagId = $scope.dataOptions.tagId=='all'?null:$scope.dataOptions.tagId;
     	var period = $scope.dataOptions.period=='all'?null:$scope.dataOptions.period;
     	var batch = $scope.dataOptions.batch=='all'?null:$scope.dataOptions.batch;
-    	var condition = $scope.dataOptions.condition=='all'?null:$scope.dataOptions.condition;
+    	var condition = $scope.dataOptions.condition==''?null:$scope.dataOptions.condition;
       dataReportService.getReportsByParams($scope.dataOptions.page,$scope.dataOptions.pageSize,condition,beginDate,endDate,batch,tagId,period,$scope.dataOptions.sort)
       .success(function(dataList){
         $scope.reportList = dataList;
@@ -1531,7 +1532,8 @@
       paramQuqery();
     }
     $scope.conditionQuery = function(){
-    	
+    	$scope.dataOptions.page = 1;
+    	paramQuqery();
     }
     paramQuqery();
   });
