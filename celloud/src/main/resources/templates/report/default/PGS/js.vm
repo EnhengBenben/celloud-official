@@ -90,7 +90,8 @@ $(function(){
 		$("body").find("span[name='miniPrint']").each(function(){
 			inputVal = $(this).html();
 			inputClass = $(this).attr('_hideClass');
-			$(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" style=\"height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px\" value=\""+inputVal+"\"/>");
+			inputName = $(this).attr('tempName');
+			$(this).parent().html("<input name=\""+inputName+"\" type=\"text\" class=\""+inputClass+"\" style=\"height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px\" value=\""+inputVal+"\"/>");
 		});
 		inputVal = $("#des").html();
 		if(inputVal){
