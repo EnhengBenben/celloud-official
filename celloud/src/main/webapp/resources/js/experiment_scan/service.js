@@ -2,7 +2,7 @@
   celloudApp.service("samplingService", function($resource,$http){
     var self = this;
     self.sampleList = function(){
-      return $resource("sample/getSamplingList").query();
+      return $resource("sample/getSamplingList?v="+new Date()).query();
     }
     self.getProductTags = function(){
       return $resource("uploadFile/getProductTag").query();
@@ -26,10 +26,10 @@
   celloudApp.service("scanStorageService", function($resource,$http){
     var self = this;
     self.sampleList = function(){
-      return $resource("sample/getScanStorageSamples").get();
+      return $resource("sample/getScanStorageSamples?v="+new Date()).get();
     }
     self.pageList = function(page,size){
-      return $http.get("sample/getScanStorageSamples",{params: {page:page,size:size}});
+      return $http.get("sample/getScanStorageSamples?v="+new Date(),{params: {page:page,size:size}});
     }
     self.scanStorage = function(sampleName){
       return $http({method:"POST",url:'sample/toScanStorage',params:{"sampleName":sampleName}});
@@ -44,10 +44,10 @@
   celloudApp.service("tokenDNAService", function($resource,$http){
     var self = this;
     self.sampleList = function(){
-      return $resource("sample/getTokenDnaSamples").get();
+      return $resource("sample/getTokenDnaSamples?v="+new Date()).get();
     }
     self.pageList = function(page,size){
-      return $http.get("sample/getTokenDnaSamples",{params: {page:page,size:size}});
+      return $http.get("sample/getTokenDnaSamples?v="+new Date(),{params: {page:page,size:size}});
     }
     self.tokenDNA = function(sampleName){
       return $http({method:"POST",url:'sample/toTokenDNA',params:{"sampleName":sampleName}});
@@ -56,7 +56,7 @@
   celloudApp.service("buidLibraryService", function($resource,$http){
     var self = this;
     self.infos = function(){
-      return $resource("sample/getBuidLibrarySamples").get();
+      return $resource("sample/getBuidLibrarySamples?v="+new Date()).get();
     }
     self.addSample = function(sampleName,sampleList){
       var sindexs=new Array();
@@ -81,13 +81,13 @@
   celloudApp.service("storagesService", function($resource,$http,$routeParams){
     var self = this;
     self.storages = function(){
-      return $resource("sample/getSampleStorages").get();
+      return $resource("sample/getSampleStorages?v="+new Date()).get();
     }
     self.pageList = function(page,size){
-      return $http.get("sample/getSampleStorages",{params: {page:page,size:size}});
+      return $http.get("sample/getSampleStorages?v="+new Date(),{params: {page:page,size:size}});
     }
     self.sampleList = function(){
-      return $http.get("sample/sampleListInStorage",{params: {ssId:$routeParams.ssId}});
+      return $http.get("sample/sampleListInStorage?v="+new Date(),{params: {ssId:$routeParams.ssId}});
     }
   });
 })()

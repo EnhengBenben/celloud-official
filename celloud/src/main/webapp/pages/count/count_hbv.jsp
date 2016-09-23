@@ -21,27 +21,8 @@
   <c:choose>
   	<c:when test="${map.data.size()>0}">
   	  <c:forEach items="${map.data }" var="hbv">
-	    <tr>
-	      <td align="center" style="max-width: 150px;">${hbv.fileName }</td>
-	      <c:if test="${not empty hbv.site  }">
-			<c:forEach var="key" items="169,173,180,181,184,194,202,204,236,250">
-		      	<c:set value="${key }_wild" var="w"></c:set>
-		      	<c:set value="${key }_mutation" var="m"></c:set>
-			      	<td align="center">
-				      	<c:if test="${hbv.site[m].contains('未检测到') }">
-				      	${hbv.site[w].substring(0,1) }
-				      	</c:if>
-				      	<c:if test="${not hbv.site[m].contains('未检测到') }">
-				      	${hbv.site[m].substring(0,1) }
-				      	</c:if>
-			      </td>
-			</c:forEach>
-	      </c:if>
-	      <c:if test="${empty hbv.site }">
-	      	<td align="center" colspan="10">由于分析流程的升级，八月一日之前的分析结果无法提取到该信息，若需要请重新运行。</td>
-	      </c:if>
-	      <td align="center"><a href="javascript:showSeq('${hbv.seq }')">查看序列</a></td>
-	    </tr>
+  	  <!-- tr与td如果换行的话ie9会有bug -->
+	    <tr><td align="center" style="max-width: 150px;"><c:if test="${hbv.fileName.length() > 18 }">${hbv.fileName.substring(0,18).concat('...') }</c:if><c:if test="${hbv.fileName.length() <= 18 }">${hbv.fileName }</c:if></td><c:if test="${not empty hbv.site  }"><c:forEach var="key" items="169,173,180,181,184,194,202,204,236,250"><c:set value="${key }_wild" var="w"></c:set><c:set value="${key }_mutation" var="m"></c:set><td align="center"><c:if test="${hbv.site[m].contains('未检测到') }">${hbv.site[w].substring(0,1) }</c:if><c:if test="${not hbv.site[m].contains('未检测到') }">${hbv.site[m].substring(0,1) }</c:if></td></c:forEach></c:if><c:if test="${empty hbv.site }"><td align="center" colspan="10">由于分析流程的升级，八月一日之前的分析结果无法提取到该信息，若需要请重新运行。</td></c:if><td align="center"><a href="javascript:showSeq('${hbv.seq }')">查看序列</a></td></tr>
   	  </c:forEach>
   	</c:when>
   	<c:otherwise>

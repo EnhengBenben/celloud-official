@@ -5,50 +5,27 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <table class="table table-main no-padding-left count-table">
   <thead>
-    <tr>
-      <th style="min-width:50px;">序号</th>
-      <th style="width:120px">数据编号</th>
-      <th style="width:70px">Barcode</th>
-      <th style="width:70px">数据别名</th>
-      <th style="width:90px">上传日期</th>
-      <th style="width:110px">APP</th>
-      <th style="width:90px">Total_Reads</th>
-      <th style="width:90px">Map_Reads</th>
-      <th style="width:100px">Map_Ratio(%)</th>
-      <th style="width:80px">Duplicate</th>
-      <th style="width:100px">GC_Count(%)</th>
-      <th style="width:60px">*SD</th>
+    <tr style="padding: 0px;">
+      <th>序号</th>
+      <th>数据编号</th>
+      <th>Barcode</th>
+      <th>数据别名</th>
+      <th>上传日期</th>
+      <th>APP</th>
+      <th>Total_Reads</th>
+      <th>Map_Reads</th>
+      <th>Map_Ratio(%)</th>
+      <th>Duplicate</th>
+      <th>GC_Count(%)</th>
+      <th>*SD</th>
     </tr>
   </thead>
   <tbody>
   <c:choose>
   	<c:when test="${map.data.size()>0}">
   	  <c:forEach items="${map.data }" var="pgs" varStatus="pgsSta">
-	    <tr>
-	      <td align="center"><c:out value="${pgsSta.index}"/></td>
-	      <td align="center">${pgs.dataKey }</td>
-	      <td align="center"><c:set var="fileName" value="${fn:split(pgs.fileName, '_')}" />
-	      	<c:choose>
-		      	<c:when test="${fn:length(fileName)>2}">
-					<c:forEach items="${fileName }" var="fname" begin="0" end="1" varStatus="status">
-						${fname }<c:if test="${status.count == 1}">_</c:if>
-					</c:forEach>
-		      	</c:when>
-		      	<c:otherwise>
-		      		<c:out value='${fn:substringBefore(pgs.fileName, ".")}'></c:out>
-		      	</c:otherwise>
-	      	</c:choose>
-	      </td>
-	      <td align="center">${pgs.anotherName }</td>
-	      <td align="center"><fmt:formatDate value="${pgs.uploadDate }" pattern="yyyy-MM-dd"/> </td>
-	      <td align="center">${pgs.appName }</td>
-	      <td align="center">${pgs.totalReads }</td>
-	      <td align="center">${pgs.mapReads }</td>
-	      <td align="center">${pgs.mapRatio }</td>
-	      <td align="center">${pgs.duplicate }</td>
-	      <td align="center">${pgs.gcCount }</td>
-	      <td align="center">${pgs.sd }</td>
-	    </tr>
+  	  <!-- tr与td如果换行的话ie9会有bug -->
+	    <tr style="padding: 0px;"><td align="center"><c:out value="${pgsSta.index}"/></td><td align="center">${pgs.dataKey }</td><td align="center"><c:set var="fileName" value="${fn:split(pgs.fileName, '_')}" /><c:set var="name" value=""></c:set><c:choose><c:when test="${fn:length(fileName)>2}"><c:forEach items="${fileName }" var="fname" begin="0" end="1" varStatus="status"><c:set var="name" value="${name.concat(fname) }"></c:set><c:if test="${status.count == 1}"><c:set var="name" value="${name.concat('_') }"></c:set></c:if></c:forEach></c:when><c:otherwise><c:set var="name" value="${fn:substringBefore(pgs.fileName, '.') }"></c:set></c:otherwise></c:choose>${name.length() > 16 ? name.substring(0,11).concat('...') : name }</td><td align="center">${pgs.anotherName.length() > 14 ? (pgs.anotherName.substring(0,11).concat('...')) : pgs.anotherName }</td><td align="center"><fmt:formatDate value="${pgs.uploadDate }" pattern="yyyy-MM-dd"/></td><td align="center">${pgs.appName }</td><td align="center">${pgs.totalReads }</td><td align="center">${pgs.mapReads }</td><td align="center">${pgs.mapRatio }</td><td align="center">${pgs.duplicate }</td><td align="center">${pgs.gcCount }</td><td align="center">${pgs.sd }</td></tr>
   	  </c:forEach>
   	</c:when>
   	<c:otherwise>

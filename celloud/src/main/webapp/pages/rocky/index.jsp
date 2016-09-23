@@ -16,7 +16,7 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.1" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.2" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/rocky_main.min.css" rel="stylesheet">
 <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
 <!-- [if It IE 9]>
@@ -92,49 +92,9 @@
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
   <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
   <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
-  <script src="<%=request.getContextPath()%>/js/utils.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/js/charts.js"></script>
-  <script src="<%=request.getContextPath()%>/js/report_codon.js"></script>
-  <script src="<%=request.getContextPath()%>/js/message.js"></script>
-  <script src="<%=request.getContextPath()%>/js/alert.js"></script>
-  <script src="<%=request.getContextPath()%>/js/confirm.js"></script>
-  <script src="<%=request.getContextPath()%>/js/application.js"></script>
-  <script src="<%=request.getContextPath()%>/js/directive/href.js"></script>
-  <script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
-  <script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/app/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/experiment_scan/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/experiment_scan/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/user/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/data/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/data/data.js"></script>
-  <script src="<%=request.getContextPath()%>/js/report/filter.js"></script>
-  <script src="<%=request.getContextPath()%>/js/report/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/report/dataReportService.js"></script>
-  <script src="<%=request.getContextPath()%>/js/report/dataReportController.js"></script>
-  <script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
-  <script src="<%=request.getContextPath()%>/js/common/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
-  <script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
-  <script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
-  <script src="<%=request.getContextPath()%>/js/notice/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/notice/messageController.js"></script>
-  <script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
-  <script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
-  <script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
-  
+  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.2"></script>
 	<script src="<%=request.getContextPath()%>/js/base.js?v=3.2.4" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/rocky_main.js?v=3.2.4" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/rocky_upload.js?v=3.2.4"></script>

@@ -9,41 +9,29 @@
     <div class="content library">
         <div class="content-header clearfix">
 		  <div class="library-name">文库编码：{{infos.libraryName}}</div>
-          <select ng-model="sindex">
-            <option value="文库index">文库index</option>
-            <option value="M16s_1_1R/F:AG">M16s_1_1R/F:AG</option>
-			<option value="M16s_1_2R/F:AT">M16s_1_2R/F:AT</option>
-			<option value="M16s_1_3R/F:CA">M16s_1_3R/F:CA</option>
-			<option value="M16s_1_4R/F:CG">M16s_1_4R/F:CG</option>
-			<option value="M16s_1_5R/F:GA">M16s_1_5R/F:GA</option>
-			<option value="M16s_1_6R/F:GT">M16s_1_6R/F:GT</option>
-			<option value="M16s_1_7R/F:CTGG">M16s_1_7R/F:CTGG</option>
-			<option value="M16s_1_8R/F:CTTG">M16s_1_8R/F:CTTG</option>
-			<option value="M16s_1_9R/F:ACGT">M16s_1_9R/F:ACGT</option>
-			<option value="M16s_1_10R/F:GGCT">M16s_1_10R/F:GGCT</option>
-			<option value="M16s_1_11R/F:AAGC">M16s_1_11R/F:AAGC</option>
-			<option value="M16s_1_12R/F:CTTA">M16s_1_12R/F:CTTA</option>
-			<option value="M16s_1_13R/F:CTGT">M16s_1_13R/F:CTGT</option>
-			<option value="M16s_1_14R/F:GCAG">M16s_1_14R/F:GCAG</option>
-			<option value="M16s_1_15R/F:TCAC">M16s_1_15R/F:TCAC</option>
-			<option value="M16s_1_16R/F:AACT">M16s_1_16R/F:AACT</option>
-			<option value="M16s_1_17R/F:ACCAGAG">M16s_1_17R/F:ACCAGAG</option>
-			<option value="M16s_1_18R/F:TGAGAGT">M16s_1_18R/F:TGAGAGT</option>
-			<option value="M16s_1_19R/F:TGATACG">M16s_1_19R/F:TGATACG</option>
-			<option value="M16s_1_20R/F:GGCAGAC">M16s_1_20R/F:GGCAGAC</option>
-			<option value="M16s_1_21R/F:CTTCTAA">M16s_1_21R/F:CTTCTAA</option>
-			<option value="M16s_1_22R/F:GCATCGT">M16s_1_22R/F:GCATCGT</option>
-			<option value="M16s_1_23R/F:TCTACTG">M16s_1_23R/F:TCTACTG</option>
-			<option value="M16s_1_24R/F:TACTTCC">M16s_1_24R/F:TACTTCC</option>
-          </select>
           <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入样本编号！</span>
 	      <div class="info-btn-group">
-            <input class="field" type="text" ng-trim="true" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
+            <input class="field" type="text" ng-trim="true" ng-model="sampleName" ng-keypress="doOnKeyPress($event)" required placeholder="扫描样本编号/病历号"/>
             <a class="action" ng-click="addSample()">扫码入库</a>
           </div>
           <div class="library-btns pull-right">
-            <a ng-click="addLibrary()" class="btn -low pull-right" ng-disabled="infos.pageList.datas.length <= 0">建库</a>
-            <a ng-click="addAndDownLibrary()" class="btn btn-reset -low pull-right" ng-disabled="infos.pageList.datas.length <= 0">建库并下载</a>
+            <select class="form-control" ng-model="sindex">
+	            <option value="文库index">文库index</option>
+	            <option value="BSL1:ATCACG">BSL1:ATCACG</option>
+	            <option value="BSL2:CGATGT">BSL2:CGATGT</option>
+	            <option value="BSL3:TTAGGC">BSL3:TTAGGC</option>
+	            <option value="BSL4:TGACCA">BSL4:TGACCA</option>
+	            <option value="BSL5:ACAGTG">BSL5:ACAGTG</option>
+	            <option value="BSL6:GCCAAT">BSL6:GCCAAT</option>
+	            <option value="BSL7:CAGATC">BSL7:CAGATC</option>
+	            <option value="BSL8:ACTTGA">BSL8:ACTTGA</option>
+	            <option value="BSL9:GATCAG">BSL9:GATCAG</option>
+	            <option value="BSL10:TAGCTT">BSL10:TAGCTT</option>
+	            <option value="BSL11:GGCTAC">BSL11:GGCTAC</option>
+	            <option value="BSL12:CTTGTA">BSL12:CTTGTA</option>
+	        </select>
+            <button ng-click="addLibrary()" class="btn -low pull-right" ng-disabled="infos.pageList.datas.length <= 0 || sindex=='' || sindex==undefined">建库</button>
+            <button ng-click="addAndDownLibrary()" class="btn btn-reset -low pull-right" ng-disabled="infos.pageList.datas.length <= 0 || sindex=='' || sindex==undefined">建库并下载</button>
           </div>
         </div>
         <div class="table-opera clearfix">

@@ -37,11 +37,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.AppConstants;
-import com.celloud.constants.CompanyConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
-import com.celloud.constants.DeptConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.ABINJ;
@@ -684,9 +682,18 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView(path, projectId);
 		if (mib == null)
 			return mv;
-		mibCharList.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
-		mibCharList.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-		mibCharList.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        if (mib.getReadsDistributionInfo() != null
+                && mib.getReadsDistributionInfo().size() > 0)
+            mibCharList.put("readsDistributionInfo",
+                    JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        if (mib.getFamilyDistributionInfo() != null
+                && mib.getFamilyDistributionInfo().size() > 0)
+            mibCharList.put("familyDistributionInfo",
+                    JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        if (mib.getGenusDistributionInfo() != null
+                && mib.getGenusDistributionInfo().size() > 0)
+            mibCharList.put("genusDistributionInfo",
+                    JSONArray.fromObject(mib.getGenusDistributionInfo()));
 		mv.addObject("mibCharList", mibCharList);
 		return mv.addObject("mib", mib);
 	}
@@ -697,12 +704,18 @@ public class ReportAction {
             Integer projectId, Integer appId) {
         MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
         Map<String, Object> map = new HashMap<>();
-        map.put("readsDistributionInfo",
-                JSONArray.fromObject(mib.getReadsDistributionInfo()));
-        map.put("familyDistributionInfo",
-                JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-        map.put("genusDistributionInfo",
-                JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        if (mib.getReadsDistributionInfo() != null
+                && mib.getReadsDistributionInfo().size() > 0)
+            map.put("readsDistributionInfo",
+                    JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        if (mib.getFamilyDistributionInfo() != null
+                && mib.getFamilyDistributionInfo().size() > 0)
+            map.put("familyDistributionInfo",
+                    JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        if (mib.getGenusDistributionInfo() != null
+                && mib.getGenusDistributionInfo().size() > 0)
+            map.put("genusDistributionInfo",
+                    JSONArray.fromObject(mib.getGenusDistributionInfo()));
         map.put("mib", mib);
         map.put("uploadPath", "/upload/");
         return map;
@@ -745,9 +758,18 @@ public class ReportAction {
 		MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
 		Map<String, Object> context = new HashMap<String, Object>();
 		if (mib != null) {
-			context.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
-			context.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-			context.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
+            if (mib.getReadsDistributionInfo() != null
+                    && mib.getReadsDistributionInfo().size() > 0)
+                context.put("readsDistributionInfo",
+                        JSONArray.fromObject(mib.getReadsDistributionInfo()));
+            if (mib.getFamilyDistributionInfo() != null
+                    && mib.getFamilyDistributionInfo().size() > 0)
+                context.put("familyDistributionInfo",
+                        JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+            if (mib.getGenusDistributionInfo() != null
+                    && mib.getGenusDistributionInfo().size() > 0)
+                context.put("genusDistributionInfo",
+                        JSONArray.fromObject(mib.getGenusDistributionInfo()));
 			context.put("mib", mib);
 		}
 		returnToVelocity(path, context, projectId);
@@ -1178,7 +1200,10 @@ public class ReportAction {
     public Map<String, Object> getPgsInfo(String dataKey, Integer projectId, Integer appId) {
         Map<String, Object> map = getCommonInfo(projectId);
         Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        List<Experiment> expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
+        List<Experiment> expList = null;
+        if (pgs != null) {
+            expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
+        }
         if (expList != null && expList.size() > 0) {
             map.put("experiment", expList.get(0));
         }
@@ -3393,9 +3418,8 @@ public class ReportAction {
 	@ActionLog(value = "获取用户所属医院logo", button = "打印数据报告")
 	@RequestMapping(value = "company/icon", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> companyIcon(String file) throws IOException {
-		String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
+		String path = IconConstants.getCompanyPath(file);
 		File targetFile = new File(path);
-		// log.info("医院logo绝对路径{}",targetFile.getAbsolutePath());
 		if (targetFile.isFile()) {
 			return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
 		} else {
@@ -3413,9 +3437,8 @@ public class ReportAction {
 	@ActionLog(value = "获取用户所属部门logo", button = "打印数据报告")
 	@RequestMapping(value = "dept/icon", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> deptIcon(String file) throws IOException {
-		String path = DeptConstants.getDeptIconPath() + File.separator + file;
+		String path = IconConstants.getDeptPath(file);
 		File targetFile = new File(path);
-		// log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
 	}
 
@@ -3492,7 +3515,7 @@ public class ReportAction {
 			String endDate) throws ParseException {
 		ModelAndView mv = new ModelAndView("rocky/report/report_main");
 		Integer userId = ConstantsData.getLoginUserId();
-		Map<String, Object> periodMap = taskService.findTaskPeriodNum(AppConstants.APP_ID_ROCKY, userId);
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		Page pager = new Page(page, size);
 		PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, batches, periods,

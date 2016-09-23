@@ -22,21 +22,20 @@
 					          <img ng-src="<%=request.getContextPath()%>/app/image?file={{app.pictureName}}">
 					        </div>
 					        <div class="itemInfo">
-					          <h5>{{app.appName}}
+					          <h5>
+					          	<span ng-bind="app.appName"></span>
 					            <span id="manageAppBtns" style="display:inline-block;position:relative;margin-left:20px;" data-step="2" data-intro="" data-position="bottom" data-img="changedApp.png">
-					            	<a ng-if="app.runType==0" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="{{app.address}}" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
-					                <a ng-if="app.runType==2" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="{{app.address}}" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
-				                    <a ng-if="app.runType!=0 && app.isAdded==0" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="javascript:void(0);" ng-click="addApp(app.appId)" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
-				                    <a ng-if="app.runType!=0 && app.isAdded!=0" class="btn btn-celloud-close btn-flat" style="padding-top: 10px;" href="javascript:void(0);" ng-click="removeApp(app.appId)" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
+					            	<a ng-clock ng-if="app.runType==0" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="{{app.address}}" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
+					                <a ng-clock ng-if="app.runType==2" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="{{app.address}}" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
+				                    <a ng-clock ng-if="app.runType!=0 && app.isAdded==0" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="javascript:void(0);" ng-click="addApp(app.appId)" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
+				                    <a ng-clock ng-if="app.runType!=0 && app.isAdded!=0" class="btn btn-celloud-close btn-flat" style="padding-top: 10px;" href="javascript:void(0);" ng-click="removeApp(app.appId)" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
 					          </span>
 					         </h5>
-					          <div class="unlinedate">上线时间：<span class="date">{{app.createDate | date:'yyyy-MM-dd'}}</span></div>
+					          <div class="unlinedate">上线时间：<span class="date" ng-bind="app.createDate | date:'yyyy-MM-dd'"></span></div>
 					          <div class="intro">
 					            <ul>
-					              <li>分类：<span>{{app.classifyNames}}</span></li>
-					              <li>提供者：<span>
-					                        {{app.companyName==null?'上海华点云生物科技有限公司':app.companyName}}
-					                      </span>
+					              <li>分类：<span ng-bind="app.classifyNames"></span></li>
+					              <li>提供者：<span ng-bind="app.companyName==null?'上海华点云生物科技有限公司':app.companyName"></span>
 					              </li>
 					            </ul>
 					          </div>

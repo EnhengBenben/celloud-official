@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
-import com.celloud.constants.CompanyConstants;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.message.category.MessageCategoryCode;
@@ -124,7 +124,7 @@ public class UserAction {
      */
     @RequestMapping(value = "icon")
     public ResponseEntity<byte[]> attach(String file) throws IOException {
-        String path = CompanyConstants.getCompanyIconPath() + File.separator + file;
+		String path = IconConstants.getCompanyPath(file);
         File targetFile = new File(path);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
@@ -141,7 +141,7 @@ public class UserAction {
      */
     @RequestMapping(value = "icon/temp")
     public ResponseEntity<byte[]> attachTemp(String file) throws IOException {
-        String path = CompanyConstants.getCompanyIconTempPath() + File.separator + file;
+		String path = IconConstants.getTempPath(file);
         File targetFile = new File(path);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
@@ -162,7 +162,7 @@ public class UserAction {
     @ResponseBody
     public String attach(@RequestParam("file") CommonsMultipartFile file, String fileName) {
         String type = fileName.substring(fileName.lastIndexOf("."));
-        File targetFile = new File(CompanyConstants.getCompanyIconTempPath(), new ObjectId().toString() + type);
+		File targetFile = new File(IconConstants.getTempPath(new ObjectId().toString() + type));
         targetFile.getParentFile().mkdirs();
         try {
             file.transferTo(targetFile);

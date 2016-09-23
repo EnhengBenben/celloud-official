@@ -102,133 +102,145 @@
 	        </c:otherwise>
 	      </c:choose>
 	    </ul>
-	    <div class="pagination text-center">
-		  <c:if test="${appPageList.datas.size()>0}">
-			<ul class="pages">
-		    	<!-- 显示prev -->
-		        <c:if test="${appPageList.page.hasPrev}">
-					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">&lt;</a></li>
-				</c:if>
-				<!-- 显示第一页 -->
-				<c:choose>
-				  <c:when test="${appPageList.page.currentPage==1}"><li class="active"><a href="javascript:void(0);">1</a></li></c:when>
-				  <c:otherwise><li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },1,${classifyFloor })">1</a></li></c:otherwise>
-				</c:choose>
-				
-				<c:if test="${appPageList.page.currentPage>4&&appPageList.page.totalPage>10}">
-					<li>...</li>
-				</c:if>
-				<c:choose>
-				  <c:when test="${appPageList.page.totalPage-appPageList.page.currentPage>=7}">
-					<c:if test="${appPageList.page.currentPage==3}">
-						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">${appPageList.page.currentPage-1 }</a></li>
-					</c:if>
-					<c:if test="${appPageList.page.currentPage==4}">
-						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-2 },${classifyFloor })">${appPageList.page.currentPage-2 }</a></li>
-					</c:if>
-					<c:if test="${appPageList.page.currentPage>3}">
-						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">${appPageList.page.currentPage-1 }</a></li>
-					</c:if>
-					<c:if test="${appPageList.page.currentPage>1&&appPageList.page.currentPage<appPageList.page.totalPage}">
-						<li class="active"><a href="javascript:void(0);">${appPageList.page.currentPage }</a></li>
-					</c:if>
-					<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>1}">
-						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+1 },${classifyFloor })">${appPageList.page.currentPage+1 }</a></li>
-					</c:if>
-					<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>2}">
-						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+2 },${classifyFloor })">${appPageList.page.currentPage+2 }</a></li>
-					</c:if>
-					<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>3}">
-						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+3 })">${appPageList.page.currentPage+3 }</a></li>
-					</c:if>
-					<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>4}">
-						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+4 })">${appPageList.page.currentPage+4 }</a></li>
-					</c:if>
-					<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>5}">
-						<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+5 })">${appPageList.page.currentPage+5 }</a></li>
-					</c:if>
-					<c:if test="${appPageList.page.currentPage<4}">
-						<c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>6}">
-							<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 })">${appPageList.page.currentPage+6 }</a></li>
-						</c:if>
-					</c:if>
-					<c:choose>
-					  <c:when test="${appPageList.page.currentPage==1}">
-					    <c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>7}">
-							<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+7 },${classifyFloor })">${appPageList.page.currentPage+7 }</a></li>
-						</c:if>
-						<c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>8}">
-							<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+8 },${classifyFloor })">${appPageList.page.currentPage+8 }</a></li>
-						</c:if>
-					  </c:when>
-					  <c:otherwise>
-					  	<c:choose>
-						  <c:when test="${appPageList.page.currentPage==2}">
-						    <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>7}">
-								<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+7 },${classifyFloor })">${appPageList.page.currentPage+7 }</a></li>
-							</c:if>
-						  </c:when>
-						  <c:otherwise>
-						    <c:if test="${appPageList.page.currentPage>4 && (appPageList.page.totalPage-appPageList.page.currentPage>6)}">
-								<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 },${classifyFloor })">${appPageList.page.currentPage+6 }</a></li>
-							</c:if>
-						  </c:otherwise>
-						</c:choose>
-					  </c:otherwise>
-					</c:choose>
-				  </c:when>
-				  <c:otherwise>
-				    <c:choose>
-				      <c:when test="${appPageList.page.totalPage-8>0}">
-						<c:forEach begin="${appPageList.page.totalPage-8}" step="1" end="${appPageList.page.totalPage-1}" var="step">
-						  <c:choose>
-				      		<c:when test="${step==appPageList.page.currentPage}">	
-								<li class="active"><a href="javascript:void(0);">${step }</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
-							</c:otherwise>
-					      </c:choose>
-						</c:forEach>
-					  </c:when>
-					  <c:otherwise>
-						<c:forEach begin="2" step="1" end="${appPageList.page.totalPage-1}" var="step">
-						  <c:choose>
-				      		<c:when test="${step==appPageList.page.currentPage}">	
-								<li class="active"><a href="javascript:void(0);">${step }</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
-							</c:otherwise>
-						  </c:choose>
-						</c:forEach>
-					  </c:otherwise>
-					</c:choose>
-				  </c:otherwise>
-			    </c:choose>
-				<c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>=8&&appPageList.page.totalPage>10}">
-					<li>...</li>
-				</c:if>
-				<c:choose>
-	      		  <c:when test="${appPageList.page.currentPage==appPageList.page.totalPage&&appPageList.page.totalPage>1}">	
-					<li class="active"><a href="javascript:void(0);">${appPageList.page.totalPage }</a></li>
-				  </c:when>
-				  <c:otherwise>
-					<c:if test="${appPageList.page.totalPage>1}">	
-					  <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.totalPage },${classifyFloor })">${appPageList.page.totalPage }</a></li>
-					</c:if>
-				  </c:otherwise>
-				</c:choose>
-				<c:if test="${appPageList.page.hasNext}">
-					<li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+1 },${classifyFloor })">&gt;</a></li>
-				</c:if>
-				<li>
-					共${appPageList.page.totalPage }页&nbsp;|&nbsp;合计${appPageList.page.rowCount }条
-				</li>
-		    </ul>
-	      </c:if>
-	    </div>
 	  </div>
+	  <div class="pagination text-center">
+        <c:if test="${appPageList.datas.size()>0}">
+           <ul class="datanumul pull-right">
+              <li>
+                  <span>共&nbsp;&nbsp;${appPageList.page.rowCount }&nbsp;&nbsp;条</span>
+              </li>
+          </ul>
+          <ul class="pages pull-right">
+              <!-- 显示prev -->
+              <c:choose>
+                <c:when test="${appPageList.page.hasPrev}">
+                  <li><a class="ends" href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">&lt;&lt;</a></li>
+                </c:when>
+                <c:otherwise>
+                  <li><a class="ends" href="javascript:void(0)">&lt;&lt;</a></li>
+                </c:otherwise>
+              </c:choose>
+              <!-- 显示第一页 -->
+              <c:choose>
+                <c:when test="${appPageList.page.currentPage==1}"><li class="active"><a href="javascript:void(0);">1</a></li></c:when>
+                <c:otherwise><li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },1,${classifyFloor })">1</a></li></c:otherwise>
+              </c:choose>
+              
+              <c:if test="${appPageList.page.currentPage>4&&appPageList.page.totalPage>10}">
+                  <li>...</li>
+              </c:if>
+              <c:choose>
+                <c:when test="${appPageList.page.totalPage-appPageList.page.currentPage>=7}">
+                  <c:if test="${appPageList.page.currentPage==3}">
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">${appPageList.page.currentPage-1 }</a></li>
+                  </c:if>
+                  <c:if test="${appPageList.page.currentPage==4}">
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-2 },${classifyFloor })">${appPageList.page.currentPage-2 }</a></li>
+                  </c:if>
+                  <c:if test="${appPageList.page.currentPage>3}">
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage-1 },${classifyFloor })">${appPageList.page.currentPage-1 }</a></li>
+                  </c:if>
+                  <c:if test="${appPageList.page.currentPage>1&&appPageList.page.currentPage<appPageList.page.totalPage}">
+                      <li class="active"><a href="javascript:void(0);">${appPageList.page.currentPage }</a></li>
+                  </c:if>
+                  <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>1}">
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+1 },${classifyFloor })">${appPageList.page.currentPage+1 }</a></li>
+                  </c:if>
+                  <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>2}">
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+2 },${classifyFloor })">${appPageList.page.currentPage+2 }</a></li>
+                  </c:if>
+                  <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>3}">
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+3 })">${appPageList.page.currentPage+3 }</a></li>
+                  </c:if>
+                  <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>4}">
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+4 })">${appPageList.page.currentPage+4 }</a></li>
+                  </c:if>
+                  <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>5}">
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+5 })">${appPageList.page.currentPage+5 }</a></li>
+                  </c:if>
+                  <c:if test="${appPageList.page.currentPage<4}">
+                      <c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>6}">
+                          <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 })">${appPageList.page.currentPage+6 }</a></li>
+                      </c:if>
+                  </c:if>
+                  <c:choose>
+                    <c:when test="${appPageList.page.currentPage==1}">
+                      <c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>7}">
+                          <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+7 },${classifyFloor })">${appPageList.page.currentPage+7 }</a></li>
+                      </c:if>
+                      <c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>8}">
+                          <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+8 },${classifyFloor })">${appPageList.page.currentPage+8 }</a></li>
+                      </c:if>
+                    </c:when>
+                    <c:otherwise>
+                      <c:choose>
+                        <c:when test="${appPageList.page.currentPage==2}">
+                          <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>7}">
+                              <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+7 },${classifyFloor })">${appPageList.page.currentPage+7 }</a></li>
+                          </c:if>
+                        </c:when>
+                        <c:otherwise>
+                          <c:if test="${appPageList.page.currentPage>4 && (appPageList.page.totalPage-appPageList.page.currentPage>6)}">
+                              <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 },${classifyFloor })">${appPageList.page.currentPage+6 }</a></li>
+                          </c:if>
+                        </c:otherwise>
+                      </c:choose>
+                    </c:otherwise>
+                  </c:choose>
+                </c:when>
+                <c:otherwise>
+                  <c:choose>
+                    <c:when test="${appPageList.page.totalPage-8>0}">
+                      <c:forEach begin="${appPageList.page.totalPage-8}" step="1" end="${appPageList.page.totalPage-1}" var="step">
+                        <c:choose>
+                          <c:when test="${step==appPageList.page.currentPage}">   
+                              <li class="active"><a href="javascript:void(0);">${step }</a></li>
+                          </c:when>
+                          <c:otherwise>
+                              <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
+                          </c:otherwise>
+                        </c:choose>
+                      </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                      <c:forEach begin="2" step="1" end="${appPageList.page.totalPage-1}" var="step">
+                        <c:choose>
+                          <c:when test="${step==appPageList.page.currentPage}">   
+                              <li class="active"><a href="javascript:void(0);">${step }</a></li>
+                          </c:when>
+                          <c:otherwise>
+                              <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${step },${classifyFloor })">${step }</a></li>
+                          </c:otherwise>
+                        </c:choose>
+                      </c:forEach>
+                    </c:otherwise>
+                  </c:choose>
+                </c:otherwise>
+              </c:choose>
+              <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>=8&&appPageList.page.totalPage>10}">
+                  <li>...</li>
+              </c:if>
+              <c:choose>
+                <c:when test="${appPageList.page.currentPage==appPageList.page.totalPage&&appPageList.page.totalPage>1}"> 
+                  <li class="active"><a href="javascript:void(0);">${appPageList.page.totalPage }</a></li>
+                </c:when>
+                <c:otherwise>
+                  <c:if test="${appPageList.page.totalPage>1}">   
+                    <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.totalPage },${classifyFloor })">${appPageList.page.totalPage }</a></li>
+                  </c:if>
+                </c:otherwise>
+              </c:choose>
+              <c:choose>
+                <c:when test="${appPageList.page.hasNext}">
+                  <li><a class="ends" href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+1 },${classifyFloor })">&gt;&gt;</a></li>
+                </c:when>
+                <c:otherwise>
+                  <li><a class="ends" href="javascript:void(0)">&gt;&gt;</a></li>
+                </c:otherwise>
+              </c:choose>
+          </ul>
+        </c:if>
+      </div>
 	</div>
 </div>
 <script type="text/javascript">
