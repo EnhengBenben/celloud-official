@@ -60,6 +60,89 @@
     };
   });
   
+  function dataInPro(appInfo, proId, projectName){
+  	$.get("data/getDatasInProject",{"projectId":proId},function(fileList){
+			$("#fileListUl").append("<a id='prevA' class='btn -low' style='width:100%;'><span class='fa fa-sort-asc'></span></button>");
+			var fileNames = new Array();
+			var newList = "";
+			appId = appInfo.appId;
+			userId = appInfo.userId;
+			dataKey = appInfo.dataKey;
+			if(appId == 110||appId == 111||appId == 112||appId == 113||appId == 126||appId == 127||appId == 128){
+				$.each(fileList,function(index,item){
+				  if(!utils.isConfigure(item.fileName)){
+				    fileNames.push(item.fileName);
+				  }
+				});
+				newList = "[{";
+				fileNames.sort();
+				var fileId_n = "fileId:";
+				var fileName_n=",fileName:'";
+				var dataKey_n=",dataKey:'"
+				for(var i=0;i<fileNames.length;i++){
+					fileName_n+=fileNames[i]
+					if(i<fileNames.length-1){
+						fileName_n+="_&_"
+					}
+				}
+				$.each(fileList,function(index,item){
+					if(fileNames[0] == item.fileName){
+						fileId_n+=item.fileId;
+						dataKey_n+=item.dataKey;
+					}
+				});
+				newList+=fileId_n+fileName_n+"'"+dataKey_n+"'}]";
+				newList=eval(newList);
+			}else{
+				newList=fileList;
+			}
+			$.each(newList,function(index,item){
+				var inner = "";
+				var seq = index+1;
+				var obj1 = $("#dataSpan"+proId+item.dataKey);
+				if(index == 0){
+					dataItem0 = item;
+					obj1 = $("#dataSpan"+proId+dataItem0.dataKey);
+				}
+				var isActive = "";
+				if(item.dataKey == dataKey){
+					isActive = "active";
+					reportIdNow = 'fileA'+proId+item.fileId;
+				}
+				inner += "<a class='btn -low "+isActive+"' style='font-size:12px;width:100%;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
+				$("#fileListUl").append(inner);
+				$("#fileA"+proId+item.fileId).bind("click", function() {
+					viewDataReport(userId,item.dataKey,item.fileName,appId,appInfo.appName,proId,projectName,$(this));
+					$.get("report/clickItemDataReport",{},function(state){});
+				});
+			});
+			$("#fileListUl").append("<a id='nextA' class='btn -low' style='width:100%;'><span class='caret'></span></button>");
+			$("#prevA").bind("click",function(){
+				var preId = $("#"+reportIdNow).prev().attr("id");
+				if(preId=='prevA'){
+					$.alert("已经是第一条数据");
+					return ;
+				}
+				$("#fileListUl").find("#"+preId).trigger("click");
+				$("#fileListUl").removeClass("active");
+				$("#"+preId).addClass("active");
+				$.get("report/prevDataReport",{},function(state){});
+			});
+			$("#nextA").bind("click",function(){
+				var nextId = $("#"+reportIdNow).next().attr("id");
+				if(nextId=='nextA'){
+					$.alert("已经是最后一条数据");
+					return;
+				}
+				$("#fileListUl").find("#"+nextId).trigger("click");
+				$("#fileListUl").removeClass("active");
+				$("#"+nextId).addClass("active");
+				$.get("report/nextDataReport",{},function(state){});
+			});
+		});
+	}
+  
+  
   /**
    * egfr数据报告controller
    */
@@ -69,6 +152,7 @@
 		  $scope.egfr = egfrInfo.egfr;
 		  $scope.project = egfrInfo.project;
 		  $scope.uploadPath = egfrInfo.uploadPath;
+		  dataInPro($scope.egfr, $scope.project.projectId, $scope.project.projectName);
 		  // 数据参数同比
 		  var length = $scope.egfr.pos;
 		  if(length==0 || isNaN(length)){
@@ -110,6 +194,7 @@
 		  $scope.kras = krasInfo.kras;
 		  $scope.project = krasInfo.project;
 		  $scope.uploadPath = krasInfo.uploadPath;
+		  dataInPro($scope.kras, $scope.project.projectId, $scope.project.projectName);
 		  // 数据参数同比
 		  var length = $scope.kras.pos;
 		  if(length==0 || isNaN(length)){
@@ -145,13 +230,14 @@
   /**
    * hcv数据报告controller
    */
-  celloudApp.controller("hcvDataReportController", function($scope, $routeParams, dataReportService){
+  celloudApp.controller("hcvDataReportController", function($scope, $rootScope, $routeParams, dataReportService){
 	  dataReportService.getDataReportInfo("report/getHCVInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
 	  success(function(hcvInfo){
 		  $scope.hcv = hcvInfo.hcv;
 		  $scope.project = hcvInfo.project;
 		  $scope.uploadPath = hcvInfo.uploadPath;
 		  
+		  dataInPro($scope.hcv, $scope.project.projectId, $scope.project.projectName);
 		  $scope.change = function(){
 			  var val = $("#_change").html();
 			  if(val=="显示更多"){
@@ -197,6 +283,7 @@
 		  $scope.project = brafInfo.project;
 		  $scope.uploadPath = brafInfo.uploadPath;
 		  
+		  dataInPro($scope.braf, $scope.project.projectId, $scope.project.projectName);
 		  if($scope.braf != undefined){
 			  var $table = $($scope.braf.mutationPosition);
 			  $scope.searchTable = function(){
@@ -241,6 +328,7 @@
 		  $scope.project = tbrifampicinInfo.project;
 		  $scope.uploadPath = tbrifampicinInfo.uploadPath;
 		  
+		  dataInPro($scope.tbrifampicin, $scope.project.projectId, $scope.project.projectName);
 		  $scope.searchTable = function(){
 			  var search = $("#_snum").val();
 				$("#_sr").html("");
@@ -339,7 +427,7 @@
 		  $scope.tbinh = tbinhInfo.tbinh;
 		  $scope.project = tbinhInfo.project;
 		  $scope.uploadPath = tbinhInfo.uploadPath;
-		  
+		  dataInPro($scope.tbinh, $scope.project.projectId, $scope.project.projectName);
 		  // 数据参数同比
 		  var mutant = tbinhInfo.mutant;
 		  var wild = tbinhInfo.wild;
@@ -423,7 +511,7 @@
 		  $scope.hbv = hbvInfo.hbv;
 		  $scope.project = hbvInfo.project;
 		  $scope.uploadPath = hbvInfo.uploadPath;
-		  
+		  dataInPro($scope.hbv, $scope.project.projectId, $scope.project.projectName);
 		  $scope.change1 = function(){
 			  $("#nomal").css("display","");
 			  $("#cfda").css("display","none");
@@ -604,6 +692,7 @@
 		  $scope.oncogene = oncogeneInfo.oncogene;
 		  $scope.project = oncogeneInfo.project;
 		  $scope.uploadPath = oncogeneInfo.uploadPath;
+		  dataInPro($scope.oncogene, $scope.project.projectId, $scope.project.projectName);
 	  });
   });
   /**
@@ -615,6 +704,7 @@
 		  $scope.dpd = dpdInfo.dpd;
 		  $scope.project = dpdInfo.project;
 		  $scope.uploadPath = dpdInfo.uploadPath;
+		  dataInPro($scope.dpd, $scope.project.projectId, $scope.project.projectName);
 		  $scope.searchTable = function(){
 			var search = $("#_snum").val();
 			$("#_sr").html("");
@@ -675,6 +765,7 @@
 		  $scope.abinj = abinjInfo.abinj;
 		  $scope.project = abinjInfo.project;
 		  $scope.uploadPath = abinjInfo.uploadPath;
+		  dataInPro($scope.abinj, $scope.project.projectId, $scope.project.projectName);
 	  });
   });
   /**
@@ -686,6 +777,7 @@
 		  $scope.ugt = ugtInfo.ugt;
 		  $scope.project = ugtInfo.project;
 		  $scope.uploadPath = ugtInfo.uploadPath;
+		  dataInPro($scope.ugt, $scope.project.projectId, $scope.project.projectName);
 	  });
   });
   /**
@@ -697,6 +789,7 @@
 		  $scope.s16 = s16Info.s16;
 		  $scope.project = s16Info.project;
 		  $scope.uploadPath = s16Info.uploadPath;
+		  dataInPro($scope.s16, $scope.project.projectId, $scope.project.projectName);
 		  var $table = $("<div>" + $scope.s16.resultTable + "</div>");
 		  $table.find("tr").each(function(i){
 			  if(i==0){
@@ -720,6 +813,7 @@
 		  $scope.translate = translateInfo.translate;
 		  $scope.project = translateInfo.project;
 		  $scope.uploadPath = translateInfo.uploadPath;
+		  dataInPro($scope.translate, $scope.project.projectId, $scope.project.projectName);
 	  });
   });
   /**
@@ -731,6 +825,7 @@
 		  $scope.gdd = gddInfo.cmp;
 		  $scope.project = gddInfo.project;
 		  $scope.uploadPath = gddInfo.uploadPath;
+		  dataInPro($scope.gdd, $scope.project.projectId, $scope.project.projectName);
 	  });
   });
   /**
@@ -742,6 +837,7 @@
 		  $scope.cmp = cmpInfo.cmp;
 		  $scope.project = cmpInfo.project;
 		  $scope.uploadPath = cmpInfo.uploadPath;
+		  dataInPro($scope.cmp, $scope.project.projectId, $scope.project.projectName);
 	  });
   });
   /**
@@ -889,6 +985,7 @@
 		  $scope.experiment = pgsInfo.experiment;
 		  $scope.project = pgsInfo.project;
 		  $scope.uploadPath = pgsInfo.uploadPath;
+		  dataInPro($scope.pgs, $scope.project.projectId, $scope.project.projectName);
 		  
 		  $scope.editShowConclusion = function(){
 			  $("#edit-conclusion-error").addClass("hide");
@@ -986,6 +1083,7 @@
   
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     $scope.companyId = companyId;
+    
     $("#shareProjectSelect").select2({
       language: "zh-CN",
       placeholder: "请输入用户名",
