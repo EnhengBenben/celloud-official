@@ -462,10 +462,12 @@ public class RunOverUtil {
 	 * @return
 	 */
 	public boolean PGS(String appPath, String appName, String appTitle, String projectFile, String projectId,
-			List<DataFile> proDataList) {
+			List<DataFile> proDataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		StringBuffer sb = new StringBuffer();
 		// 2. 遍历数据列表
 		for (DataFile d : proDataList) {
@@ -476,6 +478,9 @@ public class RunOverUtil {
 			// 3. 为项目PDF生成数据
 			sb.append(datakey).append(",").append(CustomStringUtils.getBarcode(filename)).append(",")
 					.append(anotherName).append(";");
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
 			String finalPath = appPath + datakey;
 			String xls = FileTools.fileExist(finalPath, datakey + ".xls", "endsWith");
 			if (xls.equals("")) {
@@ -505,11 +510,13 @@ public class RunOverUtil {
 				}
 			}
 		}
-		// 4.生成项目pdf
-		try {
-			PGSProjectPDF.createPDF(appPath, appName, 220, 800, sb.toString(), projectId);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (FileTools.countLines(projectFile) == proDataList.size() + 1) {
+			// 4.生成项目pdf
+			try {
+				PGSProjectPDF.createPDF(appPath, appName, 220, 800, sb.toString(), projectId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		FileTools.appendWrite(projectFile, resultArray.toString());
 		return true;

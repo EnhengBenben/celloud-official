@@ -29,18 +29,15 @@ import com.celloud.constants.CommandKey;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
-import com.celloud.constants.ExperimentState;
 import com.celloud.constants.FileFormat;
 import com.celloud.constants.Mod;
 import com.celloud.constants.NoticeConstants;
-import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.message.MessageUtils;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
-import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
@@ -331,10 +328,10 @@ public class TaskAction {
     @RequestMapping("projectRunOver")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String projectRunOver(String projectId) {
+	public String projectRunOver(String projectId, String dataKey) {
 		//TODO projectRunOver
-        logger.info("项目运行结束，id:{}", projectId);
-        if (StringUtils.isEmpty(projectId)) {
+		logger.info("项目运行结束，id:{},{}", projectId, dataKey);
+		if (StringUtils.isEmpty(projectId) || StringUtils.isEmpty(dataKey)) {
             logger.info("任务运行结束信息不全");
             return "run error";
         }
@@ -345,7 +342,7 @@ public class TaskAction {
 			return "run error";
 		}
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
-		String command = "python " + SparkPro.PYTHONPATH + " " + SparkPro.TOOLSPATH + " " + projectId;
+		String command = SparkPro.PYTHONPATH + " " + SparkPro.TOOLSPATH + " " + projectId + " " + dataKey;
 		PerlUtils.excutePerl(command);
         // 2. 数据库检索
         Map<String, Object> map = projectService.findProjectInfoById(proId);
@@ -362,20 +359,17 @@ public class TaskAction {
 		// 3. 创建项目结果文件
 		StringBuffer basePath = new StringBuffer();
 		basePath.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/");
-		StringBuffer projectFileBf = new StringBuffer();
-		projectFileBf.append(basePath).append(projectId).append("/").append(projectId).append(".txt");
-		String projectFile = projectFileBf.toString();
-		FileTools.createFile(projectFile);
+		String projectFile = basePath + projectId + "/" + projectId + ".txt";
 		// 4. 通过反射调用相应app的处理方法，传参格式如下：
 		// String appPath, String appName, String appTitle,String
-		// projectFile,String projectId, List<DataFile> proDataList
+		// projectFile,String projectId, List<DataFile> proDataList,String dataKey
 		RunOverUtil rou = new RunOverUtil();
 		try {
 			rou.getClass()
 					.getMethod(method,
 							new Class[] { String.class, String.class, String.class, String.class, String.class,
-									List.class })
-					.invoke(rou, basePath.toString(), appName, title, projectFile, projectId, dataList);
+									List.class, String.class, })
+					.invoke(rou, basePath.toString(), appName, title, projectFile, projectId, dataList, dataKey);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -386,40 +380,40 @@ public class TaskAction {
 		}
 		// 6. 项目报告插入mysql并修改项目运行状态
 		reportService.reportCompeleteByProId(proId, xml);
-		if (ExperimentState.apps.contains(appId)) {
-			for (DataFile dataFile : dataList) {
-				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();
-				int dataId = dataFile.getFileId();
-				List<Experiment> expList = expService.getRelatList(userId, anotherName, dataFile.getDataKey());
-				if (expList != null && expList.size() == 1) {
-					Report report = reportService.getReport(userId, appId, Integer.valueOf(projectId), dataId,
-							ReportType.DATA);
-					Experiment exp = expList.get(0);
-					Integer am = exp.getAmplificationMethod();
-					if (am == null || am.equals(0)) {
-						continue;
-					}
-					Integer sample = exp.getSampleType();
-					if (sample == null || sample.equals(0)) {
-						continue;
-					}
-					Integer sequenator = exp.getSequenator();
-					if (sequenator == null || sequenator.equals(0)) {
-						continue;
-					}
-					Integer expAPPId = expService.getApp(sample, am, sequenator);
-					if (expAPPId != null && expAPPId.equals(appId)) {
-						exp.setReportId(report.getReportId());
-						exp.setReportDate(report.getEndDate());
-						exp.setStep(ExperimentState.REPORT_STEP);
-						expService.updateByPrimaryKeySelective(exp);
-						logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
-					}
-				} else {
-					logger.error("用户{}未能检索到与{}匹配的实验流程", userId, dataId);
-				}
-			}
-		}
+		//		if (ExperimentState.apps.contains(appId)) {
+		//			for (DataFile dataFile : dataList) {
+		//				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();
+		//				int dataId = dataFile.getFileId();
+		//				List<Experiment> expList = expService.getRelatList(userId, anotherName, dataFile.getDataKey());
+		//				if (expList != null && expList.size() == 1) {
+		//					Report report = reportService.getReport(userId, appId, Integer.valueOf(projectId), dataId,
+		//							ReportType.DATA);
+		//					Experiment exp = expList.get(0);
+		//					Integer am = exp.getAmplificationMethod();
+		//					if (am == null || am.equals(0)) {
+		//						continue;
+		//					}
+		//					Integer sample = exp.getSampleType();
+		//					if (sample == null || sample.equals(0)) {
+		//						continue;
+		//					}
+		//					Integer sequenator = exp.getSequenator();
+		//					if (sequenator == null || sequenator.equals(0)) {
+		//						continue;
+		//					}
+		//					Integer expAPPId = expService.getApp(sample, am, sequenator);
+		//					if (expAPPId != null && expAPPId.equals(appId)) {
+		//						exp.setReportId(report.getReportId());
+		//						exp.setReportDate(report.getEndDate());
+		//						exp.setStep(ExperimentState.REPORT_STEP);
+		//						expService.updateByPrimaryKeySelective(exp);
+		//						logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
+		//					}
+		//				} else {
+		//					logger.error("用户{}未能检索到与{}匹配的实验流程", userId, dataId);
+		//				}
+		//			}
+		//		}
 		//构造桌面消息
 		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
 				.send(NoticeConstants.createMessage("task", "运行完成", "项目【" + projectName + "】运行【" + appName + "】完成。"));
