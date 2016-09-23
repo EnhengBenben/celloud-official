@@ -1,5 +1,8 @@
 package com.celloud.box.listener;
 
+import java.net.InetAddress;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -8,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.celloud.box.config.BoxConfig;
+import com.celloud.box.utils.LocalIpAddressUtil;
 import com.celloud.box.utils.UploadPath;
 
 @Component
@@ -23,6 +27,10 @@ public class ApplicationStartup implements CommandLineRunner {
 		logger.info("");
 		logger.info("box.env        =  {}", config.getEnv());
 		logger.info("box.uploadPath =  {}", config.getUploadPath());
+		Map<InetAddress, String> map = LocalIpAddressUtil.resolveLocalNetworks();
+		for (InetAddress address : map.keySet()) {
+			logger.info("local ips      =  {} : {}", map.get(address), address.getHostAddress());
+		}
 		logger.info("");
 		logger.info("*************************************************************");
 	}
