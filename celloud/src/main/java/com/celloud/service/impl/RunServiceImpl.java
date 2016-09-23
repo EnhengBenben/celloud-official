@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
@@ -33,6 +34,7 @@ import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.Response;
 
+@Service("runService")
 public class RunServiceImpl implements RunService {
 	Logger logger = LoggerFactory.getLogger(RunServiceImpl.class);
 
