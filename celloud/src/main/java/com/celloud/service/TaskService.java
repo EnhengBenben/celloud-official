@@ -16,13 +16,6 @@ import com.celloud.page.PageList;
  * @date 2016-1-10 下午8:10:18
  */
 public interface TaskService {
-	/**
-	 * 新增任务
-	 * 
-	 * @param task
-	 * @return
-	 */
-	public Integer create(Task task);
 
 	/**
 	 * 获取等待运行APP时间最长的任务

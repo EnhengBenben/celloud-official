@@ -237,6 +237,9 @@ public class FileTools {
 	 * @param writeContext
 	 */
 	public static void appendWrite(String filePath, String writeContext) {
+		if (!new File(filePath).exists()) {
+			createFile(filePath);
+		}
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(filePath, true);

@@ -325,13 +325,4 @@ public interface DataService {
 	 */
 	public PageList<DataFile> filterRockyList(Page pager, String sample, String condition, String sidx, String sord);
 
-	/**
-	 * 数据运行
-	 * 
-	 * @param dataIds
-	 * @param appIds
-	 * @return
-	 */
-	public String updateToRun(Integer userId, String dataIds, String appIds);
-
 }

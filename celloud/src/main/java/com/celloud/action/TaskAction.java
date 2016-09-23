@@ -122,6 +122,7 @@ public class TaskAction {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String taskRunOver(String projectId, String dataNames) {
+		//TODO taskRunOver
         logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
         if (StringUtils.isEmpty(projectId) || StringUtils.isEmpty(dataNames)) {
             logger.info("任务运行结束信息不全");
@@ -331,6 +332,7 @@ public class TaskAction {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String projectRunOver(String projectId) {
+		//TODO projectRunOver
         logger.info("项目运行结束，id:{}", projectId);
         if (StringUtils.isEmpty(projectId)) {
             logger.info("任务运行结束信息不全");
@@ -503,7 +505,7 @@ public class TaskAction {
             StrSubstitutor sub = new StrSubstitutor(map);
             String command = sub.replace(app.getCommand());
             task.setCommand(command);
-            taskService.create(task);
+			taskService.updateTask(task);
             Integer taskId = task.getTaskId();
             if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
                 logger.info("任务{}运行命令：{}", taskId, command);

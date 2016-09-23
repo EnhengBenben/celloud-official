@@ -1,34 +1,21 @@
 package com.celloud.service.impl;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.text.StrSubstitutor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.celloud.constants.AppDataListType;
-import com.celloud.constants.CommandKey;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
-import com.celloud.constants.SparkPro;
-import com.celloud.constants.TaskPeriod;
 import com.celloud.mapper.DataFileMapper;
-import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
-import com.celloud.model.mysql.Project;
-import com.celloud.model.mysql.Report;
-import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
@@ -37,9 +24,6 @@ import com.celloud.service.ExpensesService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
-import com.celloud.utils.AppSubmitUtil;
-import com.celloud.utils.DataKeyListToFile;
-import com.celloud.utils.FileTools;
 
 /**
  * 数据管理服务实现类
@@ -49,7 +33,6 @@ import com.celloud.utils.FileTools;
  */
 @Service("dataService")
 public class DataServiceImpl implements DataService {
-	private static Logger logger = LoggerFactory.getLogger(DataServiceImpl.class);
 	@Resource
 	DataFileMapper dataFileMapper;
 	@Resource
@@ -274,145 +257,4 @@ public class DataServiceImpl implements DataService {
 		return new PageList<>(page, lists);
 	}
 
-	@Override
-	public String updateToRun(Integer userId, String dataIds, String appIds) {
-		String result = "";
-		logger.info("用户{}使用数据{}运行APP{}", userId, dataIds, appIds);
-		String[] dataIdArr = dataIds.split(",");
-		String[] appIdArrs = appIds.split(",");
-		List<Integer> appIdList = new ArrayList<>();
-		for (String s : appIdArrs) {
-			appIdList.add(Integer.parseInt(s));
-		}
-		if (!appService.checkPriceToRun(appIdList, userId)) {
-			logger.info("{}的余额不足，提醒充值后再运行", userId);
-			return "1";
-		}
-
-		// 公共项目信息
-		Project project = new Project();
-		String proName = new Date().getTime() + "";
-		project.setUserId(userId);
-		project.setProjectName(proName);
-		project.setDataNum(dataIdArr.length);
-		project.setDataSize(dataService.queryFileSize(dataIds));
-
-		// 公共报告信息
-		Report report = new Report();
-		report.setUserId(userId);
-		List<DataFile> dataList = dataService.findDatasById(dataIds);
-		// 构建运行所需dataListFile文件路径
-		Map<String, String> dataFilePathMap = new HashMap<>();// 针对按数据投递APP
-		String dataFilePath = "";// 针对按项目投递APP
-
-		List<Integer> list_tmp = new ArrayList<>(appIdList);
-		list_tmp.retainAll(AppDataListType.FASTQ_PATH);
-		if (list_tmp.size() > 0) {
-			dataFilePathMap = DataKeyListToFile.onlyFastqPath(dataList);
-			project.setDataNum(Integer.parseInt(dataFilePathMap.get("dataReportNum")));
-			dataFilePathMap.remove("dataReportNum");
-		} else {
-			list_tmp = new ArrayList<>(appIdList);
-			list_tmp.retainAll(AppDataListType.ONLY_PATH);
-			if (list_tmp.size() > 0) {
-				dataFilePath = DataKeyListToFile.onlyPath(dataList);
-			} else {
-				list_tmp = new ArrayList<>(appIdList);
-				list_tmp.retainAll(AppDataListType.PATH_AND_NAME);
-				if (list_tmp.size() > 0) {
-					dataFilePath = DataKeyListToFile.containName(dataList);
-				} else {
-					list_tmp = new ArrayList<>(appIdList);
-					list_tmp.retainAll(AppDataListType.SPLIT);
-					if (list_tmp.size() > 0) {
-						dataFilePathMap = DataKeyListToFile.toSplit(dataList);
-						project.setDataNum(1);
-					}
-				}
-			}
-		}
-		// 批量创建项目
-		Map<Integer, Integer> appProMap = projectService.insertMultipleProject(project, appIdList, dataIdArr);
-		if (appProMap == null) {
-			result = "项目创建失败";
-			logger.info("{}{}", userId, result);
-			return result;
-		}
-
-		// 批量创建报告
-		List<Integer> failAppIdList = reportService.insertMultipleProReport(report, appProMap, dataIdArr);
-		if (failAppIdList.size() > 0) {
-			result = appService.findAppNamesByIds(failAppIdList.toString()) + "创建报告失败";
-			logger.info("{}{}", userId, result);
-			return result;
-		}
-
-		// 运行APP详细信息
-		List<App> appList = appService.findAppsByIds(appIds);
-		String bp = SparkPro.TOOLSPATH + userId + "/";
-		for (App app : appList) {
-			Integer appId = app.getAppId();
-			Integer proId = appProMap.get(appId);
-			String appPath = bp + appId + "/";
-			if (!FileTools.checkPath(appPath)) {
-				new File(appPath).mkdirs();
-			}
-			if (AppDataListType.FASTQ_PATH.contains(appId) || AppDataListType.SPLIT.contains(appId)) {
-				int runningNum;
-				Boolean iswait;
-				if (AppDataListType.SPARK.contains(appId)) {
-					runningNum = taskService.findRunningNumByAppId(AppDataListType.SPARK);
-					iswait = runningNum < SparkPro.MAXTASK;
-					logger.info("APP{}任务投递到spark", appId);
-				} else {
-					runningNum = taskService.findRunningNumByAppId(appId);
-					iswait = runningNum < app.getMaxTask() || app.getMaxTask() == 0;
-				}
-				for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
-					String dataKey = entry.getKey();
-					String dataListFile = entry.getValue();
-					Map<String, String> map = CommandKey.getMap(dataListFile, appPath, proId);
-					StrSubstitutor sub = new StrSubstitutor(map);
-					String command = sub.replace(app.getCommand());
-					Task task = taskService.findTaskByDataKeyAndApp(dataKey, appId);
-					if (task == null) {
-						task = new Task();
-						task.setProjectId(proId);
-						task.setUserId(userId);
-						task.setAppId(appId);
-						task.setDataKey(dataKey);
-						task.setCommand(command);
-						taskService.create(task);
-					} else {
-						task.setProjectId(proId);
-						task.setCommand(command);
-						task.setPeriod(TaskPeriod.WAITTING);
-						taskService.updateTask(task);
-					}
-					Integer taskId = task.getTaskId();
-					if (iswait) {
-						logger.info("任务{}运行命令：{}", taskId, command);
-						AppSubmitUtil.http(appId, dataListFile, appPath, proId);
-						taskService.updateToRunning(taskId);
-					} else {
-						logger.info("数据{}排队运行{}", dataKey, app.getAppName());
-					}
-				}
-				// 保存消费记录
-				expenseService.saveRunExpenses(proId, appId, userId, dataList);
-			} else {
-				// SGE
-				logger.info("celloud 直接向 SGE 投递任务");
-				Map<String, String> map = CommandKey.getMap(dataFilePath, appPath, proId);
-				StrSubstitutor sub = new StrSubstitutor(map);
-				String command = sub.replace(app.getCommand());
-				logger.info("运行命令:{}", command);
-				AppSubmitUtil.http(appId, dataFilePath, appPath, proId);
-				// 保存消费记录
-				expenseService.saveProRunExpenses(proId, dataList);
-			}
-		}
-
-		return result;
-	}
 }

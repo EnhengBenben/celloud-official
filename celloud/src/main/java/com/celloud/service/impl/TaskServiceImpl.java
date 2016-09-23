@@ -10,9 +10,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.celloud.constants.IconConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.TaskPeriod;
@@ -53,14 +53,6 @@ public class TaskServiceImpl implements TaskService {
     PriceMapper priceMapper;
     @Resource
     ReportDao reportDao;
-
-    @Override
-    public Integer create(Task task) {
-        task.setPeriod(TaskPeriod.WAITTING);
-        task.setCreateDate(new Date());
-        task.setUpdateDate(new Date());
-        return taskMapper.insertSelective(task);
-    }
 
     @Override
     public Task findFirstTask(Integer appId) {
@@ -245,6 +237,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Integer updateTask(Task task) {
+		if (task.getTaskId() == null) {
+			task.setPeriod(TaskPeriod.WAITTING);
+			task.setCreateDate(new Date());
+			task.setUpdateDate(new Date());
+			return taskMapper.insertSelective(task);
+		}
         return taskMapper.updateByPrimaryKeySelective(task);
     }
 
