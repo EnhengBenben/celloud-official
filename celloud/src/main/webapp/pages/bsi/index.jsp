@@ -259,6 +259,7 @@
   </div>
   <script type="text/javascript">
      window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+     window.userId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUserId() %>';
   </script>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
