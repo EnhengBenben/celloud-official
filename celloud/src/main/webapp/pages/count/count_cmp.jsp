@@ -18,20 +18,7 @@
   	<c:when test="${map.data.size()>0}">
   	  <c:forEach items="${map.data }" var="cmp" varStatus="cmpSta">
   	    <c:if test="${not empty cmp.data}">
-  	      <tr>
-	          <td align="center">${cmp.dataKey }</td>
-	          <td align="center">${cmp.data[0].fileName }(${cmp.data[0].dataKey })</td>
-	          <td align="center">${cmp.data[1].fileName }(${cmp.data[1].dataKey })</td>
-	          <td align="center">${cmp.appName }</td>
-	          <td align="center">${cmp.allFragment }</td>
-	          <td align="center">${cmp.usableFragment }</td>
-	          <td align="center">${cmp.avgCoverage }</td>
-	          <td align="center">
-	            <a href="javascript:showGeneResult('<c:forEach items="${cmp.cmpGeneResult}" var="gene">
-	              <c:if test="${gene.knownMSNum>0}">${gene.geneName }:${gene.knownMSNum }&nbsp;&nbsp;&nbsp;</c:if>
-	            </c:forEach>')">查看结果</a>
-	          </td>
-	        </tr>
+  	      <tr><td align="center">${cmp.dataKey }</td><td align="center"><c:if test="${cmp.data[0].fileName.length() + cmp.data[0].dataKey.length() < 20 }">${cmp.data[0].fileName }(${cmp.data[0].dataKey })</c:if><c:if test="${cmp.data[0].fileName.length()>20 }">${cmp.data[0].fileName.substring(0,20).concat('...') }</c:if><c:if test="${cmp.data[0].fileName.length()<20 and cmp.data[0].fileName.length() + cmp.data[0].dataKey.length() > 20 }">${cmp.data[0].fileName }(${cmp.data[0].dataKey.substring(0,20-cmp.data[0].fileName.length()).concat('...') })</c:if></td><td align="center"><c:if test="${cmp.data[1].fileName.length() + cmp.data[1].dataKey.length() < 20 }">${cmp.data[1].fileName }(${cmp.data[1].dataKey })</c:if><c:if test="${cmp.data[1].fileName.length()>20 }">${cmp.data[1].fileName.substring(0,20).concat('...') }</c:if><c:if test="${cmp.data[1].fileName.length()<20 and cmp.data[1].fileName.length() + cmp.data[1].dataKey.length() > 20 }">${cmp.data[1].fileName }(${cmp.data[1].dataKey.substring(0,20-cmp.data[1].fileName.length()).concat('...') })</c:if></td><td align="center">${cmp.appName }</td><td align="center">${cmp.allFragment }</td><td align="center">${cmp.usableFragment }</td><td align="center">${cmp.avgCoverage }</td><td align="center"><a href="javascript:showGeneResult('<c:forEach items="${cmp.cmpGeneResult}" var="gene"><c:if test="${gene.knownMSNum>0}">${gene.geneName }:${gene.knownMSNum }&nbsp;&nbsp;&nbsp;</c:if></c:forEach>')">查看结果</a></td></tr>
   	    </c:if>
   	  </c:forEach>
   	</c:when>

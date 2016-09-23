@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.celloud.constants.SparkPro;
 import com.celloud.model.mysql.DataFile;
 
 /**
@@ -20,27 +19,7 @@ import com.celloud.model.mysql.DataFile;
  */
 public class DataKeyListToFile {
 	private static String datalist = PropertiesUtil.datalist;
-
-	/**
-	 * 面向spark封装，格式为：path \t name \t port
-	 * 
-	 * @param projectId
-	 * @param dataKeyList
-	 * @return
-	 */
-	public static String toSpark(String projectId, List<DataFile> dataList) {
-		StringBuffer sb = new StringBuffer();
-		String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
-				+ ".txt";
-		FileTools.createFile(dataListFile);
-		for (int i = 0; i < dataList.size(); i++) {
-			DataFile data = dataList.get(i);
-			sb.append(data.getPath()).append("\t").append(data.getFileName()).append("\t").append(SparkPro.START)
-					.append("");
-		}
-		FileTools.appendWrite(dataListFile, sb.toString());
-		return dataListFile;
-	}
+	public static final String DATA_REPORT_NUM = "dataReportNum";
 
 	/**
 	 * 包含路径和文件名，格式为：path \t name
@@ -48,16 +27,18 @@ public class DataKeyListToFile {
 	 * @param dataKeyList
 	 * @return
 	 */
-	public static String containName(List<DataFile> dataList) {
-		StringBuffer sb = new StringBuffer();
-		String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
-				+ ".txt";
-		FileTools.createFile(dataListFile);
-		for (DataFile data : dataList) {
-			sb.append(data.getPath() + "\t" + data.getFileName() + "\n");
+	public static Map<String, String> containName(List<DataFile> dataList) {
+		Map<String, String> dataListFileMap = new HashMap<>();
+		Iterator<DataFile> iterator = dataList.iterator();
+		while (iterator.hasNext()) {
+			DataFile data = iterator.next();
+			String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
+					+ ".txt";
+			FileTools.appendWrite(dataListFile, data.getPath());
+			dataListFileMap.put(data.getDataKey(), dataListFile);
 		}
-		FileTools.appendWrite(dataListFile, sb.toString());
-		return dataListFile;
+		dataListFileMap.put(DATA_REPORT_NUM, String.valueOf(dataList.size()));
+		return dataListFileMap;
 	}
 
 	/**
@@ -66,16 +47,18 @@ public class DataKeyListToFile {
 	 * @param dataKeyList
 	 * @return
 	 */
-	public static String onlyPath(List<DataFile> dataList) {
-		StringBuffer sb = new StringBuffer();
-		String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
-				+ ".txt";
-		FileTools.createFile(dataListFile);
-		for (DataFile data : dataList) {
-			sb.append(data.getPath() + "\n");
+	public static Map<String, String> onlyPath(List<DataFile> dataList) {
+		Map<String, String> dataListFileMap = new HashMap<>();
+		Iterator<DataFile> iterator = dataList.iterator();
+		while (iterator.hasNext()) {
+			DataFile data = iterator.next();
+			String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
+					+ ".txt";
+			FileTools.appendWrite(dataListFile, data.getPath());
+			dataListFileMap.put(data.getDataKey(), dataListFile);
 		}
-		FileTools.appendWrite(dataListFile, sb.toString());
-		return dataListFile;
+		dataListFileMap.put(DATA_REPORT_NUM, String.valueOf(dataList.size()));
+		return dataListFileMap;
 	}
 
 	/**
@@ -94,7 +77,6 @@ public class DataKeyListToFile {
 			sb = new StringBuffer();
 			String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
 					+ ".txt";
-			FileTools.createFile(dataListFile);
 			DataFile data = chk_it.next();
 			String dataKey = data.getDataKey();
 			String fname = data.getFileName();
@@ -115,7 +97,7 @@ public class DataKeyListToFile {
 			dataListFileMap.put(dataKey, dataListFile);
 			dataReportNum++;
 		}
-		dataListFileMap.put("dataReportNum", dataReportNum.toString());
+		dataListFileMap.put(DATA_REPORT_NUM, dataReportNum.toString());
 		return dataListFileMap;
 	}
 
@@ -130,7 +112,6 @@ public class DataKeyListToFile {
 		StringBuffer sb = new StringBuffer();
 		String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
 				+ ".txt";
-		FileTools.createFile(dataListFile);
 		sortDataList(dataList);
 		List<String> pathList = new ArrayList<>();
 		String endPath = "";
@@ -151,6 +132,7 @@ public class DataKeyListToFile {
 		sb.append(pathList.get(0)).append("\t").append(pathList.get(1)).append("\t").append(endPath);
 		FileTools.appendWrite(dataListFile, sb.toString());
 		dataListFileMap.put(dataKey, dataListFile);
+		dataListFileMap.put(DATA_REPORT_NUM, "1");
 		return dataListFileMap;
 	}
 

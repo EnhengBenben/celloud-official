@@ -77,7 +77,7 @@
           <li class="search-type clearfix">
             <label>样本编码：</label>
             <div class="search-type-detail">
-              <input type="text" placeholder="扫码或输入编号">
+              <input ng-change="conditionQuery()" ng-model="dataOptions.condition" type="text" placeholder="扫码或输入编号">
             </div>
           </li>
         </ul>
@@ -110,7 +110,7 @@
               </label>
             </td>
             <td>{{task.fileName}}</td>
-            <td>{{task.dataKey}}</td>
+            <td>{{task.sampleName}}</td>
             <td>{{task.tagName}}</td>
             <td>{{task.batch}}</td>
             <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>

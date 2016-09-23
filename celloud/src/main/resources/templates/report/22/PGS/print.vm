@@ -1,12 +1,8 @@
 #parse("templates/report/layout.vm")
 #parse("templates/report/default/PGS/reference.vm")
-#if($printContext)
-	$printContext
-#else
-	#override("dept")
-	#end
-	#override("bottom")
-	#end
-	#extends("templates/report/default/PGS/base.vm")
+#override("dept")
 #end
+#override("bottom")
+#end
+#extends("templates/report/default/PGS/base.vm")
 #parse("templates/report/default/PGS/js.vm")

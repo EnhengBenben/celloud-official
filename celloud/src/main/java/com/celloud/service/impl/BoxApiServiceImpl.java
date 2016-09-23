@@ -24,6 +24,7 @@ import com.celloud.model.mysql.Task;
 import com.celloud.service.BoxApiService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExperimentService;
+import com.celloud.service.RunService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.CheckFileTypeUtil;
 import com.celloud.utils.FileTools;
@@ -40,6 +41,9 @@ public class BoxApiServiceImpl implements BoxApiService {
 	private ExperimentService expService;
 	@Resource
 	private TaskService taskService;
+	@Resource
+	private RunService runService;
+
 	CheckFileTypeUtil checkFileType = new CheckFileTypeUtil();
 
 	@Async
@@ -175,18 +179,18 @@ public class BoxApiServiceImpl implements BoxApiService {
 			task.setAppId(appId);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (needSplit == 1 && hasR1 && hasR2 && hasIndex) {
-				dataService.updateToRun(userId, StringUtils.join(dataIds.toArray(), ","), appId + "");
+				runService.run(userId, null, StringUtils.join(dataIds.toArray(), ","));
 				return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
 						+ "\"}";
 			} else if (needSplit != 1 && hasR1 && hasR2) {
 				task.setAppId(appId);
 				taskService.addOrUpdateUploadTaskByParam(task, isR1);
-				dataService.updateToRun(userId, StringUtils.join(dataIds.toArray(), ","), appId + "");
+				runService.run(userId, null, StringUtils.join(dataIds.toArray(), ","));
 				return "{\"dataIds\":\"" + StringUtils.join(dataIds.toArray(), ",") + "\",\"appIds\":\"" + appId
 						+ "\"}";
 			}
 		} else if (fileFormat == FileFormat.YASUO && needSplit == null) {
-			dataService.updateToRun(userId, dataId + "", appId + "");
+			runService.run(userId, null, dataId + "");
 			return "{\"dataIds\":" + dataId + ",\"appIds\":\"" + appId + "\"}";
 		}
 		return "1";
