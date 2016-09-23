@@ -8,7 +8,8 @@ $(function(){
         var inputVal;
         $("#printMain").find("input[type='text']").each(function(){
             inputVal = $(this).val();
-            $(this).parent().html("<span name='print'>"+inputVal+"</span>");
+            inputName = $(this).attr("name");
+            $(this).parent().html("<span tempName=\""+inputName+"\" name='print'>"+inputVal+"</span>");
         });
         var sex = $("input[type='radio']:checked").val();
         $("#_sex").html(sex);
@@ -17,9 +18,10 @@ $(function(){
         $(".buttons").show();
         $("body").find("span[name='print']").each(function(){
             inputVal = $(this).html();
-            $(this).parent().html("<input type='text' value='"+inputVal+"'>");
+            inputName = $(this).attr("tempName");
+            $(this).parent().html("<input name=\""+inputName+"\" type='text' value='"+inputVal+"'>");
         });
-        $("#_sex").html("<input type='radio' name='sex' value='男'>男<input type='radio' name='sex' value='女'>女");
+        $("#_sex").html("<input type='radio' name='baseInfo[\"sex\"]' value='男'>男<input type='radio' name='baseInfo[\"sex\"]' value='女'>女");
         $("input[type='radio'][value="+sex+"]").attr("checked",true);  
     });
     

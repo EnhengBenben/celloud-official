@@ -2,7 +2,8 @@
 function attrTransfer(obj,name){
     inputVal = $(obj).val();
     inputClass = $(obj).attr("class");
-    $(obj).parent().html("<span name='"+name+"' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
+    inputName = $(obj).attr("name");
+    $(obj).parent().html("<span tempName=\""+inputName+"\" name='"+name+"' _hideClass='"+inputClass+"'>"+inputVal+"</span>");
 }
 
 function printCss(){
@@ -53,11 +54,13 @@ $(function(){
             attrTransfer(this,'print');
         });
         inputVal = $("#des").children().val();
+        desName = $("#des").children().attr("name");
         if(inputVal){
             inputVal = inputVal.replace(/\n/g,"<br>");
             $("#des").html(inputVal);
         }
         var des1 = $("#des1").children().val();
+        des1Name = $("#des1").children().attr("name");
         if (des1){
             inputVal = des1.replace(/\n/g,"<br>");
         }else{
@@ -65,6 +68,7 @@ $(function(){
         }
         $("#des1").html(inputVal);
         var des2 = $("#des2").children().val();
+        des2Name = $("#des2").children().attr("name");
         if (des2){
             inputVal = des2.replace(/\n/g,"<br>");
         }else{
@@ -72,6 +76,7 @@ $(function(){
         }
         $("#des2").html(inputVal);
         var des3 = $("#des3").children().val();
+        des3Name = $("#des3").children().attr("name");
         if (des3){
             inputVal = des3.replace(/\n/g,"<br>");
         }else{
@@ -79,6 +84,7 @@ $(function(){
         }
         $("#des3").html(inputVal);
         var advice = $("#advice").children().val();
+        adviceName = $("#advice").children().attr("name");
         if(advice){
             inputVal = advice.replace(/\n/g,"<br>");
         }else{
@@ -91,46 +97,48 @@ $(function(){
         $("body").find("span[name='print']").each(function(){
             inputVal = $(this).html();
             inputClass = $(this).attr('_hideClass');
+            inputName = $(this).attr("tempName");
             if($(this).parent().attr("id")=="jzkp"){
-                $(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" value=\""+inputVal+"\" id=\"jzkh\" />");
+                $(this).parent().html("<input name=\""+inputName+"\" type=\"text\" class=\""+inputClass+"\" value=\""+inputVal+"\" id=\"jzkh\" />");
             }else{
-                $(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" value=\""+inputVal+"\" />");
+                $(this).parent().html("<input name=\""+inputName+"\" type=\"text\" class=\""+inputClass+"\" value=\""+inputVal+"\" />");
             }
         });
         $("body").find("span[name='miniPrint']").each(function(){
             inputVal = $(this).html();
             inputClass = $(this).attr('_hideClass');
-            $(this).parent().html("<input type=\"text\" class=\""+inputClass+"\" style=\"height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px\" value=\""+inputVal+"\"/>");
+            inputName = $(this).attr("tempName");
+            $(this).parent().html("<input name=\""+inputName+"\" type=\"text\" class=\""+inputClass+"\" style=\"height:12px;padding:0px;margin:0px;font-size:10px;line-height:12px\" value=\""+inputVal+"\"/>");
         });
         inputVal = $("#des").html();
         if(inputVal){
             inputVal = inputVal.replace(/<br>/g,"\n");
-            $("#des").html("<textarea rows=\"3\">"+inputVal+"</textarea>");
+            $("#des").html("<textarea name=\""+desName+"\" rows=\"3\">"+inputVal+"</textarea>");
         }
         if (des1){
             inputVal = $("#des1").html().replace(/<br>/g,"\n");
         }else{
             inputVal = "";
         }
-        $("#des1").html("<textarea rows=\"3\"  style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
+        $("#des1").html("<textarea name=\""+des1Name+"\" rows=\"3\" style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
         if (des2){
             inputVal = $("#des2").html().replace(/<br>/g,"\n");
         }else{
             inputVal = "";
         }
-        $("#des2").html("<textarea rows=\"3\" style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
+        $("#des2").html("<textarea name=\""+des2Name+"\" rows=\"3\" style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
         if (des3){
             inputVal = $("#des3").html().replace(/<br>/g,"\n");
         }else{
             inputVal = "";
         }
-        $("#des3").html("<textarea rows=\"6\" style=\"margin:0px;font-size:12px;line-height:12px;height:87px;\">"+inputVal+"</textarea>");
+        $("#des3").html("<textarea name=\""+des3Name+"\" rows=\"6\" style=\"margin:0px;font-size:12px;line-height:12px;height:87px;\">"+inputVal+"</textarea>");
         if(advice){
             inputVal = $("#advice").html().replace(/<br>/g,"\n");
         }else{
             inputVal = "";
         }
-        $("#advice").html("<textarea rows=\"2\" style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
+        $("#advice").html("<textarea name=\""+adviceName+"\" rows=\"2\" style=\"margin:0px;font-size:10px;line-height:10px\">"+inputVal+"</textarea>");
         lookCss();
     });
     $("#save").on("click",function(){

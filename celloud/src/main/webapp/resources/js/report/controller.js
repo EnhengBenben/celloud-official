@@ -1003,7 +1003,7 @@
 	  start : $routeParams.start,
 	  end : $routeParams.end,
 	  app : $routeParams.app,
-	  condition : $routeParams.condition
+	  condition : $routeParams.condition == 'all' ? '' : $routeParams.condition
     };
     //分页检索主方法
     $scope.pageQuery = function(currentPage,pageSize){
@@ -1011,7 +1011,7 @@
       var start = $scope.projectOptions.start=='all'?null:$scope.projectOptions.start + " 00:00:00";
       var end = $scope.projectOptions.end=='all'?null:$scope.projectOptions.end + " 23:59:59";
       var app = $scope.projectOptions.app;
-      var condition = $scope.projectOptions.condition=='all'?null:$scope.projectOptions.condition;
+      var condition = $scope.projectOptions.condition==''?null:$scope.projectOptions.condition;
       $scope.projectOptions.pageSize = pageSize;
       $scope.projectOptions.page = currentPage;
       projectReportService.getReportListCondition($scope.projectOptions.page,$scope.projectOptions.pageSize,belongs,start,end,app,condition).
@@ -1028,6 +1028,7 @@
         var condition = $scope.projectOptions.condition;
         var pageSize = $scope.projectOptions.pageSize;
         var page = $scope.projectOptions.page;
+        condition == ''?condition = 'all': condition = condition;
     	window.location.href = CONTEXT_PATH + "/index#/reportpro/"+page+"/"+pageSize+"/"+belongs+"/"+changeDate+"/"+start+"/"+end+"/"+app+"/"+condition;
     }
     $scope.pageQuery($scope.projectOptions.page,$scope.projectOptions.pageSize);
@@ -1089,7 +1090,6 @@
     }
     //数据检索
     $scope.changeCondition = function(){
-    	$scope.projectOptions.condition = $scope.reportCondition;
       $scope.pageQuery(1,$scope.projectOptions.pageSize);
     }
     //显示项目名称编辑框
@@ -1444,7 +1444,7 @@
 	  tagId : $routeParams.tagId,
       period : $routeParams.period,
       batch : $routeParams.batch,
-      condition : $routeParams.condition,
+      condition : $routeParams.condition == 'all'?'':$routeParams.condition,
       sort: 'desc'
     };
     
@@ -1455,7 +1455,7 @@
     	var tagId = $scope.dataOptions.tagId=='all'?null:$scope.dataOptions.tagId;
     	var period = $scope.dataOptions.period=='all'?null:$scope.dataOptions.period;
     	var batch = $scope.dataOptions.batch=='all'?null:$scope.dataOptions.batch;
-    	var condition = $scope.dataOptions.condition=='all'?null:$scope.dataOptions.condition;
+    	var condition = $scope.dataOptions.condition==''?null:$scope.dataOptions.condition;
       dataReportService.getReportsByParams($scope.dataOptions.page,$scope.dataOptions.pageSize,condition,beginDate,endDate,batch,tagId,period,$scope.dataOptions.sort)
       .success(function(dataList){
         $scope.reportList = dataList;
@@ -1530,6 +1530,10 @@
       $scope.dataOptions.endDate = end;
       $scope.dataOptions.page = 1;
       paramQuqery();
+    }
+    $scope.conditionQuery = function(){
+    	$scope.dataOptions.page = 1;
+    	paramQuqery();
     }
     paramQuqery();
   });

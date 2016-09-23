@@ -20,8 +20,8 @@
         <div class="btn-groups">
         	<a class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=0"><i class="fa fa-print"></i>打印报告1</a>
             <a ng-if="pgs.splitPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=1"><i class="fa fa-print"></i>点图报告1</a>                  
-        	<a ng-if="pgs.miniPng != null && pgs.splitPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=2"><i class="fa fa-print"></i>打印报告2</a>
-            <a ng-if="pgs.reportMiniPng != null && pgs.reportSplitPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=3"><i class="fa fa-print"></i>点图报告2</a>                  
+        	<a ng-if="pgs.reportMiniPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=2"><i class="fa fa-print"></i>打印报告2</a>
+            <a ng-if="pgs.reportMiniPng != null" class="btn -low" target="_blank" href="report/printPGS?appId={{pgs.appId}}&projectId={{pgs.projectId}}&dataKey={{pgs.dataKey}}&flag=3"><i class="fa fa-print"></i>点图报告2</a>                  
             
             <!-- <a ng-if="pgs.pdf != null" class="btn -middle" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.pdf}}" class="btn btn-default"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
             <a ng-if="pgs.finalPng!=null && pgs.finalPng!=''" class="btn -high" href="/report/down?path={{pgs.userId}}/{{pgs.appId}}/{{pgs.dataKey}}/{{pgs.finalPng}}" class="btn btn-default"><i class="fa fa-cloud-download"></i>报告下载</a> -->

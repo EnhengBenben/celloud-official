@@ -36,7 +36,7 @@
         </li>
         <shiro:hasPermission name="count:menu">
             <li ng-class="{active: isActive('/count')}">
-              <a di-href="<%=request.getContextPath()%>/index#/count"><i class="count-icon"></i><span>统计</span></a>
+              <a di-href="<%=request.getContextPath()%>/index#/count"><i class="statistics-icon"></i><span>统计</span></a>
             </li>
         </shiro:hasPermission>
       </ul>

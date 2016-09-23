@@ -116,12 +116,12 @@ utils.setDocSize = function(){
 		$(".bgContainer").height(winHeight);
 		$(".longbackground").height(winHeight);
 		$("#bg").height(winHeight);
-		$(".container").height(winHeight);
+//		$(".container").height(winHeight);
 	}else{
 		$(".bgContainer").height(docHeight);
 		$(".longbackground").height(docHeight);
 		$("#bg").height(docHeight);
-		$(".container").height(docHeight);
+//		$(".container").height(docHeight);
 	}
 	$(".bgContainer").css("overflow","hidden");
 }

@@ -43,8 +43,12 @@
             	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;">
             	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:99%;">
             #elseif($flag==2 || $flag==3)
-            	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportMiniPng}" style="width:100%;">
-            	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportSplitPng}" style="width:99%;">
+            	#if(${pgs.reportMiniPng})
+            		<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportMiniPng}" style="width:100%;">
+            	#end
+            	#if(${pgs.reportSplitPng})
+            		<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportSplitPng}" style="width:99%;">
+            	#end
             #end
             <strong>该样本检测结果显示:</strong><br/>
             <div id="result">

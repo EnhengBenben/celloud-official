@@ -37,9 +37,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.IconConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.ABINJ;
@@ -682,9 +682,18 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView(path, projectId);
 		if (mib == null)
 			return mv;
-		mibCharList.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
-		mibCharList.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-		mibCharList.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        if (mib.getReadsDistributionInfo() != null
+                && mib.getReadsDistributionInfo().size() > 0)
+            mibCharList.put("readsDistributionInfo",
+                    JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        if (mib.getFamilyDistributionInfo() != null
+                && mib.getFamilyDistributionInfo().size() > 0)
+            mibCharList.put("familyDistributionInfo",
+                    JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        if (mib.getGenusDistributionInfo() != null
+                && mib.getGenusDistributionInfo().size() > 0)
+            mibCharList.put("genusDistributionInfo",
+                    JSONArray.fromObject(mib.getGenusDistributionInfo()));
 		mv.addObject("mibCharList", mibCharList);
 		return mv.addObject("mib", mib);
 	}
@@ -695,12 +704,18 @@ public class ReportAction {
             Integer projectId, Integer appId) {
         MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
         Map<String, Object> map = new HashMap<>();
-        map.put("readsDistributionInfo",
-                JSONArray.fromObject(mib.getReadsDistributionInfo()));
-        map.put("familyDistributionInfo",
-                JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-        map.put("genusDistributionInfo",
-                JSONArray.fromObject(mib.getGenusDistributionInfo()));
+        if (mib.getReadsDistributionInfo() != null
+                && mib.getReadsDistributionInfo().size() > 0)
+            map.put("readsDistributionInfo",
+                    JSONArray.fromObject(mib.getReadsDistributionInfo()));
+        if (mib.getFamilyDistributionInfo() != null
+                && mib.getFamilyDistributionInfo().size() > 0)
+            map.put("familyDistributionInfo",
+                    JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+        if (mib.getGenusDistributionInfo() != null
+                && mib.getGenusDistributionInfo().size() > 0)
+            map.put("genusDistributionInfo",
+                    JSONArray.fromObject(mib.getGenusDistributionInfo()));
         map.put("mib", mib);
         map.put("uploadPath", "/upload/");
         return map;
@@ -743,9 +758,18 @@ public class ReportAction {
 		MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
 		Map<String, Object> context = new HashMap<String, Object>();
 		if (mib != null) {
-			context.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
-			context.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-			context.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
+            if (mib.getReadsDistributionInfo() != null
+                    && mib.getReadsDistributionInfo().size() > 0)
+                context.put("readsDistributionInfo",
+                        JSONArray.fromObject(mib.getReadsDistributionInfo()));
+            if (mib.getFamilyDistributionInfo() != null
+                    && mib.getFamilyDistributionInfo().size() > 0)
+                context.put("familyDistributionInfo",
+                        JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+            if (mib.getGenusDistributionInfo() != null
+                    && mib.getGenusDistributionInfo().size() > 0)
+                context.put("genusDistributionInfo",
+                        JSONArray.fromObject(mib.getGenusDistributionInfo()));
 			context.put("mib", mib);
 		}
 		returnToVelocity(path, context, projectId);

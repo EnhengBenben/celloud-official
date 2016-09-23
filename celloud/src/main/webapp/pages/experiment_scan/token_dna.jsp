@@ -62,7 +62,7 @@
 		                   <div class="control-label form-label col-xs-2">备注：</div>
 		                   <!-- 长度10-100 -->
 		                   <div class="col-xs-10 form-group-content">
-		                       <textarea rows="4" ng-trim="true" ng-model="remark" name="remark" required ng-maxlength="100">{{remark}}</textarea>
+		                       <textarea rows="4" ng-trim="true" ng-model="remark" name="remark" required ng-maxlength="1000">{{remark}}</textarea>
 		                       <span class="input-alert break-line" ng-show="sampleForm.remark.$dirty && sampleForm.remark.$error.required">请输入问题的描述</span>
 		                       <span class="input-alert break-line" ng-show="sampleForm.remark.$dirty && (sampleForm.remark.$error.maxlength)">请输入小于1000字的描述！</span>
 		                   </div>

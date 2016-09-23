@@ -4,8 +4,8 @@
 		${pgs.companyName}
 		<br />染色体拷贝数变异检测报告
 		<br />
-		<span class="subtitle">${pgs.companyAddr}，
-		电话：${pgs.companyTel}</span>
+		<span class="subtitle">$!{pgs.companyAddr}，
+		电话：$!{pgs.companyTel}</span>
 	</h2>
 </div>
 <hr style="margin:0px">

@@ -16,7 +16,7 @@
           <div class="info-form-group">
             <label>邮箱地址:</label>
             <div>
-                <input name="email" type="text" ng-model="user.email" readonly="readonly" />
+                <input name="email" class="email" type="text" ng-model="user.email" readonly="readonly" />
                 <span class="input-alert" ng-show="sendSuccess">
 					邮件已发送，请进入邮箱处理
 				</span>

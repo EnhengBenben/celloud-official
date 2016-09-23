@@ -5,22 +5,22 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>CelLoud 控制台</title>
-<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
-<meta name="description" content="一站式高通量基因检测数据分析系统" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="<%=request.getContextPath()%>/images/favicon.ico" rel="bookmark">
-<link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
-<link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.1" rel="stylesheet">
-<link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css" />
-<script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
-<!-- [if It IE 9]>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>CelLoud 控制台</title>
+  <meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
+  <meta name="description" content="一站式高通量基因检测数据分析系统" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="bookmark">
+  <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.2" rel="stylesheet">
+  <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
+  <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
+  <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
+  <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
+  <!-- [if It IE 9]>
   <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]  -->
@@ -251,74 +251,35 @@
 			<!-- /.modal -->
 		</div>
 	</div>
-	<div id="fullbg"></div>
-	<div id="pageContent" class="pageContent hide">
-		<a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
-		<img id="imageFullScreen" src="">
-	</div>
-	<script type="text/javascript">
-       window.CONTEXT_PATH = '<%=request.getContextPath()%>';
-       window.userId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUserId() %>';
-  	</script>
-	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
-	<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
-	<script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
-	<script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js" type="text/javascript"></script>
-	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
-	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
-	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
-	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
-	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-	<script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/jquery.ba-resize.min.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
-	<script src="<%=request.getContextPath()%>/js/utils.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
-	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-	<script src="<%=request.getContextPath()%>/js/charts.js"></script>
-	<script src="<%=request.getContextPath()%>/js/report_codon.js"></script>
-	<script src="<%=request.getContextPath()%>/js/message.js"></script>
-	<script src="<%=request.getContextPath()%>/js/alert.js"></script>
-	<script src="<%=request.getContextPath()%>/js/confirm.js"></script>
-	<script src="<%=request.getContextPath()%>/js/application.js"></script>
-	<script src="<%=request.getContextPath()%>/js/directive/href.js"></script>
-	<script src="<%=request.getContextPath()%>/js/directive/pagination.js"></script>
-	<script src="<%=request.getContextPath()%>/js/upload/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/upload/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/app/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/app/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/expense/filter.js"></script>
-	<script src="<%=request.getContextPath()%>/js/expense/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/expense/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/experiment_scan/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/experiment_scan/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/user/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/user/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/data/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/data/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/data/data.js"></script>
-	<script src="<%=request.getContextPath()%>/js/report/filter.js"></script>
-	<script src="<%=request.getContextPath()%>/js/report/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/report/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/report/dataReportService.js"></script>
-	<script src="<%=request.getContextPath()%>/js/report/dataReportController.js"></script>
-	<script src="<%=request.getContextPath()%>/js/config/routeProvider.js"></script>
-	<script src="<%=request.getContextPath()%>/js/common/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/common/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/common/filter.js"></script>
-	<script src="<%=request.getContextPath()%>/js/overview/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/overview/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/overview/userCount.js"></script>
-	<script src="<%=request.getContextPath()%>/js/notice/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/notice/messageController.js"></script>
-	<script src="<%=request.getContextPath()%>/js/notice/noticeController.js"></script>
-	<script src="<%=request.getContextPath()%>/js/feedback/service.js"></script>
-	<script src="<%=request.getContextPath()%>/js/feedback/controller.js"></script>
-	<script src="<%=request.getContextPath()%>/js/bsi_main.js?version=3.1.15" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/bsi_upload.js?version=3.1.12"></script>
-	<script src="<%=request.getContextPath()%>/js/charts.js"></script>
+  </div>
+  <div id="fullbg"></div> 
+  <div id="pageContent" class="pageContent hide">
+    <a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
+    <img id="imageFullScreen" src="">
+  </div>
+  <script type="text/javascript">
+     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
+  </script>
+  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
+  <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
+  <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js" type="text/javascript"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
+  <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+  <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
+  <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.2"></script>
+  <script src="<%=request.getContextPath()%>/js/bsi_main.js?version=3.1.15" type="text/javascript"></script>
+  <script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=3.1.12"></script>
+  <script src="<%=request.getContextPath()%>/js/charts.js"></script>
 </body>
 </html>
