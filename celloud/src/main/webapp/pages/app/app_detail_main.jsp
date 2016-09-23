@@ -80,10 +80,10 @@
 					                      <img style="height:200px;width:100%" ng-src="<%=request.getContextPath()%>/app/screen?file={{screen.screenName}}" alt="First slide">
 					                    </div>
 					                 </div>
-					                 <a class="left carousel-control" href="#appScreen" data-slide="prev">
+					                 <a class="left carousel-control" data-target="#appScreen" data-slide="prev">
 					                   <span class="fa fa-angle-left"></span>
 					                 </a>
-					                 <a class="right carousel-control" href="#appScreen" data-slide="next">
+					                 <a class="right carousel-control" data-target="#appScreen" data-slide="next">
 					                   <span class="fa fa-angle-right"></span>
 					                 </a>
 					                 </div>
