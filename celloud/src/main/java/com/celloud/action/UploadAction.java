@@ -19,8 +19,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,10 +30,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.celloud.constants.IconConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.TaskPeriod;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
@@ -263,14 +261,13 @@ public class UploadAction {
 								int fileFormat = checkFileType.checkFileType(newName, folderByDay);
 								updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay, batch,
 										fileFormat, tagId);
-								Subject sub = SecurityUtils.getSubject();
 								// MessageUtils.get()
 								// .on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants.createMessage("upload",
 								// "文件上传完成", "您的文件【" + originalName +
 								// "】已经上传完成。"))
 								// .to(sub.getPrincipal().toString());
-								if (sub.hasRole("bsier")) {
-									logger.info("{}拥有百菌探权限", userId);
+                                // TODO 写死的百菌探自动运行
+                                if (tagId == 1) {
 									return bsierCheckRun(tagId, batch, dataId, fileDataKey, needSplit, newName,
 											originalName, userId, fileFormat);
 								}

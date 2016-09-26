@@ -7,27 +7,31 @@
       </div>
       <ul class="sidebar-menu">
         <li class="sidebar-header">产品与服务</li>
-        <li ng-class="{active: isActive('/')}">
-          <a di-href="<%=request.getContextPath()%>/index#/"><i class="overview-icon"></i><span>我的工作台</span></a>
-        </li>
-        <shiro:hasAnyRoles name="bsier,rocky">
+        <shiro:hasPermission name="overview:menu">
+	        <li ng-class="{active: isActive('/')}">
+	          <a di-href="<%=request.getContextPath()%>/index#/"><i class="overview-icon"></i><span>我的工作台</span></a>
+	        </li>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="sampling:menu">
             <li ng-class="{active: isActive('/sampling')}">
               <a di-href="<%=request.getContextPath()%>/index#/sampling"><i class="sample-icon"></i><span>样本采集</span></a>
             </li>
-        </shiro:hasAnyRoles>
-        <shiro:hasAnyRoles name="bsier">
+        </shiro:hasPermission>
+        <shiro:hasPermission name="experiment:menu">
 	        <li ng-class="{active: isActive('/experiment')}">
 	          <a di-href="<%=request.getContextPath()%>/index#/experiment/scanStorage"><i class="experiment-icon"></i><span>实验管理</span></a>
 	        </li>
-        </shiro:hasAnyRoles>
-        <li ng-class="{active: isActive('/data')}">
-          <a di-href="<%=request.getContextPath()%>/index#/data"><i class="data-icon"></i><span>数据管理</span></a>
-        </li>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="data:menu">
+	        <li ng-class="{active: isActive('/data')}">
+	          <a di-href="<%=request.getContextPath()%>/index#/data"><i class="data-icon"></i><span>数据管理</span></a>
+	        </li>
+	    </shiro:hasPermission>
         <li ng-class="{active: isActive('/report')}">
-            <shiro:hasPermission name="runWithProject:button">
+            <shiro:hasPermission name="proReport:menu">
                 <a di-href="<%=request.getContextPath()%>/index#/reportpro/1/10/1/0/all/all/0/all"><i class="report-icon"></i><span>报告管理</span></a>
             </shiro:hasPermission>
-            <shiro:hasPermission name="runWithData:button">
+            <shiro:hasPermission name="dataReport:menu">
                 <a di-href="<%=request.getContextPath()%>/index#/reportdata/1/20/0/all/all/all/all/all/all"><i class="report-icon"></i><span>报告管理</span></a>
             </shiro:hasPermission>
         </li>

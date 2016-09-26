@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -48,7 +47,6 @@ import com.celloud.service.DataService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
-import com.celloud.service.SecRoleService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
@@ -88,8 +86,6 @@ public class TaskAction {
     private AppService appService;
     @Resource
     private ExperimentService expService;
-    @Resource
-    private SecRoleService secService;
     @Resource
     private UserService userService;
     @Resource
@@ -204,7 +200,6 @@ public class TaskAction {
             if (resultFiles != null) {
                 Iterator<String> rFile = resultFiles.iterator();
                 Long size = null;
-                Set<String> secs = secService.findRolesByUserId(userId);
                 while (rFile.hasNext()) {
                     String fstr = rFile.next();
                     if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
@@ -242,7 +237,7 @@ public class TaskAction {
                             dataService.updateDataInfoByFileIdAndTagId(data,
                                     tagId);
                             // TODO 需要去掉写死的自动运行
-                            if (secs.contains("bsier") && tagId == 1) {
+                            if (tagId == 1) {
                                 toRunSplitData(userId, data);
                             }
                         }
