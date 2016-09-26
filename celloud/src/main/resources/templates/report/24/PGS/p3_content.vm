@@ -10,10 +10,10 @@
             <td>胚胎编号:<span><input name="baseInfo['explainEmbryoNumber']" value="$!{pgs.baseInfo.explainEmbryoNumber}" type="text" class="tdInput"></span></td>
         </tr>
         <tr>
-            <td>检测结果:<span><input name="baseInfo['explainResult']" value="$!{pgs.baseInfo.explainResult}" type="text" class="tdInput"></span></td>
+            <td><div style="float:left">检测结果:</div><div style="float:left;width:55%;word-wrap: break-word;word-break: break-all;" id="explainResult"><textarea style="width:100%" rows="3" name="baseInfo['explainResult']">#if(${pgs.baseInfo.explainResult})$!{pgs.baseInfo.explainResult}#else#end</textarea></div></td>
         </tr>
         <tr>
-            <td>遗传咨询:<span><input name="baseInfo['explainGeneticCounseling']" value="$!{pgs.baseInfo.explainGeneticCounseling}" type="text" class="tdInput"></span></td>
+            <td><div style="float:left">遗传咨询:</div><div style="float:left;width:55%;word-wrap: break-word;word-break: break-all;" id="explainGeneticCounseling"><textarea style="width:100%" rows="3" name="baseInfo['explainGeneticCounseling']">#if(${pgs.baseInfo.explainGeneticCounseling})$!{pgs.baseInfo.explainGeneticCounseling}#else#end</textarea></div></td>
         </tr>
     </table>
     #if($flag==0 || $flag==1)
