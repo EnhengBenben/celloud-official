@@ -26,3 +26,7 @@ java -jar box-api-{version}.jar
 ```
  java -jar box-api-{version}.jar --box.uploadPath=/share/data/upload/
 ```
+##建议的启动脚本：
+```
+java -jar box-api-{version}.jar  --spring.profiles.active=dev|test|qa|prod --server.port=80 --box.uploadPath=/share/data/upload/
+```
