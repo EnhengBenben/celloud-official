@@ -48,183 +48,190 @@ ${hbv.detailBaseInfo.clinical}
     <div class="w3cbbs" style="display: none;"></div>
     <div class="container" style="display: none;"></div>
     <h2 class="mt10"><input name="detailBaseInfo['result3']" type="text" class="long_input" value="#if($hbv.detailBaseInfo.result3)$!{hbv.detailBaseInfo.result3}#else三、耐药位点突变检测结果：#end"></h2>
-    <div class="clearCss_3">
-        <div class="m-box">
-            <h2>
-                <input name="detailBaseInfo['result31']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result31)1.替诺福韦酯TDF突变检测#else$!{hbv.detailBaseInfo.result31}#end"/>
-            </h2>
-            <div class="m-boxCon">
-                #if(${hbv.known.containsKey('194_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['194_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        194位点测序失败，建议重测。
-                    </div>
-                #end
-            </div>
-        </div>
-        <!--位点突变-->
-        <div class="m-box">
-            <h2>
-            <input name="detailBaseInfo['result32']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result32)2.替比夫定 LDT 突变检测#else$!{hbv.detailBaseInfo.result32}#end"/>
-            </h2>
-            <div class="m-boxCon">
-                #if(${hbv.known.containsKey('204_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        204位点测序失败，建议重测。
-                    </div>
-                #end
-            </div>
-        </div>
-        <!--位点突变-->
-        <div class="m-box">
-            <h2>
-            <input name="detailBaseInfo['result33']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result33)3.阿德福韦 ADV 突变检测#else$!{hbv.detailBaseInfo.result33}#end"/>
-            </h2>
-            <div class="m-boxCon">
-                #if(${hbv.known.containsKey('181_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['181_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        181位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('236_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['236_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        236位点测序失败，建议重测。
-                    </div>
-                #end
-            </div>
-        </div>
-        <!--位点突变-->
-        <div class="m-box">
-            <h2>
-            <input name="detailBaseInfo['result34']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result34)4.拉米夫定 LAM 突变检测#else$!{hbv.detailBaseInfo.result34}#end"/>
-            </h2>
-            <div class="m-boxCon">
-                #if(${hbv.known.containsKey('173_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        173位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('180_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        180位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('204_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        204位点测序失败，建议重测。
-                    </div>
-                #end
-            </div>
-        </div>
-        <!--位点突变-->
-        <div class="m-box">
-            <h2>
-            <input name="detailBaseInfo['result35']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result35)5.恩曲他滨 FTC 突变检测#else$!{hbv.detailBaseInfo.result35}#end"/>
-            </h2>
-            <div class="m-boxCon">
-                #if(${hbv.known.containsKey('173_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        173位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('180_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        180位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('204_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        204位点测序失败，建议重测。
-                    </div>
-                #end
-            </div>
-        </div>
-        <!--位点突变-->
-        <div class="m-box">
-            <h2>
-            <input name="detailBaseInfo['result36']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result36)6.恩替卡韦 ETV 突变检测#else$!{hbv.detailBaseInfo.result36}#end"/>
-            </h2>
-            <div class="m-boxCon">
-                #if(${hbv.known.containsKey('169_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['169_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        169位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('180_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        180位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('184_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['184_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        184位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('202_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['202_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        202位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('204_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        204位点测序失败，建议重测。
-                    </div>
-                #end
-                #if(${hbv.known.containsKey('250_png')})
-                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['250_png']}" height="170px;" width="150px;">
-                #else
-                    <div class="imgmiss">
-                        250位点测序失败，建议重测。
-                    </div>
-                #end
-            </div>
-        </div>
-        <div class="w3cbbs" style="display: none;"></div>
-        <div class="container" style="display: none;"></div>
-        <!--位点突变-->
-        <div class="m-box">
-              <h2>
-              <input name="detailBaseInfo['result37']" type="text" class="super_long_input" value="#if(!$hbv.detailBaseInfo.result37)7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）#else$!{hbv.detailBaseInfo.result37}#end"/>
-              </h2>
-            <div class="m-boxCon" id="otherPng">
-                #if(${hbv.imgString}!='')
-                    #set($imgs=${hbv.imgString.split(',')})
-                    #foreach($img in $imgs)
-                        <img onmouseover="imgRemove.setOptions({left:120}).show(this)" title="${img}" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${img}" height="170px;" width="150px;">
-                    #end
-                #end
-            </div>
-        </div>
-    </div>
+    <input type="hidden" name="detailBaseInfo['imgs']" id="imgs" />
+    #if($hbv.detailBaseInfo.imgs)
+	    <div class="clearCss_3" id="originalImgs">
+	    	$hbv.detailBaseInfo.imgs
+	    <div>
+    #else
+	    <div class="clearCss_3" id="originalImgs">
+	        <div class="m-box">
+	            <h2>
+	                <input name="detailBaseInfo['result31']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result31)1.替诺福韦酯TDF突变检测#else$!{hbv.detailBaseInfo.result31}#end"/>
+	            </h2>
+	            <div class="m-boxCon">
+	                #if(${hbv.known.containsKey('194_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['194_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        194位点测序失败，建议重测。
+	                    </div>
+	                #end
+	            </div>
+	        </div>
+	        <!--位点突变-->
+	        <div class="m-box">
+	            <h2>
+	            <input name="detailBaseInfo['result32']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result32)2.替比夫定 LDT 突变检测#else$!{hbv.detailBaseInfo.result32}#end"/>
+	            </h2>
+	            <div class="m-boxCon">
+	                #if(${hbv.known.containsKey('204_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        204位点测序失败，建议重测。
+	                    </div>
+	                #end
+	            </div>
+	        </div>
+	        <!--位点突变-->
+	        <div class="m-box">
+	            <h2>
+	            <input name="detailBaseInfo['result33']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result33)3.阿德福韦 ADV 突变检测#else$!{hbv.detailBaseInfo.result33}#end"/>
+	            </h2>
+	            <div class="m-boxCon">
+	                #if(${hbv.known.containsKey('181_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['181_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        181位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('236_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['236_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        236位点测序失败，建议重测。
+	                    </div>
+	                #end
+	            </div>
+	        </div>
+	        <!--位点突变-->
+	        <div class="m-box">
+	            <h2>
+	            <input name="detailBaseInfo['result34']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result34)4.拉米夫定 LAM 突变检测#else$!{hbv.detailBaseInfo.result34}#end"/>
+	            </h2>
+	            <div class="m-boxCon">
+	                #if(${hbv.known.containsKey('173_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        173位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('180_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        180位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('204_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        204位点测序失败，建议重测。
+	                    </div>
+	                #end
+	            </div>
+	        </div>
+	        <!--位点突变-->
+	        <div class="m-box">
+	            <h2>
+	            <input name="detailBaseInfo['result35']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result35)5.恩曲他滨 FTC 突变检测#else$!{hbv.detailBaseInfo.result35}#end"/>
+	            </h2>
+	            <div class="m-boxCon">
+	                #if(${hbv.known.containsKey('173_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        173位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('180_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        180位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('204_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        204位点测序失败，建议重测。
+	                    </div>
+	                #end
+	            </div>
+	        </div>
+	        <!--位点突变-->
+	        <div class="m-box">
+	            <h2>
+	            <input name="detailBaseInfo['result36']" type="text" class="long_input" value="#if(!$hbv.detailBaseInfo.result36)6.恩替卡韦 ETV 突变检测#else$!{hbv.detailBaseInfo.result36}#end"/>
+	            </h2>
+	            <div class="m-boxCon">
+	                #if(${hbv.known.containsKey('169_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['169_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        169位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('180_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        180位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('184_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['184_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        184位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('202_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['202_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        202位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('204_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        204位点测序失败，建议重测。
+	                    </div>
+	                #end
+	                #if(${hbv.known.containsKey('250_png')})
+	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['250_png']}" height="170px;" width="150px;">
+	                #else
+	                    <div class="imgmiss">
+	                        250位点测序失败，建议重测。
+	                    </div>
+	                #end
+	            </div>
+	        </div>
+	        <div class="w3cbbs" style="display: none;"></div>
+	        <div class="container" style="display: none;"></div>
+	        <!--位点突变-->
+	        <div class="m-box">
+	              <h2>
+	              <input name="detailBaseInfo['result37']" type="text" class="super_long_input" value="#if(!$hbv.detailBaseInfo.result37)7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）#else$!{hbv.detailBaseInfo.result37}#end"/>
+	              </h2>
+	            <div class="m-boxCon" id="otherPng">
+	                #if(${hbv.imgString}!='')
+	                    #set($imgs=${hbv.imgString.split(',')})
+	                    #foreach($img in $imgs)
+	                        <img onmouseover="imgRemove.setOptions({left:120}).show(this)" title="${img}" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${img}" height="170px;" width="150px;">
+	                    #end
+	                #end
+	            </div>
+	        </div>
+	    </div>
+	#end
     <div class="m-box_1" id="des1">
         <textarea name="detailBaseInfo['des1']" rows="5">#if($hbv.detailBaseInfo.des1)$!hbv.detailBaseInfo.des1#else注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G
     2. Wild Type: GCT;表示该位点的野生型为GCT
