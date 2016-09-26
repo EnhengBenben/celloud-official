@@ -215,7 +215,6 @@ public class RunOverUtil {
 		if (!new File(projectFile).exists()) {
 			resultArray.append(appTitle);
 		}
-		resultArray.append(appTitle);
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String datakey = data.getDataKey();
