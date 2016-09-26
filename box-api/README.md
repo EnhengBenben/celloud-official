@@ -10,3 +10,19 @@ mvn clean package
 ```java
 java -jar box-api-{version}.jar 
 ```
+##运行参数
+###spring.profiles.active
+启动springboot的profile，默认值dev，可选值test、qa、prod，分别对应开发环境、测试环境、qa环境和生产环境
+```
+ java -jar box-api-{version}.jar --spring.profiles.active=prod
+```
+###server.port
+启动springboot使用的端口号，默认9090
+```
+ java -jar box-api-{version}.jar --server.port=8080
+```
+###box.uploadPath
+文件上传的根路径，默认 ```/share/data/upload```
+```
+ java -jar box-api-{version}.jar --box.uploadPath=/share/data/upload/
+```
