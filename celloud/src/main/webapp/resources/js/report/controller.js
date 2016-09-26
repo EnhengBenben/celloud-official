@@ -109,14 +109,14 @@
 					isActive = "active";
 					reportIdNow = 'fileA'+proId+item.fileId;
 				}
-				inner += "<a class='btn -low "+isActive+"' style='font-size:12px;width:100%;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
+				inner += "<a class='btn -low "+isActive+"' style='font-size:12px;width:100%;margin-top:1px;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
 				$("#fileListUl").append(inner);
 				$("#fileA"+proId+item.fileId).bind("click", function() {
 					viewDataReport(userId,item.dataKey,item.fileName,appId,appInfo.appName,proId,projectName,$(this));
 					$.get("report/clickItemDataReport",{},function(state){});
 				});
 			});
-			$("#fileListUl").append("<a id='nextA' class='btn -low' style='width:100%;'><span class='caret'></span></button>");
+			$("#fileListUl").append("<a id='nextA' class='btn -low' style='width:100%;margin-top:1px;'><span class='caret'></span></button>");
 			$("#prevA").bind("click",function(){
 				var preId = $("#"+reportIdNow).prev().attr("id");
 				if(preId=='prevA'){
