@@ -1,3 +1,5 @@
+/*!40101 SET NAMES utf8 */;
+
 use celloud;
 CREATE TABLE `tb_box_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
