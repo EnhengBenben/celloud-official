@@ -33,6 +33,7 @@ bin/
 .eclipse
 /lib/
 /logs/
+/logs*/
 /modules
 /project/project
 /project/target
