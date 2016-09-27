@@ -113,7 +113,7 @@ public class RunServiceImpl implements RunService {
 	}
 
 	@Override
-	public boolean isWait(App app) {
+	public boolean runCheckIsWait(App app) {
 		boolean iswait = false;
 		int runningNum = 0;
 		Integer appId = app.getAppId();
@@ -122,6 +122,9 @@ public class RunServiceImpl implements RunService {
 			iswait = runningNum < SparkPro.MAXTASK;
 		} else {
 			runningNum = taskService.findRunningNumByAppId(appId);
+			System.out.println(runningNum);
+			System.out.println(app.getMaxTask());
+			System.out.println("---------");
 			iswait = runningNum < app.getMaxTask() || app.getMaxTask() == 0;
 		}
 		return iswait;
@@ -205,7 +208,7 @@ public class RunServiceImpl implements RunService {
 			task.setResult(appPath);
 			taskService.updateTask(task);
 			Integer taskId = task.getTaskId();
-			Boolean iswait = isWait(app);
+			Boolean iswait = runCheckIsWait(app);
 			if (iswait) {
 				if (AppDataListType.API_RUN.contains(appId)) {
 					AppSubmitUtil.http(appId, dataListFile, appPath, projectId);

@@ -62,7 +62,7 @@ public interface RunService {
 	 * @author lin
 	 * @date 2016年9月22日上午10:56:06
 	 */
-	public boolean isWait(App app);
+	public boolean runCheckIsWait(App app);
 
 	/**
 	 * 运行主方法（会根据数据的产品标签分组成项目运行）
