@@ -20,6 +20,7 @@ var fileUpload=(function(fileUpload){
 			  }
 		  }
 		  var uploadUrl = box==null?"../uploadFile/uploadManyFile":(box+"/box/upload");
+		  console.log(box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+box);
 	    var uploader = new plupload.Uploader({
 	      runtimes : 'html5,flash,silverlight,html4',
 	      browse_button : ['plupload-content','upload-more'],

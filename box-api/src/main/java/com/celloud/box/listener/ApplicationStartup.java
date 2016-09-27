@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.celloud.box.config.APIConfig;
 import com.celloud.box.config.BoxConfig;
 import com.celloud.box.utils.LocalIpAddressUtil;
 import com.celloud.box.utils.UploadPath;
@@ -18,15 +19,19 @@ import com.celloud.box.utils.UploadPath;
 public class ApplicationStartup implements CommandLineRunner {
 	private static Logger logger = LoggerFactory.getLogger(ApplicationStartup.class);
 	@Resource
-	private BoxConfig config;
+	private BoxConfig boxConfig;
+	@Resource
+	private APIConfig apiConfig;
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		UploadPath.setRootPath(config.getUploadPath());
+		UploadPath.setRootPath(boxConfig.getUploadPath());
 		logger.info("********************* System Properties *********************");
 		logger.info("");
-		logger.info("box.env        =  {}", config.getEnv());
-		logger.info("box.uploadPath =  {}", config.getUploadPath());
+		logger.info("box.env        =  {}", boxConfig.getEnv());
+		logger.info("box.uploadPath =  {}", boxConfig.getUploadPath());
+		logger.info("api.newfile    =  {}", apiConfig.getNewfile());
+		logger.info("api.updatefile =  {}", apiConfig.getUpdatefile());
 		Map<InetAddress, String> map = LocalIpAddressUtil.resolveLocalNetworks();
 		for (InetAddress address : map.keySet()) {
 			logger.info("local ips      =  {} : {}", map.get(address), address.getHostAddress());

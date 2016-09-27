@@ -68,24 +68,58 @@ public interface RunService {
 	 * 运行主方法（会根据数据的产品标签分组成项目运行）
 	 * 
 	 * @param userId
-	 * @param userName
 	 * @param dataIds
 	 * @return
 	 * @author lin
 	 * @date 2016年9月22日下午1:49:39
 	 */
-	public Response run(Integer userId, String userName, String dataIds);
+	public Response run(Integer userId, String dataIds);
 
 	/**
 	 * 以某个APP运行一组数据
 	 * 
 	 * @param userId
-	 * @param userName
 	 * @param appId
 	 * @param dataList
 	 * @return
 	 * @author lin
 	 * @date 2016年9月22日下午1:50:26
 	 */
-	public String runSingle(Integer userId, String userName, Integer appId, List<DataFile> dataList);
+	public String runSingle(Integer userId, Integer appId, List<DataFile> dataList);
+
+	/**
+	 * 运行下一个任务
+	 * 
+	 * @param appId
+	 * @author lin
+	 * @date 2016年9月27日下午1:43:39
+	 */
+	public void runNext(Integer appId);
+
+	/**
+	 * 校验是否运行BSI
+	 * 
+	 * @param batch
+	 * @param dataId
+	 * @param dataKey
+	 * @param needSplit
+	 * @param originalName
+	 * @param userId
+	 * @param fileFormat
+	 * @return
+	 * @author lin
+	 * @date 2016年9月27日下午4:08:50
+	 */
+	public String bsiCheckRun(String batch, Integer dataId, String dataKey, Integer needSplit, String originalName,
+			Integer userId, Integer fileFormat);
+
+	/**
+	 * 校验是否运行rocky
+	 * 
+	 * @param appId
+	 * @param data
+	 * @author lin
+	 * @date 2016年9月27日下午4:09:02
+	 */
+	public void rockyCheckRun(Integer appId, DataFile data);
 }

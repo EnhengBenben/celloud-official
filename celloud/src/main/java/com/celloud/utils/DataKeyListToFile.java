@@ -32,9 +32,8 @@ public class DataKeyListToFile {
 		Iterator<DataFile> iterator = dataList.iterator();
 		while (iterator.hasNext()) {
 			DataFile data = iterator.next();
-			String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
-					+ ".txt";
-			FileTools.appendWrite(dataListFile, data.getPath());
+			String dataListFile = getDataListFile();
+			FileTools.appendWrite(dataListFile, data.getPath() + "\t" + data.getFileName());
 			dataListFileMap.put(data.getDataKey(), dataListFile);
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, String.valueOf(dataList.size()));
@@ -52,8 +51,7 @@ public class DataKeyListToFile {
 		Iterator<DataFile> iterator = dataList.iterator();
 		while (iterator.hasNext()) {
 			DataFile data = iterator.next();
-			String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
-					+ ".txt";
+			String dataListFile = getDataListFile();
 			FileTools.appendWrite(dataListFile, data.getPath());
 			dataListFileMap.put(data.getDataKey(), dataListFile);
 		}
@@ -75,8 +73,7 @@ public class DataKeyListToFile {
 		Integer dataReportNum = 0;
 		while (chk_it.hasNext()) {
 			sb = new StringBuffer();
-			String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
-					+ ".txt";
+			String dataListFile = getDataListFile();
 			DataFile data = chk_it.next();
 			String dataKey = data.getDataKey();
 			String fname = data.getFileName();
@@ -110,8 +107,7 @@ public class DataKeyListToFile {
 	public static Map<String, String> toSplit(List<DataFile> dataList) {
 		Map<String, String> dataListFileMap = new HashMap<>();
 		StringBuffer sb = new StringBuffer();
-		String dataListFile = datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue()
-				+ ".txt";
+		String dataListFile = getDataListFile();
 		sortDataList(dataList);
 		List<String> pathList = new ArrayList<>();
 		String endPath = "";
@@ -143,6 +139,10 @@ public class DataKeyListToFile {
 				return d1.getFileName().compareTo(d2.getFileName());
 			}
 		});
+	}
+
+	private static String getDataListFile() {
+		return datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue() + ".txt";
 	}
 
 }

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -16,7 +18,10 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
+import com.celloud.constants.FileFormat;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.SparkPro;
+import com.celloud.constants.TaskPeriod;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Project;
@@ -123,7 +128,7 @@ public class RunServiceImpl implements RunService {
 	}
 
 	@Override
-	public Response run(Integer userId, String userName, String dataIds) {
+	public Response run(Integer userId, String dataIds) {
 		//1. 检索数据详情
 		List<DataFile> dataList = dataService.findDatasById(dataIds);
 		//2. 数据分组
@@ -135,13 +140,13 @@ public class RunServiceImpl implements RunService {
 		}
 		if (!appService.checkPriceToRun(appIdList, userId)) {
 			String result = "余额不足，请充值后再运行";
-			logger.info(userName + result);
+			logger.info("用户" + userId + result);
 			return new Response(result);
 		}
 		//4. 运行
 		StringBuffer result = new StringBuffer();
 		for (Entry<Integer, List<DataFile>> entry : map.entrySet()) {
-			String back = runSingle(userId, userName, entry.getKey(), entry.getValue());
+			String back = runSingle(userId, entry.getKey(), entry.getValue());
 			if (back != null) {
 				result.append(back).append(";");
 			}
@@ -154,7 +159,7 @@ public class RunServiceImpl implements RunService {
 	}
 
 	@Override
-	public String runSingle(Integer userId, String userName, Integer appId, List<DataFile> dataList) {
+	public String runSingle(Integer userId, Integer appId, List<DataFile> dataList) {
 		//1. 创建 dataListFile
 		Map<String, String> dataFilePathMap = getDataListFile(appId, dataList);
 		String dataReportNum = dataFilePathMap.get(DataKeyListToFile.DATA_REPORT_NUM);
@@ -165,7 +170,7 @@ public class RunServiceImpl implements RunService {
 		Integer projectId = createProject(userId, dataList, Integer.valueOf(dataReportNum));
 		if (projectId == null) {
 			result = "项目创建失败";
-			logger.info("{}{}", userName, result);
+			logger.info("用户{}{}", userId, result);
 			return result;
 		}
 
@@ -173,7 +178,7 @@ public class RunServiceImpl implements RunService {
 		boolean reportState = createReport(userId, appId, projectId, dataList);
 		if (!reportState) {
 			result = appId + "报告创建失败";
-			logger.info("{}{}", userName, result);
+			logger.info("用户{}{}", userId, result);
 			return result;
 		}
 
@@ -183,7 +188,6 @@ public class RunServiceImpl implements RunService {
 		if (!FileTools.checkPath(appPath)) {
 			new File(appPath).mkdirs();
 		}
-		Boolean iswait = isWait(app);
 		for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
 			String dataKey = entry.getKey();
 			String dataListFile = entry.getValue();
@@ -197,8 +201,11 @@ public class RunServiceImpl implements RunService {
 			}
 			task.setProjectId(projectId);
 			task.setCommand(command);
+			task.setDatalist(dataListFile);
+			task.setResult(appPath);
 			taskService.updateTask(task);
 			Integer taskId = task.getTaskId();
+			Boolean iswait = isWait(app);
 			if (iswait) {
 				if (AppDataListType.API_RUN.contains(appId)) {
 					AppSubmitUtil.http(appId, dataListFile, appPath, projectId);
@@ -214,6 +221,134 @@ public class RunServiceImpl implements RunService {
 		// 保存消费记录
 		expenseService.saveRunExpenses(projectId, appId, userId, dataList);
 		return result;
+	}
+
+	@Override
+	public void runNext(Integer appId) {
+		Task t = taskService.findFirstTask(appId);
+		if (t != null) {
+			if (AppDataListType.API_RUN.contains(appId)) {
+				AppSubmitUtil.http(appId, t.getDatalist(), t.getResult(), t.getProjectId());
+			} else {
+				AppSubmitUtil.ssh("sge", t.getCommand(), false);
+			}
+			taskService.updateToRunning(t.getTaskId());
+		}
+	}
+
+	@Override
+	public String bsiCheckRun(String batch, Integer dataId, String dataKey, Integer needSplit, String originalName,
+			Integer userId, Integer fileFormat) {
+		logger.info("判断是否数据{}上传完即刻运行", originalName);
+		Integer appId;
+		if (needSplit == null) {
+			appId = 118;
+		} else {
+			appId = 113;
+		}
+		String pubName = "";
+		if (fileFormat == FileFormat.FQ || originalName.contains(".txt") || originalName.contains(".lis")) {
+			Boolean isR1 = false;
+			if (originalName.contains("R1")) {
+				pubName = originalName.substring(0, originalName.lastIndexOf("R1"));
+				isR1 = true;
+			} else if (originalName.contains("R2")) {
+				pubName = originalName.substring(0, originalName.lastIndexOf("R2"));
+			} else if (originalName.contains(".txt") || originalName.contains(".lis")) {
+				pubName = originalName.substring(0, originalName.lastIndexOf("."));
+			}
+			Pattern p = Pattern.compile("\\_|\\%");
+			Matcher m = p.matcher(pubName);
+			StringBuffer sb = new StringBuffer();
+			while (m.find()) {
+				String rep = "\\\\" + m.group(0);
+				m.appendReplacement(sb, rep);
+			}
+			m.appendTail(sb);
+			List<DataFile> dataList = dataService.getDataByBatchAndFileName(userId, batch, sb.toString());
+			boolean hasR1 = false;
+			boolean hasR2 = false;
+			boolean hasIndex = false;
+			for (DataFile d : dataList) {
+				String name_tmp = d.getFileName();
+				if (name_tmp.contains("R1")) {
+					hasR1 = true;
+				} else if (name_tmp.contains("R2")) {
+					hasR2 = true;
+				} else if (name_tmp.contains(".txt") || name_tmp.contains(".lis")) {
+					hasIndex = true;
+				}
+			}
+			Task task = new Task();
+			task.setUserId(userId);
+			task.setDataKey(dataKey);
+			task.setPeriod(TaskPeriod.UPLOADING);
+			task.setParams(pubName);
+			task.setAppId(appId);
+			taskService.addOrUpdateUploadTaskByParam(task, isR1);
+			if (needSplit == 1 && hasR1 && hasR2 && hasIndex) {
+				runSingle(userId, appId, dataList);
+			} else if (needSplit != 1 && hasR1 && hasR2) {
+				runSingle(userId, appId, dataList);
+			}
+		} else if (fileFormat == FileFormat.YASUO && needSplit == null) {
+			List<DataFile> dataList = new ArrayList<>();
+			DataFile data = dataService.getDataById(dataId);
+			dataList.add(data);
+			runSingle(userId, appId, dataList);
+		}
+		return "1";
+
+	}
+
+	@Override
+	public void rockyCheckRun(Integer appId, DataFile data) {
+		String originalName = data.getFileName();
+		String pubName = "";
+		if (data.getFileFormat() == FileFormat.FQ || data.getFileFormat() == FileFormat.YASUO) {
+			Map<String, Integer> dataIds = new HashMap<String, Integer>();
+			Boolean isR1 = false;
+			if (originalName.contains("R1")) {
+				pubName = originalName.substring(0, originalName.lastIndexOf("R1"));
+				isR1 = true;
+			} else if (originalName.contains("R2")) {
+				pubName = originalName.substring(0, originalName.lastIndexOf("R2"));
+			}
+			Pattern p = Pattern.compile("\\_|\\%");
+			Matcher m = p.matcher(pubName);
+			StringBuffer sb = new StringBuffer();
+			while (m.find()) {
+				String rep = "\\\\" + m.group(0);
+				m.appendReplacement(sb, rep);
+			}
+			m.appendTail(sb);
+			List<DataFile> dlist = dataService.getDataByBatchAndFileName(data.getUserId(), data.getBatch(),
+					sb.toString());
+			boolean hasR1 = false;
+			boolean hasR2 = false;
+			for (DataFile d : dlist) {
+				String name_tmp = d.getFileName();
+				if (name_tmp.contains("R1") && data.getFileFormat().intValue() == d.getFileFormat().intValue()) {
+					hasR1 = true;
+				} else if (name_tmp.contains("R2") && data.getFileFormat().intValue() == d.getFileFormat().intValue()) {
+					hasR2 = true;
+				}
+				// 排除同一个文件多次上传的问题
+				dataIds.put(d.getMd5(), d.getFileId());
+			}
+			Task task = new Task();
+			task.setUserId(data.getUserId());
+			task.setDataKey(data.getDataKey());
+			task.setPeriod(TaskPeriod.UPLOADING);// TODO 小心处理这个状态，将关系到数据的统计
+			task.setParams(pubName);
+			task.setAppId(IconConstants.APP_ID_ROCKY);
+			taskService.addOrUpdateUploadTaskByParam(task, isR1);
+			if (hasR1 && hasR2) {
+				logger.info("数据{}上传完可以运行", originalName);
+				runSingle(data.getUserId(), appId, dlist);
+			}
+		}
+		logger.info("数据{}上传完不可以运行", originalName);
 	}
 
 }
