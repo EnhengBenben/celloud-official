@@ -4,6 +4,9 @@
 将用户上传的数据先上传到盒子，盒子上传到OSS上，然后web端再从OSS同步到上海的存储。
 ##二、打包
 ```java
+cd /{git仓库目录}/celloud/box-api
+```
+```java
 mvn clean package
 ```
 ##三、运行
