@@ -23,19 +23,21 @@ import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.DataState;
+import com.celloud.constants.ExperimentState;
 import com.celloud.constants.FileFormat;
 import com.celloud.constants.NoticeConstants;
+import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.message.MessageUtils;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
-import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
@@ -43,7 +45,6 @@ import com.celloud.service.ReportService;
 import com.celloud.service.RunService;
 import com.celloud.service.SecRoleService;
 import com.celloud.service.TaskService;
-import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
@@ -76,13 +77,9 @@ public class TaskAction {
     @Resource
     private ReportService reportService;
     @Resource
-    private AppService appService;
-    @Resource
     private ExperimentService expService;
     @Resource
     private SecRoleService secService;
-    @Resource
-    private UserService userService;
     @Resource
 	private MessageCategoryUtils mcu;
 	@Resource
@@ -102,7 +99,6 @@ public class TaskAction {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public String taskRunOver(String projectId, String dataNames) {
-		//TODO taskRunOver
         logger.info("任务运行结束，proId:{},运行数据dataKey：{}", projectId, dataNames);
         if (StringUtils.isEmpty(projectId) || StringUtils.isEmpty(dataNames)) {
             logger.info("任务运行结束信息不全");
@@ -119,7 +115,7 @@ public class TaskAction {
 		Project project = projectService.selectByPrimaryKey(proId);
 		if (project.getState() == 1) {
 			logger.info("用户删除的项目回调并尝试运行下一个，projectID：" + projectId);
-			runNext(appId);
+			runService.runNext(appId);
 			return "run error";
 		}
         Integer userId = (Integer) map.get("userId");
@@ -226,7 +222,10 @@ public class TaskAction {
                                     tagId);
                             // TODO 需要去掉写死的自动运行
                             if (secs.contains("bsier") && tagId == 1) {
-								toRunSplitData(userId, username, data);
+								logger.info("bsi自动运行split分数据");
+								List<DataFile> bsiList = new ArrayList<>();
+								bsiList.add(data);
+								runService.runSingle(userId, username, 118, bsiList);
                             }
                         }
                     }
@@ -238,7 +237,7 @@ public class TaskAction {
                 dataKey, dataNames, xml);
         if (task != null) {
             logger.info("任务{}执行完毕", task.getTaskId());
-			runNext(appId);
+			runService.runNext(appId);
         }
         String tipsName = pubName.equals("") ? fname : pubName;
 		//构造桌面消息
@@ -261,17 +260,6 @@ public class TaskAction {
 		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
         return "run over";
     }
-
-	/**
-	 * 运行下一个task
-	 * 
-	 * @param appId
-	 * @author lin
-	 * @date 2016年8月4日下午4:33:32
-	 */
-	public void runNext(Integer appId) {
-		runService.runNext(appId);
-	}
 
     /**
      * 项目运行结束，由python进行全部的后续处理
@@ -300,7 +288,6 @@ public class TaskAction {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
 	public String projectRunOver(String projectId, String dataKey) {
-		//TODO projectRunOver
 		logger.info("项目运行结束，id:{},{}", projectId, dataKey);
 		if (StringUtils.isEmpty(projectId) || StringUtils.isEmpty(dataKey)) {
             logger.info("任务运行结束信息不全");
@@ -351,40 +338,40 @@ public class TaskAction {
 		}
 		// 6. 项目报告插入mysql并修改项目运行状态
 		reportService.reportCompeleteByProId(proId, xml);
-		//		if (ExperimentState.apps.contains(appId)) {
-		//			for (DataFile dataFile : dataList) {
-		//				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();
-		//				int dataId = dataFile.getFileId();
-		//				List<Experiment> expList = expService.getRelatList(userId, anotherName, dataFile.getDataKey());
-		//				if (expList != null && expList.size() == 1) {
-		//					Report report = reportService.getReport(userId, appId, Integer.valueOf(projectId), dataId,
-		//							ReportType.DATA);
-		//					Experiment exp = expList.get(0);
-		//					Integer am = exp.getAmplificationMethod();
-		//					if (am == null || am.equals(0)) {
-		//						continue;
-		//					}
-		//					Integer sample = exp.getSampleType();
-		//					if (sample == null || sample.equals(0)) {
-		//						continue;
-		//					}
-		//					Integer sequenator = exp.getSequenator();
-		//					if (sequenator == null || sequenator.equals(0)) {
-		//						continue;
-		//					}
-		//					Integer expAPPId = expService.getApp(sample, am, sequenator);
-		//					if (expAPPId != null && expAPPId.equals(appId)) {
-		//						exp.setReportId(report.getReportId());
-		//						exp.setReportDate(report.getEndDate());
-		//						exp.setStep(ExperimentState.REPORT_STEP);
-		//						expService.updateByPrimaryKeySelective(exp);
-		//						logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
-		//					}
-		//				} else {
-		//					logger.error("用户{}未能检索到与{}匹配的实验流程", userId, dataId);
-		//				}
-		//			}
-		//		}
+		if (ExperimentState.apps.contains(appId)) {
+			for (DataFile dataFile : dataList) {
+				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();
+				int dataId = dataFile.getFileId();
+				List<Experiment> expList = expService.getRelatList(userId, anotherName, dataFile.getDataKey());
+				if (expList != null && expList.size() == 1) {
+					Report report = reportService.getReport(userId, appId, Integer.valueOf(projectId), dataId,
+							ReportType.DATA);
+					Experiment exp = expList.get(0);
+					Integer am = exp.getAmplificationMethod();
+					if (am == null || am.equals(0)) {
+						continue;
+					}
+					Integer sample = exp.getSampleType();
+					if (sample == null || sample.equals(0)) {
+						continue;
+					}
+					Integer sequenator = exp.getSequenator();
+					if (sequenator == null || sequenator.equals(0)) {
+						continue;
+					}
+					Integer expAPPId = expService.getApp(sample, am, sequenator);
+					if (expAPPId != null && expAPPId.equals(appId)) {
+						exp.setReportId(report.getReportId());
+						exp.setReportDate(report.getEndDate());
+						exp.setStep(ExperimentState.REPORT_STEP);
+						expService.updateByPrimaryKeySelective(exp);
+						logger.info("用户{}数据{}自动绑定报告成功", userId, dataId);
+					}
+				} else {
+					logger.error("用户{}未能检索到与{}匹配的实验流程", userId, dataId);
+				}
+			}
+		}
 		//构造桌面消息
 		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
 				.send(NoticeConstants.createMessage("task", "运行完成", "项目【" + projectName + "】运行【" + appName + "】完成。"));
@@ -408,14 +395,4 @@ public class TaskAction {
         return "run over";
     }
 
-    @ActionLog(value = "bsi运行split分数据", button = "运行split分数据")
-	private String toRunSplitData(Integer userId, String userName, DataFile data) {
-        logger.info("bsi自动运行split分数据");
-        // XXX 运行完split只能运行bsi
-        Integer appId = 118;
-        List<DataFile> dataList = new ArrayList<>();
-        dataList.add(data);
-		runService.runSingle(userId, userName, appId, dataList);
-        return "begin run:bsi";
-    }
 }

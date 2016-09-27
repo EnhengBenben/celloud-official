@@ -89,5 +89,12 @@ public interface RunService {
 	 */
 	public String runSingle(Integer userId, String userName, Integer appId, List<DataFile> dataList);
 
-	public String runNext(Integer appId);
+	/**
+	 * 运行下一个任务
+	 * 
+	 * @param appId
+	 * @author lin
+	 * @date 2016年9月27日下午1:43:39
+	 */
+	public void runNext(Integer appId);
 }

@@ -219,19 +219,16 @@ public class RunServiceImpl implements RunService {
 	}
 
 	@Override
-	public String runNext(Integer appId) {
+	public void runNext(Integer appId) {
 		Task t = taskService.findFirstTask(appId);
 		if (t != null) {
-			String command = t.getCommand();
-			logger.info("运行命令：{}", command);
 			if (AppDataListType.API_RUN.contains(appId)) {
 				AppSubmitUtil.http(appId, t.getDatalist(), t.getResult(), t.getProjectId());
 			} else {
-				AppSubmitUtil.ssh("sge", command, false);
+				AppSubmitUtil.ssh("sge", t.getCommand(), false);
 			}
 			taskService.updateToRunning(t.getTaskId());
 		}
-		return null;
 	}
 
 }
