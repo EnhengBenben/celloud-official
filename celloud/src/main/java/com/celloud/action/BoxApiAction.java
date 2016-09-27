@@ -3,8 +3,6 @@ package com.celloud.action;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +37,7 @@ public class BoxApiAction {
 	public Response newfile(Integer userId, String name, String md5, long size, Integer tagId, String batch) {
 		logger.info("user {} new file : {}", userId, name);
 		Map<String, Object> values = new HashMap<>();
-		int dataId = addFileInfo(userId, name);
+		int dataId = dataService.addFileInfo(userId, name);
 		String fileDataKey = DataUtil.getNewDataKey(dataId);
 		String ext = FileTools.getExtName(name);
 		DataFile data = new DataFile();
@@ -67,26 +65,8 @@ public class BoxApiAction {
 		String folderByDay = realPath + userId + File.separator + today;
 		String newName = file.getDataKey() + FileTools.getExtName(file.getFileName());
 		String path = folderByDay + File.separator + newName;
-		apiService.updateUploadState(fileId, objectKey, 1, path);
+		dataService.updateUploadState(fileId, objectKey, 1, path);
 		apiService.updatefile(objectKey, fileId, tagId, batch, needSplit, newName, folderByDay);
 		return Response.SUCCESS();
-	}
-
-	/**
-	 * 将上传文件添加到数据库中
-	 * 
-	 * @return
-	 */
-	private int addFileInfo(Integer userId, String fileName) {
-		DataFile data = new DataFile();
-		data.setUserId(userId);
-		// 只允许字母和数字
-		String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
-		Pattern p = Pattern.compile(regEx);
-		Matcher m = p.matcher(fileName);
-		// replaceAll()将中文标号替换成英文标号
-		data.setFileName(m.replaceAll("").trim());
-		data.setState(DataState.DEELTED);
-		return dataService.addDataInfo(data);
 	}
 }

@@ -373,8 +373,7 @@ public class DataAction {
 	@ResponseBody
 	public Response runWithProject(String dataIds) {
 		Integer userId = ConstantsData.getLoginUserId();
-		String userName = ConstantsData.getLoginUserName();
-		return runService.run(userId, userName, dataIds);
+		return runService.run(userId, dataIds);
 	}
 
 	/**
