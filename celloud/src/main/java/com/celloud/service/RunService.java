@@ -88,4 +88,6 @@ public interface RunService {
 	 * @date 2016年9月22日下午1:50:26
 	 */
 	public String runSingle(Integer userId, String userName, Integer appId, List<DataFile> dataList);
+
+	public String runNext(Integer appId);
 }

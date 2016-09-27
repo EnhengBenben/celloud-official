@@ -197,6 +197,8 @@ public class RunServiceImpl implements RunService {
 			}
 			task.setProjectId(projectId);
 			task.setCommand(command);
+			task.setDatalist(dataListFile);
+			task.setResult(appPath);
 			taskService.updateTask(task);
 			Integer taskId = task.getTaskId();
 			if (iswait) {
@@ -214,6 +216,22 @@ public class RunServiceImpl implements RunService {
 		// 保存消费记录
 		expenseService.saveRunExpenses(projectId, appId, userId, dataList);
 		return result;
+	}
+
+	@Override
+	public String runNext(Integer appId) {
+		Task t = taskService.findFirstTask(appId);
+		if (t != null) {
+			String command = t.getCommand();
+			logger.info("运行命令：{}", command);
+			if (AppDataListType.API_RUN.contains(appId)) {
+				AppSubmitUtil.http(appId, t.getDatalist(), t.getResult(), t.getProjectId());
+			} else {
+				AppSubmitUtil.ssh("sge", command, false);
+			}
+			taskService.updateToRunning(t.getTaskId());
+		}
+		return null;
 	}
 
 }
