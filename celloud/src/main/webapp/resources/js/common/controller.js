@@ -57,6 +57,14 @@
 	        $("img[id='imageFullScreen']").css("height",157.5);
 	        $rootScope.showZoom(src);
 	    }
+	    
+	    /**
+	     * 用于记录数据报告中哪个数据被点击过的json数组
+	     * proId:项目id
+	     * dataKeys:该项目下的dataKey
+	     * [{proId:proId,dataKeys:[dataKey1,dataKey2,...]},{proId:proId,dataKeys:[dataKey1,dataKey2,...]},...]
+	     */
+	    window.rememberDataReport = new Array();
 		
 		$scope.isActive = function(viewLocation) {
 			if (viewLocation != "/") {

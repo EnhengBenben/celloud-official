@@ -1,5 +1,34 @@
 (function(){
   function viewDataReport(userId,dataKey,fileName,appId,appName,proId,proName,obj){
+	  // 遍历保存访问过的数据的json数组
+	  for(index in rememberDataReport){
+		  // 如果projectId相等则证明保存过, 就取出dataKeys;
+		  if(rememberDataReport[index].proId == proId){
+			 var dataKeys = rememberDataReport[index].dataKeys;
+			 break;
+		  }
+	  }
+	  if(dataKeys != undefined){
+		  // 不是第一次访问该项目的数据报告
+		  // 遍历dataKeys, 判断是否已经保存过该dataKey
+		  var flag = false;
+		  for(key in dataKeys){
+			  if(dataKeys[key] == dataKey){
+				  flag = true;
+				  break;
+			  }
+		  }
+		  if(!flag){
+			  // 将本次的dataKey存入dataKeys数组中
+			  dataKeys.push(dataKey);
+		  }
+	  }else{
+		  // 第一次访问该项目的数据报告
+		  // 构造json对象
+		  var remember = {"proId":proId,"dataKeys":[dataKey]};
+		  rememberDataReport.push(remember);
+	  }
+	  
 	  if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94||appId==99||appId==100||appId==101||appId==104||appId==116||appId==119||appId==120||appId==121||appId==122||appId==124||appId==125){
 		  var href = "#/reportpro/PGS/" + appId + "/" + dataKey + "/" + proId;
 	  }else{
@@ -1316,6 +1345,14 @@
         var th_size = 0;
         var td_size = 0;
         var tr_size = $(this).find("tr").length;
+        // 遍历访问记录的json数组, 判断是否访问过当前项目
+        var dataKeys;
+        for(remember in rememberDataReport){
+        	if(rememberDataReport[remember].proId == proId){
+        		// 如果访问过该项目, 取出该项目下的dataKeys数组
+        		dataKeys = rememberDataReport[remember].dataKeys;
+        	}
+        }
         $(this).find("table").addClass("table table-main info-table data-report-table");
         $(this).find("tr").each(function(j){
           if(j==0){
@@ -1344,6 +1381,17 @@
             $(this).find("a").removeClass("link_hover");
           });
           $(this).find("td").each(function(i){
+        	  var flag = false;
+              if(dataKeys != undefined){
+                  for(key in dataKeys){
+                	  // 遍历当前项目下的Keys
+                	  if(dataKeys[key] == $.trim($(this).prev().html())){
+                		  // 存在就证明该数据报告被访问过
+                		  flag = true;
+                		  break;
+                	  }
+                  }
+              }
             if(appId=="90"){
               if(i!=1){
                 if(trc==4){
@@ -1361,7 +1409,11 @@
                   if(fileName.length>30){
                     fileName = fileName.substring(0,30) + "...";
                   }
-                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  if(flag){
+                	  $(this).html("<a style='color: rgb(67, 0, 153);' id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  }else{
+                	  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  }
                   $(this).find("a").bind("click",function(){
                     viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
@@ -1377,9 +1429,17 @@
                   fileName = fileName.substring(0,30) + "...";
                 }
                 if(appId!="114"&&appId!="118"){
-                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                	if(flag){
+                		$(this).html("<a style='color: rgb(67, 0, 153);' id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                	}else{
+                		$(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                	}
                 }else{
-                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</a>");
+                	if(flag){
+                		$(this).html("<a style='color: rgb(67, 0, 153);' id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</a>");
+                	}else{
+                		$(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+fileName+"</a>");
+                	}
                 }
                 $(this).find("a").bind("click",function(){
                   viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
@@ -1405,7 +1465,22 @@
                 if(fileName.length>30){
                   fileName = fileName.substring(0,30) + "...";
                 }
-                $(this).html("<a id='dataSpan"+proId+$(this).next().html()+"'>"+$(this).next().html()+" （"+fileName+"）</a>");
+                var flag = false;
+                if(dataKeys != undefined){
+                    for(key in dataKeys){
+                  	  // 遍历当前项目下的Keys
+                  	  if(dataKeys[key] == $.trim($(this).next().html())){
+                  		  // 存在就证明该数据报告被访问过
+                  		  flag = true;
+                  		  break;
+                  	  }
+                    }
+                }
+                if(flag){
+                	$(this).html("<a style='color: rgb(67, 0, 153);' id='dataSpan"+proId+$(this).next().html()+"'>"+$(this).next().html()+" （"+fileName+"）</a>");
+                }else{
+                	$(this).html("<a id='dataSpan"+proId+$(this).next().html()+"'>"+$(this).next().html()+" （"+fileName+"）</a>");
+                }
                 $(this).find("a").bind("click",function(){
                   viewDataReport(userId,$.trim($(this).parent().next().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
@@ -1429,7 +1504,11 @@
                   if(fileName.length>30){
                     fileName = fileName.substring(0,30) + "...";
                   }
-                  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  if(flag){
+                	  $(this).html("<a style='color: rgb(67, 0, 153);' id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  }else{
+                	  $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                  }
                   $(this).find("a").bind("click",function(){
                     viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                   });
@@ -1485,7 +1564,11 @@
                 if(fileName.length>30){
                   fileName = fileName.substring(0,30) + "...";
                 }
-                $(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                if(flag){
+                	$(this).html("<a style='color: rgb(67, 0, 153);' id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                }else{
+                	$(this).html("<a id='dataSpan"+proId+$(this).prev().html()+"'>"+$(this).prev().html()+" （"+fileName+"）</a>");
+                }
                 $(this).find("a").bind("click",function(){
                   viewDataReport(userId,$.trim($(this).parent().prev().html()),$.trim($(this).html()),appId,appName,proId,proName,$(this));
                 });
