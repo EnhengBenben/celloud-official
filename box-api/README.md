@@ -22,7 +22,7 @@ java -jar box-api-{version}.jar
  java -jar box-api-{version}.jar --server.port=8080
 ```
 ###4.3 box.uploadPath
-文件上传的根路径，默认 ```/share/data/upload```
+文件上传的根路径，linux默认为 ```/share/data/upload```，建议手动创建此目录，并将目录权限授予启动程序的用户；windows下默认为```System.getProperty("user.home")```，即用户的home路径，强烈建议windows下重新指定此参数。
 ```
  java -jar box-api-{version}.jar --box.uploadPath=/share/data/upload/
 ```
