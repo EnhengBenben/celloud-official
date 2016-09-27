@@ -183,7 +183,6 @@ public class RunServiceImpl implements RunService {
 		if (!FileTools.checkPath(appPath)) {
 			new File(appPath).mkdirs();
 		}
-		Boolean iswait = isWait(app);
 		for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
 			String dataKey = entry.getKey();
 			String dataListFile = entry.getValue();
@@ -201,6 +200,7 @@ public class RunServiceImpl implements RunService {
 			task.setResult(appPath);
 			taskService.updateTask(task);
 			Integer taskId = task.getTaskId();
+			Boolean iswait = isWait(app);
 			if (iswait) {
 				if (AppDataListType.API_RUN.contains(appId)) {
 					AppSubmitUtil.http(appId, dataListFile, appPath, projectId);
