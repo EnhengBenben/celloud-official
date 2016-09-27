@@ -31,7 +31,7 @@
 				<h5 id="snpType">{{hbv.type.replace('Type','基因型')}}</h5>
 				<div class="m-boxCon">
 					<img ng-if="hbv.known['204_png'] != null" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="476px" width="420px"/>
-					<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
+					<div ng-if="hbv.known != undefined && hbv.known['204_png'] == null" class="imgmiss">
 						204位点测序失败，建议重测。
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 			</div>
 	     </section>
 	     <section id="nomal" style="display: none;">
-			<div class="m-box" ng-if="hbv.type == 'no match&lt;br /&gt;'">
+			<div class="m-box" ng-if="hbv.type != '' && hbv.type == 'no match&lt;br /&gt;'">
 			 	<h2>数据异常</h2>
 			    <div class="m-boxCon">
 					没有比对结果
