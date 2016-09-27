@@ -22,7 +22,7 @@
         <section class="m-box">
 	        <h2><i class="i-edit"></i>突变类型</h2>
 		    <div class="m-boxCon result">
-	    		<span ng-if="dpd.position != null && dpd.position != ''">{{dpd.position}}</span>
+	    		<span ng-if="dpd.position != null && dpd.position != ''" ng-bind-html="dpd.position"></span>
 	    		<span ng-if="dpd.position == null || dpd.position == ''">未检测到突变</span>
 		    </div>
 	    </section>
