@@ -50,7 +50,7 @@ public class BoxApiServiceImpl implements BoxApiService {
 		int fileFormat = checkFileType.checkFileType(newName, folderByDay);
 		// TODO fileFormat 是空
 		dataService.updateFileInfo(fileId, file.getDataKey(), newName, null, null, folderByDay, batch, fileFormat,
-				tagId);
+				null);
 		if (tagId != null && tagId.intValue() == 1) {
 			// TODO 保险起见，这里还应该校验用户是否已经添加app
 			String result = runService.bsiCheckRun(batch, fileId, file.getDataKey(), needSplit, file.getFileName(),

@@ -37,6 +37,9 @@ public class AppSubmitUtil {
 			throw new BusinessException("没有找到app=" + appId + "对应的service接口，不能投递任务：projectId=" + projectId);
 		}
 		List<NameValuePair> params = new ArrayList<>();
+		if (appId == 118) {
+			params.add(new BasicNameValuePair("state", "1"));
+		}
 		params.add(new BasicNameValuePair("list", list));
 		params.add(new BasicNameValuePair("exposePath", path));
 		params.add(new BasicNameValuePair("projectID", String.valueOf(projectId)));
