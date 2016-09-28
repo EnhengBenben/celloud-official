@@ -2,6 +2,7 @@ package com.celloud.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -143,6 +144,35 @@ public class ReportAction {
 		}
 		return 1;
 	}
+
+    @ActionLog(value = "下载", button = "下载")
+    @RequestMapping("downByName")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public Integer downByName(String path) throws UnsupportedEncodingException {
+        String filePath = SparkPro.TOOLSPATH + path;
+        // 获取dataKey
+        String dataKey = path.split("/")[2];
+        // 获取appId
+        String appId = path.split("/")[1];
+        String filename = null;
+        // 如果是split则用文件名作为下载名称
+        if ("113".equals(appId)) {
+            // 根据datakey获取文件
+            DataFile dataFile = dataService.getDataByKey(dataKey);
+            // 获取文件名称
+            filename = dataFile.getFileName().split("R1")[0];
+            // 如果截取R1之前的名称是以"_"结尾则截掉该"_"
+            if (filename.endsWith("_")) {
+                filename = filename.substring(0, filename.lastIndexOf("_"));
+            }
+        }
+        if (new File(filePath).exists()) {
+            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath, filename);
+            return 0;
+        }
+        return 1;
+    }
 
     /**
      * 获取数据报告形式列表
