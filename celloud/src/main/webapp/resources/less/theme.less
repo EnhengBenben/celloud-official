@@ -1,10 +1,8 @@
 .theme(@bg-color,@font-color,@border-color){
-    .common-sidebar{
-        > .menu .treeview{
-            &.-active>a {
-                border-left: 2px solid @font-color;
-                color: @font-color;
-            }
+    .product-sidebar.pro-sidebar-menu > li{
+        &:hover>a, &.active>a {
+            color: @font-color;
+            border-left: 2px solid @font-color;
         }
     }
     .table-main>tbody>tr:hover>td,
@@ -64,24 +62,4 @@
 }
 .rocky{
     .theme(@rocky-bg-color,@rocky-font-color,@rocky-border-color);
-    .common-sidebar{
-        > .menu .treeview{
-            &.-active>a {
-                >.celicon{
-                    &.-sample{
-                        background-position: -351px -116px;
-                    }
-                    &.-upload{
-                        background-position: -394px -118px;
-                    }
-                    &.-data{
-                        background-position: -438px -118px;
-                    }
-                    &.-report{
-                        background-position: -476px -118px;
-                    }
-                }
-            }
-        }
-    }
 }

@@ -8,7 +8,7 @@
       <ul class="sidebar-menu">
         <li class="sidebar-header">产品与服务</li>
         <shiro:hasPermission name="overview:menu">
-	        <li ng-class="{active: isActive('/')}">
+	        <li ng-class="{active: (isActive('/') || isActive('/product'))}">
 	          <a di-href="<%=request.getContextPath()%>/index#/"><i class="overview-icon"></i><span>我的工作台</span></a>
 	        </li>
         </shiro:hasPermission>

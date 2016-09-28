@@ -225,6 +225,9 @@
       templateUrl: "pages/experiment_scan/library_detail.jsp",
       controller: "storagesController"
     })
+    .when('/product/rocky',{
+      templateUrl: "pages/rocky/rocky.jsp"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()

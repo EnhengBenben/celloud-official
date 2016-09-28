@@ -55,9 +55,11 @@
   </div>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/intro/intro.js?version=1.1"></script>
+ 
   <script type="text/javascript">
      window.CONTEXT_PATH = '<%=request.getContextPath()%>';
      window.companyId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getCompanyId() %>';
+     window.username = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUsername() %>';
   </script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -120,4 +122,5 @@
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
   </script>
 </body>
+<script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js"></script>
 </html>
