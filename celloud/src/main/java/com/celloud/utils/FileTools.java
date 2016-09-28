@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.LineNumberReader;
 import java.io.RandomAccessFile;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.Files;
@@ -28,6 +30,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -348,17 +351,19 @@ public class FileTools {
 		String newFileName = filePath.substring(endIndex + 1);
 		File file = new File(filePath);
 		response.addHeader("Content-Disposition", "attachment;filename=" + newFileName);
+        response.addHeader("Content-Length", file.length() + "");
 		response.setContentType("application/octet-stream");
 		FileInputStream is = null;
 		ServletOutputStream out = null;
 		try {
 			is = new FileInputStream(file);
-			int length = is.available();
-			byte[] content = new byte[length];
-			is.read(content);
-			out = response.getOutputStream();
-			out.write(content);
-			out.flush();
+            byte[] content = new byte[1024];
+            int len = -1;
+            while ((len = is.read(content)) != -1) {
+                out = response.getOutputStream();
+                out.write(content, 0, len);
+                out.flush();
+            }
 			response.setStatus(response.SC_OK);
 			response.flushBuffer();
 		} catch (IOException e) {
@@ -374,6 +379,54 @@ public class FileTools {
 			}
 		}
 	}
+
+    /**
+     * 文件下载方法, 文件名自定义
+     * 
+     * @param response
+     *            :HttpServletResponse
+     * @param filePath
+     *            ：带有路径的文件名，如 path/fileName.zip
+     * @throws UnsupportedEncodingException
+     * @throws IOException
+     */
+    @SuppressWarnings("static-access")
+    public static void fileDownLoad(HttpServletResponse response, String filePath, String customerFileName)
+            throws UnsupportedEncodingException {
+        File file = new File(filePath);
+        if (StringUtils.isBlank(customerFileName)) {
+            customerFileName = "未知名称";
+        }
+        response.addHeader("Content-Disposition",
+                "attachment;filename=" + URLEncoder.encode(customerFileName, "UTF-8"));
+        response.addHeader("Content-Length", file.length() + "");
+        response.setContentType("application/octet-stream");
+        FileInputStream is = null;
+        ServletOutputStream out = null;
+        try {
+            is = new FileInputStream(file);
+            byte[] content = new byte[1024];
+            int len = -1;
+            while ((len = is.read(content)) != -1) {
+                out = response.getOutputStream();
+                out.write(content, 0, len);
+                out.flush();
+            }
+            response.setStatus(response.SC_OK);
+            response.flushBuffer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null)
+                    out.close();
+                if (is != null)
+                    is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 	public static byte[] getByte(File file) {
 		byte[] bytes = null;
