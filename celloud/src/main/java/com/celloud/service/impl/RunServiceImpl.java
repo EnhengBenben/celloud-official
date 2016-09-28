@@ -122,9 +122,6 @@ public class RunServiceImpl implements RunService {
 			iswait = runningNum < SparkPro.MAXTASK;
 		} else {
 			runningNum = taskService.findRunningNumByAppId(appId);
-			System.out.println(runningNum);
-			System.out.println(app.getMaxTask());
-			System.out.println("---------");
 			iswait = runningNum < app.getMaxTask() || app.getMaxTask() == 0;
 		}
 		return iswait;
