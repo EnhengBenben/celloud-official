@@ -40,10 +40,10 @@ public class AppSubmitUtil {
 		if (appId == 118) {
 			params.add(new BasicNameValuePair("state", "1"));
 		}
-		params.add(new BasicNameValuePair("list", list));
+		params.add(new BasicNameValuePair("filePath", list));
 		params.add(new BasicNameValuePair("exposePath", path));
 		params.add(new BasicNameValuePair("projectID", String.valueOf(projectId)));
-		logger.info(url, "?list=", list, "&exposePath=", path, "&projectID", projectId);
+		logger.info("url={}?filePath={}&exposePath={}&projectID={}", url, list, path, projectId);
 		HttpURLUtils.httpPostRequest(url, params);
 	}
 
