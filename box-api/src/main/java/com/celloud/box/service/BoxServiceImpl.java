@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.box.model.Newfile;
 import com.celloud.box.utils.MD5Util;
+import com.celloud.box.utils.OSSProgressListener;
 import com.celloud.box.utils.ThreadUtil;
 import com.celloud.box.utils.UploadPath;
 
@@ -43,7 +44,13 @@ public class BoxServiceImpl implements BoxService {
 		}
 		// 将文件上传到oss
 		String objectKey = UploadPath.getObjectKey(userId, newfile.getDataKey(), newfile.getExt());
-		ossService.upload(objectKey, file);
+		String location = null;
+		for (int i = 0; i < 10; i++) {
+			location = ossService.upload(objectKey, file, new OSSProgressListener(userId, name, newfile.getDataKey()));
+			if (location != null) {
+				break;
+			}
+		}
 		// 通知celloud文件已经上传到oss
 		boolean result = false;
 		for (int i = 0; i < 3; i++) {// 失败需重试

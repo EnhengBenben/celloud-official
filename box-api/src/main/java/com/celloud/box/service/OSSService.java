@@ -16,9 +16,12 @@ import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.ListObjectsRequest;
 import com.aliyun.oss.model.OSSObjectSummary;
 import com.aliyun.oss.model.ObjectListing;
+import com.aliyun.oss.model.PutObjectRequest;
+import com.aliyun.oss.model.PutObjectResult;
 import com.aliyun.oss.model.UploadFileRequest;
 import com.aliyun.oss.model.UploadFileResult;
 import com.celloud.box.config.OSSConfig;
+import com.celloud.box.utils.OSSProgressListener;
 import com.celloud.box.utils.SpeedUtil;
 
 @Component
@@ -45,6 +48,23 @@ public class OSSService {
 	}
 
 	public String upload(String objectKey, File localFile) {
+		return upload(objectKey, localFile, null);
+	}
+
+	public String putObject(String objectKey, File localFile, OSSProgressListener listener) {
+		OSSClient client = getClient();
+		try {
+			// 带进度条的上传
+			PutObjectResult result = client.putObject(new PutObjectRequest(config.getBucketName(), objectKey, localFile)
+					.<PutObjectRequest> withProgressListener(listener));
+			return result.getRequestId();
+		} catch (Exception e) {
+			logger.error("文件上传失败：{}", localFile.getName());
+		}
+		return null;
+	}
+
+	public String upload(String objectKey, File localFile, OSSProgressListener listener) {
 		logger.debug("uploading file 【{}】 as 【{}】", localFile.getAbsolutePath(), objectKey);
 		long time = System.currentTimeMillis();
 		OSSClient client = getClient();
@@ -57,13 +77,14 @@ public class OSSService {
 		uploadFileRequest.setPartSize(1 * 1024 * 1024);
 		// 开启断点续传
 		uploadFileRequest.setEnableCheckpoint(true);
+		uploadFileRequest.setProgressListener(listener);
 		// 断点续传上传
 		try {
 			UploadFileResult result = client.uploadFile(uploadFileRequest);
 			location = result.getMultipartUploadResult().getLocation();
 			logger.debug("location : {} ", location);
 		} catch (Throwable e) {
-			e.printStackTrace();
+			logger.error("文件上传失败：{}", localFile.getName());
 		}
 		logger.debug("uploaded file 【{}】 as 【{}】", localFile.getAbsolutePath(), objectKey);
 		client.shutdown();
