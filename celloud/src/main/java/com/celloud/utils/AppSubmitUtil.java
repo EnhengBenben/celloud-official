@@ -39,10 +39,8 @@ public class AppSubmitUtil {
 		List<NameValuePair> params = new ArrayList<>();
 		if (appId == 118) {
 			params.add(new BasicNameValuePair("state", "1"));
-			params.add(new BasicNameValuePair("filePath", list));
-		} else {
-			params.add(new BasicNameValuePair("list", list));
 		}
+		params.add(new BasicNameValuePair("list", list));
 		params.add(new BasicNameValuePair("exposePath", path));
 		params.add(new BasicNameValuePair("projectID", String.valueOf(projectId)));
 		logger.info("url={}?filePath={}&exposePath={}&projectID={}", url, list, path, projectId);
