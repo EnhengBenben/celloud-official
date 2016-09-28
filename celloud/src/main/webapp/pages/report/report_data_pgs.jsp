@@ -91,8 +91,8 @@
 							<tr ng-repeat="info in pgs.detail" pgs-over>
 							    <td ng-if="info.length == 1 || info.length == 2 || info.length == 3 || info.length == 4">{{info[0]}}</td>
 							    <td ng-if="info.length == 2 || info.length == 3 || info.length == 4">{{info[1]}}</td>
-							    <td ng-if="info.length == 3 || info.length == 4">{{info[2]}}</td>
-							    <td ng-if="info.length == 4">{{info[3]}}</td>
+							    <td ng-if="info.length == 3 || info.length == 4">{{info[2].length > 50 ? info[2].substr(0,50) + '...' : info[2]}}</td>
+							    <td ng-if="info.length == 4">{{info[3].length > 55 ? info[3].substr(0,55) + '...' : info[3]}}</td>
 						    	<td ng-if="info.length == 1"></td>
 						    	<td ng-if="info.length == 1"></td>
 						    	<td ng-if="info.length == 1"></td>
