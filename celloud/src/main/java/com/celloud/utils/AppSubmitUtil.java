@@ -6,12 +6,15 @@ import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.Mod;
 import com.celloud.exception.BusinessException;
 
 public class AppSubmitUtil {
+	private static Logger logger = LoggerFactory.getLogger(AppSubmitUtil.class);
 	private static Map<String, Map<String, String>> machines = ConstantsData.getMachines();
 	private static String sparkhost = machines.get("spark").get(Mod.HOST);
 	private static String sparkpwd = machines.get("spark").get(Mod.PWD);
@@ -37,6 +40,7 @@ public class AppSubmitUtil {
 		params.add(new BasicNameValuePair("list", list));
 		params.add(new BasicNameValuePair("exposePath", path));
 		params.add(new BasicNameValuePair("projectID", String.valueOf(projectId)));
+		logger.info(url, "?list=", list, "&exposePath=", path, "&projectID", projectId);
 		HttpURLUtils.httpPostRequest(url, params);
 	}
 

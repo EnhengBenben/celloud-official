@@ -286,9 +286,9 @@ public class RunServiceImpl implements RunService {
 			task.setParams(pubName);
 			task.setAppId(appId);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
-			if (needSplit == 1 && hasR1 && hasR2 && hasIndex) {
+			if (needSplit == null && hasR1 && hasR2) {
 				runSingle(userId, appId, dataList);
-			} else if (needSplit != 1 && hasR1 && hasR2) {
+			} else if (needSplit != null && hasR1 && hasR2 && hasIndex) {
 				runSingle(userId, appId, dataList);
 			}
 		} else if (fileFormat == FileFormat.YASUO && needSplit == null) {
