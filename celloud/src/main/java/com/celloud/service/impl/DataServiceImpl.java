@@ -1,29 +1,41 @@
 package com.celloud.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
+import com.celloud.constants.FileFormat;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Experiment;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExpensesService;
+import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
+import com.celloud.utils.FileTools;
+import com.celloud.utils.MD5Util;
+import com.celloud.utils.PerlUtils;
 
 /**
  * 数据管理服务实现类
@@ -33,6 +45,7 @@ import com.celloud.service.TaskService;
  */
 @Service("dataService")
 public class DataServiceImpl implements DataService {
+	private static Logger logger = LoggerFactory.getLogger(DataServiceImpl.class);
 	@Resource
 	DataFileMapper dataFileMapper;
 	@Resource
@@ -47,6 +60,8 @@ public class DataServiceImpl implements DataService {
 	private TaskService taskService;
 	@Resource
 	ExpensesService expenseService;
+	@Resource
+	ExperimentService expService;
 
 	@Override
 	public Integer countData(Integer userId) {
@@ -257,4 +272,83 @@ public class DataServiceImpl implements DataService {
 		return new PageList<>(page, lists);
 	}
 
+	@Override
+	public String getAnotherName(String filePath, String fileDataKey, String perlPath, String outPath) {
+		String anotherName = null;
+		StringBuffer command = new StringBuffer();
+		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);
+		PerlUtils.excutePerl(command.toString());
+		String anothername = FileTools.getFirstLine(outPath);
+		if (anothername != null) {
+			anothername = anothername.replace(" ", "_").replace("\t", "_");
+			String regEx1 = "[^\\w+$]";
+			Pattern p1 = Pattern.compile(regEx1);
+			Matcher m1 = p1.matcher(anothername);
+			anotherName = m1.replaceAll("").trim();
+			new File(outPath).delete();
+		}
+		return anotherName;
+	}
+
+	@Override
+	public int updateFileInfo(Integer dataId, String dataKey, String newName, String perlPath, String outPath,
+			String folderByDay, String batch, Integer fileFormat, Integer tagId) {
+		DataFile data = new DataFile();
+		data.setFileId(dataId);
+		String filePath = folderByDay + File.separator + newName;
+		data.setSize(FileTools.getFileSize(filePath));
+		data.setDataKey(dataKey);
+		data.setPath(filePath);
+		data.setMd5(MD5Util.getFileMD5(filePath));
+		data.setBatch(batch);
+		data.setFileFormat(fileFormat);
+		if (fileFormat == FileFormat.BAM) {
+			String anotherName = dataService.getAnotherName(filePath, dataKey, perlPath, outPath);
+			data.setAnotherName(anotherName);
+			// 绑定实验流程
+			if (!StringUtils.isBlank(anotherName)) {
+				Integer userId = ConstantsData.getLoginUserId();
+				List<Experiment> expList = expService.getUnRelatList(userId, anotherName);
+				if (expList != null && expList.size() == 1) {
+					Experiment exp = expList.get(0);
+					exp.setFileId(dataId);
+					exp.setDataKey(dataKey);
+					expService.updateByPrimaryKeySelective(exp);
+					logger.info("用户{}数据{}自动绑定成功", userId, dataId);
+				} else {
+					logger.error("用户{}数据{}自动绑定失败", userId, dataId);
+				}
+			}
+		}
+		data.setState(DataState.ACTIVE);
+		if (tagId == null) {
+			return dataService.updateDataInfoByFileId(data);
+		} else {
+			return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+		}
+	}
+
+	@Override
+	public void updateUploadState(Integer fileId, String objectKey, int state, String path) {
+		DataFile data = new DataFile();
+		data.setFileId(fileId);
+		data.setOssPath(objectKey);
+		data.setUploadState(state);
+		data.setPath(path);
+		dataService.updateByPrimaryKeySelective(data);
+	}
+
+	@Override
+	public Integer addFileInfo(Integer userId, String fileName) {
+		DataFile data = new DataFile();
+		data.setUserId(userId);
+		// 只允许字母和数字
+		String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(fileName);
+		// replaceAll()将中文标号替换成英文标号
+		data.setFileName(m.replaceAll("").trim());
+		data.setState(DataState.DEELTED);
+		return dataService.addDataInfo(data);
+	}
 }

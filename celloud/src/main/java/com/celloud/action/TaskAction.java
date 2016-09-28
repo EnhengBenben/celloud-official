@@ -225,7 +225,7 @@ public class TaskAction {
 								logger.info("bsi自动运行split分数据");
 								List<DataFile> bsiList = new ArrayList<>();
 								bsiList.add(data);
-								runService.runSingle(userId, username, 118, bsiList);
+								runService.runSingle(userId, 118, bsiList);
                             }
                         }
                     }
