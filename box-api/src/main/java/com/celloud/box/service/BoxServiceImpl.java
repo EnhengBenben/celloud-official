@@ -31,26 +31,32 @@ public class BoxServiceImpl implements BoxService {
 		for (int i = 0; i < 3; i++) {// 失败需重试
 			newfile = apiService.newfile(userId, name, file.length(), md5, tagId, batch);
 			if (newfile != null) {// 成功则退出
+				logger.info("文件创建成功：userId={},fileName={},fileId={}", userId, name, newfile.getFileId());
 				break;
 			}
 			ThreadUtil.sleep(5000);// 5秒之后再重试
 		}
 		if (newfile == null) {
 			// TODO 这里需要处理
+			logger.info("文件创建失败：userId={},fileName={},fileId={}", userId, name);
 			return;
 		}
 		// 将文件上传到oss
 		String objectKey = UploadPath.getObjectKey(userId, newfile.getDataKey(), newfile.getExt());
 		ossService.upload(objectKey, file);
 		// 通知celloud文件已经上传到oss
+		boolean result = false;
 		for (int i = 0; i < 3; i++) {// 失败需重试
-			boolean result = apiService.updatefile(objectKey, newfile.getFileId(), tagId, batch, needSplit);
+			result = apiService.updatefile(objectKey, newfile.getFileId(), tagId, batch, needSplit);
 			if (result) {// 成功则退出
+				logger.info("文件更新成功：userId={},fileName={},fileId={}", userId, name, newfile.getFileId());
 				break;
 			}
 			ThreadUtil.sleep(5000);// 5秒之后再重试
 		}
-		logger.info("文件已上传到celloud:{}", name);
+		if (!result) {
+			logger.info("文件更新失败：userId={},fileName={}", userId, name);
+		}
 	}
 
 }

@@ -26,7 +26,9 @@ import com.celloud.box.utils.UploadPath;
 @RequestMapping("box")
 @CrossOrigin(origins = { "http://localhost:8080", "http://127.0.0.1:8080", "https://www.celloud.cn",
 		"https://celloud.cn", "https://www.celloud.cc", "https://celloud.cc", "https://www.genecode.cn",
-		"https://genecode.cn" }, methods = { RequestMethod.POST, RequestMethod.GET }, allowedHeaders = { "*" })
+		"https://genecode.cn", "http://www.celloud.cn", "http://celloud.cn", "http://www.celloud.cc",
+		"http://celloud.cc", "http://www.genecode.cn",
+		"http://genecode.cn" }, methods = { RequestMethod.POST, RequestMethod.GET }, allowedHeaders = { "*" })
 public class BoxController {
 	private Logger logger = LoggerFactory.getLogger(BoxController.class);
 	@Resource
@@ -45,7 +47,7 @@ public class BoxController {
 			return new Response("没有要上传的文件！");
 		}
 		tagId = tagId == null ? 118 : tagId;
-		logger.info("name={}\tsize={}\tlastModifiedDate={}", name, size,
+		logger.debug("name={}\tsize={}\tlastModifiedDate={}", name, size,
 				new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(lastModifiedDate));
 		String folder = UploadPath.getPath(userId);
 		String uniqueName = UploadPath.getUniqueName(userId, name, lastModifiedDate, size);
@@ -57,7 +59,7 @@ public class BoxController {
 			logger.error("文件上传失败！", e);
 			return new Response("文件上传失败，服务器异常！");
 		}
-		logger.info("【{}】 chunk={} {}", name, chunk, getLoaded(userId, uniqueName));
+		logger.debug("【{}】 chunk={} {}", name, chunk, getLoaded(userId, uniqueName));
 		if (chunks == null || chunks == 0 || chunk == chunks - 1) {
 			logger.info("文件上传完成【{}】", name);
 			File f = finish(chunkFile.getParentFile(), chunks == null ? 0 : chunks.intValue(), uniqueName);
