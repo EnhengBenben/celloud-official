@@ -126,19 +126,19 @@
           }else if(data.result.length > 2){
             var LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
             LODOP.PRINT_INIT("打印提取DNA二维码takenDNAS");
-            LODOP.ADD_PRINT_BARCODE(0, 0, 20, 20, 'QRCode', $scope.sampleName);
+            LODOP.ADD_PRINT_BARCODE(0, 7, 20, 20, 'QRCode', $scope.sampleName);
             LODOP.NEWPAGEA();
-            LODOP.ADD_PRINT_BARCODE(2, 0, 20, 20, 'QRCode', $scope.sampleName);
-            LODOP.ADD_PRINT_TEXTA('sname',25,24,180,8,$scope.sampleName);
+            LODOP.ADD_PRINT_BARCODE(2, 7, 20, 20, 'QRCode', $scope.sampleName);
+            LODOP.ADD_PRINT_TEXTA('sname',25,30,180,8,$scope.sampleName);
             LODOP.SET_PRINT_STYLEA('sname', 'FontSize', 6);
             LODOP.SET_PRINT_STYLEA('sname', 'Angle', -90);
-            LODOP.ADD_PRINT_TEXTA('uname',25,16,180,8,window.username);
+            LODOP.ADD_PRINT_TEXTA('uname',25,22,180,8,window.username);
             LODOP.SET_PRINT_STYLEA('uname', 'FontSize', 6);
             LODOP.SET_PRINT_STYLEA('uname', 'Angle', -90);
-            LODOP.ADD_PRINT_TEXTA('date',25,8,180,8,data.result);
+            LODOP.ADD_PRINT_TEXTA('date',25,14,180,8,data.result);
             LODOP.SET_PRINT_STYLEA('date', 'FontSize', 6);
             LODOP.SET_PRINT_STYLEA('date', 'Angle', -90);
-            LODOP.SET_PRINT_PAGESIZE(1, 360, 380, "");
+            LODOP.SET_PRINT_PAGESIZE(1, 90, 380, "");
             LODOP.PRINT();
             $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
           }else {

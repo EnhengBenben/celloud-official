@@ -316,7 +316,6 @@ public class SampleAction {
         // 如果存在上一个状态并且不存在当前状态, 则更新状态
         sampleService.updateExperState(ConstantsData.getLoginUserId(),
                 currentType, sampling.getSampleId());
-        System.out.println(sampling.getLogDate());
         return DateUtil.getDateToString(sampling.getLogDate(),
                 "yyyy-MM-dd HH:mm:ss");
     }
