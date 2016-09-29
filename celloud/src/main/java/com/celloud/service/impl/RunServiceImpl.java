@@ -129,11 +129,11 @@ public class RunServiceImpl implements RunService {
 
 	@Override
 	public Response run(Integer userId, String dataIds) {
-		//1. 检索数据详情
+		// 1. 检索数据详情
 		List<DataFile> dataList = dataService.findDatasById(dataIds);
-		//2. 数据分组
+		// 2. 数据分组
 		Map<Integer, List<DataFile>> map = dataGroup(dataList);
-		//3. 校验余额
+		// 3. 校验余额
 		List<Integer> appIdList = new ArrayList<>();
 		for (Integer appId : map.keySet()) {
 			appIdList.add(appId);
@@ -143,7 +143,7 @@ public class RunServiceImpl implements RunService {
 			logger.info("用户" + userId + result);
 			return new Response(result);
 		}
-		//4. 运行
+		// 4. 运行
 		StringBuffer result = new StringBuffer();
 		for (Entry<Integer, List<DataFile>> entry : map.entrySet()) {
 			String back = runSingle(userId, entry.getKey(), entry.getValue());
@@ -160,12 +160,12 @@ public class RunServiceImpl implements RunService {
 
 	@Override
 	public String runSingle(Integer userId, Integer appId, List<DataFile> dataList) {
-		//1. 创建 dataListFile
+		// 1. 创建 dataListFile
 		Map<String, String> dataFilePathMap = getDataListFile(appId, dataList);
 		String dataReportNum = dataFilePathMap.get(DataKeyListToFile.DATA_REPORT_NUM);
 		dataFilePathMap.remove(DataKeyListToFile.DATA_REPORT_NUM);
 
-		//2. 创建项目
+		// 2. 创建项目
 		String result = null;
 		Integer projectId = createProject(userId, dataList, Integer.valueOf(dataReportNum));
 		if (projectId == null) {
@@ -174,7 +174,7 @@ public class RunServiceImpl implements RunService {
 			return result;
 		}
 
-		//3. 创建报告
+		// 3. 创建报告
 		boolean reportState = createReport(userId, appId, projectId, dataList);
 		if (!reportState) {
 			result = appId + "报告创建失败";
@@ -182,7 +182,7 @@ public class RunServiceImpl implements RunService {
 			return result;
 		}
 
-		//4. 投递
+		// 4. 投递
 		App app = appService.selectByPrimaryKey(appId);
 		String appPath = SparkPro.TOOLSPATH + userId + "/" + appId + "/";
 		if (!FileTools.checkPath(appPath)) {
@@ -270,6 +270,9 @@ public class RunServiceImpl implements RunService {
 			boolean hasR2 = false;
 			boolean hasIndex = false;
 			for (DataFile d : dataList) {
+				if (d.getPath() == null) {
+					continue;
+				}
 				String name_tmp = d.getFileName();
 				if (name_tmp.contains("R1")) {
 					hasR1 = true;
