@@ -1344,7 +1344,10 @@
         var length = 0;
         var th_size = 0;
         var td_size = 0;
+        // 标题与已跑出结果的项目的数量之和
         var tr_size = $(this).find("tr").length;
+        // 获得该项目实际的文件数量
+        var fileCount = $.trim($(this).parent().find("#rdataNum" + proId).html());
         // 遍历访问记录的json数组, 判断是否访问过当前项目
         var dataKeys;
         for(remember in rememberDataReport){
@@ -1588,9 +1591,22 @@
             
           });
         });
-        var minTdNum = 5;
+        // 算上标题栏的最小行数
+        var minTdNum;
+        // 实际文件数量小于5就取5
+        if(fileCount < 5){
+        	minTdNum = 5;
+        }else{
+        	// 大于等于5取文件数量+标题栏数量
+        	minTdNum = fileCount + 1;
+        }
+        // 这几个app名称过长, 所以最小行数为4
         if(appId=="128"||appId=="127"||appId=="126"||appId=="113"||appId=="112"||appId=="111"||appId=="110"){
-          minTdNum = 4;
+        	if(fileCount < 4){
+        		minTdNum = 4;
+        	}else{
+        		minTdNum = fileCount + 1;
+        	}
         }
         var rdataNum = $("#rdataNum"+proId).html();
         if((appId=="114"||appId=="118") && tr_size-1<rdataNum){
@@ -1598,15 +1614,20 @@
           var height = 30*(5-tr_size);
           var adHtml = "<tr><td colspan='"+th_size+"' style='border-left-style: none;vertical-align: middle;height:"+height+"px' align='center'><img src='/celloud/images/report/running.png' title='正在运行...'/><br>"+num+"个数据正在运行...</td></tr>";
           $(this).find("tbody").append(adHtml);
-        }else if(tr_size<minTdNum){
-          var num = 5-tr_size;
-          for(i=0;i<num;i++){
-            var adHtml = "<tr>";
-            for(j=0;j<th_size-1;j++){
-              adHtml+="<td></td>";
-            }
-            adHtml+="</tr>";
-            $(this).find("tbody").append(adHtml);
+        }else if(tr_size<minTdNum){// 需要补齐tr
+          var num = minTdNum-tr_size;
+    	  if(tr_size - 1 < fileCount){// 如果已运行完的文件的数量<实际运行的文件数量,就将剩余的位置显示为进度条
+    		  var imgTr = "<tr><td rowspan='"+num+"' colspan='"+th_size+"'><img src='"+CONTEXT_PATH+"/images/report/running.png' title='正在运行...''/></td></tr>"
+    		  $(this).find("tbody").append(adHtml);
+    	  }else{ // 否则就正常补齐
+    		  for(i=0;i<num;i++){
+	    		  var adHtml = "<tr>";
+	    		  for(j=0;j<th_size-1;j++){
+	    			  adHtml+="<td></td>";
+	    		  }
+	    		  adHtml+="</tr>";
+	    		  $(this).find("tbody").append(adHtml);
+    		  }
           }
         }
       });
