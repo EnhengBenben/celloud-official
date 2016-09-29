@@ -9,8 +9,10 @@ var uglify     = require('gulp-uglify'), // js compress
     rename     = require('gulp-rename'), // file rename
     concat     = require('gulp-concat'), // file combine
     less       = require('gulp-less'),
-    cssmin  = require('gulp-clean-css'),
-    autoprefix = require('gulp-autoprefixer');
+    cssmin     = require('gulp-clean-css'),
+    autoprefix = require('gulp-autoprefixer'),
+    livereload = require('gulp-livereload'),
+    watch      = require('gulp-watch');
 
 /* path
 ** source, build 
@@ -18,7 +20,10 @@ var uglify     = require('gulp-uglify'), // js compress
 var src = {
   js: 'src/main/webapp/resources/js/*.js',
   less: 'src/main/webapp/resources/less/celloud.less',
-  lessdir: 'src/main/webapp/resources/less/*.less',
+  lessdir: [
+      'src/main/webapp/resources/less/*.less',
+      'src/main/webapp/resources/less/**/*.less'
+  ],
   mainjs: [
       'src/main/webapp/resources/js/utils.js',
       'src/main/webapp/resources/js/charts.js',
@@ -64,11 +69,13 @@ gulp.task('combinejs', function () {
 */
 gulp.task('less', function() {
   return gulp.src(src.less)
+      .pipe(watch(src.less))
       .pipe(rename({suffix: '.min'}))
       .pipe(less())
       .pipe(autoprefix())
       .pipe(cssmin())
-      .pipe(gulp.dest(dist.css));
+      .pipe(gulp.dest(dist.css))
+      .pipe(livereload());
 });
 
 /* default */
@@ -80,6 +87,6 @@ gulp.task('default', function(){
 ** excute task when less file is changed 
 */
 gulp.task('watch', function() {
-  gulp.watch(src.js, ['minifyjs','combinejs']);
+  gulp.watch(src.mainjs, ['combinejs']);
   gulp.watch(src.lessdir, ['less']);
 });

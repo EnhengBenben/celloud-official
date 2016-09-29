@@ -98,6 +98,7 @@
             line-height: 20px;
             white-space: normal;
             word-break: break-word;
+            word-warp: break-word;
             text-align: left;
             vertical-align: middle;
             border-right: 1px solid @light-gray;
@@ -120,7 +121,10 @@
             padding: 4px 10px;
             line-height: 20px;
             white-space: normal;
-            word-break: break-word;
+            -ms-word-wrap: break-word;
+            -o-word-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-all;
             text-align: left;
             vertical-align: middle;
             border-right: 1px solid @light-gray;
