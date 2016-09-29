@@ -15,7 +15,7 @@
   <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.2" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.3" rel="stylesheet">
   <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
   <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
   <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
@@ -278,9 +278,9 @@
   <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.2"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.3"></script>
   <script src="<%=request.getContextPath()%>/js/bsi_main.js?version=3.1.15" type="text/javascript"></script>
-  <script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=3.1.12"></script>
+  <script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=3.3.3"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>
 </body>
 </html>
