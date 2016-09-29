@@ -11,7 +11,7 @@ public class SparkPro {
     /**
      * Spark最大任务数
      */
-    public static final int MAXTASK = 12;
+    public static final int MAXTASK = 4;
 
     /**
      * Spark 任务投递从哪个端口开始
