@@ -28,7 +28,7 @@ public class BoxApiServiceImpl implements BoxApiService {
 
 	@Async
 	@Override
-	public void updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
+	public void finishfile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
 			String newName, String folderByDay) {
 		DataFile file = dataService.getDataById(fileId);
 		Integer userId = file.getUserId();

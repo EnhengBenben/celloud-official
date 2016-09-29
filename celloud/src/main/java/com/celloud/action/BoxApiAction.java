@@ -66,7 +66,7 @@ public class BoxApiAction {
 		String newName = file.getDataKey() + FileTools.getExtName(file.getFileName());
 		String path = folderByDay + File.separator + newName;
 		dataService.updateUploadState(fileId, objectKey, 1, path);
-		apiService.updatefile(objectKey, fileId, tagId, batch, needSplit, newName, folderByDay);
+		apiService.finishfile(objectKey, fileId, tagId, batch, needSplit, newName, folderByDay);
 		return Response.SUCCESS();
 	}
 }

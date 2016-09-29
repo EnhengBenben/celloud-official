@@ -29,7 +29,6 @@ import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.MD5Util;
 import com.celloud.utils.PerlUtils;
 
 /**
@@ -293,7 +292,6 @@ public class DataServiceImpl implements DataService {
 		data.setSize(FileTools.getFileSize(filePath));
 		data.setDataKey(dataKey);
 		data.setPath(filePath);
-		data.setMd5(MD5Util.getFileMD5(filePath));
 		data.setBatch(batch);
 		data.setFileFormat(fileFormat);
 		data.setState(DataState.ACTIVE);
