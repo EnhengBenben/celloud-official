@@ -1348,7 +1348,6 @@
         var tr_size = $(this).find("tr").length;
         // 获得该项目实际的文件数量
         var fileCount = parseInt($.trim($(this).parent().find("#rdataNum" + proId).html()));
-        alert(fileCount);
         // 遍历访问记录的json数组, 判断是否访问过当前项目
         var dataKeys;
         for(remember in rememberDataReport){
