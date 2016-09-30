@@ -36,7 +36,7 @@
         </tr>   
       </thead>
       <tbody>
-          #if(!${gsrList})
+          #if(!$gsrList || $gsrList.size()==0)
             <tr><td colspan="4">没有发现突变位点</td></tr>
           #else
             #foreach(${accountConfig} in $!{gsrList})
@@ -56,58 +56,62 @@
   </section>
   <section class="section2 border1 w3cbbs" id="section2">
     <h4 class="title">二. 检测结果详述</h4>
-    #if($!cmpReport.geneDetectionDetail=={})
+    #if($!cmpReport.geneDetectionDetail=={} || !$gsrList || $gsrList.size()==0)
       <div class="info">没有发现突变基因</div>
     #else
-        #foreach($geneDetection in $!cmpReport.geneDetectionDetail)
-            <h5>$!cmpReport.geneDetectionDetail.size().&nbsp;&nbsp;$!geneDetection.key基因：该基因突变与$!geneDetection.value.result[0].diseaseName相关</h5>
-            <div class="info">
-            <div name="geneDescriptDiv">
-              <h6>检测结果</h6>
-              <table class="table table-text-center">
-                <thead>
-                  <tr>
-                    <th>基因</th>
-                    <th>参考碱基</th>
-                    <th>突变率</th>
-                    <th>覆盖深度</th>
-                    <th>突变位置</th>
-                    <th>氨基酸变化</th>
-                    <th>纯合/杂合</th>
-                    <th>遗传方式</th>
-                    <th>疾病名称</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    #foreach($r in $!geneDetection.value.result)
-                        #if($r.gene.contains('没有发现突变位点'))
-                            <tr><td colspan="6">没有发现突变位点</td></tr>
-                        #else
-                            <tr>
-                                <td>$!r.gene</td>
-                                <td>$!r.refBase</td>
-                                <td>$!r.mutBase</td>
-                                <td>$!r.depth</td>
-                                <td>#if($!r.cdsMutSyntax.length()>14)$!r.cdsMutSyntax.substring(0,14)#else$!r.cdsMutSyntax#end</td>
-                                <td>#if($!r.aaMutSyntax.length()>14)$!r.aaMutSyntax.substring(0,14)#else$!r.aaMutSyntax#end</td>
-                                <td>
-                                    #if($r.hetOrHom=='het')
-                                            杂合
-                                    #else
-                                            纯合
-                                    #end
-                                </td>
-                                <td>$!r.geneticMethod</td>
-                                <td>$!r.diseaseName</td>
-                        </tr>
+        #set($a=1)
+        #foreach($geneDetection in $!cmpReport.geneDetectionDetail.entrySet())
+            #if($!geneDetection.value.result.size()>0)
+                <h5>$!a.&nbsp;&nbsp;$!geneDetection.key基因：该基因突变与$!geneDetection.value.result.get(0).diseaseName相关</h5>
+                #set($a=$a+1)
+                <div class="info">
+                <div name="geneDescriptDiv">
+                  <h6>检测结果</h6>
+                  <table class="table table-text-center">
+                    <thead>
+                      <tr>
+                        <th>基因</th>
+                        <th>参考碱基</th>
+                        <th>突变率</th>
+                        <th>覆盖深度</th>
+                        <th>突变位置</th>
+                        <th>氨基酸变化</th>
+                        <th>纯合/杂合</th>
+                        <th>遗传方式</th>
+                        <th>疾病名称</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        #foreach($r in $!geneDetection.value.result)
+                            #if($r.gene.contains('没有发现突变位点'))
+                                <tr><td colspan="6">没有发现突变位点</td></tr>
+                            #else
+                                <tr>
+                                    <td>$!r.gene</td>
+                                    <td>$!r.refBase</td>
+                                    <td>$!r.mutBase</td>
+                                    <td>$!r.depth</td>
+                                    <td>#if($!r.cdsMutSyntax.length()>14)$!r.cdsMutSyntax.substring(0,14)#else$!r.cdsMutSyntax#end</td>
+                                    <td>#if($!r.aaMutSyntax.length()>14)$!r.aaMutSyntax.substring(0,14)#else$!r.aaMutSyntax#end</td>
+                                    <td>
+                                        #if($r.hetOrHom=='het')
+                                                杂合
+                                        #else
+                                                纯合
+                                        #end
+                                    </td>
+                                    <td>$!r.geneticMethod</td>
+                                    <td>$!r.diseaseName</td>
+                            </tr>
+                            #end
                         #end
-                    #end
-                </tbody>
-              </table>
-              <h6>疾病简介</h6>
-              <div><textarea class="form-control" rows="15" cols="100" name="diseaseProfile['$!geneDetection.value.result[0].diseaseEngName']">$!cmpReport.cmpFilling.diseaseProfile['$!geneDetection.value.result[0].diseaseEngName']</textarea></div>
-            </div>
-          </div>
+                    </tbody>
+                  </table>
+                  <h6>疾病简介</h6>
+                  <div><textarea class="form-control" rows="15" cols="100" name="diseaseProfile['$!geneDetection.value.result.get(0).diseaseEngName']">$!cmpReport.cmpFilling.diseaseProfile['$!geneDetection.value.result.get(0).diseaseEngName']</textarea></div>
+                </div>
+              </div>
+           #end
         #end
     #end
   </section>
