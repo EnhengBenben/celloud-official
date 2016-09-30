@@ -2,6 +2,27 @@
 $(function(){
     var url = window.location.href.split("print")[0];
     $("#print").on("click",function(){
+    
+    	var explainResult = $("#explainResult").children().val();
+		tempExplainResultName = $("#explainResult").children().attr("name");
+		tempExplainResultWidth = $("#explainResult").children().css("width");
+		if (explainResult){
+			explainResult = explainResult.replace(/\n/g,"<br>");
+		}else{
+			explainResult = "";
+		}
+		$("#explainResult").html(explainResult);
+		
+    	var explainGeneticCounseling = $("#explainGeneticCounseling").children().val();
+		tempExplainGeneticCounselingName = $("#explainGeneticCounseling").children().attr("name");
+		tempExplainGeneticCounselingWidth = $("#explainGeneticCounseling").children().css("width");
+		if (explainGeneticCounseling){
+			explainGeneticCounseling = explainGeneticCounseling.replace(/\n/g,"<br>");
+		}else{
+			explainGeneticCounseling = "";
+		}
+		$("#explainGeneticCounseling").html(explainGeneticCounseling);
+    
         var lookHide = $(".look_hide");
         $(".buttons").hide();
         lookHide.removeClass("look_hide");
@@ -10,6 +31,14 @@ $(function(){
         $("input").css("border-bottom", "1px solid #D4D4D4");
         lookHide.addClass("look_hide");
         $(".buttons").show();
+        
+        explainResult = $("#explainResult").html();
+		explainResult = explainResult.replace(/<br>/g,"\n");
+		$("#explainResult").html("<textarea style=\"width:"+tempExplainResultWidth+"\" name=\""+tempExplainResultName+"\" rows=\"3\">"+explainResult+"</textarea>");
+		
+        explainGeneticCounseling = $("#explainGeneticCounseling").html();
+		explainGeneticCounseling = explainGeneticCounseling.replace(/<br>/g,"\n");
+		$("#explainGeneticCounseling").html("<textarea style=\"width:"+tempExplainGeneticCounselingWidth+"\" name=\""+tempExplainGeneticCounselingName+"\" rows=\"3\">"+explainGeneticCounseling+"</textarea>");
     });
     
     $("#save").on("click",function(){

@@ -26,7 +26,7 @@ public class SparkPro {
     /**
      * 配置python路径
      */
-    public static final String PYTHONPATH = "/share/biosoft/perl/PGS_MG/python/runover.py";
+	public static final String PYTHONPATH = "python /share/biosoft/perl/PGS_MG/python/runover.py";
     
     /**
      * 由python进行全部的后续处理

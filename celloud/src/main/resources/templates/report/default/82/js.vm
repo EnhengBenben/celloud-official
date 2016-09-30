@@ -167,6 +167,7 @@ $(function(){
         });
     
         $("#clinical").val($("table").html());
+        $("#imgs").val($("#originalImgs").html());
         var _flag = $("#_flag").html();
         if(_flag==0){
             url = url + "updateHbvDetailFilling";

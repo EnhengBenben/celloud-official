@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body mreport">
+<div class="pro-body mreport col-xs-10">
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li><a style="color: #a0a0a0" href="javascript:void(0);" ng-click="goBack()">报告管理</a></li>
@@ -22,7 +22,7 @@
         <section class="m-box">
 	        <h2><i class="i-edit"></i>突变类型</h2>
 		    <div class="m-boxCon result">
-	    		<span ng-if="dpd.position != null && dpd.position != ''">{{dpd.position}}</span>
+	    		<span ng-if="dpd.position != null && dpd.position != ''" ng-bind-html="dpd.position"></span>
 	    		<span ng-if="dpd.position == null || dpd.position == ''">未检测到突变</span>
 		    </div>
 	    </section>
@@ -65,3 +65,4 @@
 	   </div>
      </div>
  </div>
+ <ng-include src="'pages/partial/_partial_reportoperate.jsp'"></ng-include>

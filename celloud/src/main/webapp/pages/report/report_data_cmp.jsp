@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<div class="pro-body mreport">
+<div class="pro-body mreport col-xs-10">
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li><a style="color: #a0a0a0" href="javascript:void(0);" ng-click="goBack()">报告管理</a></li>
@@ -17,8 +17,8 @@
             {{data.fileName}}({{data.dataKey}})
         </p>
         <div class="btn-groups">
-        	<a class="btn -low" target="_blank" href="<%=request.getContextPath()%>/report/printMoreCMPReport?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印科研报告</a>
-			<a class="btn -middle" target="_blank" href="<%=request.getContextPath()%>/report/printLessCMPReport?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印临床报告</a>
+        	<a style="padding:0 10px;" class="btn -low" target="_blank" href="<%=request.getContextPath()%>/report/printMoreCMPReport?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印科研报告</a>
+			<a style="padding:0 10px;" class="btn -middle" target="_blank" href="<%=request.getContextPath()%>/report/printLessCMPReport?projectId={{cmp.projectId}}&dataKey={{cmp.dataKey}}&appId={{cmp.appId}}"><i class="fa fa-print"></i>打印临床报告</a>
         </div>
       </div>
       <div>
@@ -250,3 +250,4 @@
 	   </div>
      </div>
  </div>
+ <ng-include src="'pages/partial/_partial_reportoperate.jsp'"></ng-include>

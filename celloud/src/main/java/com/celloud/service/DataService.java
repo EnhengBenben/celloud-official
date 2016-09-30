@@ -63,15 +63,15 @@ public interface DataService {
 	 * @param data
 	 * @return
 	 */
-    public int updateDataInfoByFileId(DataFile data);
+	public int updateDataInfoByFileId(DataFile data);
 
-    /**
-     * 修改数据信息
-     * 
-     * @param data
-     * @return
-     */
-    public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId);
+	/**
+	 * 修改数据信息
+	 * 
+	 * @param data
+	 * @return
+	 */
+	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId);
 
 	/**
 	 * 数据分页列表
@@ -82,17 +82,16 @@ public interface DataService {
 	 */
 	PageList<DataFile> dataAllList(Page page, Integer userId);
 
-    /**
-     * 产品中的数据分页列表
-     * 
-     * @param page
-     * @param userId
-     * @param appId
-     * @return
-     */
-    PageList<DataFile> dataListByAppId(Page page, Integer userId,
-            Integer appId, String condition, Integer sort, String sortDate,
-            String sortName, String sortBatch);
+	/**
+	 * 产品中的数据分页列表
+	 * 
+	 * @param page
+	 * @param userId
+	 * @param appId
+	 * @return
+	 */
+	PageList<DataFile> dataListByAppId(Page page, Integer userId, Integer appId, String condition, Integer sort,
+			String sortDate, String sortName, String sortBatch);
 
 	/**
 	 * 按条件检索数据列表
@@ -325,4 +324,14 @@ public interface DataService {
 	 * @return
 	 */
 	public PageList<DataFile> filterRockyList(Page pager, String sample, String condition, String sidx, String sord);
+
+	public String getAnotherName(String filePath, String fileDataKey, String perlPath, String outPath);
+
+	public int updateFileInfo(Integer dataId, String dataKey, String newName, String perlPath, String outPath,
+			String folderByDay, String batch, Integer fileFormat, Integer tagId);
+
+	public void updateUploadState(Integer fileId, String objectKey, int state, String path);
+
+	public Integer addFileInfo(Integer userId, String fileName);
+
 }

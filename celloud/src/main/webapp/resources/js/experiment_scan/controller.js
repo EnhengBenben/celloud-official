@@ -29,9 +29,9 @@
       samplingService.deleteSample(id).success(function(data){
         if(data > 0){
           refreshList();
-          $.alert("删除样本成功");
+          $.alert("删除样本成功!");
         }else {
-          $.alert("删除样本失败");
+          $.alert("删除样本失败!");
         }
       })
     }

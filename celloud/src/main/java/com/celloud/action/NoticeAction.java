@@ -70,7 +70,7 @@ public class NoticeAction {
 	@ResponseBody
 	public Response delete(Integer[] noticeIds) {
 		noticeService.deleteMessages(noticeIds);
-		return Response.DELETE_SUCCESS;
+		return Response.SUCCESS_DELETE();
 	}
 
 	@ActionLog(value = "读消息", button = "已读")
@@ -78,7 +78,7 @@ public class NoticeAction {
 	@ResponseBody
 	public Response read(Integer[] noticeIds) {
 		noticeService.readMessage(noticeIds);
-		return Response.UPDATE_SUCCESS;
+		return Response.SUCCESS_UPDATE();
 	}
 
 	@ActionLog(value = "全部置为已读", button = "全部置为已读")
@@ -90,6 +90,6 @@ public class NoticeAction {
 		} else if (NoticeConstants.TYPE_NOTICE.equals(type)) {
 			noticeService.readAllNotice();
 		}
-		return Response.UPDATE_SUCCESS;
+		return Response.SUCCESS_UPDATE();
 	}
 }

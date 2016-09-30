@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<div class="pro-body mreport">
+<div class="pro-body mreport col-xs-10">
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li><a style="color: #a0a0a0" href="javascript:void(0);" ng-click="goBack()">报告管理</a></li>
@@ -17,7 +17,7 @@
             {{data.fileName}}({{data.dataKey}})
         </p>
         <div class="btn-group">
-	        <a class="btn -low" target="_blank" href="<%=request.getContextPath()%>/report/printGDDReport?projectId={{gdd.projectId}}&dataKey={{gdd.dataKey}}&appId={{gdd.appId}}"><i class="fa fa-print"></i>打印GDD报告</a>
+	        <a style="padding:0 10px;" class="btn -low" target="_blank" href="<%=request.getContextPath()%>/report/printGDDReport?projectId={{gdd.projectId}}&dataKey={{gdd.dataKey}}&appId={{gdd.appId}}"><i class="fa fa-print"></i>打印GDD报告</a>
         </div>
       </div>
       <div>
@@ -249,3 +249,4 @@
 	   </div>
      </div>
  </div>
+ <ng-include src="'pages/partial/_partial_reportoperate.jsp'"></ng-include>

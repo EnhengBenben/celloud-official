@@ -33,6 +33,10 @@ public class Task {
 
     private Integer sampleId;
 
+	private String datalist;
+
+	private String result;
+
     // 显示的字段
     private String fileName;
     private String anotherName;
@@ -217,4 +221,21 @@ public class Task {
     public void setAppName(String appName) {
         this.appName = appName;
     }
+
+	public String getDatalist() {
+		return datalist;
+	}
+
+	public void setDatalist(String datalist) {
+		this.datalist = datalist;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
 }

@@ -1,10 +1,13 @@
 package com.celloud.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -18,7 +21,15 @@ import com.celloud.mapper.DataFileMapper;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.AppService;
 import com.celloud.service.DataService;
+import com.celloud.service.ExpensesService;
+import com.celloud.service.ExperimentService;
+import com.celloud.service.ProjectService;
+import com.celloud.service.ReportService;
+import com.celloud.service.TaskService;
+import com.celloud.utils.FileTools;
+import com.celloud.utils.PerlUtils;
 
 /**
  * 数据管理服务实现类
@@ -30,6 +41,20 @@ import com.celloud.service.DataService;
 public class DataServiceImpl implements DataService {
 	@Resource
 	DataFileMapper dataFileMapper;
+	@Resource
+	private DataService dataService;
+	@Resource
+	private AppService appService;
+	@Resource
+	private ProjectService projectService;
+	@Resource
+	private ReportService reportService;
+	@Resource
+	private TaskService taskService;
+	@Resource
+	ExpensesService expenseService;
+	@Resource
+	ExperimentService expService;
 
 	@Override
 	public Integer countData(Integer userId) {
@@ -53,15 +78,15 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-    public int updateDataInfoByFileId(DataFile data) {
+	public int updateDataInfoByFileId(DataFile data) {
 		return dataFileMapper.updateDataInfoByFileId(data);
 	}
 
-    @Override
-    public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
-        dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
-        return dataFileMapper.updateDataInfoByFileId(data);
-    }
+	@Override
+	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
+		dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+		return dataFileMapper.updateDataInfoByFileId(data);
+	}
 
 	@Override
 	public List<Map<String, String>> sumData(Integer userId, String time) {
@@ -75,15 +100,13 @@ public class DataServiceImpl implements DataService {
 		return new PageList<>(page, lists);
 	}
 
-    @Override
-    public PageList<DataFile> dataListByAppId(Page page, Integer userId,
-            Integer appId, String condition, Integer sort, String sortDate,
-            String sortName, String sortBatch) {
-        List<DataFile> lists = dataFileMapper.findDataListsByAppId(page, userId,
-                DataState.ACTIVE, appId, condition, sort, sortDate, sortName,
-                sortBatch);
-        return new PageList<>(page, lists);
-    }
+	@Override
+	public PageList<DataFile> dataListByAppId(Page page, Integer userId, Integer appId, String condition, Integer sort,
+			String sortDate, String sortName, String sortBatch) {
+		List<DataFile> lists = dataFileMapper.findDataListsByAppId(page, userId, DataState.ACTIVE, appId, condition,
+				sort, sortDate, sortName, sortBatch);
+		return new PageList<>(page, lists);
+	}
 
 	@Override
 	public PageList<DataFile> dataLists(Page page, Integer userId, String condition, int sort, String sortDateType,
@@ -192,7 +215,6 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public List<Map<String, String>> countDataFile(Integer userId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -213,11 +235,11 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public int updateDataAndTag(DataFile record) {
-		//1.清除历史标签
+		// 1.清除历史标签
 		dataFileMapper.deleteDataTag(record.getFileId());
-		//2.插入新的标签
+		// 2.插入新的标签
 		dataFileMapper.insertDataTag(record);
-		//3.修改数据信息
+		// 3.修改数据信息
 		return dataFileMapper.updateByPrimaryKeySelective(record);
 	}
 
@@ -241,5 +263,66 @@ public class DataServiceImpl implements DataService {
 		List<DataFile> lists = dataFileMapper.filterRockyList(page, ConstantsData.getLoginUserId(), DataState.ACTIVE,
 				ReportType.DATA, ReportPeriod.COMPLETE, sample, condition, sidx, sord);
 		return new PageList<>(page, lists);
+	}
+
+	@Override
+	public String getAnotherName(String filePath, String fileDataKey, String perlPath, String outPath) {
+		String anotherName = null;
+		StringBuffer command = new StringBuffer();
+		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);
+		PerlUtils.excutePerl(command.toString());
+		String anothername = FileTools.getFirstLine(outPath);
+		if (anothername != null) {
+			anothername = anothername.replace(" ", "_").replace("\t", "_");
+			String regEx1 = "[^\\w+$]";
+			Pattern p1 = Pattern.compile(regEx1);
+			Matcher m1 = p1.matcher(anothername);
+			anotherName = m1.replaceAll("").trim();
+			new File(outPath).delete();
+		}
+		return anotherName;
+	}
+
+	@Override
+	public int updateFileInfo(Integer dataId, String dataKey, String newName, String perlPath, String outPath,
+			String folderByDay, String batch, Integer fileFormat, Integer tagId) {
+		DataFile data = new DataFile();
+		data.setFileId(dataId);
+		String filePath = folderByDay + File.separator + newName;
+		data.setSize(FileTools.getFileSize(filePath));
+		data.setDataKey(dataKey);
+		data.setPath(filePath);
+		data.setBatch(batch);
+		data.setFileFormat(fileFormat);
+		data.setState(DataState.ACTIVE);
+		if (tagId == null) {
+			return dataService.updateDataInfoByFileId(data);
+		} else {
+			return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+		}
+	}
+
+	@Override
+	public void updateUploadState(Integer fileId, String objectKey, int state, String path) {
+		DataFile data = new DataFile();
+		data.setFileId(fileId);
+		data.setOssPath(objectKey);
+		data.setUploadState(state);
+		data.setPath(path);
+		dataService.updateByPrimaryKeySelective(data);
+	}
+
+	@Override
+	public Integer addFileInfo(Integer userId, String fileName) {
+		DataFile data = new DataFile();
+		data.setUserId(userId);
+		// 只允许字母和数字
+		String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(fileName);
+		// replaceAll()将中文标号替换成英文标号
+		data.setFileName(m.replaceAll("").trim());
+		data.setState(DataState.DEELTED);
+		return dataService.addDataInfo(data);
 	}
 }

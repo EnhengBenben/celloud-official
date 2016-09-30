@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body mreport">
+<div class="pro-body mreport col-xs-10">
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li><a style="color: #a0a0a0" href="javascript:void(0);" ng-click="goBack()">报告管理</a></li>
@@ -91,8 +91,8 @@
 							<tr ng-repeat="info in pgs.detail" pgs-over>
 							    <td ng-if="info.length == 1 || info.length == 2 || info.length == 3 || info.length == 4">{{info[0]}}</td>
 							    <td ng-if="info.length == 2 || info.length == 3 || info.length == 4">{{info[1]}}</td>
-							    <td ng-if="info.length == 3 || info.length == 4">{{info[2]}}</td>
-							    <td ng-if="info.length == 4">{{info[3]}}</td>
+							    <td ng-if="info.length == 3 || info.length == 4">{{info[2].length > 50 ? info[2].substr(0,50) + '...' : info[2]}}</td>
+							    <td ng-if="info.length == 4">{{info[3].length > 55 ? info[3].substr(0,55) + '...' : info[3]}}</td>
 						    	<td ng-if="info.length == 1"></td>
 						    	<td ng-if="info.length == 1"></td>
 						    	<td ng-if="info.length == 1"></td>
@@ -272,3 +272,4 @@
     </div>
   </div>
 </div>
+<ng-include src="'pages/partial/_partial_reportoperate.jsp'"></ng-include>

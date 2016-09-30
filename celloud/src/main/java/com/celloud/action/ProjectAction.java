@@ -69,7 +69,7 @@ public class ProjectAction {
     @RequestMapping("update")
     @ResponseBody
 	public Response update(Project project) {
-		return projectService.update(project) == 1 ? Response.UPDATE_SUCCESS : Response.FAIL;
+		return projectService.update(project) == 1 ? Response.SUCCESS_UPDATE() : Response.FAIL();
     }
 
     /**
@@ -152,7 +152,7 @@ public class ProjectAction {
 				mcu.sendMessage(shareTo.getUserId(), MessageCategoryCode.SHARE, aliEmail, params, mu);
 			}
 		}
-		return Response.SUCCESS;
+		return Response.SUCCESS();
     }
 
     /**
@@ -169,7 +169,7 @@ public class ProjectAction {
         Integer userId = ConstantsData.getLoginUserId();
         // 删除一条共享记录，修改一条项目记录
         Integer num = projectService.deleteShareToMe(userId, projectId);
-		return num == 2 ? Response.DELETE_SUCCESS : Response.FAIL;
+		return num == 2 ? Response.SUCCESS_DELETE() : Response.FAIL();
     }
 
     /**

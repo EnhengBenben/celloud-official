@@ -36,7 +36,7 @@
 		                <br>
 		                <br>
 		                <div class="autolog">
-		                    <span class="error" style="padding-left: 0; font-size: 16px;">${info }</span>
+		                    <span class="info" style="padding-left: 0; font-size: 16px;">${info }</span>
 		                </div>
 		            </c:when>
 		            <c:otherwise>

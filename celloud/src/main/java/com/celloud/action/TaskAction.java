@@ -2,18 +2,15 @@ package com.celloud.action;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.text.StrSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,21 +21,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliSubstitution;
-import com.celloud.constants.AppDataListType;
-import com.celloud.constants.CommandKey;
 import com.celloud.constants.Constants;
-import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.ExperimentState;
 import com.celloud.constants.FileFormat;
-import com.celloud.constants.Mod;
 import com.celloud.constants.NoticeConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.message.MessageUtils;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
-import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Project;
@@ -46,16 +38,14 @@ import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Task;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
-import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.RunService;
 import com.celloud.service.SecRoleService;
 import com.celloud.service.TaskService;
-import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
-import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
@@ -63,7 +53,6 @@ import com.celloud.utils.MD5Util;
 import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.RunOverUtil;
-import com.celloud.utils.SSHUtil;
 import com.celloud.utils.XmlUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
@@ -88,25 +77,13 @@ public class TaskAction {
     @Resource
     private ReportService reportService;
     @Resource
-    private AppService appService;
-    @Resource
     private ExperimentService expService;
     @Resource
     private SecRoleService secService;
     @Resource
-    private UserService userService;
-    @Resource
 	private MessageCategoryUtils mcu;
-
-    private static Map<String, Map<String, String>> machines = ConstantsData
-            .getMachines();
-    private static String sgeHost = machines.get("158").get(Mod.HOST);
-    private static String sgePwd = machines.get("158").get(Mod.PWD);;
-    private static String sgeUserName = machines.get("158").get(Mod.USERNAME);
-    private static String sparkhost = machines.get("spark").get(Mod.HOST);
-    private static String sparkpwd = machines.get("spark").get(Mod.PWD);
-    private static String sparkuserName = machines.get("spark")
-            .get(Mod.USERNAME);
+	@Resource
+	private RunService runService;
 
     /**
      * 任务运行结束
@@ -138,7 +115,7 @@ public class TaskAction {
 		Project project = projectService.selectByPrimaryKey(proId);
 		if (project.getState() == 1) {
 			logger.info("用户删除的项目回调并尝试运行下一个，projectID：" + projectId);
-			runNext(appId);
+			runService.runNext(appId);
 			return "run error";
 		}
         Integer userId = (Integer) map.get("userId");
@@ -245,7 +222,10 @@ public class TaskAction {
                                     tagId);
                             // TODO 需要去掉写死的自动运行
                             if (secs.contains("bsier") && tagId == 1) {
-                                toRunSplitData(userId, data);
+								logger.info("bsi自动运行split分数据");
+								List<DataFile> bsiList = new ArrayList<>();
+								bsiList.add(data);
+								runService.runSingle(userId, 118, bsiList);
                             }
                         }
                     }
@@ -257,7 +237,7 @@ public class TaskAction {
                 dataKey, dataNames, xml);
         if (task != null) {
             logger.info("任务{}执行完毕", task.getTaskId());
-			runNext(appId);
+			runService.runNext(appId);
         }
         String tipsName = pubName.equals("") ? fname : pubName;
 		//构造桌面消息
@@ -280,29 +260,6 @@ public class TaskAction {
 		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
         return "run over";
     }
-
-	/**
-	 * 运行下一个task
-	 * 
-	 * @param appId
-	 * @author lin
-	 * @date 2016年8月4日下午4:33:32
-	 */
-	public void runNext(Integer appId) {
-		Task t = taskService.findFirstTask(appId);
-		if (t != null) {
-			String toRunCommand = t.getCommand();
-			logger.info("运行命令：{}", toRunCommand);
-			SSHUtil ssh;
-			if (AppDataListType.SPARK.contains(appId)) {
-				ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-			} else {
-				ssh = new SSHUtil(sgeHost, sgeUserName, sgePwd);
-			}
-			ssh.sshSubmit(toRunCommand.toString(), false);
-			taskService.updateToRunning(t.getTaskId());
-		}
-	}
 
     /**
      * 项目运行结束，由python进行全部的后续处理
@@ -330,9 +287,9 @@ public class TaskAction {
     @RequestMapping("projectRunOver")
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public String projectRunOver(String projectId) {
-        logger.info("项目运行结束，id:{}", projectId);
-        if (StringUtils.isEmpty(projectId)) {
+	public String projectRunOver(String projectId, String dataKey) {
+		logger.info("项目运行结束，id:{},{}", projectId, dataKey);
+		if (StringUtils.isEmpty(projectId) || StringUtils.isEmpty(dataKey)) {
             logger.info("任务运行结束信息不全");
             return "run error";
         }
@@ -343,7 +300,7 @@ public class TaskAction {
 			return "run error";
 		}
         // 1. 利用 python 生成数据 pdf，并将数据报告插入 mongodb
-		String command = "python " + SparkPro.PYTHONPATH + " " + SparkPro.TOOLSPATH + " " + projectId;
+		String command = SparkPro.PYTHONPATH + " " + SparkPro.TOOLSPATH + " " + projectId + " " + dataKey;
 		PerlUtils.excutePerl(command);
         // 2. 数据库检索
         Map<String, Object> map = projectService.findProjectInfoById(proId);
@@ -360,20 +317,17 @@ public class TaskAction {
 		// 3. 创建项目结果文件
 		StringBuffer basePath = new StringBuffer();
 		basePath.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/");
-		StringBuffer projectFileBf = new StringBuffer();
-		projectFileBf.append(basePath).append(projectId).append("/").append(projectId).append(".txt");
-		String projectFile = projectFileBf.toString();
-		FileTools.createFile(projectFile);
+		String projectFile = basePath + projectId + "/" + projectId + ".txt";
 		// 4. 通过反射调用相应app的处理方法，传参格式如下：
 		// String appPath, String appName, String appTitle,String
-		// projectFile,String projectId, List<DataFile> proDataList
+		// projectFile,String projectId, List<DataFile> proDataList,String dataKey
 		RunOverUtil rou = new RunOverUtil();
 		try {
 			rou.getClass()
 					.getMethod(method,
 							new Class[] { String.class, String.class, String.class, String.class, String.class,
-									List.class })
-					.invoke(rou, basePath.toString(), appName, title, projectFile, projectId, dataList);
+									List.class, String.class, })
+					.invoke(rou, basePath.toString(), appName, title, projectFile, projectId, dataList, dataKey);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -441,79 +395,4 @@ public class TaskAction {
         return "run over";
     }
 
-    @ActionLog(value = "bsi运行split分数据", button = "运行split分数据")
-    private String toRunSplitData(Integer userId, DataFile data) {
-        logger.info("bsi自动运行split分数据");
-        String result;
-        // XXX 运行完split只能运行bsi
-        Integer appId = 118;
-        Integer dataId = data.getFileId();
-        // 公共项目信息
-        Project project = new Project();
-        String proName = new Date().getTime() + "";
-        project.setUserId(userId);
-        project.setProjectName(proName);
-        project.setDataNum(1);
-        project.setDataSize(data.getSize().toString());
-
-        // 公共报告信息
-        Report report = new Report();
-        report.setUserId(userId);
-
-        // 构建运行所需dataListFile文件路径
-
-        List<DataFile> dataList = new ArrayList<>();
-        dataList.add(data);
-        Map<String, String> dataFilePathMap = DataKeyListToFile
-                .onlyFastqPath(dataList);
-        project.setDataNum(
-                Integer.parseInt(dataFilePathMap.get("dataReportNum")));
-        dataFilePathMap.remove("dataReportNum");
-        // 批量创建项目
-        Integer proId = projectService.insertProject(project, dataId);
-        if (proId == null) {
-            result = "血流项目创建失败";
-            return result;
-        }
-        // 批量创建报告
-        Integer reportId = reportService.insertProReport(report, dataId);
-        if (reportId == 0) {
-            result = "血流项目创建报告失败";
-            return result;
-        }
-
-        // 运行APP详细信息
-        App app = appService.findAppById(appId);
-        String bp = SparkPro.TOOLSPATH + userId + "/";
-        String appPath = bp + appId + "/";
-        if (!FileTools.checkPath(appPath)) {
-            new File(appPath).mkdirs();
-        }
-        for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
-            String dataKey = entry.getKey();
-            String dataListFile = entry.getValue();
-            int runningNum = taskService.findRunningNumByAppId(appId);
-            Task task = new Task();
-            task.setProjectId(proId);
-            task.setUserId(userId);
-            task.setAppId(appId);
-            task.setDataKey(dataKey);
-            Map<String, String> map = CommandKey.getMap(dataListFile, appPath,
-                    proId);
-            StrSubstitutor sub = new StrSubstitutor(map);
-            String command = sub.replace(app.getCommand());
-            task.setCommand(command);
-            taskService.create(task);
-            Integer taskId = task.getTaskId();
-            if (runningNum < app.getMaxTask() || app.getMaxTask() == 0) {
-                logger.info("任务{}运行命令：{}", taskId, command);
-                SSHUtil ssh = new SSHUtil(sparkhost, sparkuserName, sparkpwd);
-                ssh.sshSubmit(command, false);
-                taskService.updateToRunning(taskId);
-            } else {
-                logger.info("数据{}排队运行{}", dataKey, app.getAppName());
-            }
-        }
-        return "begin run:bsi";
-    }
 }

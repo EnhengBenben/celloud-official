@@ -32,14 +32,20 @@ public class RunOverUtil {
 	 * @return
 	 * @author MQ
 	 */
-	public boolean TBINH(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
-			List<DataFile> dataList) {
+	public boolean TBINH(String reportPath, String appName, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
-			String finalPath = reportPath + data.getDataKey();
+			String datakey = data.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = reportPath + datakey;
 
 			String report = finalPath + "/report.txt";
 			int lines = FileTools.countLines(report);
@@ -72,14 +78,20 @@ public class RunOverUtil {
 	 * @return
 	 * @author MQ
 	 */
-	public boolean TBRifampicin(String reportPath, String dataKey, String appTitle, String projectFile,
-			String projectId, List<DataFile> dataList) {
+	public boolean TBRifampicin(String reportPath, String appName, String appTitle, String projectFile,
+			String projectId, List<DataFile> dataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
-			String finalPath = reportPath + data.getDataKey();
+			String datakey = data.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = reportPath + datakey;
 			resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t"
 					+ ScreeningUtil.screen(finalPath + "/report.txt") + "\n");
 		}
@@ -162,14 +174,20 @@ public class RunOverUtil {
 	 * @return
 	 * @author MQ
 	 */
-	public boolean BRAF(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
-			List<DataFile> dataList) {
+	public boolean BRAF(String reportPath, String appName, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
-			String finalPath = reportPath + data.getDataKey() + File.separator + "report.txt.wz.1";
+			String datakey = data.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = reportPath + datakey + File.separator + "report.txt.wz.1";
 			String context = FileTools.readAppoint(finalPath).replace("<br />", ";");
 			resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t" + context + "\n");
 		}
@@ -190,14 +208,20 @@ public class RunOverUtil {
 	 * @author lin
 	 * @date 2016年3月25日下午4:28:44
 	 */
-	public boolean UGT(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
-			List<DataFile> dataList) {
+	public boolean UGT(String reportPath, String appName, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
-			String finalPath = reportPath + data.getDataKey() + File.separator + "report.txt.wz.1";
+			String datakey = data.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = reportPath + datakey + File.separator + "report.txt.wz.1";
 			String context = FileTools.readAppoint(finalPath);
 			if (context != null && context.contains("The type is ")) {
 				context = context.split("<br />")[0].replace("The type is ", "");
@@ -223,14 +247,20 @@ public class RunOverUtil {
 	 * @author lin
 	 * @date 2016年3月25日下午4:26:00
 	 */
-	public boolean DPD(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
-			List<DataFile> dataList) {
+	public boolean DPD(String reportPath, String appName, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
-			String finalPath = reportPath + data.getDataKey() + File.separator + "report.txt.wz.1";
+			String datakey = data.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = reportPath + datakey + File.separator + "report.txt.wz.1";
 			String context = FileTools.readAppoint(finalPath).replace("<br />", ";");
 			resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t" + context + "\n");
 		}
@@ -251,14 +281,20 @@ public class RunOverUtil {
 	 * @author lin
 	 * @date 2016年3月22日下午4:31:03
 	 */
-	public boolean KRAS(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
-			List<DataFile> dataList) {
+	public boolean KRAS(String reportPath, String appName, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
-			String finalPath = reportPath + data.getDataKey();
+			String datakey = data.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = reportPath + datakey;
 			String first = FileTools.getFirstLine(finalPath + "/report.txt");
 			String conclusion = FileTools.readAppoint(finalPath + "/report.txt.Report");
 			resultArray.append(data.getDataKey() + "\t" + data.getFileName() + "\t" + first + "\t" + conclusion + "\n");
@@ -280,14 +316,20 @@ public class RunOverUtil {
 	 * @author lin
 	 * @date 2016年3月10日下午3:03:25
 	 */
-	public boolean EGFR(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
-			List<DataFile> dataList) {
+	public boolean EGFR(String reportPath, String appName, String appTitle, String projectFile, String projectId,
+			List<DataFile> dataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
-			String finalPath = reportPath + data.getDataKey();
+			String datakey = data.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = reportPath + datakey;
 			String first = FileTools.getFirstLine(finalPath + "/report.txt");
 			String result = StringUtils.isBlank(first) ? "no result" : first.replace("Exon", "").trim();
 			String re = FileTools.readAppoint(finalPath + "/report.txt.wz.Report").replace("<br />", "");
@@ -462,10 +504,12 @@ public class RunOverUtil {
 	 * @return
 	 */
 	public boolean PGS(String appPath, String appName, String appTitle, String projectFile, String projectId,
-			List<DataFile> proDataList) {
+			List<DataFile> proDataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		StringBuffer sb = new StringBuffer();
 		// 2. 遍历数据列表
 		for (DataFile d : proDataList) {
@@ -476,6 +520,9 @@ public class RunOverUtil {
 			// 3. 为项目PDF生成数据
 			sb.append(datakey).append(",").append(CustomStringUtils.getBarcode(filename)).append(",")
 					.append(anotherName).append(";");
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
 			String finalPath = appPath + datakey;
 			String xls = FileTools.fileExist(finalPath, datakey + ".xls", "endsWith");
 			if (xls.equals("")) {
@@ -505,13 +552,15 @@ public class RunOverUtil {
 				}
 			}
 		}
-		// 4.生成项目pdf
-		try {
-			PGSProjectPDF.createPDF(appPath, appName, 220, 800, sb.toString(), projectId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		FileTools.appendWrite(projectFile, resultArray.toString());
+		if (FileTools.countLines(projectFile) == proDataList.size() + 1) {
+			// 4.生成项目pdf
+			try {
+				PGSProjectPDF.createPDF(appPath, appName, 220, 800, sb.toString(), projectId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return true;
 	}
 
@@ -527,13 +576,19 @@ public class RunOverUtil {
 	 * @return
 	 */
 	public boolean HBV(String appPath, String appName, String appTitle, String projectFile, String projectId,
-			List<DataFile> proDataList) {
+			List<DataFile> proDataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile DataFile : proDataList) {
-			String finalPath = appPath + DataFile.getDataKey();
+			String datakey = DataFile.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = appPath + datakey;
 			String result = FileTools.readAppoint(finalPath + "/SVG/type.txt");
 			result = result.replace("Type: ", "");
 			result = result.replace("<br />", "");
@@ -620,13 +675,19 @@ public class RunOverUtil {
 	 * @return
 	 */
 	public boolean HCV(String appPath, String appName, String appTitle, String projectFile, String projectId,
-			List<DataFile> proDataList) {
+			List<DataFile> proDataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile DataFile : proDataList) {
-			String finalPath = appPath + "/" + DataFile.getDataKey() + "/Result.txt";
+			String datakey = DataFile.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = appPath + "/" + datakey + "/Result.txt";
 			String context = null;
 			if (FileTools.checkPath(finalPath)) {
 				context = FileTools.getLastLine(finalPath);
@@ -661,13 +722,19 @@ public class RunOverUtil {
 	 * @return
 	 */
 	public boolean oncogene(String appPath, String appName, String appTitle, String projectFile, String projectId,
-			List<DataFile> proDataList) {
+			List<DataFile> proDataList, String dataKey) {
 		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
+		if (!new File(projectFile).exists()) {
+			resultArray.append(appTitle);
+		}
 		// 2. 遍历数据列表
 		for (DataFile data : proDataList) {
-			String finalPath = appPath + data.getDataKey();
+			String datakey = data.getDataKey();
+			if (!datakey.equals(dataKey)) {
+				continue;
+			}
+			String finalPath = appPath + datakey;
 			String first = FileTools.getFirstLine(finalPath + "/report.txt");
 			String result = CustomStringUtils.isEmpty(first) ? "no result"
 					: first.replace("Exon", "").split("@")[0].trim();
