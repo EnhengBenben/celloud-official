@@ -41,10 +41,10 @@
           #else
             #foreach(${accountConfig} in $!{gsrList})
                 <tr>  
-                 <td>$!{accountConfig.diseaseName}</td>
-                 <td>$!{accountConfig.gene}</td>
-                 <td>$!{accountConfig.mutNum}</td>
-                 <td><input type="text" name="decisionResult['$!{accountConfig.diseaseEngName}']" value="$!{cmpReport.cmpFilling.decisionResult[$!{accountConfig.diseaseEngName}]}"></td>  
+                 <td>$!accountConfig.diseaseName</td>
+                 <td>$!accountConfig.gene</td>
+                 <td>$!accountConfig.mutNum</td>
+                 <td><input type="text" name="decisionResult['$!{accountConfig.diseaseEngName}']" value="$!cmpReport.cmpFilling.decisionResult[$!accountConfig.diseaseEngName]"></td>  
                 </tr>
             #end
           #end
@@ -56,11 +56,11 @@
   </section>
   <section class="section2 border1 w3cbbs" id="section2">
     <h4 class="title">二. 检测结果详述</h4>
-    #if(${cmpReport.geneDetectionDetail}=={})
+    #if($!cmpReport.geneDetectionDetail=={})
       <div class="info">没有发现突变基因</div>
     #else
-        #foreach(${geneDetection} in ${cmpReport.geneDetectionDetail})
-            <h5>$!{cmpReport.geneDetectionDetail.size()}.&nbsp;&nbsp;${geneDetection.key}基因：该基因突变与$!{geneDetection.value.result[0].diseaseName}相关</h5>
+        #foreach($geneDetection in $!cmpReport.geneDetectionDetail)
+            <h5>$!cmpReport.geneDetectionDetail.size().&nbsp;&nbsp;$!geneDetection.key基因：该基因突变与$!geneDetection.value.result[0].diseaseName相关</h5>
             <div class="info">
             <div name="geneDescriptDiv">
               <h6>检测结果</h6>
@@ -79,33 +79,33 @@
                   </tr>
                 </thead>
                 <tbody>
-                    #foreach(${r} in ${geneDetection.value.result})
-                        #if(${r.gene.contains('没有发现突变位点')})
+                    #foreach($r in $!geneDetection.value.result)
+                        #if($r.gene.contains('没有发现突变位点'))
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
                             <tr>
-                                <td>${r.gene}</td>
-                                <td>${r.refBase}</td>
-                                <td>${r.mutBase}</td>
-                                <td>${r.depth}</td>
-                                <td>#if($!{r.cdsMutSyntax.length()}>14)$!{r.cdsMutSyntax.substring(0,14)}#else${!r.cdsMutSyntax}#end</td>
-                                <td>#if($!{r.aaMutSyntax.length()}>14)$!{r.aaMutSyntax.substring(0,14)}#else$!{r.aaMutSyntax}#end</td>
+                                <td>$!r.gene</td>
+                                <td>$!r.refBase</td>
+                                <td>$!r.mutBase</td>
+                                <td>$!r.depth</td>
+                                <td>#if($!r.cdsMutSyntax.length()>14)$!r.cdsMutSyntax.substring(0,14)#else$!r.cdsMutSyntax#end</td>
+                                <td>#if($!r.aaMutSyntax.length()>14)$!r.aaMutSyntax.substring(0,14)#else$!r.aaMutSyntax#end</td>
                                 <td>
-                                    #if(${r.hetOrHom}=='het')
+                                    #if($r.hetOrHom=='het')
                                             杂合
                                     #else
                                             纯合
                                     #end
                                 </td>
-                                <td>${r.geneticMethod}</td>
-                                <td>${r.diseaseName}</td>
+                                <td>$!r.geneticMethod</td>
+                                <td>$!r.diseaseName</td>
                         </tr>
                         #end
                     #end
                 </tbody>
               </table>
               <h6>疾病简介</h6>
-              <div><textarea class="form-control" rows="15" cols="100" name="diseaseProfile['$!{geneDetection.value.result[0].diseaseEngName}']">${cmpReport.cmpFilling.diseaseProfile['$!{geneDetection.value.result[0].diseaseEngName}']}</textarea></div>
+              <div><textarea class="form-control" rows="15" cols="100" name="diseaseProfile['$!geneDetection.value.result[0].diseaseEngName']">$!cmpReport.cmpFilling.diseaseProfile['$!geneDetection.value.result[0].diseaseEngName']</textarea></div>
             </div>
           </div>
         #end
@@ -124,13 +124,13 @@
           </tr>
         </thead>
         <tbody>
-          #if(!${gddDiseaseList})
+          #if(!$gddDiseaseList)
             <tr><td colspan="4">没有发现其他检测结果</td></tr>
           #end
-          #foreach(${gddDisease} in ${gddDiseaseList})
+          #foreach($gddDisease in $!gddDiseaseList)
             <tr>
-                <td>$!{gddDisease.name}</td>
-                <td>$!{gddDisease.gene}</td>
+                <td>$!gddDisease.name</td>
+                <td>$!gddDisease.gene</td>
                 <td>未发现异常</td>
                 <td>正常</td>
             </tr>
@@ -180,19 +180,19 @@
                 <tr><td colspan="7">没有发现突变位点</td></tr>
             #else
                 <tr>
-                    <td>${r.gene}</td>
-                    <td>${r.mutBase}</td>
-                    <td>${r.depth}</td>
-                    <td>#if(${r.cdsMutSyntax.length()}>14)${r.cdsMutSyntax.substring(0,14)}#else${r.cdsMutSyntax}#end</td>
-                    <td>#if(${r.aaMutSyntax.length()}>14)${r.aaMutSyntax.substring(0,14)}#else${r.aaMutSyntax}#end</td>
+                    <td>$!r.gene</td>
+                    <td>$!r.mutBase</td>
+                    <td>$!r.depth</td>
+                    <td>#if($!r.cdsMutSyntax.length()>14)$!r.cdsMutSyntax.substring(0,14)#else$!r.cdsMutSyntax#end</td>
+                    <td>#if($!r.aaMutSyntax.length()>14)$!r.aaMutSyntax.substring(0,14)#else$!r.aaMutSyntax#end</td>
                     <td>
-                            #if(${r.hetOrHom}=='het')
+                            #if($!r.hetOrHom=='het')
                                 杂合
                             #else
                                 纯合
                             #end
                     </td>
-                    <td>${r.diseaseName}</td>
+                    <td>$!r.diseaseName</td>
                 </tr>
             #end
           #end
@@ -222,31 +222,31 @@
         <tbody>
             <tr>
                 <td>Filename</td>
-                <td>${cmpReport.basicStatistics1.Filename}</td>
+                <td>$!cmpReport.basicStatistics1.Filename</td>
             </tr>
             <tr>
                 <td>File type</td>
-                <td>${cmpReport.basicStatistics1.FileType}</td>
+                <td>$!cmpReport.basicStatistics1.FileType</td>
             </tr>
             <tr>
                 <td>Encoding</td>
-                <td>${cmpReport.basicStatistics1.Encoding}</td>
+                <td>$!cmpReport.basicStatistics1.Encoding</td>
             </tr>
             <tr>
                 <td>Total Sequences</td>
-                <td>${cmpReport.basicStatistics1.TotalSeq}</td>
+                <td>$!cmpReport.basicStatistics1.TotalSeq</td>
             </tr>
             <tr>
                 <td>Filtered Sequences</td>
-                <td>${cmpReport.basicStatistics1.FilteredSeq}</td>
+                <td>$!cmpReport.basicStatistics1.FilteredSeq</td>
             </tr>
             <tr>
                 <td>Sequence length</td>
-                <td>${cmpReport.basicStatistics1.SeqLength}</td>
+                <td>$!cmpReport.basicStatistics1.SeqLength</td>
             </tr>
             <tr>
                 <td>%GC</td>
-                <td>${cmpReport.basicStatistics1.gc}</td>
+                <td>$!cmpReport.basicStatistics1.gc</td>
             </tr>
         </tbody>
     </table>
@@ -261,56 +261,56 @@
         <tbody>
             <tr>
                 <td>Filename</td>
-                <td>${cmpReport.basicStatistics2.Filename}</td>
+                <td>$!cmpReport.basicStatistics2.Filename</td>
             </tr>
             <tr>
                 <td>File type</td>
-                <td>${cmpReport.basicStatistics2.FileType}</td>
+                <td>$!cmpReport.basicStatistics2.FileType</td>
             </tr>
             <tr>
                 <td>Encoding</td>
-                <td>${cmpReport.basicStatistics2.Encoding}</td>
+                <td>$!cmpReport.basicStatistics2.Encoding</td>
             </tr>
             <tr>
                 <td>Total Sequences</td>
-                <td>${cmpReport.basicStatistics2.TotalSeq}</td>
+                <td>$!cmpReport.basicStatistics2.TotalSeq</td>
             </tr>
             <tr>
                 <td>Filtered Sequences</td>
-                <td>${cmpReport.basicStatistics2.FilteredSeq}</td>
+                <td>$!cmpReport.basicStatistics2.FilteredSeq</td>
             </tr>
             <tr>
                 <td>Sequence length</td>
-                <td>${cmpReport.basicStatistics2.SeqLength}</td>
+                <td>$!cmpReport.basicStatistics2.SeqLength</td>
             </tr>
             <tr>
                 <td>%GC</td>
-                <td>${cmpReport.basicStatistics2.gc}</td>
+                <td>$!cmpReport.basicStatistics2.gc</td>
             </tr>
         </tbody>
     </table>
     <table style="width:100%;">
       <tr>
         <td style="width:50%;">
-          #if(${cmpReport.qualityPath1})
-            <img style="max-width:500px;" src="#if(!${cmpReport.qualityPath1.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.qualityPath1}">
+          #if($cmpReport.qualityPath1)
+            <img style="max-width:500px;" src="#if(!$!cmpReport.qualityPath1.contains('Tools'))$!uploadPath/$!cmpReport.userId/$!cmpReport.appId/$!cmpReport.dataKey/#end$!cmpReport.qualityPath1">
           #end
         </td>
         <td>
-          #if(${cmpReport.qualityPath2})
-            <img style="max-width:500px;" src="#if(!${cmpReport.qualityPath2.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.qualityPath2}">
+          #if($cmpReport.qualityPath2)
+            <img style="max-width:500px;" src="#if(!$cmpReport.qualityPath2.contains('Tools'))$!uploadPath/$!cmpReport.userId/$!cmpReport.appId/$!cmpReport.dataKey/#end$!cmpReport.qualityPath2">
           #end
         </td>
       </tr>
       <tr>
         <td>
-          #if(${cmpReport.seqContentPath1})
-            <img style="max-width:500px;" src="#if(!${cmpReport.seqContentPath1.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.seqContentPath1}">
+          #if($cmpReport.seqContentPath1)
+            <img style="max-width:500px;" src="#if(!$cmpReport.seqContentPath1.contains('Tools'))$!uploadPath/$!cmpReport.userId/$!cmpReport.appId/$!cmpReport.dataKey/#end$!cmpReport.seqContentPath1">
           #end
         </td>
         <td>
-          #if(${cmpReport.seqContentPath2})
-            <img style="max-width:500px;" src="#if(!${cmpReport.seqContentPath2.contains('Tools')})${uploadPath}/${cmpReport.userId}/${cmpReport.appId}/${cmpReport.dataKey}/#end${cmpReport.seqContentPath2}">
+          #if($cmpReport.seqContentPath2)
+            <img style="max-width:500px;" src="#if(!$cmpReport.seqContentPath2.contains('Tools'))$!uploadPath/$!cmpReport.userId/$!cmpReport.appId/$!cmpReport.dataKey/#end$!cmpReport.seqContentPath2">
           #end
         </td>
       </tr>
