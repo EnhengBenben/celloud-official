@@ -185,18 +185,26 @@ public class HomeAction {
         if (referer != null && referer.contains("login")) {
             // 获取当前用户所有的app
             List<App> appList = appService.getMyAppList(ConstantsData.getLoginUserId());
-            // 只有一个app
-            if (appList != null && appList.size() == 1) {
-                // 获取该app的appId
-                Integer appId = appList.get(0).getAppId();
-                // bsi
-                if (appId == 118) {
-                    return "redirect:bsi";
-                } else if (appId == 123) {
-                    return "redirect:rocky";
+            // 该用户appId不为空, 判断是否包含bsi与rocky
+            boolean bsi = false;
+            boolean rocky = false;
+            if (appList != null && appList.size() > 0) {
+                for (App app : appList) {
+                    // 获取该app的appId
+                    Integer appId = app.getAppId();
+                    // bsi
+                    if (appId == 118) {
+                        bsi = true;
+                    } else if (appId == 123) {
+                        rocky = true;
+                    }
                 }
             }
-            return "index";
+            if (bsi && !rocky) {
+                return "redirect:bsi";
+            } else if (!bsi && rocky) {
+                return "redirect:rocky";
+            }
         }
         return "index";
     }
