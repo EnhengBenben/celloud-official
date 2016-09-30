@@ -552,6 +552,7 @@ public class RunOverUtil {
 				}
 			}
 		}
+		FileTools.appendWrite(projectFile, resultArray.toString());
 		if (FileTools.countLines(projectFile) == proDataList.size() + 1) {
 			// 4.生成项目pdf
 			try {
@@ -560,7 +561,6 @@ public class RunOverUtil {
 				e.printStackTrace();
 			}
 		}
-		FileTools.appendWrite(projectFile, resultArray.toString());
 		return true;
 	}
 

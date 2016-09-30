@@ -48,7 +48,7 @@ var rockyUpload = (function(rockyUpload) {
 					{title : "gz", extensions : "gz"},
 				]
 			},
-			max_retries : 5,
+			max_retries : 0,
 			multiple_queues : true,
 			flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf'
 		});

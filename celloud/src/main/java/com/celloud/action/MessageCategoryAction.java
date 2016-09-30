@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.service.MessageCategoryService;
@@ -35,7 +34,6 @@ public class MessageCategoryAction {
     @ResponseBody
     public List<Map<String, Object>> setting() {
         logger.info("用户{}查看消息设置", ConstantsData.getLoginUserName());
-        ModelAndView mv = new ModelAndView("notice/setting");
         Integer userId = ConstantsData.getLoginUserId();
         return messageCategoryService.getMessageCategoryByUserId(userId);
     }

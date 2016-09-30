@@ -11,19 +11,14 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
-import com.celloud.constants.FileFormat;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.model.mysql.DataFile;
-import com.celloud.model.mysql.Experiment;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
@@ -34,7 +29,6 @@ import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.MD5Util;
 import com.celloud.utils.PerlUtils;
 
 /**
@@ -45,7 +39,6 @@ import com.celloud.utils.PerlUtils;
  */
 @Service("dataService")
 public class DataServiceImpl implements DataService {
-	private static Logger logger = LoggerFactory.getLogger(DataServiceImpl.class);
 	@Resource
 	DataFileMapper dataFileMapper;
 	@Resource
@@ -299,27 +292,8 @@ public class DataServiceImpl implements DataService {
 		data.setSize(FileTools.getFileSize(filePath));
 		data.setDataKey(dataKey);
 		data.setPath(filePath);
-		data.setMd5(MD5Util.getFileMD5(filePath));
 		data.setBatch(batch);
 		data.setFileFormat(fileFormat);
-		if (fileFormat == FileFormat.BAM) {
-			String anotherName = dataService.getAnotherName(filePath, dataKey, perlPath, outPath);
-			data.setAnotherName(anotherName);
-			// 绑定实验流程
-			if (!StringUtils.isBlank(anotherName)) {
-				Integer userId = ConstantsData.getLoginUserId();
-				List<Experiment> expList = expService.getUnRelatList(userId, anotherName);
-				if (expList != null && expList.size() == 1) {
-					Experiment exp = expList.get(0);
-					exp.setFileId(dataId);
-					exp.setDataKey(dataKey);
-					expService.updateByPrimaryKeySelective(exp);
-					logger.info("用户{}数据{}自动绑定成功", userId, dataId);
-				} else {
-					logger.error("用户{}数据{}自动绑定失败", userId, dataId);
-				}
-			}
-		}
 		data.setState(DataState.ACTIVE);
 		if (tagId == null) {
 			return dataService.updateDataInfoByFileId(data);

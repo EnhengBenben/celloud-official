@@ -27,6 +27,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.DataState;
+import com.celloud.constants.FileFormat;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Tag;
 import com.celloud.service.DataService;
@@ -37,6 +39,7 @@ import com.celloud.utils.CheckFileTypeUtil;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.MD5Util;
 import com.celloud.utils.PropertiesUtil;
 
 /**
@@ -127,8 +130,7 @@ public class UploadAction {
 			// TODO 固定值，可以抽取处理
 			String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/" + fileDataKey;
 			int fileFormat = checkFileType.checkFileType(newName, folderByDay);
-			dataService.updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay, batch, fileFormat,
-					null);
+			updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay, batch, fileFormat);
 			return dataId;
 		}
 		return 0;
@@ -184,7 +186,7 @@ public class UploadAction {
 								String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
 										+ fileDataKey;
 								int fileFormat = checkFileType.checkFileType(newName, folderByDay);
-								dataService.updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay,
+								updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay,
 										batch, fileFormat, tagId);
                                 // TODO 写死的百菌探自动运行
                                 if (tagId == 1) {
@@ -259,6 +261,41 @@ public class UploadAction {
 	@RequestMapping("checkAdminSessionTimeOut")
 	public String checkAdminSessionTimeOut() {
 		return ConstantsData.getLoginUserName();
+	}
+
+	//TODO 以下两个方法是垃圾，要删除
+    private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath,
+            String folderByDay, String batch, int fileFormat, int tagId) {
+        DataFile data = new DataFile();
+        data.setFileId(dataId);
+        String filePath = folderByDay + File.separator + newName;
+        data.setSize(FileTools.getFileSize(filePath));
+        data.setDataKey(dataKey);
+        data.setPath(filePath);
+        data.setMd5(MD5Util.getFileMD5(filePath));
+        data.setBatch(batch);
+        data.setFileFormat(fileFormat);
+        if (fileFormat == FileFormat.BAM) {
+			String anotherName = dataService.getAnotherName(filePath, dataKey, perlPath, outPath);
+            data.setAnotherName(anotherName);
+        }
+        data.setState(DataState.ACTIVE);
+        return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+    }
+
+	private int updateFileInfo(Integer dataId, String dataKey, String newName, String perlPath, String outPath,
+			String folderByDay, String batch, Integer fileFormat) {
+		DataFile data = new DataFile();
+		data.setFileId(dataId);
+		String filePath = folderByDay + File.separator + newName;
+		data.setSize(FileTools.getFileSize(filePath));
+		data.setDataKey(dataKey);
+		data.setPath(filePath);
+		data.setMd5(MD5Util.getFileMD5(filePath));
+		data.setBatch(batch);
+		data.setFileFormat(fileFormat);
+		data.setState(DataState.ACTIVE);
+		return dataService.updateDataInfoByFileId(data);
 	}
 
 }
