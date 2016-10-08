@@ -1,6 +1,8 @@
 package com.celloud.action;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -313,6 +315,14 @@ public class TaskAction {
 		StringBuffer basePath = new StringBuffer();
 		basePath.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/");
 		String projectFile = basePath + projectId + "/" + projectId + ".txt";
+		FileLock filelock = null;
+		if (!new File(projectFile).exists()) {
+			FileTools.createFile(projectFile);
+			filelock = FileTools.getFileLock(new File(projectFile));
+			FileTools.appendWrite(projectFile, title);
+		} else {
+			filelock = FileTools.getFileLock(new File(projectFile));
+		}
 		// 4. 通过反射调用相应app的处理方法，传参格式如下：
 		// String appPath, String appName, String appTitle,String
 		// projectFile,String projectId, List<DataFile> proDataList,String dataKey
@@ -330,6 +340,11 @@ public class TaskAction {
 		String xml = null;
 		if (new File(projectFile.toString()).exists()) {
 			xml = XmlUtil.writeXML(projectFile);
+		}
+		try {
+			filelock.release();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		// 6. 项目报告插入mysql并修改项目运行状态
 		reportService.reportCompeleteByProId(proId, xml);
