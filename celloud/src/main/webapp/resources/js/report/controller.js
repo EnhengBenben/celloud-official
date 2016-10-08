@@ -1617,7 +1617,7 @@
         }else if(tr_size<minTdNum){// 需要补齐tr
           var num = minTdNum-tr_size;
     	  if(tr_size - 1 < fileCount){// 如果已运行完的文件的数量<实际运行的文件数量,就将剩余的位置显示为进度条
-    		  var imgTr = "<tr><td style='text-align: center;' rowspan='"+num+"' colspan='"+th_size+"'><img src='"+CONTEXT_PATH+"/images/report/running.png' title='正在运行...''/></td></tr>"
+    		  var imgTr = "<tr><td style='text-align: center;height: 60px;' rowspan='"+num+"' colspan='"+th_size+"'><img src='"+CONTEXT_PATH+"/images/report/running.png' title='正在运行...''/></td></tr>"
     		  $(this).find("tbody").append(imgTr);
     	  }else{ // 否则就正常补齐
     		  for(i=0;i<num;i++){
