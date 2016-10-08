@@ -325,4 +325,9 @@ public class DataServiceImpl implements DataService {
 		data.setState(DataState.DEELTED);
 		return dataService.addDataInfo(data);
 	}
+
+    @Override
+    public List<DataFile> getDataFileFromTbTask(Integer projectId) {
+        return this.dataFileMapper.getDataFileFromTbTask(projectId);
+    }
 }

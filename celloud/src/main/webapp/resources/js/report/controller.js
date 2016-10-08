@@ -90,7 +90,7 @@
   });
   
   function dataInPro(appInfo, proId, projectName){
-  	$.get("data/getDatasInProject",{"projectId":proId},function(fileList){
+  	$.get("data/getDataFromTbTask",{"projectId":proId},function(fileList){
 			$("#fileListUl").append("<a id='prevA' class='btn -low' style='width:100%;'><span class='fa fa-sort-asc'></span></button>");
 			var fileNames = new Array();
 			var newList = "";

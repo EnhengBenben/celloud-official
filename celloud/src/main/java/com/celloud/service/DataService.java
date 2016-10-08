@@ -14,6 +14,7 @@ import com.celloud.page.PageList;
  * @date 2015年12月23日 下午5:58:14
  */
 public interface DataService {
+
 	/**
 	 * 统计帐号下的文件数量
 	 * 
@@ -333,5 +334,14 @@ public interface DataService {
 	public void updateUploadState(Integer fileId, String objectKey, int state, String path);
 
 	public Integer addFileInfo(Integer userId, String fileName);
+
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年10月8日下午4:44:19
+     * @description 从TbTask中获取运行结束的数据报告
+     *
+     */
+    public List<DataFile> getDataFileFromTbTask(Integer projectId);
 
 }

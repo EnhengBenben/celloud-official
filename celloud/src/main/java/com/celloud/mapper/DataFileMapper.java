@@ -317,4 +317,17 @@ public interface DataFileMapper {
 	List<DataFile> filterRockyList(Page page, @Param("userId") Integer userId, @Param("state") Integer state,
 			@Param("reportType") Integer reportType, @Param("period") Integer period, @Param("sample") String sample,
 			@Param("condition") String condition, @Param("sidx") String sidx, @Param("sord") String sord);
+
+    /**
+     * 
+     * @description 从TbTask表中获取运行结束的数据报告
+     * @author miaoqi
+     * @date 2016年10月8日下午4:51:01
+     *
+     * @param projectId
+     *            项目id
+     * @return 项目下数据报告对应的文件集合
+     *
+     */
+    List<DataFile> getDataFileFromTbTask(@Param("projectId") Integer projectId);
 }

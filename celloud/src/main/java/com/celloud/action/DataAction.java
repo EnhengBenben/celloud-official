@@ -46,6 +46,7 @@ import com.celloud.utils.Response;
  * @author liuqx
  * @date 2015-12-30 下午4:08:06
  */
+
 @Controller
 @RequestMapping("data")
 public class DataAction {
@@ -80,6 +81,24 @@ public class DataAction {
 	public List<DataFile> getDatasInProject(Integer projectId) {
 		return dataService.getDatasInProject(projectId);
 	}
+
+    /**
+     * 
+     * @description 根据项目id从TbTask中获取运行结束的数据报告
+     * @author miaoqi
+     * @date 2016年10月8日下午5:05:38
+     *
+     * @param projectId
+     *            项目id
+     * @return 文件集合json
+     *
+     */
+    @ActionLog(value = "从tb_task中根据project_id检索数据", button = "报告管理/查看数据报告")
+    @RequestMapping("getDataFromTbTask")
+    @ResponseBody
+    public List<DataFile> getDataFromTbTask(Integer projectId) {
+        return this.dataService.getDataFileFromTbTask(projectId);
+    }
 
 	/**
 	 * 获取全部数据列表
