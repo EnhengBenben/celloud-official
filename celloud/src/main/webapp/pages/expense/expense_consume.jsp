@@ -32,7 +32,7 @@
         <tbody>
           <tr ng-repeat="expense in dataList.datas">
             <td>{{expense.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td>数据{{expense.fileInfos | substring}}运行{{expense.appName}}</td>
+            <td title="数据{{expense.fileInfos}}运行{{expense.appName}}">数据{{expense.fileInfos | substring}}运行{{expense.appName}}</td>
             <td>{{expense.price}}</td>
             <td>{{expense.remark | emptyText:"无"}}</td>
           </tr>
