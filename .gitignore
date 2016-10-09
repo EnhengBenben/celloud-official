@@ -44,7 +44,7 @@ server.pid
 *.eml
 /dist/
 .cache
-/node_modules
+node_modules
 
 
 ### Intellij ###
