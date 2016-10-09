@@ -29,7 +29,7 @@
       	<button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
       	<span>{{message}}</span>
       </div>
-      <table class="table table-main" ng-init="pageType='data'">
+      <table class="table table-main" ng-init="pageType='data'" id="_data_table">
         <thead>
           <tr>
             <th class="th-checkoutbox">
