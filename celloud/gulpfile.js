@@ -54,6 +54,7 @@ var src = {
       'src/main/webapp/resources/js/report/dataReportService.js',
       'src/main/webapp/resources/js/report/dataReportController.js',
       'src/main/webapp/resources/js/config/routeProvider.js',
+      'src/main/webapp/resources/js/config/sessionInterceptor.js',
       'src/main/webapp/resources/js/common/service.js',
       'src/main/webapp/resources/js/common/controller.js',
       'src/main/webapp/resources/js/common/filter.js',
