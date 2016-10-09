@@ -101,13 +101,11 @@ gulp.task('combinejs', function () {
 */
 gulp.task('less', function() {
   return gulp.src(src.less)
-      .pipe(watch(src.less))
       .pipe(rename({suffix: '.min'}))
       .pipe(less())
       .pipe(autoprefix())
       .pipe(cssmin())
-      .pipe(gulp.dest(dist.css))
-      .pipe(livereload());
+      .pipe(gulp.dest(dist.css));
 });
 
 /* default */
