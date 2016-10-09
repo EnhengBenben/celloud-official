@@ -29,7 +29,7 @@
       	<button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
       	<span>{{message}}</span>
       </div>
-      <table class="table table-main" ng-init="pageType='data'">
+      <table class="table table-main" ng-init="pageType='data'" id="_data_table">
         <thead>
           <tr>
             <th class="th-checkoutbox">
@@ -66,7 +66,7 @@
             <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
           <tr ng-show="dataList.datas.length == 0">
-          	<td colspan="8">暂无数据</td>
+          	<td colspan="9">暂无数据</td>
           </tr>
         </tbody>
       </table>
