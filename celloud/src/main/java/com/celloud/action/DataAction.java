@@ -97,7 +97,14 @@ public class DataAction {
     @RequestMapping("getDataFromTbTask")
     @ResponseBody
     public List<DataFile> getDataFromTbTask(Integer projectId) {
-        return this.dataService.getDataFileFromTbTask(projectId);
+        logger.info("项目报告中加载右侧浮动窗 projectId = {}", projectId);
+        List<DataFile> dataList = null;
+        // 从tb_task中加载数据
+        dataList = this.dataService.getDataFileFromTbTask(projectId);
+        if (null == dataList || (null != dataList && dataList.size() == 0)) { // tb_task中查找不到数据代表是老数据采用老的方法加载数据
+            dataList = this.dataService.getDatasInProject(projectId);
+        }
+        return dataList;
     }
 
 	/**
