@@ -202,8 +202,6 @@ public class HomeAction {
             }
             if (bsi && !rocky) {
                 return "redirect:bsi";
-            } else if (!bsi && rocky) {
-                return "redirect:rocky";
             }
         }
         return "index";

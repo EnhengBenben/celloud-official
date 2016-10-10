@@ -4,6 +4,7 @@ import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +30,10 @@ import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
+import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.User;
 import com.celloud.service.ActionLogService;
+import com.celloud.service.AppService;
 import com.celloud.service.RSAKeyService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
@@ -59,6 +62,8 @@ public class LoginAction {
     private ActionLogService logService;
 	@Resource
 	private MessageCategoryUtils mcu;
+    @Resource
+    private AppService appService;
 
     /**
      * 跳转到登录页面
@@ -172,6 +177,27 @@ public class LoginAction {
 				.set(WechatParams.LOGIN.time.name(), now, null).set(WechatParams.LOGIN.ip.name(), ip, null)
 				.set(WechatParams.LOGIN.reason.name(), reason, "#222222");
 		mcu.sendMessage(userId, MessageCategoryCode.LOGIN, null, params, null);
+        // 获取当前用户所有的app
+        List<App> appList = appService.getMyAppList(userId);
+        // 该用户appId不为空, 判断是否包含bsi与rocky
+        boolean bsi = false;
+        boolean rocky = false;
+        if (appList != null && appList.size() > 0) {
+            for (App app : appList) {
+                // 获取该app的appId
+                Integer appId = app.getAppId();
+                // bsi
+                if (appId == 118) {
+                    bsi = true;
+                } else if (appId == 123) {
+                    rocky = true;
+                }
+            }
+        }
+        if (!bsi && rocky) {
+            mv.addObject("route", "#/product/rocky/upload");
+        }
+
         return mv;
     }
 

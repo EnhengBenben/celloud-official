@@ -4,11 +4,11 @@
   <section class="s-bar rocky">
     <ul class="pro-sidebar-menu">
       <li class="pro-sidebar-header"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></li>
-      <li ng-class="{active: isActive('user/base')}">
-        <a di-href="#/user/base"><span>上传</span></a>
+      <li ng-class="{active: isActive('/product/rocky/upload')}">
+        <a di-href="#/product/rocky/upload"><span>上传</span></a>
       </li>
-      <li ng-class="{active: isActive('/user/pwd')}">
-        <a di-href="#/user/pwd"><span>报告</span></a>
+      <li ng-class="{active: isActive('/product/rocky/report')}">
+        <a di-href="#/product/rocky/report"><span>报告</span></a>
       </li>
     </ul>
   </section>

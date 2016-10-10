@@ -19,7 +19,7 @@
 			      </a>
 			    </li>
 			    <li ng-if="userProduct.app123==123">
-			      <a href="#/product/rocky">
+			      <a href="${pageContext.request.contextPath }/index#/product/rocky/upload">
 			        <div class="inner">
 			          <img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰">
 			        </div>

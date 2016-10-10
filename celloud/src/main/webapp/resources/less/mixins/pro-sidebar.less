@@ -51,12 +51,26 @@
         a{
             color: @gray-black;
         }
-        .pro-sidebar-menu>.pro-sidebar-header{
-            background: @content-gray;
-            .border-bottom-1(@light-gray);
-            img{
-                width: 90px;
-                height: auto;
+        >.rocky>.pro-sidebar-menu{
+             >li{
+                margin: 1px 0px;
+                width: 100%;
+                a{
+                    text-align: center;
+                }
+                &:hover>a, &.active>a {
+                    color: @rocky-font-color;
+                    background: @content-gray;
+                    border-left: 2px solid @rocky-border-color;
+                }
+            }
+            >.pro-sidebar-header{
+                background: @content-gray;
+                .border-bottom-1(@light-gray);
+                img{
+                    width: 90px;
+                    height: auto;
+                }
             }
         }
     }

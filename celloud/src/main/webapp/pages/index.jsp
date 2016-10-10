@@ -77,7 +77,8 @@
   <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.3.2"></script>
+  
+  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.3.3"></script>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
   </script>

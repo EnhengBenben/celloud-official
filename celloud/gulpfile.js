@@ -65,7 +65,9 @@ var src = {
       'src/main/webapp/resources/js/notice/messageController.js',
       'src/main/webapp/resources/js/notice/noticeController.js',
       'src/main/webapp/resources/js/feedback/service.js',
-      'src/main/webapp/resources/js/feedback/controller.js'
+      'src/main/webapp/resources/js/feedback/controller.js',
+      'src/main/webapp/resources/js/rocky/service.js',
+      'src/main/webapp/resources/js/rocky/controller.js'
   ]
 }
 var dist = {
