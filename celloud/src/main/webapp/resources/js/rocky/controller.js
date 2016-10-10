@@ -15,6 +15,7 @@
 			$(".step-line").addClass("not-reached")
 			$("#upload-nav-line-one").removeClass("not-reached");
 			$("#upload-nav-step-two").removeClass("not-reached");
+			$("#upload-nav-step-three").addClass("not-reached");
 			$("#upload-step-two").removeClass("hide");
 			$(".tips").addClass('hide');
 			$("#upload-tip-two").removeClass("hide");
