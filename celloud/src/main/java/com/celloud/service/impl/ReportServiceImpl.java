@@ -27,12 +27,14 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.DataState;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
+import com.celloud.constants.TaskPeriod;
 import com.celloud.constants.TimeState;
 import com.celloud.dao.ReportDao;
 import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.DataFileMapper;
 import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.ReportMapper;
+import com.celloud.mapper.TaskMapper;
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
@@ -64,6 +66,7 @@ import com.celloud.model.mongo.Translate;
 import com.celloud.model.mongo.UGT;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.ReportService;
@@ -94,6 +97,8 @@ public class ReportServiceImpl implements ReportService {
 	AppMapper appMapper;
 	@Resource
 	PriceMapper priceMapper;
+	@Resource
+	private TaskMapper taskMapper;
 
 	Logger log = Logger.getLogger(this.getClass());
 
@@ -853,9 +858,15 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public Integer reportCompeleteByProId(Integer projectId, String context) {
-		Report report = new Report();
+	public Integer reportCompeleteByProId(Integer projectId, String dataKey, String context) {
 		Date endDate = new Date();
+		// 修改任务状态
+		Task task = taskMapper.findTaskByProData(projectId, dataKey);
+		task.setEndDate(endDate);
+		task.setUpdateDate(endDate);
+		task.setPeriod(TaskPeriod.DONE);
+		taskMapper.updateByPrimaryKeySelective(task);
+		Report report = new Report();
 		report.setProjectId(projectId);
 		report.setFlag(ReportType.DATA);
 		report.setPeriod(ReportPeriod.COMPLETE);

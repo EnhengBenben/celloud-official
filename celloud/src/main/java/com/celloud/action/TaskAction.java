@@ -347,7 +347,7 @@ public class TaskAction {
 			e.printStackTrace();
 		}
 		// 6. 项目报告插入mysql并修改项目运行状态
-		reportService.reportCompeleteByProId(proId, xml);
+		reportService.reportCompeleteByProId(proId, dataKey, xml);
 		if (ExperimentState.apps.contains(appId)) {
 			for (DataFile dataFile : dataList) {
 				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();
