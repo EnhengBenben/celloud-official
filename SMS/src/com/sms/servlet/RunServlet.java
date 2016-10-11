@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-
 import com.sms.constant.GadgetsConstants;
 import com.sms.utils.FileTools;
 import com.sms.utils.PerlUtils;
@@ -18,7 +16,6 @@ import com.sms.utils.PerlUtils;
 @WebServlet("/RunServlet")
 public class RunServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Logger log = Logger.getLogger(RunServlet.class);
 
 	public RunServlet() {
 		super();
@@ -35,11 +32,9 @@ public class RunServlet extends HttpServlet {
 		String result = null;
 		String command = null;
 		if ("reversal".equals(type)) {
-			log.info("序列反转");
 			command = "perl " + perlPath + "/reverse_seq.pl  " + filePath;
 			result = PerlUtils.executeGadgetsPerl(command);
 		} else if ("seqsub".equals(type)) {
-			log.info("序列截取");
 			String start = request.getParameter("start");
 			String end = request.getParameter("end");
 			command = "perl " + perlPath + "/cut_seq.pl  " + filePath + " " + start + " " + end;
