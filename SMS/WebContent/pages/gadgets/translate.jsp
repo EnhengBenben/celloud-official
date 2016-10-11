@@ -8,12 +8,9 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resource/bootstrap/js/jquery-1.9.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var userId = window.parent.document.getElementById("userId").value;
 		$("input[name='submit']").click(function() {
 			var seq = $("#sequence").val();
-			$.get("Gadgets!translate", {
-				"context" : seq,"userId":userId
-			}, function(result) {
+			$.get("<%=request.getContextPath()%>/RunServlet", {"context" : seq,"type" : 'translate'}, function(result) {
 				$("#result").val(result);
 			});
 		});

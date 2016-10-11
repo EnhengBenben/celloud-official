@@ -32,17 +32,21 @@ public class RunServlet extends HttpServlet {
 		String result = null;
 		String command = null;
 		if ("reversal".equals(type)) {
-			command = "perl " + perlPath + "/reverse_seq.pl  " + filePath;
+			command = "perl " + perlPath + "/reverse_seq.pl " + filePath;
 			result = PerlUtils.executeGadgetsPerl(command);
 		} else if ("seqsub".equals(type)) {
 			String start = request.getParameter("start");
 			String end = request.getParameter("end");
-			command = "perl " + perlPath + "/cut_seq.pl  " + filePath + " " + start + " " + end;
+			command = "perl " + perlPath + "/cut_seq.pl " + filePath + " " + start + " " + end;
 			result = PerlUtils.executeGadgetsPerl(command);
+		} else if ("translate".equals(type)) {
+			String outFile = GadgetsConstants.FILEPATH + "/" + new Date().getTime() + "_out.fasta";
+			command = "perl " + perlPath + "/cds2aa.pl " + filePath + " --output " + outFile;
+			PerlUtils.executeGadgetsPerl(command);
+			result = FileTools.readFileToString(outFile);
 		} else {
 			result = "不能识别的运行参数，请检查后再提交！";
 		}
-		result = PerlUtils.executeGadgetsPerl(command);
 		response.getWriter().append(result);
 	}
 

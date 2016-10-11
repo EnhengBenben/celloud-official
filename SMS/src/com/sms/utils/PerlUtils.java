@@ -19,6 +19,7 @@ public class PerlUtils {
 	 * @return
 	 */
 	public static String executeGadgetsPerl(String command) {
+		System.out.println("执行命令：" + command);
 		Runtime r = Runtime.getRuntime();
 		StringBuffer result = new StringBuffer();
 		try {
