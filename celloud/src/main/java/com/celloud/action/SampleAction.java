@@ -234,20 +234,20 @@ public class SampleAction {
 
     @RequestMapping("addLibrary")
     @ResponseBody
-    public Integer addLibrary(String libraryName, String sindex,
+    public SampleStorage addLibrary(String libraryName, String sindex,
             Integer[] sampleIds) {
         List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null
                 : Arrays.asList(sampleIds);
-        Integer ssId = sampleService.addStorage(libraryName, sindex, list,
+        SampleStorage ss = sampleService.addStorage(libraryName, sindex, list,
                 ConstantsData.getLoginUserId());
         List<String> header = Arrays.asList("文库编号", "文库index", "样品编号", "样品类型",
                 "建库时间", "样本index");
         ExcelUtil.listToExcel(header,
                 sampleService.sampleListInStorage(
-                        ConstantsData.getLoginUserId(), ssId),
-                PropertiesUtil.experimentExcelPath + libraryName + ssId
+                        ConstantsData.getLoginUserId(), ss.getId()),
+                PropertiesUtil.experimentExcelPath + libraryName + ss
                         + ".xls");
-        return ssId;
+        return ss;
     }
 
     @RequestMapping("getSampleStorages")

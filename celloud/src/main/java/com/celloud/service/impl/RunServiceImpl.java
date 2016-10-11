@@ -33,6 +33,7 @@ import com.celloud.service.ExpensesService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.RunService;
+import com.celloud.service.SampleService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.AppSubmitUtil;
 import com.celloud.utils.DataKeyListToFile;
@@ -55,6 +56,8 @@ public class RunServiceImpl implements RunService {
 	private ExpensesService expenseService;
 	@Resource
 	private DataService dataService;
+    @Resource
+    private SampleService sampleService;
 
 	@Override
 	public Map<String, String> getDataListFile(Integer appId, List<DataFile> dataList) {
@@ -247,6 +250,7 @@ public class RunServiceImpl implements RunService {
 			appId = 113;
 		}
 		String pubName = "";
+
 		if (fileFormat == FileFormat.FQ || originalName.contains(".txt") || originalName.contains(".lis")) {
 			Boolean isR1 = false;
 			if (originalName.contains("R1")) {
