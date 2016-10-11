@@ -5,9 +5,9 @@
 			page : 1,
 			pageSize : 10
 		};
+		$scope.checkedNotices = [];
 		$scope.noticeRemoveState = false;
 		$scope.noticeReadState = false;
-		var checkedNotices = [];
 		$scope.changePage = function(page, pageSize) {
 			pages = {
 				page : page,
@@ -18,18 +18,16 @@
 				pageSize : pageSize
 			}, function(data) {
 				$scope.notices = data;
-				checkedNotices = [];
-				$scope.chkall = false;
-				$scope.checkNoticeAllState = false;
+				$scope.checkedNotices = [];
 				changeNoticeState();
 			});
 		};
 		$scope.changePage(pages.page,pages.pageSize);
 		$scope.readNotices = function() {
 			var noticeIds = [];
-			for (i in checkedNotices) {
+			for (var i in $scope.checkedNotices) {
 				if (checkedNotices[i].readState == 0) {
-					noticeIds.push(checkedNotices[i].noticeId);
+					noticeIds.push($scope.checkedNotices[i].noticeId);
 				}
 			}
 			noticeService.read({
@@ -45,8 +43,8 @@
 		};
 		$scope.deleteNotice = function() {
 			var noticeIds = [];
-			for (i in checkedNotices) {
-				noticeIds.push(checkedNotices[i].noticeId);
+			for (var i in $scope.checkedNotices) {
+				noticeIds.push($scope.checkedNotices[i].noticeId);
 			}
 			noticeService.deleteNotice({
 				noticeIds : noticeIds
@@ -54,54 +52,37 @@
 				reload(1, null);
 			});
 		};
-		$scope.checkNoticeAll = function(state) {
-			if (state) {
-				$scope.chkall = true;
-				checkedNotices = $scope.notices.datas;
-			} else {
-				$scope.chkall = false;
-				checkedNotices = [];
-			}
+		$scope.checkNoticeAll = function() {
+			$scope.checkedNotices = $scope.checkNoticeAllState?$scope.notices.datas:[];
 			changeNoticeState();
 		}
-		$scope.checkNoticeOne = function(notice, state) {
-			if (state) {
-				checkedNotices.push(notice);
-			} else {
-				checkedNotices = removeNotice(checkedNotices, notice);
+		$scope.checkNoticeOne = function(notice) {
+			var index = $scope.checkedNotices.indexOf(notice);
+			if(index == -1){
+				$scope.checkedNotices.push(notice);	
+			}else{
+				$scope.checkedNotices.splice(index, 1);
 			}
 			changeNoticeState();
 		}
 		var changeNoticeState = function() {
-			$scope.noticeRemoveState = checkedNotices.length > 0;
+			$scope.removeState = $scope.checkedNotices.length > 0;
 			var flag = false;
-			for (i in checkedNotices) {
-				if (checkedNotices[i].readState == 0) {
+			for (var i in $scope.checkedNotices) {
+				if ($scope.checkedNotices[i].readState == 0) {
 					flag = true;
 					break;
 				}
 			}
-			$scope.noticeReadState = flag;
-		}
-		var removeNotice = function(notices, notice) {
-			var index = -1;
-			for (i in notices) {
-				if (notices[i].noticeId == notice.noticeId) {
-					index = i;
-					break;
-				}
-			}
-			if (index != -1) {
-				notices.splice(index, 1);
-			}
-			return notices;
+			$scope.readState = flag;
+			$scope.checkNoticeAllState = $scope.notices.datas.length==$scope.checkedNotices.length;
 		}
 		var reload = function(page, pageSize) {
 			$scope.notices = noticeService.listNotices({
 				currentPage : page || pages.page,
 				pageSize : pageSize || pages.pageSize
 			});
-			checkedNotices = [];
+			$scope.checkedNotices = [];
 			$rootScope.notices = commonService.notices.get();
 			changeNoticeState();
 		}

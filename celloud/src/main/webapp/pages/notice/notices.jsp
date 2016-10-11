@@ -30,7 +30,7 @@
 				<tr>
 					<th class="th-checkoutbox">
 						<label class="checkbox-lable">
-							<input class="checkbox" ng-model="checkNoticeAllState" ng-change="checkNoticeAll(checkNoticeAllState)" type="checkbox">
+							<input class="checkbox" ng-model="checkNoticeAllState" ng-checked="{{checkNoticeAllState}}" ng-change="checkNoticeAll()" type="checkbox">
 							<span class="info"></span>
 						</label>
 					</th>
@@ -44,7 +44,7 @@
 				<tr ng-repeat="message in notices.datas">
 					<td>
 						<label class="checkbox-lable">
-							<input class="checkbox" type="checkbox" ng-model="chk" ng-checked="chkall" ng-change="checkNoticeOne(message,chk)" name="noticeIds" value="{{message.noticeId }}">
+							<input class="checkbox" type="checkbox" ng-model="chk" ng-checked="checkedNotices.indexOf(message)>-1" ng-change="checkNoticeOne(message)" name="noticeIds" value="{{message.noticeId }}">
 							<span class="info"></span>
 						</label>
 					</td>
