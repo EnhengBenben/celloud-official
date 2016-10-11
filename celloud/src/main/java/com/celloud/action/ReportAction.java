@@ -200,6 +200,7 @@ public class ReportAction {
             @RequestParam(name = "batch", required = false) String batch,
             @RequestParam(name = "period", required = false) Integer period, String beginDate,
             String endDate){
+        log.info("查看data报告列表");
         Page pager = new Page(page,size);
         Integer userId = ConstantsData.getLoginUserId();
         PageList<Task> plist = taskService.findAllTasks(pager, userId,
