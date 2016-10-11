@@ -13,10 +13,10 @@
 		<div class="table-opera">
 			<div class="table-opera-content">
 				<div class="only-btn">
-					<button class="btn -low" ng-click="readNotices()" ng-disabled="!noticeReadState">
+					<button class="btn -low" ng-click="readNotices()" ng-disabled="!readState">
 						<i class="fa fa-folder-open" aria-hidden="true"></i>已读
 					</button>
-					<button class="btn -low" ng-click="deleteNotice()" ng-disabled="!noticeRemoveState">
+					<button class="btn -low" ng-click="deleteNotice()" ng-disabled="!removeState">
 						<i class="fa fa-times" aria-hidden="true"></i>删除
 					</button>
 					<button class="btn -low" ng-click="readAllNotices()">
@@ -30,7 +30,7 @@
 				<tr>
 					<th class="th-checkoutbox">
 						<label class="checkbox-lable">
-							<input class="checkbox" ng-model="checkNoticeAllState" ng-change="checkNoticeAll(checkNoticeAllState)" type="checkbox">
+							<input class="checkbox" ng-model="checkNoticeAllState" ng-checked="{{checkNoticeAllState}}" ng-change="checkNoticeAll()" type="checkbox">
 							<span class="info"></span>
 						</label>
 					</th>
@@ -44,7 +44,7 @@
 				<tr ng-repeat="message in notices.datas">
 					<td>
 						<label class="checkbox-lable">
-							<input class="checkbox" type="checkbox" ng-model="chk" ng-checked="chkall" ng-change="checkNoticeOne(message,chk)" name="noticeIds" value="{{message.noticeId }}">
+							<input class="checkbox" type="checkbox" ng-model="chk" ng-checked="checkedNotices.indexOf(message)>-1" ng-change="checkNoticeOne(message)" name="noticeIds" value="{{message.noticeId }}">
 							<span class="info"></span>
 						</label>
 					</td>

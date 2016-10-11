@@ -5,14 +5,14 @@
 			page : 1,
 			pageSize : 10
 		};
+		$scope.checkedNotices = [];
 		$scope.removeState = false;
 		$scope.readState = false;
-		var checkedNotices = [];
 		$scope.read = function() {
 			var noticeIds = [];
-			for (i in checkedNotices) {
-				if (checkedNotices[i].readState == 0) {
-					noticeIds.push(checkedNotices[i].noticeId);
+			for (var i in $scope.checkedNotices) {
+				if ($scope.checkedNotices[i].readState == 0) {
+					noticeIds.push($scope.checkedNotices[i].noticeId);
 				}
 			}
 			noticeService.read({
@@ -31,9 +31,7 @@
 				pageSize : pageSize
 			}, function(data) {
 				$scope.messages = data;
-				$scope.chkall = false;
-				$scope.checkAllState = false;
-				checkedNotices = [];
+				$scope.checkedNotices = [];
 				changeState();
 			});
 		};
@@ -50,8 +48,8 @@
 		};
 		$scope.remove = function() {
 			var noticeIds = [];
-			for (i in checkedNotices) {
-				noticeIds.push(checkedNotices[i].noticeId);
+			for (var i in $scope.checkedNotices) {
+				noticeIds.push($scope.checkedNotices[i].noticeId);
 			}
 			noticeService.deleteNotice({
 				noticeIds : noticeIds
@@ -59,56 +57,41 @@
 				reload(1, null);
 			});
 		};
-		$scope.checkAll = function(state) {
-			if (state) {
-				$scope.chkall = true;
-				checkedNotices = $scope.messages.datas;
-			} else {
-				$scope.chkall = false;
-				checkedNotices = [];
-			}
+		$scope.checkAll = function() {
+			$scope.checkedNotices = $scope.checkAllState?$scope.messages.datas:[];
 			changeState();
 		}
-		$scope.checkOne = function(notice, state) {
-			if (state) {
-				checkedNotices.push(notice);
-			} else {
-				checkedNotices = removeNotice(checkedNotices, notice);
+		$scope.checkOne = function(notice) {
+			var index = $scope.checkedNotices.indexOf(notice);
+			if(index == -1){
+				$scope.checkedNotices.push(notice);	
+			}else{
+				$scope.checkedNotices.splice(index, 1);
 			}
 			changeState();
 		}
 		var changeState = function() {
-			$scope.removeState = checkedNotices.length > 0;
+			$scope.removeState = $scope.checkedNotices.length > 0;
 			var flag = false;
-			for (i in checkedNotices) {
-				if (checkedNotices[i].readState == 0) {
+			for (var i in $scope.checkedNotices) {
+				if ($scope.checkedNotices[i].readState == 0) {
 					flag = true;
 					break;
 				}
 			}
 			$scope.readState = flag;
-		}
-		var removeNotice = function(notices, notice) {
-			var index = -1;
-			for (i in notices) {
-				if (notices[i].noticeId == notice.noticeId) {
-					index = i;
-					break;
-				}
-			}
-			if (index != -1) {
-				notices.splice(index, 1);
-			}
-			return notices;
+			$scope.checkAllState = $scope.messages.datas.length==$scope.checkedNotices.length;
 		}
 		var reload = function(page, pageSize) {
-			$scope.messages = noticeService.listMessage({
+			noticeService.listMessage({
 				currentPage : page || pages.page,
 				pageSize : pageSize || pages.pageSize
+			},function(data){
+				$scope.messages = data;
+				$scope.checkedNotices = [];
+				changeState();
 			});
-			checkedNotices = [];
 			$rootScope.messages = commonService.messages.get();
-			changeState();
 		}
 	});
 	celloudApp
