@@ -14,6 +14,7 @@ import com.celloud.service.BoxApiService;
 import com.celloud.service.DataService;
 import com.celloud.service.RunService;
 import com.celloud.utils.CheckFileTypeUtil;
+import com.celloud.utils.MD5Util;
 import com.celloud.utils.OSSUtils;
 
 @Service
@@ -49,8 +50,8 @@ public class BoxApiServiceImpl implements BoxApiService {
 		}
 		int fileFormat = checkFileType.checkFileType(newName, folderByDay);
 		// TODO fileFormat 是空
-		dataService.updateFileInfo(fileId, file.getDataKey(), newName, null, null, folderByDay, batch, fileFormat,
-				null);
+		String md5 = MD5Util.getFileMD5(path);
+		dataService.updateFileInfo(fileId, file.getDataKey(), path, batch, fileFormat, md5, null, null);
 		if (tagId != null && tagId.intValue() == 1) {
 			// TODO 保险起见，这里还应该校验用户是否已经添加app
 			String result = runService.bsiCheckRun(batch, fileId, file.getDataKey(), needSplit, file.getFileName(),
