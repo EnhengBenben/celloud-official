@@ -160,9 +160,12 @@ public class SampleAction {
     @ActionLog(value = "扫码样本入库", button = "扫码入库")
     @RequestMapping("toScanStorage")
     @ResponseBody
-    public String toScanStorage(String sampleName) {
-        return changeType(sampleName, SampleExperState.SAMPLING,
+    public Map<String, String> toScanStorage(String sampleName) {
+        Map<String, String> map = new HashMap<>();
+        String result = changeType(sampleName, SampleExperState.SAMPLING,
                 SampleExperState.SCAN_STORAGE);
+        map.put("result", result);
+        return map;
     }
 
     @ActionLog(value = "获取提DNA的样本列表", button = "提DNA")
