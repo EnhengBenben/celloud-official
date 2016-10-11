@@ -83,13 +83,15 @@
 			$scope.checkAllState = $scope.messages.datas.length==$scope.checkedNotices.length;
 		}
 		var reload = function(page, pageSize) {
-			$scope.messages = noticeService.listMessage({
+			noticeService.listMessage({
 				currentPage : page || pages.page,
 				pageSize : pageSize || pages.pageSize
+			},function(data){
+				$scope.messages = data;
+				$scope.checkedNotices = [];
+				changeState();
 			});
-			checkedNotices = [];
 			$rootScope.messages = commonService.messages.get();
-			changeState();
 		}
 	});
 	celloudApp

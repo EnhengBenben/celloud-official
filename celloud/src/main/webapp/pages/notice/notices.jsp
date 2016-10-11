@@ -13,10 +13,10 @@
 		<div class="table-opera">
 			<div class="table-opera-content">
 				<div class="only-btn">
-					<button class="btn -low" ng-click="readNotices()" ng-disabled="!noticeReadState">
+					<button class="btn -low" ng-click="readNotices()" ng-disabled="!readState">
 						<i class="fa fa-folder-open" aria-hidden="true"></i>已读
 					</button>
-					<button class="btn -low" ng-click="deleteNotice()" ng-disabled="!noticeRemoveState">
+					<button class="btn -low" ng-click="deleteNotice()" ng-disabled="!removeState">
 						<i class="fa fa-times" aria-hidden="true"></i>删除
 					</button>
 					<button class="btn -low" ng-click="readAllNotices()">

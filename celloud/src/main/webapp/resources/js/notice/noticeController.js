@@ -26,7 +26,7 @@
 		$scope.readNotices = function() {
 			var noticeIds = [];
 			for (var i in $scope.checkedNotices) {
-				if (checkedNotices[i].readState == 0) {
+				if ($scope.checkedNotices[i].readState == 0) {
 					noticeIds.push($scope.checkedNotices[i].noticeId);
 				}
 			}
@@ -78,13 +78,15 @@
 			$scope.checkNoticeAllState = $scope.notices.datas.length==$scope.checkedNotices.length;
 		}
 		var reload = function(page, pageSize) {
-			$scope.notices = noticeService.listNotices({
+			noticeService.listNotices({
 				currentPage : page || pages.page,
 				pageSize : pageSize || pages.pageSize
+			},function(data){
+				$scope.notices = data;
+				$scope.checkedNotices = [];
+				changeNoticeState();
 			});
-			$scope.checkedNotices = [];
 			$rootScope.notices = commonService.notices.get();
-			changeNoticeState();
 		}
 	});
 })();
