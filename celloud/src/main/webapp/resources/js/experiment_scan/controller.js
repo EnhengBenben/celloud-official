@@ -265,6 +265,7 @@
       remark_bak = remark;
     }
     $scope.resetSampleRemark = function() {
+      alert(remark_bak);
       $scope.remark = remark_bak;
     };
     
