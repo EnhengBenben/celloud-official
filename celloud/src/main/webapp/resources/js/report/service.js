@@ -42,13 +42,13 @@
   celloudApp.service("dataReportService", function($resource,$http){
     var self = this;
     self.getReports = function(){
-      return $resource("report/dataReportPages").get();
+      return $resource("report/dataReportPages?v="+new Date().getTime()).get();
     }
     self.getReportsByParams = function(currentPage,pageSize,condition,beginDate,endDate,batch,tagId,period,sort){
-      return $http.get("report/dataReportPages",{params:{page:currentPage,size:pageSize,condition:condition,beginDate:beginDate,endDate:endDate,tagId:tagId,batch:batch,period:period,sort:sort}});
+      return $http.get("report/dataReportPages?v="+new Date().getTime(),{params:{page:currentPage,size:pageSize,condition:condition,beginDate:beginDate,endDate:endDate,tagId:tagId,batch:batch,period:period,sort:sort}});
     }
     self.getSearchInfos = function(){
-      return $resource("report/reportSearchInfo").get();
+      return $resource("report/reportSearchInfo?v="+new Date().getTime()).get();
     }
     self.getDataReportInfo = function(url, dataKey, projectId, appId){
     	return $http({method:"POST",url:url,data:$.param({dataKey:dataKey,projectId:projectId,appId:appId}),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
