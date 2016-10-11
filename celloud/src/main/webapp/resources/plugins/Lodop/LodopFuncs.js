@@ -124,3 +124,21 @@ function getLodop(oOBJECT,oEMBED){
     } catch(err) {alert("getLodop出错:"+err);};
 };
 
+function printQRCode(sampleName,date){
+  var LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
+  LODOP.PRINT_INIT("打印提取DNA二维码takenDNAS");
+  LODOP.ADD_PRINT_BARCODE(0, 7, 20, 20, 'QRCode', sampleName);
+  LODOP.NEWPAGEA();
+  LODOP.ADD_PRINT_BARCODE(2, 7, 20, 20, 'QRCode', sampleName);
+  LODOP.ADD_PRINT_TEXTA('sname',25,30,180,8,sampleName);
+  LODOP.SET_PRINT_STYLEA('sname', 'FontSize', 6);
+  LODOP.SET_PRINT_STYLEA('sname', 'Angle', -90);
+  LODOP.ADD_PRINT_TEXTA('uname',25,22,180,8,window.username);
+  LODOP.SET_PRINT_STYLEA('uname', 'FontSize', 6);
+  LODOP.SET_PRINT_STYLEA('uname', 'Angle', -90);
+  LODOP.ADD_PRINT_TEXTA('date',25,14,180,8,date);
+  LODOP.SET_PRINT_STYLEA('date', 'FontSize', 6);
+  LODOP.SET_PRINT_STYLEA('date', 'Angle', -90);
+  LODOP.SET_PRINT_PAGESIZE(1, 90, 380, "");
+  LODOP.PRINT();
+}

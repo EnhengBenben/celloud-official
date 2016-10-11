@@ -82,6 +82,7 @@
   <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.3.4"></script>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
+	  window.username = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUsername() %>';
   </script>
 </body>
 </html>

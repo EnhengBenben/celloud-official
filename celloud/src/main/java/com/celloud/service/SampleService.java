@@ -185,7 +185,7 @@ public interface SampleService {
      * @author leamo
      * @date 2016年9月7日 上午3:00:26
      */
-    public Integer addStorage(String name, String index,
+    public SampleStorage addStorage(String name, String index,
             List<Integer> sampleIds, Integer userId);
 
     public PageList<SampleStorage> getSampleStorages(Page page, Integer userId);

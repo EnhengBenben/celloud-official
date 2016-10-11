@@ -67,9 +67,9 @@
     		return false;
     	}
       scanStorageService.scanStorage($scope.sampleName).success(function(data){
-        if(data == "0"){
+        if(data.result == "0"){
           $.alert("系统中无此样本信息，请确认是已采样样本！")
-        }else if(data.length > 2){
+        }else if(data.result.length > 2){
           $scope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
         }else {
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！")
@@ -124,22 +124,8 @@
           if(data.result == "0"){
             $.alert("此样本未入库");
           }else if(data.result.length > 2){
-            var LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
-            LODOP.PRINT_INIT("打印提取DNA二维码takenDNAS");
-            LODOP.ADD_PRINT_BARCODE(0, 7, 20, 20, 'QRCode', $scope.sampleName);
-            LODOP.NEWPAGEA();
-            LODOP.ADD_PRINT_BARCODE(2, 7, 20, 20, 'QRCode', $scope.sampleName);
-            LODOP.ADD_PRINT_TEXTA('sname',25,30,180,8,$scope.sampleName);
-            LODOP.SET_PRINT_STYLEA('sname', 'FontSize', 6);
-            LODOP.SET_PRINT_STYLEA('sname', 'Angle', -90);
-            LODOP.ADD_PRINT_TEXTA('uname',25,22,180,8,window.username);
-            LODOP.SET_PRINT_STYLEA('uname', 'FontSize', 6);
-            LODOP.SET_PRINT_STYLEA('uname', 'Angle', -90);
-            LODOP.ADD_PRINT_TEXTA('date',25,14,180,8,data.result);
-            LODOP.SET_PRINT_STYLEA('date', 'FontSize', 6);
-            LODOP.SET_PRINT_STYLEA('date', 'Angle', -90);
-            LODOP.SET_PRINT_PAGESIZE(1, 90, 380, "");
-            LODOP.PRINT();
+            //打印二维码
+            printQRCode($scope.sampleName,data.result);
             $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
           }else {
             $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
@@ -205,7 +191,10 @@
     
     $scope.addLibrary = function(){
       buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
-        if(data > 0){
+        alert(data);
+        if(data != null && data != undefined){
+          //打印二维码
+          printQRCode(data.storageName,data.createDate);
           $scope.infos = buidLibraryService.infos();
           $.alert("建库成功！");
         }else {
