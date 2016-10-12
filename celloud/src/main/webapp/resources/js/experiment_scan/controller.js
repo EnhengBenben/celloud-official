@@ -258,15 +258,13 @@
   });
   
   celloudApp.controller("editSampleController",function($scope, scanStorageService, tokenDNAService){
-    var remark_bak;
     $scope.toEditRemark = function(id,remark){
       $scope.sampleId = id;
       $scope.remark = remark;
-      remark_bak = remark;
+      $scope.remark_bak = remark;
     }
     $scope.resetSampleRemark = function() {
-      alert(remark_bak);
-      $scope.remark = remark_bak;
+      $scope.remark = angular.copy($scope.remark_bak);
     };
     
     $scope.editRemark = function(){

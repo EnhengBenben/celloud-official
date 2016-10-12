@@ -72,7 +72,7 @@
 		               </div>
 		               <div class="form-group form-btns">
 		                   <div class="text-center">
-		                       <button type="reset" class="btn btn-cancel" ng-click="resetSampleRemark()">重置</button>
+		                       <button type="button" class="btn btn-cancel" ng-click="resetSampleRemark()">重置</button>
 		                       <button type="submit" class="btn" ng-disabled="sampleForm.$invalid">提交</button>
 		                   </div>
 		               </div>
