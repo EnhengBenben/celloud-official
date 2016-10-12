@@ -1,0 +1,2 @@
+SMS项目为celloud平台提供JS软件和小工具软件支持。
+小工具软件包括：reversal、seqsub、translate
