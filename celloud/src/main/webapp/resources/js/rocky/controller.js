@@ -9,6 +9,7 @@
 			$(".tips").addClass('hide');
 			$("#batch-info-input").val('');
 			$("#upload-tip-one").removeClass("hide");
+			$scope.batch = "";
 		},
 		$scope.stepTwo = function() {
 			$(".steps").addClass("hide");
