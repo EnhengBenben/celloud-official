@@ -3609,6 +3609,16 @@ public class ReportAction {
             }
         }
 
+        if (StringUtils.isBlank(beginDate)) {
+            beginDate = null;
+        }
+        if (StringUtils.isBlank(endDate)) {
+            endDate = null;
+        }
+        if (StringUtils.isBlank(sample)) {
+            sample = null;
+        }
+
         PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, queryBatches,
                 queryPeriods,
                 beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginDate + " 00:00:00"),

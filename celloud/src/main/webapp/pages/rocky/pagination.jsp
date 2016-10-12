@@ -4,7 +4,7 @@
 <div class="pagination text-center" ng-show="dataList.datas.length > 0">
 	<ul class="checkboxul pull-left">
 		<li class="checkbox-li">
-			<label class="checkbox-lable"> <input class="checkbox" type="checkbox" name="demo-checkbox1"> <span class="info"></span>
+			<label class="checkbox-lable"> <input class="checkbox" type="checkbox" name="demo-checkbox1"> <span class="info" style="top:12%;"></span>
 			</label>
 		</li>
 		<li>全选</li>

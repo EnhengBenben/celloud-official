@@ -133,14 +133,25 @@
 	});
 	celloudApp.controller("rockyReportController", function($scope, rockyReportService) {
 		
-		$scope.showReport = function(dataKey,projectId, appId ) {
-//			$("#common-menu-right").html("");
-//			var url = CONTEXT_PATH + "/report/rocky/data/report";
-//			$("#container").load(url, {
-//				dataKey : dataKey,
-//				appId : appId,
-//				projectId : projectId
-//			});
+		$scope.showReport = function(dataKey,projectId,appId) {
+			var url = CONTEXT_PATH + "/report/rocky/data/report";
+			$.get(url,{
+				dataKey : dataKey,
+				appId : appId,
+				projectId : projectId
+			},function(data){
+				$("#common-container").html(data);
+			});
+		}
+		
+		/**
+		 * 样本编号模糊搜索
+		 */
+		$scope.reportSampleFilter = function($event){
+			if ($event.keyCode == 13) {
+				$scope.params.page = 1;
+				$scope.pageQuery();
+			}
 		}
 		
 		$scope.batchMore = function(){
@@ -243,7 +254,10 @@
 			}
 		}
 		$scope.reportDateSearch = function(){
-			$scope.pageQuery({beginDate :$("#report-begindate-search").val(),endDate:$("#report-enddate-search").val()});
+			$scope.params.beginDate = $("#report-begindate-search").val();
+			$scope.params.endDate = $("#report-enddate-search").val();
+			$scope.params.page = 1;
+			$scope.pageQuery();
 		}
 		/**
 		 * 点击单个标签时的搜索
@@ -345,18 +359,6 @@
 //			var id = $(this).attr("id");
 //			var sort = id.split('-');
 //			$scope.pageQuery({sidx : sort[1],sord : sort[2] || 'desc'});
-//		});
-		/**
-		 * 样本编号模糊搜索
-		 */
-//		$(document).on("keyup", "#report-sample-filter", function(event) {
-//			if (event.keyCode == 13) {
-//				$("#report-condition-input").val('');
-//				$scope.pageQuery({sample : $(this).val(),condition:null}, function() {
-//					var val = $("#report-sample-filter").val();
-//					$("#report-sample-filter").focus().val(val);
-//				});
-//			}
 //		});
 		/**
 		 * 右上角的搜索
