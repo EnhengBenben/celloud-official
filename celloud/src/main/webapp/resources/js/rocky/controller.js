@@ -251,6 +251,7 @@
 		$scope.reportBatchSearch = function(batchId){
 			if(!$("#batch-sl").hasClass("select-more")){
 				$scope.params.batches = $("#" + batchId).next().find("span").text();
+				$scope.params.page = 1;
 				$scope.pageQuery();
 				$("#selected-batch span").html($("#" + batchId).next().find("span").text());
 				$("#selected-batch").removeClass("hide");
@@ -267,6 +268,7 @@
 	        $("#batch-more").attr("disabled",false);
 	        $("#batch-lists").find(".multisl-btns").addClass("hide");
 	        $scope.params.batches = "";
+	        $scope.params.page = 1;
 	        $scope.pageQuery();
 		}
 		/**
@@ -275,6 +277,7 @@
 		$scope.reportPeriodSearch = function(periodId){
 			if(!$("#period-sl").hasClass("select-more")){
 				$scope.params.periods = $("#" + periodId).next().find("input").val();
+				$scope.params.page = 1;
 				$scope.pageQuery();
 				$("#selected-period span").html($("#" + periodId).next().find("span").html());
 				$("#selected-period").removeClass("hide");
@@ -288,6 +291,7 @@
 			$("#selected-period").addClass("hide");
 			$("#to-sl-period").removeClass("hide");
 			$scope.params.periods = "";
+			$scope.params.page = 1;
 			$scope.pageQuery();
 		}
 		/**
@@ -301,6 +305,7 @@
 				show_val.push($(this).next().text());
 			});
 			$scope.params.batches = batches.substring(0,batches.length);
+			$scope.params.page = 1;
 			$scope.pageQuery();
 			$("#selected-batch span").html(show_val.toString());
 			$("#selected-batch").removeClass("hide");
@@ -322,6 +327,7 @@
 				show_val.push($(this).next().find("span").html());
 			});
 			$scope.params.periods = periods.substring(0,periods.length);
+			$scope.params.page = 1;
 			$scope.pageQuery();
 			$("#selected-period span").html(show_val.toString());
 			$("#selected-period").removeClass("hide");
@@ -339,12 +345,6 @@
 //			var id = $(this).attr("id");
 //			var sort = id.split('-');
 //			$scope.pageQuery({sidx : sort[1],sord : sort[2] || 'desc'});
-//		});
-		/**
-		 * 改变分页大小
-		 */
-//		$(document).on("change", "#rocky_report_page #page-size-sel", function() {
-//			$scope.pageQuery({size : $(this).val()});
 //		});
 		/**
 		 * 样本编号模糊搜索
@@ -372,11 +372,22 @@
 //		$(document).on("click", "#report-condition-find", function(event) {
 //			$scope.pageQuery({condition : $("#report-condition-input").val(),sample:null});
 //		});
+		
+		/**
+		 * 改变分页大小
+		 */
+		$scope.changePageSize = function(){
+			$scope.params.size = $("#rocky_report_page #page-size-sel").val();
+			$scope.params.page = 1;
+			$scope.pageQuery();
+		};
+		
 		/**
 		 * 分页按钮
 		 */
-		$scope.paginationBtn = function(){
-			$scope.pageQuery({page : $(this).data("page")});
+		$scope.paginationBtn = function(page){
+			$scope.params.page = page;
+			$scope.pageQuery();
 		}
 		
 		$scope.sort = {};

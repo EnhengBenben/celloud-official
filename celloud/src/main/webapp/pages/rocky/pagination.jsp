@@ -21,7 +21,7 @@
 			<span>共&nbsp;&nbsp;{{dataList.page.rowCount}}&nbsp;&nbsp;条</span>
 		</li>
 		<li>
-			每页 <select id="page-size-sel">
+			每页 <select id="page-size-sel" ng-model="rockyPageSize" ng-change="changePageSize()">
 				<option value="10" ng-selected="dataList.page.pageSize == 10">10</option>
 				<option value="20" ng-selected="dataList.page.pageSize == 20">20</option>
 				<option value="30" ng-selected="dataList.page.pageSize == 30">30</option>
@@ -35,9 +35,9 @@
 		<li>
 			<a id="prev-page" class="ends" data-click="pagination-btn" ng-click="paginationBtn(dataList.page.currentPage>1?dataList.page.currentPage-1:1)" data-page="{{dataList.page.currentPage>1?dataList.page.currentPage-1:1}}" href="javascript:void(0);">&lt;&lt;</a>
 		</li>
-			<li ng-if="dataList.page.totalPage <= 7" ng-repeat="step in dataList.page.totalPage" ng-class="{active: step == dataList.page.currentPage}">
-	            <a ng-if="step == dataList.page.currentPage" href="javascript:void(0);">{{step}}</a>
-	            <a ng-if="step != dataList.page.currentPage" name="pagination-info" data-click="pagination-btn" ng-click="paginationBtn(step)" data-page="{{step}}" href="javascript:void(0)">{{step}}</a>
+			<li ng-if="dataList.page.totalPage <= 7" ng-repeat="step in [1,2,3,4,5,6,7]" ng-class="{active: step == dataList.page.currentPage}">
+	            <a ng-if="step == dataList.page.currentPage && step <= dataList.page.totalPage" href="javascript:void(0);">{{step}}</a>
+	            <a ng-if="step != dataList.page.currentPage && step <= dataList.page.totalPage" name="pagination-info" data-click="pagination-btn" ng-click="paginationBtn(step)" data-page="{{step}}" href="javascript:void(0)">{{step}}</a>
 	        </li>
 				
 			<li ng-if="dataList.page.currentPage <= 4 && dataList.page.totalPage > 7" ng-repeat="step in [1,2,3,4,5]" ng-class="{active: step == dataList.page.currentPage}">
