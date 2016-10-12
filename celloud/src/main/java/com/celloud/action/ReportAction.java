@@ -3578,8 +3578,7 @@ public class ReportAction {
     @ResponseBody
     public Map<String, Object> rockyReportMain(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size, String sample, String condition,
-            @RequestParam(defaultValue = "updateDate") String sidx, @RequestParam(defaultValue = "desc") String sord,
-            String batches, String periods,
+            String sidx, String sord, String batches, String periods,
             String beginDate, String endDate) throws ParseException {
         Map<String, Object> map = new HashMap<String, Object>();
         Integer userId = ConstantsData.getLoginUserId();
@@ -3617,6 +3616,12 @@ public class ReportAction {
         }
         if (StringUtils.isBlank(sample)) {
             sample = null;
+        }
+        if (StringUtils.isBlank(sidx)) {
+            sidx = "updateDate";
+        }
+        if (StringUtils.isBlank(sord)) {
+            sord = "desc";
         }
 
         PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, queryBatches,

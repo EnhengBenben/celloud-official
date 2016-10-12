@@ -355,11 +355,13 @@
 		/**
 		 * 排序按钮
 		 */
-//		$(document).on("click", "a[id^='reportSortBtn-']", function() {
-//			var id = $(this).attr("id");
-//			var sort = id.split('-');
-//			$scope.pageQuery({sidx : sort[1],sord : sort[2] || 'desc'});
-//		});
+		$scope.reportSortBtn = function(id){
+			var sort = id.split('-');
+			$scope.params.sidx = sort[1];
+			$scope.params.sord = sort[2] || 'desc';
+			$scope.pageQuery();
+		}
+		
 		/**
 		 * 右上角的搜索
 		 */
@@ -413,6 +415,8 @@
 				$scope.dataList = dataMap.pageList;
 				$scope.batchList = dataMap.batchList;
 				$scope.periodMap = dataMap.periodMap;
+				$scope.sidx = dataMap.sidx;
+				$scope.sord = dataMap.sord;
 			});
 		};
 		$scope.curDate = new Date();
