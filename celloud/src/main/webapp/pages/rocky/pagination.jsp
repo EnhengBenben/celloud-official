@@ -33,58 +33,58 @@
 	<ul id="pagination-ul" class="pages pull-right">
 		<!-- 显示prev -->
 		<li>
-			<a id="prev-page" class="ends" data-click="pagination-btn" data-page="{{dataList.page.currentPage>1?dataList.page.currentPage-1:1 }" href="javascript:void(0);">&lt;&lt;</a>
+			<a id="prev-page" class="ends" data-click="pagination-btn" ng-click="paginationBtn(dataList.page.currentPage>1?dataList.page.currentPage-1:1)" data-page="{{dataList.page.currentPage>1?dataList.page.currentPage-1:1}}" href="javascript:void(0);">&lt;&lt;</a>
 		</li>
 			<li ng-if="dataList.page.totalPage <= 7" ng-repeat="step in dataList.page.totalPage" ng-class="{active: step == dataList.page.currentPage}">
 	            <a ng-if="step == dataList.page.currentPage" href="javascript:void(0);">{{step}}</a>
-	            <a ng-if="step != dataList.page.currentPage" name="pagination-info" data-click="pagination-btn" data-page="{{step}}" href="javascript:void(0)">{{step}}</a>
+	            <a ng-if="step != dataList.page.currentPage" name="pagination-info" data-click="pagination-btn" ng-click="paginationBtn(step)" data-page="{{step}}" href="javascript:void(0)">{{step}}</a>
 	        </li>
 				
 			<li ng-if="dataList.page.currentPage <= 4 && dataList.page.totalPage > 7" ng-repeat="step in [1,2,3,4,5]" ng-class="{active: step == dataList.page.currentPage}">
                 <a ng-if="step == dataList.page.currentPage" href="javascript:void(0);">{{step}}</a>
-                <a ng-if="step != dataList.page.currentPage" name="pagination-info" data-click="pagination-btn" data-page="{{step}}" href="javascript:void(0)">{{step}}</a>
+                <a ng-if="step != dataList.page.currentPage" name="pagination-info" data-click="pagination-btn" ng-click="paginationBtn(step)" data-page="{{step}}" href="javascript:void(0)">{{step}}</a>
             </li>
 			<li ng-if="dataList.page.currentPage <= 4 && dataList.page.totalPage > 7">
                 <a href="javascript:void(0)">…</a>
             </li>
             <li ng-if="dataList.page.currentPage <= 4 && dataList.page.totalPage > 7">
-                <a name="pagination-info" data-click="pagination-btn" data-page="{{dataList.page.totalPage}}" href="javascript:void(0)">{{dataList.page.totalPage}}</a>
+                <a name="pagination-info" data-click="pagination-btn" ng-click="paginationBtn(dataList.page.totalPage)" data-page="{{dataList.page.totalPage}}" href="javascript:void(0)">{{dataList.page.totalPage}}</a>
             </li>
 				
 			<li ng-if="dataList.page.currentPage > 4 && dataList.page.currentPage < dataList.page.totalPage - 3 && dataList.page.totalPage > 7">
-                <a name="pagination-info"  data-click="pagination-btn" data-page="1" href="javascript:void(0)">1</a>
+                <a name="pagination-info"  data-click="pagination-btn" ng-click="paginationBtn(1)" data-page="1" href="javascript:void(0)">1</a>
             </li>
             <li ng-if="dataList.page.currentPage > 4 && dataList.page.currentPage < dataList.page.totalPage - 3 && dataList.page.totalPage > 7">
                 <a href="javascript:void(0)">…</a>
             </li>
             <li ng-if="dataList.page.currentPage > 4 && dataList.page.currentPage < dataList.page.totalPage - 3 && dataList.page.totalPage > 7">
-                <a name="pagination-info"  data-click="pagination-btn" data-page="{{dataList.page.currentPage-1}}" href="javascript:void(0)">{{dataList.page.currentPage - 1}}</a>
+                <a name="pagination-info"  data-click="pagination-btn" ng-click="paginationBtn(dataList.page.currentPage - 1)" data-page="{{dataList.page.currentPage-1}}" href="javascript:void(0)">{{dataList.page.currentPage - 1}}</a>
             </li>
             <li class="active" ng-if="dataList.page.currentPage > 4 && dataList.page.currentPage < dataList.page.totalPage - 3 && dataList.page.totalPage > 7">
                 <a href="javascript:void(0);">{{dataList.page.currentPage}}</a>
             </li>
             <li ng-if="dataList.page.currentPage > 4 && dataList.page.currentPage < dataList.page.totalPage - 3 && dataList.page.totalPage > 7">
-                <a name="pagination-info" data-click="pagination-btn" data-page="{{dataList.page.currentPage + 1}}" href="javascript:void(0)">{{dataList.page.currentPage + 1}}</a>
+                <a name="pagination-info" data-click="pagination-btn" ng-click="paginationBtn(dataList.page.currentPage + 1)" data-page="{{dataList.page.currentPage + 1}}" href="javascript:void(0)">{{dataList.page.currentPage + 1}}</a>
             </li>
             <li ng-if="dataList.page.currentPage > 4 && dataList.page.currentPage < dataList.page.totalPage - 3 && dataList.page.totalPage > 7">
                 <a href="javascript:void(0)">…</a>
             </li>
             <li ng-if="dataList.page.currentPage > 4 && dataList.page.currentPage < dataList.page.totalPage - 3 && dataList.page.totalPage > 7">
-                <a name="pagination-info" data-click="pagination-btn" data-page="{{dataList.page.totalPage}}" href="javascript:void(0)">{{dataList.page.totalPage}}</a>
+                <a name="pagination-info" data-click="pagination-btn" ng-click="paginationBtn(dataList.page.totalPage)" data-page="{{dataList.page.totalPage}}" href="javascript:void(0)">{{dataList.page.totalPage}}</a>
             </li>
 				
 			<li ng-if="dataList.page.currentPage >= dataList.page.totalPage - 3 && dataList.page.totalPage > 7">
-                <a name="pagination-info" data-click="pagination-btn" data-page="1"  href="javascript:void(0)">1</a>
+                <a name="pagination-info" data-click="pagination-btn" ng-click="paginationBtn(1)" data-page="1"  href="javascript:void(0)">1</a>
             </li>
             <li ng-if="dataList.page.currentPage >= dataList.page.totalPage - 3 && dataList.page.totalPage > 7">
                 <a href="javascript:void(0)">…</a>
             </li>
 			<li ng-if="dataList.page.currentPage >= dataList.page.totalPage - 3 && dataList.page.totalPage > 7" ng-repeat="step in [1,2,3,4,5]" ng-class="{active: step == dataList.page.currentPage}">
                 <a ng-if="dataList.page.totalPage - 5 + $index == dataList.page.currentPage" href="javascript:void(0);">{{dataList.page.totalPage - 5 + $index}}</a>
-                <a ng-if="dataList.page.totalPage - 5 + $index != dataList.page.currentPage" name="pagination-info" data-click="pagination-btn" data-page="{{dataList.page.totalPage - 5 + $index}}" href="javascript:void(0)">{{dataList.page.totalPage - 5 + $index}}</a>
+                <a ng-if="dataList.page.totalPage - 5 + $index != dataList.page.currentPage" name="pagination-info" data-click="pagination-btn"  ng-click="paginationBtn(dataList.page.totalPage - 5 + $index)" data-page="{{dataList.page.totalPage - 5 + $index}}" href="javascript:void(0)">{{dataList.page.totalPage - 5 + $index}}</a>
             </li>
 		<li>
-			<a id="next-page" class="ends" data-click="pagination-btn" data-page="{{dataList.page.currentPage < dataList.page.totalPage?dataList.page.currentPage+1:dataList.page.totalPage}}" href="javascript:void(0)">&gt;&gt;</a>
+			<a id="next-page" class="ends" data-click="pagination-btn" ng-click="paginationBtn(dataList.page.currentPage < dataList.page.totalPage?dataList.page.currentPage+1:dataList.page.totalPage)" data-page="{{dataList.page.currentPage < dataList.page.totalPage?dataList.page.currentPage+1:dataList.page.totalPage}}" href="javascript:void(0)">&gt;&gt;</a>
 		</li>
 	</ul>
 </div>

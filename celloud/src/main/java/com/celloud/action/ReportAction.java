@@ -3537,8 +3537,8 @@ public class ReportAction {
 	}
 
 	@ActionLog(value = "报告菜单", button = "乳腺癌报告")
-	@RequestMapping("rocky/reportMain")
-	public ModelAndView rockyReportMain(@RequestParam(defaultValue = "1") int page,
+    @RequestMapping("rocky/reportMain_bak")
+    public ModelAndView rockyReportMain_bak(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "20") int size, String sample, String condition,
 			@RequestParam(defaultValue = "updateDate") String sidx, @RequestParam(defaultValue = "desc") String sord,
 			@RequestParam(name = "batches", required = false) ArrayList<String> batches,
@@ -3563,6 +3563,35 @@ public class ReportAction {
 		log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
 		return mv;
 	}
+
+    @ActionLog(value = "报告菜单", button = "乳腺癌报告")
+    @RequestMapping("rocky/reportMain")
+    @ResponseBody
+    public Map<String, Object> rockyReportMain(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String sample, String condition,
+            @RequestParam(defaultValue = "updateDate") String sidx, @RequestParam(defaultValue = "desc") String sord,
+            @RequestParam(name = "batches", required = false) ArrayList<String> batches,
+            @RequestParam(name = "periods", required = false) ArrayList<Integer> periods, String beginDate,
+            String endDate) throws ParseException {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Integer userId = ConstantsData.getLoginUserId();
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
+        List<String> batchList = dataService.getBatchList(userId);
+        Page pager = new Page(page, size);
+        PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, batches, periods,
+                beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginDate + " 00:00:00"),
+                endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate + " 23:59:59"));
+        map.put("pageList", pageList);
+        periodMap.put("uploaded", batchList.size());
+        map.put("periodMap", periodMap);
+        map.put("batchList", batchList);
+        map.put("sampleFilter", sample);
+        map.put("conditionFilter", condition);
+        map.put("sidx", sidx);
+        map.put("sord", sord);
+        log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+        return map;
+    }
 
 	@ActionLog(value = "报告菜单", button = "乳腺癌报告")
 	@RequestMapping("rocky/data/report")

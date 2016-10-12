@@ -374,12 +374,12 @@
 		/**
 		 * 分页按钮
 		 */
-//		$(document).on("click", "#rocky_report_page [data-click='pagination-btn']",function() {
-//			$scope.pageQuery({page : $(this).data("page")});
-//		});
+		$scope.paginationBtn = function(){
+			$scope.pageQuery({page : $(this).data("page")});
+		}
 		$scope.sort = {};
 		$scope.params = {};
-		$scope.pageQuery = function(options, f) {
+		$scope.pageQuery = function(options) {
 			var params = {
 				page : 1,
 				size : $("#rocky_report_page #page-size-sel").val()||20,
