@@ -17,194 +17,420 @@
 
 
 /*按钮*/
-.btn{
-    height: 30px;
-    line-height: 18px;
-    min-width: 66px;
-    padding: 0px 18px;
-    display: inline-block;
-    color: #fff;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    .border-radius(6px);
-    &:link,&:hover,&:active,&:visited{
-       color: #fff;
-       outline: none;
-    }
-    &.-cancel {
-        background-color: @bg-gray;
-    }
-    &.-confirm {
-        background-color: @bg-black;
-        border: none;
-    }
-    &.-lg{
+.rocky{
+    .btn{
         height: 30px;
-        line-height: 28px;
-    }
-}
-
-/*上传*/
-.step-navigation{
-    height: 60px;
-    text-align: center;
-    > .step{
-         display:inline-block;
-    }
-    > .step.not-reached{
-        > .item{
-            color: @font-gray;
-            border: 6px solid @bg-gray;
-        }
-    }
-    > .step-line{
-        width:30%;
-        display:inline-block;
-        > hr{
-            border:2px solid #f7c8da;
-        }
-    }
-    > .step-line.not-reached{
-        > hr{
-            border:2px solid #e3e3e3;
-        }
-    }
-}
-
-/*上传页面步骤*/
-.step{
-    position: relative;
-    height: 42px;
-    > .item {
-        width: 42px;
-        height: 42px;
-        float: left;
-        text-align: center;
-        line-height: 30px;
-        font-size: 14px;
-        border: 6px solid @bg-gray;
-        .border-radius(99em);
-        background-color: #fff;
-    }
-    > .info{
-        height: 42px;
-        padding-left: 10px;
-        line-height: 42px;
-        font-size: 14px;
-        color: @font-gray;
-        float:left;
-    }
-}
-
-/*上传页面*/
-.upload-content{
-    margin: auto;
-    padding: 30px 0px;
-    max-width: 648px;
-    .form-inline{
-        margin-top: 30px;
-        text-align: left;
-        padding-left: 52px;
-    }
-    .form-control{
-        width: 300px;
-    }
-    
-    .upload-container{
-        
-    }
-    .plupload-content {
-        position: relative;
-        margin: 20px 0px 10px 0px;
-        width: 100%;
-        height:120px;
-        text-align: center;
-        border: 1px solid @bg-gray;
-        .border-radius(10px);
-        cursor: pointer;
-        background-color: #fff;
-        
-    }
-    .plupload-content .upload-text{
-        position: absolute;
-        width: 100%;
-        line-height: 20px;
-        font-size: 14px;
-        color: @font-s-gray;
-        margin: 37px auto;
-        .celicon {
-            margin-right: 5px;
-            margin-bottom: -3px;
-        }
-    }
-}
-
-/*表单*/
-.form-inline{
-    >.form-group{
-        > label{
-            margin: 0px;
-            font-size: 14px;
-            font-weight: normal;
-        } 
-        > .form-control {
-            margin-left: 10px;
-            margin-right: 20px;
-            height: 30px;
-            border: 1px solid #dcdcdc;
-            color: #969696;
-        }
-    }
-}
-
-/*报告*/
-.common-container{
-    position: relative;
-    padding: 20px 0px 0px 20px;
-    .content{
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        background-color: @content-gray;
-    }
-    .statistic{
-        font-size: 12px;
-        color: #323232;
-        margin-top: 10px;
-        > span{
-            margin-left: 20px;
-        }
-    }
-}
-.report-content{
-    padding: 30px;
-    text-align: left;
-    h4 {
-        margin: 0px;
-        padding-bottom: 10px;
+        line-height: 18px;
+        min-width: 66px;
+        padding: 0px 18px;
+        display: inline-block;
+        color: #fff;
         font-size: 14px;
         font-weight: bold;
-        text-align: left;
-        color: @font-black;
+        text-align: center;
+        .border-radius(6px);
+        &:link,&:hover,&:active,&:visited{
+           color: #fff;
+           outline: none;
+        }
+        &.-cancel {
+            background-color: @bg-gray;
+        }
+        &.-confirm {
+            background-color: @bg-black;
+            border: none;
+        }
+        &.-lg{
+            height: 30px;
+            line-height: 28px;
+        }
     }
-    .result-div{
-        margin-bottom: 10px;
-        width: 100%;
-        height: 100px;
-        padding: 30px;
-        .border-1(bg-gray);
-        background-color: #fff;
-        .main{
-            font-size: 18px;
-            strong{
-                padding: 0px 4px;
+    .checkbox {
+        background-position: 0 0;
+        display: inline-block;
+        width: 16px;
+        height: 18px;
+        margin-top: 2px;
+        float: left;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .checkbox-un{
+        background-position: -418px -429px;
+    }
+    .checkbox-ed{
+        background-position: -453px -429px;
+    }
+    .checkbox-body {
+        opacity: 0;
+        cursor: pointer;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+    }
+    .celicon {
+        width: 18px;
+        height: 18px;
+        text-indent: -9999em;
+        text-indent: 0;
+        font-size: 0;
+        line-height: 18px;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        background-image: url(../images/icon/global_icon.png);
+        background-repeat: no-repeat;
+        overflow: hidden;
+        &.-sample{
+            width: 24px;
+            background-position: -392px -59px;
+        }
+        &.-upload{
+            background-position: -43px -58px;
+        }
+        &.-data{
+            background-position: -91px -57px;
+        }
+        &.-report{
+            background-position: 1px -58px;
+        }
+        &.-uploadgray{
+            width: 36px;
+            height: 40px;
+            background-position: -519px -100px;
+        }
+    }
+}
+/*上传*/
+    .step-navigation{
+        height: 60px;
+        text-align: center;
+        > .step{
+             display:inline-block;
+        }
+        > .step.not-reached{
+            > .item{
+                color: @font-gray;
+                border: 6px solid @bg-gray;
+            }
+        }
+        > .step-line{
+            width:30%;
+            display:inline-block;
+            > hr{
+                border:2px solid #f7c8da;
+            }
+        }
+        > .step-line.not-reached{
+            > hr{
+                border:2px solid #e3e3e3;
             }
         }
     }
-    >.notice {
-        font-size: 12px;
-        color: @font-gray;
-        text-indent: 2em;
+    
+    /*上传页面步骤*/
+    .step{
+        position: relative;
+        height: 42px;
+        > .item {
+            width: 42px;
+            height: 42px;
+            float: left;
+            text-align: center;
+            line-height: 30px;
+            font-size: 14px;
+            border: 6px solid @bg-gray;
+            .border-radius(99em);
+            background-color: #fff;
+        }
+        > .info{
+            height: 42px;
+            padding-left: 10px;
+            line-height: 42px;
+            font-size: 14px;
+            color: @font-gray;
+            float:left;
+        }
     }
-}
+    
+    /*上传页面*/
+    .upload-content{
+        margin: auto;
+        padding: 30px 0px;
+        max-width: 648px;
+        .form-inline{
+            margin-top: 30px;
+            text-align: left;
+            padding-left: 52px;
+        }
+        .form-control{
+            width: 300px;
+        }
+        
+        .upload-container{
+            
+        }
+        .plupload-content {
+            position: relative;
+            margin: 20px 0px 10px 0px;
+            width: 100%;
+            height:120px;
+            text-align: center;
+            border: 1px solid @bg-gray;
+            .border-radius(10px);
+            cursor: pointer;
+            background-color: #fff;
+            
+        }
+        .plupload-content .upload-text{
+            position: absolute;
+            width: 100%;
+            line-height: 20px;
+            font-size: 14px;
+            color: @font-s-gray;
+            margin: 37px auto;
+            .celicon {
+                margin-right: 5px;
+                margin-bottom: -3px;
+            }
+        }
+    }
+    
+    /*表单*/
+    .form-inline{
+        >.form-group{
+            > label{
+                margin: 0px;
+                font-size: 14px;
+                font-weight: normal;
+            } 
+            > .form-control {
+                margin-left: 10px;
+                margin-right: 20px;
+                height: 30px;
+                border: 1px solid #dcdcdc;
+                color: #969696;
+            }
+        }
+    }
+    
+    /*报告*/
+    .common-container{
+        position: relative;
+        padding: 20px 0px 0px 20px;
+        .content{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            background-color: @content-gray;
+        }
+        .statistic{
+            font-size: 12px;
+            color: #323232;
+            margin-top: 10px;
+            > span{
+                margin-left: 20px;
+            }
+        }
+    }
+    .report-content{
+        padding: 30px;
+        text-align: left;
+        h4 {
+            margin: 0px;
+            padding-bottom: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: left;
+            color: @font-black;
+        }
+        .result-div{
+            margin-bottom: 10px;
+            width: 100%;
+            height: 100px;
+            padding: 30px;
+            .border-1(bg-gray);
+            background-color: #fff;
+            .main{
+                font-size: 18px;
+                strong{
+                    padding: 0px 4px;
+                }
+            }
+        }
+        >.notice {
+            font-size: 12px;
+            color: @font-gray;
+            text-indent: 2em;
+        }
+    }
+    
+    /*报告搜索栏*/
+    .selector{
+        position: relative;
+        width: 100%;
+        background-color: rgb(248,248,248);
+        margin-bottom: 10px;
+        font-size: 12px;
+        border: 1px solid #dcdcdc;
+    }
+    .selector .selector-line{
+        position: relative;
+        width: 100%;
+        min-height: 34px;
+        line-height: 34px;
+        padding: 0px 10px;
+        border-top: 1px solid #dcdcdc;
+    }
+    .selector .selector-line:first-child{
+        border-top: none;
+    }
+    .selector .select-more{
+        border: 1px solid rgb(29,210,175); 
+        border-top: 1px solid rgb(29,210,175) !important; 
+    }
+    .selector .sl-key{
+        float: left;
+        width: 100px;
+        line-height: 34px;
+        color: #323232;
+    }
+    .selector .sl-val{
+        margin-left: 100px;
+        margin-right: 100px;
+        height: 34px;
+        line-height: 34px;
+        overflow: hidden;
+    }
+    .selector .show-more{
+        height: auto;
+    }
+    .selector .sl-val-content{
+        display: inline-block;
+        padding-right: 35px;
+        position: relative;
+        border:none;
+    }
+    .selector .sl-val-content .sl-val span{
+        float: left;
+    }
+    .selector .sl-val-content .sl-val a{
+        color: #025e9e;
+        float: left;
+    }
+    .selector .sl-val input[type='text']{
+        display: inline;
+        webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -o-border-radius: 6px;
+        border-radius: 6px;
+        border: 1px solid #dcdcdc;
+        color: #a0a0a0;
+        font-size: 12px;
+        height: 24px;
+        width: 110px;
+        padding: 0px 10px;
+    }
+    .selector .sl-val .sl-btn{
+        display: inline-block;
+        color: #323232;
+        text-align: center;
+        background-color: #e6e6e6; 
+        border: 1px solid #dcdcdc;
+        webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -o-border-radius: 10px;
+        border-radius: 10px;
+        width: 50px;
+        height: 24px;
+        line-height:2px;
+        margin-left: 12px;
+    }
+    .selector .selected-val{
+        display: inline-block; 
+        border: 1px solid rgb(29,210,175);
+        min-width: 100px;
+        padding: 5px 20px;
+        margin: 2px 0px;
+        height: 30px;
+        line-height: 20px;
+        float: left;
+    }
+    .selector .selected-val a{
+        color:rgb(29,210,175);
+        font-size: 16px;
+        cursor: pointer;
+        float: right;
+        margin-left: 20px;
+    }
+    .selector .multisl-btns{
+        width: 100%;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+    .selector .sl-judge{
+        position: relative;
+        display: inline-block;
+        width: 70px;
+        height: 24px;
+        background-color: #e6e6e6; 
+        border: 1px solid #dcdcdc;
+        webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -o-border-radius: 6px;
+        border-radius: 6px;
+        margin: 5px 0px;
+    }
+    .selector .sl-judge span{
+        width: 35px;
+        height: 24px;
+        line-height: 22px;
+        color:#fff;
+        border: 1px solid #dcdcdc;
+        webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        -o-border-radius: 6px;
+        border-radius: 6px;
+        text-align: center;
+        display: inline-block;
+        padding: 0px;
+    }
+    .selector .sl-judge .sl-judge-yes{ 
+        margin: -1px 0px 0px -1px;
+        background-color: rgb(29,210,175); 
+        float: left;
+    }
+    .selector .sl-judge .sl-judge-no{ 
+        margin: -1px -1px 0px 0px;
+        background-color: #ff587d; 
+        float: right;
+    }
+    .selector .sl-ext{
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        width: 140px;
+    }
+    .selector .sl-ext button{
+        position: relative;
+        display: inline-block;
+        color: #969696;
+        background-color: #fff; 
+        border: 1px solid #dcdcdc;
+        webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -o-border-radius: 10px;
+        border-radius: 10px;
+        width: 60px;
+        height: 24px;
+        text-align: center;
+        font-size: 12px;
+        float: left;
+    }
+    .selector .sl-ext button i{
+        color: #a0a0a0;
+        padding-left: 5px;
+        font-weight: lighter;
+    }
+    .selector .sl-ext button:last-child{
+        float: right;
+    }
