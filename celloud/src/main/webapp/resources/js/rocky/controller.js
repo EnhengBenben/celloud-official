@@ -45,7 +45,7 @@
 					prevent_duplicates : true, // 不允许选取重复文件
 					mime_types : [
 						{title : "fastq", extensions : "fastq"},
-						{title : "gz", extensions : "gz"},
+						{title : "gz", extensions : "gz"}
 					]
 				},
 				max_retries : 0,
@@ -55,9 +55,8 @@
 			uploader.init();
 			$(document).on("click", "[data-click='del-upload-file']", function() {
 				var id = $(this).data("id");
+				uploader.removeFile(id);
 				$("#"+id).remove();
-				var file = uploader.getFile(id);
-				uploader.removeFile(file);
 			});
 			uploader.bind("StateChanged", function() {
 				if (uploader.state === plupload.STARTED) {
