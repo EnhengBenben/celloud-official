@@ -243,7 +243,10 @@
 			}
 		}
 		$scope.reportDateSearch = function(){
-			$scope.pageQuery({beginDate :$("#report-begindate-search").val(),endDate:$("#report-enddate-search").val()});
+			$scope.params.beginDate = $("#report-begindate-search").val();
+			$scope.params.endDate = $("#report-enddate-search").val();
+			$scope.params.page = 1;
+			$scope.pageQuery();
 		}
 		/**
 		 * 点击单个标签时的搜索

@@ -79,7 +79,7 @@
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js"></script>
   
-  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.4.24"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.4.26"></script>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
 	  window.username = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUsername() %>';
