@@ -138,7 +138,7 @@
 	                <tr>
 	                    <th class="th-checkoutbox"></th>
 	                    <th width="140">
-	                        <input id="report-sample-filter" type="text" placeholder="样本编号/病历号" ng-model="params.sample" value="${sampleFilter }">
+	                        <input id="report-sample-filter" type="text" placeholder="样本编号/病历号" ng-keypress="reportSampleFilter($event)" ng-model="params.sample" value="${sampleFilter }">
 	                    </th>
 	                    <th>
 	                        文件名

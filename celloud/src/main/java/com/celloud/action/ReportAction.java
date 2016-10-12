@@ -3615,6 +3615,9 @@ public class ReportAction {
         if (StringUtils.isBlank(endDate)) {
             endDate = null;
         }
+        if (StringUtils.isBlank(sample)) {
+            sample = null;
+        }
 
         PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, queryBatches,
                 queryPeriods,

@@ -143,6 +143,16 @@
 //			});
 		}
 		
+		/**
+		 * 样本编号模糊搜索
+		 */
+		$scope.reportSampleFilter = function($event){
+			if ($event.keyCode == 13) {
+				$scope.params.page = 1;
+				$scope.pageQuery();
+			}
+		}
+		
 		$scope.batchMore = function(){
 			if($("#batch-lists").hasClass("show-more")){
 				$("#batch-lists").removeClass("show-more");
@@ -348,18 +358,6 @@
 //			var id = $(this).attr("id");
 //			var sort = id.split('-');
 //			$scope.pageQuery({sidx : sort[1],sord : sort[2] || 'desc'});
-//		});
-		/**
-		 * 样本编号模糊搜索
-		 */
-//		$(document).on("keyup", "#report-sample-filter", function(event) {
-//			if (event.keyCode == 13) {
-//				$("#report-condition-input").val('');
-//				$scope.pageQuery({sample : $(this).val(),condition:null}, function() {
-//					var val = $("#report-sample-filter").val();
-//					$("#report-sample-filter").focus().val(val);
-//				});
-//			}
 //		});
 		/**
 		 * 右上角的搜索
