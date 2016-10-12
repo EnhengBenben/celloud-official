@@ -143,13 +143,6 @@
 //			});
 		}
 		
-//		$(document).off("click", "#rocky_report_page [data-click='pagination-btn']");
-//		$(document).off("change", "#rocky_report_page #page-size-sel");
-//		$(document).off("click", "#report-condition-find");
-//		$(document).off("keyup", "#report-sample-filter");
-//		$(document).off("keyup", "#report-condition-input");
-//		$(document).off("click", "a[id^='reportSortBtn-']");
-		
 		$scope.batchMore = function(){
 			if($("#batch-lists").hasClass("show-more")){
 				$("#batch-lists").removeClass("show-more");
@@ -257,7 +250,8 @@
 		 */
 		$scope.reportBatchSearch = function(batchId){
 			if(!$("#batch-sl").hasClass("select-more")){
-				$scope.pageQuery({batches :[$("#" + batchId).next().find("span").text()]});
+				$scope.params.batches = $("#" + batchId).next().find("span").text();
+				$scope.pageQuery();
 				$("#selected-batch span").html($("#" + batchId).next().find("span").text());
 				$("#selected-batch").removeClass("hide");
 				$("#to-sl-batch").addClass("hide");
@@ -272,14 +266,16 @@
 	        $("#batch-more").removeClass("disabled");
 	        $("#batch-more").attr("disabled",false);
 	        $("#batch-lists").find(".multisl-btns").addClass("hide");
-	        $scope.pageQuery({batches :[]});
+	        $scope.params.batches = "";
+	        $scope.pageQuery();
 		}
 		/**
 		 * 点击单个状态时的搜索
 		 */
 		$scope.reportPeriodSearch = function(periodId){
 			if(!$("#period-sl").hasClass("select-more")){
-				$scope.pageQuery({periods :[ $(this).find("input").val()]});
+				$scope.params.periods = $("#" + periodId).next().find("input").val();
+				$scope.pageQuery();
 				$("#selected-period span").html($("#" + periodId).next().find("span").html());
 				$("#selected-period").removeClass("hide");
 				$("#to-sl-period").addClass("hide");
@@ -291,17 +287,21 @@
 		$scope.clearSlPeriod = function(){
 			$("#selected-period").addClass("hide");
 			$("#to-sl-period").removeClass("hide");
-			$scope.pageQuery({periods :[]});
+			$scope.params.periods = "";
+			$scope.pageQuery();
 		}
 		/**
 		 * 标签多选
 		 */
 		$scope.reportMultibatchSearch = function(){
 			var show_val = [];
+			var batches = "";
 			$("#batch-lists .checkbox-ed").each(function(){
+				batches += $(this).next().find("span").html() + ",";
 				show_val.push($(this).next().text());
 			});
-			$scope.pageQuery({batches : show_val});
+			$scope.params.batches = batches.substring(0,batches.length);
+			$scope.pageQuery();
 			$("#selected-batch span").html(show_val.toString());
 			$("#selected-batch").removeClass("hide");
 			$("#to-sl-batch").addClass("hide");
@@ -316,12 +316,13 @@
 		 */
 		$scope.reportMultiperiodSearch = function(){
 			var show_val = [];
-			var periods = [];
+			var periods = "";
 			$("#period-lists .checkbox-ed").each(function(){
-				periods.push($(this).next().find("input[type='hidden']").val());
+				periods += $(this).next().find("input[type='hidden']").val() + ",";
 				show_val.push($(this).next().find("span").html());
 			});
-			$scope.pageQuery({periods :periods});
+			$scope.params.periods = periods.substring(0,periods.length);
+			$scope.pageQuery();
 			$("#selected-period span").html(show_val.toString());
 			$("#selected-period").removeClass("hide");
 			$("#to-sl-period").addClass("hide");
@@ -377,35 +378,24 @@
 		$scope.paginationBtn = function(){
 			$scope.pageQuery({page : $(this).data("page")});
 		}
+		
 		$scope.sort = {};
-		$scope.params = {};
-		$scope.pageQuery = function(options) {
-			var params = {
-				page : 1,
-				size : $("#rocky_report_page #page-size-sel").val()||20,
-				sidx : $scope.sort.sidx,
-				sord : $scope.sort.sord,
-				sample : $scope.params.sample,
-				beginDate : $scope.params.beginDate,
-				endDate : $scope.params.endDate,
-				condition : $scope.params.condition,
-				batches : $scope.params.batches,
-				periods : $scope.params.periods
-			};
-//			$scope.changeSettings(options);
-//			$.extend(params, options);
-//			var temp = [];
-//			for(var key in params){
-//				var param = params[key];
-//				if($.isArray(param)){
-//					for(var t in param){
-//						temp.push(key+"="+$.trim(param[t]));
-//					}
-//				}else if(param){
-//					temp.push(key+"="+params[key]);
-//				}
-//			}
-			rockyReportService.pageQuery(params).
+		
+		$scope.params = {
+			page : 1,
+			size : 20,
+			sidx : $scope.sidx,
+			sord : $scope.sord,
+			sample : $scope.sample,
+			beginDate : $scope.beginDate,
+			endDate : $scope.endDate,
+			condition : $scope.condition,
+			batches : $scope.batches,
+			periods : $scope.periods
+		};
+		
+		$scope.pageQuery = function() {
+			rockyReportService.pageQuery($scope.params).
 			success(function(dataMap){
 				$scope.dataList = dataMap.pageList;
 				$scope.batchList = dataMap.batchList;

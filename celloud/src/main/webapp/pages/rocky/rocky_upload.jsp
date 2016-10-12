@@ -34,12 +34,14 @@
 						<div class="info">第一步：请输入文件标签，输入标签可以方便后续的数据检索及体验更加便捷的服务</div>
 					</div>
 					<div class="form-inline">
-						<div class="form-group">
-							<label for="batch-info">数据标签</label> <input type="text"
-								class="form-control" id="batch-info-input" placeholder="标签">
-							<input type="hidden" id="tag-info-input">
-						</div>
-						<button id="upload-next" class="btn -confirm" ng-click="stepTwo()">下一步</button>
+					   <form name="batchForm">
+							<div class="form-group">
+								<label for="batch-info">数据标签</label> <input type="text"
+									class="form-control" id="batch-info-input" ng-model="batch" name="batch" placeholder="标签" required>
+								<input type="hidden" id="tag-info-input">
+							</div>
+							<button id="upload-next" class="btn -confirm" ng-click="stepTwo()" ng-disabled="batchForm.$invalid">下一步</button>
+					   </form>
 					</div>
 				</div>
 				<div id="upload-step-two" class="steps hide">
