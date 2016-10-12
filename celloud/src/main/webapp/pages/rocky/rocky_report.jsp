@@ -10,7 +10,7 @@
         <li>华木兰</li>
         <li>报告</li>
     </ol>
-    <div id="common-container" class="common-container">
+    <div id="common-container" class="common-container" style="width:98%">
         <div class="selector">
 		    <div id="batch-sl" class="selector-line">
 		        <div class="sl-key">标签：</div>
