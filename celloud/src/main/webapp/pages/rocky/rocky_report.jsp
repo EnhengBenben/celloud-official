@@ -10,7 +10,7 @@
         <li>华木兰</li>
         <li>报告</li>
     </ol>
-    <div class="common-container">
+    <div id="common-container" class="common-container">
         <div class="selector">
 		    <div id="batch-sl" class="selector-line">
 		        <div class="sl-key">标签：</div>
@@ -208,7 +208,7 @@
                         </td>
                         <td>{{report.sampleName}}</td>
                         <td title="{{report.fileName}}" style="text-align: left;" name="data-name-td">
-                            <a ng-show="report.period == 2" title="查看报告" style="color: #323232; font-size: 12px;" href="javascript:$report.showReport('{{report.dataKey}}','{{report.projectId}}','{{report.appId}}')">{{report.fileName}}</a>
+                            <a ng-show="report.period == 2" title="查看报告" style="color: #323232; font-size: 12px;" ng-click="showReport(report.dataKey,report.projectId,report.appId)">{{report.fileName}}</a>
                             <span ng-show="report.period != 2">{{report.fileName}}</span>
                         </td>
                         <td>{{report.batch}}</td>
@@ -226,7 +226,7 @@
                             {{report.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}
                         </td>
                         <td>
-                            <a ng-show="report.period == 2" title="查看报告" ng-href="javascript:$report.showReport('{{report.dataKey}}','{{report.projectId}}','{{report.appId}}')">
+                            <a ng-show="report.period == 2" title="查看报告" ng-click="showReport(report.dataKey,report.projectId,report.appId)">
                                 <i class="fa fa-eye"></i>
                             </a>
                             <a ng-show="report.period == 2" title="打印患者报告" target="_blank" ng-href="${pageContext.request.contextPath }/report/printRockyReport?projectId={{report.projectId}}&dataKey={{report.dataKey}}&appId={{report.appId}}">

@@ -133,14 +133,15 @@
 	});
 	celloudApp.controller("rockyReportController", function($scope, rockyReportService) {
 		
-		$scope.showReport = function(dataKey,projectId, appId ) {
-//			$("#common-menu-right").html("");
-//			var url = CONTEXT_PATH + "/report/rocky/data/report";
-//			$("#container").load(url, {
-//				dataKey : dataKey,
-//				appId : appId,
-//				projectId : projectId
-//			});
+		$scope.showReport = function(dataKey,projectId,appId) {
+			var url = CONTEXT_PATH + "/report/rocky/data/report";
+			$.get(url,{
+				dataKey : dataKey,
+				appId : appId,
+				projectId : projectId
+			},function(data){
+				$("#common-container").html(data);
+			});
 		}
 		
 		/**
