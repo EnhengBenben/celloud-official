@@ -12,7 +12,7 @@
     </ol>
     <div id="common-container" class="common-container" style="width:98%">
         <div class="selector">
-		    <div id="batch-sl" class="selector-line">
+		    <div id="batch-sl" class="selector-line clearfix">
 		        <div class="sl-key">标签：</div>
 		        <div id="selected-batch" class="sl-val selected-val hide">
 		            <span></span>
@@ -44,7 +44,7 @@
 		            </div>
 		        </div>
 		    </div>
-		    <div id="period-sl" class="selector-line">
+		    <div id="period-sl" class="selector-line clearfix">
 		        <div class="sl-key">状态：</div>
 		        <div id="selected-period" class="sl-val selected-val hide">
 		            <span></span>
