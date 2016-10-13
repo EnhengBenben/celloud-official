@@ -148,8 +148,8 @@
 				<p id="tip-text">请在新窗口中完成支付</p>
 			</div>
 			<div class="modal-footer">
-				<button id="check-true" type="button" class="btn btn-outline" onclick="$.expense.pay.recharge();">已支付</button>
-				<button id="check-flase" type="button" class="btn btn-outline" onclick="$.expense.pay.recharge();">取消</button>
+				<button id="check-true" type="button" class="btn btn-outline" data-dismiss="modal" onclick="$.expense.pay.recharge();">已支付</button>
+				<button id="check-flase" type="button" class="btn btn-outline" data-dismiss="modal" onclick="$.expense.pay.recharge();">取消</button>
 			</div>
 		</div>
 	</div>
