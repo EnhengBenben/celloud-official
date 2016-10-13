@@ -1634,7 +1634,7 @@
     });
   });
   
-  celloudApp.controller("dataReportController", function($rootScope, $routeParams, $scope,projectReportService,dataReportService){
+  celloudApp.controller("dataReportController", function($rootScope, $routeParams, $scope,$location,projectReportService,dataReportService){
     $scope.searchInfo = dataReportService.getSearchInfos();
     
     $scope.dataOptions = {
@@ -1674,7 +1674,8 @@
     	var period = $scope.dataOptions.period;
     	var batch = $scope.dataOptions.batch;
     	var condition = $scope.dataOptions.condition;
-    	window.location.href = CONTEXT_PATH + "/index#/reportdata/" + page + "/" + pageSize + "/" + fullDate + "/" + beginDate + "/" + endDate + "/" + tagId + "/" + period + "/" + batch + "/" + condition;
+    	alert(CONTEXT_PATH);
+    	$location.href = CONTEXT_PATH + "/index#/reportdata/" + page + "/" + pageSize + "/" + fullDate + "/" + beginDate + "/" + endDate + "/" + tagId + "/" + period + "/" + batch + "/" + condition;
     }
     
     $scope.pageQuery = function(page,pageSize){
