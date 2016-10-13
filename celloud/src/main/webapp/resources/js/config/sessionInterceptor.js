@@ -1,9 +1,11 @@
 (function() {
+	window.sessionTimeoutFlag = false;
 	window.celloudApp.factory('sessionTimeout', ["$q",function($q) {
 	    return {
 	        response: function(response) {
 	        	var sessionstatus = response.headers()['sessionstatus'];
-	            if(sessionstatus=="timeout"){
+	            if(sessionstatus=="timeout" && !window.sessionTimeoutFlag){
+	            	window.sessionTimeoutFlag=true;
 	            	alert("登录超时，请重新登录！");
 	            	window.location.href="logout";
 	            }
