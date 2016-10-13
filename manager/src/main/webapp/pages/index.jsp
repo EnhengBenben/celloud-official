@@ -95,7 +95,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <i class="linecons-mail"></i>
+                            <i class="fa-bar-chart"></i>
                             <span class="title">医院统计 </span>
                         </a>
                         <ul>
@@ -138,7 +138,7 @@
                     </li>
                     <li id="user-menu">
                         <a href="javascript:user.toUserMain();">
-                            <i class="linecons-note"></i>
+                            <i class="fa-user"></i>
                             <span class="title">用户管理</span>
                         </a>
                     </li>
@@ -163,7 +163,7 @@
                     <!-- 费用中心 -->
                     <li>
                         <a href="#">
-                            <i class="linecons-mail"></i>
+                            <i class="fa-money"></i>
                             <span class="title">费用中心 </span>
                         </a>
                         <ul>
@@ -185,6 +185,25 @@
                             <li id="to-invoice">
                                 <a href="javascript:void(0);">
                                     <span class="title">发票管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- 实验元数据 -->
+                    <li>
+                        <a href="#">
+                            <i class="fa-database"></i>
+                            <span class="title">实验元数据 </span>
+                        </a>
+                        <ul>
+                            <li id="to-bsi">
+                                <a href="javascript:void(0);">
+                                    <span class="title">百菌探</span>
+                                </a>
+                            </li>
+                            <li id="to-rocky">
+                                <a href="javascript:void(0);">
+                                    <span class="title">华木兰</span>
                                 </a>
                             </li>
                         </ul>
@@ -291,6 +310,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/select2/js/zh-CN.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/metadata.js"></script>
     <script type="text/javascript">
        window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 	</script>
