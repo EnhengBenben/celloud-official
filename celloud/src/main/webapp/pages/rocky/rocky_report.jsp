@@ -191,7 +191,7 @@
                         <td>{{report.sampleName}}</td>
                         <td title="{{report.fileName}}" style="text-align: left;" name="data-name-td">
                             <a ng-show="report.period == 2" title="查看报告" style="color: #323232; font-size: 12px;" ng-click="showReport(report.dataKey,report.projectId,report.appId)">{{report.fileName}}</a>
-                            <span ng-show="report.period != 2">{{report.fileName}}</span>
+                            <a style="color: #323232; font-size: 12px; cursor: text" ng-show="report.period != 2">{{report.fileName}}</a>
                         </td>
                         <td>{{report.batch}}</td>
                         <td>
