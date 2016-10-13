@@ -33,7 +33,7 @@
 	        </li>
         </shiro:hasPermission>
         <shiro:hasPermission name="dataReport:menu">
-            <li ng-class="{active: isActive('/eportdata')}">
+            <li ng-class="{active: isActive('/reportdata')}">
 	            <a di-href="<%=request.getContextPath()%>/index#/reportdata/1/20/0/all/all/all/all/all/all"><i class="report-icon"></i><span>报告管理</span></a>
 	        </li>
         </shiro:hasPermission>
