@@ -733,6 +733,7 @@ a, a:link, a:hover, a:active, a:visited {
     color:#c8c8c8;
     -webkit-transform:scale(0.85);
     -moz-transform:scale(0.85);
+    -ms-transform:scale(0.85);
     -o-transform:scale(0.85);
     display: block;
     margin: -3px -50px 0px -37px;
