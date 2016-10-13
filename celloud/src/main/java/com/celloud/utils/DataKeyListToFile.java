@@ -79,9 +79,6 @@ public class DataKeyListToFile {
 			String fname = data.getFileName();
 			if (fname.contains("R1") || fname.contains("R2")) {
 				int index_r1 = fname.lastIndexOf("R1");
-				if (index_r1 == -1) {
-					index_r1 = fname.lastIndexOf("R2");
-				}
 				String commonPrefix = fname.substring(0, index_r1);
 				String commonSuffix = fname.substring(index_r1 + 2, fname.length());
 				DataFile data_r2 = chk_it.next();
