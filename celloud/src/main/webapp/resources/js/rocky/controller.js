@@ -9,6 +9,7 @@
 			$(".tips").addClass('hide');
 			$("#batch-info-input").val('');
 			$("#upload-tip-one").removeClass("hide");
+			$scope.batch = "";
 		},
 		$scope.stepTwo = function() {
 			$(".steps").addClass("hide");
@@ -45,7 +46,7 @@
 					prevent_duplicates : true, // 不允许选取重复文件
 					mime_types : [
 						{title : "fastq", extensions : "fastq"},
-						{title : "gz", extensions : "gz"},
+						{title : "gz", extensions : "gz"}
 					]
 				},
 				max_retries : 0,
@@ -55,9 +56,8 @@
 			uploader.init();
 			$(document).on("click", "[data-click='del-upload-file']", function() {
 				var id = $(this).data("id");
+				uploader.removeFile(id);
 				$("#"+id).remove();
-				var file = uploader.getFile(id);
-				uploader.removeFile(file);
 			});
 			uploader.bind("StateChanged", function() {
 				if (uploader.state === plupload.STARTED) {
@@ -355,11 +355,13 @@
 		/**
 		 * 排序按钮
 		 */
-//		$(document).on("click", "a[id^='reportSortBtn-']", function() {
-//			var id = $(this).attr("id");
-//			var sort = id.split('-');
-//			$scope.pageQuery({sidx : sort[1],sord : sort[2] || 'desc'});
-//		});
+		$scope.reportSortBtn = function(id){
+			var sort = id.split('-');
+			$scope.params.sidx = sort[1];
+			$scope.params.sord = sort[2] || 'desc';
+			$scope.pageQuery();
+		}
+		
 		/**
 		 * 右上角的搜索
 		 */
@@ -413,6 +415,8 @@
 				$scope.dataList = dataMap.pageList;
 				$scope.batchList = dataMap.batchList;
 				$scope.periodMap = dataMap.periodMap;
+				$scope.sidx = dataMap.sidx;
+				$scope.sord = dataMap.sord;
 			});
 		};
 		$scope.curDate = new Date();

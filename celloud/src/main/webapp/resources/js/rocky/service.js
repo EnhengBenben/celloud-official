@@ -7,7 +7,7 @@
 	
 	celloudApp.service("rockyReportService", function($http){
 		this.pageQuery = function(params){
-			return $http({method:"POST",url:'report/rocky/reportMain',data:$.param({"batches":params.batches,"periods":params.periods,"page":params.page,"size":params.size,"beginDate":params.beginDate,"endDate":params.endDate,"sample":params.sample}),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+			return $http({method:"POST",url:'report/rocky/reportMain',data:$.param({"batches":params.batches,"periods":params.periods,"page":params.page,"size":params.size,"beginDate":params.beginDate,"endDate":params.endDate,"sample":params.sample,"sidx":params.sidx,"sord":params.sord}),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
 		}
 	});
 })();

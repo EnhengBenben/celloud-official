@@ -12,7 +12,7 @@
     </ol>
     <div id="common-container" class="common-container" style="width:98%">
         <div class="selector">
-		    <div id="batch-sl" class="selector-line">
+		    <div id="batch-sl" class="selector-line clearfix">
 		        <div class="sl-key">标签：</div>
 		        <div id="selected-batch" class="sl-val selected-val hide">
 		            <span></span>
@@ -44,7 +44,7 @@
 		            </div>
 		        </div>
 		    </div>
-		    <div id="period-sl" class="selector-line">
+		    <div id="period-sl" class="selector-line clearfix">
 		        <div class="sl-key">状态：</div>
 		        <div id="selected-period" class="sl-val selected-val hide">
 		            <span></span>
@@ -142,58 +142,40 @@
 	                    </th>
 	                    <th>
 	                        文件名
-	                        <c:if test="${sidx=='filename'&&sord=='asc' }">
-	                            <a id="reportSortBtn-filename-desc" href="javascript:void(0);">
-	                                <i class="fa fa-sort-amount-asc"></i>
-	                            </a>
-	                        </c:if>
-	                        <c:if test="${sidx=='filename'&&sord=='desc' }">
-	                            <a id="reportSortBtn-filename-asc" href="javascript:void(0);">
-	                                <i class="fa fa-sort-amount-desc"></i>
-	                            </a>
-	                        </c:if>
-	                        <c:if test="${sidx!='filename' }">
-	                            <a id="reportSortBtn-filename" href="javascript:void(0);">
-	                                <i class="fa fa-sort" aria-hidden="true"></i>
-	                            </a>
-	                        </c:if>
+                            <a ng-if="sidx=='filename' && sord=='asc'" ng-click="reportSortBtn('reportSortBtn-filename-desc')" id="reportSortBtn-filename-desc" href="javascript:void(0);">
+                                <i class="fa fa-sort-amount-asc"></i>
+                            </a>
+                            <a ng-if="sidx=='filename' && sord=='desc'" ng-click="reportSortBtn('reportSortBtn-filename-asc')" id="reportSortBtn-filename-asc" href="javascript:void(0);">
+                                <i class="fa fa-sort-amount-desc"></i>
+                            </a>
+                            <a ng-if="sidx!='filename'" ng-click="reportSortBtn('reportSortBtn-filename')" id="reportSortBtn-filename" href="javascript:void(0);">
+                                <i class="fa fa-sort" aria-hidden="true"></i>
+                            </a>
 	                    </th>
 	                    <th>
 	                        标签
-	                        <c:if test="${sidx=='batch'&&sord=='asc' }">
-	                            <a id="reportSortBtn-batch-desc" href="javascript:void(0);">
-	                                <i class="fa fa-sort-amount-asc"></i>
-	                            </a>
-	                        </c:if>
-	                        <c:if test="${sidx=='batch'&&sord=='desc' }">
-	                            <a id="reportSortBtn-batch-asc" href="javascript:void(0);">
-	                                <i class="fa fa-sort-amount-desc"></i>
-	                            </a>
-	                        </c:if>
-	                        <c:if test="${sidx!='batch' }">
-	                            <a id="reportSortBtn-batch" href="javascript:void(0);">
-	                                <i class="fa fa-sort" aria-hidden="true"></i>
-	                            </a>
-	                        </c:if>
+                            <a ng-if="sidx=='batch'&&sord=='asc'" ng-click="reportSortBtn('reportSortBtn-batch-desc')" id="reportSortBtn-batch-desc" href="javascript:void(0);">
+                                <i class="fa fa-sort-amount-asc"></i>
+                            </a>
+                            <a ng-if="sidx=='batch'&&sord=='desc'" ng-click="reportSortBtn('reportSortBtn-batch-asc')" id="reportSortBtn-batch-asc" href="javascript:void(0);">
+                                <i class="fa fa-sort-amount-desc"></i>
+                            </a>
+                            <a ng-if="sidx!='batch'" ng-click="reportSortBtn('reportSortBtn-batch')" id="reportSortBtn-batch" href="javascript:void(0);">
+                                <i class="fa fa-sort" aria-hidden="true"></i>
+                            </a>
 	                    </th>
 	                    <th>状态</th>
 	                    <th>
 	                        更新时间
-	                        <c:if test="${sidx=='updateDate'&&sord=='asc' }">
-	                            <a id="reportSortBtn-updateDate-desc" href="javascript:void(0);">
-	                                <i class="fa fa-sort-amount-asc"></i>
-	                            </a>
-	                        </c:if>
-	                        <c:if test="${sidx=='updateDate'&&sord=='desc' }">
-	                            <a id="reportSortBtn-updateDate-asc" href="javascript:void(0);">
-	                                <i class="fa fa-sort-amount-desc"></i>
-	                            </a>
-	                        </c:if>
-	                        <c:if test="${sidx!='updateDate' }">
-	                            <a id="reportSortBtn-updateDate" href="javascript:void(0);">
-	                                <i class="fa fa-sort" aria-hidden="true"></i>
-	                            </a>
-	                        </c:if>
+                            <a ng-if="sidx=='updateDate'&&sord=='asc'" ng-click="reportSortBtn('reportSortBtn-updateDate-desc')" id="reportSortBtn-updateDate-desc" href="javascript:void(0);">
+                                <i class="fa fa-sort-amount-asc"></i>
+                            </a>
+                            <a ng-if="sidx=='updateDate'&&sord=='desc'" ng-click="reportSortBtn('reportSortBtn-updateDate-asc')" id="reportSortBtn-updateDate-asc" href="javascript:void(0);">
+                                <i class="fa fa-sort-amount-desc"></i>
+                            </a>
+                            <a ng-if="sidx!='updateDate'" ng-click="reportSortBtn('reportSortBtn-updateDate')" id="reportSortBtn-updateDate" href="javascript:void(0);">
+                                <i class="fa fa-sort" aria-hidden="true"></i>
+                            </a>
 	                    </th>
 	                    <th>操作</th>
 	                </tr>
