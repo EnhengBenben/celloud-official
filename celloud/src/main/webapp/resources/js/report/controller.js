@@ -1674,8 +1674,7 @@
     	var period = $scope.dataOptions.period;
     	var batch = $scope.dataOptions.batch;
     	var condition = $scope.dataOptions.condition;
-    	alert(CONTEXT_PATH);
-    	$location.href = CONTEXT_PATH + "/index#/reportdata/" + page + "/" + pageSize + "/" + fullDate + "/" + beginDate + "/" + endDate + "/" + tagId + "/" + period + "/" + batch + "/" + condition;
+    	$location.path(window.CONTEXT_PATH + "/index#/reportdata/" + page + "/" + pageSize + "/" + fullDate + "/" + beginDate + "/" + endDate + "/" + tagId + "/" + period + "/" + batch + "/" + condition);
     }
     
     $scope.pageQuery = function(page,pageSize){
