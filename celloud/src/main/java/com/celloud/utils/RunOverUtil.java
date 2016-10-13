@@ -34,11 +34,7 @@ public class RunOverUtil {
 	 */
 	public boolean TBINH(String reportPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String datakey = data.getDataKey();
@@ -80,11 +76,7 @@ public class RunOverUtil {
 	 */
 	public boolean TBRifampicin(String reportPath, String appName, String appTitle, String projectFile,
 			String projectId, List<DataFile> dataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String datakey = data.getDataKey();
@@ -114,9 +106,7 @@ public class RunOverUtil {
 	 */
 	public boolean Translate(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String resultPath = reportPath + data.getDataKey() + File.separatorChar + "result.txt";
@@ -145,10 +135,6 @@ public class RunOverUtil {
 	 */
 	public boolean S16(String reportPath, String dataKey, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList) {
-		// 1. 追加表头
-		StringBuffer resultArray = new StringBuffer();
-		resultArray.append(appTitle);
-		FileTools.appendWrite(projectFile, resultArray.toString());
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String resultPath = reportPath + data.getDataKey() + File.separatorChar + "report.txt";
@@ -176,11 +162,7 @@ public class RunOverUtil {
 	 */
 	public boolean BRAF(String reportPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String datakey = data.getDataKey();
@@ -210,11 +192,7 @@ public class RunOverUtil {
 	 */
 	public boolean UGT(String reportPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String datakey = data.getDataKey();
@@ -249,11 +227,7 @@ public class RunOverUtil {
 	 */
 	public boolean DPD(String reportPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String datakey = data.getDataKey();
@@ -283,11 +257,7 @@ public class RunOverUtil {
 	 */
 	public boolean KRAS(String reportPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String datakey = data.getDataKey();
@@ -318,11 +288,7 @@ public class RunOverUtil {
 	 */
 	public boolean EGFR(String reportPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> dataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile data : dataList) {
 			String datakey = data.getDataKey();
@@ -505,11 +471,7 @@ public class RunOverUtil {
 	 */
 	public boolean PGS(String appPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> proDataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		StringBuffer sb = new StringBuffer();
 		// 2. 遍历数据列表
 		for (DataFile d : proDataList) {
@@ -577,11 +539,7 @@ public class RunOverUtil {
 	 */
 	public boolean HBV(String appPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> proDataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile DataFile : proDataList) {
 			String datakey = DataFile.getDataKey();
@@ -676,11 +634,7 @@ public class RunOverUtil {
 	 */
 	public boolean HCV(String appPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> proDataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile DataFile : proDataList) {
 			String datakey = DataFile.getDataKey();
@@ -723,11 +677,7 @@ public class RunOverUtil {
 	 */
 	public boolean oncogene(String appPath, String appName, String appTitle, String projectFile, String projectId,
 			List<DataFile> proDataList, String dataKey) {
-		// 1. 追加表头
 		StringBuffer resultArray = new StringBuffer();
-		if (!new File(projectFile).exists()) {
-			resultArray.append(appTitle);
-		}
 		// 2. 遍历数据列表
 		for (DataFile data : proDataList) {
 			String datakey = data.getDataKey();

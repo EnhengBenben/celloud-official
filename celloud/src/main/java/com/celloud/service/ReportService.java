@@ -530,7 +530,7 @@ public interface ReportService {
 	 * @author leamo
 	 * @date 2016年1月15日 上午10:58:52
 	 */
-	public Integer reportCompeleteByProId(Integer projectId, String context);
+	public Integer reportCompeleteByProId(Integer projectId, String dataKey, String context);
 
 	/**
 	 * 检索数据报告

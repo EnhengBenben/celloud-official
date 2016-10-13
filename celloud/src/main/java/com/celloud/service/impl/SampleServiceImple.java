@@ -188,7 +188,7 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Integer addStorage(String name, String sindex,
+    public SampleStorage addStorage(String name, String sindex,
             List<Integer> sampleIds, Integer userId) {
         SampleStorage ss = new SampleStorage();
         ss.setStorageName(name);
@@ -202,7 +202,7 @@ public class SampleServiceImple implements SampleService {
             updateExperState(userId, SampleExperState.IN_LIBRARY, sampleId);
         }
         sampleStorageMapper.addSampleStorageRelat(ss.getId(), sampleIds);
-        return ss.getId();
+        return ss;
     }
 
     @Override

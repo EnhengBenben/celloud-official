@@ -1,7 +1,9 @@
 <form id="cmp-form">
     <section class="section0 border1 w3cbbs">
         <div class="header">
-            <img src="${base}/images/report/yanda_print.png">
+            #if($cmpReport.username != 't_shineschina')
+                <img src="${base}/images/report/yanda_print.png">
+            #end
             <h1>肿瘤样本基因检测与个体化治疗分析报告</h1>
         </div>
         <div class="titletype">
@@ -19,6 +21,10 @@
             </div>
         </div>
         <footer>
-            检测机构：燕达国际医院临床检测二部/华点云科技
+        #if($cmpReport.username == 't_shineschina')
+                     检测机构：上海华点云生物科技有限公司
+        #else
+                     检测机构：燕达国际医院临床检测二部/华点云科技
+        #end
         </footer>
     </section>

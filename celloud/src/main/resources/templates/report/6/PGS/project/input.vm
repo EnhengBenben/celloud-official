@@ -46,8 +46,8 @@
 	            <td style="height:30px">
 	                <div style="width:10%;margin-left:1px;float:left;margin-top:10px;"><input class="notbottom" readonly="readonly" value="样本编号" type="text" style="width:100%;height:16px;padding:0px;margin:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
 	                <div style="width:10%;margin-left:14px;margin-top:10px;float:left;"><input class="notbottom" readonly="readonly" value="实验编号" type="text" style="width:100%;height:16px;padding:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
-	                <div style="width:40%;margin-left:15px;float:left;margin-top:10px;"><input class="notbottom" readonly="readonly" value="检测结果" type="text" style="width:100%;height:16px;padding:0px;margin:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
-	                <div style="width:23%;margin-left:12px;margin-top:10px;float:left;"><input class="notbottom" readonly="readonly" value="备注" type="text" style="width:100%;height:16px;padding:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
+	                <div style="width:42%;margin-left:15px;float:left;margin-top:10px;"><input class="notbottom" readonly="readonly" value="检测结果" type="text" style="width:100%;height:16px;padding:0px;margin:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
+	                <div style="width:21%;margin-left:12px;margin-top:10px;float:left;"><input class="notbottom" readonly="readonly" value="备注" type="text" style="width:100%;height:16px;padding:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
 	            </td>
 	        </tr>
 	        #end
@@ -55,8 +55,8 @@
 	            <td style="height:30px">
 	                <div class="saId" style="width:10%;margin-left:2px;float:left;word-break: break-all;"><textarea name="projectInfo['sampleNumber']" style="width:98%;font-size:12px;">#if(${pgs.projectInfo.sampleNumber.get($index)})$!{pgs.projectInfo.sampleNumber.get($index)}#else$!{p.anotherName}#end</textarea></div>
 	                <div class="exId" style="width:10%;margin-left:14px;float:left;word-break: break-all;"><textarea name="projectInfo['experimentNumber']" style="width:98%;font-size:12px;">$!{pgs.projectInfo.experimentNumber.get($index)}</textarea></div>
-	                <div class="exResult" style="width:40%;margin-left:15px;float:left;word-break: break-all;"><textarea name="projectInfo['result']" style="width:98%;font-size:12px;">#if(${pgs.projectInfo.result.get($index)})$!{pgs.projectInfo.result.get($index)}#else$!{p.report}#end</textarea></div>
-	                <div class="exRemark" style="width:23%;margin-left:12px;float:left;word-break: break-all;"><textarea name="projectInfo['remark']" style="width:98%;font-size:12px;">$!{pgs.projectInfo.remark.get($index)}</textarea></div>
+	                <div class="exResult" style="width:42%;margin-left:15px;float:left;word-break: break-all;"><textarea name="projectInfo['result']" style="width:98%;font-size:12px;">#if(${pgs.projectInfo.result.get($index)})$!{pgs.projectInfo.result.get($index)}#else$!{p.report}#end</textarea></div>
+	                <div class="exRemark" style="width:21%;margin-left:12px;float:left;word-break: break-all;"><textarea name="projectInfo['remark']" style="width:98%;font-size:12px;">$!{pgs.projectInfo.remark.get($index)}</textarea></div>
 	            </td>
 	        </tr>
 	    #end
@@ -65,16 +65,16 @@
             <td style="height:30px">
                 <div style="width:10%;margin-left:1px;float:left;margin-top:10px;"><input class="notbottom" readonly="readonly" value="样本编号" type="text" style="width:100%;height:16px;padding:0px;margin:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
                 <div style="width:10%;margin-left:14px;margin-top:10px;float:left;"><input class="notbottom" readonly="readonly" value="实验编号" type="text" style="width:100%;height:16px;padding:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
-                <div style="width:40%;margin-left:15px;float:left;margin-top:10px;"><input class="notbottom" readonly="readonly" value="检测结果" type="text" style="width:100%;height:16px;padding:0px;margin:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
-                <div style="width:23%;margin-left:12px;margin-top:10px;float:left;"><input class="notbottom" readonly="readonly" value="备注" type="text" style="width:100%;height:16px;padding:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
+                <div style="width:42%;margin-left:15px;float:left;margin-top:10px;"><input class="notbottom" readonly="readonly" value="检测结果" type="text" style="width:100%;height:16px;padding:0px;margin:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
+                <div style="width:21%;margin-left:12px;margin-top:10px;float:left;"><input class="notbottom" readonly="readonly" value="备注" type="text" style="width:100%;height:16px;padding:0px;font-size:14px;line-height:16px;border-bottom:0;font-weight:bold;"/></div>
             </td>
         </tr>
         <tr>
             <td style="height:30px">
                 <div class="saId" style="width:10%;margin-left:2px;float:left;word-break: break-all;"><textarea name="projectInfo['sampleNumber']" style="width:98%;font-size:12px;">#if(${pgs.projectInfo.sampleNumber})$!{pgs.projectInfo.sampleNumber}#else$!{pgsList.get(0).anotherName}#end</textarea></div>
                 <div class="exId" style="width:10%;margin-left:14px;float:left;word-break: break-all;"><textarea name="projectInfo['experimentNumber']" style="width:98%;font-size:12px;">$!{pgs.projectInfo.experimentNumber}</textarea></div>
-                <div class="exResult" style="width:40%;margin-left:15px;float:left;word-break: break-all;"><textarea name="projectInfo['result']" style="width:98%;font-size:12px;">#if(${pgs.projectInfo.result})$!{pgs.projectInfo.result}#else$!{pgsList.get(0).report}#end</textarea></div>
-                <div class="exRemark" style="width:23%;margin-left:12px;float:left;word-break: break-all;"><textarea name="projectInfo['remark']" style="width:98%;font-size:12px;">$!{pgs.projectInfo.remark}</textarea></div>
+                <div class="exResult" style="width:42%;margin-left:15px;float:left;word-break: break-all;"><textarea name="projectInfo['result']" style="width:98%;font-size:12px;">#if(${pgs.projectInfo.result})$!{pgs.projectInfo.result}#else$!{pgsList.get(0).report}#end</textarea></div>
+                <div class="exRemark" style="width:21%;margin-left:12px;float:left;word-break: break-all;"><textarea name="projectInfo['remark']" style="width:98%;font-size:12px;">$!{pgs.projectInfo.remark}</textarea></div>
             </td>
         </tr>
 	#end

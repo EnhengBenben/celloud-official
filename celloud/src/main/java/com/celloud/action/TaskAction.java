@@ -1,12 +1,13 @@
 package com.celloud.action;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -43,7 +44,6 @@ import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.RunService;
-import com.celloud.service.SecRoleService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataUtil;
@@ -78,8 +78,6 @@ public class TaskAction {
     private ReportService reportService;
     @Resource
     private ExperimentService expService;
-    @Resource
-    private SecRoleService secService;
     @Resource
 	private MessageCategoryUtils mcu;
 	@Resource
@@ -183,7 +181,6 @@ public class TaskAction {
             if (resultFiles != null) {
                 Iterator<String> rFile = resultFiles.iterator();
                 Long size = null;
-                Set<String> secs = secService.findRolesByUserId(userId);
                 while (rFile.hasNext()) {
                     String fstr = rFile.next();
                     if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
@@ -220,8 +217,8 @@ public class TaskAction {
                             data.setMd5(MD5Util.getFileMD5(filePath));
                             dataService.updateDataInfoByFileIdAndTagId(data,
                                     tagId);
-                            // TODO 需要去掉写死的自动运行
-                            if (secs.contains("bsier") && tagId == 1) {
+							// TODO 需要去掉写死的自动运行
+                            if (tagId == 1) {
 								logger.info("bsi自动运行split分数据");
 								List<DataFile> bsiList = new ArrayList<>();
 								bsiList.add(data);
@@ -318,6 +315,14 @@ public class TaskAction {
 		StringBuffer basePath = new StringBuffer();
 		basePath.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/");
 		String projectFile = basePath + projectId + "/" + projectId + ".txt";
+		FileLock filelock = null;
+		if (!new File(projectFile).exists()) {
+			FileTools.createFile(projectFile);
+			filelock = FileTools.getFileLock(new File(projectFile));
+			FileTools.appendWrite(projectFile, title);
+		} else {
+			filelock = FileTools.getFileLock(new File(projectFile));
+		}
 		// 4. 通过反射调用相应app的处理方法，传参格式如下：
 		// String appPath, String appName, String appTitle,String
 		// projectFile,String projectId, List<DataFile> proDataList,String dataKey
@@ -336,8 +341,13 @@ public class TaskAction {
 		if (new File(projectFile.toString()).exists()) {
 			xml = XmlUtil.writeXML(projectFile);
 		}
+		try {
+			filelock.release();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		// 6. 项目报告插入mysql并修改项目运行状态
-		reportService.reportCompeleteByProId(proId, xml);
+		reportService.reportCompeleteByProId(proId, dataKey, xml);
 		if (ExperimentState.apps.contains(appId)) {
 			for (DataFile dataFile : dataList) {
 				String anotherName = dataFile.getAnotherName() == null ? "" : dataFile.getAnotherName();

@@ -15,8 +15,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -29,17 +27,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.celloud.constants.ConstantsData;
-import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Tag;
-import com.celloud.service.AppService;
 import com.celloud.service.DataService;
-import com.celloud.service.ExperimentService;
-import com.celloud.service.ReportService;
 import com.celloud.service.RunService;
 import com.celloud.service.TagService;
-import com.celloud.service.TaskService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CheckFileTypeUtil;
 import com.celloud.utils.DataUtil;
@@ -60,15 +53,7 @@ public class UploadAction {
 	Logger logger = LoggerFactory.getLogger(UploadAction.class);
 	private static final int BUFFER_SIZE = 2 * 1024;
 	@Resource
-	private AppService appService;
-	@Resource
-	private ReportService reportService;
-	@Resource
 	private DataService dataService;
-	@Resource
-	private ExperimentService expService;
-	@Resource
-	private TaskService taskService;
 	@Resource
 	private TagService tagService;
 	@Resource
@@ -138,13 +123,10 @@ public class UploadAction {
 				pf.mkdirs();
 			}
 			FileTools.mvFile(realPath, uniqueName, folderByDay, newName);
-			// TODO 固定值，可以抽取处理
-			String perlPath = request.getSession().getServletContext().getRealPath("/resources")
-					+ "/plugins/getAliases.pl";
-			// TODO 固定值，可以抽取处理
-			String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/" + fileDataKey;
 			int fileFormat = checkFileType.checkFileType(newName, folderByDay);
-			updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay, batch, fileFormat);
+			String filePath = folderByDay + File.separator + newName;
+			String md5 = MD5Util.getFileMD5(filePath);
+			dataService.updateFileInfo(dataId, fileDataKey, filePath, batch, fileFormat, md5, null, null);
 			return dataId;
 		}
 		return 0;
@@ -195,20 +177,17 @@ public class UploadAction {
 									pf.mkdirs();
 								}
 								FileTools.mvFile(realPath, name, folderByDay, newName);
-								String perlPath = request.getSession().getServletContext().getRealPath("/resources")
-										+ "/plugins/getAliases.pl";
-								String outPath = request.getSession().getServletContext().getRealPath("/temp") + "/"
-										+ fileDataKey;
 								int fileFormat = checkFileType.checkFileType(newName, folderByDay);
-								updateFileInfo(dataId, fileDataKey, newName, perlPath, outPath, folderByDay,
-										batch, fileFormat, tagId);
-								Subject sub = SecurityUtils.getSubject();
-								// MessageUtils.get()
-								// .on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants.createMessage("upload",
-								// "文件上传完成", "您的文件【" + originalName +
-								// "】已经上传完成。"))
-								// .to(sub.getPrincipal().toString());
-								if (sub.hasRole("bsier")) {
+								String filePath = folderByDay + File.separator + newName;
+								String anotherName = null;
+								if (fileFormat == FileFormat.BAM) {
+									anotherName = dataService.getAnotherName(request, filePath, fileDataKey);
+								}
+								md5 = MD5Util.getFileMD5(filePath);
+								dataService.updateFileInfo(dataId, fileDataKey, filePath, batch, fileFormat, md5,
+										anotherName, tagId);
+                                // TODO 写死的百菌探自动运行
+                                if (tagId == 1) {
 									logger.info("{}拥有百菌探权限", userId);
 									runService.bsiCheckRun(batch, dataId, fileDataKey, needSplit, originalName, userId,
 											fileFormat);
@@ -282,39 +261,5 @@ public class UploadAction {
 		return ConstantsData.getLoginUserName();
 	}
 
-	//TODO 以下两个方法是垃圾，要删除
-    private int updateFileInfo(int dataId, String dataKey, String newName, String perlPath, String outPath,
-            String folderByDay, String batch, int fileFormat, int tagId) {
-        DataFile data = new DataFile();
-        data.setFileId(dataId);
-        String filePath = folderByDay + File.separator + newName;
-        data.setSize(FileTools.getFileSize(filePath));
-        data.setDataKey(dataKey);
-        data.setPath(filePath);
-        data.setMd5(MD5Util.getFileMD5(filePath));
-        data.setBatch(batch);
-        data.setFileFormat(fileFormat);
-        if (fileFormat == FileFormat.BAM) {
-			String anotherName = dataService.getAnotherName(filePath, dataKey, perlPath, outPath);
-            data.setAnotherName(anotherName);
-        }
-        data.setState(DataState.ACTIVE);
-        return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
-    }
-
-	private int updateFileInfo(Integer dataId, String dataKey, String newName, String perlPath, String outPath,
-			String folderByDay, String batch, Integer fileFormat) {
-		DataFile data = new DataFile();
-		data.setFileId(dataId);
-		String filePath = folderByDay + File.separator + newName;
-		data.setSize(FileTools.getFileSize(filePath));
-		data.setDataKey(dataKey);
-		data.setPath(filePath);
-		data.setMd5(MD5Util.getFileMD5(filePath));
-		data.setBatch(batch);
-		data.setFileFormat(fileFormat);
-		data.setState(DataState.ACTIVE);
-		return dataService.updateDataInfoByFileId(data);
-	}
 
 }

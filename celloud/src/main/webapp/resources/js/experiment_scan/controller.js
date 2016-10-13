@@ -67,9 +67,9 @@
     		return false;
     	}
       scanStorageService.scanStorage($scope.sampleName).success(function(data){
-        if(data == 0){
+        if(data.result == "0"){
           $.alert("系统中无此样本信息，请确认是已采样样本！")
-        }else if(data > 0){
+        }else if(data.result.length > 2){
           $scope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
         }else {
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！")
@@ -115,16 +115,17 @@
       		}
       	}
       }
-    
       $scope.tokenDNA = function(){
-    	if($scope.sampleName == "" || $scope.sampleName == undefined){
-    		$.alert("请输入样本信息！");
-    		return false;
-    	}
+      	if($scope.sampleName == "" || $scope.sampleName == undefined){
+      		$.alert("请输入样本信息！");
+      		return false;
+      	}
         tokenDNAService.tokenDNA($scope.sampleName).success(function(data){
-          if(data == 0){
+          if(data.result == "0"){
             $.alert("此样本未入库");
-          }else if(data > 0){
+          }else if(data.result.length > 2){
+            //打印二维码
+            printQRCode($scope.sampleName,data.result);
             $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
           }else {
             $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
@@ -190,7 +191,10 @@
     
     $scope.addLibrary = function(){
       buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
-        if(data > 0){
+        alert(data);
+        if(data != null && data != undefined){
+          //打印二维码
+          printQRCode(data.storageName,data.createDate);
           $scope.infos = buidLibraryService.infos();
           $.alert("建库成功！");
         }else {

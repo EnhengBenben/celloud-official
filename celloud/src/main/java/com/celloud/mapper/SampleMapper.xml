@@ -13,6 +13,9 @@
     <result column="state" jdbcType="BIT" property="state" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
+  <resultMap type="com.celloud.model.mysql.Sample" id="ResultMapWithlogDate" extends="BaseResultMap">
+    <result column="log_date" jdbcType="TIMESTAMP" property="logDate" />
+  </resultMap>
   <resultMap id="ResultMapWithTag" type="com.celloud.model.mysql.Sample"
       extends="BaseResultMap">
       <result column="tag_id" property="tagId" jdbcType="INTEGER" />
@@ -185,8 +188,8 @@
 	tb_sample s,tb_sample_log sl
 	where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and sl.state=#{state}
   </select>
-  <select id="getByNameExperState" resultMap="BaseResultMap">
-    select s.* from 
+  <select id="getByNameExperState" resultMap="ResultMapWithlogDate">
+    select s.*,sl.create_date log_date from 
     tb_sample s,tb_sample_log sl
     where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and s.sample_name=#{sampleName,jdbcType=VARCHAR}
     and s.is_add = #{isAdd,jdbcType=BIT}

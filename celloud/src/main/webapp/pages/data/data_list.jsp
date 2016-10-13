@@ -9,7 +9,9 @@
       <div class="table-opera">
         <div class="table-opera-content">
           <div class="opera-info">
-	        <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
+            <shiro:hasPermission name="run:button">
+	          <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
+            </shiro:hasPermission>
             <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
           </div>
           <div class="info-btn-group pull-right">
@@ -27,7 +29,7 @@
       	<button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
       	<span>{{message}}</span>
       </div>
-      <table class="table table-main" ng-init="pageType='data'">
+      <table class="table table-main" ng-init="pageType='data'" id="_data_table">
         <thead>
           <tr>
             <th class="th-checkoutbox">
@@ -54,8 +56,8 @@
                 <span class="info"></span>
               </label>
             </td>
-            <td title="{{file.fileName}}"><i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i> {{file.fileName}}</td>
-            <td>{{file.anotherName}}</td>
+            <td title="{{file.fileName}}"><i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i> {{file.fileName.length > 23 ? file.fileName.substring(0,23) + '...' : file.fileName}}</td>
+            <td title="{{file.anotherName}}">{{file.anotherName.length > 23 ? file.anotherName.substring(0,23) + '...' : file.anotherName}}</td>
             <td>{{file.tagName}}</td>
             <td>{{file.batch}}</td>
             <td>{{file.size | fileSizeFormat}}</td>
@@ -64,7 +66,7 @@
             <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
           <tr ng-show="dataList.datas.length == 0">
-          	<td colspan="8">暂无数据</td>
+          	<td colspan="9">暂无数据</td>
           </tr>
         </tbody>
       </table>

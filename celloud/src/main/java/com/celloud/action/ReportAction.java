@@ -2,6 +2,7 @@ package com.celloud.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -144,6 +145,35 @@ public class ReportAction {
 		return 1;
 	}
 
+    @ActionLog(value = "下载", button = "下载")
+    @RequestMapping("downByName")
+    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
+    public Integer downByName(String path) throws UnsupportedEncodingException {
+        String filePath = SparkPro.TOOLSPATH + path;
+        // 获取dataKey
+        String dataKey = path.split("/")[2];
+        // 获取appId
+        String appId = path.split("/")[1];
+        String filename = null;
+        // 如果是split则用文件名作为下载名称
+        if ("113".equals(appId)) {
+            // 根据datakey获取文件
+            DataFile dataFile = dataService.getDataByKey(dataKey);
+            // 获取文件名称
+            filename = dataFile.getFileName().split("R1")[0];
+            // 如果截取R1之前的名称是以"_"结尾则截掉该"_"
+            if (filename.endsWith("_")) {
+                filename = filename.substring(0, filename.lastIndexOf("_"));
+            }
+        }
+        if (new File(filePath).exists()) {
+            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath, filename);
+            return 0;
+        }
+        return 1;
+    }
+
     /**
      * 获取数据报告形式列表
      * 
@@ -170,6 +200,7 @@ public class ReportAction {
             @RequestParam(name = "batch", required = false) String batch,
             @RequestParam(name = "period", required = false) Integer period, String beginDate,
             String endDate){
+        log.info("查看data报告列表");
         Page pager = new Page(page,size);
         Integer userId = ConstantsData.getLoginUserId();
         PageList<Task> plist = taskService.findAllTasks(pager, userId,
@@ -3505,33 +3536,109 @@ public class ReportAction {
 		return mv;
 	}
 
-	@ActionLog(value = "报告菜单", button = "乳腺癌报告")
-	@RequestMapping("rocky/reportMain")
-	public ModelAndView rockyReportMain(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "20") int size, String sample, String condition,
-			@RequestParam(defaultValue = "updateDate") String sidx, @RequestParam(defaultValue = "desc") String sord,
-			@RequestParam(name = "batches", required = false) ArrayList<String> batches,
-			@RequestParam(name = "periods", required = false) ArrayList<Integer> periods, String beginDate,
-			String endDate) throws ParseException {
-		ModelAndView mv = new ModelAndView("rocky/report/report_main");
-		Integer userId = ConstantsData.getLoginUserId();
-		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
-		List<String> batchList = dataService.getBatchList(userId);
-		Page pager = new Page(page, size);
-		PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, batches, periods,
-				beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginDate+" 00:00:00"),
-				endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate+" 23:59:59"));
-		mv.addObject("pageList", pageList);
-		periodMap.put("uploaded", batchList.size());
-		mv.addObject("periodMap", periodMap);
-		mv.addObject("batchList", batchList);
-		mv.addObject("sampleFilter", sample);
-		mv.addObject("conditionFilter", condition);
-		mv.addObject("sidx", sidx);
-		mv.addObject("sord", sord);
-		log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
-		return mv;
-	}
+    // @ActionLog(value = "报告菜单", button = "乳腺癌报告")
+    // @RequestMapping("rocky/reportMain_bak")
+    // public ModelAndView rockyReportMain_bak(@RequestParam(defaultValue = "1")
+    // int page,
+    // @RequestParam(defaultValue = "20") int size, String sample, String
+    // condition,
+    // @RequestParam(defaultValue = "updateDate") String sidx,
+    // @RequestParam(defaultValue = "desc") String sord,
+    // @RequestParam(name = "batches", required = false) ArrayList<String>
+    // batches,
+    // @RequestParam(name = "periods", required = false) ArrayList<Integer>
+    // periods, String beginDate,
+    // String endDate) throws ParseException {
+    // ModelAndView mv = new ModelAndView("rocky/report/report_main");
+    // Integer userId = ConstantsData.getLoginUserId();
+    // Map<String, Object> periodMap =
+    // taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
+    // List<String> batchList = dataService.getBatchList(userId);
+    // Page pager = new Page(page, size);
+    // PageList<Task> pageList = taskService.findRockyTasks(pager, sample,
+    // condition, sidx, sord, batches, periods,
+    // beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd
+    // HH:mm:ss").parse(beginDate + " 00:00:00"),
+    // endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd
+    // HH:mm:ss").parse(endDate + " 23:59:59"));
+    // mv.addObject("pageList", pageList);
+    // periodMap.put("uploaded", batchList.size());
+    // mv.addObject("periodMap", periodMap);
+    // mv.addObject("batchList", batchList);
+    // mv.addObject("sampleFilter", sample);
+    // mv.addObject("conditionFilter", condition);
+    // mv.addObject("sidx", sidx);
+    // mv.addObject("sord", sord);
+    // log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+    // return mv;
+    // }
+
+    @ActionLog(value = "报告菜单", button = "乳腺癌报告")
+    @RequestMapping("rocky/reportMain")
+    @ResponseBody
+    public Map<String, Object> rockyReportMain(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String sample, String condition,
+            String sidx, String sord, String batches, String periods,
+            String beginDate, String endDate) throws ParseException {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Integer userId = ConstantsData.getLoginUserId();
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
+        List<String> batchList = dataService.getBatchList(userId);
+        Page pager = new Page(page, size);
+
+        ArrayList<String> queryBatches = null;
+        if (StringUtils.isNotBlank(batches)) {
+            queryBatches = new ArrayList<String>();
+            if (batches.indexOf(",") > -1) {
+                queryBatches.addAll(Arrays.asList(batches.split(",")));
+            } else {
+                queryBatches.add(batches);
+            }
+        }
+
+        ArrayList<Integer> queryPeriods = null;
+        if (StringUtils.isNotBlank(periods)) {
+            queryPeriods = new ArrayList<Integer>();
+            if (periods.indexOf(",") > -1) {
+                for (String s : periods.split(",")) {
+                    queryPeriods.add(Integer.parseInt(s));
+                }
+            } else {
+                queryPeriods.add(Integer.parseInt(periods));
+            }
+        }
+
+        if (StringUtils.isBlank(beginDate)) {
+            beginDate = null;
+        }
+        if (StringUtils.isBlank(endDate)) {
+            endDate = null;
+        }
+        if (StringUtils.isBlank(sample)) {
+            sample = null;
+        }
+        if (StringUtils.isBlank(sidx)) {
+            sidx = "updateDate";
+        }
+        if (StringUtils.isBlank(sord)) {
+            sord = "desc";
+        }
+
+        PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, queryBatches,
+                queryPeriods,
+                beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginDate + " 00:00:00"),
+                endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate + " 23:59:59"));
+        map.put("pageList", pageList);
+        periodMap.put("uploaded", batchList.size());
+        map.put("periodMap", periodMap);
+        map.put("batchList", batchList);
+        map.put("sampleFilter", sample);
+        map.put("conditionFilter", condition);
+        map.put("sidx", sidx);
+        map.put("sord", sord);
+        log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+        return map;
+    }
 
 	@ActionLog(value = "报告菜单", button = "乳腺癌报告")
 	@RequestMapping("rocky/data/report")

@@ -15,12 +15,14 @@
             </a>
             <div class="dropdown-menu product-dropdown">
               <a ng-if="userProduct.app118==118" href="<%=request.getContextPath()%>/bsi"><img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探"></a>
-              <a ng-if="userProduct.app123==123" href="<%=request.getContextPath()%>/rocky"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
+              <a ng-if="userProduct.app123==123" href="${pageContext.request.contextPath }/index#/product/rocky/upload"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
             </div>
           </li>
-          <li data-step="1" data-position="right" data-intro="" data-img="upload.png">
-            <a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a>
-          </li>
+          <shiro:hasPermission name="upload:menu">
+	          <li data-step="1" data-position="right" data-intro="" data-img="upload.png">
+	            <a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a>
+	          </li>
+          </shiro:hasPermission>
         </ul>
         <ul class="nav navbar-nav pull-right">
           <li class="dropdown">

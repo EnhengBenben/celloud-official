@@ -4,7 +4,7 @@
 <div class="pro-body">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li><a style="color: #a0a0a0" href="${pageContext.request.contextPath }/index#/reportdata">报告管理</a></li>
+      <li><a style="color: #a0a0a0" href="javascript:void(0);" ng-click="goBack()">报告管理</a></li>
       <li>华木兰报告</li>
     </ol>
 	<div class="common-container">

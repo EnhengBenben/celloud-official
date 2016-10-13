@@ -33,6 +33,7 @@ import com.celloud.service.ExpensesService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.RunService;
+import com.celloud.service.SampleService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.AppSubmitUtil;
 import com.celloud.utils.DataKeyListToFile;
@@ -55,6 +56,8 @@ public class RunServiceImpl implements RunService {
 	private ExpensesService expenseService;
 	@Resource
 	private DataService dataService;
+    @Resource
+    private SampleService sampleService;
 
 	@Override
 	public Map<String, String> getDataListFile(Integer appId, List<DataFile> dataList) {
@@ -247,6 +250,7 @@ public class RunServiceImpl implements RunService {
 			appId = 113;
 		}
 		String pubName = "";
+
 		if (fileFormat == FileFormat.FQ || originalName.contains(".txt") || originalName.contains(".lis")) {
 			Boolean isR1 = false;
 			if (originalName.contains("R1")) {
@@ -313,7 +317,6 @@ public class RunServiceImpl implements RunService {
 		String originalName = data.getFileName();
 		String pubName = "";
 		if (data.getFileFormat() == FileFormat.FQ || data.getFileFormat() == FileFormat.YASUO) {
-			Map<String, Integer> dataIds = new HashMap<String, Integer>();
 			Boolean isR1 = false;
 			if (originalName.contains("R1")) {
 				pubName = originalName.substring(0, originalName.lastIndexOf("R1"));
@@ -333,6 +336,7 @@ public class RunServiceImpl implements RunService {
 					sb.toString());
 			boolean hasR1 = false;
 			boolean hasR2 = false;
+			Map<String, DataFile> datas = new HashMap<String, DataFile>();
 			for (DataFile d : dlist) {
 				String name_tmp = d.getFileName();
 				if (name_tmp.contains("R1") && data.getFileFormat().intValue() == d.getFileFormat().intValue()) {
@@ -341,7 +345,7 @@ public class RunServiceImpl implements RunService {
 					hasR2 = true;
 				}
 				// 排除同一个文件多次上传的问题
-				dataIds.put(d.getMd5(), d.getFileId());
+				datas.put(d.getMd5(), d);
 			}
 			Task task = new Task();
 			task.setUserId(data.getUserId());
@@ -352,7 +356,7 @@ public class RunServiceImpl implements RunService {
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
 				logger.info("数据{}上传完可以运行", originalName);
-				runSingle(data.getUserId(), appId, dlist);
+				runSingle(data.getUserId(), appId, new ArrayList<>(datas.values()));
 			}
 		}
 		logger.info("数据{}上传完不可以运行", originalName);

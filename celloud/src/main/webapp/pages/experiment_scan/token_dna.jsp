@@ -11,6 +11,9 @@
           <img src="<%=request.getContextPath()%>/images/icon/sample_scan.jpg">
           <p>* 请持条码枪扫描样品管上的条码<br>
               无条码样品请按以下方式操作：<br> 1. 在样品管上记录样品病历号<br> 2. 将病历号输入上面窗口后回车
+          <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
+		    <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+		  </object>
           </p>
           <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入样本编号！</span>
           <div class="info-btn-group">
@@ -69,7 +72,7 @@
 		               </div>
 		               <div class="form-group form-btns">
 		                   <div class="text-center">
-		                       <button type="reset" class="btn btn-cancel" ng-click="resetSampleRemark()">重置</button>
+		                       <button type="button" class="btn btn-cancel" ng-click="resetSampleRemark()">重置</button>
 		                       <button type="submit" class="btn" ng-disabled="sampleForm.$invalid">提交</button>
 		                   </div>
 		               </div>

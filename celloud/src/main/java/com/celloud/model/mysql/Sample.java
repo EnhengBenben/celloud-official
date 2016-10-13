@@ -26,6 +26,7 @@ public class Sample {
     private Integer tagId;
     private String tagName;
     private Integer sampleLogId;
+    private Date logDate;
 
     public Integer getSampleId() {
         return sampleId;
@@ -129,5 +130,13 @@ public class Sample {
 
     public void setSampleLogId(Integer sampleLogId) {
         this.sampleLogId = sampleLogId;
+    }
+
+    public Date getLogDate() {
+        return logDate;
+    }
+
+    public void setLogDate(Date logDate) {
+        this.logDate = logDate;
     }
 }

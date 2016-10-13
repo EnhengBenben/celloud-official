@@ -136,3 +136,4 @@ local.properties
 
 # MAC Os
 *.DS_Store
+/package.json

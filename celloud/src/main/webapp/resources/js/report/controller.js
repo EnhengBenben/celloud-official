@@ -90,7 +90,7 @@
   });
   
   function dataInPro(appInfo, proId, projectName){
-  	$.get("data/getDatasInProject",{"projectId":proId},function(fileList){
+  	$.get("data/getDataFromTbTask",{"projectId":proId},function(fileList){
 			$("#fileListUl").append("<a id='prevA' class='btn -low' style='width:100%;'><span class='fa fa-sort-asc'></span></button>");
 			var fileNames = new Array();
 			var newList = "";
@@ -1617,7 +1617,7 @@
         }else if(tr_size<minTdNum){// 需要补齐tr
           var num = minTdNum-tr_size;
     	  if(tr_size - 1 < fileCount){// 如果已运行完的文件的数量<实际运行的文件数量,就将剩余的位置显示为进度条
-    		  var imgTr = "<tr><td style='text-align: center;' rowspan='"+num+"' colspan='"+th_size+"'><img src='"+CONTEXT_PATH+"/images/report/running.png' title='正在运行...''/></td></tr>"
+    		  var imgTr = "<tr><td style='text-align: center;height: 60px;' rowspan='"+num+"' colspan='"+th_size+"'><img src='"+CONTEXT_PATH+"/images/report/running.png' title='正在运行...''/></td></tr>"
     		  $(this).find("tbody").append(imgTr);
     	  }else{ // 否则就正常补齐
     		  for(i=0;i<num;i++){
@@ -1634,7 +1634,7 @@
     });
   });
   
-  celloudApp.controller("dataReportController", function($rootScope, $routeParams, $scope,projectReportService,dataReportService){
+  celloudApp.controller("dataReportController", function($rootScope, $routeParams, $scope,$location,projectReportService,dataReportService){
     $scope.searchInfo = dataReportService.getSearchInfos();
     
     $scope.dataOptions = {
@@ -1674,7 +1674,7 @@
     	var period = $scope.dataOptions.period;
     	var batch = $scope.dataOptions.batch;
     	var condition = $scope.dataOptions.condition;
-    	window.location.href = CONTEXT_PATH + "/index#/reportdata/" + page + "/" + pageSize + "/" + fullDate + "/" + beginDate + "/" + endDate + "/" + tagId + "/" + period + "/" + batch + "/" + condition;
+    	$location.path("/reportdata/" + page + "/" + pageSize + "/" + fullDate + "/" + beginDate + "/" + endDate + "/" + tagId + "/" + period + "/" + batch + "/" + (condition.length==0?"all":condition));
     }
     
     $scope.pageQuery = function(page,pageSize){

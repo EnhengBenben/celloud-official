@@ -10,11 +10,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
+import com.celloud.constants.FileFormat;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.mapper.DataFileMapper;
@@ -266,12 +269,16 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public String getAnotherName(String filePath, String fileDataKey, String perlPath, String outPath) {
-		String anotherName = null;
+	public String getAnotherName(HttpServletRequest request, String filePath, String fileDataKey) {
+		ServletContext sc = request.getSession().getServletContext();
+		//TODO 写死的路径
+		String perlPath = sc.getRealPath("/resources") + "/plugins/getAliases.pl";
+		String outPath = sc.getRealPath("/temp") + "/" + fileDataKey;
 		StringBuffer command = new StringBuffer();
 		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);
 		PerlUtils.excutePerl(command.toString());
 		String anothername = FileTools.getFirstLine(outPath);
+		String anotherName = null;
 		if (anothername != null) {
 			anothername = anothername.replace(" ", "_").replace("\t", "_");
 			String regEx1 = "[^\\w+$]";
@@ -284,17 +291,20 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public int updateFileInfo(Integer dataId, String dataKey, String newName, String perlPath, String outPath,
-			String folderByDay, String batch, Integer fileFormat, Integer tagId) {
+	public int updateFileInfo(Integer dataId, String dataKey, String filePath, String batch,
+			Integer fileFormat, String md5, String anotherName, Integer tagId) {
 		DataFile data = new DataFile();
 		data.setFileId(dataId);
-		String filePath = folderByDay + File.separator + newName;
-		data.setSize(FileTools.getFileSize(filePath));
 		data.setDataKey(dataKey);
 		data.setPath(filePath);
+		data.setSize(FileTools.getFileSize(filePath));
 		data.setBatch(batch);
 		data.setFileFormat(fileFormat);
+		data.setMd5(md5);
 		data.setState(DataState.ACTIVE);
+		if (fileFormat == FileFormat.BAM) {
+			data.setAnotherName(anotherName);
+		}
 		if (tagId == null) {
 			return dataService.updateDataInfoByFileId(data);
 		} else {
@@ -325,4 +335,9 @@ public class DataServiceImpl implements DataService {
 		data.setState(DataState.DEELTED);
 		return dataService.addDataInfo(data);
 	}
+
+    @Override
+    public List<DataFile> getDataFileFromTbTask(Integer projectId) {
+        return this.dataFileMapper.getDataFileFromTbTask(projectId);
+    }
 }

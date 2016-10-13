@@ -19,7 +19,7 @@
 			      </a>
 			    </li>
 			    <li ng-if="userProduct.app123==123">
-			      <a href="<%=request.getContextPath()%>/rocky">
+			      <a href="${pageContext.request.contextPath }/index#/product/rocky/upload">
 			        <div class="inner">
 			          <img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰">
 			        </div>
@@ -69,10 +69,10 @@
 	            <h1>{{map.countReport}}<span>个</span></h1>
 	            <div class="footer">
 	              <span>报告数量</span>
-	              <shiro:hasPermission name="runWithProject:button">
+	              <shiro:hasPermission name="proReport:menu">
 	              	<a href="<%=request.getContextPath()%>/index#/reportpro/1/10/1/0/all/all/0/all"><span>详情</span><i class="next-icon"></i></a>
 		          </shiro:hasPermission>
-		          <shiro:hasPermission name="runWithData:button">
+		          <shiro:hasPermission name="dataReport:menu">
 	              	<a href="<%=request.getContextPath()%>/index#/reportdata/1/20/0/all/all/all/all/all/all"><span>详情</span><i class="next-icon"></i></a>
 		          </shiro:hasPermission>
 	            </div>

@@ -160,9 +160,12 @@ public class SampleAction {
     @ActionLog(value = "扫码样本入库", button = "扫码入库")
     @RequestMapping("toScanStorage")
     @ResponseBody
-    public Integer toScanStorage(String sampleName) {
-        return changeType(sampleName, SampleExperState.SAMPLING,
+    public Map<String, String> toScanStorage(String sampleName) {
+        Map<String, String> map = new HashMap<>();
+        String result = changeType(sampleName, SampleExperState.SAMPLING,
                 SampleExperState.SCAN_STORAGE);
+        map.put("result", result);
+        return map;
     }
 
     @ActionLog(value = "获取提DNA的样本列表", button = "提DNA")
@@ -177,9 +180,12 @@ public class SampleAction {
     @ActionLog(value = "扫码提取DNA", button = "提取DNA")
     @RequestMapping("toTokenDNA")
     @ResponseBody
-    public Integer toTokenDNA(String sampleName) {
-        return changeType(sampleName, SampleExperState.SCAN_STORAGE,
+    public Map<String, String> toTokenDNA(String sampleName) {
+        Map<String, String> map = new HashMap<>();
+        String result = changeType(sampleName, SampleExperState.SCAN_STORAGE,
                 SampleExperState.TOKEN_DNA);
+        map.put("result", result);
+        return map;
     }
 
     @ActionLog(value = "获取建库中的样本列表", button = "建库")
@@ -228,20 +234,20 @@ public class SampleAction {
 
     @RequestMapping("addLibrary")
     @ResponseBody
-    public Integer addLibrary(String libraryName, String sindex,
+    public SampleStorage addLibrary(String libraryName, String sindex,
             Integer[] sampleIds) {
         List<Integer> list = sampleIds == null || sampleIds.length <= 0 ? null
                 : Arrays.asList(sampleIds);
-        Integer ssId = sampleService.addStorage(libraryName, sindex, list,
+        SampleStorage ss = sampleService.addStorage(libraryName, sindex, list,
                 ConstantsData.getLoginUserId());
         List<String> header = Arrays.asList("文库编号", "文库index", "样品编号", "样品类型",
                 "建库时间", "样本index");
         ExcelUtil.listToExcel(header,
                 sampleService.sampleListInStorage(
-                        ConstantsData.getLoginUserId(), ssId),
-                PropertiesUtil.experimentExcelPath + libraryName + ssId
+                        ConstantsData.getLoginUserId(), ss.getId()),
+                PropertiesUtil.experimentExcelPath + libraryName + ss
                         + ".xls");
-        return ssId;
+        return ss;
     }
 
     @RequestMapping("getSampleStorages")
@@ -296,23 +302,25 @@ public class SampleAction {
      * @param currentType
      * @return
      */
-    private Integer changeType(String sampleName, int prevType,
+    private String changeType(String sampleName, int prevType,
             int currentType) {
         // 判断是否已经存在上一个状态的样本
         Sample sampling = sampleService.getByNameExperState(
                 ConstantsData.getLoginUserId(), sampleName,
                 prevType);
         if (sampling == null)
-            return 0;
+            return "0";
         // 判断是否已经存在一个相同的样本
         Sample scanStorage = sampleService.getByNameExperState(
                 ConstantsData.getLoginUserId(), sampleName,
                 currentType);
         if (scanStorage != null)
-            return -1;
+            return "-1";
         // 如果存在上一个状态并且不存在当前状态, 则更新状态
-        return sampleService.updateExperState(ConstantsData.getLoginUserId(),
+        sampleService.updateExperState(ConstantsData.getLoginUserId(),
                 currentType, sampling.getSampleId());
+        return DateUtil.getDateToString(sampling.getLogDate(),
+                "yyyy-MM-dd HH:mm:ss");
     }
 
 }

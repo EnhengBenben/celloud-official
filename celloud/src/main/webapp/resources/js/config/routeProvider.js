@@ -225,6 +225,14 @@
       templateUrl: "pages/experiment_scan/library_detail.jsp",
       controller: "storagesController"
     })
+    .when('/product/rocky/upload',{
+      templateUrl: "pages/rocky/rocky_upload.jsp",
+      controller: "rockyUploadController"
+    })
+    .when('/product/rocky/report',{
+      templateUrl: "pages/rocky/rocky_report.jsp",
+      controller: "rockyReportController"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()

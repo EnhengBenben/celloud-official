@@ -703,4 +703,16 @@
 			</otherwise>
 		</choose>
 	</select>
+	<select id="getDataFileFromTbTask" resultMap="BaseResultMap">
+	   SELECT
+       <include refid="Base_Column_List" />
+       FROM tb_file
+       WHERE data_key
+       IN(
+       SELECT data_key
+       FROM tb_task
+       WHERE project_id = #{projectId}
+       AND period = 2
+       )
+	</select>
 </mapper>

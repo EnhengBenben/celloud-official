@@ -54,6 +54,7 @@ var src = {
       'src/main/webapp/resources/js/report/dataReportService.js',
       'src/main/webapp/resources/js/report/dataReportController.js',
       'src/main/webapp/resources/js/config/routeProvider.js',
+      'src/main/webapp/resources/js/config/sessionInterceptor.js',
       'src/main/webapp/resources/js/common/service.js',
       'src/main/webapp/resources/js/common/controller.js',
       'src/main/webapp/resources/js/common/filter.js',
@@ -64,7 +65,9 @@ var src = {
       'src/main/webapp/resources/js/notice/messageController.js',
       'src/main/webapp/resources/js/notice/noticeController.js',
       'src/main/webapp/resources/js/feedback/service.js',
-      'src/main/webapp/resources/js/feedback/controller.js'
+      'src/main/webapp/resources/js/feedback/controller.js',
+      'src/main/webapp/resources/js/rocky/service.js',
+      'src/main/webapp/resources/js/rocky/controller.js'
   ]
 }
 var dist = {
@@ -101,13 +104,11 @@ gulp.task('combinejs', function () {
 */
 gulp.task('less', function() {
   return gulp.src(src.less)
-      .pipe(watch(src.less))
       .pipe(rename({suffix: '.min'}))
       .pipe(less())
       .pipe(autoprefix())
       .pipe(cssmin())
-      .pipe(gulp.dest(dist.css))
-      .pipe(livereload());
+      .pipe(gulp.dest(dist.css));
 });
 
 /* default */
