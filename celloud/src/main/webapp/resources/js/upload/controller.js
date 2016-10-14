@@ -29,7 +29,7 @@
 				chunk_size : '1mb',
 				dragdrop : true,
 				unique_names:true,
-				drop_element : 'plupload-content',
+				drop_element : 'plupload-content', // 设置可拖拽上传
 				// Specify what files to browse for
 				filters : {
 					max_file_size : '3gb',
@@ -46,7 +46,7 @@
 						{title : "txt", extensions : "txt"}
 					]
 				},
-				max_retries : 0,
+				max_retries : 0,// 重试次数
 				multiple_queues : true,
 				// Flash settings
 				flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf',
@@ -66,12 +66,12 @@
 					clearInterval(refresh);
 				}
 			});
-			uploader.bind("UploadProgress", function(uploader, file) {
+			uploader.bind("UploadProgress", function(uploader, file) { // 上传过程中
 				$("#uploading-" + file.id +" .plupload-file-status").html(file.percent+"%");
 				$("#uploading-" + file.id + " .plupload-file-surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
 				$("#uploading-" + file.id + " .plupload_file_speed").html(getSize(uploader.total.bytesPerSec)+"/s");
 			});
-			uploader.bind("FilesAdded", function(uploader, files) {
+			uploader.bind("FilesAdded", function(uploader, files) { // 文件添加结束后
 				$scope.isCancel = false;
 				$.get("uploadFile/checkAdminSessionTimeOut",function(response){
 					if(response){//session超时则执行下两步
@@ -131,7 +131,7 @@
 				}
 				handleStatus(file);
 			});
-			uploader.bind("UploadComplete",function(uploader,files){
+			uploader.bind("UploadComplete",function(uploader,files){ // 文件上传完成(只要uploader中没有排队的文件就算完成)
 				$scope.step = 'one';
 				if(!$scope.isCancel){
 					$("#upload-list-tbody").children().remove();
@@ -142,10 +142,10 @@
 					}
 				}
 			});
-			uploader.bind("BeforeUpload", function(uploader, file) {
+			uploader.bind("BeforeUpload", function(uploader, file) { // 上传之前设置参数
 				uploader.setOption("multipart_params",{'originalName': file.name,'tagId':$scope.tagSelected.tagId,'batch': $scope.batch});
 			});
-			uploader.bind("Error", function(uploader, error) {
+			uploader.bind("Error", function(uploader, error) { // 发生错误
 				if(error.code=='-602'){
 					alert("当前队列已存在文件【"+error.file.name+"】，请勿重复添加！");
 				}

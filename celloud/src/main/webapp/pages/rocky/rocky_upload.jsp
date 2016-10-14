@@ -74,8 +74,8 @@
 					<div class="box-body plupload-content">
 						<div class="upload-text">
 							<i class="celicon -uploadgray"></i>文件上传成功，继续上传，请点击 <a
-								ng-click="stepTwo();">继续添加</a> 或 <a
-								ng-click="stepOne();">新上传</a>
+								ng-click="continueUpload();">继续添加</a> 或 <a
+								ng-click="newUpload();">新上传</a>
 						</div>
 					</div>
 				</div>
