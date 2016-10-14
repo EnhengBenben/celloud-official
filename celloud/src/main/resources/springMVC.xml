@@ -255,7 +255,7 @@
 				/css/** = anon
 				/plugins/** = anon
 				/resources/** = anon
-				/kaptcha.jpg = anon
+				/kaptcha = anon
 				/home/** = anon
 				/home** = anon
 				/feedback/save = anon

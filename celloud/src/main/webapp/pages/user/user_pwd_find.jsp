@@ -43,7 +43,7 @@
                                 <div class="yzm">
                                     <input type="text" class="yzm input-bottom" placeholder="验证码" id="inputValidateCode" name="kaptchaCode"
                                         value="${requestScope.kapcode }" />
-                                    <img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha.jpg" id="kaptchaImage" alt="验证码"
+                                    <img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage" alt="验证码"
                                         class="validateCode" style="cursor: pointer;" />
                                 </div>
                                 <a href="javascript:void()" class="btn-login btn-email" onclick="javascript:submitEmail();">发送邮件</a>
