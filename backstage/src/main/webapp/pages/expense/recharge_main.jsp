@@ -103,7 +103,7 @@
 	                            <input type="text" class="yzm input-bottom" placeholder="验证码" id="captcha"
 	                                name="kaptchaCode" value="${requestScope.kapcode }" data-rule-required="true"/>
 	                            <img title="看不清，换一张"
-	                                src="<%=request.getContextPath()%>/kaptcha.jpg" id="kaptchaImage"
+	                                src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage"
 	                                alt="验证码" class="validateCode" style="cursor: pointer;" />
 	                        </div>
                         </div>
