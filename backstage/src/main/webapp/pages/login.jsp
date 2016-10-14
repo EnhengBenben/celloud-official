@@ -52,7 +52,7 @@
                         <span class="btn-login checkbox-un" id="remPass"></span>
                         <input id="isRem" name="isRem" value="0" type="hidden">
                                             记住密码
-                        <a href="forgot.html" class="forget">忘记密码</a>
+                        <a href="../forgot.html" class="forget">忘记密码</a>
                     </div>
                 </div>
             </form>
