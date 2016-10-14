@@ -1,10 +1,13 @@
 package com.celloud.manager.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class App {
-    private Integer appId;
+public class App implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private Integer appId;
 
     private String appName;
 

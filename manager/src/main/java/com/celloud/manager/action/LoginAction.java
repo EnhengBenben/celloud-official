@@ -22,11 +22,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.manager.constants.Constants;
 import com.celloud.manager.constants.ConstantsData;
+import com.celloud.manager.model.App;
 import com.celloud.manager.model.PrivateKey;
 import com.celloud.manager.model.PublicKey;
 import com.celloud.manager.model.RSAKey;
 import com.celloud.manager.model.User;
 import com.celloud.manager.service.ActionLogService;
+import com.celloud.manager.service.AppService;
 import com.celloud.manager.service.RSAKeyService;
 import com.celloud.manager.service.UserService;
 import com.celloud.manager.utils.CookieUtils;
@@ -41,6 +43,8 @@ public class LoginAction {
     private UserService userService;
     @Resource
     private ActionLogService logService;
+	@Resource
+	private AppService appService;
     
     /**
      * 跳转到登录页面
@@ -142,6 +146,11 @@ public class LoginAction {
             saveRSAKey(publicKey, privateKey, loginUser);
         }
         session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+		//TODO 写死的华木兰和百菌探id
+		App bsi = appService.selectByPrimaryKey(118);
+		App rocky = appService.selectByPrimaryKey(123);
+		session.setAttribute("bsi", bsi);
+		session.setAttribute("rocky", rocky);
         mv.setViewName("loading");
         return mv;
     }

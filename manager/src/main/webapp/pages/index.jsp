@@ -189,25 +189,31 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- 实验元数据 -->
-                    <li>
-                        <a href="#">
-                            <i class="fa-database"></i>
-                            <span class="title">实验元数据 </span>
-                        </a>
-                        <ul>
-                            <li id="to-bsi">
-                                <a href="javascript:void(0);">
-                                    <span class="title">百菌探</span>
-                                </a>
-                            </li>
-                            <li id="to-rocky">
-                                <a href="javascript:void(0);">
-                                    <span class="title">华木兰</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    <c:if test="${ loginUserInSession.companyId==bsi.companyId||loginUserInSession.companyId==rocky.companyId}">
+	                    <!-- 实验元数据 -->
+	                    <li>
+	                        <a href="#">
+	                            <i class="fa-database"></i>
+	                            <span class="title">实验元数据</span>
+	                        </a>
+	                        <ul>
+	                        <c:if test="${ loginUserInSession.companyId==bsi.companyId}">
+	                            <li id="to-bsi">
+	                                <a href="javascript:void(0);">
+	                                    <span class="title">百菌探</span>
+	                                </a>
+	                            </li>
+	                         </c:if>
+	                         <c:if test="${ loginUserInSession.companyId==rocky.companyId}">
+	                            <li id="to-rocky">
+	                                <a href="javascript:void(0);">
+	                                    <span class="title">华木兰</span>
+	                                </a>
+	                            </li>
+	                          </c:if>
+	                        </ul>
+	                    </li>
+                    </c:if>
                 </ul>
             </div>
         </div>

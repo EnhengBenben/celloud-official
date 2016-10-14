@@ -127,4 +127,6 @@ public interface AppService {
      *
      */
     public int grant(Integer appId, Integer[] userIds);
+
+	App selectByPrimaryKey(Integer appId);
 }

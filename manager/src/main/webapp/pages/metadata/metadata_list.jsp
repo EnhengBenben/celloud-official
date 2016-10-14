@@ -11,18 +11,16 @@
 </div>
 <div class="page-content">
 	<div class="panel panel-default">
-		<div class="panel-heading">
-		    <div class="panel-options" style="float: left;">
-		    	<select onchange="$.metadata.change()" id="metadataFlag">
-		    		<option value="0">种类</option>
-		    		<option value="1">样本index</option>
-		    		<option value="2">文库index</option>
-		    	</select>
-		     </div>
-		    <div class="panel-options">
-		         <button class="btn btn-danger" type="button" onclick="$.metadata.toEdit(null);" style="margin-bottom:0;">新增</button>
-		     </div>
-		</div>
+	    <div style="float: left;">
+	    	<select onchange="$.metadata.change()" id="metadataFlag">
+	    		<option value="0">种类</option>
+	    		<option value="1">样本index</option>
+	    		<option value="2">文库index</option>
+	    	</select>
+	     </div>
+		 <div style="float: right;">
+	         <button class="btn btn-danger" type="button" onclick="$.metadata.toEdit(null);" style="margin-bottom:0;">新增</button>
+	     </div>
 	</div>
     <div class="row">
           <div class="table-responsive table-div col-sm-12">
