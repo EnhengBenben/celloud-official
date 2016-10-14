@@ -25,7 +25,7 @@ public class ApiService {
 		params.put("tagId", tagId);
 		params.put("batch", batch);
 		ApiResponse response = HttpClientUtil.post(api.getNewfile(), params);
-		return new Newfile(response.getData());
+		return response.isSuccess() ? new Newfile(response.getData()) : null;
 	}
 
 	public boolean updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit) {

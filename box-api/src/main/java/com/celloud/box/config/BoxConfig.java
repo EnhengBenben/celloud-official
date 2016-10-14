@@ -1,5 +1,10 @@
 package com.celloud.box.config;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -11,20 +16,23 @@ public class BoxConfig {
 	 */
 	private String uploadPath;
 	/**
-	 * 当前的运行环境：<br />
-	 * dev=开发环境
-	 * test=测试环境
-	 * prod=生产环境
+	 * 网卡名称
 	 */
-	private String env;
-
-	public String getEnv() {
-		return env;
-	}
-
-	public void setEnv(String env) {
-		this.env = env;
-	}
+	@NotNull
+	@NotBlank
+	private String network;
+	/**
+	 * 盒子往oss上传时，最大可同时上传的文件数量
+	 */
+	@Min(1)
+	@Max(10)
+	private Integer maxUploading = 3;
+	@Min(0)
+	@Max(10)
+	private Integer maxRetry = 2;
+	@Min(1)
+	@Max(365)
+	private Integer retentionDays = 30;
 
 	public String getUploadPath() {
 		return uploadPath;
@@ -32,6 +40,38 @@ public class BoxConfig {
 
 	public void setUploadPath(String uploadPath) {
 		this.uploadPath = uploadPath;
+	}
+
+	public String getNetwork() {
+		return network;
+	}
+
+	public void setNetwork(String network) {
+		this.network = network;
+	}
+
+	public Integer getMaxUploading() {
+		return maxUploading;
+	}
+
+	public void setMaxUploading(Integer maxUploading) {
+		this.maxUploading = maxUploading;
+	}
+
+	public Integer getMaxRetry() {
+		return maxRetry;
+	}
+
+	public void setMaxRetry(Integer maxRetry) {
+		this.maxRetry = maxRetry;
+	}
+
+	public Integer getRetentionDays() {
+		return retentionDays;
+	}
+
+	public void setRetentionDays(Integer retentionDays) {
+		this.retentionDays = retentionDays;
 	}
 
 }
