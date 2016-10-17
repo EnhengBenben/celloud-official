@@ -24,7 +24,16 @@ public class UploadPath {
 	 * @return
 	 */
 	public static String getUploadingPath(Integer userId) {
-		return getRootPath() + S + "uploading" + S + userId + S + DateUtils.formartToday("yyyyMMdd") + S;
+		return getRootPath() + S + "uploading" + S + DateUtils.formartToday("yyyyMMdd") + S + userId + S;
+	}
+
+	/**
+	 * 获取未上传到OSS的文件在盒子上存储的根路径
+	 * 
+	 * @return
+	 */
+	public static String getUploadingPath() {
+		return getRootPath() + S + "uploading" + S;
 	}
 
 	/**

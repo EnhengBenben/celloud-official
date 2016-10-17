@@ -157,11 +157,4 @@ public class DataFile {
 		}
 		return dataFile;
 	}
-
-	public static void main(String[] args) {
-		DataFile file = new DataFile();
-		file.setBatch("aaaaaa");
-		file.serialize();
-	}
-
 }

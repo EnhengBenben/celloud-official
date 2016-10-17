@@ -18,7 +18,7 @@ public class LocalIpAddressUtil {
 		return resolveLocalNetworks().keySet();
 	}
 
-	public static String getLocalArress(String displayName) {
+	public static String getLocalArress(String name) {
 		Enumeration<NetworkInterface> ns = null;
 		try {
 			ns = NetworkInterface.getNetworkInterfaces();
@@ -27,7 +27,7 @@ public class LocalIpAddressUtil {
 		}
 		while (ns != null && ns.hasMoreElements()) {
 			NetworkInterface n = ns.nextElement();
-			if (n.getDisplayName().equals(displayName)) {
+			if (n.getName().equals(name)) {
 				Enumeration<InetAddress> is = n.getInetAddresses();
 				while (is.hasMoreElements()) {
 					InetAddress i = is.nextElement();
@@ -41,8 +41,8 @@ public class LocalIpAddressUtil {
 		return null;
 	}
 
-	public static Map<InetAddress, String> resolveLocalNetworks() {
-		Map<InetAddress, String> networks = new HashMap<>();
+	public static Map<InetAddress, NetworkInterface> resolveLocalNetworks() {
+		Map<InetAddress, NetworkInterface> networks = new HashMap<>();
 		Enumeration<NetworkInterface> ns = null;
 		try {
 			ns = NetworkInterface.getNetworkInterfaces();
@@ -56,7 +56,7 @@ public class LocalIpAddressUtil {
 				InetAddress i = is.nextElement();
 				if (!i.isLoopbackAddress() && !i.isLinkLocalAddress() && !i.isMulticastAddress()
 						&& !isSpecialIp(i.getHostAddress()))
-					networks.put(i, n.getDisplayName());
+					networks.put(i, n);
 			}
 		}
 		return networks;

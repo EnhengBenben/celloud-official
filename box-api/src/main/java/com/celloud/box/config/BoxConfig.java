@@ -2,7 +2,6 @@ package com.celloud.box.config;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -18,8 +17,7 @@ public class BoxConfig {
 	/**
 	 * 网卡名称
 	 */
-	@NotNull
-	@NotBlank
+	@NotBlank(message = "网卡的名字不能为null")
 	private String network;
 	/**
 	 * 盒子往oss上传时，最大可同时上传的文件数量
