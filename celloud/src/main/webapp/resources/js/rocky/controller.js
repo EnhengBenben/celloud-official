@@ -38,7 +38,7 @@
 			var uploader = new plupload.Uploader({
 				runtimes : 'html5,flash,silverlight,html4',
 				browse_button : 'plupload-content',
-				url : CONTEXT_PATH+"/uploadFile/rocky",
+				url : CONTEXT_PATH+"/uploadFile/uploadManyFile",
 				chunk_size : '1mb',
 				drop_element : 'plupload-content',
 				filters : {
@@ -88,7 +88,7 @@
 			});
 			uploader.bind("BeforeUpload", function(uploader, file) {
 				$("#" + file.id +" .percent").html("正在上传");
-				uploader.setOption("multipart_params",{"tagId":$("#tag-info-input").val(),"batch":$("#batch-info-input").val(),"uniqueName":file.id});
+				uploader.setOption("multipart_params",{'originalName': file.name, "tagId":2, "batch":$("#batch-info-input").val(), 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
 			});
 			uploader.bind("FileUploaded", function(uploader, file, response) {
 				var res = JSON.parse(response.response);
