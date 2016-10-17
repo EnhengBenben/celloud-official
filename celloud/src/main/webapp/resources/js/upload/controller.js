@@ -143,7 +143,7 @@
 				}
 			});
 			uploader.bind("BeforeUpload", function(uploader, file) {
-				uploader.setOption("multipart_params",{'originalName': file.name,'tagId':$scope.tagSelected.tagId,'batch': $scope.batch});
+				uploader.setOption("multipart_params",{'originalName': file.name,'tagId':$scope.tagSelected.tagId,'batch': $scope.batch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate});
 			});
 			uploader.bind("Error", function(uploader, error) {
 				if(error.code=='-602'){
