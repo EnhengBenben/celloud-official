@@ -39,12 +39,12 @@ function needCLodop(){
 if (needCLodop()) {
 	var head = document.head || document.getElementsByTagName("head")[0] || document.documentElement;
 	var oscript = document.createElement("script");
-	oscript.src ="https://localhost:8443/CLodopfuncs.js?priority=1";
+	oscript.src ="http://localhost:8000/CLodopfuncs.js?priority=1";
 	head.insertBefore( oscript,head.firstChild );
-//	//本机云打印的后补端口8001：
-//	oscript = document.createElement("script");
-//	oscript.src ="http://localhost:8001/CLodopfuncs.js?priority=2";
-//	head.insertBefore( oscript,head.firstChild );
+	//本机云打印的后补端口8001：
+	oscript = document.createElement("script");
+	oscript.src ="http://localhost:8001/CLodopfuncs.js?priority=2";
+	head.insertBefore( oscript,head.firstChild );
 };
 
 //====获取LODOP对象的主过程：====
