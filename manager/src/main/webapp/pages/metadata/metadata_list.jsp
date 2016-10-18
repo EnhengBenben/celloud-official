@@ -12,8 +12,8 @@
 <div class="page-content">
 	<div class="panel panel-default">
 	    <div style="float: left;">
+	    	种类
 	    	<select onchange="$.metadata.change()" id="metadataFlag">
-	    		<option value="0">种类</option>
 	    		<option value="1">样本index</option>
 	    		<option value="2">文库index</option>
 	    	</select>
