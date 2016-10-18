@@ -10,12 +10,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RockyTxtUtils {
 	public static void main(String[] args) throws Exception {
-		File file = new File("/Users/sun8wd/Documents/rocky/variation_clinical_significance_20161011.txt");
+		File file = new File("/Users/sun8wd/Documents/rocky/variation_clinical_significance_20161014.txt");
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		String line = null;
 		String value = "";
 		Map<String, String> map = new HashMap<>();
 		while ((line = reader.readLine()) != null) {
+			if (line.trim().length() == 0) {
+				System.out.println("===");
+				continue;
+			}
 			String title = parseTitle(line);
 			if (title != null) {
 				map.put(title, value);
@@ -25,7 +29,7 @@ public class RockyTxtUtils {
 			}
 		}
 		ObjectMapper mapper = new ObjectMapper();
-//		mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+		// mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 		mapper.writeValue(new File("/Users/sun8wd/Documents/rocky/Rocky.txt"), map);
 		reader.close();
 		// with open('data.json', 'r') as f:
