@@ -358,8 +358,9 @@ public class RunServiceImpl implements RunService {
 				logger.info("数据{}上传完可以运行", originalName);
 				runSingle(data.getUserId(), appId, new ArrayList<>(datas.values()));
 			}
+        } else {
+            logger.info("数据{}上传完不可以运行", originalName);
 		}
-		logger.info("数据{}上传完不可以运行", originalName);
 	}
 
 }
