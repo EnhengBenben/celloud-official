@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.Constants;
@@ -33,6 +34,15 @@ public class WeChatAction {
 	private UserService us;
     @Resource
     private WechatUtils wechatUtils;
+
+	@RequestMapping(value = "checkUrl", method = RequestMethod.GET)
+	@ResponseBody
+	public String checkUrl(String signature, String timestamp, String nonce, String echostr) {
+		if (wechatUtils.checkUrl(signature, timestamp, nonce)) {
+			return echostr;
+		}
+		return null;
+	}
 
 	@RequestMapping(value = "getState", method = RequestMethod.GET)
     public ModelAndView getState(String state, String code) {

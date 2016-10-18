@@ -1,7 +1,11 @@
 package com.celloud.wechat;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +25,30 @@ public class WechatUtils {
 	private String appId;
 	private String appSecret;
 	private String loginHtml;
+	private String urlToken;
 
 	//wechat url
     private String oAuth2Url;
     private String oAuth2TokenUrl;
     private String tokenUrl;
     private String templateUrl;
+
+	public boolean checkUrl(String signature, String timestamp, String nonce) {
+		List<String> param = new ArrayList<>();
+		param.add(urlToken);
+		param.add(timestamp);
+		param.add(nonce);
+		//1）将token、timestamp、nonce三个参数进行字典序排序
+		Collections.sort(param);
+		//2）将三个参数字符串拼接成一个字符串进行sha1加密
+		String params = "";
+		for (String s : param) {
+			params += s;
+		}
+		String mySignature = DigestUtils.sha256Hex(params);
+		//3）开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
+		return mySignature.equals(signature);
+	}
 
 	/**
 	 * 获取生成二维码所需要的url
@@ -165,5 +187,9 @@ public class WechatUtils {
     public void setTemplateUrl(String templateUrl) {
         this.templateUrl = templateUrl;
     }
+
+	public void setUrlToken(String urlToken) {
+		this.urlToken = urlToken;
+	}
 
 }
