@@ -67,15 +67,19 @@ public class FileUploadQueue {
 			this.printAll();
 		}
 		DataFile dataFile = DataFile.load(file + ".json");
-		String location = null;
 		boolean result = false;
-		for (int i = 0; i <= config.getMaxRetry(); i++) {
-			location = service.upload(dataFile.getObjectKey(), new File(file),
-					new OSSProgressListener(dataFile.getUserId(), dataFile.getFilename(), dataFile.getDataKey()));
-			if (location != null) {
-				result = true;
-				break;
+		if (dataFile != null) {
+			String location = null;
+			for (int i = 0; i <= config.getMaxRetry(); i++) {
+				location = service.upload(dataFile.getObjectKey(), new File(file),
+						new OSSProgressListener(dataFile.getUserId(), dataFile.getFilename(), dataFile.getDataKey()));
+				if (location != null) {
+					result = true;
+					break;
+				}
 			}
+		} else {
+			result = true;
 		}
 		uploading.remove(file);// 线程安全，不需要加锁
 		ApplicationEvent event = result ? new FileUploadedEvent(file) : new FileUploadErrorEvent(file);

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.celloud.box.config.APIConfig;
 import com.celloud.box.config.BoxConfig;
 import com.celloud.box.constants.Constants;
+import com.celloud.box.service.BoxService;
 import com.celloud.box.service.CleanService;
 import com.celloud.box.utils.LocalIpAddressUtil;
 import com.celloud.box.utils.UploadPath;
@@ -28,6 +29,8 @@ public class ApplicationStartup implements CommandLineRunner {
 	private APIConfig apiConfig;
 	@Resource
 	private CleanService cleanService;
+	@Resource
+	private BoxService boxService;
 	@Value("${spring.profiles.active:dev}")
 	private String env;
 
@@ -66,6 +69,7 @@ public class ApplicationStartup implements CommandLineRunner {
 		logger.info("");
 		logger.info("*************************************************************");
 		cleanService.clean();
+		boxService.loadUnUploadedFiles();
 	}
 
 }

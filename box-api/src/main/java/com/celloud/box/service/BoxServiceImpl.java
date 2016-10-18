@@ -2,6 +2,7 @@ package com.celloud.box.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
@@ -25,6 +26,8 @@ public class BoxServiceImpl implements BoxService {
 	private OSSService ossService;
 	@Resource
 	private ApiService apiService;
+	@Resource
+	private FileUploadQueue queue;
 
 	@Async
 	@Override
@@ -72,6 +75,8 @@ public class BoxServiceImpl implements BoxService {
 	@Override
 	public DataFile save(Integer userId, String name, Integer tagId, String batch, Integer needSplit, File f) {
 		DataFile file = new DataFile();
+		file.setPath(f.getAbsolutePath());
+		file.createFile();
 		file.setBatch(batch);
 		file.setUserId(userId);
 		file.setFilename(name);
@@ -80,7 +85,6 @@ public class BoxServiceImpl implements BoxService {
 		String md5 = MD5Util.getFileMD5(f);
 		file.setMd5(md5);
 		file.setFileSize(f.length());
-		file.setPath(f.getAbsolutePath());
 		return file.serialize() ? file : null;
 	}
 
@@ -110,6 +114,10 @@ public class BoxServiceImpl implements BoxService {
 	public DataFile updatefile(DataFile file) {
 		// 通知celloud文件已经上传到oss
 		boolean result = false;
+		if (file == null) {
+			logger.info("文件更新失败，从json未加载到数据。。。");
+			return null;
+		}
 		for (int i = 0; i < 3; i++) {// 失败需重试
 			result = apiService.updatefile(file.getObjectKey(), file.getFileId(), file.getTagId(), file.getBatch(),
 					file.getNeedSplit());
@@ -128,6 +136,9 @@ public class BoxServiceImpl implements BoxService {
 
 	@Override
 	public boolean uploaded(DataFile file) {
+		if (file == null) {
+			return false;
+		}
 		try {
 			FileUtils.moveFileToDirectory(new File(file.getPath()),
 					new File(UploadPath.getUploadedPath(file.getUserId())), true);
@@ -137,6 +148,35 @@ public class BoxServiceImpl implements BoxService {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void loadUnUploadedFiles() {
+		TreeMap<Long, String> uploadingFiles = listFiles(new File(UploadPath.getUploadingPath()));
+		for (String file : uploadingFiles.values()) {
+			queue.add(file);
+		}
+	}
+
+	private TreeMap<Long, String> listFiles(File file) {
+		TreeMap<Long, String> result = new TreeMap<>();
+		if (file == null || !file.exists()) {
+			return result;
+		}
+		if (file.isFile()) {
+			if (new File(file.getAbsolutePath() + ".json").exists()) {
+				result.put(file.lastModified(), file.getAbsolutePath());
+			}
+			return result;
+		}
+		File[] children = file.listFiles();
+		if (children == null || children.length == 0) {
+			return result;
+		}
+		for (File child : children) {
+			result.putAll(listFiles(child));
+		}
+		return result;
 	}
 
 }

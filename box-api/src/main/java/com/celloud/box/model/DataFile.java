@@ -157,4 +157,16 @@ public class DataFile {
 		}
 		return dataFile;
 	}
+
+	public boolean createFile() {
+		boolean result = false;
+		if (path != null && new File(path).exists()) {
+			try {
+				result = new File(path + ".json").createNewFile();
+			} catch (IOException e) {
+
+			}
+		}
+		return result;
+	}
 }
