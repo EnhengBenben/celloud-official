@@ -181,6 +181,9 @@
     	or 
     	seq = #{meta.seq,jdbcType=VARCHAR}
     )
+    <if test="meta.id != null" >
+        and id != #{meta.id,jdbcType=INTEGER}
+    </if>
   </select>
   <select id="getMaxPriority" resultType="java.lang.Integer">
     select 
