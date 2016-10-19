@@ -170,6 +170,18 @@
     	and priority &gt; #{meta.priority,jdbcType=INTEGER}
     )
   </select>
+  <select id="checkRepeat" resultType="com.celloud.manager.model.Metadata">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_metadata
+    where app_id = #{meta.appId,jdbcType=INTEGER} and flag = #{meta.flag,jdbcType=INTEGER} and state = #{meta.state,jdbcType=INTEGER}
+    and 
+    (
+    	name = #{meta.name,jdbcType=VARCHAR}
+    	or 
+    	seq = #{meta.seq,jdbcType=VARCHAR}
+    )
+  </select>
   <select id="getMaxPriority" resultType="java.lang.Integer">
     select 
     max(priority)

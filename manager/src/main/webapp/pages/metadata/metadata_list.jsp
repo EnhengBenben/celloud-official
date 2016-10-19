@@ -92,6 +92,12 @@
 		          <span style="color: red;"></span>
                </div>
            </div>
+           <div class="form-group">
+               <label class="col-sm-2 control-label"></label>
+               <div class="col-sm-10">
+		          <span style="color: red;" id="totalError"></span>
+               </div>
+           </div>
        </form>
       </div>
       <div class="modal-footer">
