@@ -60,12 +60,17 @@ public class ApplicationStartup implements CommandLineRunner {
 		}
 		logger.info("********************* System Properties *********************");
 		logger.info("");
+		logger.info("box.serialNumber  =  {}", boxConfig.getSerialNumber());
+		logger.info("box.appName       =  {}", boxConfig.getAppName());
+		logger.info("box.version       =  {}", boxConfig.getVersion());
+		logger.info("box.Artifact      =  {}", boxConfig.getArtifact());
 		logger.info("box.environment   =  {}", Constants.env);
 		logger.info("box.uploadPath    =  {}", boxConfig.getUploadPath());
 		logger.info("box.localIp       =  {}", ip);
 		logger.info("box.maxRetry      =  {}", boxConfig.getMaxRetry());
 		logger.info("box.maxUploading  =  {}", boxConfig.getMaxUploading());
 		logger.info("box.retentionDays =  {}", boxConfig.getRetentionDays());
+
 		logger.info("");
 		logger.info("api.newfile       =  {}", apiConfig.getNewfile());
 		logger.info("api.updatefile    =  {}", apiConfig.getUpdatefile());
@@ -74,7 +79,6 @@ public class ApplicationStartup implements CommandLineRunner {
 		logger.info("*************************************************************");
 		cleanService.clean();
 		boxService.loadUnUploadedFiles();
-		apiService.reportHealth();
 	}
 
 }

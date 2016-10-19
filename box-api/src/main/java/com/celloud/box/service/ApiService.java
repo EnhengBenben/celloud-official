@@ -49,17 +49,13 @@ public class ApiService {
 	}
 
 	@Async
-	@Scheduled(cron = "0 0/5 * * * *")
+	@Scheduled(fixedRate = 1000 * 60 * 3)
 	public void reportHealth() {
 		Map<String, Object> params = new HashMap<>();
 		params.put("version", config.getVersion());
 		params.put("ip", LocalIpAddressUtil.getLocalArress(config.getNetwork()));
 		params.put("serialNumber", config.getSerialNumber());
 		ApiResponse response = HttpClientUtil.post(api.getReportHealth(), params);
-		if (response.isSuccess()) {
-			logger.info("成功。。。");
-		} else {
-			logger.info("失败。。。");
-		}
+		logger.info("状态更新{}", response.isSuccess() ? "成功" : "失败");
 	}
 }

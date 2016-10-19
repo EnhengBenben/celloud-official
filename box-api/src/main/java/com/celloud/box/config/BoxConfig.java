@@ -121,5 +121,5 @@ public class BoxConfig {
 	public void setArtifact(String artifact) {
 		this.artifact = artifact;
 	}
-	
+
 }
