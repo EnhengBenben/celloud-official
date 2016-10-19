@@ -27,4 +27,6 @@ public interface MetadataMapper {
 	Metadata selectUp(@Param("meta") Metadata meta);
 
 	Metadata selectDown(@Param("meta") Metadata meta);
+
+	List<Metadata> checkRepeat(@Param("meta") Metadata meta);
 }

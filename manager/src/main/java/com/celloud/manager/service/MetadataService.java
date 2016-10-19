@@ -88,4 +88,14 @@ public interface MetadataService {
 	 */
 	Integer updateMove(Metadata d1, Metadata d2);
 
+	/**
+	 * 校验名称和序列是否重复
+	 * 
+	 * @param meta
+	 * @return
+	 * @author lin
+	 * @date 2016年10月19日上午11:21:37
+	 */
+	Integer checkRepeat(Metadata meta);
+
 }

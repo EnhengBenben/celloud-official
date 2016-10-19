@@ -44,6 +44,7 @@ function init_metadata(){
         }else{
           $("#meta_title").html("编辑");
         }
+        $("#totalError").html("");
         $("#id").val(id);
         $("#name").val(name);
         $("#seq").val(seq);
@@ -52,8 +53,27 @@ function init_metadata(){
     	  $("#metadata-modal").modal("show");
       },
       save:function(){
-        $.get("metadata/updateMetadata",$("#metadataForm").serialize(),function(responseText){
-          $.metadata.metadataList();
+        var name = $("#name").val().trim();
+        if(!name){
+          $("#name").next().html("名称不能为空");
+          return;
+        }
+        $("#name").next().html("");
+        var seq = $("#seq").val().trim();
+        if(!seq){
+          $("#seq").next().html("序列不能为空");
+          return;
+        }
+        $("#seq").next().html("");
+        $.get("metadata/checkRepeat",$("#metadataForm").serialize(),function(flag){
+          if(flag==0){
+            $.get("metadata/updateMetadata",$("#metadataForm").serialize(),function(responseText){
+              $.metadata.metadataList();
+              $("#metadata-modal").modal("hide");
+            });
+          }else{
+            $("#totalError").html("名称和序列均不能与已有的重复！");
+          }
         });
       },
       change:function(){
