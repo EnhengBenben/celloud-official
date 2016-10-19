@@ -1110,7 +1110,10 @@ public class ReportAction {
     public Map<String, Object> getHBVInfo(String dataKey, Integer projectId, Integer appId) {
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
+        Map<String, Map<String, String>> hbvOtherSiteMap = reportService
+                .getHBVOtherSiteByUserId(ConstantsData.getLoginUserId(), appId);
         Map<String, Object> map = getCommonInfo(projectId);
+        map.put("hbvOtherSiteMap", hbvOtherSiteMap);
         map.put("hbv", hbv);
         return map;
     }
