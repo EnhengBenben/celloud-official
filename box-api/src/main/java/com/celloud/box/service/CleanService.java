@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -23,27 +24,47 @@ public class CleanService {
 	@Resource
 	private BoxConfig config;
 
-	@Scheduled(cron = "0 0 0/2 * * ? ") // 每5秒执行一次
+	@Async
+	@Scheduled(cron = "0 0 0/2 * * ? ")
 	public void clean() {
 		logger.info("cleanning...");
-		File uploading = new File(UploadPath.getUploadingPath());
-		if (!uploading.exists()) {
+		File rootPath = new File(UploadPath.getRootPath());
+		if (!rootPath.exists()) {
 			return;
 		}
+		File[] userPath = rootPath.listFiles();
+		for (File file : userPath) {
+			if (isNumber(file.getName())) {// userId必须为数字
+				delete(file);
+			}
+		}
+	}
+
+	public void delete(File userPath) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_YEAR, 0 - config.getRetentionDays());
-		File[] toBeDeleted = uploading.listFiles();
+		File[] toBeDeleted = userPath.listFiles();
 		for (File file : toBeDeleted) {
 			Date date = DateUtils.parse(file.getName(), "yyyyMMdd");
 			if (date == null || calendar.getTime().after(date)) {
 				try {
 					FileUtils.forceDelete(file);
 					logger.info("deleted：{}", file.getAbsolutePath());
-				} catch (IOException e) { 
+				} catch (IOException e) {
 					logger.error("文件删除失败:{}", file.getAbsolutePath(), e);
 				}
 
 			}
 		}
+	}
+
+	public boolean isNumber(String content) {
+		boolean result = false;
+		try {
+			Integer.parseInt(content);
+			result = true;
+		} catch (Exception e) {
+		}
+		return result;
 	}
 }
