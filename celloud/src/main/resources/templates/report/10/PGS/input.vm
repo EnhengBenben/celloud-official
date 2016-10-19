@@ -13,7 +13,7 @@
 	<td><span><input name="baseInfo['type']" value="$!pgs.baseInfo.type" type="text" class="input-mini onlybotton" /></span></td>
 	<th>申请日期</th>
 	<td><span><input name="baseInfo['applyDate']" value="$!pgs.baseInfo.applyDate" type="text" class="input-mini onlybotton" /></span></td>
-	<th>接收日期</th>
+	<th>住院号</th>
 	<td><span><input name="baseInfo['receiveDate']" value="$!pgs.baseInfo.receiveDate" type="text" class="input-mini onlybotton" /></span></td>
 	<th>样本状态</th>
 	<td><span><input name="baseInfo['state']" value="$!pgs.baseInfo.state" type="text" class="input-mini onlybotton" /></span></td>
