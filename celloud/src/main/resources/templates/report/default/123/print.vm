@@ -161,7 +161,7 @@
 									<td>$!record.chromosome</td>
 									<td>$!record.acids</td>
 									<td>$!record.nucleotides</td>
-									<td>$!record.significance</td>
+									<td>${significances.get($!record.significance)}</td>
 								</tr>
 								#end
 							</tbody>
@@ -187,7 +187,7 @@
 								#foreach($record in $!rocky.records)
 								<tr>
 									<td style="width: 170px;">
-										<i>$record.gene</i>:&nbsp;$record.acids<br>$!record.significance
+										<i>$record.gene</i>:&nbsp;$record.acids<br>${significances.get($!record.significance)}
 									</td>
 									<td>$record.description</td>
 								</tr>

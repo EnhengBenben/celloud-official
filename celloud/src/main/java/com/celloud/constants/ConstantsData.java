@@ -228,4 +228,13 @@ public class ConstantsData {
 		}
 		return localAddr;
 	}
+	public static Map<String,String> significances(){
+		Map<String, String> significances = new HashMap<>();
+		significances.put("Pathogenic", "致病相关变异");
+		significances.put("Likely pathogenic", "可能致病变异");
+		significances.put("Uncertain significance", "意义不明确变异");
+		significances.put("Likely benign", "可能良性变异");
+		significances.put("Benign", "良性变异");
+		return significances;
+	}
 }

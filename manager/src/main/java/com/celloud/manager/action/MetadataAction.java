@@ -70,4 +70,18 @@ public class MetadataAction {
 		Metadata m2 = ms.selectDown(m1);
 		return ms.updateMove(m1, m2);
 	}
+
+	/**
+	 * 
+	 * 
+	 * @param metadata
+	 * @return
+	 * @author lin
+	 * @date 2016年10月19日上午11:28:19
+	 */
+	@RequestMapping("checkRepeat")
+	@ResponseBody
+	public Integer checkRepeat(Metadata metadata) {
+		return ms.checkRepeat(metadata);
+	}
 }
