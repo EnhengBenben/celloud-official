@@ -52,8 +52,21 @@ function init_metadata(){
     	  $("#metadata-modal").modal("show");
       },
       save:function(){
+        var name = $("#name").val().trim();
+        if(!name){
+          $("#name").next().html("名称不能为空");
+          return;
+        }
+        $("#name").next().html("");
+        var seq = $("#seq").val().trim();
+        if(!seq){
+          $("#seq").next().html("序列不能为空");
+          return;
+        }
+        $("#seq").next().html("");
         $.get("metadata/updateMetadata",$("#metadataForm").serialize(),function(responseText){
           $.metadata.metadataList();
+          $("#metadata-modal").modal("hide");
         });
       },
       change:function(){
