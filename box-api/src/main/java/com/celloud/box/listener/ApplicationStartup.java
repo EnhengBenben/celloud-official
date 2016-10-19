@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.celloud.box.config.APIConfig;
 import com.celloud.box.config.BoxConfig;
 import com.celloud.box.constants.Constants;
+import com.celloud.box.service.ApiService;
 import com.celloud.box.service.BoxService;
 import com.celloud.box.service.CleanService;
 import com.celloud.box.utils.LocalIpAddressUtil;
@@ -31,6 +32,8 @@ public class ApplicationStartup implements CommandLineRunner {
 	private CleanService cleanService;
 	@Resource
 	private BoxService boxService;
+	@Resource
+	private ApiService apiService;
 	@Value("${spring.profiles.active:dev}")
 	private String env;
 
@@ -57,15 +60,21 @@ public class ApplicationStartup implements CommandLineRunner {
 		}
 		logger.info("********************* System Properties *********************");
 		logger.info("");
+		logger.info("box.serialNumber  =  {}", boxConfig.getSerialNumber());
+		logger.info("box.appName       =  {}", boxConfig.getAppName());
+		logger.info("box.version       =  {}", boxConfig.getVersion());
+		logger.info("box.Artifact      =  {}", boxConfig.getArtifact());
 		logger.info("box.environment   =  {}", Constants.env);
 		logger.info("box.uploadPath    =  {}", boxConfig.getUploadPath());
 		logger.info("box.localIp       =  {}", ip);
 		logger.info("box.maxRetry      =  {}", boxConfig.getMaxRetry());
 		logger.info("box.maxUploading  =  {}", boxConfig.getMaxUploading());
 		logger.info("box.retentionDays =  {}", boxConfig.getRetentionDays());
+
 		logger.info("");
 		logger.info("api.newfile       =  {}", apiConfig.getNewfile());
 		logger.info("api.updatefile    =  {}", apiConfig.getUpdatefile());
+		logger.info("api.reportHealth  =  {}", apiConfig.getReportHealth());
 		logger.info("");
 		logger.info("*************************************************************");
 		cleanService.clean();

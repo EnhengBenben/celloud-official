@@ -12,8 +12,8 @@
 <div class="page-content">
 	<div class="panel panel-default">
 	    <div style="float: left;">
+	    	种类
 	    	<select onchange="$.metadata.change()" id="metadataFlag">
-	    		<option value="0">种类</option>
 	    		<option value="1">样本index</option>
 	    		<option value="2">文库index</option>
 	    	</select>
@@ -79,6 +79,7 @@
                <label class="col-sm-2 control-label" for="name">名称</label>
                <div class="col-sm-10">
 		          <input name="name" type="text" id="name">
+		          <span style="color: red;"></span>
 		          <input name="id" type="hidden" id="id">
 		          <input name="appId" type="hidden" id="appId">
 		          <input name="flag" type="hidden" id="flag">
@@ -88,13 +89,20 @@
                <label class="col-sm-2 control-label" for="seq">序列</label>
                <div class="col-sm-10" id="email-roleIds">
 		          <input name="seq" type="text" id="seq">
+		          <span style="color: red;"></span>
+               </div>
+           </div>
+           <div class="form-group">
+               <label class="col-sm-2 control-label"></label>
+               <div class="col-sm-10">
+		          <span style="color: red;" id="totalError"></span>
                </div>
            </div>
        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-outline" data-dismiss="modal" onclick="$.metadata.save()">确定</button>
+        <button type="button" class="btn btn-outline" onclick="$.metadata.save()">确定</button>
       </div>
     </div>
   </div>

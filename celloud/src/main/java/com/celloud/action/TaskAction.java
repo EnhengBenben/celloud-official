@@ -383,21 +383,20 @@ public class TaskAction {
 			}
 		}
 		//构造桌面消息
-		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
-				.send(NoticeConstants.createMessage("task", "运行完成", "项目【" + projectName + "】运行【" + appName + "】完成。"));
+		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants
+				.createMessage("task", "运行完成", "项目【" + projectName + "】下数据【" + dataKey + "】运行【" + appName + "】完成。"));
 		//构造邮件内容
 		Report report = reportService.getReportByProjectId(Integer.valueOf(projectId));
 		String startDate = DateUtil.getDateToString(report.getCreateDate(), DateUtil.YMDHMS);
 		String endDate = report.getEndDate() == null ? null
 				: DateUtil.getDateToString(report.getEndDate(), DateUtil.YMDHMS);
-		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER)
-				.substitutionVars(AliSubstitution.sub().set(EmailParams.RUN_OVER.userName.name(), username)
-						.set(EmailParams.RUN_OVER.projectName.name(), projectName)
-						.set(EmailParams.RUN_OVER.app.name(), appName).set(EmailParams.RUN_OVER.start.name(), startDate)
-						.set(EmailParams.RUN_OVER.end.name(), endDate));
+		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER).substitutionVars(AliSubstitution.sub()
+				.set(EmailParams.RUN_OVER.userName.name(), username).set(EmailParams.RUN_OVER.data.name(), dataKey)
+				.set(EmailParams.RUN_OVER.projectName.name(), projectName).set(EmailParams.RUN_OVER.app.name(), appName)
+				.set(EmailParams.RUN_OVER.start.name(), startDate).set(EmailParams.RUN_OVER.end.name(), endDate));
 		//构造微信发送消息
 		Param params = ParamFormat.param()
-				.set(WechatParams.RUN_OVER.first.name(), "您好，您的项目" + projectName + " 运行结束", "#222222")
+				.set(WechatParams.RUN_OVER.first.name(), "您好，您的项目" + projectName + " 下数据" + dataKey + "运行结束", "#222222")
 				.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
 				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
 				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");

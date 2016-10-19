@@ -873,9 +873,12 @@ public class ReportServiceImpl implements ReportService {
 		report.setPeriod(ReportPeriod.COMPLETE);
 		report.setState(DataState.ACTIVE);
 		report.setEndDate(endDate);
+		DataFile data = dataMapper.selectByDataKey(dataKey);
+		report.setFileId(data.getFileId());
 		reportMapper.updateReportPeriod(report);
 		report.setFlag(ReportType.PROJECT);
 		report.setContext(context);
+		report.setFileId(null);
 		int result = reportMapper.updateReportPeriod(report);
 		return result;
 	}

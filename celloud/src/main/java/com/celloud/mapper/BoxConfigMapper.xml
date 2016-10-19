@@ -1,135 +1,206 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.celloud.mapper.BoxConfigMapper" >
-  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.BoxConfig" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="intranet_address" property="intranetAddress" jdbcType="VARCHAR" />
-    <result column="extranet_address" property="extranetAddress" jdbcType="VARCHAR" />
-    <result column="port" property="port" jdbcType="INTEGER" />
-    <result column="context" property="context" jdbcType="VARCHAR" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, user_id, intranet_address, extranet_address, port, context, remark
-  </sql>
-  
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_box_config
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_box_config
-    where user_id = #{userId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_box_config
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.celloud.model.mysql.BoxConfig" >
-    insert into tb_box_config (id, name, user_id, 
-      intranet_address, extranet_address, port, 
-      context, remark)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{intranetAddress,jdbcType=VARCHAR}, #{extranetAddress,jdbcType=VARCHAR}, #{port,jdbcType=INTEGER}, 
-      #{context,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.mysql.BoxConfig" >
-    insert into tb_box_config
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="intranetAddress != null" >
-        intranet_address,
-      </if>
-      <if test="extranetAddress != null" >
-        extranet_address,
-      </if>
-      <if test="port != null" >
-        port,
-      </if>
-      <if test="context != null" >
-        context,
-      </if>
-      <if test="remark != null" >
-        remark,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="intranetAddress != null" >
-        #{intranetAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="extranetAddress != null" >
-        #{extranetAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="port != null" >
-        #{port,jdbcType=INTEGER},
-      </if>
-      <if test="context != null" >
-        #{context,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.BoxConfig" >
-    update tb_box_config
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="intranetAddress != null" >
-        intranet_address = #{intranetAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="extranetAddress != null" >
-        extranet_address = #{extranetAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="port != null" >
-        port = #{port,jdbcType=INTEGER},
-      </if>
-      <if test="context != null" >
-        context = #{context,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.BoxConfig" >
-    update tb_box_config
-    set name = #{name,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER},
-      intranet_address = #{intranetAddress,jdbcType=VARCHAR},
-      extranet_address = #{extranetAddress,jdbcType=VARCHAR},
-      port = #{port,jdbcType=INTEGER},
-      context = #{context,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+<mapper namespace="com.celloud.mapper.BoxConfigMapper">
+	<resultMap id="BaseResultMap" type="com.celloud.model.mysql.BoxConfig">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+		<result column="location" property="location" jdbcType="VARCHAR" />
+		<result column="intranet_address" property="intranetAddress" jdbcType="VARCHAR" />
+		<result column="extranet_address" property="extranetAddress" jdbcType="VARCHAR" />
+		<result column="port" property="port" jdbcType="INTEGER" />
+		<result column="context" property="context" jdbcType="VARCHAR" />
+		<result column="version" property="version" jdbcType="VARCHAR" />
+		<result column="last_alive" property="lastAlive" jdbcType="TIMESTAMP" />
+		<result column="alive" property="alive" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, serial_number, location, intranet_address, extranet_address, port, context, version,
+		last_alive, alive, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_box_config
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByUserId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_box_config
+		where extranet_address=#{ip} and id in(select box_id from tb_box_user_relate where user_id = #{userId,jdbcType=INTEGER} )
+	</select>
+	<select id="selectBySerialNumber" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_box_config
+		where serial_number=#{serialNumber}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_box_config
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.celloud.model.mysql.BoxConfig">
+		insert into tb_box_config (id, name, serial_number,
+		location, intranet_address, extranet_address,
+		port, context, version,last_alive,
+		alive, remark)
+		values
+		(#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{serialNumber,jdbcType=VARCHAR},
+		#{location,jdbcType=VARCHAR}, #{intranetAddress,jdbcType=VARCHAR}, #{extranetAddress,jdbcType=VARCHAR},
+		#{port,jdbcType=INTEGER}, #{context,jdbcType=VARCHAR},#{version,jdbcType=VARCHAR}, #{lastAlive,jdbcType=TIMESTAMP},
+		#{alive,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.celloud.model.mysql.BoxConfig">
+		insert into tb_box_config
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="serialNumber != null">
+				serial_number,
+			</if>
+			<if test="location != null">
+				location,
+			</if>
+			<if test="intranetAddress != null">
+				intranet_address,
+			</if>
+			<if test="extranetAddress != null">
+				extranet_address,
+			</if>
+			<if test="port != null">
+				port,
+			</if>
+			<if test="context != null">
+				context,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="lastAlive != null">
+				last_alive,
+			</if>
+			<if test="alive != null">
+				alive,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="serialNumber != null">
+				#{serialNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				#{location,jdbcType=VARCHAR},
+			</if>
+			<if test="intranetAddress != null">
+				#{intranetAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="extranetAddress != null">
+				#{extranetAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="port != null">
+				#{port,jdbcType=INTEGER},
+			</if>
+			<if test="context != null">
+				#{context,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=VARCHAR},
+			</if>
+			<if test="lastAlive != null">
+				#{lastAlive,jdbcType=TIMESTAMP},
+			</if>
+			<if test="alive != null">
+				#{alive,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.BoxConfig">
+		update tb_box_config
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="serialNumber != null">
+				serial_number = #{serialNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				location = #{location,jdbcType=VARCHAR},
+			</if>
+			<if test="intranetAddress != null">
+				intranet_address = #{intranetAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="extranetAddress != null">
+				extranet_address = #{extranetAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="port != null">
+				port = #{port,jdbcType=INTEGER},
+			</if>
+			<if test="context != null">
+				context = #{context,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=VARCHAR},
+			</if>
+			<if test="lastAlive != null">
+				last_alive = #{lastAlive,jdbcType=TIMESTAMP},
+			</if>
+			<if test="alive != null">
+				alive = #{alive,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.BoxConfig">
+		update tb_box_config
+		set name = #{name,jdbcType=VARCHAR},
+		serial_number = #{serialNumber,jdbcType=VARCHAR},
+		location = #{location,jdbcType=VARCHAR},
+		intranet_address = #{intranetAddress,jdbcType=VARCHAR},
+		extranet_address = #{extranetAddress,jdbcType=VARCHAR},
+		port = #{port,jdbcType=INTEGER},
+		context = #{context,jdbcType=VARCHAR},
+		last_alive =
+		#{lastAlive,jdbcType=TIMESTAMP},
+		alive = #{alive,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateBoxHealth" parameterType="com.celloud.model.mysql.BoxConfig">
+		update tb_box_config
+		<set>
+			<if test="intranetAddress != null">
+				intranet_address = #{intranetAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="extranetAddress != null">
+				extranet_address = #{extranetAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=VARCHAR},
+			</if>
+			<if test="lastAlive != null">
+				last_alive = #{lastAlive,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where serial_number= #{serialNumber,jdbcType=VARCHAR}
+	</update>
 </mapper>

@@ -62,4 +62,11 @@ public class MetadataServiceImpl implements MetadataService {
 		return mm.selectDown(meta);
 	}
 
+	@Override
+	public Integer checkRepeat(Metadata meta) {
+		meta.setState(DataState.ACTIVE);
+		List<Metadata> list = mm.checkRepeat(meta);
+		return list == null ? 0 : list.size();
+	}
+
 }

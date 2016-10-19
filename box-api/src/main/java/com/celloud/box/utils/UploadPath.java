@@ -13,7 +13,7 @@ public class UploadPath {
 	 * 
 	 * @return
 	 */
-	private static String getRootPath() {
+	public static String getRootPath() {
 		return PATH != null ? PATH : '/' == S ? "/share/data/upload" : System.getProperty("user.home");
 	}
 
