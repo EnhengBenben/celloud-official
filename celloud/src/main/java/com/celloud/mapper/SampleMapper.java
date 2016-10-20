@@ -21,6 +21,7 @@ public interface SampleMapper {
 
     int updateAddTypeById(@Param("sampleIds") List<Integer> sampleIds,
             @Param("isAdd") Integer isAdd,
+            @Param("orderId") Integer orderId,
             @Param("updateDate") Date updateDate);
 
     List<Sample> selectAllByUser(@Param("userId") Integer userId,
@@ -44,4 +45,7 @@ public interface SampleMapper {
 
     int addSampleTagRelat(@Param("sampleId") Integer sampleId,
             @Param("tagId") Integer tagId);
+
+    List<Sample> getSamplesByOrder(@Param("userId") Integer userId,
+            @Param("orderId") Integer orderId, @Param("state") Integer state);
 }

@@ -129,7 +129,7 @@ $.reportChar.draw = {
   	},
   	
   	/**
-  	 * 柱状图
+  	 * 垂直柱状图
   	 */
   	echartsShowBar : function(id, title, X, Y, rotate, width, height) {
         var option = {
@@ -169,6 +169,47 @@ $.reportChar.draw = {
                 grid : {
                 	width : width,
                 	height : height
+                }
+        };
+        $.reportChar.draw._require('bar',option,id);
+  	},
+  	
+  	/**
+  	 * 水平柱状图
+  	 */
+  	echartsShowHorizontalBar : function(id, title, X, Y, width, height, xname) {
+        var option = {
+        		tooltip : {
+        	        trigger: 'axis'
+        	    },
+        	    legend: {
+        	        data:[title],
+        	        top : 15
+        	    },
+        	    calculable : true,
+        	    xAxis : [
+        	        {
+        	            type : 'value',
+        		        name : xname
+        	        }
+        	    ],
+        	    yAxis : [
+        	        {
+        	            type : 'category',
+        	            data : Y,
+        	        }
+        	    ],
+        	    series : [
+        	        {
+        	            name:title,
+        	            type:'bar',
+        	            data:X,
+        	            barWidth:20
+        	        }
+        	    ],
+                color : ['#feabac'],
+                grid : {
+                	width : width
                 }
         };
         $.reportChar.draw._require('bar',option,id);
@@ -224,7 +265,7 @@ $.reportChar.draw = {
                 }
     		],
     		grid : {
-    		    width : 800,
+    		    width : 750,
     		    height : 250
     		},
             color : ['#00cccc','#ff0000']

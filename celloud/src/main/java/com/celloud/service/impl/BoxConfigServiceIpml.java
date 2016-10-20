@@ -23,14 +23,15 @@ public class BoxConfigServiceIpml implements BoxConfigService {
 	}
 
 	@Override
-	public boolean updateBoxHealth(String serialNumber, String version, String ip, String exIp) {
+	public boolean updateBoxHealth(String serialNumber, String version, String ip, String exIp, Integer port) {
 		BoxConfig config = mapper.selectBySerialNumber(serialNumber);
 		if (config == null) {
 			return false;
 		}
 		if (CustomStringUtils.equals(version, config.getVersion())
 				&& CustomStringUtils.equals(exIp, config.getExtranetAddress())
-				&& CustomStringUtils.equals(ip, config.getIntranetAddress())) {
+				&& CustomStringUtils.equals(ip, config.getIntranetAddress())
+				&& (port == null || port.equals(config.getPort()))) {
 			// 参数一致则不修改数据库，减轻数据库压力
 			return true;
 		}
@@ -39,6 +40,9 @@ public class BoxConfigServiceIpml implements BoxConfigService {
 		config.setLastAlive(new Date());
 		config.setSerialNumber(serialNumber);
 		config.setVersion(version);
+		if (port != null && port.intValue() != 0) {
+			config.setPort(port);
+		}
 		return mapper.updateBoxHealth(config) > 0;
 	}
 

@@ -7,7 +7,11 @@ public class Sample {
 
     private Integer userId;
 
+    private Integer orderId;
+
     private String sampleName;
+
+    private String experSampleName;
 
     private Boolean isAdd;
 
@@ -27,6 +31,7 @@ public class Sample {
     private String tagName;
     private Integer sampleLogId;
     private Date logDate;
+    private String orderNo;
 
     public Integer getSampleId() {
         return sampleId;
@@ -44,6 +49,13 @@ public class Sample {
         this.userId = userId;
     }
 
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
     public String getSampleName() {
         return sampleName;
     }
@@ -52,6 +64,14 @@ public class Sample {
         this.sampleName = sampleName == null ? null : sampleName.trim();
     }
 
+    public String getExperSampleName() {
+        return experSampleName;
+    }
+
+    public void setExperSampleName(String experSampleName) {
+        this.experSampleName = experSampleName == null ? null
+                : experSampleName.trim();
+    }
     public Boolean getIsAdd() {
         return isAdd;
     }
@@ -138,5 +158,13 @@ public class Sample {
 
     public void setLogDate(Date logDate) {
         this.logDate = logDate;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 }

@@ -19,6 +19,7 @@
     $scope.commitSample = function(){
       samplingService.commitSample($scope.sampleList).success(function(data){
         if(data > 0){
+          window.location.href = window.CONTEXT_PATH+"/sample_order.html#/sampling/order/"+data;
           refreshList();
         }else {
           $.alert("样本已提交");
@@ -35,6 +36,16 @@
         }
       })
     }
+  });
+  
+  celloudApp.controller("sampleOrderController", function($scope, $routeParams, sampleOrderService){
+    sampleOrderService.sampleOrderInfo($routeParams.orderId).success(function(data){
+      if(data != null){
+        $scope.sampleOrderInfo = data;
+      }else {
+        $.alert("样本已提交");
+      }
+    });
   });
   
   celloudApp.controller("scanStorageController", function($scope, scanStorageService){

@@ -53,6 +53,7 @@ public class ApiService {
 	public void reportHealth() {
 		Map<String, Object> params = new HashMap<>();
 		params.put("version", config.getVersion());
+		params.put("port", config.getPort());
 		params.put("ip", LocalIpAddressUtil.getLocalArress(config.getNetwork()));
 		params.put("serialNumber", config.getSerialNumber());
 		ApiResponse response = HttpClientUtil.post(api.getReportHealth(), params);

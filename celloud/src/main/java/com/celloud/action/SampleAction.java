@@ -98,6 +98,14 @@ public class SampleAction {
                 ConstantsData.getLoginUserId());
     }
 
+    @ActionLog(value = "获取样品订单信息", button = "提交订单")
+    @RequestMapping("getSampleOrderInfo")
+    @ResponseBody
+    public Map<String, Object> getSampleOrderInfo(Integer orderId) {
+        return sampleService.getSampleOrderInfo(ConstantsData.getLoginUserId(),
+                orderId);
+    }
+
     @ActionLog(value = "删除暂存的样本", button = "删除样品")
     @RequestMapping("bsi/deleteOne")
     @ResponseBody

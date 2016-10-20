@@ -1072,27 +1072,30 @@ public class ReportAction {
 		return mv.addObject("hbv", hbv);
 	}
 
-	/**
-	 * 
-	 * @author miaoqi
-	 * @date 2016年9月6日下午1:34:54
-	 * @description 查看HBV数据报告
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 *
-	 */
-	@ActionLog(value = "查看HBV数据报告", button = "数据报告")
-	@RequestMapping("getHBVInfo")
-	@ResponseBody
-	public Map<String, Object> getHBVInfo(String dataKey, Integer projectId, Integer appId) {
-		HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
-		hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
-		Map<String, Object> map = getCommonInfo(projectId);
-		map.put("hbv", hbv);
-		return map;
-	}
+    /**
+     * 
+     * @author miaoqi
+     * @date 2016年9月6日下午1:34:54
+     * @description 查看HBV数据报告
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     *
+     */
+    @ActionLog(value = "查看HBV数据报告", button = "数据报告")
+    @RequestMapping("getHBVInfo")
+    @ResponseBody
+    public Map<String, Object> getHBVInfo(String dataKey, Integer projectId, Integer appId) {
+        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
+        hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
+        Map<String, Map<String, String>> hbvOtherSiteMap = reportService
+                .getHBVOtherSiteByUserId(ConstantsData.getLoginUserId(), appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("hbvOtherSiteMap", hbvOtherSiteMap);
+        map.put("hbv", hbv);
+        return map;
+    }
 
 	/**
 	 * 获取ABINJ的数据报告

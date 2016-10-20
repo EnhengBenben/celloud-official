@@ -21,7 +21,8 @@ public interface BoxConfigService {
 	 * @param version
 	 * @param ip
 	 * @param exIp
+	 * @param port 
 	 * @return
 	 */
-	public boolean updateBoxHealth(String serialNumber, String version, String ip, String exIp);
+	public boolean updateBoxHealth(String serialNumber, String version, String ip, String exIp, Integer port);
 }

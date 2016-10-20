@@ -1,8 +1,10 @@
 package com.celloud.service.impl;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,15 +20,18 @@ import com.celloud.constants.SampleIsCommit;
 import com.celloud.constants.TaskPeriod;
 import com.celloud.mapper.SampleLogMapper;
 import com.celloud.mapper.SampleMapper;
+import com.celloud.mapper.SampleOrderMapper;
 import com.celloud.mapper.SampleStorageMapper;
 import com.celloud.mapper.TaskMapper;
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleLog;
+import com.celloud.model.mysql.SampleOrder;
 import com.celloud.model.mysql.SampleStorage;
 import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.SampleService;
+import com.celloud.utils.DateUtil;
 
 /**
  * 样本收集管理接口实现
@@ -39,6 +44,8 @@ public class SampleServiceImple implements SampleService {
 	@Resource
 	SampleMapper sampleMapper;
 	@Resource
+    SampleOrderMapper sampleOrderMapper;
+    @Resource
     SampleLogMapper sampleLogMapper;
     @Resource
     SampleStorageMapper sampleStorageMapper;
@@ -58,7 +65,18 @@ public class SampleServiceImple implements SampleService {
 	public Integer commitSamples(List<Integer> sampleIds, Integer appId, Integer userId) {
 		sampleIds = new ArrayList<>(new HashSet<>(sampleIds));
 		Collections.sort(sampleIds);
-		Integer result = sampleMapper.updateAddTypeById(sampleIds, SampleIsCommit.ISADD, new Date());
+        // 添加样本寄送订单
+        SampleOrder so = new SampleOrder();
+        so.setUserId(userId);
+        so.setCreateDate(new Date());
+        // 样本编号规则：yyMMdd+ 4位userId不够补0
+        String orderNo = DateUtil.getDateToString()
+                + String.format("%04d", userId);
+        so.setOrderNo(orderNo);
+        sampleOrderMapper.insert(so);
+        // 修改sample状态为已添加，并添加订单编号
+        Integer result = sampleMapper.updateAddTypeById(sampleIds,
+                SampleIsCommit.ISADD, so.getId(), new Date());
         for (Integer sampleId : sampleIds) {
             Task task = new Task();
             task.setAppId(appId);
@@ -76,8 +94,22 @@ public class SampleServiceImple implements SampleService {
     public Integer commitSamples(List<Integer> sampleIds, Integer userId) {
         sampleIds = new ArrayList<>(new HashSet<>(sampleIds));
         Collections.sort(sampleIds);
-        return sampleMapper.updateAddTypeById(sampleIds, SampleIsCommit.ISADD,
-                new Date());
+        sampleIds = new ArrayList<>(new HashSet<>(sampleIds));
+        Collections.sort(sampleIds);
+        // 添加样本寄送订单
+        SampleOrder so = new SampleOrder();
+        so.setUserId(userId);
+        so.setCreateDate(new Date());
+        // 样本编号规则：yyyyMMdd+ 4位userId不够补0 + 两位随机数
+        String orderNo = DateUtil.getDateToString("yyyyMMdd")
+                + String.format("%04d", userId) + ""
+                + String.format("%02d", new SecureRandom().nextInt(99));
+        so.setOrderNo(orderNo);
+        sampleOrderMapper.insert(so);
+        // 修改sample状态为已添加，并添加订单编号
+        sampleMapper.updateAddTypeById(sampleIds, SampleIsCommit.ISADD,
+                so.getId(), new Date());
+        return so.getId();
     }
 
 	@Override
@@ -218,5 +250,17 @@ public class SampleServiceImple implements SampleService {
             Integer ssId) {
         return sampleStorageMapper.sampleListInStorage(userId, DataState.ACTIVE,
                 ssId);
+    }
+
+    @Override
+    public Map<String, Object> getSampleOrderInfo(Integer userId,
+            Integer orderId) {
+        Map<String, Object> map = new HashMap<>();
+        SampleOrder so = sampleOrderMapper.selectByPrimaryKey(orderId, userId);
+        List<Sample> samples = sampleMapper.getSamplesByOrder(userId, orderId,
+                DataState.ACTIVE);
+        map.put("sampleOrder", so);
+        map.put("samples", samples);
+        return map;
     }
 }
