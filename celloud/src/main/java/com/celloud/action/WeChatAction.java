@@ -25,8 +25,8 @@ import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
 import com.celloud.utils.XmlUtil;
-import com.celloud.wechat.WechatEvent;
 import com.celloud.wechat.WechatUtils;
+import com.celloud.wechat.constant.WechatEvent;
 
 @Controller
 @RequestMapping("api/wechat")

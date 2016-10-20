@@ -50,7 +50,7 @@ import com.celloud.utils.ResetPwdUtils;
 import com.celloud.utils.Response;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
-import com.celloud.wechat.WechatParams;
+import com.celloud.wechat.constant.WechatParams;
 import com.celloud.wechat.WechatUtils;
 
 /**

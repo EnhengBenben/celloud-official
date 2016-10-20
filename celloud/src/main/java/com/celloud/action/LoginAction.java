@@ -43,7 +43,7 @@ import com.celloud.utils.RSAUtil;
 import com.celloud.utils.UserAgentUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
-import com.celloud.wechat.WechatParams;
+import com.celloud.wechat.constant.WechatParams;
 
 /**
  * 登录action

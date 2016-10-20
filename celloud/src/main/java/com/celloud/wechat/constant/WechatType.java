@@ -1,4 +1,4 @@
-package com.celloud.wechat;
+package com.celloud.wechat.constant;
 
 public class WechatType {
     /**

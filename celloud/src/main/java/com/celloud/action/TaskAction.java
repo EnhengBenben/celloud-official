@@ -56,7 +56,7 @@ import com.celloud.utils.RunOverUtil;
 import com.celloud.utils.XmlUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
-import com.celloud.wechat.WechatParams;
+import com.celloud.wechat.constant.WechatParams;
 
 /**
  * 投递任务管理

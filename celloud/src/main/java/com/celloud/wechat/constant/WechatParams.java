@@ -1,4 +1,4 @@
-package com.celloud.wechat;
+package com.celloud.wechat.constant;
 
 /**
  * 微信消息模板所需参数

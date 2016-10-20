@@ -22,7 +22,7 @@ import com.celloud.service.MessageCategoryService;
 import com.celloud.service.UserService;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
-import com.celloud.wechat.WechatType;
+import com.celloud.wechat.constant.WechatType;
 import com.celloud.wechat.WechatUtils;
 
 @Service

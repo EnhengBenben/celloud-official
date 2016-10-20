@@ -33,7 +33,7 @@ import com.celloud.utils.ActionLog;
 import com.celloud.utils.Response;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
-import com.celloud.wechat.WechatParams;
+import com.celloud.wechat.constant.WechatParams;
 
 /**
  * 项目操作类

@@ -27,7 +27,7 @@ import com.celloud.service.RechargeService;
 import com.celloud.utils.DateUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
-import com.celloud.wechat.WechatParams;
+import com.celloud.wechat.constant.WechatParams;
 
 @Service("rechargeServiceImpl")
 public class RechargeImpl implements RechargeService {
