@@ -75,6 +75,7 @@ public class ApplicationStartup implements CommandLineRunner {
 		logger.info("api.newfile       =  {}", apiConfig.getNewfile());
 		logger.info("api.updatefile    =  {}", apiConfig.getUpdatefile());
 		logger.info("api.reportHealth  =  {}", apiConfig.getReportHealth());
+		logger.info("api.ossConfig     =  {}", apiConfig.getOssConfig());
 		logger.info("");
 		logger.info("*************************************************************");
 		cleanService.clean();

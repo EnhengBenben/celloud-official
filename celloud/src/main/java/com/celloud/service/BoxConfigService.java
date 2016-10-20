@@ -21,8 +21,19 @@ public interface BoxConfigService {
 	 * @param version
 	 * @param ip
 	 * @param exIp
-	 * @param port 
+	 * @param port
 	 * @return
 	 */
 	public boolean updateBoxHealth(String serialNumber, String version, String ip, String exIp, Integer port);
+
+	/**
+	 * 校验盒子的身份是否正确
+	 * 
+	 * @param serialNumber
+	 * @param version
+	 * @param ip
+	 * @param extranet
+	 * @param port
+	 */
+	public boolean checkConfig(String serialNumber, String version, String ip, String extranet, Integer port);
 }

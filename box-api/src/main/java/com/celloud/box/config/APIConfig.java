@@ -9,6 +9,7 @@ public class APIConfig {
 	private String newfile;
 	private String updatefile;
 	private String reportHealth;
+	private String ossConfig;
 
 	public String getNewfile() {
 		return newfile;
@@ -32,6 +33,14 @@ public class APIConfig {
 
 	public void setReportHealth(String reportHealth) {
 		this.reportHealth = reportHealth;
+	}
+
+	public String getOssConfig() {
+		return ossConfig;
+	}
+
+	public void setOssConfig(String ossConfig) {
+		this.ossConfig = ossConfig;
 	}
 
 }

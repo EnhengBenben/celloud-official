@@ -36,4 +36,17 @@ public interface BoxConfigMapper {
 	 * @return
 	 */
 	int updateBoxHealth(BoxConfig config);
+
+	/**
+	 * 根据盒子传过来的参数校验盒子是否合法
+	 * 
+	 * @param serialNumber
+	 * @param version
+	 * @param ip
+	 * @param extranet
+	 * @param port
+	 * @return
+	 */
+	List<BoxConfig> selectByConfig(@Param("serialNumber") String serialNumber, @Param("version") String version,
+			@Param("ip") String ip, @Param("extranet") String extranet, @Param("port") Integer port);
 }

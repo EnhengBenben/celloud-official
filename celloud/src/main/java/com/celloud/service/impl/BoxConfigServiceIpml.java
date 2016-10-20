@@ -46,4 +46,10 @@ public class BoxConfigServiceIpml implements BoxConfigService {
 		return mapper.updateBoxHealth(config) > 0;
 	}
 
+	@Override
+	public boolean checkConfig(String serialNumber, String version, String ip, String extranet, Integer port) {
+		List<BoxConfig> configs = mapper.selectByConfig(serialNumber, version, ip, extranet, port);
+		return configs != null && configs.size() > 0;
+	}
+
 }

@@ -31,6 +31,12 @@
 		from tb_box_config
 		where extranet_address=#{ip} and id in(select box_id from tb_box_user_relate where user_id = #{userId,jdbcType=INTEGER} )
 	</select>
+	<select id="selectByConfig" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_box_config
+		where extranet_address=#{extranet} and serial_number=#{serialNumber} and version=#{version} and intranet_address=#{ip} and port = #{port}
+	</select>
 	<select id="selectBySerialNumber" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />

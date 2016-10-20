@@ -16,9 +16,11 @@ import com.celloud.constants.BoxUploadState;
 import com.celloud.constants.DataState;
 import com.celloud.model.BoxFile;
 import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.OSSConfig;
 import com.celloud.service.BoxApiService;
 import com.celloud.service.BoxConfigService;
 import com.celloud.service.DataService;
+import com.celloud.service.OSSConfigService;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
@@ -38,6 +40,8 @@ public class BoxApiAction {
 	private BoxApiService apiService;
 	@Resource
 	private BoxConfigService configService;
+	@Resource
+	private OSSConfigService ossService;
 
 	/**
 	 * 盒子端创建文件
@@ -124,5 +128,25 @@ public class BoxApiAction {
 				extranet, port);
 		boolean result = configService.updateBoxHealth(serialNumber, version, ip, extranet, port);
 		return result ? Response.SUCCESS() : Response.FAIL();
+	}
+
+	@RequestMapping("ossConfig")
+	public Response ossConfig(HttpServletRequest request, String serialNumber, String version, String ip,
+			Integer port) {
+		String extranet = UserAgentUtil.getIp(request);
+		Response response = Response.FAIL();
+		boolean result = configService.checkConfig(serialNumber, version, ip, extranet, port);
+		OSSConfig config = null;
+		if (!result) {
+			response.setMessage("参数不合法！");
+		} else if (result) {
+			config = ossService.getLatest();
+		}
+		if (config == null) {
+			response.setMessage("没有可用的oss配置");
+		} else {
+			response = Response.SUCCESS().setData(config);
+		}
+		return response;
 	}
 }

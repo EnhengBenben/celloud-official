@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.celloud.box.config.APIConfig;
 import com.celloud.box.config.BoxConfig;
+import com.celloud.box.config.OSSConfig;
 import com.celloud.box.constants.ApiResponse;
 import com.celloud.box.model.Newfile;
 import com.celloud.box.utils.HttpClientUtil;
@@ -23,6 +24,8 @@ public class ApiService {
 	private APIConfig api;
 	@Autowired
 	private BoxConfig config;
+	@Autowired
+	private OSSConfig ossConfig;
 	private static Logger logger = LoggerFactory.getLogger(ApiService.class);
 
 	public Newfile newfile(Integer userId, String name, long size, String md5, Integer tagId, String batch) {
@@ -58,5 +61,25 @@ public class ApiService {
 		params.put("serialNumber", config.getSerialNumber());
 		ApiResponse response = HttpClientUtil.post(api.getReportHealth(), params);
 		logger.info("状态更新{}", response.isSuccess() ? "成功" : "失败");
+	}
+
+	@Async
+	@Scheduled(fixedRate = 1000 * 60 * 30)
+	public void fetchOSSConfig() {
+		Map<String, Object> params = new HashMap<>();
+		params.put("serialNumber", config.getSerialNumber());
+		params.put("version", config.getVersion());
+		params.put("port", config.getPort());
+		params.put("ip", LocalIpAddressUtil.getLocalArress(config.getNetwork()));
+		ApiResponse response = HttpClientUtil.post(api.getOssConfig(), params);
+		if (response.isSuccess()) {
+			ossConfig.setAccessKeyId((String) response.getData().get("keyId"));
+			ossConfig.setAccessKeySecret((String) response.getData().get("keySecret"));
+			ossConfig.setBucketName((String) response.getData().get("bucket"));
+			ossConfig.setEndpoint((String) response.getData().get("endpoint"));
+			logger.info("成功获取到oss的配置：{}", response.getData());
+		} else {
+			logger.info("获取oss配置失败：{}", response.getMessage());
+		}
 	}
 }
