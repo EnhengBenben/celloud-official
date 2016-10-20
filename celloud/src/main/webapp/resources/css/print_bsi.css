@@ -271,7 +271,7 @@ section h2,
 	   padding: 0px;
 	   background: none;
 	}
-	input,select,.button,#sex{
+	input,select,.btn,.button,#sex{
 	  display: none;
 	}
 	.print{

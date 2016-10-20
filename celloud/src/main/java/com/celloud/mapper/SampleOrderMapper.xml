@@ -11,7 +11,7 @@
   <sql id="Base_Column_List" >
     id, user_id, order_no, create_date, is_print
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_sample_order

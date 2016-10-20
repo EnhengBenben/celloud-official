@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
+import com.celloud.constants.IconConstants;
 import com.celloud.constants.SampleExperState;
 import com.celloud.constants.SampleIndex;
 import com.celloud.constants.SampleIsCommit;
@@ -32,6 +33,7 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.SampleService;
 import com.celloud.utils.DateUtil;
+import com.celloud.utils.QRCodeUtil;
 
 /**
  * 样本收集管理接口实现
@@ -105,7 +107,7 @@ public class SampleServiceImple implements SampleService {
                 + String.format("%04d", userId) + ""
                 + String.format("%02d", new SecureRandom().nextInt(99));
         so.setOrderNo(orderNo);
-        sampleOrderMapper.insert(so);
+        sampleOrderMapper.insertSelective(so);
         // 修改sample状态为已添加，并添加订单编号
         sampleMapper.updateAddTypeById(sampleIds, SampleIsCommit.ISADD,
                 so.getId(), new Date());
@@ -261,6 +263,8 @@ public class SampleServiceImple implements SampleService {
                 DataState.ACTIVE);
         map.put("sampleOrder", so);
         map.put("samples", samples);
+        QRCodeUtil.createQRCode(so.getOrderNo(),
+                IconConstants.getTempPath() + "sample_orderno.png");
         return map;
     }
 }

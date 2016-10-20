@@ -11,6 +11,8 @@ public class SampleOrder {
 
     private Date createDate;
 
+    private Integer isPrint;
+
     public Integer getId() {
         return id;
     }
@@ -42,4 +44,13 @@ public class SampleOrder {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+    public Integer getIsPrint() {
+        return isPrint;
+    }
+
+    public void setIsPrint(Integer isPrint) {
+        this.isPrint = isPrint;
+    }
+
 }

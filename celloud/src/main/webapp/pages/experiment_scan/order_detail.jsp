@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
   <div class="print-button">
-    <a id="print-report" class="btn -low" style="border-radius:6px;" title="打印" href="javascript:void(0)"><i class="fa fa-print"></i>打印</a>
+    <a ng-click="print()" class="btn -low" style="border-radius:6px;" title="打印" href="javascript:void(0)"><i class="fa fa-print"></i></a>
   </div>
   <div class="title-content">
       <div class="title">样品寄送订单</div>
@@ -11,7 +11,7 @@
 	  <h4>订单编号：<span>{{sampleOrderInfo.sampleOrder.orderNo}}</span></h4><br>
 	  <h4>下单日期：<span>{{sampleOrderInfo.sampleOrder.createDate| date : 'yyyy-MM-dd HH:mm:ss'}}</span></h4>
     </div>
-    <img class="pull-right" width="80" alt="" src="<%=request.getContextPath()%>/images/icon/qrcode.jpg">
+    <img class="pull-right" width="76" alt="" ng-src="<%=request.getContextPath()%>/user/icon/temp?file=sample_orderno.png">
   </div>
   <div class="tests-content">
 	  <table class="table table-count">
