@@ -30,7 +30,8 @@ public class BoxConfigServiceIpml implements BoxConfigService {
 		}
 		if (CustomStringUtils.equals(version, config.getVersion())
 				&& CustomStringUtils.equals(exIp, config.getExtranetAddress())
-				&& CustomStringUtils.equals(ip, config.getIntranetAddress())) {
+				&& CustomStringUtils.equals(ip, config.getIntranetAddress())
+				&& (port == null || port.equals(config.getPort()))) {
 			// 参数一致则不修改数据库，减轻数据库压力
 			return true;
 		}
