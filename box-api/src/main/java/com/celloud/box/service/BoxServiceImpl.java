@@ -149,7 +149,7 @@ public class BoxServiceImpl implements BoxService {
 		}
 		return true;
 	}
-
+	@Async
 	@Override
 	public void loadUnUploadedFiles() {
 		TreeMap<Long, String> uploadingFiles = listFiles(new File(UploadPath.getUploadingPath()));

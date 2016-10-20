@@ -17,6 +17,8 @@ public class HBV extends Base {
      * ["_wild","_mutation"] eg : 169_wild , 169_mutation
      */
     private Map<String, String> site;// 突变位点及信息
+    /** 文件编号 */
+    private Integer fileId;
     private String pdf;//
     private String zip;// 压缩包
     private String seq;// 序列
@@ -170,6 +172,14 @@ public class HBV extends Base {
 
     public void setDetailBaseInfo(Map<String, String> detailBaseInfo) {
         this.detailBaseInfo = detailBaseInfo;
+    }
+
+    public Integer getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(Integer fileId) {
+        this.fileId = fileId;
     }
 
 }

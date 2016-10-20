@@ -47,7 +47,7 @@
 								<td>${record.chromosome}</td>
 								<td>${record.acids }</td>
 								<td>${record.nucleotides }</td>
-								<td>${record.significance }</td>
+								<td>${significances[record.significance]}</td>
 							</tr>
 						</c:forEach>
 					</tbody>

@@ -121,16 +121,16 @@ public class ReportAction {
 	private TaskService taskService;
 	@Resource
 	private UserService userService;
-    @Resource
-    private MedicineService medicineService;
-    @Resource
-    private TagService tagService;
+	@Resource
+	private MedicineService medicineService;
+	@Resource
+	private TagService tagService;
 
-    @RequestMapping("checkPgsProject")
-    @ResponseBody
-    public Integer checkPgsProject(Integer projectId) {
-        return reportService.getProjectPeriod(projectId);
-    }
+	@RequestMapping("checkPgsProject")
+	@ResponseBody
+	public Integer checkPgsProject(Integer projectId) {
+		return reportService.getProjectPeriod(projectId);
+	}
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("down")
@@ -145,88 +145,85 @@ public class ReportAction {
 		return 1;
 	}
 
-    @ActionLog(value = "下载", button = "下载")
-    @RequestMapping("downByName")
-    @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    public Integer downByName(String path) throws UnsupportedEncodingException {
-        String filePath = SparkPro.TOOLSPATH + path;
-        // 获取dataKey
-        String dataKey = path.split("/")[2];
-        // 获取appId
-        String appId = path.split("/")[1];
-        String filename = null;
-        // 如果是split则用文件名作为下载名称
-        if ("113".equals(appId)) {
-            // 根据datakey获取文件
-            DataFile dataFile = dataService.getDataByKey(dataKey);
-            // 获取文件名称
-            filename = dataFile.getFileName().split("R1")[0];
-            // 如果截取R1之前的名称是以"_"结尾则截掉该"_"
-            if (filename.endsWith("_")) {
-                filename = filename.substring(0, filename.lastIndexOf("_"));
-            }
-        }
-        if (new File(filePath).exists()) {
-            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath, filename);
-            return 0;
-        }
-        return 1;
-    }
+	@ActionLog(value = "下载", button = "下载")
+	@RequestMapping("downByName")
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public Integer downByName(String path) throws UnsupportedEncodingException {
+		String filePath = SparkPro.TOOLSPATH + path;
+		// 获取dataKey
+		String dataKey = path.split("/")[2];
+		// 获取appId
+		String appId = path.split("/")[1];
+		String filename = null;
+		// 如果是split则用文件名作为下载名称
+		if ("113".equals(appId)) {
+			// 根据datakey获取文件
+			DataFile dataFile = dataService.getDataByKey(dataKey);
+			// 获取文件名称
+			filename = dataFile.getFileName().split("R1")[0];
+			// 如果截取R1之前的名称是以"_"结尾则截掉该"_"
+			if (filename.endsWith("_")) {
+				filename = filename.substring(0, filename.lastIndexOf("_"));
+			}
+		}
+		if (new File(filePath).exists()) {
+			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath, filename);
+			return 0;
+		}
+		return 1;
+	}
 
-    /**
-     * 获取数据报告形式列表
-     * 
-     * @param page
-     * @param size
-     * @param sample
-     * @param condition
-     * @param sord
-     * @param batch
-     * @param period
-     * @param beginDate
-     * @param endDate
-     * @return
-     * @author leamo
-     * @date 2016年8月29日 下午3:37:38
-     */
-    @RequestMapping("dataReportPages")
-    @ResponseBody
-    public PageList<Task> dataReportPages(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size, String sample,
-            String condition, @RequestParam(defaultValue = "desc") String sort,
-            @RequestParam(name = "tagId", required = false) Integer tagId,
-            @RequestParam(name = "batch", required = false) String batch,
-            @RequestParam(name = "period", required = false) Integer period, String beginDate,
-            String endDate){
-        log.info("查看data报告列表");
-        Page pager = new Page(page,size);
-        Integer userId = ConstantsData.getLoginUserId();
-        PageList<Task> plist = taskService.findAllTasks(pager, userId,
-                condition, tagId, batch,
-                period, beginDate, endDate, sort);
-        return plist;
-    }
+	/**
+	 * 获取数据报告形式列表
+	 * 
+	 * @param page
+	 * @param size
+	 * @param sample
+	 * @param condition
+	 * @param sord
+	 * @param batch
+	 * @param period
+	 * @param beginDate
+	 * @param endDate
+	 * @return
+	 * @author leamo
+	 * @date 2016年8月29日 下午3:37:38
+	 */
+	@RequestMapping("dataReportPages")
+	@ResponseBody
+	public PageList<Task> dataReportPages(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "20") int size, String sample, String condition,
+			@RequestParam(defaultValue = "desc") String sort,
+			@RequestParam(name = "tagId", required = false) Integer tagId,
+			@RequestParam(name = "batch", required = false) String batch,
+			@RequestParam(name = "period", required = false) Integer period, String beginDate, String endDate) {
+		log.info("查看data报告列表");
+		Page pager = new Page(page, size);
+		Integer userId = ConstantsData.getLoginUserId();
+		PageList<Task> plist = taskService.findAllTasks(pager, userId, condition, tagId, batch, period, beginDate,
+				endDate, sort);
+		return plist;
+	}
 
-    /**
-     * 数据报告列表搜索信息列表
-     * 
-     * @return
-     * @author leamo
-     * @date 2016年8月30日 上午11:47:18
-     */
-    @RequestMapping("reportSearchInfo")
-    @ResponseBody
-    public Map<String, Object> reportSearchInfo() {
-        Integer userId = ConstantsData.getLoginUserId();
-        List<String> batchs = dataService.getBatchList(userId);
-        List<Tag> tags = tagService.findTags(userId);
-        Map<String, Object> map = new HashMap<>();
-        map.put("batchs", batchs);
-        map.put("tags", tags);
-        return map;
-    }
+	/**
+	 * 数据报告列表搜索信息列表
+	 * 
+	 * @return
+	 * @author leamo
+	 * @date 2016年8月30日 上午11:47:18
+	 */
+	@RequestMapping("reportSearchInfo")
+	@ResponseBody
+	public Map<String, Object> reportSearchInfo() {
+		Integer userId = ConstantsData.getLoginUserId();
+		List<String> batchs = dataService.getBatchList(userId);
+		List<Tag> tags = tagService.findTags(userId);
+		Map<String, Object> map = new HashMap<>();
+		map.put("batchs", batchs);
+		map.put("tags", tags);
+		return map;
+	}
 
 	/**
 	 * 获取报告模块列表
@@ -270,20 +267,20 @@ public class ReportAction {
 		return mv;
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月4日下午4:43:42
-     * @description 获取数据报告共有数据
-     * @param projectId
-     *
-     */
-    private Map<String, Object> getCommonInfo(Integer projectId) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        Project project = projectService.selectByPrimaryKey(projectId);
-        map.put("uploadPath", "/upload/");
-        map.put("project", project);
-        return map;
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月4日下午4:43:42
+	 * @description 获取数据报告共有数据
+	 * @param projectId
+	 *
+	 */
+	private Map<String, Object> getCommonInfo(Integer projectId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Project project = projectService.selectByPrimaryKey(projectId);
+		map.put("uploadPath", "/upload/");
+		map.put("project", project);
+		return map;
 	}
 
 	/**
@@ -318,26 +315,26 @@ public class ReportAction {
 		return getCMPModelAndView("report/report_data_cmp", dataKey, projectId, appId);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月7日下午4:30:25
-     * @description 获取CMP,CMP_199数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看CMP数据报告", button = "数据报告")
-    @RequestMapping("getCMPInfo")
-    @ResponseBody
-    public Map<String, Object> getCMPInfo(String dataKey, Integer projectId, Integer appId) {
-        CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("cmp", cmp);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月7日下午4:30:25
+	 * @description 获取CMP,CMP_199数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看CMP数据报告", button = "数据报告")
+	@RequestMapping("getCMPInfo")
+	@ResponseBody
+	public Map<String, Object> getCMPInfo(String dataKey, Integer projectId, Integer appId) {
+		CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("cmp", cmp);
+		return map;
+	}
 
 	/**
 	 * 打印 CMP简要报告
@@ -402,26 +399,26 @@ public class ReportAction {
 		return getCMPModelAndView("report/report_data_gdd", dataKey, projectId, appId);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月7日下午3:27:00
-     * @description 获取GDD数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看GDD数据报告", button = "数据报告")
-    @RequestMapping("getGDDInfo")
-    @ResponseBody
-    public Map<String, Object> getGDDInfo(String dataKey, Integer projectId, Integer appId) {
-        CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("cmp", cmp);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月7日下午3:27:00
+	 * @description 获取GDD数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看GDD数据报告", button = "数据报告")
+	@RequestMapping("getGDDInfo")
+	@ResponseBody
+	public Map<String, Object> getGDDInfo(String dataKey, Integer projectId, Integer appId) {
+		CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("cmp", cmp);
+		return map;
+	}
 
 	@ActionLog(value = "打印GDD数据报告", button = "打印报告")
 	@RequestMapping("printGDDReport")
@@ -653,25 +650,25 @@ public class ReportAction {
 		return getSplitModelAndView("report/report_data_split", dataKey, projectId, appId);
 	}
 
-    /**
-     * 获取 Split 数据报告
-     * 
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     * @date 2016-1-10 下午10:44:45
-     */
-    @ActionLog(value = "查看split数据报告", button = "数据报告")
-    @RequestMapping("getSplitInfo")
-    @ResponseBody
-    public Map<String, Object> getSplitInfo(String dataKey, Integer projectId, Integer appId) {
-        Split split = reportService.getSplitReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("split", split);
-        map.put("splitId", split.getId().toString());
-        return map;
-    }
+	/**
+	 * 获取 Split 数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @date 2016-1-10 下午10:44:45
+	 */
+	@ActionLog(value = "查看split数据报告", button = "数据报告")
+	@RequestMapping("getSplitInfo")
+	@ResponseBody
+	public Map<String, Object> getSplitInfo(String dataKey, Integer projectId, Integer appId) {
+		Split split = reportService.getSplitReport(dataKey, projectId, appId);
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("split", split);
+		map.put("splitId", split.getId().toString());
+		return map;
+	}
 
 	/**
 	 * 打印 Split 数据报告
@@ -713,44 +710,31 @@ public class ReportAction {
 		ModelAndView mv = getModelAndView(path, projectId);
 		if (mib == null)
 			return mv;
-        if (mib.getReadsDistributionInfo() != null
-                && mib.getReadsDistributionInfo().size() > 0)
-            mibCharList.put("readsDistributionInfo",
-                    JSONArray.fromObject(mib.getReadsDistributionInfo()));
-        if (mib.getFamilyDistributionInfo() != null
-                && mib.getFamilyDistributionInfo().size() > 0)
-            mibCharList.put("familyDistributionInfo",
-                    JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-        if (mib.getGenusDistributionInfo() != null
-                && mib.getGenusDistributionInfo().size() > 0)
-            mibCharList.put("genusDistributionInfo",
-                    JSONArray.fromObject(mib.getGenusDistributionInfo()));
+		if (mib.getReadsDistributionInfo() != null && mib.getReadsDistributionInfo().size() > 0)
+			mibCharList.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
+		if (mib.getFamilyDistributionInfo() != null && mib.getFamilyDistributionInfo().size() > 0)
+			mibCharList.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+		if (mib.getGenusDistributionInfo() != null && mib.getGenusDistributionInfo().size() > 0)
+			mibCharList.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
 		mv.addObject("mibCharList", mibCharList);
 		return mv.addObject("mib", mib);
 	}
 
-    @RequestMapping("getMIBReportInfo")
-    @ResponseBody
-    public Map<String, Object> getMIBReportInfo(String dataKey,
-            Integer projectId, Integer appId) {
-        MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
-        Map<String, Object> map = new HashMap<>();
-        if (mib.getReadsDistributionInfo() != null
-                && mib.getReadsDistributionInfo().size() > 0)
-            map.put("readsDistributionInfo",
-                    JSONArray.fromObject(mib.getReadsDistributionInfo()));
-        if (mib.getFamilyDistributionInfo() != null
-                && mib.getFamilyDistributionInfo().size() > 0)
-            map.put("familyDistributionInfo",
-                    JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-        if (mib.getGenusDistributionInfo() != null
-                && mib.getGenusDistributionInfo().size() > 0)
-            map.put("genusDistributionInfo",
-                    JSONArray.fromObject(mib.getGenusDistributionInfo()));
-        map.put("mib", mib);
-        map.put("uploadPath", "/upload/");
-        return map;
-    }
+	@RequestMapping("getMIBReportInfo")
+	@ResponseBody
+	public Map<String, Object> getMIBReportInfo(String dataKey, Integer projectId, Integer appId) {
+		MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
+		Map<String, Object> map = new HashMap<>();
+		if (mib.getReadsDistributionInfo() != null && mib.getReadsDistributionInfo().size() > 0)
+			map.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
+		if (mib.getFamilyDistributionInfo() != null && mib.getFamilyDistributionInfo().size() > 0)
+			map.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+		if (mib.getGenusDistributionInfo() != null && mib.getGenusDistributionInfo().size() > 0)
+			map.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
+		map.put("mib", mib);
+		map.put("uploadPath", "/upload/");
+		return map;
+	}
 
 	/**
 	 * 获取 MIB 的数据报告
@@ -789,18 +773,12 @@ public class ReportAction {
 		MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
 		Map<String, Object> context = new HashMap<String, Object>();
 		if (mib != null) {
-            if (mib.getReadsDistributionInfo() != null
-                    && mib.getReadsDistributionInfo().size() > 0)
-                context.put("readsDistributionInfo",
-                        JSONArray.fromObject(mib.getReadsDistributionInfo()));
-            if (mib.getFamilyDistributionInfo() != null
-                    && mib.getFamilyDistributionInfo().size() > 0)
-                context.put("familyDistributionInfo",
-                        JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-            if (mib.getGenusDistributionInfo() != null
-                    && mib.getGenusDistributionInfo().size() > 0)
-                context.put("genusDistributionInfo",
-                        JSONArray.fromObject(mib.getGenusDistributionInfo()));
+			if (mib.getReadsDistributionInfo() != null && mib.getReadsDistributionInfo().size() > 0)
+				context.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
+			if (mib.getFamilyDistributionInfo() != null && mib.getFamilyDistributionInfo().size() > 0)
+				context.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
+			if (mib.getGenusDistributionInfo() != null && mib.getGenusDistributionInfo().size() > 0)
+				context.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
 			context.put("mib", mib);
 		}
 		returnToVelocity(path, context, projectId);
@@ -938,36 +916,36 @@ public class ReportAction {
 		return getBSIModelAndView("report/report_data_bsi", dataKey, projectId, appId);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月7日下午6:51:40
-     * @description 获取BSI数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看BSI数据报告", button = "数据报告")
-    @RequestMapping("getBSIInfo")
-    @ResponseBody
-    public Map<String, Object> getBSIInfo(String dataKey, Integer projectId, Integer appId) {
-        BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
-        // Map<String, JSONArray> mibCharList = new HashMap<>();
-        Map<String, Object> map = getCommonInfo(projectId);
-        if (bsi == null)
-            return map;
-        // mibCharList.put("readsDistributionInfo",
-        // JSONArray.fromObject(bsi.getReadsDistributionInfo()));
-        // mibCharList.put("familyDistributionInfo",
-        // JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
-        // mibCharList.put("genusDistributionInfo",
-        // JSONArray.fromObject(bsi.getGenusDistributionInfo()));
-        // map.put("bsiCharList", mibCharList);
-        map.put("bsi", bsi);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月7日下午6:51:40
+	 * @description 获取BSI数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看BSI数据报告", button = "数据报告")
+	@RequestMapping("getBSIInfo")
+	@ResponseBody
+	public Map<String, Object> getBSIInfo(String dataKey, Integer projectId, Integer appId) {
+		BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+		// Map<String, JSONArray> mibCharList = new HashMap<>();
+		Map<String, Object> map = getCommonInfo(projectId);
+		if (bsi == null)
+			return map;
+		// mibCharList.put("readsDistributionInfo",
+		// JSONArray.fromObject(bsi.getReadsDistributionInfo()));
+		// mibCharList.put("familyDistributionInfo",
+		// JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
+		// mibCharList.put("genusDistributionInfo",
+		// JSONArray.fromObject(bsi.getGenusDistributionInfo()));
+		// map.put("bsiCharList", mibCharList);
+		map.put("bsi", bsi);
+		return map;
+	}
 
 	/**
 	 * 打印MIB报告
@@ -1015,6 +993,7 @@ public class ReportAction {
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put("rocky", rocky);
+		context.put("significances", ConstantsData.significances());
 		returnToVelocity(path.toString(), context, projectId);
 	}
 
@@ -1110,7 +1089,10 @@ public class ReportAction {
     public Map<String, Object> getHBVInfo(String dataKey, Integer projectId, Integer appId) {
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
+        Map<String, Map<String, String>> hbvOtherSiteMap = reportService
+                .getHBVOtherSiteByUserId(ConstantsData.getLoginUserId(), appId);
         Map<String, Object> map = getCommonInfo(projectId);
+        map.put("hbvOtherSiteMap", hbvOtherSiteMap);
         map.put("hbv", hbv);
         return map;
     }
@@ -1133,26 +1115,26 @@ public class ReportAction {
 		return mv.addObject("abinj", abinj);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月6日下午6:20:52
-     * @description 获取ABINJ数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看ABINJ数据报告", button = "数据报告")
-    @RequestMapping("getABINJInfo")
-    @ResponseBody
-    public Map<String, Object> getABINJInfo(String dataKey, Integer projectId, Integer appId) {
-        ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("abinj", abinj);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月6日下午6:20:52
+	 * @description 获取ABINJ数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看ABINJ数据报告", button = "数据报告")
+	@RequestMapping("getABINJInfo")
+	@ResponseBody
+	public Map<String, Object> getABINJInfo(String dataKey, Integer projectId, Integer appId) {
+		ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("abinj", abinj);
+		return map;
+	}
 
 	/**
 	 * 获取16S的数据报告
@@ -1172,26 +1154,26 @@ public class ReportAction {
 		return mv.addObject("s16", s16);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月6日下午6:48:34
-     * @description 获取16S数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看16S数据报告", button = "数据报告")
-    @RequestMapping("get16SInfo")
-    @ResponseBody
-    public Map<String, Object> get16SInfo(String dataKey, Integer projectId, Integer appId) {
-        S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("s16", s16);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月6日下午6:48:34
+	 * @description 获取16S数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看16S数据报告", button = "数据报告")
+	@RequestMapping("get16SInfo")
+	@ResponseBody
+	public Map<String, Object> get16SInfo(String dataKey, Integer projectId, Integer appId) {
+		S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("s16", s16);
+		return map;
+	}
 
 	/**
 	 * 获取PGS的数据报告
@@ -1214,33 +1196,33 @@ public class ReportAction {
 		return mv.addObject("pgs", pgs);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月7日上午9:55:49
-     * @description 获取Pgs数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看PGS数据报告", button = "数据报告")
-    @RequestMapping("getPgsInfo")
-    @ResponseBody
-    public Map<String, Object> getPgsInfo(String dataKey, Integer projectId, Integer appId) {
-        Map<String, Object> map = getCommonInfo(projectId);
-        Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        List<Experiment> expList = null;
-        if (pgs != null) {
-            expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
-        }
-        if (expList != null && expList.size() > 0) {
-            map.put("experiment", expList.get(0));
-        }
-        map.put("pgs", pgs);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月7日上午9:55:49
+	 * @description 获取Pgs数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看PGS数据报告", button = "数据报告")
+	@RequestMapping("getPgsInfo")
+	@ResponseBody
+	public Map<String, Object> getPgsInfo(String dataKey, Integer projectId, Integer appId) {
+		Map<String, Object> map = getCommonInfo(projectId);
+		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
+		List<Experiment> expList = null;
+		if (pgs != null) {
+			expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
+		}
+		if (expList != null && expList.size() > 0) {
+			map.put("experiment", expList.get(0));
+		}
+		map.put("pgs", pgs);
+		return map;
+	}
 
 	/**
 	 * 获取Oncogene报告
@@ -1277,43 +1259,43 @@ public class ReportAction {
 		return mv.addObject("oncogene", oncogene);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月6日下午4:34:16
-     * @description 查看Oncogene数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看Oncogene数据报告", button = "数据报告")
-    @RequestMapping("getOncogeneInfo")
-    @ResponseBody
-    public Map<String, Object> getOncogeneInfo(String dataKey, Integer projectId, Integer appId) {
-        Oncogene oncogene = reportService.getOncogeneReport(dataKey, projectId, appId);
-        if (oncogene != null) {
-            // jstl 处理 \n 很困难，就在 java 端处理
-            oncogene.setReport(CustomStringUtils.htmlbr(oncogene.getReport()));
-            oncogene.setWz1(CustomStringUtils.htmlbr(oncogene.getWz1()));
-            oncogene.setWz2(CustomStringUtils.htmlbr(oncogene.getWz2()));
-            // 排序
-            List<String> km = oncogene.getKnowMutation();
-            if (km != null) {
-                Collections.sort(km);
-                oncogene.setKnowMutation(km);
-            }
-            List<String> out = oncogene.getOut();
-            if (out != null) {
-                Collections.sort(out);
-                oncogene.setOut(out);
-            }
-        }
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("oncogene", oncogene);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月6日下午4:34:16
+	 * @description 查看Oncogene数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看Oncogene数据报告", button = "数据报告")
+	@RequestMapping("getOncogeneInfo")
+	@ResponseBody
+	public Map<String, Object> getOncogeneInfo(String dataKey, Integer projectId, Integer appId) {
+		Oncogene oncogene = reportService.getOncogeneReport(dataKey, projectId, appId);
+		if (oncogene != null) {
+			// jstl 处理 \n 很困难，就在 java 端处理
+			oncogene.setReport(CustomStringUtils.htmlbr(oncogene.getReport()));
+			oncogene.setWz1(CustomStringUtils.htmlbr(oncogene.getWz1()));
+			oncogene.setWz2(CustomStringUtils.htmlbr(oncogene.getWz2()));
+			// 排序
+			List<String> km = oncogene.getKnowMutation();
+			if (km != null) {
+				Collections.sort(km);
+				oncogene.setKnowMutation(km);
+			}
+			List<String> out = oncogene.getOut();
+			if (out != null) {
+				Collections.sort(out);
+				oncogene.setOut(out);
+			}
+		}
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("oncogene", oncogene);
+		return map;
+	}
 
 	/**
 	 * 获取HCV数据报告
@@ -1333,25 +1315,25 @@ public class ReportAction {
 		return mv.addObject("hcv", hcv);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月5日上午11:05:19
-     * @description 获取HCV数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @RequestMapping("getHCVInfo")
-    @ResponseBody
-    public Map<String, Object> getHCVInfo(String dataKey, Integer projectId, Integer appId) {
-        HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("hcv", hcv);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月5日上午11:05:19
+	 * @description 获取HCV数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@RequestMapping("getHCVInfo")
+	@ResponseBody
+	public Map<String, Object> getHCVInfo(String dataKey, Integer projectId, Integer appId) {
+		HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("hcv", hcv);
+		return map;
+	}
 
 	@ActionLog(value = "查看Translate数据报告", button = "数据报告")
 	@RequestMapping("getTranslateReport")
@@ -1376,41 +1358,41 @@ public class ReportAction {
 		return mv.addObject("translate", translate);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月6日下午7:33:22
-     * @description 获取Translate数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看Translate数据报告", button = "数据报告")
-    @RequestMapping("getTranslateInfo")
-    @ResponseBody
-    public Map<String, Object> getTranslateInfo(String dataKey, Integer projectId, Integer appId) {
-        DataFile data = dataService.getDataByKey(dataKey);
-        Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
-        String path = data.getPath();
-        int MAX = 256 * 1024;
-        if (FileTools.getFileSize(path) > MAX) {
-            translate.setSource("输入序列超过256k，不再显示！");
-        } else {
-            String source = FileTools.readAppoint(data.getPath());
-            translate.setSource(source);
-        }
-        String result = translate.getResult();
-        if (result != null && result.length() > MAX) {
-            translate.setResult("输出序列超过256k，不再显示，请下载查看！");
-        } else {
-            translate.setResult(CustomStringUtils.htmlbr(result));
-        }
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("translate", translate);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月6日下午7:33:22
+	 * @description 获取Translate数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看Translate数据报告", button = "数据报告")
+	@RequestMapping("getTranslateInfo")
+	@ResponseBody
+	public Map<String, Object> getTranslateInfo(String dataKey, Integer projectId, Integer appId) {
+		DataFile data = dataService.getDataByKey(dataKey);
+		Translate translate = reportService.getTranslateReport(dataKey, projectId, appId);
+		String path = data.getPath();
+		int MAX = 256 * 1024;
+		if (FileTools.getFileSize(path) > MAX) {
+			translate.setSource("输入序列超过256k，不再显示！");
+		} else {
+			String source = FileTools.readAppoint(data.getPath());
+			translate.setSource(source);
+		}
+		String result = translate.getResult();
+		if (result != null && result.length() > MAX) {
+			translate.setResult("输出序列超过256k，不再显示，请下载查看！");
+		} else {
+			translate.setResult(CustomStringUtils.htmlbr(result));
+		}
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("translate", translate);
+		return map;
+	}
 
 	/**
 	 * 获取EGFR数据报告
@@ -1434,26 +1416,26 @@ public class ReportAction {
 		return mv.addObject("egfr", egfr);
 	}
 
-    @RequestMapping("getEGFRInfo")
-    @ResponseBody
-    public Map<String, Object> getEGFRInfo(String dataKey, Integer projectId, Integer appId) {
-        EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
-        String mp = egfr.getMutationPosition();
-        String position = egfr.getPosition();
-        String conclusion = egfr.getConclusion();
-        if (StringUtils.isNotBlank(conclusion)) {
-            egfr.setConclusion(CustomStringUtils.htmlbr(conclusion));
-        }
-        if (StringUtils.isNotEmpty(mp)) {
-            egfr.setMutationPosition(CustomStringUtils.htmlbr(mp));
-        }
-        if (StringUtils.isNotBlank(position)) {
-            egfr.setPosition(CustomStringUtils.htmlbr(position));
-        }
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("egfr", egfr);
-        return map;
-    }
+	@RequestMapping("getEGFRInfo")
+	@ResponseBody
+	public Map<String, Object> getEGFRInfo(String dataKey, Integer projectId, Integer appId) {
+		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
+		String mp = egfr.getMutationPosition();
+		String position = egfr.getPosition();
+		String conclusion = egfr.getConclusion();
+		if (StringUtils.isNotBlank(conclusion)) {
+			egfr.setConclusion(CustomStringUtils.htmlbr(conclusion));
+		}
+		if (StringUtils.isNotEmpty(mp)) {
+			egfr.setMutationPosition(CustomStringUtils.htmlbr(mp));
+		}
+		if (StringUtils.isNotBlank(position)) {
+			egfr.setPosition(CustomStringUtils.htmlbr(position));
+		}
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("egfr", egfr);
+		return map;
+	}
 
 	/**
 	 * 获取KRAS数据报告
@@ -1481,33 +1463,33 @@ public class ReportAction {
 		return mv.addObject("kras", kras);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月5日上午11:04:39
-     * @description 获取kras数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @RequestMapping("getKRASInfo")
-    @ResponseBody
-    public Map<String, Object> getKRASInfo(String dataKey, Integer projectId, Integer appId) {
-        KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
-        String mp = kras.getMutationPosition();
-        if (StringUtils.isNotBlank(mp)) {
-            kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
-        }
-        String pos = kras.getPosition();
-        if (StringUtils.isNotBlank(pos)) {
-            kras.setPosition(CustomStringUtils.htmlbr(pos));
-        }
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("kras", kras);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月5日上午11:04:39
+	 * @description 获取kras数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@RequestMapping("getKRASInfo")
+	@ResponseBody
+	public Map<String, Object> getKRASInfo(String dataKey, Integer projectId, Integer appId) {
+		KRAS kras = reportService.getKRASReport(dataKey, projectId, appId);
+		String mp = kras.getMutationPosition();
+		if (StringUtils.isNotBlank(mp)) {
+			kras.setMutationPosition(CustomStringUtils.htmlbr(mp));
+		}
+		String pos = kras.getPosition();
+		if (StringUtils.isNotBlank(pos)) {
+			kras.setPosition(CustomStringUtils.htmlbr(pos));
+		}
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("kras", kras);
+		return map;
+	}
 
 	/**
 	 * 获取DPD数据报告
@@ -1534,42 +1516,42 @@ public class ReportAction {
 	}
 
 	/**
-     * 
-     * @author miaoqi
-     * @date 2016年9月6日下午5:11:22
-     * @description 获取DPD数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看DPD数据报告", button = "数据报告")
-    @RequestMapping("getDpdInfo")
-    @ResponseBody
-    public Map<String, Object> getDpdInfo(String dataKey, Integer projectId, Integer appId) {
-        DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
-        String mp = dpd.getMutationPosition();
-        dpd.setMutationPosition(CustomStringUtils.toTable(mp));
-        String postion = dpd.getPosition();
-        if (StringUtils.isNotBlank(postion)) {
-            dpd.setPosition(CustomStringUtils.htmlbr(postion));
-        }
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("dpd", dpd);
-        return map;
-    }
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月6日下午5:11:22
+	 * @description 获取DPD数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看DPD数据报告", button = "数据报告")
+	@RequestMapping("getDpdInfo")
+	@ResponseBody
+	public Map<String, Object> getDpdInfo(String dataKey, Integer projectId, Integer appId) {
+		DPD dpd = reportService.getDPDReport(dataKey, projectId, appId);
+		String mp = dpd.getMutationPosition();
+		dpd.setMutationPosition(CustomStringUtils.toTable(mp));
+		String postion = dpd.getPosition();
+		if (StringUtils.isNotBlank(postion)) {
+			dpd.setPosition(CustomStringUtils.htmlbr(postion));
+		}
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("dpd", dpd);
+		return map;
+	}
 
-    /**
-     * 获取UGT数据报告
-     * 
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     * @author lin
-     * @date 2016年3月25日下午4:00:51
-     */
+	/**
+	 * 获取UGT数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年3月25日下午4:00:51
+	 */
 	@ActionLog(value = "查看UGT数据报告", button = "数据报告")
 	@RequestMapping("getUGTReport")
 	public ModelAndView getUGTReport(String dataKey, Integer projectId, Integer appId) {
@@ -1586,34 +1568,34 @@ public class ReportAction {
 		return mv.addObject("ugt", ugt);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月6日下午6:34:06
-     * @description 获取UGT数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看UGT数据报告", button = "数据报告")
-    @RequestMapping("getUGTInfo")
-    @ResponseBody
-    public Map<String, Object> getUGTInfo(String dataKey, Integer projectId, Integer appId) {
-        UGT ugt = reportService.getUGTReport(dataKey, projectId, appId);
-        String position = ugt.getPosition();
-        if (StringUtils.isNotBlank(position)) {
-            ugt.setPosition(CustomStringUtils.htmlbr(position));
-        }
-        String mutationPosition = ugt.getMutationPosition();
-        if (StringUtils.isNotBlank(mutationPosition)) {
-            ugt.setMutationPosition(CustomStringUtils.htmlbr(mutationPosition));
-        }
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("ugt", ugt);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月6日下午6:34:06
+	 * @description 获取UGT数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看UGT数据报告", button = "数据报告")
+	@RequestMapping("getUGTInfo")
+	@ResponseBody
+	public Map<String, Object> getUGTInfo(String dataKey, Integer projectId, Integer appId) {
+		UGT ugt = reportService.getUGTReport(dataKey, projectId, appId);
+		String position = ugt.getPosition();
+		if (StringUtils.isNotBlank(position)) {
+			ugt.setPosition(CustomStringUtils.htmlbr(position));
+		}
+		String mutationPosition = ugt.getMutationPosition();
+		if (StringUtils.isNotBlank(mutationPosition)) {
+			ugt.setMutationPosition(CustomStringUtils.htmlbr(mutationPosition));
+		}
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("ugt", ugt);
+		return map;
+	}
 
 	/**
 	 * 点击数据报告列表查看上一页数据报告
@@ -1659,42 +1641,42 @@ public class ReportAction {
 				neither);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月6日上午11:21:31
-     * @description 获取TBINH数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看TBINH数据报告", button = "数据报告")
-    @RequestMapping("getTBINHInfo")
-    @ResponseBody
-    public Map<String, Object> getTBINHInfo(String dataKey, Integer projectId, Integer appId) {
-        TBINH tbinh = reportService.getTBINHReport(dataKey, projectId, appId);
-        String position = tbinh.getPosition();
-        tbinh.setPosition(CustomStringUtils.toTable(position));
-        String mutationPosition = tbinh.getMutationPosition();
-        tbinh.setMutationPosition(CustomStringUtils.toTable(mutationPosition));
-        // 获取userId下野生型,非野生型,两者都不是的数量
-        Integer userId = tbinh.getUserId();
-        String simpleGeneName = tbinh.getSimpleGeneName();
-        // 两者都不是
-        Integer neither = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 0);
-        // 野生型
-        Integer wild = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 1);
-        // 非野生型
-        Integer mutant = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 2);
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("tbinh", tbinh);
-        map.put("wild", wild);
-        map.put("mutant", mutant);
-        map.put("neither", neither);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月6日上午11:21:31
+	 * @description 获取TBINH数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看TBINH数据报告", button = "数据报告")
+	@RequestMapping("getTBINHInfo")
+	@ResponseBody
+	public Map<String, Object> getTBINHInfo(String dataKey, Integer projectId, Integer appId) {
+		TBINH tbinh = reportService.getTBINHReport(dataKey, projectId, appId);
+		String position = tbinh.getPosition();
+		tbinh.setPosition(CustomStringUtils.toTable(position));
+		String mutationPosition = tbinh.getMutationPosition();
+		tbinh.setMutationPosition(CustomStringUtils.toTable(mutationPosition));
+		// 获取userId下野生型,非野生型,两者都不是的数量
+		Integer userId = tbinh.getUserId();
+		String simpleGeneName = tbinh.getSimpleGeneName();
+		// 两者都不是
+		Integer neither = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 0);
+		// 野生型
+		Integer wild = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 1);
+		// 非野生型
+		Integer mutant = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 2);
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("tbinh", tbinh);
+		map.put("wild", wild);
+		map.put("mutant", mutant);
+		map.put("neither", neither);
+		return map;
+	}
 
 	/**
 	 * 获取TBRifampicin数据报告
@@ -1715,28 +1697,28 @@ public class ReportAction {
 		return mv.addObject("tbrifampicin", tbrifampicin);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月6日上午10:04:08
-     * @description 获取tbrifampicin数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看TBRifampicin数据报告", button = "数据报告")
-    @RequestMapping("getTBRifampicinInfo")
-    @ResponseBody
-    public Map<String, Object> getTBRifampicinInfo(String dataKey, Integer projectId, Integer appId) {
-        TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
-        String report = tbrifampicin.getReport();
-        tbrifampicin.setReport(CustomStringUtils.toTable(report));
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("tbrifampicin", tbrifampicin);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月6日上午10:04:08
+	 * @description 获取tbrifampicin数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看TBRifampicin数据报告", button = "数据报告")
+	@RequestMapping("getTBRifampicinInfo")
+	@ResponseBody
+	public Map<String, Object> getTBRifampicinInfo(String dataKey, Integer projectId, Integer appId) {
+		TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
+		String report = tbrifampicin.getReport();
+		tbrifampicin.setReport(CustomStringUtils.toTable(report));
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("tbrifampicin", tbrifampicin);
+		return map;
+	}
 
 	/**
 	 * 获取BRAF数据报告
@@ -1757,27 +1739,27 @@ public class ReportAction {
 		return mv.addObject("braf", braf);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月5日下午3:18:34
-     * @description 获取BRAF数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @RequestMapping("getBRAFInfo")
-    @ResponseBody
-    public Map<String, Object> getBRAFInfo(String dataKey, Integer projectId, Integer appId) {
-        BRAF braf = reportService.getBRAFReport(dataKey, projectId, appId);
-        String mp = braf.getMutationPosition();
-        braf.setMutationPosition(CustomStringUtils.toTable(mp));
-        Map<String, Object> map = getCommonInfo(projectId);
-        map.put("braf", braf);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月5日下午3:18:34
+	 * @description 获取BRAF数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@RequestMapping("getBRAFInfo")
+	@ResponseBody
+	public Map<String, Object> getBRAFInfo(String dataKey, Integer projectId, Integer appId) {
+		BRAF braf = reportService.getBRAFReport(dataKey, projectId, appId);
+		String mp = braf.getMutationPosition();
+		braf.setMutationPosition(CustomStringUtils.toTable(mp));
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("braf", braf);
+		return map;
+	}
 
 	/**
 	 * 点击数据报告列表查看下一页数据报告
@@ -2913,28 +2895,28 @@ public class ReportAction {
 	}
 
 	/**
-     * 
-     * @author MQ
-     * @date 2016年8月25日下午1:14:09
-     * @description 打印项目报告
-     * @param projectId
-     *            项目id
-     *
-     */
-    @ActionLog(value = "打印Pgs项目报告", button = "打印数据报告")
+	 * 
+	 * @author MQ
+	 * @date 2016年8月25日下午1:14:09
+	 * @description 打印项目报告
+	 * @param projectId
+	 *            项目id
+	 *
+	 */
+	@ActionLog(value = "打印Pgs项目报告", button = "打印数据报告")
 	@RequestMapping("printPgsProject")
 	@ResponseBody
 	public void printPgsProject(Integer projectId) {
 		List<Pgs> pgsList = reportService.getPgsProjectReport(projectId);
-        Pgs pgs = reportService.getPgsProjectInfo(pgsList.get(0).getProjectId());
-        Map<String, Object> context = new HashMap<String, Object>();
-        if(pgs==null){
-            context.put("exists", 0);
-        } else {
-            context.put("exists", 1);
-            context.put("pgs", pgs);
-        }
-        String path = ConstantsData.getLoginUser().getCompanyId() + "/PGS/project/print.vm";
+		Pgs pgs = reportService.getPgsProjectInfo(pgsList.get(0).getProjectId());
+		Map<String, Object> context = new HashMap<String, Object>();
+		if (pgs == null) {
+			context.put("exists", 0);
+		} else {
+			context.put("exists", 1);
+			context.put("pgs", pgs);
+		}
+		String path = ConstantsData.getLoginUser().getCompanyId() + "/PGS/project/print.vm";
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/PGS/print.vm";
 		}
@@ -3202,34 +3184,34 @@ public class ReportAction {
 		Map<String, Object> context = new HashMap<String, Object>();
 		EGFR egfr = reportService.getEGFRReport(dataKey, projectId, appId);
 
-        // 如果是普陀区中心医院则对结果进行处理
-        if (ConstantsData.getLoginCompanyId() == 25) {
-            // 获取长度特征值
-            String conclusion = egfr.getConclusion();
-            String feature = null;
-            String result = null;
-            if (StringUtils.isNotBlank(conclusion)) {
-                if (conclusion.startsWith("未检测到EGFR基因")) {
-                    result = "未检测到";
-                    feature = null;
-                } else if (conclusion.startsWith("野生型")) {
-                    result = "野生型";
-                    feature = null;
-                } else if (conclusion.startsWith("检测到EGFR") && !conclusion.contains("测序质量差")) {
-                    result = conclusion.substring("检测到EGFR基因".length(), conclusion.lastIndexOf("突变"));
-                    feature = egfr.getPos();
-                }
-                if (result != null) {
-                    Medicine medicine = medicineService.getByFeatureAndResultDetail(feature, result, appId);
-                    if (medicine == null) {
-                        medicine = medicineService.getByFeatureAndResultDetail(null, "其他突变", appId);
-                    }
-                    if (medicine != null) {
-                        egfr.setConclusion(egfr.getConclusion() + "\n" + medicine.getAdvice());
-                    }
-                }
-            }
-        }
+		// 如果是普陀区中心医院则对结果进行处理
+		if (ConstantsData.getLoginCompanyId() == 25) {
+			// 获取长度特征值
+			String conclusion = egfr.getConclusion();
+			String feature = null;
+			String result = null;
+			if (StringUtils.isNotBlank(conclusion)) {
+				if (conclusion.startsWith("未检测到EGFR基因")) {
+					result = "未检测到";
+					feature = null;
+				} else if (conclusion.startsWith("野生型")) {
+					result = "野生型";
+					feature = null;
+				} else if (conclusion.startsWith("检测到EGFR") && !conclusion.contains("测序质量差")) {
+					result = conclusion.substring("检测到EGFR基因".length(), conclusion.lastIndexOf("突变"));
+					feature = egfr.getPos();
+				}
+				if (result != null) {
+					Medicine medicine = medicineService.getByFeatureAndResultDetail(feature, result, appId);
+					if (medicine == null) {
+						medicine = medicineService.getByFeatureAndResultDetail(null, "其他突变", appId);
+					}
+					if (medicine != null) {
+						egfr.setConclusion(egfr.getConclusion() + "\n" + medicine.getAdvice());
+					}
+				}
+			}
+		}
 
 		Integer userId = ConstantsData.getLoginUserId();
 		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
@@ -3323,31 +3305,31 @@ public class ReportAction {
 		return reportService.updatePgsFilling(pgs);
 	}
 
-    /**
-     * 
-     * @author MQ
-     * @date 2016年8月25日下午3:33:48
-     * @description
-     * @param pgs
-     * @return
-     *
-     */
-    @ActionLog(value = "打印Pgs项目报告时修改用户填写的信息", button = "修改项目报告")
-    @RequestMapping("updatePgsProjectFilling")
-    @ResponseBody
-    public String updatePgsProjectFilling(Pgs pgs, Integer exists) {
-        try {
-            if (exists == 0) { // 代表第一次保存, 需要插入到mongo中
-                pgs.setFlag(1);
-                pgs.setId(null);
-                return reportService.save(pgs).getId().toString();
-            } else { // 不是第一次保存, 更新相应的额报告
-                return reportService.updatePgsProjectilling(pgs).toString();
-            }
-        } catch (Exception e) {
-            return "0";
-        }
-    }
+	/**
+	 * 
+	 * @author MQ
+	 * @date 2016年8月25日下午3:33:48
+	 * @description
+	 * @param pgs
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "打印Pgs项目报告时修改用户填写的信息", button = "修改项目报告")
+	@RequestMapping("updatePgsProjectFilling")
+	@ResponseBody
+	public String updatePgsProjectFilling(Pgs pgs, Integer exists) {
+		try {
+			if (exists == 0) { // 代表第一次保存, 需要插入到mongo中
+				pgs.setFlag(1);
+				pgs.setId(null);
+				return reportService.save(pgs).getId().toString();
+			} else { // 不是第一次保存, 更新相应的额报告
+				return reportService.updatePgsProjectilling(pgs).toString();
+			}
+		} catch (Exception e) {
+			return "0";
+		}
+	}
 
 	/**
 	 * 
@@ -3473,21 +3455,20 @@ public class ReportAction {
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
 	}
 
-    /**
-     * 获取报告图片
-     * 
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    @RequestMapping(value = "reportImage", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> reportImage(String file) throws IOException {
-        String path = SparkPro.TOOLSPATH + File.separator + file;
-        File targetFile = new File(path);
-        // log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
-        return new ResponseEntity<byte[]>(
-                FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
-    }
+	/**
+	 * 获取报告图片
+	 * 
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "reportImage", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> reportImage(String file) throws IOException {
+		String path = SparkPro.TOOLSPATH + File.separator + file;
+		File targetFile = new File(path);
+		// log.info("部门logo目录的绝对路径{}",targetFile.getAbsolutePath());
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+	}
 
 	/**
 	 * 将Map中的数据返回到velocity模板中
@@ -3536,109 +3517,108 @@ public class ReportAction {
 		return mv;
 	}
 
-    // @ActionLog(value = "报告菜单", button = "乳腺癌报告")
-    // @RequestMapping("rocky/reportMain_bak")
-    // public ModelAndView rockyReportMain_bak(@RequestParam(defaultValue = "1")
-    // int page,
-    // @RequestParam(defaultValue = "20") int size, String sample, String
-    // condition,
-    // @RequestParam(defaultValue = "updateDate") String sidx,
-    // @RequestParam(defaultValue = "desc") String sord,
-    // @RequestParam(name = "batches", required = false) ArrayList<String>
-    // batches,
-    // @RequestParam(name = "periods", required = false) ArrayList<Integer>
-    // periods, String beginDate,
-    // String endDate) throws ParseException {
-    // ModelAndView mv = new ModelAndView("rocky/report/report_main");
-    // Integer userId = ConstantsData.getLoginUserId();
-    // Map<String, Object> periodMap =
-    // taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
-    // List<String> batchList = dataService.getBatchList(userId);
-    // Page pager = new Page(page, size);
-    // PageList<Task> pageList = taskService.findRockyTasks(pager, sample,
-    // condition, sidx, sord, batches, periods,
-    // beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd
-    // HH:mm:ss").parse(beginDate + " 00:00:00"),
-    // endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd
-    // HH:mm:ss").parse(endDate + " 23:59:59"));
-    // mv.addObject("pageList", pageList);
-    // periodMap.put("uploaded", batchList.size());
-    // mv.addObject("periodMap", periodMap);
-    // mv.addObject("batchList", batchList);
-    // mv.addObject("sampleFilter", sample);
-    // mv.addObject("conditionFilter", condition);
-    // mv.addObject("sidx", sidx);
-    // mv.addObject("sord", sord);
-    // log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
-    // return mv;
-    // }
+	// @ActionLog(value = "报告菜单", button = "乳腺癌报告")
+	// @RequestMapping("rocky/reportMain_bak")
+	// public ModelAndView rockyReportMain_bak(@RequestParam(defaultValue = "1")
+	// int page,
+	// @RequestParam(defaultValue = "20") int size, String sample, String
+	// condition,
+	// @RequestParam(defaultValue = "updateDate") String sidx,
+	// @RequestParam(defaultValue = "desc") String sord,
+	// @RequestParam(name = "batches", required = false) ArrayList<String>
+	// batches,
+	// @RequestParam(name = "periods", required = false) ArrayList<Integer>
+	// periods, String beginDate,
+	// String endDate) throws ParseException {
+	// ModelAndView mv = new ModelAndView("rocky/report/report_main");
+	// Integer userId = ConstantsData.getLoginUserId();
+	// Map<String, Object> periodMap =
+	// taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
+	// List<String> batchList = dataService.getBatchList(userId);
+	// Page pager = new Page(page, size);
+	// PageList<Task> pageList = taskService.findRockyTasks(pager, sample,
+	// condition, sidx, sord, batches, periods,
+	// beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd
+	// HH:mm:ss").parse(beginDate + " 00:00:00"),
+	// endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd
+	// HH:mm:ss").parse(endDate + " 23:59:59"));
+	// mv.addObject("pageList", pageList);
+	// periodMap.put("uploaded", batchList.size());
+	// mv.addObject("periodMap", periodMap);
+	// mv.addObject("batchList", batchList);
+	// mv.addObject("sampleFilter", sample);
+	// mv.addObject("conditionFilter", condition);
+	// mv.addObject("sidx", sidx);
+	// mv.addObject("sord", sord);
+	// log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+	// return mv;
+	// }
 
-    @ActionLog(value = "报告菜单", button = "乳腺癌报告")
-    @RequestMapping("rocky/reportMain")
-    @ResponseBody
-    public Map<String, Object> rockyReportMain(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size, String sample, String condition,
-            String sidx, String sord, String batches, String periods,
-            String beginDate, String endDate) throws ParseException {
-        Map<String, Object> map = new HashMap<String, Object>();
-        Integer userId = ConstantsData.getLoginUserId();
-        Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
-        List<String> batchList = dataService.getBatchList(userId);
-        Page pager = new Page(page, size);
+	@ActionLog(value = "报告菜单", button = "乳腺癌报告")
+	@RequestMapping("rocky/reportMain")
+	@ResponseBody
+	public Map<String, Object> rockyReportMain(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "20") int size, String sample, String condition, String sidx, String sord,
+			String batches, String periods, String beginDate, String endDate) throws ParseException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Integer userId = ConstantsData.getLoginUserId();
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
+		List<String> batchList = dataService.getBatchList(userId);
+		Page pager = new Page(page, size);
 
-        ArrayList<String> queryBatches = null;
-        if (StringUtils.isNotBlank(batches)) {
-            queryBatches = new ArrayList<String>();
-            if (batches.indexOf(",") > -1) {
-                queryBatches.addAll(Arrays.asList(batches.split(",")));
-            } else {
-                queryBatches.add(batches);
-            }
-        }
+		ArrayList<String> queryBatches = null;
+		if (StringUtils.isNotBlank(batches)) {
+			queryBatches = new ArrayList<String>();
+			if (batches.indexOf(",") > -1) {
+				queryBatches.addAll(Arrays.asList(batches.split(",")));
+			} else {
+				queryBatches.add(batches);
+			}
+		}
 
-        ArrayList<Integer> queryPeriods = null;
-        if (StringUtils.isNotBlank(periods)) {
-            queryPeriods = new ArrayList<Integer>();
-            if (periods.indexOf(",") > -1) {
-                for (String s : periods.split(",")) {
-                    queryPeriods.add(Integer.parseInt(s));
-                }
-            } else {
-                queryPeriods.add(Integer.parseInt(periods));
-            }
-        }
+		ArrayList<Integer> queryPeriods = null;
+		if (StringUtils.isNotBlank(periods)) {
+			queryPeriods = new ArrayList<Integer>();
+			if (periods.indexOf(",") > -1) {
+				for (String s : periods.split(",")) {
+					queryPeriods.add(Integer.parseInt(s));
+				}
+			} else {
+				queryPeriods.add(Integer.parseInt(periods));
+			}
+		}
 
-        if (StringUtils.isBlank(beginDate)) {
-            beginDate = null;
-        }
-        if (StringUtils.isBlank(endDate)) {
-            endDate = null;
-        }
-        if (StringUtils.isBlank(sample)) {
-            sample = null;
-        }
-        if (StringUtils.isBlank(sidx)) {
-            sidx = "updateDate";
-        }
-        if (StringUtils.isBlank(sord)) {
-            sord = "desc";
-        }
+		if (StringUtils.isBlank(beginDate)) {
+			beginDate = null;
+		}
+		if (StringUtils.isBlank(endDate)) {
+			endDate = null;
+		}
+		if (StringUtils.isBlank(sample)) {
+			sample = null;
+		}
+		if (StringUtils.isBlank(sidx)) {
+			sidx = "updateDate";
+		}
+		if (StringUtils.isBlank(sord)) {
+			sord = "desc";
+		}
 
-        PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, queryBatches,
-                queryPeriods,
-                beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginDate + " 00:00:00"),
-                endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate + " 23:59:59"));
-        map.put("pageList", pageList);
-        periodMap.put("uploaded", batchList.size());
-        map.put("periodMap", periodMap);
-        map.put("batchList", batchList);
-        map.put("sampleFilter", sample);
-        map.put("conditionFilter", condition);
-        map.put("sidx", sidx);
-        map.put("sord", sord);
-        log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
-        return map;
-    }
+		PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, queryBatches,
+				queryPeriods,
+				beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginDate + " 00:00:00"),
+				endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate + " 23:59:59"));
+		map.put("pageList", pageList);
+		periodMap.put("uploaded", batchList.size());
+		map.put("periodMap", periodMap);
+		map.put("batchList", batchList);
+		map.put("sampleFilter", sample);
+		map.put("conditionFilter", condition);
+		map.put("sidx", sidx);
+		map.put("sord", sord);
+		log.info("乳腺癌用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+		return map;
+	}
 
 	@ActionLog(value = "报告菜单", button = "乳腺癌报告")
 	@RequestMapping("rocky/data/report")
@@ -3646,31 +3626,32 @@ public class ReportAction {
 		ModelAndView mv = new ModelAndView("rocky/report/report_data_main");
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		mv.addObject("rocky", rocky);
+		mv.addObject("significances", ConstantsData.significances());
 		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return mv;
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月8日上午10:26:46
-     * @description 获取乳腺癌数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "报告菜单", button = "乳腺癌报告")
-    @RequestMapping("getRockyInfo")
-    @ResponseBody
-    public Map<String, Object> getRockyInfo(String dataKey, Integer projectId, Integer appId) {
-        Map<String, Object> map = getCommonInfo(projectId);
-        Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
-        map.put("rocky", rocky);
-        log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月8日上午10:26:46
+	 * @description 获取乳腺癌数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "报告菜单", button = "乳腺癌报告")
+	@RequestMapping("getRockyInfo")
+	@ResponseBody
+	public Map<String, Object> getRockyInfo(String dataKey, Integer projectId, Integer appId) {
+		Map<String, Object> map = getCommonInfo(projectId);
+		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
+		map.put("rocky", rocky);
+		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
+		return map;
+	}
 
 	/**
 	 * 根据条件获取数据列表

@@ -735,4 +735,14 @@ public interface ReportService {
      */
     public Integer updateHbvDetailFilling(HBV hbv);
 
+    /**
+     * 
+     * @description 根据用户id从mongodb,mysql中查找hbv其他位点突变(去重)
+     * @author miaoqi
+     * @date 2016年10月18日下午6:18:00
+     *
+     * @param userId
+     */
+    public Map<String, Map<String, String>> getHBVOtherSiteByUserId(Integer userId, Integer appId);
+
 }

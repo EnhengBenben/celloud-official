@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.mysql.DataFile;
@@ -330,4 +331,17 @@ public interface DataFileMapper {
      *
      */
     List<DataFile> getDataFileFromTbTask(@Param("projectId") Integer projectId);
+
+    /**
+     * 
+     * @description 查询某个userId下某个appId的文件的md5出现次数大于1的file_id和md5值
+     * @author miaoqi
+     * @date 2016年10月19日下午1:47:38
+     *
+     * @param userId
+     * @param appId
+     * @return
+     */
+    @MapKey("fileId")
+    Map<Integer, Map<String, String>> getMd5FileIdMap(@Param("userId") Integer userId, @Param("appId") Integer appId);
 }

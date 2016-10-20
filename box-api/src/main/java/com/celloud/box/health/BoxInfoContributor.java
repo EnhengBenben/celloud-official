@@ -22,7 +22,7 @@ public class BoxInfoContributor implements InfoContributor {
 		Map<String, Object> infos = new HashMap<>();
 		infos.put("ip", LocalIpAddressUtil.getLocalArress(config.getNetwork()));
 		infos.put("name", config.getNetwork());
-		builder.withDetail("network", infos);
+		builder.withDetail("network", infos).withDetail("serialNumber", config.getSerialNumber());
 	}
 
 }

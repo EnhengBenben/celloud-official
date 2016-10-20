@@ -60,7 +60,7 @@ public class EmailParams {
 	}
 
 	public static enum RUN_OVER {
-		userName, projectName, app,
+		userName, projectName, data, app,
 		/**
 		 * 开始时间
 		 */

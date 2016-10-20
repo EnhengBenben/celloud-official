@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.celloud.constants.DataState;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.service.BoxApiService;
+import com.celloud.service.BoxConfigService;
 import com.celloud.service.DataService;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.Response;
+import com.celloud.utils.UserAgentUtil;
 
 @RestController
 @RequestMapping("api/box")
@@ -32,7 +34,20 @@ public class BoxApiAction {
 	private DataService dataService;
 	@Resource
 	private BoxApiService apiService;
+	@Resource
+	private BoxConfigService configService;
 
+	/**
+	 * 盒子端创建文件
+	 * 
+	 * @param userId
+	 * @param name
+	 * @param md5
+	 * @param size
+	 * @param tagId
+	 * @param batch
+	 * @return
+	 */
 	@RequestMapping("newfile")
 	public Response newfile(Integer userId, String name, String md5, long size, Integer tagId, String batch) {
 		logger.info("user {} new file : {}", userId, name);
@@ -55,6 +70,17 @@ public class BoxApiAction {
 		return Response.SUCCESS(values);
 	}
 
+	/**
+	 * 盒子端将文件上传到OSS后，更新根据的状态
+	 * 
+	 * @param objectKey
+	 * @param fileId
+	 * @param tagId
+	 * @param batch
+	 * @param needSplit
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("updatefile")
 	public Response updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
 			HttpServletRequest request) {
@@ -68,5 +94,22 @@ public class BoxApiAction {
 		dataService.updateUploadState(fileId, objectKey, 1, path);
 		apiService.finishfile(objectKey, fileId, tagId, batch, needSplit, newName, folderByDay);
 		return Response.SUCCESS();
+	}
+
+	/**
+	 * 盒子端主动上报盒子的健康状态
+	 * 
+	 * @param request
+	 * @param serialNumber
+	 * @param version
+	 * @param ip
+	 * @return
+	 */
+	@RequestMapping("health")
+	public Response health(HttpServletRequest request, String serialNumber, String version, String ip) {
+		String extranet = UserAgentUtil.getIp(request);
+		logger.info("更新盒子状态：serialNumber={},version={},intranet={},extranet={}", serialNumber, version, ip, extranet);
+		boolean result = configService.updateBoxHealth(serialNumber, version, ip, extranet);
+		return result ? Response.SUCCESS() : Response.FAIL();
 	}
 }
