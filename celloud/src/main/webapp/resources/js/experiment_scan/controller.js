@@ -46,6 +46,9 @@
         $.alert("样本已提交");
       }
     });
+    $scope.print = function(){
+      window.print();
+    };
   });
   
   celloudApp.controller("scanStorageController", function($scope, scanStorageService){
@@ -202,7 +205,6 @@
     
     $scope.addLibrary = function(){
       buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
-        alert(data);
         if(data != null && data != undefined){
           //打印二维码
           printQRCode(data.storageName,data.createDate);
