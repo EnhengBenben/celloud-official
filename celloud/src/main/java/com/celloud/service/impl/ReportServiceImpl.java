@@ -1118,7 +1118,7 @@ public class ReportServiceImpl implements ReportService {
         NumberFormat nt = NumberFormat.getPercentInstance(); // 数字格式化
         nt.setMinimumFractionDigits(2);
         for (HBV hbv : hbvs) {
-            if (hbv.getOther() != null) { // 其他位点存指才去统计
+            if (hbv.getOther() != null && hbv.getOther().size() > 0) { // 其他位点存指才去统计
                 if (dataKeyMap.containsKey(hbv.getDataKey())) { // map中已经存在该datakey代表已经存在该文件(去除重复运行)
                     continue;
                 } else {
