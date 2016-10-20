@@ -21,8 +21,6 @@
       extends="BaseResultMap">
       <result column="tag_id" property="tagId" jdbcType="INTEGER" />
       <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
-      <result column="sampleLogId" property="sampleLogId" jdbcType="INTEGER" />
-      <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultWithOrder" type="com.celloud.model.mysql.Sample"
       extends="BaseResultMap">
@@ -212,8 +210,9 @@
     insert into tb_sample_tag_relat (sample_id,tag_id)
     values (#{sampleId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER})
   </insert>
-  <select id="getSamplesByOrder" reaultMap="ResultMapWithTag">
-    select s.*,t.tag_id,t.tag_name
+  <select id="getSamplesByOrder" resultMap="ResultMapWithTag">
+    select s.sample_id, s.user_id, s.order_id, s.sample_name, s.is_add, s.type, s.sindex, s.create_date, s.update_date,
+     s.state, s.remark,t.tag_id,t.tag_name
     from tb_sample s
     left join tb_sample_log sl on s.sample_id=sl.sample_id 
     left join tb_sample_tag_relat st on s.sample_id=st.sample_id
