@@ -330,20 +330,22 @@ public interface DataService {
 
 	public String getAnotherName(HttpServletRequest request, String filePath, String fileDataKey);
 
-	public int updateFileInfo(Integer dataId, String dataKey, String filePath, String batch,
-			Integer fileFormat, String md5, String anotherName, Integer tagId);
+	public String getAnotherName(String perlPath, String filePath, String outPath);
 
-	public void updateUploadState(Integer fileId, String objectKey, int state, String path);
+	public int updateFileInfo(Integer dataId, String dataKey, String filePath, String batch, Integer fileFormat,
+			String md5, String anotherName, Integer tagId);
+
+	public void updateUploadState(Integer fileId, String objectKey, int state);
 
 	public Integer addFileInfo(Integer userId, String fileName);
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年10月8日下午4:44:19
-     * @description 从TbTask中获取运行结束的数据报告
-     *
-     */
-    public List<DataFile> getDataFileFromTbTask(Integer projectId);
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年10月8日下午4:44:19
+	 * @description 从TbTask中获取运行结束的数据报告
+	 *
+	 */
+	public List<DataFile> getDataFileFromTbTask(Integer projectId);
 
 }

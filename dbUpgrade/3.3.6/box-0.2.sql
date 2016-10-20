@@ -16,3 +16,7 @@ CREATE TABLE `tb_box_user_relate` (
 
 ALTER TABLE `tb_box_config` 
 ADD COLUMN `version` VARCHAR(45) NULL COMMENT '盒子内置应用版本号' AFTER `context`;
+
+ALTER TABLE `celloud`.`tb_file` 
+CHANGE COLUMN `upload_state` `upload_state` INT(11) NOT NULL DEFAULT '0' COMMENT '文件上传状态:0=已上传到盒子，1=已上传到oss，2=上传oss失败，3=已下载到平台，4下载到平台失败' ;
+

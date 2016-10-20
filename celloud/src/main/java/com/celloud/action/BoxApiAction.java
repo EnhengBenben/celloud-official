@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.celloud.constants.BoxUploadState;
 import com.celloud.constants.DataState;
+import com.celloud.model.BoxFile;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.service.BoxApiService;
 import com.celloud.service.BoxConfigService;
@@ -90,9 +92,19 @@ public class BoxApiAction {
 		String today = DateUtil.getDateToString("yyyyMMdd");
 		String folderByDay = realPath + userId + File.separator + today;
 		String newName = file.getDataKey() + FileTools.getExtName(file.getFileName());
-		String path = folderByDay + File.separator + newName;
-		dataService.updateUploadState(fileId, objectKey, 1, path);
-		apiService.finishfile(objectKey, fileId, tagId, batch, needSplit, newName, folderByDay);
+		BoxFile boxFile = new BoxFile();
+		boxFile.setFileId(fileId);
+		boxFile.setBatch(batch);
+		boxFile.setFileName(file.getFileName());
+		boxFile.setDataKey(file.getDataKey());
+		boxFile.setMd5(file.getMd5());
+		boxFile.setNeedSplit(needSplit);
+		boxFile.setObjectKey(objectKey);
+		boxFile.setPath(folderByDay + File.separator + newName);
+		boxFile.setTagId(tagId);
+		boxFile.setUserId(file.getUserId());
+		dataService.updateUploadState(fileId, objectKey, BoxUploadState.IN_OSS);
+		apiService.downloadFromOSS(boxFile);
 		return Response.SUCCESS();
 	}
 
@@ -106,10 +118,11 @@ public class BoxApiAction {
 	 * @return
 	 */
 	@RequestMapping("health")
-	public Response health(HttpServletRequest request, String serialNumber, String version, String ip) {
+	public Response health(HttpServletRequest request, String serialNumber, String version, String ip, Integer port) {
 		String extranet = UserAgentUtil.getIp(request);
-		logger.info("更新盒子状态：serialNumber={},version={},intranet={},extranet={}", serialNumber, version, ip, extranet);
-		boolean result = configService.updateBoxHealth(serialNumber, version, ip, extranet);
+		logger.info("更新盒子状态：serialNumber={},version={},intranet={},extranet={},port={}", serialNumber, version, ip,
+				extranet, port);
+		boolean result = configService.updateBoxHealth(serialNumber, version, ip, extranet, port);
 		return result ? Response.SUCCESS() : Response.FAIL();
 	}
 }

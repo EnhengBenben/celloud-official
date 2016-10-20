@@ -49,6 +49,8 @@ public class BoxConfig {
 	private String appName;
 	@Value("${info.build.artifact}")
 	private String artifact;
+	@Value("${server.port}")
+	private Integer port;
 
 	public String getUploadPath() {
 		return uploadPath;
@@ -120,6 +122,14 @@ public class BoxConfig {
 
 	public void setArtifact(String artifact) {
 		this.artifact = artifact;
+	}
+
+	public Integer getPort() {
+		return port;
+	}
+
+	public void setPort(Integer port) {
+		this.port = port;
 	}
 
 }

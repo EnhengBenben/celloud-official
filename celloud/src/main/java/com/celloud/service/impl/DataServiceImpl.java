@@ -13,8 +13,10 @@ import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.celloud.constants.BoxUploadState;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
@@ -271,7 +273,7 @@ public class DataServiceImpl implements DataService {
 	@Override
 	public String getAnotherName(HttpServletRequest request, String filePath, String fileDataKey) {
 		ServletContext sc = request.getSession().getServletContext();
-		//TODO 写死的路径
+		// TODO 写死的路径
 		String perlPath = sc.getRealPath("/resources") + "/plugins/getAliases.pl";
 		String outPath = sc.getRealPath("/temp") + "/" + fileDataKey;
 		StringBuffer command = new StringBuffer();
@@ -291,8 +293,28 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public int updateFileInfo(Integer dataId, String dataKey, String filePath, String batch,
-			Integer fileFormat, String md5, String anotherName, Integer tagId) {
+	public String getAnotherName(String perlPath, String filePath, String outPath) {
+		perlPath = !StringUtils.isBlank(perlPath) ? perlPath : ConstantsData.getAnotherNamePerlPath();
+		outPath = !StringUtils.isBlank(outPath) ? outPath : filePath + ".txt";
+		StringBuffer command = new StringBuffer();
+		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);
+		PerlUtils.excutePerl(command.toString());
+		String anothername = FileTools.getFirstLine(outPath);
+		String anotherName = null;
+		if (anothername != null) {
+			anothername = anothername.replace(" ", "_").replace("\t", "_");
+			String regEx1 = "[^\\w+$]";
+			Pattern p1 = Pattern.compile(regEx1);
+			Matcher m1 = p1.matcher(anothername);
+			anotherName = m1.replaceAll("").trim();
+			new File(outPath).delete();
+		}
+		return anotherName;
+	}
+
+	@Override
+	public int updateFileInfo(Integer dataId, String dataKey, String filePath, String batch, Integer fileFormat,
+			String md5, String anotherName, Integer tagId) {
 		DataFile data = new DataFile();
 		data.setFileId(dataId);
 		data.setDataKey(dataKey);
@@ -302,6 +324,7 @@ public class DataServiceImpl implements DataService {
 		data.setFileFormat(fileFormat);
 		data.setMd5(md5);
 		data.setState(DataState.ACTIVE);
+		data.setUploadState(BoxUploadState.ON_CELLOUD);
 		if (fileFormat == FileFormat.BAM) {
 			data.setAnotherName(anotherName);
 		}
@@ -313,12 +336,11 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public void updateUploadState(Integer fileId, String objectKey, int state, String path) {
+	public void updateUploadState(Integer fileId, String objectKey, int state) {
 		DataFile data = new DataFile();
 		data.setFileId(fileId);
 		data.setOssPath(objectKey);
 		data.setUploadState(state);
-		data.setPath(path);
 		dataService.updateByPrimaryKeySelective(data);
 	}
 
@@ -336,8 +358,8 @@ public class DataServiceImpl implements DataService {
 		return dataService.addDataInfo(data);
 	}
 
-    @Override
-    public List<DataFile> getDataFileFromTbTask(Integer projectId) {
-        return this.dataFileMapper.getDataFileFromTbTask(projectId);
-    }
+	@Override
+	public List<DataFile> getDataFileFromTbTask(Integer projectId) {
+		return this.dataFileMapper.getDataFileFromTbTask(projectId);
+	}
 }

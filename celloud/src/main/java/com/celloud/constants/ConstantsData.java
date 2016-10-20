@@ -34,6 +34,7 @@ public class ConstantsData {
 	public static Map<String, Map<String, String>> machines = null;
 	private static Properties systemProperties;
 	private static Properties bioinfoServices;
+	private static String anotherNamePerlPath;
 
 	/**
 	 * 获取所有机器列表(如果内存中已存在，则直接使用内存中的；如果内存中不存在，则加载配置文件)
@@ -228,7 +229,8 @@ public class ConstantsData {
 		}
 		return localAddr;
 	}
-	public static Map<String,String> significances(){
+
+	public static Map<String, String> significances() {
 		Map<String, String> significances = new HashMap<>();
 		significances.put("Pathogenic", "致病相关变异");
 		significances.put("Likely pathogenic", "可能致病变异");
@@ -236,5 +238,18 @@ public class ConstantsData {
 		significances.put("Likely benign", "可能良性变异");
 		significances.put("Benign", "良性变异");
 		return significances;
+	}
+
+	public static String getAnotherNamePerlPath() {
+		if (anotherNamePerlPath != null) {
+			return anotherNamePerlPath;
+		}
+		HttpServletRequest request = getRequset();
+		if (request == null) {
+			return null;
+		}
+		// sc.getRealPath("/resources") + "/plugins/getAliases.pl"
+		String path = request.getServletContext().getRealPath("/resources") + "/plugins/getAliases.pl";
+		return path;
 	}
 }

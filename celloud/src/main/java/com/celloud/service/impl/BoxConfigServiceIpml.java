@@ -23,7 +23,7 @@ public class BoxConfigServiceIpml implements BoxConfigService {
 	}
 
 	@Override
-	public boolean updateBoxHealth(String serialNumber, String version, String ip, String exIp) {
+	public boolean updateBoxHealth(String serialNumber, String version, String ip, String exIp, Integer port) {
 		BoxConfig config = mapper.selectBySerialNumber(serialNumber);
 		if (config == null) {
 			return false;
@@ -39,6 +39,9 @@ public class BoxConfigServiceIpml implements BoxConfigService {
 		config.setLastAlive(new Date());
 		config.setSerialNumber(serialNumber);
 		config.setVersion(version);
+		if (port != null && port.intValue() != 0) {
+			config.setPort(port);
+		}
 		return mapper.updateBoxHealth(config) > 0;
 	}
 
