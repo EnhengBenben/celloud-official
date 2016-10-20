@@ -3,6 +3,7 @@ package com.celloud.action;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -23,6 +24,8 @@ import com.celloud.model.mysql.User;
 import com.celloud.service.UserService;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
+import com.celloud.utils.XmlUtil;
+import com.celloud.wechat.WechatEvent;
 import com.celloud.wechat.WechatUtils;
 
 @Controller
@@ -35,6 +38,29 @@ public class WeChatAction {
     @Resource
     private WechatUtils wechatUtils;
 
+	/**
+	 * 初始化自定义菜单
+	 * 
+	 * @author lin
+	 * @date 2016年10月20日下午1:39:12
+	 */
+	@RequestMapping(value = "initMenu", method = RequestMethod.GET)
+	@ResponseBody
+	public void initMenu() {
+		wechatUtils.initMenu();
+	}
+
+	/**
+	 * 验证url是否有效
+	 * 
+	 * @param signature
+	 * @param timestamp
+	 * @param nonce
+	 * @param echostr
+	 * @return
+	 * @author lin
+	 * @date 2016年10月20日下午1:39:24
+	 */
 	@RequestMapping(value = "checkUrl", method = RequestMethod.GET)
 	@ResponseBody
 	public String checkUrl(String signature, String timestamp, String nonce, String echostr) {
@@ -44,34 +70,32 @@ public class WeChatAction {
 		return null;
 	}
 
-	@RequestMapping(value = "getState", method = RequestMethod.GET)
-    public ModelAndView getState(String state, String code) {
+	@RequestMapping(value = "toBind", method = RequestMethod.GET)
+	public ModelAndView toBind(String context) {
         ModelAndView mv = new ModelAndView();
-		String openId = wechatUtils.getOpenId(code);
-		String msg = null;
-		if ("out".equals(state)) {//关注后通过自动回复的链接进来，需要跳转登录页面
-			mv.setViewName("wechat/bind");
-			int isBind = us.checkWechatBind(openId, null);
-			if (isBind > 0) {
-				msg = "您的微信号已绑定平台账号，不可重复绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
-				mv.addObject("info", msg).addObject("isSuccess", "true");
-				return mv;
-			}
-			Session session = SecurityUtils.getSubject().getSession();
-			session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
-			PublicKey publicKey = generatePublicKey(session);
-			mv.addObject("publicKey", publicKey).addObject("isSuccess", "false");
-		} else {
-			//TODO
+		Map<String, String> event = XmlUtil.readXMLToMap(context);
+		String openId = event.get(WechatEvent.url.FromUserName);
+		//关注后通过自动回复的链接进来，需要跳转登录页面
+		mv.setViewName("wechat/bind");
+		int isBind = us.checkWechatBind(openId, null);
+		if (isBind > 0) {
+			String msg = "您的微信号已绑定平台账号，不可重复绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
+			mv.addObject("info", msg).addObject("isSuccess", "true");
+			return mv;
 		}
+		Session session = SecurityUtils.getSubject().getSession();
+		session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
+		PublicKey publicKey = generatePublicKey(session);
+		mv.addObject("publicKey", publicKey).addObject("isSuccess", "false");
         return mv;
 	}
 
 	@RequestMapping(value = "toUnBind", method = RequestMethod.GET)
-	public ModelAndView toUnBind(String state, String code) {
+	public ModelAndView toUnBind(String context) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("wechat/unbind");
-		String openId = wechatUtils.getOpenId(code);
+		Map<String, String> event = XmlUtil.readXMLToMap(context);
+		String openId = event.get(WechatEvent.url.FromUserName);
 		int isBind = us.checkWechatBind(openId, null);
 		if (isBind == 0) {
 			String msg = "您的微信号尚未绑定平台账号，不可解除绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";

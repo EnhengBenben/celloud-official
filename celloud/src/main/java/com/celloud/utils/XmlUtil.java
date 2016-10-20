@@ -3,8 +3,10 @@ package com.celloud.utils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.dom4j.Document;
@@ -73,4 +75,36 @@ public class XmlUtil {
 		}
 		return listXML;
 	}
+
+	/**
+	 * 将xml转成map，不支持层级遍历
+	 * 
+	 * @param context
+	 * @return
+	 * @author lin
+	 * @date 2016年10月19日下午5:03:04
+	 */
+	public static Map<String, String> readXMLToMap(String context) {
+		Map<String, String> map = new HashMap<>();
+		Document doc = null;
+		try {
+			doc = DocumentHelper.parseText(context);
+			// 获取根节点
+			Element root = doc.getRootElement();
+			Iterator<Element> x = root.elementIterator();
+			while (x.hasNext()) {
+				Element y = x.next();
+				map.put(y.getName(), y.getText());
+			}
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+	public static void main(String[] args) {
+		String context = "<xml><ToUserName>toUserddd<data>test</data></ToUserName><FromUserName><![CDATA[FromUser]]></FromUserName><CreateTime>123456789</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[VIEW]]></Event><EventKey><![CDATA[www.qq.com]]></EventKey><MenuId>MENUID</MenuId></xml>";
+		readXMLToMap(context);
+	}
+
 }
