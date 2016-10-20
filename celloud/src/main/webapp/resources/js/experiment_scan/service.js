@@ -23,6 +23,11 @@
       return $http({method:"POST",url:'sample/commitSampling',params:{"sampleIds":sampleIds}});
     }
   });
+  celloudApp.service("sampleOrderService", function($resource,$http){
+    this.sampleOrderInfo = function(orderId){
+      return $http({method:"POST",url:'sample/getSampleOrderInfo',params:{"orderId":orderId,"v":new Date()}});
+    }
+  });
   celloudApp.service("scanStorageService", function($resource,$http){
     var self = this;
     self.sampleList = function(){
