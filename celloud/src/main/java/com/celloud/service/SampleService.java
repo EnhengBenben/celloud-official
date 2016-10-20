@@ -201,4 +201,16 @@ public interface SampleService {
      */
     public List<Map<String, Object>> sampleListInStorage(Integer userId,
             Integer ssId);
+
+    /**
+     * 获取样品订单信息
+     * 
+     * @param userId
+     * @param orderId
+     * @return
+     * @author leamo
+     * @date 2016年10月19日 下午4:42:48
+     */
+    public Map<String, Object> getSampleOrderInfo(Integer userId,
+            Integer orderId);
 }

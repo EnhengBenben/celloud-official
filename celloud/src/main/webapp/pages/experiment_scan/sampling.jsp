@@ -23,7 +23,7 @@
           </form>
         </div>
         <div class="sample-btns clearfix">
-          <button ng-click="commitSample()" class="btn -low pull-right" ng-disabled="sampleList.length <= 0">提交样本</button>
+          <button ng-click="commitSample()" class="btn -low pull-right" ng-disabled="sampleList.length <= 0">提交订单</button>
           <button id="sample-cancel" class="btn btn-reset -low pull-right" ng-disabled="sampleList.length <= 0">取消</button>
         </div>
         <table class="table table-main">
