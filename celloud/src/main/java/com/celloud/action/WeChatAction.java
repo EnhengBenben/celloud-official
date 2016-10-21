@@ -1,14 +1,22 @@
 package com.celloud.action;
 
+import java.io.IOException;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,7 +29,9 @@ import com.celloud.constants.Constants;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
 import com.celloud.model.mysql.User;
+import com.celloud.model.mysql.WechatAutoReply;
 import com.celloud.service.UserService;
+import com.celloud.service.WechatAutoReplyService;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
 import com.celloud.utils.XmlUtil;
@@ -35,6 +45,8 @@ public class WeChatAction {
 
 	@Resource
 	private UserService us;
+	@Resource
+	private WechatAutoReplyService autoReplyService;
     @Resource
     private WechatUtils wechatUtils;
 
@@ -68,6 +80,36 @@ public class WeChatAction {
 			return echostr;
 		}
 		return null;
+	}
+
+	@RequestMapping(value = "autoReply", method = RequestMethod.GET)
+	@ResponseBody
+	public String autoReply(String keywords) {
+		WechatAutoReply autoReply = autoReplyService.selectByKeywords(keywords);
+		return autoReply == null ? null : autoReply.getReplyContext();
+	}
+
+	@RequestMapping(value = "eventTest", method = RequestMethod.POST)
+	@ResponseBody
+	public String eventTest(HttpServletRequest request, String keywords) {
+		try {
+			ServletInputStream sis = request.getInputStream();
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(sis);
+			// 获取根节点
+			Element root = document.getRootElement();
+			Iterator<Element> x = root.elementIterator();
+			while (x.hasNext()) {
+				Element y = x.next();
+				System.out.println("name:" + y.getName() + "-----text:" + y.getText());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+		System.out.println(keywords);
+		return keywords == null ? "null" : "success";
 	}
 
 	@RequestMapping(value = "toBind", method = RequestMethod.GET)
