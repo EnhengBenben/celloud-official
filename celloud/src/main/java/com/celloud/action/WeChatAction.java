@@ -21,7 +21,9 @@ import com.celloud.constants.Constants;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
 import com.celloud.model.mysql.User;
+import com.celloud.model.mysql.WechatAutoReply;
 import com.celloud.service.UserService;
+import com.celloud.service.WechatAutoReplyService;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
 import com.celloud.utils.XmlUtil;
@@ -35,6 +37,8 @@ public class WeChatAction {
 
 	@Resource
 	private UserService us;
+	@Resource
+	private WechatAutoReplyService autoReplyService;
     @Resource
     private WechatUtils wechatUtils;
 
@@ -68,6 +72,13 @@ public class WeChatAction {
 			return echostr;
 		}
 		return null;
+	}
+
+	@RequestMapping(value = "autoReply", method = RequestMethod.GET)
+	@ResponseBody
+	public String autoReply(String keywords) {
+		WechatAutoReply autoReply = autoReplyService.selectByKeywords(keywords);
+		return autoReply == null ? null : autoReply.getReplyContext();
 	}
 
 	@RequestMapping(value = "toBind", method = RequestMethod.GET)
