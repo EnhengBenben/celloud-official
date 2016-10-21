@@ -44,6 +44,25 @@ public class DataAction {
     @Resource
     private WeekService weekService;
 
+    @RequestMapping("otherSiteCount")
+    public ModelAndView otherSiteCount() {
+        ModelAndView mv = new ModelAndView("data/data_otherSite");
+        User user = ConstantsData.getLoginUser();
+        Map<String, Map<String, String>> otherSiteCount = null;
+        if (user != null) {
+            Integer role = user.getRole();
+            mv.addObject("userRole", role);
+            if (UserRole.ADMINISTRATOR.equals(role)) {// 超级管理员
+                otherSiteCount = dataService.getHBVOtherSiteByUserId(null);
+            }
+            if (UserRole.BIG_CUSTOMER.equals(role)) {// 大客户
+                otherSiteCount = dataService.getHBVOtherSiteByUserId(user.getCompanyId());
+            }
+        }
+        mv.addObject("othserSiteCount", otherSiteCount);
+        return mv;
+    }
+
     @RequestMapping("dataCount")
     public ModelAndView dataCount(){
         ModelAndView mv=new ModelAndView("data/data_count");

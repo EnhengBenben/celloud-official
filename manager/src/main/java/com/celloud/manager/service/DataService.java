@@ -171,4 +171,16 @@ public interface DataService {
      *
      */
     public List<Map<String, Object>> getHistoryWeekDataSize(Integer companyId);
+
+    /**
+     * 
+     * @description 根据用户id从mongodb,mysql中查找hbv其他位点突变(去重)
+     * @author miaoqi
+     * @date 2016年10月18日下午6:18:00
+     *
+     * @param userId
+     * @param companyId
+     *            大客户id
+     */
+    public Map<String, Map<String, String>> getHBVOtherSiteByUserId(Integer companyId);
 }

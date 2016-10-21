@@ -28,6 +28,11 @@ var consoleModel=(function(console){
 
 var dataFile=(function(dataFile){
 	var self=dataFile||{};
+	self.toOtherSiteCount = function(){
+		$.post("otherSiteCount",function(responseText){
+			menu("data-othersite-menu",responseText);
+		});
+	};
 	self.toDataCount=function(){
 		$.post("dataCount",function(responseText){
 			menu("data-count-menu",responseText);

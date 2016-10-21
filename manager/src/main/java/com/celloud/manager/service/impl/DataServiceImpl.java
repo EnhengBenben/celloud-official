@@ -1,5 +1,6 @@
 package com.celloud.manager.service.impl;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +13,13 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.manager.constants.DataState;
 import com.celloud.manager.constants.UserRole;
+import com.celloud.manager.dao.ReportDao;
 import com.celloud.manager.mapper.CompanyMapper;
 import com.celloud.manager.mapper.DataFileMapper;
 import com.celloud.manager.mapper.UserMapper;
 import com.celloud.manager.model.Company;
 import com.celloud.manager.model.User;
+import com.celloud.manager.model.mongo.HBV;
 import com.celloud.manager.service.DataService;
 import com.celloud.manager.utils.PropertiesUtil;
 
@@ -27,6 +30,8 @@ public class DataServiceImpl implements DataService{
     private DataFileMapper dataFileMapper;
     @Resource
     private CompanyMapper companyMapper;
+    @Resource
+    private ReportDao reportDao;
     
     @Resource
     private UserMapper userMapper;
@@ -134,6 +139,87 @@ public class DataServiceImpl implements DataService{
     @Override
     public List<Map<String, Object>> getHistoryWeekDataSize(Integer companyId) {
         return dataFileMapper.getHistoryWeekDataSize(companyId, PropertiesUtil.testAccountIds);
+    }
+
+    @Override
+    public Map<String, Map<String, String>> getHBVOtherSiteByUserId(Integer companyId) {
+
+        // 结果Map
+        // {"206":{"count":"20","percent":"10%"},"207":{"count":"30","percent":"30%%}}
+        Map<String, Map<String, String>> result = new HashMap<String, Map<String, String>>();
+        // 封装过滤条件
+        Map<String, Object> filters = new HashMap<String, Object>();
+        // 如果是超级管理员, 则查找所有hbv的报告, 不用筛选用户
+        List<Integer> userIds = new ArrayList<Integer>();
+        if (null != companyId) { // 如果是大客户, 则查找该大客户下用户的hbv的报告
+            // 查找该大客户下的所有用户, 封装过滤条件
+            userIds = new ArrayList<Integer>();
+            List<User> users = userMapper.findUserByBigCustomer(companyId, DataState.ACTIVE,
+                    PropertiesUtil.testAccountIds);
+            for (User user : users) {
+                userIds.add(user.getUserId());
+            }
+            filters.put("userId in", userIds);
+        }
+
+        // 该用户下所有的hbv报告
+        Date before = new Date();
+        List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters, new String[] { "other" });
+        Date after = new Date();
+        System.out.println(after.);
+
+        // 保存datakey, 用于去除重复运行
+        Map<String, Object> dataKeyMap = new HashMap<String, Object>();
+        // 保存md5, 用于去除重复文件
+        Map<String, Object> md5Map = new HashMap<String, Object>();
+        // hbv对应的文件map集合{"21":{"md5":"xfdsghfsgh"},"22":{"md5":"dgdfsgsdgf"},...}
+        Map<Integer, Map<String, String>> md5FileIdMap = dataFileMapper.getMd5FileIdMap(userIds, 82);
+        // 遍历hbv数据报告, 去除重复运行, 去除重复文件, 将有用信息封装map
+        Float totalSite = 0.0f; // 总的位点数量用于统计半分比
+        NumberFormat nt = NumberFormat.getPercentInstance(); // 数字格式化
+        nt.setMinimumFractionDigits(2);
+        for (HBV hbv : hbvs) {
+            if (hbv.getOther() != null && hbv.getOther().size() > 0) { // 其他位点存指才去统计
+                if (dataKeyMap.containsKey(hbv.getDataKey())) { // map中已经存在该datakey代表已经存在该文件(去除重复运行)
+                    continue;
+                } else {
+                    // 判断是否包含在md5Map中(去除重复文件)
+                    if (md5FileIdMap.containsKey(hbv.getFileId())) { // 代表该文件属于md5有重复的文件
+                        // 判断是否已经添加过了
+                        if (md5Map.get(md5FileIdMap.get(hbv.getFileId()).get("md5")) != null) { // 代表保存md5的map中已经存在该MD5(去除重复文件)
+                            continue;
+                        } else {
+                            md5Map.put(md5FileIdMap.get(hbv.getFileId()).get("md5"), new Object());
+                        }
+                    }
+                    dataKeyMap.put(hbv.getDataKey(), new Object()); // 代表第一次读取到该datakey作为键存入map中
+                    // 该hbv数据既不属于重复运行, 也不属于重复文件, 读取该数据的新的突变位点, 封装map
+                    // 其他突变位点统计
+                    Map<String, String> map = hbv.getOther();
+                    for (String site : map.keySet()) {
+                        totalSite++;
+                        site = site.split("_")[0]; // 获取位点值
+                        if (result.containsKey(site)) { // 结果map中已经统计过该位点,
+                                                        // 则取出该位点的Map
+                            Map<String, String> siteMap = result.get(site);
+                            siteMap.put("count", String.valueOf(Integer.parseInt(siteMap.get("count")) + 1));// 数量+1
+                            siteMap.put("percent", Integer.parseInt(siteMap.get("count")) / totalSite + ""); // 重新计算百分比
+                        } else {
+                            // 构造一个结果map放到result中
+                            Map<String, String> siteMap = new HashMap<String, String>();
+                            siteMap.put("count", "1");
+                            siteMap.put("percent", 1 / totalSite + "");
+                            result.put(site, siteMap);
+                        }
+                    }
+                    for (Map.Entry<String, Map<String, String>> entry : result.entrySet()) {
+                        entry.getValue().put("percent",
+                                nt.format(Float.parseFloat(entry.getValue().get("count")) / totalSite));
+                    }
+                }
+            }
+        }
+        return result;
     }
 
 }

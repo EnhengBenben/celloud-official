@@ -205,4 +205,5 @@ public interface UserMapper {
             @Param("appAddList") List<Map<String, String>> appAddList);
 
     public void addUserRoleRight(@Param("userId") Integer userId, @Param("roleIds") String[] roleIds);
+
 }

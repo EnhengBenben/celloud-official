@@ -719,22 +719,13 @@
         SELECT
         file_id fileId, `md5` `md5`
         FROM tb_file
-        WHERE md5 in(
-            SELECT
-            md5
-            FROM tb_file
-            WHERE file_id
-            IN(
-                SELECT file_id
-                FROM tb_report
-                WHERE app_id = #{appId}
-                AND user_id = #{userId}
-                AND flag = 0
-                AND period = 3
-            )
-            GROUP BY `md5`
-            HAVING
-            COUNT(file_id) > 1
+        WHERE file_id in(
+            SELECT file_id
+            FROM tb_report
+            WHERE app_id = #{appId}
+            AND user_id = #{userId}
+            AND flag = 0
+            AND period = 3
         )
 	</select>
 </mapper>
