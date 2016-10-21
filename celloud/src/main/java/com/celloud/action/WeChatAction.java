@@ -1,14 +1,22 @@
 package com.celloud.action;
 
+import java.io.IOException;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -83,7 +91,23 @@ public class WeChatAction {
 
 	@RequestMapping(value = "eventTest", method = RequestMethod.POST)
 	@ResponseBody
-	public String eventTest(String keywords) {
+	public String eventTest(HttpServletRequest request, String keywords) {
+		try {
+			ServletInputStream sis = request.getInputStream();
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(sis);
+			// 获取根节点
+			Element root = document.getRootElement();
+			Iterator<Element> x = root.elementIterator();
+			while (x.hasNext()) {
+				Element y = x.next();
+				System.out.println("name:" + y.getName() + "-----text:" + y.getText());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
 		System.out.println(keywords);
 		return keywords == null ? "null" : "success";
 	}
