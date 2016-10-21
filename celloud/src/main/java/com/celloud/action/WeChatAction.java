@@ -81,6 +81,13 @@ public class WeChatAction {
 		return autoReply == null ? null : autoReply.getReplyContext();
 	}
 
+	@RequestMapping(value = "eventTest", method = RequestMethod.POST)
+	@ResponseBody
+	public String eventTest(String keywords) {
+		System.out.println(keywords);
+		return keywords == null ? "null" : "success";
+	}
+
 	@RequestMapping(value = "toBind", method = RequestMethod.GET)
 	public ModelAndView toBind(String context) {
         ModelAndView mv = new ModelAndView();
