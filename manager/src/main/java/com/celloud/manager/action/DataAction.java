@@ -44,6 +44,11 @@ public class DataAction {
     @Resource
     private WeekService weekService;
 
+    public ModelAndView getSiteCompany(Integer site) {
+        
+        return null;
+    }
+
     @RequestMapping("otherSiteCount")
     public ModelAndView otherSiteCount() {
         ModelAndView mv = new ModelAndView("data/data_otherSite");

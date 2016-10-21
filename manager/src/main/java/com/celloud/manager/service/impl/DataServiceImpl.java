@@ -150,7 +150,7 @@ public class DataServiceImpl implements DataService{
         // 封装过滤条件
         Map<String, Object> filters = new HashMap<String, Object>();
         // 如果是超级管理员, 则查找所有hbv的报告, 不用筛选用户
-        List<Integer> userIds = new ArrayList<Integer>();
+        List<Integer> userIds = null;
         if (null != companyId) { // 如果是大客户, 则查找该大客户下用户的hbv的报告
             // 查找该大客户下的所有用户, 封装过滤条件
             userIds = new ArrayList<Integer>();
@@ -163,7 +163,7 @@ public class DataServiceImpl implements DataService{
         }
 
         // 该用户下所有的hbv报告
-        List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters, new String[] { "other" });
+        List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters, new String[] { "other", "fileId", "dataKey" });
 
         // 保存datakey, 用于去除重复运行
         Map<String, Object> dataKeyMap = new HashMap<String, Object>();
