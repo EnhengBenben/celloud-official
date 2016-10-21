@@ -114,7 +114,7 @@
 						{title : "bam", extensions : "bam"}
 					]
 				},
-				max_retries : 0,
+				max_retries : 5,
 				multiple_queues : true,
 				flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf'
 			});

@@ -46,7 +46,7 @@
 						{title : "txt", extensions : "txt"}
 					]
 				},
-				max_retries : 0,// 重试次数
+				max_retries : 5,
 				multiple_queues : true,
 				// Flash settings
 				flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf',
