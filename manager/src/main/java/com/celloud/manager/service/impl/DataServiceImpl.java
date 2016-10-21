@@ -163,10 +163,7 @@ public class DataServiceImpl implements DataService{
         }
 
         // 该用户下所有的hbv报告
-        Date before = new Date();
         List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters, new String[] { "other" });
-        Date after = new Date();
-        System.out.println(after.);
 
         // 保存datakey, 用于去除重复运行
         Map<String, Object> dataKeyMap = new HashMap<String, Object>();
