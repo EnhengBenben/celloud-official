@@ -201,10 +201,13 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> List<T> queryByFilters(Class<T> clazz, Map<String, Object> filters) {
+    public <T> List<T> queryByFilters(Class<T> clazz, Map<String, Object> filters, String[] fields) {
         Query<T> query = dataStore.createQuery(clazz);
         for (String key : filters.keySet()) {
             query.filter(key, filters.get(key));
+        }
+        if (null != fields) {
+            query.retrievedFields(true, fields);
         }
         return query.order("-createDate").asList();
     }
