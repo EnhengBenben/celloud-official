@@ -46,7 +46,7 @@
 						{title : "txt", extensions : "txt"}
 					]
 				},
-				max_retries : 0,
+				max_retries : 5,
 				multiple_queues : true,
 				// Flash settings
 				flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf',
@@ -143,7 +143,7 @@
 				}
 			});
 			uploader.bind("BeforeUpload", function(uploader, file) {
-				uploader.setOption("multipart_params",{'originalName': file.name,'tagId':$scope.tagSelected.tagId,'batch': $scope.batch});
+				uploader.setOption("multipart_params",{'originalName': file.name,'tagId':$scope.tagSelected.tagId,'batch': $scope.batch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate});
 			});
 			uploader.bind("Error", function(uploader, error) {
 				if(error.code=='-602'){

@@ -43,7 +43,7 @@
 							<input type="text" class="yzm input-bottom" placeholder="验证码" id="captcha"
 								name="kaptchaCode" value="${requestScope.kapcode }" />
 							<img title="看不清，换一张"
-								src="<%=request.getContextPath()%>/kaptcha.jpg" id="kaptchaImage"
+								src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage"
 								alt="验证码" class="validateCode" style="cursor: pointer;" />
 						</div>
 					</c:if>
@@ -52,7 +52,7 @@
 	                    <span class="btn-login checkbox-un" id="remPass"></span>
 	                    <input id="isRem" name="isRem" value="0" type="hidden">
 	                                        记住密码
-	                    <a href="forgot.html" class="forget">忘记密码</a>
+	                    <a href="../forgot.html" class="forget">忘记密码</a>
 	                </div>
 				</div>
 			</form>

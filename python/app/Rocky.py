@@ -5,6 +5,7 @@ __des__ = "Rocky的操作类"
 __author__ = "sun8wd"
 
 import threading
+import json
 from mongo.mongoOperate import mongo
 from utils.StringUtils import *
 from utils.FileUtils import *
@@ -33,6 +34,7 @@ class Rocky:
     def getResult(self, path, appId, dataKey):
         result = {}
         rockyRecords = [];
+        descriptions = self.getDescription()
         result_path = os.path.join(path,dataKey, 'result','all.snp')
         print result_path
         mo = mongo.getInstance()
@@ -43,15 +45,18 @@ class Rocky:
                 st = line.strip().split("\t")
                 acids = st[2]
                 gene = st[0]
-                description = st[5]
+                variationId = st[5]
                 chromosome = st[1]
                 significance = st[4]
                 nucleotides = st[3]
+                description = '目前暂无描述说明。我们将保持关注，根据最新科研成果及时更新该状态。'
+                if gene+'-'+variationId in descriptions.keys():
+                    description = descriptions[gene+'-'+variationId]
                 if significance=='pathogenic':
                     pathogenic='true'
-                print pathogenic
                 rockyRecord={
                     "acids":acids,
+                    "variationId":variationId,
                     "gene":gene,
                     "description":description,
                     "chromosome":chromosome,
@@ -65,5 +70,13 @@ class Rocky:
         result["records"] = rockyRecords
         result["pathogenic"] = pathogenic
         return result
+
+    def getDescription(self):
+        path = os.path.split(os.path.realpath(__file__))[0]
+        path = os.path.join(path,'Rocky.txt')
+        with open(path, 'r') as f:
+            data = json.load(f)
+        f.close()
+        return data
 
 

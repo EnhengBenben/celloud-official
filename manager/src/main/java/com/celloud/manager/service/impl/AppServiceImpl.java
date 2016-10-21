@@ -260,4 +260,9 @@ public class AppServiceImpl implements AppService {
         }
     }
 
+	@Override
+	public App selectByPrimaryKey(Integer appId) {
+		return appMapper.selectByPrimaryKey(appId);
+	}
+
 }
