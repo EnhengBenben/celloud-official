@@ -209,6 +209,7 @@
 	<bean id="wechatProperties" class="com.celloud.wechat.WechatUtils">
 		<property name="appId" value="${wechat.appId}" />
 		<property name="appSecret" value="${wechat.appSecret}" />
+		<property name="urlToken" value="${wechat.urlToken}" />
 		<property name="loginHtml" value="${wechat.loginHtml}" />
 		<property name="oAuth2Url" value="${wechat.oAuth2Url}" />
 		<property name="oAuth2TokenUrl" value="${wechat.oAuth2TokenUrl}" />
