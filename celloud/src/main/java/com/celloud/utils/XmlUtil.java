@@ -8,11 +8,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.io.FileUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 public class XmlUtil {
 	public static String writeXML(String path) {
@@ -85,19 +89,39 @@ public class XmlUtil {
 	 * @date 2016年10月19日下午5:03:04
 	 */
 	public static Map<String, String> readXMLToMap(String context) {
-		Map<String, String> map = new HashMap<>();
-		Document doc = null;
+		Map<String, String> map = null;
 		try {
-			doc = DocumentHelper.parseText(context);
-			// 获取根节点
-			Element root = doc.getRootElement();
-			Iterator<Element> x = root.elementIterator();
-			while (x.hasNext()) {
-				Element y = x.next();
-				map.put(y.getName(), y.getText());
-			}
+			Document document = DocumentHelper.parseText(context);
+			map = readXMLToMap(document);
 		} catch (DocumentException e) {
 			e.printStackTrace();
+		}
+		return map;
+	}
+
+	public static Map<String, String> readXMLToMap(HttpServletRequest request) {
+		Map<String, String> map = null;
+		try {
+			ServletInputStream sis = request.getInputStream();
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(sis);
+			map = readXMLToMap(document);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+	public static Map<String, String> readXMLToMap(Document document) {
+		Map<String, String> map = new HashMap<>();
+		// 获取根节点
+		Element root = document.getRootElement();
+		Iterator<Element> element = root.elementIterator();
+		while (element.hasNext()) {
+			Element y = element.next();
+			map.put(y.getName(), y.getText());
 		}
 		return map;
 	}

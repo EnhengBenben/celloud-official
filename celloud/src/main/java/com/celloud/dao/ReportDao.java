@@ -257,6 +257,6 @@ public interface ReportDao {
      *            条件map,key是条件名,value是条件值
      * @return
      */
-    public <T> List<T> queryByFilters(Class<T> clazz, Map<String, Object> filters);
+    public <T> List<T> queryByFilters(Class<T> clazz, Map<String, Object> filters, String[] fields);
 
 }

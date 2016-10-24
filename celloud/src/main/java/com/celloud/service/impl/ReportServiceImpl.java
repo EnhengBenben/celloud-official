@@ -1105,7 +1105,7 @@ public class ReportServiceImpl implements ReportService {
         Map<String, Object> filters = new HashMap<String, Object>();
         filters.put("userId", userId);
         // 该用户下所有的hbv报告
-        List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters);
+        List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters, new String[] { "other", "fileId", "dataKey" });
 
         // 保存datakey, 用于去除重复运行
         Map<String, Object> dataKeyMap = new HashMap<String, Object>();
@@ -1138,6 +1138,12 @@ public class ReportServiceImpl implements ReportService {
                     for (String site : map.keySet()) {
                         totalSite++;
                         site = site.split("_")[0]; // 获取位点值
+                        // if ("152".equals(site) || "154".equals(site) ||
+                        // "153".equals(site) || "166".equals(site)
+                        // || "149".equals(site) || "175".equals(site)) {
+                        // System.out.println("site: " + site + " dataKey: " +
+                        // hbv.getDataKey());
+                        // }
                         if(result.containsKey(site)){ // 结果map中已经统计过该位点, 则取出该位点的Map
                             Map<String,String> siteMap = result.get(site);
                             siteMap.put("count", String.valueOf(Integer.parseInt(siteMap.get("count")) + 1));// 数量+1

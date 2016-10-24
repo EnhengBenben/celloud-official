@@ -28,12 +28,21 @@ var consoleModel=(function(console){
 
 var dataFile=(function(dataFile){
 	var self=dataFile||{};
+	self.getSiteInfo = function(site){
+		$.post("getSiteInfo", {"site" : site}, function(responseText){
+			$("#siteInfoRow").html(responseText);
+		});
+	};
+	self.toOtherSiteCount = function(){
+		$.post("otherSiteCount",function(responseText){
+			menu("data-othersite-menu",responseText);
+		});
+	};
 	self.toDataCount=function(){
 		$.post("dataCount",function(responseText){
 			menu("data-count-menu",responseText);
 		});
 	};
-	
 	self.toUserDataCount=function(){
 		$.post("userDataCount",function(responseText){
 			menu("data-user-menu",responseText);

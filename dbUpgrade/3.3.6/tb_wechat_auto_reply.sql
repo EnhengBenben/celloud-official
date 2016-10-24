@@ -1,0 +1,55 @@
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4096
+#
+# http://www.sequelpro.com/
+# http://code.google.com/p/sequel-pro/
+#
+# Host: 192.168.22.253 (MySQL 5.1.73)
+# Database: celloud
+# Generation Time: 2016-10-21 06:22:58 +0000
+# ************************************************************
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table tb_wechat_auto_reply
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tb_wechat_auto_reply`;
+
+CREATE TABLE `tb_wechat_auto_reply` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `name` varchar(60) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '规则名称',
+  `keywords` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '关键字',
+  `reply_context` text COLLATE utf8_bin NOT NULL COMMENT '回复内容',
+  `create_date` datetime NOT NULL COMMENT '创建时间',
+  `state` int(3) NOT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='微信自动回复表';
+
+LOCK TABLES `tb_wechat_auto_reply` WRITE;
+/*!40000 ALTER TABLE `tb_wechat_auto_reply` DISABLE KEYS */;
+
+INSERT INTO `tb_wechat_auto_reply` (`id`, `name`, `keywords`, `reply_context`, `create_date`, `state`)
+VALUES
+	(1,X'E5B9B3E58FB0E6B3A8E5868CE696B9E5BC8F',X'E6B3A8E5868C',X'43656C4C6F7564E7949FE789A9E4BFA1E681AFE4BA91E5B9B3E58FB0E79BAEE5898DE69A82E4B88DE4BC9AE5AFB9E5A496E5BC80E694BEE6B3A8E5868CEFBC8CE68980E69C89E8B4A6E58FB7E79A84E794B3E8AFB7E983BDE698AFE58685E983A8E794B3E8AFB7E88EB7E5BE97E79A84E38082','2016-10-21 10:59:23',0);
+
+/*!40000 ALTER TABLE `tb_wechat_auto_reply` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
