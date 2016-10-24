@@ -35,6 +35,31 @@ public class WechatEvent {
 	}
 
 	/**
+	 * 校验url
+	 * 
+	 * @author lin
+	 * @date 2016年10月24日 上午10:57:01
+	 */
+	public class checkUrl {
+		/**
+		 * 微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
+		 */
+		public static final String signature = "signature";
+		/**
+		 * 时间戳
+		 */
+		public static final String timestamp = "timestamp";
+		/**
+		 * 随机数
+		 */
+		public static final String nonce = "nonce";
+		/**
+		 * 随机字符串
+		 */
+		public static final String echostr = "echostr";
+	}
+
+	/**
 	 * 点击事件的参数
 	 * 
 	 * @author lin

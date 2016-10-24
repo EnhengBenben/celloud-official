@@ -68,9 +68,27 @@ public class WeChatAction {
 	 */
 	@RequestMapping(value = "checkUrl", method = RequestMethod.GET)
 	@ResponseBody
-	public String checkUrl(String signature, String timestamp, String nonce, String echostr) {
+	public String checkUrl(HttpServletRequest request) {
+		Map<String, String> event = XmlUtil.readXMLToMap(request);
+		String signature = null;
+		String timestamp = null;
+		String nonce = null;
+		if (event.containsKey(WechatEvent.checkUrl.echostr)) {
+			System.out.println("echostr:" + event.get(WechatEvent.checkUrl.echostr));
+		}
+		if (event.containsKey(WechatEvent.checkUrl.nonce)) {
+			System.out.println("nonce:" + event.get(WechatEvent.checkUrl.nonce));
+		}
+		if (event.containsKey(WechatEvent.checkUrl.signature)) {
+			System.out.println("signature:" + event.get(WechatEvent.checkUrl.signature));
+		}
+		if (event.containsKey(WechatEvent.checkUrl.timestamp)) {
+			System.out.println("timestamp" + event.get(WechatEvent.checkUrl.timestamp));
+		}
 		if (wechatUtils.checkUrl(signature, timestamp, nonce)) {
-			return echostr;
+			System.out.println("校验通过");
+		} else {
+			System.out.println("校验失败");
 		}
 		return null;
 	}
