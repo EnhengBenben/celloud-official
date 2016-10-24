@@ -28,7 +28,7 @@
 			<div class="form-inline">
 				<div class="form-group">
 					<label for="batch-info">数据标签</label>
-					<input type="text" class="form-control" id="batch-info-input" placeholder="标签">
+					<input type="text" class="form-control" id="batch-info-input" ng-model="rockyBatch" placeholder="标签">
 					<input type="hidden" id="tag-info-input">
 				</div>
 				<button id="upload-next" class="btn -confirm">下一步</button>
