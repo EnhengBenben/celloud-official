@@ -50,6 +50,9 @@ public class WechatUtils {
 	}
 
 	public boolean checkUrl(String signature, String timestamp, String nonce) {
+		System.out.println("urlToken:" + urlToken);
+		System.out.println("timestamp:" + timestamp);
+		System.out.println("nonce:" + nonce);
 		List<String> param = new ArrayList<>();
 		param.add(urlToken);
 		param.add(timestamp);
