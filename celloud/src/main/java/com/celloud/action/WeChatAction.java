@@ -3,10 +3,7 @@ package com.celloud.action;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +28,10 @@ import com.celloud.service.WechatAutoReplyService;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
 import com.celloud.utils.XmlUtil;
+import com.celloud.wechat.MessageUtils;
 import com.celloud.wechat.WechatUtils;
 import com.celloud.wechat.constant.WechatEvent;
+import com.celloud.wechat.constant.WechatMessage;
 
 @Controller
 @RequestMapping("api/wechat")
@@ -58,51 +57,51 @@ public class WeChatAction {
 		wechatUtils.initMenu();
 	}
 
-	private void showParams(HttpServletRequest request) {
-		Map<String, String> map = new HashMap<String, String>();
-		Enumeration<String> paramNames = request.getParameterNames();
-		while (paramNames.hasMoreElements()) {
-			String paramName = (String) paramNames.nextElement();
-
-			String[] paramValues = request.getParameterValues(paramName);
-			if (paramValues.length == 1) {
-				String paramValue = paramValues[0];
-				if (paramValue.length() != 0) {
-					map.put(paramName, paramValue);
-				}
-			}
-		}
-
-		Set<Map.Entry<String, String>> set = map.entrySet();
-		System.out.println("-------------param start-----------------");
-		for (Map.Entry<String, String> entry : set) {
-			System.out.println(entry.getKey() + ":" + entry.getValue());
-		}
-		boolean xx = wechatUtils.checkUrl(map.get("signature"), map.get("timestamp"), map.get("nonce"));
-		System.out.println(xx);
-		System.out.println("-------------param end-----------------");
-	}
-
 	/**
-	 * 验证url是否有效
+	 * 微信事件接收方法
 	 * 
+	 * @param request
 	 * @param signature
-	 * @param timestamp
 	 * @param nonce
 	 * @param echostr
+	 * @param timestamp
 	 * @return
 	 * @author lin
-	 * @date 2016年10月20日下午1:39:24
+	 * @date 2016年10月24日下午1:51:37
 	 */
-	@RequestMapping(value = "checkUrl", method = RequestMethod.GET)
+	@RequestMapping("eventRecive")
 	@ResponseBody
-	public String checkUrl(HttpServletRequest request, String signature, String nonce, String echostr,
+	public String eventRecive(HttpServletRequest request, String signature, String nonce, String echostr,
 			String timestamp) {
-		showParams(request);
-		System.out.println("signature:" + signature);
-		System.out.println("nonce:" + nonce);
-		System.out.println("echostr:" + echostr);
-		System.out.println("timestamp:" + timestamp);
+		if (signature != null) {
+			boolean isTrue = wechatUtils.checkUrl(signature, timestamp, nonce);
+			if (isTrue) {
+				System.out.println("测试通过，需要返回：" + echostr);
+				//TODO 这里需要返回 echostr
+			} else {
+				System.out.println("测试失败");
+				return null;
+			}
+		} else {
+			//TODO 其他事件的处理
+			Map<String, String> map = XmlUtil.readXMLToMap(request);
+			if (map.containsKey(WechatEvent.click.MsgType)) {
+				if (map.get(WechatEvent.click.MsgType).equals("event")) {//是事件推送
+
+				} else if (map.get(WechatMessage.text.MsgType).equals("text")) {//是文本消息推送，主要用来做自动回复
+					String keywords = map.get(WechatMessage.text.Content);
+					WechatAutoReply autoReply = autoReplyService.selectByKeywords(keywords);
+					String reply = autoReply == null ? "未知的查询关键字" : autoReply.getReplyContext();
+					return MessageUtils.getReply(map, reply);
+				} else {
+					System.out.println(map.get(WechatEvent.click.MsgType) + "类型的推送");
+					return null;
+				}
+			} else {
+				System.out.println("MsgType不存在，未知类型的消息");
+				return null;
+			}
+		}
 		return null;
 	}
 

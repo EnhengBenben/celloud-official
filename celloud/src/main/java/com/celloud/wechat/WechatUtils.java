@@ -49,10 +49,17 @@ public class WechatUtils {
 
 	}
 
+	/**
+	 * 校验url是否有效
+	 * 
+	 * @param signature
+	 * @param timestamp
+	 * @param nonce
+	 * @return
+	 * @author lin
+	 * @date 2016年10月24日下午1:43:53
+	 */
 	public boolean checkUrl(String signature, String timestamp, String nonce) {
-		System.out.println("urlToken:" + urlToken);
-		System.out.println("timestamp:" + timestamp);
-		System.out.println("nonce:" + nonce);
 		List<String> param = new ArrayList<>();
 		param.add(urlToken);
 		param.add(timestamp);
@@ -64,7 +71,7 @@ public class WechatUtils {
 		for (String s : param) {
 			params += s;
 		}
-		String mySignature = DigestUtils.sha256Hex(params);
+		String mySignature = DigestUtils.sha1Hex(params);
 		//3）开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
 		return mySignature.equals(signature);
 	}
