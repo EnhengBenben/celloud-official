@@ -213,4 +213,19 @@ public interface SampleService {
      */
     public Map<String, Object> getSampleOrderInfo(Integer userId,
             Integer orderId);
+
+    public Sample getSampleByNameAndOrderNo(String orderNo, String sampleName);
+
+    /**
+     * 根据实验样本编号及实验状态获取样本信息
+     * 
+     * @param userId
+     * @param experSampleName
+     * @param experState
+     * @return
+     * @author leamo
+     * @date 2016年10月24日 下午4:54:25
+     */
+    public Sample getByExperNameExperState(Integer userId,
+            String experSampleName, Integer experState);
 }

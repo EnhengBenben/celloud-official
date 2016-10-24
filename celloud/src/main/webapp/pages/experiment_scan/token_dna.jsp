@@ -15,9 +15,9 @@
 		    <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
 		  </object>
           </p>
-          <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入样本编号！</span>
+          <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入实验样本编号！</span>
           <div class="info-btn-group">
-            <input class="field" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
+            <input class="field" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="sampleName" required placeholder="扫描实验样本编号"/>
             <a class="action" ng-click="tokenDNA()">扫码提DNA</a>
           </div>
         </div>
@@ -25,7 +25,8 @@
           <table class="table table-main">
             <thead>
                 <tr>
-                    <th>样品编号</th>
+                    <th>订单编号</th>
+                    <th>实验样品编号</th>
                     <th>样品类型</th>
                     <th>采样时间</th>
                     <th>状态</th>
@@ -35,7 +36,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="sample in sampleList.datas">
-                    <td>{{sample.sampleName }}</td>
+                    <td>{{sample.orderNo }}</td>
+                    <td>{{sample.experSampleName }}</td>
                     <td>{{sample.type }}</td>
                     <td>{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td>提DNA</td>
