@@ -1,0 +1,77 @@
+<div class="content">
+    <input type="hidden" name="id" value="${pgs.id}" id="pgsId" />
+    <table border='1' cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="label tdCenter">患者姓名</td>
+            <td><input name="baseInfo['name']" value="$!{pgs.baseInfo.name}" type="text" class="tdInput"></td>
+            <td class="label tdCenter">样品编号</td>
+            <td><input name="baseInfo['sampleId']" value="$!{pgs.baseInfo.sampleId}" type="text" class="tdInput"></td>
+        </tr>
+        <tr>
+            <td class="label tdCenter">患者年龄</td>
+            <td><input name="baseInfo['age']" value="$!{pgs.baseInfo.age}" type="text" class="tdInput"></td>
+            <td class="label tdCenter">流产孕周</td>
+            <td><input name="baseInfo['week']" value="$!{pgs.baseInfo.week}" type="text" class="tdInput"></td>
+        </tr>
+        <tr>
+            <td class="label tdCenter">送检时间</td>
+            <td><input name="baseInfo['inspectionDate']" value="$!{pgs.baseInfo.inspectionDate}" type="text" class="tdInput"></td>
+            <td class="label tdCenter">样本类型</td>
+            <td class="tdLeft">胎儿流产组织</td>
+        </tr>
+        <tr>
+            <td class="label tdCenter">送检医生</td>
+            <td><input name="baseInfo['doctor']" value="$!{pgs.baseInfo.doctor}" type="text" class="tdInput"></td>
+            <td class="label tdCenter">样本状态</td>
+            <td class="tdLeft">正常</td>
+        </tr>
+        <tr>
+            <td class="label tdCenter">病史特征</td>
+            <td colspan="3"><input name="baseInfo['feature']" value="$!{pgs.baseInfo.feature}" type="text" class="tdInput"></td>
+        </tr>
+        <tr>
+            <td class="label tdCenter">检测范围</td>
+            <td colspan="3" class="tdLeft">23对染色体的非整倍体，及4Mb以上片段重复或缺失</td>
+        </tr>
+        <tr>
+            <td class="label tdCenter">检测技术</td>
+            <td colspan="3" class="tdLeft">高通量测序</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="tdLeft">检测结果附图:<br/>
+            #if($flag==0 || $flag==1)
+        <img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;">
+        <img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;">
+    #elseif($flag==2 || $flag==3)
+        #if(${pgs.reportMiniPng})
+            <img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportMiniPng}" style="width:100%;">
+        #end
+        #if(${pgs.reportSplitPng})
+            <img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportSplitPng}" style="width:100%;">
+        #end
+    #end
+            </td>
+        </tr>
+        <tr>
+            <td class="label tdCenter">结果说明:</td>
+            <td colspan="3"><div id="result" style="word-break: break-all;word-wrap: break-word;"><textarea style="width:99.8%;height:50px;" name="baseInfo['result']">$!{pgs.baseInfo.result}</textarea></div></td>
+        </tr>
+        <tr>
+            <td class="label tdCenter">分析意见:</td>
+            <td colspan="3"><div id="analyze" style="word-break: break-all;word-wrap: break-word;"><textarea style="width:99.8%;height:50px;" name="baseInfo['analyze']">$!{pgs.baseInfo.analyze}</textarea></div></td>
+        </tr>
+        <tr>
+            <td colspan="4" class="tdLeft">备注：<br/>
+*本报告结果只对本次送检样本负责；<br/>
+*以上结论均为实验室检测数据，不代表最终诊断结果，仅供临床参考。
+</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="tdCenter">
+            检测者:<span><input name="baseInfo['detection']" value="$!{pgs.baseInfo.detection}" type="text" style="width:24%;border:0;border-bottom:1px solid #D4D4D4;line-height: 2em;"></span>
+            审核者:<span><input name="baseInfo['review']" value="$!{pgs.baseInfo.review}" type="text" style="width:24%;border:0;border-bottom:1px solid #D4D4D4;line-height: 2em;"></span>
+            报告日期:<span><input name="baseInfo['reportDate']" value="$!{pgs.baseInfo.reportDate}" type="text" style="width:24%;border:0;border-bottom:1px solid #D4D4D4;line-height: 2em;"></span>
+            </td>
+        </tr>
+    </table>
+</div>
