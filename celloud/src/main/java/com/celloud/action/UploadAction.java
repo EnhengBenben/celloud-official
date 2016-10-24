@@ -236,11 +236,11 @@ public class UploadAction {
             // /share/data/file/23
             String userFolder = realPath + ConstantsData.getLoginUserId();
             // 通过userId,块名称,最后修改时间,大小获取文件唯一名字
-            String uniqueName = UploadUtil.getUniqueName(userId, name, lastModifiedDate, size);
             if (logger.isDebugEnabled()) {
                 logger.debug("获取uniqueName, userId: {}, name: {}, lastModifiedData: {}, size: {}", userId, name,
                     lastModifiedDate, size);
             }
+            String uniqueName = UploadUtil.getUniqueName(userId, name, lastModifiedDate, size);
             // 获取块文件对象
             // /share/data/file/23/uniqueName_chunks/0(1,2...)
             File chunkFile = new File(userFolder + File.separator + uniqueName + "_chunks" + File.separator + chunk);
