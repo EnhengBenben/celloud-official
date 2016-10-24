@@ -3,7 +3,10 @@ package com.celloud.action;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +58,29 @@ public class WeChatAction {
 		wechatUtils.initMenu();
 	}
 
+	private void showParams(HttpServletRequest request) {
+		Map<String, String> map = new HashMap<String, String>();
+		Enumeration<String> paramNames = request.getParameterNames();
+		while (paramNames.hasMoreElements()) {
+			String paramName = (String) paramNames.nextElement();
+
+			String[] paramValues = request.getParameterValues(paramName);
+			if (paramValues.length == 1) {
+				String paramValue = paramValues[0];
+				if (paramValue.length() != 0) {
+					map.put(paramName, paramValue);
+				}
+			}
+		}
+
+		Set<Map.Entry<String, String>> set = map.entrySet();
+		System.out.println("-------------param start-----------------");
+		for (Map.Entry<String, String> entry : set) {
+			System.out.println(entry.getKey() + ":" + entry.getValue());
+		}
+		System.out.println("-------------param end-----------------");
+	}
+
 	/**
 	 * 验证url是否有效
 	 * 
@@ -69,23 +95,38 @@ public class WeChatAction {
 	@RequestMapping(value = "checkUrl", method = RequestMethod.GET)
 	@ResponseBody
 	public String checkUrl(HttpServletRequest request) {
+		showParams(request);
 		Map<String, String> event = XmlUtil.readXMLToMap(request);
 		String signature = null;
 		String timestamp = null;
 		String nonce = null;
+		String echostr = null;
 		if (event.containsKey(WechatEvent.checkUrl.echostr)) {
-			System.out.println("echostr:" + event.get(WechatEvent.checkUrl.echostr));
+			echostr = event.get(WechatEvent.checkUrl.echostr);
 		}
+		System.out.println(echostr);
+		System.out.println(echostr == null);
+		System.out.println("-----");
 		if (event.containsKey(WechatEvent.checkUrl.nonce)) {
-			System.out.println("nonce:" + event.get(WechatEvent.checkUrl.nonce));
+			nonce = event.get(WechatEvent.checkUrl.nonce);
 		}
+		System.out.println(nonce);
+		System.out.println(nonce == null);
+		System.out.println("-----");
 		if (event.containsKey(WechatEvent.checkUrl.signature)) {
-			System.out.println("signature:" + event.get(WechatEvent.checkUrl.signature));
+			signature = event.get(WechatEvent.checkUrl.signature);
 		}
+		System.out.println(signature);
+		System.out.println(signature == null);
+		System.out.println("-----");
 		if (event.containsKey(WechatEvent.checkUrl.timestamp)) {
-			System.out.println("timestamp" + event.get(WechatEvent.checkUrl.timestamp));
+			timestamp = event.get(WechatEvent.checkUrl.timestamp);
 		}
-		if (wechatUtils.checkUrl(signature, timestamp, nonce)) {
+		System.out.println(timestamp);
+		System.out.println(timestamp == null);
+		System.out.println("-----");
+		if (timestamp != null && signature != null && nonce != null
+				&& wechatUtils.checkUrl(signature, timestamp, nonce)) {
 			System.out.println("校验通过");
 		} else {
 			System.out.println("校验失败");
