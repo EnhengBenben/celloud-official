@@ -60,6 +60,17 @@ public class SampleAction {
         return mv.addObject("samples", samples);
     }
 
+    // XXX 百菌探报证结束后删除（完全拷贝的↑）
+    @RequestMapping("/baozheng/bsi/sampleList")
+    public ModelAndView sampleList1() {
+        System.out.println("-------------------------");
+        ModelAndView mv = new ModelAndView("bsi/baozheng/sample_list");
+        List<Sample> samples = sampleService
+                .allUnaddSample(ConstantsData.getLoginUserId());
+        System.out.println(samples.size());
+        return mv.addObject("samples", samples);
+    }
+
     @ActionLog(value = "新增样品", button = "样品输入框")
     @RequestMapping("{app}/addSample")
     @ResponseBody
