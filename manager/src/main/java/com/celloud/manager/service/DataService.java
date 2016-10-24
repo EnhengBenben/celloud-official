@@ -183,4 +183,18 @@ public interface DataService {
      *            大客户id
      */
     public Map<String, Map<String, String>> getHBVOtherSiteByUserId(Integer companyId);
+
+    /**
+     * 
+     * @description 根据位点查找医院名称, datakey
+     * @author miaoqi
+     * @date 2016年10月21日下午6:06:07
+     *
+     * @param companyId
+     *            大客户id
+     * @param site
+     *            位点
+     * @return
+     */
+    public Map<Integer, Map<String, String>> getSiteInfo(Integer companyId, Integer site);
 }

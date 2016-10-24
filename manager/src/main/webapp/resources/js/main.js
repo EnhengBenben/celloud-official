@@ -28,9 +28,9 @@ var consoleModel=(function(console){
 
 var dataFile=(function(dataFile){
 	var self=dataFile||{};
-	self.getSiteCompany = function(site){
-		$.post("getSiteCompany", {"site" : site}, function(responseText){
-			
+	self.getSiteInfo = function(site){
+		$.post("getSiteInfo", {"site" : site}, function(responseText){
+			$("#siteInfoRow").html(responseText);
 		});
 	};
 	self.toOtherSiteCount = function(){
