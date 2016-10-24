@@ -69,7 +69,7 @@ public class WeChatAction {
 	 * @author lin
 	 * @date 2016年10月24日下午1:51:37
 	 */
-	@RequestMapping("eventRecive")
+	@RequestMapping(value = "eventRecive", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String eventRecive(HttpServletRequest request, String signature, String nonce, String echostr,
 			String timestamp) {

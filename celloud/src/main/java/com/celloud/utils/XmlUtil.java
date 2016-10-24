@@ -146,4 +146,11 @@ public class XmlUtil {
 		}
 		return doc;
 	}
+	
+	public static void main(String[] args) {
+		String context = "<xml><ToUserName>您好</ToUserName><FromUserName><![CDATA[FromUser中文]]></FromUserName><CreateTime>123456789</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[VIEW]]></Event><EventKey><![CDATA[www.qq.com]]></EventKey><MenuId>MENUID</MenuId></xml>";
+		Map<String, String> map = readXMLToMap(context);
+		Document result = mapToXML(map,"xml");
+		System.out.println(result.asXML());
+	}
 }
