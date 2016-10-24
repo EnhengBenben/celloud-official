@@ -219,4 +219,43 @@ public class DataServiceImpl implements DataService{
         return result;
     }
 
+    @Override
+    public Map<Integer, Map<String, String>> getSiteInfo(Integer companyId, Integer site) {
+        // 结果Map
+        Map<Integer, Map<String, String>> result = new HashMap<Integer, Map<String, String>>();
+        Map<String, Object> filters = new HashMap<String, Object>();
+        // 如果是超级管理员, 则查找所有hbv的报告, 不用就5筛选用户
+        List<Integer> userIds = null;
+        if (null != companyId) { // 如果是大客户, 则查找该大客户下用户的hbv的报告
+            // 查找该大客户下的所有用户, 封装过滤条件
+            userIds = new ArrayList<Integer>();
+            List<User> users = userMapper.findUserByBigCustomer(companyId, DataState.ACTIVE,
+                    PropertiesUtil.testAccountIds);
+            for (User user : users) {
+                userIds.add(user.getUserId());
+            }
+            filters.put("userId in", userIds);
+        }
+        filters.put("other." + site + "_new_png exists", true);
+
+        // 该大客户下所有的hbv报告
+        List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters, new String[] { "companyId", "dataKey" });
+
+        // 遍历hbv报告, companyId为key封装结果集
+        for (HBV hbv : hbvs) {
+            Map<String,String> valueMap = new HashMap<String, String>();
+            valueMap.put("dataKey", hbv.getDataKey());
+            result.put(hbv.getCompanyId(), valueMap);
+        }
+        // 查询该大客户下的医院
+        List<Company> companys = companyMapper.getCompany(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
+        for (Company company : companys) {
+            // 如果包含这个医院, 则将医院名字放入值map中
+            if (result.containsKey(company.getCompanyId())) {
+                result.get(company.getCompanyId()).put("companyName", company.getCompanyName());
+            }
+        }
+        return result;
+    }
+
 }

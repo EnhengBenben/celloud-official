@@ -44,9 +44,23 @@ public class DataAction {
     @Resource
     private WeekService weekService;
 
-    public ModelAndView getSiteCompany(Integer site) {
-        
-        return null;
+    @RequestMapping("getSiteInfo")
+    public ModelAndView getSiteInfo(Integer site) {
+
+        ModelAndView mv = new ModelAndView("data/data_siteInfo");
+        User user = ConstantsData.getLoginUser();
+        if (user != null) {
+            Map<Integer, Map<String, String>> siteInfo = null;
+            Integer role = user.getRole();
+            if (UserRole.ADMINISTRATOR.equals(role)) {// 超级管理员
+                siteInfo = this.dataService.getSiteInfo(null, site);
+            }
+            if (UserRole.BIG_CUSTOMER.equals(role)) {// 大客户
+                siteInfo = this.dataService.getSiteInfo(user.getCompanyId(), site);
+            }
+            mv.addObject("siteInfo", siteInfo);
+        }
+        return mv;
     }
 
     @RequestMapping("otherSiteCount")
