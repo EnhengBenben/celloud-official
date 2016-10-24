@@ -78,6 +78,8 @@ public class WeChatAction {
 		for (Map.Entry<String, String> entry : set) {
 			System.out.println(entry.getKey() + ":" + entry.getValue());
 		}
+		boolean xx = wechatUtils.checkUrl(map.get("signature"), map.get("timestamp"), map.get("nonce"));
+		System.out.println(xx);
 		System.out.println("-------------param end-----------------");
 	}
 
@@ -94,43 +96,13 @@ public class WeChatAction {
 	 */
 	@RequestMapping(value = "checkUrl", method = RequestMethod.GET)
 	@ResponseBody
-	public String checkUrl(HttpServletRequest request) {
+	public String checkUrl(HttpServletRequest request, String signature, String nonce, String echostr,
+			String timestamp) {
 		showParams(request);
-		Map<String, String> event = XmlUtil.readXMLToMap(request);
-		String signature = null;
-		String timestamp = null;
-		String nonce = null;
-		String echostr = null;
-		if (event.containsKey(WechatEvent.checkUrl.echostr)) {
-			echostr = event.get(WechatEvent.checkUrl.echostr);
-		}
-		System.out.println(echostr);
-		System.out.println(echostr == null);
-		System.out.println("-----");
-		if (event.containsKey(WechatEvent.checkUrl.nonce)) {
-			nonce = event.get(WechatEvent.checkUrl.nonce);
-		}
-		System.out.println(nonce);
-		System.out.println(nonce == null);
-		System.out.println("-----");
-		if (event.containsKey(WechatEvent.checkUrl.signature)) {
-			signature = event.get(WechatEvent.checkUrl.signature);
-		}
-		System.out.println(signature);
-		System.out.println(signature == null);
-		System.out.println("-----");
-		if (event.containsKey(WechatEvent.checkUrl.timestamp)) {
-			timestamp = event.get(WechatEvent.checkUrl.timestamp);
-		}
-		System.out.println(timestamp);
-		System.out.println(timestamp == null);
-		System.out.println("-----");
-		if (timestamp != null && signature != null && nonce != null
-				&& wechatUtils.checkUrl(signature, timestamp, nonce)) {
-			System.out.println("校验通过");
-		} else {
-			System.out.println("校验失败");
-		}
+		System.out.println("signature:" + signature);
+		System.out.println("nonce:" + nonce);
+		System.out.println("echostr:" + echostr);
+		System.out.println("timestamp:" + timestamp);
 		return null;
 	}
 
