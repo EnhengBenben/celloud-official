@@ -58,6 +58,12 @@ table td {
 	padding: 3px;
 }
 
+table td.tdLeft {
+    text-align: left;
+    height: 30px;
+    padding: 3px;
+}
+
 td.label{
 	white-space: nowrap;
 }

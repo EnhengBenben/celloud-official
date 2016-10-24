@@ -76,14 +76,22 @@
     }
     
     $scope.scanStorage = function(){
+      if($scope.orderNo == "" || $scope.orderNo == undefined){
+        $.alert("请输入订单编号！");
+        return false;
+      }
     	if($scope.sampleName == "" || $scope.sampleName == undefined){
     		$.alert("请输入样本信息！");
     		return false;
     	}
-      scanStorageService.scanStorage($scope.sampleName).success(function(data){
-        if(data.result == "0"){
+      scanStorageService.scanStorage($scope.orderNo,$scope.sampleName).success(function(data){
+        if(data.error != undefined){
+          $.alert(data.error);
+        }else if(data.result == "0"){
           $.alert("系统中无此样本信息，请确认是已采样样本！")
-        }else if(data.result.length > 2){
+        }else if(data.result.length > 1){
+          //打印二维码
+          printQRCode(data.sampleName,data.result);
           $scope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
         }else {
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！")
@@ -131,7 +139,7 @@
       }
       $scope.tokenDNA = function(){
       	if($scope.sampleName == "" || $scope.sampleName == undefined){
-      		$.alert("请输入样本信息！");
+      		$.alert("请输入实验样本编号！");
       		return false;
       	}
         tokenDNAService.tokenDNA($scope.sampleName).success(function(data){
@@ -178,7 +186,7 @@
       if(sampleList.length>=12){
         $.tips("每个文库最多12个样本！")
       }else if($scope.sampleName == '' || $scope.sampleName == undefined){
-    	  $.alert("请输入样本信息");
+    	  $.alert("请输入实验样本编号");
       }else{
         buidLibraryService.addSample($scope.sampleName,sampleList).success(function(data){
           if(data > 0){
@@ -186,7 +194,7 @@
           }else if(data == 0){
             $.alert("此样本未提取DNA");
           }else {
-            $.alert("此样品信息已经入库，请核查或者扫描下一管样品信息！");
+            $.alert("此样品已在等待建库，请核查或者扫描下一管样品信息！");
           }
         });
       }
@@ -207,7 +215,7 @@
       buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
         if(data != null && data != undefined){
           //打印二维码
-          printQRCode(data.storageName,data.createDate);
+          printQRCode(data.storageName,data.sindex);
           $scope.infos = buidLibraryService.infos();
           $.alert("建库成功！");
         }else {

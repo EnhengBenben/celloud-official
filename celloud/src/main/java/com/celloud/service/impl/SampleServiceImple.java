@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.DataState;
 import com.celloud.constants.IconConstants;
 import com.celloud.constants.SampleExperState;
-import com.celloud.constants.SampleIndex;
 import com.celloud.constants.SampleIsCommit;
+import com.celloud.constants.SampleTypes;
 import com.celloud.constants.TaskPeriod;
 import com.celloud.mapper.SampleLogMapper;
 import com.celloud.mapper.SampleMapper;
@@ -32,6 +32,7 @@ import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.SampleService;
+import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.QRCodeUtil;
 
@@ -153,6 +154,12 @@ public class SampleServiceImple implements SampleService {
     @Override
     public Integer updateExperState(Integer userId, Integer experState,
             Integer sampleId) {
+        if (experState == SampleExperState.SCAN_STORAGE) {
+            Sample s = sampleMapper.selectByPrimaryKey(sampleId);
+            s.setExperSampleName(
+                    DataUtil.getExperSampleNo(s.getType(), sampleId));
+            sampleMapper.updateByPrimaryKeySelective(s);
+        }
         sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED, userId);
         SampleLog slog = new SampleLog();
         slog.setUserId(userId);
@@ -166,7 +173,7 @@ public class SampleServiceImple implements SampleService {
     public Integer updateExperStateAndIndex(Integer userId, Integer experState,
             Integer sampleId, List<String> sindexList) {
         List<String> indexList = new ArrayList<>();
-        indexList.addAll(SampleIndex.index);
+        indexList.addAll(SampleTypes.index);
         if (sindexList != null) {
             for (String s : sindexList) {
                 indexList.remove(s);
@@ -266,5 +273,18 @@ public class SampleServiceImple implements SampleService {
         QRCodeUtil.createQRCode(so.getOrderNo(),
                 IconConstants.getTempPath() + "sample_orderno.png");
         return map;
+    }
+
+    @Override
+    public Sample getSampleByNameAndOrderNo(String orderNo, String sampleName) {
+        return sampleMapper.getSampleByNameAndOrderNo(sampleName, orderNo,
+                DataState.ACTIVE);
+    }
+
+    @Override
+    public Sample getByExperNameExperState(Integer userId,
+            String experSampleName, Integer experState) {
+        return sampleMapper.getByExperNameExperState(userId, experSampleName,
+                experState, DataState.ACTIVE, SampleIsCommit.ISADD);
     }
 }

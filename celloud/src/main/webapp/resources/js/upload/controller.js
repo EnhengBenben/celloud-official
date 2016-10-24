@@ -143,7 +143,7 @@
 				}
 			});
 			uploader.bind("BeforeUpload", function(uploader, file) { // 上传之前设置参数
-				uploader.setOption("multipart_params",{'originalName': file.name,'tagId':$scope.tagSelected.tagId,'batch': $scope.batch});
+				uploader.setOption("multipart_params",{'size':file.size,'lastModifiedDate':file.lastModifiedDate,'originalName': file.name,'tagId':$scope.tagSelected.tagId,'batch': $scope.batch});
 			});
 			uploader.bind("Error", function(uploader, error) { // 发生错误
 				if(error.code=='-602'){

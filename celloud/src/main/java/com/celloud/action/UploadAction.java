@@ -236,6 +236,10 @@ public class UploadAction {
             // /share/data/file/23
             String userFolder = realPath + ConstantsData.getLoginUserId();
             // 通过userId,块名称,最后修改时间,大小获取文件唯一名字
+            if (logger.isDebugEnabled()) {
+                logger.debug("获取uniqueName, userId: {}, name: {}, lastModifiedData: {}, size: {}", userId, name,
+                    lastModifiedDate, size);
+            }
             String uniqueName = UploadUtil.getUniqueName(userId, name, lastModifiedDate, size);
             // 获取块文件对象
             // /share/data/file/23/uniqueName_chunks/0(1,2...)
@@ -247,7 +251,9 @@ public class UploadAction {
                 }
             }
             try {
-                logger.info("用户 {} 正在上传文件, chunk = {}", userId, chunk);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("用户 {} 正在上传文件, chunk = {}", userId, chunk);
+                }
                 file.transferTo(chunkFile);
                 if (chunk.equals(chunks) || chunk.equals(chunks - 1)) {
                     Integer dataId = dataService.addFileInfo(userId, originalName);

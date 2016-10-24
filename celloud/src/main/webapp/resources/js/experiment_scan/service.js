@@ -36,8 +36,8 @@
     self.pageList = function(page,size){
       return $http.get("sample/getScanStorageSamples?v="+new Date(),{params: {page:page,size:size}});
     }
-    self.scanStorage = function(sampleName){
-      return $http({method:"POST",url:'sample/toScanStorage',params:{"sampleName":sampleName}});
+    self.scanStorage = function(orderNo,sampleName){
+      return $http({method:"POST",url:'sample/toScanStorage',params:{"orderNo":orderNo,"sampleName":sampleName}});
     }
     self.editRemark = function(id,remark){
       return $http({method:"POST",url:'sample/editRemark',params:{"sampleId":id,"remark":remark}});
@@ -55,7 +55,7 @@
       return $http.get("sample/getTokenDnaSamples?v="+new Date(),{params: {page:page,size:size}});
     }
     self.tokenDNA = function(sampleName){
-      return $http({method:"POST",url:'sample/toTokenDNA',params:{"sampleName":sampleName}});
+      return $http({method:"POST",url:'sample/toTokenDNA',params:{"experSampleName":sampleName}});
     }
   });
   celloudApp.service("buidLibraryService", function($resource,$http){
@@ -68,7 +68,7 @@
       for(s in sampleList){
          sindexs.push(sampleList[s].sindex);
       }
-      return $http({method:"POST",url:'sample/addSampleToLibrary',params:{"sampleName":sampleName,"sindexs":sindexs}});
+      return $http({method:"POST",url:'sample/addSampleToLibrary',params:{"experSampleName":sampleName,"sindexs":sindexs}});
     }
     self.addLibrary = function(libraryName,sindex,sampleList){
       var sampleIds=new Array();

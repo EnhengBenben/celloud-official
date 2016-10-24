@@ -17,8 +17,6 @@ public interface SampleMapper {
 
     int updateByPrimaryKeySelective(Sample record);
 
-    int updateByPrimaryKey(Sample record);
-
     int updateAddTypeById(@Param("sampleIds") List<Integer> sampleIds,
             @Param("isAdd") Integer isAdd,
             @Param("orderId") Integer orderId,
@@ -48,4 +46,13 @@ public interface SampleMapper {
 
     List<Sample> getSamplesByOrder(@Param("userId") Integer userId,
             @Param("orderId") Integer orderId, @Param("state") Integer state);
+
+    Sample getSampleByNameAndOrderNo(@Param("sampleName") String sampleName,
+            @Param("orderNo") String orderNo,
+            @Param("state") Integer state);
+
+    Sample getByExperNameExperState(@Param("userId") Integer userId,
+            @Param("experSampleName") String experSampleName,
+            @Param("experState") Integer experState,
+            @Param("state") Integer state, @Param("isAdd") Integer isAdd);
 }
