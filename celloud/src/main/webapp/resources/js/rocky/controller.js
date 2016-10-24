@@ -12,7 +12,7 @@
 				$(".tips").addClass('hide');
 				$("#batch-info-input").val('');
 				$("#upload-tip-one").removeClass("hide");
-				$scope.batch = "";
+				$rootScope.rockyBatch = "";
 			}else if(!$rootScope.rockyUploader){ // 在第三步点击新上传
 				$(".steps").addClass("hide");
 				$("#upload-nav-step-three").addClass("not-reached");
@@ -22,12 +22,14 @@
 				$(".tips").addClass('hide');
 				$("#batch-info-input").val('');
 				$("#upload-tip-one").removeClass("hide");
-				$scope.batch = "";
+				$rootScope.rockyBatch = "";
 			}
 		},
 		$scope.stepTwo = function() {
+			if(!$rootScope.rockyBatch){
+				$rootScope.rockyBatch = $scope.rockyBatch;
+			}
 			if(!$rootScope.rockyUploader){
-				console.log("进来了");
 				$rootScope.rockyUploader = initUploader();
 				$rootScope.rockyUploader.init();
 				$rootScope.rockyUploadSpead = {};
@@ -157,7 +159,7 @@
 			});
 			uploader.bind("BeforeUpload", function(uploader, file) {
 				$("#" + file.id +" .percent").html("正在上传");
-				uploader.setOption("multipart_params",{'originalName': file.name, "tagId":2, "batch":$("#batch-info-input").val(), 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
+				uploader.setOption("multipart_params",{'originalName': file.name, "tagId":2, "batch":$rootScope.rockyBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
 			});
 			uploader.bind("FileUploaded", function(uploader, file, response) {
 				var res = JSON.parse(response.response);
