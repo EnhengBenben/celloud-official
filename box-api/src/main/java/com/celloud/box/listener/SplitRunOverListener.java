@@ -44,7 +44,7 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 		boxService.finish(r2);
 		DataFile txt = setSplited(splitFile.getTxtPath());
 		boxService.finish(txt);
-		String temp = r1.getFilename().replaceAll(r1.getExt(), "");
+		String temp = new File(r1.getPath()).getName().replaceAll(r1.getExt(), "");
 		String resultPath = UploadPath.getSplitOutputPath(splitFile.getUserId(), splitFile.getBatch(),
 				splitFile.getName()) + File.separatorChar + temp + File.separatorChar + "result" + File.separatorChar
 				+ "split" + File.separatorChar;
@@ -56,6 +56,10 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 		}
 		String folder = UploadPath.getUploadingPath(splitFile.getUserId());
 		for (File result : results) {
+			if (result.isDirectory()) {
+				continue;
+			}
+			String filename = result.getName();
 			String uniqueName = UploadPath.getUniqueName(splitFile.getUserId(), result.getName(), result.lastModified(),
 					result.length());
 			String randomName = UploadPath.getRandomName(uniqueName);
@@ -66,7 +70,7 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 				logger.error("移动文件失败：{}", result.getAbsolutePath(), e);
 				continue;
 			}
-			boxService.splitRunOver(splitFile.getUserId(), newPath.getName(), splitFile.getName(), r1.getTagId(),
+			boxService.splitRunOver(splitFile.getUserId(), filename, splitFile.getName(), splitFile.getTagId(),
 					splitFile.getBatch(), null, newPath);
 		}
 		// TODO clean...
@@ -74,6 +78,10 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 
 	public DataFile setSplited(String path) {
 		DataFile temp = DataFile.load(path + ".json");
+		if (temp == null) {
+			logger.info("没有加载到文件的信息:{}", path);
+			return null;
+		}
 		temp.setSplited(Boolean.TRUE);
 		temp.serialize();
 		return temp;

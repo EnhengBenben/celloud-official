@@ -188,6 +188,7 @@ public class BoxServiceImpl implements BoxService {
 			splitFile.setOutPath(UploadPath.getSplitOutputPath(dataFile.getUserId(), dataFile.getBatch(), name));
 		}
 		splitFile.setUserId(dataFile.getUserId());
+		splitFile.setTagId(dataFile.getTagId());
 		splitFile.setName(name);
 		splitFile.setBatch(dataFile.getBatch());
 		switch (fileType) {
@@ -213,6 +214,7 @@ public class BoxServiceImpl implements BoxService {
 			logger.info("不能运行split:{}", splitFile.toJSON());
 			return;
 		}
+		splitFile.toFile();
 		splitQueue.add(splitFile);
 	}
 
@@ -221,6 +223,7 @@ public class BoxServiceImpl implements BoxService {
 	public void splitRunOver(Integer userId, String name, String anotherName, Integer tagId, String batch,
 			Integer needSplit, File f) {
 		DataFile file = save(userId, name, anotherName, tagId, batch, needSplit, f);
+		logger.info("anotherName={}", anotherName);
 		file = newfile(file);
 		if (file != null) {
 			fileQueue.add(f);

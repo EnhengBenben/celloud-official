@@ -22,6 +22,10 @@ public class SplitFile {
 	 */
 	private String name;
 	/**
+	 * 文件的数据标签
+	 */
+	private Integer tagId;
+	/**
 	 * R1文件的路径
 	 */
 	private String r1Path;
@@ -68,6 +72,14 @@ public class SplitFile {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(Integer tagId) {
+		this.tagId = tagId;
 	}
 
 	public String getR1Path() {
