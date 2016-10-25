@@ -540,7 +540,7 @@
 		  $scope.hbv = hbvInfo.hbv;
 		  $scope.project = hbvInfo.project;
 		  $scope.uploadPath = hbvInfo.uploadPath;
-		  $scope.hbvOtherSiteMap = hbvInfo.hbvOtherSiteMap;
+		  // $scope.hbvOtherSiteMap = hbvInfo.hbvOtherSiteMap;
 		  $scope.siteKeys = new Array();
 		  for(key in hbvInfo.hbvOtherSiteMap){
 			  $scope.siteKeys.push(key);
@@ -586,17 +586,17 @@
 		  }
 		  
 		  // 其他位点突变图表
-		  var X = new Array();
-		  var Y = new Array();
-		  for(key in $scope.hbvOtherSiteMap){
-			  Y.push(key);
-			  X.push($scope.hbvOtherSiteMap[key].count);
-		  }
-		  X = "[" + X.join(",") + "]";
-		  Y = "[" + Y.join(",") + "]";
-		  var div2 = $("<div id='char2' class='col-lg-12' style='width: 1000px;height: " + 40 * $scope.siteKeys.length + "px;'></div>");
-		  $("#charDiv0").append(div2);
-		  $.reportChar.draw.echartsShowHorizontalBar("char2", "其他位点", eval(X), eval(Y), 700, 40 * $scope.siteKeys.length, "其他位点数量");
+//		  var X = new Array();
+//		  var Y = new Array();
+//		  for(key in $scope.hbvOtherSiteMap){
+//			  Y.push(key);
+//			  X.push($scope.hbvOtherSiteMap[key].count);
+//		  }
+//		  X = "[" + X.join(",") + "]";
+//		  Y = "[" + Y.join(",") + "]";
+//		  var div2 = $("<div id='char2' class='col-lg-12' style='width: 1000px;height: " + 40 * $scope.siteKeys.length + "px;'></div>");
+//		  $("#charDiv0").append(div2);
+//		  $.reportChar.draw.echartsShowHorizontalBar("char2", "其他位点", eval(X), eval(Y), 700, 40 * $scope.siteKeys.length, "其他位点数量");
 		  
 		  $.get("count/hbvCompare",{"appId":82,"path":DATAPATH},function(data){
 				var div0 = $("<div id='char0' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
