@@ -29,7 +29,7 @@
 		  rememberDataReport.push(remember);
 	  }
 	  
-	  if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94||appId==99||appId==100||appId==101||appId==104||appId==116||appId==119||appId==120||appId==121||appId==122||appId==124||appId==125){
+	  if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94||appId==99||appId==100||appId==101||appId==104||appId==116||appId==119||appId==120||appId==121||appId==122||appId==124||appId==125||appId==129){
 		  var href = "#/reportpro/PGS/" + appId + "/" + dataKey + "/" + proId;
 	  }else{
 		  var href = "#/reportpro/"+ appName + "/" + appId + "/" + dataKey + "/" + proId;
