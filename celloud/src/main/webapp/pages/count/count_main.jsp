@@ -67,6 +67,11 @@
 		    	  <p>查看页面中不提供序列详细信息的直接展示，用户可以通过“下载Excel”获得全部序列信息。</p>
 		  		</div>
 		       </c:if>
+		       <c:if test="${companyId!=3 && companyId!=6 && companyId!=33 }">
+	    	    <div class="info">
+		    	  <p>很抱歉，暂时没有为该用户提供的统计信息，敬请期待。</p>
+		  		</div>
+		       </c:if>
 		  		<ul>
 			      <li><a href="javascript:void(0)" id="_down">下载 Excel</a></li>
 		  		</ul>
@@ -96,4 +101,4 @@
   </div>
  </div>
 </div>
-<script src="<%=request.getContextPath()%>/js/count.js?version=1.2" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/count.js?version=3.3.6" type="text/javascript"></script>

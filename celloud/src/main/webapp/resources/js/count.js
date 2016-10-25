@@ -49,6 +49,9 @@ $(document).ready(function() {
 			$("#_down").attr("href", url);
 			spinner.stop();
 		});
+	}else{
+	  $("#_down").parent().parent().remove();
+	  spinner.stop();
 	}
 });
 function showSeq(seq) {
