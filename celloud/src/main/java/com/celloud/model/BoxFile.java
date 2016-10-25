@@ -4,6 +4,7 @@ public class BoxFile {
 	private Integer userId;
 	private Integer fileId;
 	private String fileName;
+	private String anotherName;
 	private String dataKey;
 	private String objectKey;
 	private Integer needSplit;
@@ -34,6 +35,14 @@ public class BoxFile {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getAnotherName() {
+		return anotherName;
+	}
+
+	public void setAnotherName(String anotherName) {
+		this.anotherName = anotherName;
 	}
 
 	public String getDataKey() {

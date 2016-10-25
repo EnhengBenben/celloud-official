@@ -25,7 +25,8 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
 	@Override
 	public void onApplicationEvent(FileDownloadedEvent event) {
 		BoxFile boxFile = (BoxFile) event.getSource();
-		String anotherName = service.getAnotherName("", boxFile.getPath(), "");
+		String anotherName = boxFile.getAnotherName() == null ? service.getAnotherName("", boxFile.getPath(), "")
+				: boxFile.getAnotherName();
 		CheckFileTypeUtil util = new CheckFileTypeUtil();
 		File file = new File(boxFile.getPath());
 		int fileFormat = util.checkFileType(file.getName(), file.getParentFile().getAbsolutePath());

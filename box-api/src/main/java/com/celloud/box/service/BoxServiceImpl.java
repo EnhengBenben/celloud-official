@@ -58,8 +58,8 @@ public class BoxServiceImpl implements BoxService {
 	public DataFile newfile(DataFile file) {
 		Newfile newfile = null;
 		for (int i = 0; i < 3; i++) {// 失败需重试
-			newfile = apiService.newfile(file.getUserId(), file.getFilename(), file.getFileSize(), file.getMd5(),
-					file.getTagId(), file.getBatch());
+			newfile = apiService.newfile(file.getUserId(), file.getFilename(), file.getAnotherName(),
+					file.getFileSize(), file.getMd5(), file.getTagId(), file.getBatch());
 			if (newfile != null) {// 成功则退出
 				logger.info("文件创建成功：userId={},fileName={},fileId={}", file.getUserId(), file.getFilename(),
 						newfile.getFileId());
