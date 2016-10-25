@@ -44,7 +44,8 @@ public class ApiService {
 		return response.isSuccess() ? new Newfile(response.getData()) : null;
 	}
 
-	public boolean updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit) {
+	public boolean updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
+			boolean splited) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("objectKey", objectKey);
 		params.put("fileId", fileId);
@@ -52,6 +53,9 @@ public class ApiService {
 		params.put("batch", batch);
 		if (needSplit != null) {
 			params.put("needSplit", needSplit);
+		}
+		if (splited) {
+			params.put("splited", splited);
 		}
 		ApiResponse response = HttpClientUtil.post(api.getUpdatefile(), params);
 		return response.isSuccess();

@@ -92,7 +92,7 @@ public class BoxApiAction {
 	 */
 	@RequestMapping("updatefile")
 	public Response updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
-			HttpServletRequest request) {
+			boolean splited, HttpServletRequest request) {
 		ConstantsData.getAnotherNamePerlPath(request);
 		logger.info("updating file : {}", objectKey);
 		DataFile file = dataService.getDataById(fileId);
@@ -107,6 +107,7 @@ public class BoxApiAction {
 		boxFile.setAnotherName(file.getAnotherName());
 		boxFile.setDataKey(file.getDataKey());
 		boxFile.setMd5(file.getMd5());
+		boxFile.setSplited(splited);
 		boxFile.setNeedSplit(needSplit);
 		boxFile.setObjectKey(objectKey);
 		boxFile.setPath(folderByDay + File.separator + newName);

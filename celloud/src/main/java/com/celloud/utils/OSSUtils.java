@@ -20,7 +20,7 @@ import com.aliyun.oss.model.UploadFileResult;
 
 public class OSSUtils {
 	private static Logger logger = LoggerFactory.getLogger(OSSUtils.class);
-	private static String bucketName = "celloud";
+	private static String bucketName = "celloud-dev";
 	private static String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
 	// accessKey请登录https://ak-console.aliyun.com/#/查看
 	private static String accessKeyId = "UrKY3uHmTuwajVKU";

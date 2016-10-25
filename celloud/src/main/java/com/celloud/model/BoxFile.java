@@ -8,6 +8,7 @@ public class BoxFile {
 	private String dataKey;
 	private String objectKey;
 	private Integer needSplit;
+	private boolean splited;
 	private String md5;
 	private String path;
 	private Integer tagId;
@@ -67,6 +68,14 @@ public class BoxFile {
 
 	public void setNeedSplit(Integer needSplit) {
 		this.needSplit = needSplit;
+	}
+
+	public boolean isSplited() {
+		return splited;
+	}
+
+	public void setSplited(boolean splited) {
+		this.splited = splited;
 	}
 
 	public String getMd5() {

@@ -86,7 +86,7 @@ public class BoxServiceImpl implements BoxService {
 		}
 		for (int i = 0; i < 3; i++) {// 失败需重试
 			result = apiService.updatefile(file.getObjectKey(), file.getFileId(), file.getTagId(), file.getBatch(),
-					file.getNeedSplit());
+					file.getNeedSplit(), file.getNeedSplit() != null);
 			if (result) {// 成功则退出
 				logger.info("文件更新成功：userId={},fileId={},fileName={}", file.getUserId(), file.getFileId(),
 						file.getFilename());

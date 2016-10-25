@@ -34,13 +34,13 @@ public class SplitService {
 			return false;
 		}
 		File out = new File(file.getOutPath());
-		try {
-			if (out.exists()) {
-				FileUtils.deleteDirectory(out);
-			}
-		} catch (IOException e) {
-			logger.error("运行split失败，输出目录已存在，删除时出错:\n{}", file.toJSON(), e);
-		}
+//		try {
+//			if (out.exists()) {
+//				FileUtils.deleteDirectory(out);
+//			}
+//		} catch (IOException e) {
+//			logger.error("运行split失败，输出目录已存在，删除时出错:\n{}", file.toJSON(), e);
+//		}
 		out.mkdirs();
 		command.append(" ").append(file.getListPath()).append(" ").append(file.getOutPath());
 		boolean result = CommandUtils.excute(command.toString());

@@ -49,7 +49,16 @@ public interface DataFileMapper {
 
 	int insertDataTag(DataFile dataFile);
 
-    int insertFileTagRelat(@Param("fileId") Integer fileId, @Param("tagId") Integer tagId);
+	/**
+	 * 校验数据是否已存在了tag
+	 * 
+	 * @param fileId
+	 * @param tagId
+	 * @return
+	 */
+	public int selectTagRelat(@Param("fileId") Integer fileId, @Param("tagId") Integer tagId);
+
+	Integer insertFileTagRelat(@Param("fileId") Integer fileId, @Param("tagId") Integer tagId);
 
 	/**
 	 * 检索某个项目下的所有数据
@@ -141,23 +150,20 @@ public interface DataFileMapper {
 	List<DataFile> findAllDataLists(Page page, @Param("userId") Integer userId, @Param("state") Integer state,
 			@Param("reportType") Integer reportType, @Param("period") Integer period);
 
-    /**
-     * 所有数据分页列表
-     * 
-     * @param page
-     * @param userId
-     * @param state
-     * @param reportType
-     * @param period
-     * @return
-     */
-    List<DataFile> findDataListsByAppId(Page page,
-            @Param("userId") Integer userId, @Param("state") Integer state,
-            @Param("appId") Integer appId, @Param("condition") String condition,
-            @Param("sort") Integer sort,
-            @Param("sortDate") String sortDate,
-            @Param("sortName") String sortName,
-            @Param("sortBatch") String sortBatch);
+	/**
+	 * 所有数据分页列表
+	 * 
+	 * @param page
+	 * @param userId
+	 * @param state
+	 * @param reportType
+	 * @param period
+	 * @return
+	 */
+	List<DataFile> findDataListsByAppId(Page page, @Param("userId") Integer userId, @Param("state") Integer state,
+			@Param("appId") Integer appId, @Param("condition") String condition, @Param("sort") Integer sort,
+			@Param("sortDate") String sortDate, @Param("sortName") String sortName,
+			@Param("sortBatch") String sortBatch);
 
 	/**
 	 * 按条件检索数据列表
@@ -319,29 +325,30 @@ public interface DataFileMapper {
 			@Param("reportType") Integer reportType, @Param("period") Integer period, @Param("sample") String sample,
 			@Param("condition") String condition, @Param("sidx") String sidx, @Param("sord") String sord);
 
-    /**
-     * 
-     * @description 从TbTask表中获取运行结束的数据报告
-     * @author miaoqi
-     * @date 2016年10月8日下午4:51:01
-     *
-     * @param projectId
-     *            项目id
-     * @return 项目下数据报告对应的文件集合
-     *
-     */
-    List<DataFile> getDataFileFromTbTask(@Param("projectId") Integer projectId);
+	/**
+	 * 
+	 * @description 从TbTask表中获取运行结束的数据报告
+	 * @author miaoqi
+	 * @date 2016年10月8日下午4:51:01
+	 *
+	 * @param projectId
+	 *            项目id
+	 * @return 项目下数据报告对应的文件集合
+	 *
+	 */
+	List<DataFile> getDataFileFromTbTask(@Param("projectId") Integer projectId);
 
-    /**
-     * 
-     * @description 查询某个userId下某个appId的文件的md5出现次数大于1的file_id和md5值
-     * @author miaoqi
-     * @date 2016年10月19日下午1:47:38
-     *
-     * @param userId
-     * @param appId
-     * @return
-     */
-    @MapKey("fileId")
-    Map<Integer, Map<String, String>> getMd5FileIdMap(@Param("userId") Integer userId, @Param("appId") Integer appId);
+	/**
+	 * 
+	 * @description 查询某个userId下某个appId的文件的md5出现次数大于1的file_id和md5值
+	 * @author miaoqi
+	 * @date 2016年10月19日下午1:47:38
+	 *
+	 * @param userId
+	 * @param appId
+	 * @return
+	 */
+	@MapKey("fileId")
+	Map<Integer, Map<String, String>> getMd5FileIdMap(@Param("userId") Integer userId, @Param("appId") Integer appId);
+
 }
