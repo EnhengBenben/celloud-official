@@ -203,6 +203,9 @@
 			<if test="version != null">
 				version = #{version,jdbcType=VARCHAR},
 			</if>
+			<if test="port != null">
+				port = #{port,jdbcType=INTEGER},
+			</if>
 			<if test="lastAlive != null">
 				last_alive = #{lastAlive,jdbcType=TIMESTAMP},
 			</if>
