@@ -28,15 +28,13 @@ public class CleanService {
 	@Scheduled(cron = "0 0 0/2 * * ? ")
 	public void clean() {
 		logger.info("cleanning...");
-		File rootPath = new File(UploadPath.getRootPath());
+		File rootPath = new File(UploadPath.getUploadedPath());
 		if (!rootPath.exists()) {
 			return;
 		}
 		File[] userPath = rootPath.listFiles();
 		for (File file : userPath) {
-			if (isNumber(file.getName())) {// userId必须为数字
-				delete(file);
-			}
+			delete(file);
 		}
 	}
 

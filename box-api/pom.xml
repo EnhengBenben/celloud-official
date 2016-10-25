@@ -124,8 +124,8 @@
 				<directory>${basedir}/src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<exclude>application-${profileActive}.properties</exclude>
-					<exclude>application.properties</exclude>
+					<include>application-${profileActive}.properties</include>
+					<include>application.properties</include>
 				</includes>
 			</resource>
 		</resources>

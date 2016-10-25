@@ -21,6 +21,13 @@ import com.celloud.box.service.CleanService;
 import com.celloud.box.utils.LocalIpAddressUtil;
 import com.celloud.box.utils.UploadPath;
 
+/**
+ * 系统监听器，当系统启动后，打印一些系统常用配置，执行清理、断点续传等操作。
+ * 
+ * @author <a href="mailto:sunwendong@celloud.cn">sun8wd</a>
+ * @date 2016年10月25日上午11:28:36
+ * @version Revision: 1.0
+ */
 @Component
 public class ApplicationStartup implements CommandLineRunner {
 	private static Logger logger = LoggerFactory.getLogger(ApplicationStartup.class);
@@ -70,7 +77,9 @@ public class ApplicationStartup implements CommandLineRunner {
 		logger.info("box.maxRetry      =  {}", boxConfig.getMaxRetry());
 		logger.info("box.maxUploading  =  {}", boxConfig.getMaxUploading());
 		logger.info("box.retentionDays =  {}", boxConfig.getRetentionDays());
-
+		logger.info("split.command     =  {}", boxConfig.getSplitCommand());
+		logger.info("box.maxSplitting  =  {}", boxConfig.getMaxSplitting());
+		logger.info("box.server.port   =  {}", boxConfig.getPort());
 		logger.info("");
 		logger.info("api.newfile       =  {}", apiConfig.getNewfile());
 		logger.info("api.updatefile    =  {}", apiConfig.getUpdatefile());
@@ -79,7 +88,7 @@ public class ApplicationStartup implements CommandLineRunner {
 		logger.info("");
 		logger.info("*************************************************************");
 		cleanService.clean();
-		boxService.loadUnUploadedFiles();
+		boxService.loadUnFinishedFiles();
 	}
 
 }

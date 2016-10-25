@@ -8,9 +8,15 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import com.celloud.box.constants.FileAddedEvent;
+import com.celloud.box.event.FileAddedEvent;
 import com.celloud.box.service.FileUploadQueue;
 
+/**
+ * 文件上传到oss队列的监听器，当文件添加到队列的时候执行文件上传操作
+ * 
+ * @author sun8wd
+ *
+ */
 @Component
 public class FileAddedListener implements ApplicationListener<FileAddedEvent> {
 	private static Logger logger = LoggerFactory.getLogger(FileAddedListener.class);

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -57,7 +56,7 @@ public class BoxController {
 		logger.debug("name={}\tsize={}\tlastModifiedDate={}", name, size,
 				new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(lastModifiedDate));
 		String folder = UploadPath.getUploadingPath(userId);
-		String uniqueName = UploadPath.getUniqueName(userId, name, lastModifiedDate, size);
+		String uniqueName = UploadPath.getUniqueName(userId, name, lastModifiedDate.getTime(), size);
 		File chunkFile = new File(folder + uniqueName + "_chunks" + File.separatorChar + chunk);
 		chunkFile.getParentFile().mkdirs();
 		try {
@@ -73,11 +72,11 @@ public class BoxController {
 			if (f == null) {
 				return new Response("文件上传失败，服务器异常！");
 			}
-			DataFile dataFile = boxService.save(userId, name, tagId, batch, needSplit, f);
-			logger.info(dataFile.getUserId() + "");
+			DataFile dataFile = boxService.save(userId, name, null, tagId, batch, needSplit, f);
 			dataFile = boxService.newfile(dataFile);
 			if (dataFile != null) {
 				queue.add(f);
+				boxService.checkRunSplit(dataFile);
 			}
 		}
 		return Response.SUCCESS;
@@ -85,14 +84,16 @@ public class BoxController {
 
 	@RequestMapping("checkBreakpoints")
 	public Response checkBreakpoints(Integer userId, String name, Date lastModifiedDate, long size) {
-		String uniqueName = UploadPath.getUniqueName(userId, name, lastModifiedDate, size);
+		String uniqueName = UploadPath.getUniqueName(userId, name, lastModifiedDate.getTime(), size);
 		return Response.SUCCESS.setData(getLoaded(userId, uniqueName));
 	}
 
 	private File finish(File tempFile, int total, String uniqueName) {
-		File f = new File(tempFile.getParentFile().getAbsolutePath() + File.separatorChar + getRandomName(uniqueName));
+		File f = new File(
+				tempFile.getParentFile().getAbsolutePath() + File.separatorChar + UploadPath.getRandomName(uniqueName));
 		while (f.exists()) {
-			f = new File(tempFile.getParentFile().getAbsolutePath() + File.separatorChar + getRandomName(uniqueName));
+			f = new File(tempFile.getParentFile().getAbsolutePath() + File.separatorChar
+					+ UploadPath.getRandomName(uniqueName));
 		}
 		try {
 			for (int i = 0; i < total; i++) {// 有可能是性能瓶颈
@@ -106,10 +107,6 @@ public class BoxController {
 			return null;
 		}
 		return f;
-	}
-
-	private String getRandomName(String uniqueName) {
-		return (new Random().nextInt(9000) + 1000) + "_" + uniqueName;
 	}
 
 	private long getLoaded(Integer userId, String uniqueName) {
