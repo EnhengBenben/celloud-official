@@ -71,10 +71,10 @@ public class PGSProjectPDF {
 			String errorFile = result + "no_enough_reads.xls";
 			if (!FileTools.checkPath(errorFile)) {
 				boolean isBigPic = true;
-				String finalPng = FileTools.fileExist(result, "final.png", "endsWith");
+				String finalPng = FileTools.fileExist(result, "final.txt.final.png", "endsWith");
 				if (finalPng.equals("")) {
 					isBigPic = false;
-					finalPng = FileTools.fileExist(path, "mini.png", "endsWith");
+					finalPng = FileTools.fileExist(result, "final.txt.mini.png", "endsWith");
 				}
 				String fileName = "";
 				String tableTitle = "";
