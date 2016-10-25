@@ -294,7 +294,7 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public String getAnotherName(String perlPath, String filePath, String outPath) {
-		perlPath = !StringUtils.isBlank(perlPath) ? perlPath : ConstantsData.getAnotherNamePerlPath();
+		perlPath = !StringUtils.isBlank(perlPath) ? perlPath : ConstantsData.getAnotherNamePerlPath(null);
 		outPath = !StringUtils.isBlank(outPath) ? outPath : filePath + ".txt";
 		StringBuffer command = new StringBuffer();
 		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);

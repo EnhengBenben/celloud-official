@@ -13,6 +13,7 @@ public class RockyTxtUtils {
 		File file = new File("/Users/sun8wd/Documents/rocky/variation_clinical_significance_20161014.txt");
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		String line = null;
+		String title = "";
 		String value = "";
 		Map<String, String> map = new HashMap<>();
 		while ((line = reader.readLine()) != null) {
@@ -20,10 +21,11 @@ public class RockyTxtUtils {
 				System.out.println("===");
 				continue;
 			}
-			String title = parseTitle(line);
-			if (title != null) {
+			String temp = parseTitle(line);
+			if (temp != null) {
 				map.put(title, value);
 				value = "";
+				title = temp;
 			} else {
 				value += line.trim() + "\n";
 			}

@@ -240,16 +240,16 @@ public class ConstantsData {
 		return significances;
 	}
 
-	public static String getAnotherNamePerlPath() {
+	public static String getAnotherNamePerlPath(HttpServletRequest request) {
 		if (anotherNamePerlPath != null) {
 			return anotherNamePerlPath;
 		}
-		HttpServletRequest request = getRequset();
+		request = request == null ? getRequset() : request;
 		if (request == null) {
 			return null;
 		}
 		// sc.getRealPath("/resources") + "/plugins/getAliases.pl"
-		String path = request.getServletContext().getRealPath("/resources") + "/plugins/getAliases.pl";
-		return path;
+		anotherNamePerlPath = request.getServletContext().getRealPath("/resources") + "/plugins/getAliases.pl";
+		return anotherNamePerlPath;
 	}
 }

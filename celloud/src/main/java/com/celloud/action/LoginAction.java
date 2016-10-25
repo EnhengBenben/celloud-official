@@ -53,120 +53,112 @@ import com.celloud.wechat.constant.WechatParams;
  */
 @Controller
 public class LoginAction {
-    Logger logger = LoggerFactory.getLogger(LoginAction.class);
-    @Resource
-    private UserService userService;
-    @Resource
-    private RSAKeyService rsaKeyService;
-    @Resource
-    private ActionLogService logService;
+	Logger logger = LoggerFactory.getLogger(LoginAction.class);
+	@Resource
+	private UserService userService;
+	@Resource
+	private RSAKeyService rsaKeyService;
+	@Resource
+	private ActionLogService logService;
 	@Resource
 	private MessageCategoryUtils mcu;
-    @Resource
-    private AppService appService;
+	@Resource
+	private AppService appService;
 
-    /**
-     * 跳转到登录页面
-     * 
-     * @param request
-     * @param response
-     * @return
-     */
-    @ActionLog(value = "跳转到登录页面", button = "登录")
-    @RequestMapping("login")
-    public ModelAndView login() {
-    	ConstantsData.getAnotherNamePerlPath();
-        ModelAndView mv = new ModelAndView("login");
-        User user = new User();
-        Subject subject = SecurityUtils.getSubject();
-        Object isRem = subject.getSession(true).getAttribute("isRemembered");
-        boolean isRemembered = isRem != null ? ((boolean) isRem)
-                : subject.isRemembered();
-        PublicKey key = generatePublicKey(subject.getSession());
-        if (isRemembered) {
-            String username = String.valueOf(subject.getPrincipal());
-            User temp = userService.findByUsernameOrEmail(username);
-            if (temp != null) {
-                user.setUsername(temp.getUsername());
-                String password = RSAUtil.encryptedString(key.getModulus(),
-                        key.getExponent(), temp.getPassword());
-                user.setPassword(password);
-            } else {
-                logger.info("用户使用记住密码登录，但根据用户名(" + username + ")未找到用户");
-                isRemembered = false;
-            }
-        }
-        return mv.addObject("checked", isRemembered).addObject("user", user)
-                .addObject("publicKey", key)
-                .addObject("showKaptchaCode", getFailedlogins() >= 3);
-    }
+	/**
+	 * 跳转到登录页面
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ActionLog(value = "跳转到登录页面", button = "登录")
+	@RequestMapping("login")
+	public ModelAndView login() {
+		ConstantsData.getAnotherNamePerlPath(null);
+		ModelAndView mv = new ModelAndView("login");
+		User user = new User();
+		Subject subject = SecurityUtils.getSubject();
+		Object isRem = subject.getSession(true).getAttribute("isRemembered");
+		boolean isRemembered = isRem != null ? ((boolean) isRem) : subject.isRemembered();
+		PublicKey key = generatePublicKey(subject.getSession());
+		if (isRemembered) {
+			String username = String.valueOf(subject.getPrincipal());
+			User temp = userService.findByUsernameOrEmail(username);
+			if (temp != null) {
+				user.setUsername(temp.getUsername());
+				String password = RSAUtil.encryptedString(key.getModulus(), key.getExponent(), temp.getPassword());
+				user.setPassword(password);
+			} else {
+				logger.info("用户使用记住密码登录，但根据用户名(" + username + ")未找到用户");
+				isRemembered = false;
+			}
+		}
+		return mv.addObject("checked", isRemembered).addObject("user", user).addObject("publicKey", key)
+				.addObject("showKaptchaCode", getFailedlogins() >= 3);
+	}
 
-    /**
-     * 用户登录验证
-     * 
-     * @param model
-     * @param user
-     * @param kaptchaCode
-     * @param publicKey
-     * @param checked
-     * @param request
-     * @param response
-     * @return
-     */
-    @ActionLog(value = "用户登录", button = "登录")
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView login(User user, String kaptchaCode, String newPassword,
-            boolean checked) {
-        logger.info("用户正在登陆：" + user.getUsername());
-        ConstantsData.getAnotherNamePerlPath();
-        Subject subject = SecurityUtils.getSubject();
-        String password = user.getPassword();
-        user.setPassword("");
-        Session session = subject.getSession();
-        PrivateKey privateKey = (PrivateKey) session
-                .getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
-        ModelAndView mv = new ModelAndView("login").addObject("user", user)
-                .addObject("checked", subject.isRemembered())
-                .addObject("publicKey", generatePublicKey(session))
-                .addObject("showKaptchaCode", getFailedlogins() >= 3);
-        if (!checkKaptcha(kaptchaCode, session)) {
-            return mv.addObject("info", "验证码错误，请重新登录！");
-        }
-        if (newPassword == null || newPassword.trim().length() <= 0) {
-            password = RSAUtil.decryptString(privateKey, password);
-        } else {
-            password = RSAUtil.decryptStringByJs(privateKey, newPassword);
-            password = password == null ? "" : MD5Util.getMD5(password);
-        }
-        UsernamePasswordToken token = new UsernamePasswordToken(
-                user.getUsername(), password, checked);
-        try {
-            subject.login(token);
-        } catch (IncorrectCredentialsException | UnknownAccountException e) {
-            String msg = "用户名或密码错误，请重新登录！";
-            addFailedlogins();
-            logger.warn("用户（{}）登录失败，用户名或密码错误！", user.getUsername());
-            return mv.addObject("info", msg).addObject("showKaptchaCode",
-                    getFailedlogins() >= 3);
-        } catch (Exception e) {
-            logger.error("登录失败！", e);
-            return mv.addObject("info", "登录失败！");
-        }
-        if (!subject.isAuthenticated()) {
-            return mv.addObject("info", "登录失败！");
-        }
-        User loginUser = ConstantsData.getLoginUser();
-        logger.info("用户({})登录成功！", loginUser.getUsername());
-        logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
-        session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
-        session.removeAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
-        session.setAttribute("isRemembered", checked);
-        Integer userId = loginUser.getUserId();
-        // 获取用户所属的大客户，决定是否有统计菜单
-        Integer companyId = userService.getCompanyIdByUserId(userId);
-        session.setAttribute("companyId", companyId);
-        mv.setViewName("loading");
-        String openId = userService.getOpenIdByUser(userId);
+	/**
+	 * 用户登录验证
+	 * 
+	 * @param model
+	 * @param user
+	 * @param kaptchaCode
+	 * @param publicKey
+	 * @param checked
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ActionLog(value = "用户登录", button = "登录")
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+	public ModelAndView login(User user, String kaptchaCode, String newPassword, boolean checked) {
+		logger.info("用户正在登陆：" + user.getUsername());
+		ConstantsData.getAnotherNamePerlPath(null);
+		Subject subject = SecurityUtils.getSubject();
+		String password = user.getPassword();
+		user.setPassword("");
+		Session session = subject.getSession();
+		PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+		ModelAndView mv = new ModelAndView("login").addObject("user", user).addObject("checked", subject.isRemembered())
+				.addObject("publicKey", generatePublicKey(session))
+				.addObject("showKaptchaCode", getFailedlogins() >= 3);
+		if (!checkKaptcha(kaptchaCode, session)) {
+			return mv.addObject("info", "验证码错误，请重新登录！");
+		}
+		if (newPassword == null || newPassword.trim().length() <= 0) {
+			password = RSAUtil.decryptString(privateKey, password);
+		} else {
+			password = RSAUtil.decryptStringByJs(privateKey, newPassword);
+			password = password == null ? "" : MD5Util.getMD5(password);
+		}
+		UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), password, checked);
+		try {
+			subject.login(token);
+		} catch (IncorrectCredentialsException | UnknownAccountException e) {
+			String msg = "用户名或密码错误，请重新登录！";
+			addFailedlogins();
+			logger.warn("用户（{}）登录失败，用户名或密码错误！", user.getUsername());
+			return mv.addObject("info", msg).addObject("showKaptchaCode", getFailedlogins() >= 3);
+		} catch (Exception e) {
+			logger.error("登录失败！", e);
+			return mv.addObject("info", "登录失败！");
+		}
+		if (!subject.isAuthenticated()) {
+			return mv.addObject("info", "登录失败！");
+		}
+		User loginUser = ConstantsData.getLoginUser();
+		logger.info("用户({})登录成功！", loginUser.getUsername());
+		logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");
+		session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
+		session.removeAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
+		session.setAttribute("isRemembered", checked);
+		Integer userId = loginUser.getUserId();
+		// 获取用户所属的大客户，决定是否有统计菜单
+		Integer companyId = userService.getCompanyIdByUserId(userId);
+		session.setAttribute("companyId", companyId);
+		mv.setViewName("loading");
+		String openId = userService.getOpenIdByUser(userId);
 		session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
 		// 初始化消息中心
 		session.setAttribute(Constants.MESSAGE_CATEGORY, null);
@@ -179,120 +171,112 @@ public class LoginAction {
 				.set(WechatParams.LOGIN.time.name(), now, null).set(WechatParams.LOGIN.ip.name(), ip, null)
 				.set(WechatParams.LOGIN.reason.name(), reason, "#222222");
 		mcu.sendMessage(userId, MessageCategoryCode.LOGIN, null, params, null);
-        // 获取当前用户所有的app
-        List<App> appList = appService.getMyAppList(userId);
-        // 该用户appId不为空, 判断是否包含bsi与rocky
-        boolean bsi = false;
-        boolean rocky = false;
-        if (appList != null && appList.size() > 0) {
-            for (App app : appList) {
-                // 获取该app的appId
-                Integer appId = app.getAppId();
-                // bsi
-                if (appId == 118) {
-                    bsi = true;
-                } else if (appId == 123) {
-                    rocky = true;
-                }
-            }
-        }
-        if (!bsi && rocky) {
-            mv.addObject("route", "#/product/rocky/upload");
-        }
+		// 获取当前用户所有的app
+		List<App> appList = appService.getMyAppList(userId);
+		// 该用户appId不为空, 判断是否包含bsi与rocky
+		boolean bsi = false;
+		boolean rocky = false;
+		if (appList != null && appList.size() > 0) {
+			for (App app : appList) {
+				// 获取该app的appId
+				Integer appId = app.getAppId();
+				// bsi
+				if (appId == 118) {
+					bsi = true;
+				} else if (appId == 123) {
+					rocky = true;
+				}
+			}
+		}
+		if (!bsi && rocky) {
+			mv.addObject("route", "#/product/rocky/upload");
+		}
 
-        return mv;
-    }
+		return mv;
+	}
 
-    /**
-     * 获取用户登录的账号密码错误次数
-     * 
-     * @return
-     */
-    public int getFailedlogins() {
-        Object failedlogins = SecurityUtils.getSubject().getSession()
-                .getAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
-        int time = 0;
-        try {
-            time = Integer.parseInt((String) failedlogins);
-        } catch (Exception e) {
-        }
-        return time;
-    }
+	/**
+	 * 获取用户登录的账号密码错误次数
+	 * 
+	 * @return
+	 */
+	public int getFailedlogins() {
+		Object failedlogins = SecurityUtils.getSubject().getSession().getAttribute(Constants.SESSION_FAILED_LOGIN_TIME);
+		int time = 0;
+		try {
+			time = Integer.parseInt((String) failedlogins);
+		} catch (Exception e) {
+		}
+		return time;
+	}
 
-    /**
-     * 增加用户登录的账号密码错误次数
-     */
-    public void addFailedlogins() {
-        int time = getFailedlogins();
-        SecurityUtils.getSubject().getSession().setAttribute(
-                Constants.SESSION_FAILED_LOGIN_TIME, (time + 1) + "");
-    }
+	/**
+	 * 增加用户登录的账号密码错误次数
+	 */
+	public void addFailedlogins() {
+		int time = getFailedlogins();
+		SecurityUtils.getSubject().getSession().setAttribute(Constants.SESSION_FAILED_LOGIN_TIME, (time + 1) + "");
+	}
 
-    /**
-     * 校验验证码，在用户错误三次及以上时，需要校验验证码
-     * 
-     * @param kaptcha
-     * @param session
-     * @return
-     */
-    public boolean checkKaptcha(String kaptcha, Session session) {
-        int time = getFailedlogins();
-        if (time < 3) {
-            return true;
-        }
-        String kaptchaExpected = (String) session.getAttribute(
-                com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
-        // 验证码错误，直接返回到登录页面
-        if (kaptchaExpected == null
-                || !kaptchaExpected.equalsIgnoreCase(kaptcha)) {
-            logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptcha,
-                    kaptchaExpected);
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * 校验验证码，在用户错误三次及以上时，需要校验验证码
+	 * 
+	 * @param kaptcha
+	 * @param session
+	 * @return
+	 */
+	public boolean checkKaptcha(String kaptcha, Session session) {
+		int time = getFailedlogins();
+		if (time < 3) {
+			return true;
+		}
+		String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+		// 验证码错误，直接返回到登录页面
+		if (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptcha)) {
+			logger.info("用户登陆验证码错误：param : {} \t session : {}", kaptcha, kaptchaExpected);
+			return false;
+		}
+		return true;
+	}
 
-    /**
-     * 用户退出操作
-     * 
-     * @param request
-     * @param response
-     * @return
-     */
-    @ActionLog(value = "用户退出", button = "退出")
-    @RequestMapping("logout")
-    public String logout(HttpServletRequest request,
-            HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        User user = ConstantsData.getLoginUser();
-        session.removeAttribute(Constants.SESSION_LOGIN_USER);
-        Enumeration<String> names = session.getAttributeNames();
-        while (names.hasMoreElements()) {
-            session.removeAttribute(names.nextElement());
-        }
-        SecurityUtils.getSubject().logout();
-        logger.info("用户({})主动退出",
-                user == null ? "null..." : user.getUsername());
-        return "redirect:login";
-    }
+	/**
+	 * 用户退出操作
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ActionLog(value = "用户退出", button = "退出")
+	@RequestMapping("logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		User user = ConstantsData.getLoginUser();
+		session.removeAttribute(Constants.SESSION_LOGIN_USER);
+		Enumeration<String> names = session.getAttributeNames();
+		while (names.hasMoreElements()) {
+			session.removeAttribute(names.nextElement());
+		}
+		SecurityUtils.getSubject().logout();
+		logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());
+		return "redirect:login";
+	}
 
-    /**
-     * 生成一个rsa公钥私钥对，将私钥存储到session，返回公钥
-     * 
-     * @param session
-     * @return
-     */
-    private PublicKey generatePublicKey(Session session) {
-        KeyPair keyPair = RSAUtil.generateKeyPair();
-        RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
-        RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
-        PrivateKey privateKey = new PrivateKey(rsaPrivateKey.getModulus(),
-                rsaPrivateKey.getPrivateExponent());
-        session.setAttribute(Constants.SESSION_RSA_PRIVATEKEY, privateKey);
-        PublicKey publicKey = new PublicKey();
-        publicKey.setModulus(rsaPublicKey.getModulus().toString(16));
-        publicKey.setExponent(rsaPublicKey.getPublicExponent().toString(16));
-        return publicKey;
-    }
+	/**
+	 * 生成一个rsa公钥私钥对，将私钥存储到session，返回公钥
+	 * 
+	 * @param session
+	 * @return
+	 */
+	private PublicKey generatePublicKey(Session session) {
+		KeyPair keyPair = RSAUtil.generateKeyPair();
+		RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
+		RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
+		PrivateKey privateKey = new PrivateKey(rsaPrivateKey.getModulus(), rsaPrivateKey.getPrivateExponent());
+		session.setAttribute(Constants.SESSION_RSA_PRIVATEKEY, privateKey);
+		PublicKey publicKey = new PublicKey();
+		publicKey.setModulus(rsaPublicKey.getModulus().toString(16));
+		publicKey.setExponent(rsaPublicKey.getPublicExponent().toString(16));
+		return publicKey;
+	}
 
 }

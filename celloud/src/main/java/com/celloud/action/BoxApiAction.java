@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.celloud.constants.BoxUploadState;
+import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.model.BoxFile;
 import com.celloud.model.mysql.DataFile;
@@ -90,6 +91,7 @@ public class BoxApiAction {
 	@RequestMapping("updatefile")
 	public Response updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
 			HttpServletRequest request) {
+		ConstantsData.getAnotherNamePerlPath(request);
 		logger.info("updating file : {}", objectKey);
 		DataFile file = dataService.getDataById(fileId);
 		Integer userId = file.getUserId();
@@ -124,6 +126,9 @@ public class BoxApiAction {
 	@RequestMapping("health")
 	public Response health(HttpServletRequest request, String serialNumber, String version, String ip, Integer port) {
 		String extranet = UserAgentUtil.getIp(request);
+		if (extranet.startsWith("192.168.22")) {
+			extranet = "127.0.0.1";
+		}
 		logger.info("更新盒子状态：serialNumber={},version={},intranet={},extranet={},port={}", serialNumber, version, ip,
 				extranet, port);
 		boolean result = configService.updateBoxHealth(serialNumber, version, ip, extranet, port);
@@ -138,10 +143,12 @@ public class BoxApiAction {
 		boolean result = configService.checkConfig(serialNumber, version, ip, extranet, port);
 		OSSConfig config = null;
 		if (!result) {
+			logger.info("获取oos配置的参数不合法：serialNumber={},version={},intranet={},extranet={},port={}", serialNumber, version, ip,
+					extranet, port);
 			response.setMessage("参数不合法！");
-		} else if (result) {
-			config = ossService.getLatest();
+			return response;
 		}
+		config = ossService.getLatest();
 		if (config == null) {
 			response.setMessage("没有可用的oss配置");
 		} else {
