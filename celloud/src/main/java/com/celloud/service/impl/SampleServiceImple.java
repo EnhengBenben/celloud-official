@@ -1,6 +1,5 @@
 package com.celloud.service.impl;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -103,12 +102,9 @@ public class SampleServiceImple implements SampleService {
         SampleOrder so = new SampleOrder();
         so.setUserId(userId);
         so.setCreateDate(new Date());
-        // 样本编号规则：yyyyMMdd+ 4位userId不够补0 + 两位随机数
-        String orderNo = DateUtil.getDateToString("yyyyMMdd")
-                + String.format("%04d", userId) + ""
-                + String.format("%02d", new SecureRandom().nextInt(99));
-        so.setOrderNo(orderNo);
         sampleOrderMapper.insertSelective(so);
+        so.setOrderNo(DataUtil.getSampleOrderNo(so.getId()));
+        sampleOrderMapper.updateByPrimaryKeySelective(so);
         // 修改sample状态为已添加，并添加订单编号
         sampleMapper.updateAddTypeById(sampleIds, SampleIsCommit.ISADD,
                 so.getId(), new Date());
@@ -152,21 +148,23 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Integer updateExperState(Integer userId, Integer experState,
+    public String updateExperState(Integer userId, Integer experState,
             Integer sampleId) {
-        if (experState == SampleExperState.SCAN_STORAGE) {
-            Sample s = sampleMapper.selectByPrimaryKey(sampleId);
-            s.setExperSampleName(
-                    DataUtil.getExperSampleNo(s.getType(), sampleId));
-            sampleMapper.updateByPrimaryKeySelective(s);
-        }
         sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED, userId);
         SampleLog slog = new SampleLog();
         slog.setUserId(userId);
         slog.setSampleId(sampleId);
         slog.setCreateDate(new Date());
         slog.setExperState(experState);
-        return sampleLogMapper.insertSelective(slog);
+        sampleLogMapper.insertSelective(slog);
+        if (experState == SampleExperState.SCAN_STORAGE) {
+            Sample s = sampleMapper.selectByPrimaryKey(sampleId);
+            s.setExperSampleName(
+                    DataUtil.getExperSampleNo(s.getType(), sampleId));
+            sampleMapper.updateByPrimaryKeySelective(s);
+            return s.getExperSampleName();
+        }
+        return "success";
     }
 
     @Override
@@ -271,7 +269,7 @@ public class SampleServiceImple implements SampleService {
         map.put("sampleOrder", so);
         map.put("samples", samples);
         QRCodeUtil.createQRCode(so.getOrderNo(),
-                IconConstants.getTempPath() + "sample_orderno.png");
+                IconConstants.getTempPath() + so.getOrderNo() + ".png");
         return map;
     }
 

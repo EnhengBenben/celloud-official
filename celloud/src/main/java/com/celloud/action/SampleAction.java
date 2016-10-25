@@ -170,8 +170,7 @@ public class SampleAction {
     public PageList<Sample> getScanStorageSamples(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
-        PageList<Sample> pageList = getSamples(page, size, SampleExperState.SCAN_STORAGE);
-        return pageList;
+        return getSamples(page, size, SampleExperState.SCAN_STORAGE);
     }
 
     @ActionLog(value = "扫码样本入库", button = "扫码入库")
@@ -190,7 +189,7 @@ public class SampleAction {
         Sample sampling = sampleService.getByNameExperState(
                 userId, sampleName, SampleExperState.SAMPLING);
         if (sampling == null){
-            map.put("result",  "0");
+            map.put("error", "系统中无此样本信息，请确认是已采样样本！");
             return map;
         }
         // 判断样本是否已入库
@@ -198,13 +197,14 @@ public class SampleAction {
                 userId, sampleName,
                 SampleExperState.SCAN_STORAGE);
         if (scanStorage != null){
-            map.put("result",  "-1");
+            map.put("error", "此样品信息已经收集过，请核查或者采集下一管样品信息！");
             return map;
         }
         // 修改样本状态为入库
-        sampleService.updateExperState(ConstantsData.getLoginUserId(),
-                SampleExperState.SCAN_STORAGE, sampling.getSampleId());
-        map.put("result", DateUtil.getDateToString(sampling.getLogDate(),
+        map.put("experName",
+                sampleService.updateExperState(ConstantsData.getLoginUserId(),
+                        SampleExperState.SCAN_STORAGE, sampling.getSampleId()));
+        map.put("date", DateUtil.getDateToString(sampling.getLogDate(),
                 "yyyy-MM-dd HH:mm:ss"));
         return map;
     }
@@ -228,20 +228,20 @@ public class SampleAction {
         Sample scanStorage = sampleService.getByExperNameExperState(userId,
                 experSampleName, SampleExperState.SCAN_STORAGE);
         if (scanStorage == null) {
-            map.put("result", "0");
+            map.put("error", "此样本未入库");
             return map;
         }
         // 判断样本是否已提取DNA
         Sample tokenDNA = sampleService.getByExperNameExperState(userId,
                 experSampleName, SampleExperState.TOKEN_DNA);
         if (tokenDNA != null) {
-            map.put("result", "-1");
+            map.put("error", "此样品信息已经收集过，请核查或者采集下一管样品信息！");
             return map;
         }
         // 修改样本状态为提取DNA
         sampleService.updateExperState(ConstantsData.getLoginUserId(),
                 SampleExperState.TOKEN_DNA, scanStorage.getSampleId());
-        map.put("result", DateUtil.getDateToString(scanStorage.getLogDate(),
+        map.put("date", DateUtil.getDateToString(scanStorage.getLogDate(),
                 "yyyy-MM-dd HH:mm:ss"));
         return map;
     }
