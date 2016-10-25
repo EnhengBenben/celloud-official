@@ -1,7 +1,7 @@
 (function(){
   celloudApp.controller("samplingController", function($scope, samplingService){
     $scope.productTags = samplingService.getProductTags();
-    $scope.typeList = ["血","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
+    $scope.typeList = ["血液","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
     var refreshList = function(){
       $scope.sampleList = samplingService.sampleList();
     }
@@ -87,14 +87,10 @@
       scanStorageService.scanStorage($scope.orderNo,$scope.sampleName).success(function(data){
         if(data.error != undefined){
           $.alert(data.error);
-        }else if(data.result == "0"){
-          $.alert("系统中无此样本信息，请确认是已采样样本！")
-        }else if(data.result.length > 1){
+        }else{
           //打印二维码
-          printQRCode(data.sampleName,data.result);
+          printQRCode(data.experName,data.date);
           $scope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
-        }else {
-          $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！")
         }
         $scope.sampleName = "";
       });
@@ -143,14 +139,12 @@
       		return false;
       	}
         tokenDNAService.tokenDNA($scope.sampleName).success(function(data){
-          if(data.result == "0"){
-            $.alert("此样本未入库");
-          }else if(data.result.length > 2){
+          if(data.error != undefined){
+            $.alert(data.error);
+          }else{
             //打印二维码
-            printQRCode($scope.sampleName,data.result);
+            printQRCode($scope.sampleName,data.date);
             $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
-          }else {
-            $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
           }
           $scope.sampleName = "";
         });

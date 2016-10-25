@@ -11,7 +11,7 @@
 	  <h4>订单编号：<span>{{sampleOrderInfo.sampleOrder.orderNo}}</span></h4><br>
 	  <h4>下单日期：<span>{{sampleOrderInfo.sampleOrder.createDate| date : 'yyyy-MM-dd HH:mm:ss'}}</span></h4>
     </div>
-    <img class="pull-right" width="76" alt="" ng-src="<%=request.getContextPath()%>/user/icon/temp?file=sample_orderno.png">
+    <img class="pull-right" width="76" alt="" ng-src="<%=request.getContextPath()%>/user/icon/temp?file={{sampleOrderInfo.sampleOrder.orderNo}}.png">
   </div>
   <div class="tests-content">
 	  <table class="table table-count">

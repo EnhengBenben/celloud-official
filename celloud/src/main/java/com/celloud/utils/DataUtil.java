@@ -21,6 +21,23 @@ public class DataUtil {
     }
 
     /**
+     * 生成样本订单编号
+     * 
+     * @param type
+     * @param id
+     * @return
+     * @author leamo
+     * @date 2016年10月25日 下午1:48:38
+     */
+    public static String getSampleOrderNo(int id) {
+        SecureRandom s = new SecureRandom();
+        String timeStamp = DateUtil.getDateToString("yyyyMM")
+                + String.format("%06d", id)
+                + String.format("%02d", s.nextInt(99));
+        return timeStamp;
+    }
+
+    /**
      * 生成实验样本编号
      * 
      * @param type
@@ -29,12 +46,9 @@ public class DataUtil {
      * @date 2016年10月24日 下午2:30:32
      */
     public static String getExperSampleNo(String type, int id) {
-        SecureRandom s = new SecureRandom();
-        System.out.println(SampleTypes.types);
-        System.out.println(type);
         String timeStamp = SampleTypes.types.get(type)
-                + DateUtil.getDateToString("yyyyMM") + String.format("%06d", id)
-                + "" + String.format("%02d", s.nextInt(99));
+                + DateUtil.getDateToString("yyyyMM")
+                + String.format("%06d", id);
         return timeStamp;
     }
 }
