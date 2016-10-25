@@ -57,3 +57,7 @@ INSERT INTO `tb_user_app_right` (`user_id`, `app_id`, `is_add`) VALUES (136, 129
 INSERT INTO `tb_user_app_right` (`user_id`, `app_id`, `is_add`) VALUES (139, 129, 0);
 INSERT INTO `tb_user_app_right` (`user_id`, `app_id`, `is_add`) VALUES (140, 129, 0);
 INSERT INTO `tb_user_app_right` (`user_id`, `app_id`, `is_add`) VALUES (145, 129, 0);
+
+INSERT INTO `tb_tag` (`tag_id`, `tag_name`) VALUES (37, 'AmpLibrary');
+
+INSERT INTO `tb_app_tag_relat` (`id`, `app_id`, `tag_id`) VALUES (30, 129, 37);
