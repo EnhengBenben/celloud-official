@@ -16,18 +16,18 @@ public class SampleTypes {
     @SuppressWarnings("serial")
     public static final Map<String, String> types = new HashMap<String, String>() {
         {
-            put("血", "B");
-            put("组织液", "T");
-            put("引流液", "D");
-            put("关节液", "J");
-            put("心包积液", "X");
-            put("胸水", "H");
-            put("脓液", "P");
-            put("脑脊液", "C");
-            put("阴道拭子", "V");
-            put("腹水", "A");
-            put("粪便", "F");
-            put("尿液", "U");
+            put("血液", "BL");
+            put("组织液", "TF");
+            put("引流液", "DF");
+            put("关节液", "JF");
+            put("心包积液", "PE");
+            put("胸水", "PF");
+            put("脓液", "PU");
+            put("脑脊液", "CF");
+            put("阴道拭子", "VS");
+            put("腹水", "AS");
+            put("粪便", "FE");
+            put("尿液", "UR");
             put("肺泡灌洗液", "BA");
         }
     };

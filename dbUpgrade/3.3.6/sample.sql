@@ -8,7 +8,7 @@ USE `celloud`;
 CREATE TABLE `tb_sample_order` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`user_id` INT(11) NOT NULL DEFAULT '0',
-	`order_no` VARCHAR(50) NOT NULL COMMENT '订单编号' COLLATE 'utf8_bin',
+	`order_no` VARCHAR(50) NULL DEFAULT NULL COMMENT '订单编号' COLLATE 'utf8_bin',
 	`create_date` DATETIME NOT NULL COMMENT '下单日期',
 	`is_print` INT(11) NOT NULL DEFAULT '0' COMMENT '0:未打印  1-已打印',
 	PRIMARY KEY (`id`),

@@ -2,9 +2,19 @@
 	celloudApp.controller("fileUpload", function($route, $location, $scope, $rootScope, uploadService) {
 		$scope.step = 'one';
 		$rootScope.getProTags = function(){
-			if($scope.step == 'one'){
-				$scope.upload.splice();
-				$rootScope.tags = uploadService.getProductTags().query();
+			// 判断是否在产品内部
+			if($location.path().indexOf('/product/rocky') > -1){
+				if($location.path().indexOf('upload') > -1){
+					$route.reload();
+				}else{
+					window.location.href = "#/product/rocky/upload";
+				}
+			}else{
+				if($scope.step == 'one'){
+					$scope.upload.splice();
+					$rootScope.tags = uploadService.getProductTags().query();
+				}
+				$("#upload-modal").modal("show");
 			}
 		}
 		$scope.nextStep = function(){

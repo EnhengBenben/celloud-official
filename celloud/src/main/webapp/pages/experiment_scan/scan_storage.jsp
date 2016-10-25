@@ -23,6 +23,8 @@
           <table class="table table-main">
             <thead>
                 <tr>
+                    <th>订单编号</th>
+                    <th>医院样品编号</th>
                     <th>实验样品编号</th>
                     <th>样品类型</th>
                     <th>采样时间</th>
@@ -33,6 +35,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="sample in sampleList.datas">
+                    <td>{{sample.orderNo }}</td>
+                    <td>{{sample.sampleName }}</td>
                     <td>{{sample.experSampleName }}</td>
                     <td>{{sample.type }}</td>
                     <td>{{sample.createDate  | date : 'yyyy-MM-dd HH:mm:ss'}}</td>

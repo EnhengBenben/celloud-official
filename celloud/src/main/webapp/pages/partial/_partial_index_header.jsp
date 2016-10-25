@@ -20,7 +20,7 @@
           </li>
           <shiro:hasPermission name="upload:menu">
 	          <li data-step="1" data-position="right" data-intro="" data-img="upload.png">
-	            <a data-toggle="modal" data-target="#upload-modal" ng-click="getProTags()"><i class="upload-icon"></i></a>
+	            <a ng-click="getProTags()"><i class="upload-icon"></i></a>
 	          </li>
           </shiro:hasPermission>
         </ul>
