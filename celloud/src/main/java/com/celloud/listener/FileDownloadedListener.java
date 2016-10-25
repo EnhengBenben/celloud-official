@@ -30,8 +30,8 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
 		CheckFileTypeUtil util = new CheckFileTypeUtil();
 		File file = new File(boxFile.getPath());
 		int fileFormat = util.checkFileType(file.getName(), file.getParentFile().getAbsolutePath());
-		int result = service.updateFileInfo(boxFile.getFileId(), boxFile.getObjectKey(), boxFile.getPath(),
-				boxFile.getPath(), fileFormat, boxFile.getMd5(), anotherName, boxFile.getFileId());
+		int result = service.updateFileInfo(boxFile.getFileId(), boxFile.getDataKey(), boxFile.getPath(),
+				boxFile.getBatch(), fileFormat, boxFile.getMd5(), anotherName, boxFile.getTagId());
 		logger.info("文件更新状态{}:{}", result > 0 ? "成功" : "失败", boxFile.getPath());
 		if (boxFile.getTagId() != null && boxFile.getTagId().intValue() == 1) {
 			// TODO 保险起见，这里还应该校验用户是否已经添加app
