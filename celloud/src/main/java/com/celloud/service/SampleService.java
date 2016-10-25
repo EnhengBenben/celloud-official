@@ -138,7 +138,7 @@ public interface SampleService {
      * @author leamo
      * @date 2016年9月5日 下午4:37:38
      */
-    public Integer updateExperState(Integer userId, Integer experState,
+    public String updateExperState(Integer userId, Integer experState,
             Integer sampleId);
     
     /**
