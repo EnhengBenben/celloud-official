@@ -117,6 +117,7 @@
 					<exclude>application-prod.properties</exclude>
 					<exclude>application-qa.properties</exclude>
 					<exclude>application-test.properties</exclude>
+					<exclude>application-dev.properties</exclude>
 					<exclude>application.properties</exclude>
 				</excludes>
 			</resource>
