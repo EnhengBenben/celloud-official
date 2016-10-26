@@ -1,4 +1,4 @@
-package com.celloud.box.constants;
+package com.celloud.box.event;
 
 import org.springframework.context.ApplicationEvent;
 

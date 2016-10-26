@@ -18,9 +18,9 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 import com.celloud.box.config.BoxConfig;
-import com.celloud.box.constants.FileAddedEvent;
-import com.celloud.box.constants.FileUploadErrorEvent;
-import com.celloud.box.constants.FileUploadedEvent;
+import com.celloud.box.event.FileAddedEvent;
+import com.celloud.box.event.FileUploadErrorEvent;
+import com.celloud.box.event.FileUploadedEvent;
 import com.celloud.box.model.DataFile;
 import com.celloud.box.utils.OSSProgressListener;
 

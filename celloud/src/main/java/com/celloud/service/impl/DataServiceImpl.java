@@ -89,7 +89,10 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
-		dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+		Integer result = dataFileMapper.selectTagRelat(data.getFileId(), tagId);
+		if (result == null || result.intValue() == 0) {
+			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+		}
 		return dataFileMapper.updateDataInfoByFileId(data);
 	}
 

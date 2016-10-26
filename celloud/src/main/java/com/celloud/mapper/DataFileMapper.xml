@@ -122,6 +122,9 @@
 		INSERT INTO tb_file_tag_relat(file_id, tag_id)
 		VALUES(#{fileId},#{tagId})
 	</insert>
+	<select id="selectTagRelat" resultType="java.lang.Integer">
+		select count(*) from tb_file_tag_relat where file_id=#{fileId} and tag_id=#{tagId}
+	</select>
 	<insert id="insert" parameterType="com.celloud.model.mysql.DataFile">
 		insert into tb_file (file_id,
 		user_id, data_key,

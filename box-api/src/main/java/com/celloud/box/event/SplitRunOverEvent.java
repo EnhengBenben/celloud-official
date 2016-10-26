@@ -1,10 +1,10 @@
-package com.celloud.box.constants;
+package com.celloud.box.event;
 
 import org.springframework.context.ApplicationEvent;
 
-public class FileAddedEvent extends ApplicationEvent {
+public class SplitRunOverEvent extends ApplicationEvent {
 
-	public FileAddedEvent(String source) {
+	public SplitRunOverEvent(Object source) {
 		super(source);
 	}
 

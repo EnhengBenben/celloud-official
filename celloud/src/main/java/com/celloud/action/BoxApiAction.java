@@ -56,7 +56,8 @@ public class BoxApiAction {
 	 * @return
 	 */
 	@RequestMapping("newfile")
-	public Response newfile(Integer userId, String name, String md5, long size, Integer tagId, String batch) {
+	public Response newfile(Integer userId, String name, String anotherName, String md5, long size, Integer tagId,
+			String batch) {
 		logger.info("user {} new file : {}", userId, name);
 		Map<String, Object> values = new HashMap<>();
 		int dataId = dataService.addFileInfo(userId, name);
@@ -65,6 +66,7 @@ public class BoxApiAction {
 		DataFile data = new DataFile();
 		data.setFileId(dataId);
 		data.setDataKey(fileDataKey);
+		data.setAnotherName(anotherName);
 		data.setMd5(md5);
 		data.setSize(size);
 		data.setBatch(batch);
@@ -90,7 +92,7 @@ public class BoxApiAction {
 	 */
 	@RequestMapping("updatefile")
 	public Response updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
-			HttpServletRequest request) {
+			boolean splited, HttpServletRequest request) {
 		ConstantsData.getAnotherNamePerlPath(request);
 		logger.info("updating file : {}", objectKey);
 		DataFile file = dataService.getDataById(fileId);
@@ -102,8 +104,10 @@ public class BoxApiAction {
 		boxFile.setFileId(fileId);
 		boxFile.setBatch(batch);
 		boxFile.setFileName(file.getFileName());
+		boxFile.setAnotherName(file.getAnotherName());
 		boxFile.setDataKey(file.getDataKey());
 		boxFile.setMd5(file.getMd5());
+		boxFile.setSplited(splited);
 		boxFile.setNeedSplit(needSplit);
 		boxFile.setObjectKey(objectKey);
 		boxFile.setPath(folderByDay + File.separator + newName);
@@ -143,8 +147,8 @@ public class BoxApiAction {
 		boolean result = configService.checkConfig(serialNumber, version, ip, extranet, port);
 		OSSConfig config = null;
 		if (!result) {
-			logger.info("获取oos配置的参数不合法：serialNumber={},version={},intranet={},extranet={},port={}", serialNumber, version, ip,
-					extranet, port);
+			logger.info("获取oos配置的参数不合法：serialNumber={},version={},intranet={},extranet={},port={}", serialNumber,
+					version, ip, extranet, port);
 			response.setMessage("参数不合法！");
 			return response;
 		}

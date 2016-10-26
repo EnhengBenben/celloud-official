@@ -38,6 +38,10 @@ public class BoxConfig {
 	@Min(1)
 	@Max(365)
 	private Integer retentionDays = 30;
+
+	@Min(1)
+	@Max(20)
+	private Integer maxSplitting = 5;
 	/**
 	 * 盒子的序列号
 	 */
@@ -51,6 +55,8 @@ public class BoxConfig {
 	private String artifact;
 	@Value("${server.port}")
 	private Integer port;
+	@Value("${split.command}")
+	private String splitCommand;
 
 	public String getUploadPath() {
 		return uploadPath;
@@ -130,6 +136,22 @@ public class BoxConfig {
 
 	public void setPort(Integer port) {
 		this.port = port;
+	}
+
+	public String getSplitCommand() {
+		return splitCommand;
+	}
+
+	public void setSplitCommand(String splitCommand) {
+		this.splitCommand = splitCommand;
+	}
+
+	public Integer getMaxSplitting() {
+		return maxSplitting;
+	}
+
+	public void setMaxSplitting(Integer maxSplitting) {
+		this.maxSplitting = maxSplitting;
 	}
 
 }
