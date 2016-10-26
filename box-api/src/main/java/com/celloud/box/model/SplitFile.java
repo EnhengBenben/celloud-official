@@ -8,6 +8,14 @@ import com.celloud.box.utils.UploadPath;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+/**
+ * split校验文件，存储split能否运行的校验信息<br>
+ * 该文件的文件名由userId、batch、pubName三个参数md5而来
+ * 
+ * @author <a href="mailto:sunwendong@celloud.cn">sun8wd</a>
+ * @date 2016年10月26日下午3:01:27
+ * @version Revision: 1.0
+ */
 public class SplitFile {
 	/**
 	 * 用户id
