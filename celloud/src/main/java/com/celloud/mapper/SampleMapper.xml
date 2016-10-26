@@ -225,4 +225,10 @@
     from tb_sample s,tb_sample_order so
     where s.order_id = so.id and s.sample_name=#{sampleName} and so.order_no=#{orderNo} and s.state =#{state,jdbcType=BIT}
   </select>
+  <select id="getSamplesByStorageName" resultMap="BaseResultMap">
+    select s.* from 
+	tb_sample s,tb_sample_storage ss,tb_sample_storage_relat ssr
+	where s.sample_id=ssr.sample_id and ss.id=ssr.storage_id
+	and ss.storage_name=#{storageName} and s.state=#{state,jdbcType=BIT}
+  </select>
 </mapper>

@@ -37,6 +37,10 @@ public class IconConstants {
 	 * bsi血流产品的appid
 	 */
 	public static final Integer APP_ID_BSI = 118;
+    /**
+     * split流程的appid
+     */
+    public static final Integer APP_ID_SPLIT = 113;
 
 	static {
 		properties = new Properties();

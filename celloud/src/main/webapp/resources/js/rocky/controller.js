@@ -55,7 +55,7 @@
 		}
 		if($rootScope.rockyUploader && $rootScope.rockyStep == 'two'){
 			$scope.stepTwo();
-			$("#upload-list-table").removeClass("hide");
+			$("#rocky-upload-list-table").removeClass("hide");
 			$.each($rootScope.rockyUploader.files, function(index, item) {
 				if(item.percent == 100){
 					var $fileDom = $('<tr id="' + item.id + '"></tr>');
@@ -64,7 +64,7 @@
 					$fileDom.append($('<td class="surplus">00:00:00</td>'));
 					$fileDom.append($('<td class="spead">'+$rootScope.rockyUploadSpead[item.id]+'</td>'));
 					$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
-					$("#upload-list-tbody").append($fileDom);
+					$("#rocky-upload-list-tbody").append($fileDom);
 				}else{
 					var $fileDom = $('<tr id="' + item.id + '"></tr>');
 					$fileDom.append($('<td class="filename">' + item.name + '</td>'));
@@ -72,7 +72,7 @@
 					$fileDom.append($('<td class="surplus">---</td>'));
 					$fileDom.append($('<td class="spead">---</td>'));
 					$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
-					$("#upload-list-tbody").append($fileDom);
+					$("#rocky-upload-list-tbody").append($fileDom);
 				}
 			});
 		}
@@ -144,7 +144,7 @@
 				$("#" + file.id + " .surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
 			});
 			uploader.bind("FilesAdded", function(uploader, files) {
-				$("#upload-list-table").removeClass("hide");
+				$("#rocky-upload-list-table").removeClass("hide");
 				$.each(files, function(index, item) {
 					var $fileDom = $('<tr id="' + item.id + '"></tr>');
 					$fileDom.append($('<td class="filename">' + item.name + '</td>'));
@@ -152,7 +152,7 @@
 					$fileDom.append($('<td class="surplus">---</td>'));
 					$fileDom.append($('<td class="spead">---</td>'));
 					$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
-					$("#upload-list-tbody").append($fileDom);
+					$("#rocky-upload-list-tbody").append($fileDom);
 				});
 				uploader.start();
 				$rootScope.rockyStep = 'two'; // 只有选择了文件才算真的在第二步
@@ -173,8 +173,8 @@
 			});
 			uploader.bind("UploadComplete",function(uploader,files){
 				uploader.splice(0, uploader.files.length);
-				$("#upload-list-tbody").html('');
-				$("#upload-list-table").addClass("hide");
+				$("#rocky-upload-list-tbody").html('');
+				$("#rocky-upload-list-table").addClass("hide");
 				$rootScope.rockyUploader.destroy();
 				$rootScope.rockyStep = 'three';
 				$scope.stepThree();
@@ -200,7 +200,7 @@
 			return fileSize.toFixed(2)+unit;
 		}
 		window.onbeforeunload=function(){
-			var qp=$scope.upload.total;
+			var qp=$rootScope.rockyUploader.total;
 			var percent=qp.percent;
 			if(qp.size>0&&percent<100&&percent>0){
 				return "数据正在上传，您确定要关闭页面吗?"
