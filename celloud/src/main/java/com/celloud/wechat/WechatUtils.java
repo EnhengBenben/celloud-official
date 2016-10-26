@@ -1,7 +1,9 @@
 package com.celloud.wechat;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,15 +26,16 @@ public class WechatUtils {
 	//properties
 	private String appId;
 	private String appSecret;
-	private String loginHtml;
 	private String urlToken;
 
 	//wechat url
-	private String oAuth2Url;
 	private String oAuth2TokenUrl;
 	private String tokenUrl;
 	private String templateUrl;
 	private String createMenu;
+
+	private String qrcodeCreate;
+	private String qrcodeShow;
 
 	/**
 	 * 初始化自定义菜单
@@ -77,18 +80,48 @@ public class WechatUtils {
 	}
 
 	/**
-	 * 获取生成二维码所需要的url
+	 * 获取微信临时二维码
 	 * 
-	 * @param checkCode
+	 * @param time
+	 *            超时时间，单位秒
 	 * @return
 	 * @author lin
-	 * @date 2016年6月27日上午10:26:42
+	 * @date 2016年10月26日下午2:56:28
 	 */
-	public String getQRUrl(String checkCode) {
-		//由于授权操作安全等级较高，所以在发起授权请求时，微信会对授权链接做正则强匹配校验，如果链接的参数顺序不对，授权页面将无法正常访问
-		String url = oAuth2Url + "appid=" + appId + "&redirect_uri=" + loginHtml
-				+ "&response_type=code&scope=snsapi_userinfo&state=" + checkCode + "#wechat_redirect";
-		return url;
+	public String getTempQRUrl(int time) {
+		String url = qrcodeCreate + getToken();
+		Map<String, Object> sceneId = new HashMap<>();
+		sceneId.put("scene_id", getSceneId());
+		Map<String, Object> scene = new HashMap<>();
+		scene.put("scene", sceneId);
+		Map<String, Object> map = new HashMap<>();
+		map.put("expire_seconds", time);
+		map.put("action_name", "QR_SCENE");
+		map.put("action_info", scene);
+		JSONObject json = new JSONObject(map);
+		String result = HttpURLUtils.httpPostRequest(url, json.toString());
+		JSONObject resultJson = new JSONObject(result);
+		if (resultJson.has("ticket")) {
+			return qrcodeShow + resultJson.get("ticket");
+		}
+		return null;
+	}
+
+	/**
+	 * 获取不为0的场景值ID<br>
+	 * 临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年10月26日下午2:07:38
+	 */
+	private static int getSceneId() {
+		SecureRandom sr = new SecureRandom();
+		int flag = 0;
+		while (flag == 0) {
+			flag = sr.nextInt(10000);
+		}
+		return flag;
 	}
 
 	/**
@@ -194,14 +227,6 @@ public class WechatUtils {
 		this.appSecret = appSecret;
 	}
 
-	public void setLoginHtml(String loginHtml) {
-		this.loginHtml = loginHtml;
-	}
-
-	public void setoAuth2Url(String oAuth2Url) {
-		this.oAuth2Url = oAuth2Url;
-	}
-
 	public void setoAuth2TokenUrl(String oAuth2TokenUrl) {
 		this.oAuth2TokenUrl = oAuth2TokenUrl;
 	}
@@ -220,6 +245,14 @@ public class WechatUtils {
 
 	public void setCreateMenu(String createMenu) {
 		this.createMenu = createMenu;
+	}
+
+	public void setQrcodeCreate(String qrcodeCreate) {
+		this.qrcodeCreate = qrcodeCreate;
+	}
+
+	public void setQrcodeShow(String qrcodeShow) {
+		this.qrcodeShow = qrcodeShow;
 	}
 
 }

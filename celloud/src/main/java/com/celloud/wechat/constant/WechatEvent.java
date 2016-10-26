@@ -41,6 +41,9 @@ public class WechatEvent {
 	 * @date 2016年10月20日 下午1:44:21
 	 */
 	public class click extends base {
+		/**
+		 * Event:click
+		 */
 	}
 
 	/**
@@ -51,6 +54,7 @@ public class WechatEvent {
 	 */
 	public class url extends base {
 		/**
+		 * Event:view <br>
 		 * 指菜单ID，如果是个性化菜单，则可以通过这个字段，知道是哪个规则的菜单被点击了。
 		 */
 		public static final String MenuId = "MenuId";
