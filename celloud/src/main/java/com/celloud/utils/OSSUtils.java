@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,14 +18,11 @@ import com.aliyun.oss.model.OSSObjectSummary;
 import com.aliyun.oss.model.ObjectListing;
 import com.aliyun.oss.model.UploadFileRequest;
 import com.aliyun.oss.model.UploadFileResult;
+import com.celloud.constants.ConstantsData;
+import com.celloud.model.mysql.OSSConfig;
 
 public class OSSUtils {
 	private static Logger logger = LoggerFactory.getLogger(OSSUtils.class);
-	private static String bucketName = "celloud-dev";
-	private static String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
-	// accessKey请登录https://ak-console.aliyun.com/#/查看
-	private static String accessKeyId = "UrKY3uHmTuwajVKU";
-	private static String accessKeySecret = "zK4cU4cEHPEnQNxu5NnnmCSvBHXuOd";
 
 	/**
 	 * 从oss下载文件
@@ -46,7 +44,7 @@ public class OSSUtils {
 		localFile.getParentFile().mkdirs();
 		// 下载object到文件
 		try {
-			client.getObject(new GetObjectRequest(bucketName, objectKey), localFile);
+			client.getObject(new GetObjectRequest(ConstantsData.getOSSConfig().getBucket(), objectKey), localFile);
 		} catch (Exception e) {
 			logger.error("下载文件失败:{}", objectKey, e);
 			return null;
@@ -72,7 +70,8 @@ public class OSSUtils {
 		logger.info("uploading file 【{}】 as 【{}】", localFile.getAbsolutePath(), objectKey);
 		long time = System.currentTimeMillis();
 		OSSClient client = getClient();
-		UploadFileRequest uploadFileRequest = new UploadFileRequest(bucketName, objectKey);
+		UploadFileRequest uploadFileRequest = new UploadFileRequest(ConstantsData.getOSSConfig().getBucket(),
+				objectKey);
 		String location = null;
 		uploadFileRequest.setUploadFile(localFile.getAbsolutePath());
 		// 指定上传并发线程数
@@ -103,12 +102,14 @@ public class OSSUtils {
 		final int maxKeys = 100;
 		String nextMarker = null;
 		do {
-			list = client.listObjects(new ListObjectsRequest(bucketName).withMarker(nextMarker).withMaxKeys(maxKeys));
+			list = client.listObjects(new ListObjectsRequest(ConstantsData.getOSSConfig().getBucket())
+					.withMarker(nextMarker).withMaxKeys(maxKeys));
 			List<String> keys = new ArrayList<>();
 			for (OSSObjectSummary summary : list.getObjectSummaries()) {
 				keys.add(summary.getKey());
 			}
-			DeleteObjectsResult result = client.deleteObjects(new DeleteObjectsRequest(bucketName).withKeys(keys));
+			DeleteObjectsResult result = client
+					.deleteObjects(new DeleteObjectsRequest(ConstantsData.getOSSConfig().getBucket()).withKeys(keys));
 			for (String obj : result.getDeletedObjects()) {
 				logger.info("deleted object : {}", obj);
 			}
@@ -126,7 +127,9 @@ public class OSSUtils {
 	}
 
 	private static OSSClient getClient() {
-		return new OSSClient(endpoint, accessKeyId, accessKeySecret);
+		OSSConfig config = ConstantsData.getOSSConfig();
+		Validate.notNull(config, "没有获取到oss配置");
+		return new OSSClient(config.getEndpoint(), config.getKeyId(), config.getKeySecret());
 	}
 
 	private static String formatSpead(long size, long timeMillis) {
