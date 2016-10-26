@@ -101,7 +101,7 @@ public class DataAction {
         List<DataFile> dataList = null;
         // 从tb_task中加载数据
         dataList = this.dataService.getDataFileFromTbTask(projectId);
-        if (null == dataList || (null != dataList && dataList.size() == 0)) { // tb_task中查找不到数据代表是老数据采用老的方法加载数据
+        if (null == dataList || dataList.isEmpty()) { // tb_task中查找不到数据代表是老数据采用老的方法加载数据
             dataList = this.dataService.getDatasInProject(projectId);
         }
         return dataList;
