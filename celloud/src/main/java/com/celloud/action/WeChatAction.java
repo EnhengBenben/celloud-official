@@ -57,6 +57,12 @@ public class WeChatAction {
 		wechatUtils.initMenu();
 	}
 
+	@RequestMapping(value = "getQRUrl", method = RequestMethod.GET)
+	@ResponseBody
+	public String getQRUrl() {
+		return wechatUtils.getTempQRUrl(300);
+	}
+
 	/**
 	 * 微信事件接收方法
 	 * 
@@ -86,15 +92,31 @@ public class WeChatAction {
 			//TODO 其他事件的处理
 			Map<String, String> map = XmlUtil.readXMLToMap(request);
 			if (map.containsKey(WechatEvent.click.MsgType)) {
-				if (map.get(WechatEvent.click.MsgType).equals("event")) {//是事件推送
-
-				} else if (map.get(WechatMessage.text.MsgType).equals("text")) {//是文本消息推送，主要用来做自动回复
+				String msgType = map.get(WechatEvent.click.MsgType);
+				if (msgType.equals("event")) {//是事件推送
+					String event = WechatEvent.click.Event;
+					if (event.equals("view")) {//是链接事件
+						log.info("链接事件，据说不会上报！");
+					} else if (event.equals("click")) {//是点击事件
+						log.info("点击事件，会上报！");
+					} else if (event.equals("subscribe") || event.equals("SCAN")) {//扫码推事件的事件推送
+						String openId = map.get(WechatEvent.click.FromUserName);
+						int isBind = us.checkWechatBind(openId, null);
+						if (isBind == 0) {
+							log.error("该微信账号尚未绑定平台账号：" + openId);
+						} else {
+							log.error("该微信账号已经绑定平台账号：" + openId);
+						}
+					} else {
+						log.error("未知的事件推送：" + event);
+					}
+				} else if (msgType.equals("text")) {//是文本消息推送，主要用来做自动回复
 					String keywords = map.get(WechatMessage.text.Content);
 					WechatAutoReply autoReply = autoReplyService.selectByKeywords(keywords);
 					String reply = autoReply == null ? "未知的查询关键字" : autoReply.getReplyContext();
 					return MessageUtils.getReply(map, reply);
 				} else {
-					System.out.println(map.get(WechatEvent.click.MsgType) + "类型的推送");
+					System.out.println(msgType + "类型的推送");
 					return null;
 				}
 			} else {
@@ -124,6 +146,7 @@ public class WeChatAction {
         ModelAndView mv = new ModelAndView();
 		Map<String, String> event = XmlUtil.readXMLToMap(context);
 		String openId = event.get(WechatEvent.url.FromUserName);
+		log.info("绑定账户，openId=" + openId);
 		//关注后通过自动回复的链接进来，需要跳转登录页面
 		mv.setViewName("wechat/bind");
 		int isBind = us.checkWechatBind(openId, null);
@@ -145,6 +168,7 @@ public class WeChatAction {
 		mv.setViewName("wechat/unbind");
 		Map<String, String> event = XmlUtil.readXMLToMap(context);
 		String openId = event.get(WechatEvent.url.FromUserName);
+		log.info("解除绑定，openId=" + openId);
 		int isBind = us.checkWechatBind(openId, null);
 		if (isBind == 0) {
 			String msg = "您的微信号尚未绑定平台账号，不可解除绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
