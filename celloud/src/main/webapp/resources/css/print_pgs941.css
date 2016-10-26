@@ -68,65 +68,15 @@ td.label{
 	white-space: nowrap;
 }
 
-.info li {
-	width: 27%;
-	list-style: none;
-	float: left;
-	display: inline-block;
-	*display: inline-block;
-	line-height: 1.8em;
-	text-align: left;
-	padding-left: 45px;
-}
-
 input.tdInput {
 	width: 98%;
 	margin-left: 3px;
 	line-height: 2em;
+	height: 2em;
 	border-radius: 0px;
 	border: 0px;
 	border-bottom: 1px solid #D4D4D4;
 	box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
-}
-
-span.tdSpan {
-	text-align: left;
-	display: block;
-	line-height: 2em;
-	margin-left: 3px;
-}
-
-input.liInput {
-	width: 70%;
-	line-height: 2em;
-	border-radius: 0px;
-	border: 0px;
-	border-bottom: 1px solid #D4D4D4;
-	box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
-	margin-left: 12px;
-}
-
-span.liSpan {
-	width: 75%;
-	line-height: 2em;
-	margin-left: 12px;
-}
-
-input.tdCenterInput {
-	width: 100%;
-	line-height: 2em;
-	border-radius: 0px;
-	border: 0px;
-	border-bottom: 1px solid #D4D4D4;
-	box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
-	text-align: center;
-}
-
-span.tdCenterSpan {
-	line-height: 2em;
-	display: block;
-	width: 100%;
-	height: 100%;
 }
 
 #print-form {
