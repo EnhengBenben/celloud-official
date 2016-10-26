@@ -32,7 +32,7 @@ var fileUpload=(function(fileUpload){
 	      drop_element : 'upload-filelist',
 	      // Specify what files to browse for
 	      filters : {
-	        max_file_size : '3gb',
+	        max_file_size : '10gb',
 	        prevent_duplicates : true, //不允许选取重复文件
 	        mime_types : [
 	          {title : "bam", extensions : "bam"},
