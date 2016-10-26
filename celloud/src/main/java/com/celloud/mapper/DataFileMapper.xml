@@ -571,10 +571,16 @@
 		f.user_id = ${userId}
 	</select>
 	<select id="getDatasInProject" resultMap="BaseResultMap">
-		select
+		SELECT
 		<include refid="Base_Column_List" />
-		from tb_file where file_id in(select file_id from
-		tb_file_project_relat where project_id=#{projectId})
+		FROM tb_file
+		WHERE file_id IN(
+		  SELECT
+		  file_id
+		  FROM tb_file_project_relat
+		  WHERE project_id=#{projectId}
+		)
+		ORDER BY another_name DESC
 	</select>
 	<select id="countDataFileWeek" resultType="map">
 		select
@@ -712,17 +718,18 @@
        FROM tb_file
        WHERE data_key
        IN(
-       SELECT data_key
-       FROM tb_task
-       WHERE project_id = #{projectId}
-       AND period = 2
+	       SELECT data_key
+	       FROM tb_task
+	       WHERE project_id = #{projectId}
+	       AND period = 2
        )
+       ORDER BY another_name DESC
 	</select>
 	<select id="getMd5FileIdMap" resultType="java.util.Map">
         SELECT
         file_id fileId, `md5` `md5`
         FROM tb_file
-        WHERE file_id in(
+        WHERE file_id IN(
             SELECT file_id
             FROM tb_report
             WHERE app_id = #{appId}

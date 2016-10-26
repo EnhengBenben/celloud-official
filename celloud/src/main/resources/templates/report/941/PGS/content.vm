@@ -68,9 +68,9 @@
         </tr>
         <tr>
             <td colspan="4" class="tdCenter">
-            检测者:<span><input name="baseInfo['detection']" value="$!{pgs.baseInfo.detection}" type="text" style="width:24%;border:0;border-bottom:1px solid #D4D4D4;line-height: 2em;"></span>
-            审核者:<span><input name="baseInfo['review']" value="$!{pgs.baseInfo.review}" type="text" style="width:24%;border:0;border-bottom:1px solid #D4D4D4;line-height: 2em;"></span>
-            报告日期:<span><input name="baseInfo['reportDate']" value="$!{pgs.baseInfo.reportDate}" type="text" style="width:24%;border:0;border-bottom:1px solid #D4D4D4;line-height: 2em;"></span>
+            检测者:<span><input name="baseInfo['detection']" value="$!{pgs.baseInfo.detection}" type="text" style="width:24%;border:0;border-bottom:1px solid #D4D4D4;line-height: 2em;height: 2em;"></span>
+            审核者:<span><input name="baseInfo['review']" value="$!{pgs.baseInfo.review}" type="text" style="width:24%;border:0;border-bottom:1px solid #D4D4D4;line-height: 2em;height: 2em;"></span>
+            报告日期:<span><input name="baseInfo['reportDate']" value="$!{pgs.baseInfo.reportDate}" type="text" style="width:24%;border:0;border-bottom:1px solid #D4D4D4;line-height: 2em;height: 2em;"></span>
             </td>
         </tr>
     </table>
