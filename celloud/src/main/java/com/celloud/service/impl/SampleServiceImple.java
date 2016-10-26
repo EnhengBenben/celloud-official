@@ -285,4 +285,10 @@ public class SampleServiceImple implements SampleService {
         return sampleMapper.getByExperNameExperState(userId, experSampleName,
                 experState, DataState.ACTIVE, SampleIsCommit.ISADD);
     }
+
+    @Override
+    public List<Sample> getSamplesByStorageName(String storageName) {
+        return sampleMapper.getSamplesByStorageName(storageName,
+                DataState.ACTIVE);
+    }
 }
