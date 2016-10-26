@@ -53,7 +53,7 @@
 							<i class="celicon -uploadgray"></i> 拖拽文件到此或者点击选择文件上传
 						</div>
 					</div>
-					<table class="table table-main hide" id="upload-list-table">
+					<table class="table table-main hide" id="rocky-upload-list-table">
 						<thead>
 							<tr>
 								<th>文件名</th>
@@ -63,7 +63,7 @@
 								<th>操作</th>
 							</tr>
 						</thead>
-						<tbody id="upload-list-tbody">
+						<tbody id="rocky-upload-list-tbody">
 						</tbody>
 					</table>
 				</div>
