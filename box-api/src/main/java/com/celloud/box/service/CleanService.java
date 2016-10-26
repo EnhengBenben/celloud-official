@@ -25,7 +25,7 @@ public class CleanService {
 	private BoxConfig config;
 
 	@Async
-	@Scheduled(cron = "0 0 0/2 * * ? ")
+	@Scheduled(cron = "${box.clean-cron}")
 	public void clean() {
 		logger.info("cleanning...");
 		File rootPath = new File(UploadPath.getUploadedPath());

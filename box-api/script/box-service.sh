@@ -1,11 +1,13 @@
 #!/bin/bash
 
 filepath=$(cd "$(dirname "$0")"; pwd)
-opts_network="--network=enp2s0"
-opts_pidfile="--spring.pidfile=$filepath/.pid"
-opts_logpath="--logging.path=$filepath/logs"
-opts_serial="--box.serial-number=celloud-1"
-opts="$opts_logpath $opts_network $opts_pidfile $opts_serial"
+opt_array=(
+    "--network=enp2s0"
+    "--spring.pidfile=$filepath/.pid"
+    "--logging.path=$filepath/logs"
+    "--box.serial-number=celloud-1"
+)
+jarfile=$filepath/box-1.0.1-SNAPSHOT.jar
 function start(){
 	check
 	num=$?
@@ -13,7 +15,12 @@ function start(){
 	then
 		echo 'Application is already running !'
 	else
-		nohup java -jar $filepath/box-1.0.1-SNAPSHOT.jar $opts > $filepath/nohup.out 2>&1 & 
+        opts=""
+        for opt in ${opt_array[@]}
+        do
+            opts="$opts $opt"
+        done
+        nohup java -jar $jarfile $opts > $filepath/nohup.out 2>&1 &
 		echo 'Application is started !'
 	fi
 }
