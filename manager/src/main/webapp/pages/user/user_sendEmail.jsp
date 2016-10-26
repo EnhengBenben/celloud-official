@@ -11,20 +11,25 @@
            <div class="form-group">
                <input type="hidden" name="appCompanyId" value="${appCompanyId }">
            </div>
-           
-	           <div class="form-group">
-	               <label class="col-sm-2 control-label" for="role">模块</label>
-	               <div class="col-sm-10" id="email-roleIds">
-	                   <c:if test="${not empty roleList }">
-			                <c:forEach items="${roleList }" var="role">
-			                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' checked='checked' value='${role.id }'>${role.name }</label>
-			                </c:forEach>
-			           </c:if>
-			           <c:if test="${empty roleList }">
-			                 <label class='text-inline'>暂无模块</label>
-			           </c:if>
-	               </div>
-	           </div>
+           <div class="form-group">
+               <label class="col-sm-2 control-label" for="tips"></label>
+               <div class="col-sm-10" id="tips">
+                   <p style="color: red;">提示:每个医院下只能添加一个管理员</p>
+               </div>
+           </div>
+           <div class="form-group">
+               <label class="col-sm-2 control-label" for="role">模块</label>
+               <div class="col-sm-10" id="email-roleIds">
+                   <c:if test="${not empty roleList }">
+		                <c:forEach items="${roleList }" var="role">
+		                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' <c:if test="${role.code!='hospitalmanager' }">checked='checked'</c:if> value='${role.id }'>${role.name }</label>
+		                </c:forEach>
+		           </c:if>
+		           <c:if test="${empty roleList }">
+		                 <label class='text-inline'>暂无模块</label>
+		           </c:if>
+               </div>
+           </div>
            <div class="form-group">
                <label class="col-sm-2 control-label" for="deptName">App<font color="red">*</font></label>
                <div class="col-sm-10" id="email-appIds">

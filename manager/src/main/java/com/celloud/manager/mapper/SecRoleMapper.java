@@ -2,6 +2,8 @@ package com.celloud.manager.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.manager.model.SecRole;
 
 public interface SecRoleMapper {
@@ -20,4 +22,7 @@ public interface SecRoleMapper {
     List<SecRole> findRolesByUserId(Integer userId);
 
     void deleteByUserId(Integer userId);
+
+    List<SecRole> findRoleByIds(@Param("roleIds") Integer[] roleIds);
+
 }

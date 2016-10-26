@@ -206,6 +206,33 @@ public class UserAction {
     }
 
     /**
+     * 
+     * @description 判断医院管理员角色是否已在该公司下存在
+     * @author miaoqi
+     * @date 2016年10月26日下午4:16:30
+     *
+     * @param companyId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("user/checkRoleCompany")
+    public String checkRoleCompany(Integer companyId, Integer[] roleIdArray) {
+        // 获取roidIdArray的role对象
+        List<SecRole> roles = secRoleService.findRoleListByIds(roleIdArray);
+        for (SecRole role : roles) {
+            // 勾选了医院管理员这个角色, 则需要根据这个角色校验当前的companyId是否已经存在用户
+            if ("hospitalmanager".equals(role.getCode())) {
+                List<String> companyIds = companyService.getCompanyIdsByRoleId(role.getId());
+                if (companyIds.contains(companyId.toString())) {
+                    return "0";
+                }
+                break;
+            }
+        }
+        return "1";
+    }
+
+    /**
      * 发送添加用户邮件
      *
      * @param emailArray
