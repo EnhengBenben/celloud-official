@@ -8,22 +8,22 @@ $(function(){
         
         var textareaVal1 = $("#result").children().val();
         if(textareaVal1){
-            $("#result").html(textareaVal1);
+            $("#result").html(textareaVal1.replace(/\n/g,"<br>"));
         }else{
             $("#result").html("");
         }
         
         var textareaVal2 = $("#analyze").children().val();
         if(textareaVal2){
-            $("#analyze").html(textareaVal2);
+            $("#analyze").html(textareaVal2.replace(/\n/g,"<br>"));
         }else{
             $("#analyze").html("");
         }
         
         window.print();
         
-        $("#analyze").html("<textarea style=\"width:99.8%;height:50px;\" name=\"baseInfo['analyze']\">"+textareaVal2+"</textarea>");
-        $("#result").html("<textarea style=\"width:99.8%;height:50px;\" name=\"baseInfo['result']\">"+textareaVal1+"</textarea>");
+        $("#analyze").html("<textarea style=\"width:99.8%;height:50px;\" name=\"baseInfo['analyze']\">"+textareaVal2.replace(/<br>/g,"\n")+"</textarea>");
+        $("#result").html("<textarea style=\"width:99.8%;height:50px;\" name=\"baseInfo['result']\">"+textareaVal1.replace(/<br>/g,"\n")+"</textarea>");
         
         $("input").css("border-bottom", "1px solid #D4D4D4");
         $(".buttons").show();
