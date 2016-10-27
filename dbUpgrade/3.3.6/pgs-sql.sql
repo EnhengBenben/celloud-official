@@ -8,6 +8,6 @@ INSERT INTO `tb_app_classify_relat` (`classify_id`, `app_id`) VALUES (4, 129);
 INSERT INTO `tb_app_classify_relat` (`classify_id`, `app_id`) VALUES (9, 129);
 
 INSERT INTO `tb_user_app_right` (`user_id`, `app_id`, `is_add`) select user_id, 129, 0 from tb_user_company_relat where company_id = 6;
-INSERT INTO `tb_tag` (`tag_id`, `tag_name`) VALUES (37, 'AmpLibrary');
+INSERT INTO `tb_tag` (`tag_id`, `tag_name`) VALUES (37, 'AmpLibrary-v1.0');
 
 INSERT INTO `tb_app_tag_relat` (`id`, `app_id`, `tag_id`) VALUES (30, 129, 37);
