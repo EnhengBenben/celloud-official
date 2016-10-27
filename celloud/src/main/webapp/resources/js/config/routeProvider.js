@@ -237,6 +237,10 @@
       templateUrl: "pages/rocky/rocky_report.jsp",
       controller: "rockyReportController"
     })
+    .when('/company/user',{
+	  templateUrl: "pages/company/company_user.jsp",
+      controller: "companyUserController"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()
