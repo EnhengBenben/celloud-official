@@ -181,7 +181,7 @@ public class SampleAction {
         Map<String, String> map = new HashMap<>();
         Sample s = sampleService.getSampleByNameAndOrderNo(orderNo, sampleName);
         if (s == null) {
-            map.put("error", "改订单中无此样本信息");
+            map.put("error", "该订单中无此样本信息");
             return map;
         }
         // 判断样本是否已采集
