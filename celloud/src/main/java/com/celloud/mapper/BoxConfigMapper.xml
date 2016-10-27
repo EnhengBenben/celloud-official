@@ -29,7 +29,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from tb_box_config
-		where extranet_address=#{ip} and id in(select box_id from tb_box_user_relate where user_id = #{userId,jdbcType=INTEGER} )
+		where id in(select box_id from tb_box_user_relate where user_id = #{userId,jdbcType=INTEGER} )
 	</select>
 	<select id="selectByConfig" resultMap="BaseResultMap">
 		select
