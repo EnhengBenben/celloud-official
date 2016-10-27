@@ -1,6 +1,7 @@
 package com.celloud.box.listener;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 
 import javax.annotation.Resource;
@@ -35,15 +36,18 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 	@Override
 	public void onApplicationEvent(SplitRunOverEvent event) {
 		String path = (String) event.getSource();
+		// 标记运行完成
 		SplitFile splitFile = SplitFile.load(path);
 		splitFile.setRunning(Boolean.FALSE);
 		splitFile.toFile();
+		// 分别处理三个文件
 		DataFile r1 = setSplited(splitFile.getR1Path());
 		boxService.finish(r1);
 		DataFile r2 = setSplited(splitFile.getR2Path());
 		boxService.finish(r2);
 		DataFile txt = setSplited(splitFile.getTxtPath());
 		boxService.finish(txt);
+		// 读取split结果
 		String temp = new File(r1.getPath()).getName().replaceAll(r1.getExt(), "");
 		String resultPath = UploadPath.getSplitOutputPath(splitFile.getUserId(), splitFile.getBatch(),
 				splitFile.getName()) + File.separatorChar + temp + File.separatorChar + "result" + File.separatorChar
@@ -54,6 +58,7 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 			logger.error("split运行结束，但是没有找到结果文件：{}\n{}", resultPath, splitFile.toJSON());
 			return;
 		}
+		// 分别处理结果文件
 		String folder = UploadPath.getUploadingPath(splitFile.getUserId());
 		for (File result : results) {
 			if (result.isDirectory()) {
@@ -65,7 +70,7 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 			String randomName = UploadPath.getRandomName(uniqueName);
 			File newPath = new File(folder + randomName);
 			try {
-				FileUtils.moveFile(result, newPath);
+				FileUtils.moveFile(result, newPath);// 文件移动到等待上传的目录下
 			} catch (IOException e) {
 				logger.error("移动文件失败：{}", result.getAbsolutePath(), e);
 				continue;
@@ -73,9 +78,38 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 			boxService.splitRunOver(splitFile.getUserId(), filename, splitFile.getName(), splitFile.getTagId(),
 					splitFile.getBatch(), null, newPath);
 		}
-		// TODO clean...
+		// clean...
+		File file = resultFile.getParentFile().getParentFile().getParentFile();
+		try {
+			FileUtils.deleteDirectory(file);
+		} catch (IOException e) {
+			logger.error("删除目录失败：{}", file.getAbsolutePath(), e);
+		}
+		// 列举上级目录下的所有的文件夹
+		File[] children = file.getParentFile().listFiles(new FileFilter() {
+			@Override
+			public boolean accept(File file) {
+				return file.isDirectory();
+			}
+		});
+		// 如果上级目录下不存在其他文件夹，则连同上级目录一起删除
+		if (children == null || children.length == 0) {
+			try {
+				FileUtils.deleteDirectory(file.getParentFile());
+			} catch (IOException e) {
+				logger.error("删除目录失败：{}", file.getParentFile().getAbsolutePath(), e);
+			}
+		}
+		new File(splitFile.getListPath()).delete();// 删除生成的list文件
+		new File(path).delete();// 删除split的校验文件
 	}
 
+	/**
+	 * 将上传的文件置为split已完成
+	 * 
+	 * @param path
+	 * @return
+	 */
 	public DataFile setSplited(String path) {
 		DataFile temp = DataFile.load(path + ".json");
 		if (temp == null) {

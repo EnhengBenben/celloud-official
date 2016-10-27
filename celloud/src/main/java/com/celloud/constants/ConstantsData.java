@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.celloud.model.mysql.OSSConfig;
 import com.celloud.model.mysql.User;
 
 /**
@@ -35,6 +36,7 @@ public class ConstantsData {
 	private static Properties systemProperties;
 	private static Properties bioinfoServices;
 	private static String anotherNamePerlPath;
+	private static OSSConfig ossConfig;
 
 	/**
 	 * 获取所有机器列表(如果内存中已存在，则直接使用内存中的；如果内存中不存在，则加载配置文件)
@@ -251,5 +253,13 @@ public class ConstantsData {
 		// sc.getRealPath("/resources") + "/plugins/getAliases.pl"
 		anotherNamePerlPath = request.getServletContext().getRealPath("/resources") + "/plugins/getAliases.pl";
 		return anotherNamePerlPath;
+	}
+
+	public static OSSConfig getOSSConfig() {
+		return ossConfig;
+	}
+
+	public synchronized static void setOSSConfig(OSSConfig config) {
+		ossConfig = config;
 	}
 }

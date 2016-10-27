@@ -227,4 +227,10 @@ public class CompanyServiceImpl implements CompanyService {
         return companyMapper.addCompany(company);
     }
 
+    @Override
+
+    public List<String> getCompanyIdsByRoleId(Integer roleId) {
+        return companyMapper.findCompanyIdsByRoleId(roleId);
+    }
+
 }

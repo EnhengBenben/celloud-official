@@ -50,4 +50,15 @@ public interface CompanyService {
      */
     public int addCompany(Company company);
 
+    /**
+     * 
+     * @description 根据角色id查找companyIds
+     * @author miaoqi
+     * @date 2016年10月26日下午4:31:26
+     *
+     * @param id
+     * @return
+     */
+    public List<String> getCompanyIdsByRoleId(Integer roleId);
+
 }

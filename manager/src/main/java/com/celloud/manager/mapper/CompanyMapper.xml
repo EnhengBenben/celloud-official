@@ -273,4 +273,15 @@
       now(), #{province }, 
       #{city }, #{addressDetail })
   </insert>
+  <select id="findCompanyIdsByRoleId" resultType="java.lang.String">
+    SELECT company_id
+    FROM tb_user
+    WHERE user_id
+    IN(
+        SELECT user_id
+        FROM tb_sec_user_role_relat
+        WHERE role_id = #{roleId}
+    )
+    AND role = 0
+  </select>
 </mapper>

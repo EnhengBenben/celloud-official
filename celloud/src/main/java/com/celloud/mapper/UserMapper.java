@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.mysql.User;
+import com.celloud.page.Page;
 
 public interface UserMapper {
     public int deleteByPrimaryKey(Integer userId);
@@ -88,4 +89,15 @@ public interface UserMapper {
 	 * @date 2016年7月11日下午1:35:58
 	 */
 	public int wechatUnBind(@Param("openId") String openId, @Param("pwd") String pwd);
+
+    /**
+     * 
+     * @description 根据条件查询用户
+     * @author miaoqi
+     * @date 2016年10月27日上午11:12:50
+     *
+     * @param user
+     * @return
+     */
+    public List<User> select(@Param("user") User user, Page page);
 }

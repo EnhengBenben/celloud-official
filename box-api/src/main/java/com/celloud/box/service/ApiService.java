@@ -62,7 +62,7 @@ public class ApiService {
 	}
 
 	@Async
-	@Scheduled(fixedRate = 1000 * 60 * 3)
+	@Scheduled(fixedRateString = "${box.health-rate}")
 	public void reportHealth() {
 		Map<String, Object> params = new HashMap<>();
 		params.put("version", config.getVersion());
@@ -74,7 +74,7 @@ public class ApiService {
 	}
 
 	@Async
-	@Scheduled(fixedRate = 1000 * 60 * 30)
+	@Scheduled(fixedRateString = "${box.ossConfig-rate}")
 	public void fetchOSSConfig() {
 		Map<String, Object> params = new HashMap<>();
 		params.put("serialNumber", config.getSerialNumber());

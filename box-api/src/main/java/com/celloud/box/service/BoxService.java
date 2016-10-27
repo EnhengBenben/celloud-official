@@ -60,7 +60,8 @@ public interface BoxService {
 	public void checkRunSplit(DataFile dataFile);
 
 	/**
-	 * split流程运行结束的后续操作
+	 * split流程运行结束的后续操作 <br>
+	 * 向平台创建文件、上传文件到oss、向平台更新文件状态等
 	 * 
 	 * @param file
 	 */
