@@ -15,7 +15,7 @@
           <span class="input-alert" ng-show="orderNo.$dirty && orderNo.$error.required && sampleName.$dirty && sampleName.$error.required">请完整输入订单号和样本编号！</span>
           <input class="order-input" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="orderNo" required placeholder="扫码或者输入订单号码"/>
           <div class="info-btn-group">
-            <input class="field" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="sampleName" required placeholder="扫描样本编号/病历号"/>
+            <input class="field" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="sampleName" required placeholder="扫码或者输入样本编号"/>
             <a class="action" ng-click="scanStorage()">扫码入库</a>
           </div>
         </div>
@@ -24,9 +24,9 @@
             <thead>
                 <tr>
                     <th>订单编号</th>
-                    <th>医院样品编号</th>
-                    <th>实验样品编号</th>
-                    <th>样品类型</th>
+                    <th>医院样本编号</th>
+                    <th>实验样本编号</th>
+                    <th>样本类型</th>
                     <th>采样时间</th>
                     <th>状态</th>
                     <th>备注</th>

@@ -8,7 +8,7 @@
         <div class="content-header clearfix">
           <img src="<%=request.getContextPath()%>/images/icon/sample_scan.jpg">
           <p>* 请持条码枪扫描样品管上的条码<br>
-              无条码样品请按以下方式操作：<br> 1. 在样品管上记录样品病历号<br> 2. 将病历号输入上面窗口后回车
+              无条码样本请按以下方式操作：<br> 1. 在样本管上记录样品病历号<br> 2. 将病历号输入上面窗口后回车
           </p>
           <form name="samplingForm">
             <span class="input-alert" ng-show="samplingForm.$invalid">需要输入完整信息</span>
@@ -17,7 +17,7 @@
             <select class="form-control type-select" name="type" ng-model="type" ng-options="type for type in typeList" required>
             </select>
             <div class="info-btn-group">
-              <input class="field" type="text" ng-trim="true" name="sampleName" ng-model="sampleName" placeholder="扫描样本编号/病历号" required/>
+              <input class="field" type="text" ng-trim="true" name="sampleName" ng-model="sampleName" placeholder="扫码或者输入样本编号" required/>
               <button class="btn action" ng-click="addSample()" ng-disabled="samplingForm.$invalid">添加</button>
             </div>
           </form>
@@ -30,9 +30,9 @@
           <thead>
               <tr>
                   <th>序号</th>
-                  <th>样品编号</th>
+                  <th>样本编号</th>
                   <th>检测项目</th>
-                  <th>样品类型</th>
+                  <th>样本类型</th>
                   <th>更新时间</th>
                   <th>操作</th>
               </tr>
