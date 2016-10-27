@@ -24,6 +24,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.exceptions.ServerException;
+import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.profile.IClientProfile;
+import com.aliyuncs.sms.model.v20160927.SingleSendSmsRequest;
+import com.aliyuncs.sms.model.v20160927.SingleSendSmsResponse;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.message.category.MessageCategoryCode;
@@ -64,6 +72,28 @@ public class LoginAction {
 	private MessageCategoryUtils mcu;
 	@Resource
 	private AppService appService;
+
+    public static void sendCapcha(Integer cellphone) {
+        String appkey = "kI0Hd8esVLsnf15q";
+        String secret = "ObMM6aAMpo58JrM0zZdNBKNBHV62dn";
+        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou",
+                appkey, secret);
+        try {
+            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Sms",
+                    "sms.aliyuncs.com");
+            IAcsClient client = new DefaultAcsClient(profile);
+            SingleSendSmsRequest request = new SingleSendSmsRequest();
+            request.setSignName("华点云");
+            request.setTemplateCode("SMS_22410134");
+            request.setParamString("{'number':'123456'}");
+            request.setRecNum("18511832690");
+            SingleSendSmsResponse httpResponse = client.getAcsResponse(request);
+        } catch (ServerException e) {
+            e.printStackTrace();
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+    }
 
 	/**
 	 * 跳转到登录页面
@@ -279,4 +309,7 @@ public class LoginAction {
 		return publicKey;
 	}
 
+    public static void main(String[] args) {
+        sendCapcha(1);
+    }
 }

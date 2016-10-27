@@ -258,4 +258,9 @@ public class HomeAction {
     public String sampleOrder() {
         return "experiment_scan/sampling_order";
     }
+
+    @RequestMapping("client.html")
+    public String client() {
+        return "client";
+    }
 }
