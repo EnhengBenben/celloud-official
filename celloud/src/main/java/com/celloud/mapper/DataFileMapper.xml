@@ -408,7 +408,7 @@
 	<update id="updateDataInfoByFileId" parameterType="com.celloud.model.mysql.DataFile">
 		update tb_file
 		set data_key=#{dataKey },size=#{size },path=#{path},
-		<if test="another_name != null">
+		<if test="anotherName != null">
 		 another_name=#{anotherName },
 		</if>
 		state=#{state },md5=#{md5 },batch=#{batch }
