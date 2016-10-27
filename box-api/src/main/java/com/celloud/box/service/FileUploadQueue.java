@@ -1,6 +1,7 @@
 package com.celloud.box.service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -87,7 +88,7 @@ public class FileUploadQueue {
 	}
 
 	public List<String> getAll() {
-		return Arrays.asList((String[]) queue.toArray());
+		return new ArrayList<String>(queue);
 	}
 
 	public void printAll() {
