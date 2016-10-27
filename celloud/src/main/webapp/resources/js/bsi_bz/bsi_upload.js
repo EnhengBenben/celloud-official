@@ -10,6 +10,9 @@ var fileUpload=(function(fileUpload){
 		  var box = null;
 		  for(var index in configs){
 			  var config = configs[index];
+			  if(!config){
+				  continue;
+			  }
 			  var port = config.port||80;
 			  var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
 			  config = "http://"+config.intranetAddress+":"+port+context;
