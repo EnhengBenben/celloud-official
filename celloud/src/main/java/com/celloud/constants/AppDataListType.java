@@ -35,11 +35,11 @@ public class AppDataListType {
 	 * path and name
 	 */
 	public static final List<Integer> PATH_AND_NAME = Arrays.asList(11, 80, 85, 87, 88, 91, 94, 104, 109, 116, 119, 120,
-            121, 122, 124, 125, 129);
+			121, 122, 124, 125, 129);
 
 	/**
 	 * 调用封装的API运行
 	 */
-	public static final List<Integer> API_RUN = Arrays.asList(113, 118);
+	public static final List<Integer> API_RUN = Arrays.asList(113, 118, 123);
 
 }
