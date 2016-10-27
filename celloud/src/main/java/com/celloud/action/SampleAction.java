@@ -302,7 +302,7 @@ public class SampleAction {
         ExcelUtil.listToExcel(header,
                 sampleService.sampleListInStorage(
                         ConstantsData.getLoginUserId(), ss.getId()),
-                PropertiesUtil.experimentExcelPath + libraryName + ss
+                PropertiesUtil.experimentExcelPath + libraryName + ss.getId()
                         + ".xls");
         return ss;
     }
