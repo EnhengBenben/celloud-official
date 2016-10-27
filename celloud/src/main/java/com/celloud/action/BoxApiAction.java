@@ -100,7 +100,6 @@ public class BoxApiAction {
 		String today = DateUtil.getDateToString("yyyyMMdd");
 		String folderByDay = realPath + userId + File.separator + today;
 		String newName = file.getDataKey() + FileTools.getExtName(file.getFileName());
-		logger.info("updatint file({}) : {}", file.getAnotherName(), file.getFileName());
 		BoxFile boxFile = new BoxFile();
 		boxFile.setFileId(fileId);
 		boxFile.setBatch(batch);
