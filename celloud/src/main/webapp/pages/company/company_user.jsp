@@ -12,13 +12,7 @@
       <div class="table-opera">
         <div class="table-opera-content">
           <div class="opera-info">
-            <shiro:hasPermission name="run:button">
-              <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
-            </shiro:hasPermission>
-            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
-          </div>
-          <div class="info-btn-group pull-right">
-            <a class="action" data-toggle="modal" data-target="#company-addUser-modal" ng-click="showAddUserForm()">新增</a>
+            <button class="btn data-operate" data-toggle="modal" data-target="#company-addUser-modal" ng-click="showAddUserForm()">新增</button>
           </div>
         </div>
       </div>
