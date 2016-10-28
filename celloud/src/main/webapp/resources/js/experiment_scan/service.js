@@ -61,7 +61,8 @@
   celloudApp.service("buidLibraryService", function($resource,$http){
     var self = this;
     self.infos = function(){
-      return $resource("sample/getBuidLibrarySamples?v="+new Date()).get();
+      //检索的是百菌探的文库index
+      return $resource("sample/getBuidLibrarySamples?appId=118&flag=2&v="+new Date()).get();
     }
     self.addSample = function(sampleName,sampleList){
       var sindexs=new Array();

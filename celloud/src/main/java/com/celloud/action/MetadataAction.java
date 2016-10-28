@@ -23,9 +23,6 @@ public class MetadataAction {
 	@RequestMapping("showMetadata")
 	@ResponseBody
 	public List<Metadata> toShowMetadata(Integer appId, Integer flag) {
-		System.out.println(appId);
-		System.out.println(flag);
-		System.out.println(ms.getMetadata(appId, flag).size());
 		return ms.getMetadata(appId, flag);
     }
 
