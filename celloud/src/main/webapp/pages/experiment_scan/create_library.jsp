@@ -15,20 +15,8 @@
             <a class="action" ng-click="addSample()">扫码入库</a>
           </div>
           <div class="library-btns pull-right">
-            <select class="form-control" ng-model="sindex">
-	            <option value="文库index">文库index</option>
-	            <option value="BSL1:ATCACG">BSL1:ATCACG</option>
-	            <option value="BSL2:CGATGT">BSL2:CGATGT</option>
-	            <option value="BSL3:TTAGGC">BSL3:TTAGGC</option>
-	            <option value="BSL4:TGACCA">BSL4:TGACCA</option>
-	            <option value="BSL5:ACAGTG">BSL5:ACAGTG</option>
-	            <option value="BSL6:GCCAAT">BSL6:GCCAAT</option>
-	            <option value="BSL7:CAGATC">BSL7:CAGATC</option>
-	            <option value="BSL8:ACTTGA">BSL8:ACTTGA</option>
-	            <option value="BSL9:GATCAG">BSL9:GATCAG</option>
-	            <option value="BSL10:TAGCTT">BSL10:TAGCTT</option>
-	            <option value="BSL11:GGCTAC">BSL11:GGCTAC</option>
-	            <option value="BSL12:CTTGTA">BSL12:CTTGTA</option>
+            <select class="form-control" ng-model="sindex" ng-options="(meta.name+':'+meta.seq) for meta in infos.metaList">
+            	<option value="">文库index</option>
 	        </select>
             <button ng-click="addLibrary()" class="btn -low pull-right" ng-disabled="infos.pageList.datas.length <= 0 || sindex=='' || sindex==undefined">建库</button>
             <button ng-click="addAndDownLibrary()" class="btn btn-reset -low pull-right" ng-disabled="infos.pageList.datas.length <= 0 || sindex=='' || sindex==undefined">建库并下载</button>

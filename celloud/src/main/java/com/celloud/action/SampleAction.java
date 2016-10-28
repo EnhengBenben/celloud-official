@@ -27,6 +27,7 @@ import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleStorage;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.MetadataService;
 import com.celloud.service.SampleService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DateUtil;
@@ -46,6 +47,8 @@ public class SampleAction {
     Logger logger = LoggerFactory.getLogger(SampleAction.class);
     @Resource
     private SampleService sampleService;
+	@Resource
+	private MetadataService ms;
 
     @ActionLog(value = "获取所有未保存样品列表", button = "样品")
     @RequestMapping("{app}/sampleList")
@@ -249,13 +252,14 @@ public class SampleAction {
     @ActionLog(value = "获取建库中的样本列表", button = "建库")
     @RequestMapping("getBuidLibrarySamples")
     @ResponseBody
-    public Map<String,Object> getBuidLibrarySamples() {
+	public Map<String, Object> getBuidLibrarySamples(Integer appId, Integer flag) {
         Map<String,Object> map = new HashMap<>();
         PageList<Sample> pageList = getSamples(1, 12, SampleExperState.BUID_LIBRARY);
         map.put("pageList", pageList);
         SecureRandom s = new SecureRandom();
         map.put("libraryName", DateUtil.getDateToString()
                 + String.format("%02d", s.nextInt(99)));
+		map.put("metaList", ms.getMetadata(appId, flag));
         return map;
     }
 
