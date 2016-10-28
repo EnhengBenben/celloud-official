@@ -75,7 +75,7 @@
 	<!--#E bgContainer-->
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.1"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=3.3.6"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/security.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js?version=3.1.16.1"></script>

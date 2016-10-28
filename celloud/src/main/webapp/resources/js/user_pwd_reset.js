@@ -8,7 +8,7 @@ var wid =$(window).width();
 		$("#alertInfo").html("");
 		//变换随机验证码
 		$('#kaptchaImage').click(function() {
-			$(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
+			$(this).hide().attr('src','kaptcha?' + Math.floor(Math.random() * 100)).fadeIn();
 		});
 		$(document).on("keypress","#findPasswordForm",function(e){
 			if(e.keyCode==13){
