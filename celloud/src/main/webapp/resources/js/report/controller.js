@@ -927,7 +927,7 @@
 		  $scope.rocky = rockyInfo.rocky;
 		  $scope.project = rockyInfo.project;
 		  $scope.uploadPath = rockyInfo.uploadPath;
-
+		  $scope.significances=rockyInfo.significances;
 	  });
   });
   /**

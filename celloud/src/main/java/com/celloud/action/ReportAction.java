@@ -3777,6 +3777,7 @@ public class ReportAction {
 		Map<String, Object> map = getCommonInfo(projectId);
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		map.put("rocky", rocky);
+		map.put("significances", ConstantsData.significances());
 		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return map;
 	}
