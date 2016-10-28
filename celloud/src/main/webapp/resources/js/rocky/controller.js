@@ -70,7 +70,7 @@
 					$fileDom.append($('<td class="filename">' + item.name + '</td>'));
 					$fileDom.append($('<td class="percent">'+item.percent+'%</td>'));
 					$fileDom.append($('<td class="surplus">'+getSize($rootScope.rockyUploader.total.bytesPerSec)+'/s</td>'));
-					$fileDom.append($('<td class="spead">'+utils.formatDate((item.size-item.loaded)/$rootScope.rockyUploader.total.bytesPerSec+'</td>'));
+					$fileDom.append($('<td class="spead">'+utils.formatDate((item.size-item.loaded)/$rootScope.rockyUploader.total.bytesPerSec)+'</td>'));
 					$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
 					$("#rocky-upload-list-tbody").append($fileDom);
 				}else{
