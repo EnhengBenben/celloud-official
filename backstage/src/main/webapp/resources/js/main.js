@@ -1132,7 +1132,7 @@ var expense = (function(expense){
           $("#recharge-modal").modal("show");
           //变换随机验证码
           $('#kaptchaImage').click(function() {
-            $(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
+            $(this).hide().attr('src','kaptcha?' + Math.floor(Math.random() * 100)).fadeIn();
           });
         });
 //        $("#commit-recharge").on("click",function(){

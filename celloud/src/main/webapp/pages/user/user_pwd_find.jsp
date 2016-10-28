@@ -72,7 +72,7 @@
     <!--#E bgContainer-->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/user_pwd_reset.js?version=3.1"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/user_pwd_reset.js?version=3.3.6"></script>
     <script type="text/javascript">
     //根据视口和文档的宽高设置背景图片的尺寸
     utils.setDocSize();

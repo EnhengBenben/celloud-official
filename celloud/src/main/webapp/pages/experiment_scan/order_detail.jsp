@@ -4,7 +4,7 @@
     <a ng-click="print()" class="btn -low" style="border-radius:6px;" title="打印" href="javascript:void(0)"><i class="fa fa-print"></i></a>
   </div>
   <div class="title-content">
-      <div class="title">样品寄送订单</div>
+      <div class="title">样本寄送订单</div>
   </div>
   <div class="clearfix" style="height: 80px">
     <div class="pull-left" style="margin-top: 20px">
@@ -18,9 +18,9 @@
 	    <thead>
 	        <tr>
 	            <th>序号</th>
-	            <th>样品编号</th>
+	            <th>样本编号</th>
 	            <th>检测项目</th>
-	            <th>样品类型</th>
+	            <th>样本类型</th>
 	            <th>更新时间</th>
 	        </tr>
 	    </thead>
