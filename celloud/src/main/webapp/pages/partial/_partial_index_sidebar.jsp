@@ -48,7 +48,7 @@
       </ul>
       <ul class="sidebar-menu">
         <li class="sidebar-header">用户中心</li>
-        <li ng-class="{active: isActive('/user')}">
+        <li ng-class="{active: isActive('/user/')}">
           <a di-href="<%=request.getContextPath()%>/index#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
         <li ng-class="{active: isActive('/company')}">

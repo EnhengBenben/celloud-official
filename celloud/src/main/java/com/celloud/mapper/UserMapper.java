@@ -99,5 +99,20 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    public List<User> select(@Param("user") User user, Page page);
+    public List<User> select(@Param("user") User user, @Param("testAccountIds") String testAccountIds, Page page);
+
+    /**
+     * 
+     * @description 根据所属公司查找用户
+     * @author miaoqi
+     * @date 2016年10月27日下午5:20:27
+     *
+     * @param companyId
+     * @param testAccountIds
+     * @param page
+     * @return
+     */
+    public List<User> findUsersByCompanyId(@Param("loginUserId") Integer loginUserId,
+            @Param("companyId") Integer companyId,
+            @Param("testAccountIds") String testAccountIds, Page page);
 }

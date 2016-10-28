@@ -1,6 +1,10 @@
 package com.celloud.action;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +18,8 @@ import com.celloud.service.CompanyService;
 @Controller
 @RequestMapping("company")
 public class CompanyAction {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CompanyAction.class);
 
     @Autowired
     private CompanyService companyService;
@@ -33,8 +39,36 @@ public class CompanyAction {
     @ResponseBody
     public PageList<User> userInfoByCompanyId(Page page) {
         Integer companyId = ConstantsData.getLoginCompanyId();
-        PageList<User> pageList = companyService.pageQueryUser(companyId, page);
+        Integer loginUserId = ConstantsData.getLoginUserId();
+        LOGGER.info("医院管理员 {} 查看医院账号管理, 所属公司 {} ", ConstantsData.getLoginUserId(), ConstantsData.getLoginCompanyId());
+        PageList<User> pageList = companyService.pageQueryUser(loginUserId, companyId, page);
         return pageList;
     }
     
+    /**
+     * 
+     * @description 修改用户状态
+     * @author miaoqi
+     * @date 2016年10月27日下午4:57:40
+     *
+     * @param userId
+     * @param state
+     * @return
+     */
+    @RequestMapping("/updateUserState")
+    public ResponseEntity<Void> updateUserState(Integer userId, Integer state) {
+        LOGGER.info("医院管理员 {} 修改用户 {} 的状态为 {}", ConstantsData.getLoginUserId(), userId, state);
+        User updateUser = new User();
+        updateUser.setUserId(userId);
+        updateUser.setState(state == 0 ? 1 : 0);
+        Boolean flag = companyService.updateBySelective(updateUser);
+        if(flag){
+            LOGGER.info("医院管理员修改用户状态成功");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            LOGGER.info("医院管理员修改用户状态失败");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 }

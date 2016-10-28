@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+<ng-include src="'pages/partial/_partial_company_sidebar.jsp'"></ng-include>
 <div class="pro-body">
     <ol class="breadcrumb">
       <li>CelLoud</li>
@@ -10,9 +11,14 @@
     <div class="content">
       <div class="table-opera">
         <div class="table-opera-content">
+          <div class="opera-info">
+            <shiro:hasPermission name="run:button">
+              <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
+            </shiro:hasPermission>
+            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
+          </div>
           <div class="info-btn-group pull-right">
-            <input class="field" type="text" placeholder="搜索文件名/数据标签/文件别名" ng-model="dataCondition" ng-keypress="doSearch($event)"/>
-            <a class="action" ng-click="conditionList()">搜索</a>
+            <a class="action" data-toggle="modal" data-target="#company-addUser-modal">新增</a>
           </div>
         </div>
       </div>
@@ -38,6 +44,7 @@
             <td>{{user.email}}</td>
             <td>{{user.cellphone}}</td>
             <td>{{user.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td><a class="btn-link" data-toggle="modal" ng-click="updateUserState(user.userId,user.state)"><span ng-if="user.state == 1">启用</span><span ng-if="user.state == 0">禁用</span></a></td>
           </tr>
           <tr ng-show="user.datas.length == 0">
           	<td colspan="9">暂无数据</td>
@@ -46,43 +53,36 @@
       </table>
       <pagination page="userList.page" change="pageQuery(page,pageSize)"></pagination>
     </div>
-  <!-- <div id="data-detail-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div id="company-addUser-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog">
 	  <div class="modal-content">
 	    <div class="modal-header">
 	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-	      <h4 class="modal-title">数据修改</h4>
+	      <h4 class="modal-title">增加账号--发送邮件</h4>
 	    </div>
 	    <div class="modal-body form-modal">
 	      <form class="form-horizontal info-form" name="editDataForm" id="editDataForm">
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">文件名称：</div>
+	            <div class="control-label form-label col-xs-3">邮件地址：</div>
 	            <div class="col-xs-9">
-	                <input type="text" ng-model="dataFile.fileName" ng-readonly="true">
-	                <input type="hidden" ng-model="dataFile.fileId" ng-readonly="true">
+	                <input type="text" name="email">
 	            </div>
 	          </div>
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">文件别名：</div>
-	            <div class="col-xs-9">
-	                <input type="text" placeholder="请输入文件别名" ng-model="dataFile.anotherName" maxlength="50">
+	            <div class="control-label form-label col-xs-3">验证码：</div>
+	            <div class="col-xs-6">
+                    <input type="text" placeholder="验证码" id="captcha" name="kaptchaCode" value="${requestScope.kapcode }" />
 	            </div>
-	          </div>
-	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">产品标签：</div>
-	            <div class="col-xs-9 form-group-content">
-	              <select class="checkbox-group" ng-model="appSelected" ng-options="app.tagName for app in appList"></select>
-	            </div>
-	          </div>
-	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">数据标签：</div>
-	            <div class="col-xs-9">
-	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="50" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
+	            <div class="col-xs-2">
+	               <div style="position: absolute;top: 0px;right: 0px;">
+                       <img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage" alt="验证码"
+                            class="validateCode" style="cursor: pointer;" />
+                    </div>
 	            </div>
 	          </div>
             <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
               <button type="button" class="close" ng-click="updateState=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-              <span>{{updateMessage}}</span>
+              <span>{{addMessage}}</span>
             </div>
 	      </form>
 	    </div>
@@ -94,5 +94,5 @@
 	    </div>
 	  </div>
 	</div>
-  </div> -->
+  </div>
 </div>

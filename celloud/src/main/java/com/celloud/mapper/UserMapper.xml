@@ -477,6 +477,16 @@
             <if test="user.balances != null">
                 AND balances = #{user.balances}
             </if>
+            AND user_id not in ${testAccountIds}
         </where>
+    </select>
+    <select id="findUsersByCompanyId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tb_user
+        WHERE company_id = #{companyId}
+        AND user_id not in (${testAccountIds})
+        AND user_id != #{loginUserId}
+        AND role = 0
     </select>
 </mapper>

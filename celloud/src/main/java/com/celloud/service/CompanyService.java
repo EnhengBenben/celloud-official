@@ -43,6 +43,17 @@ public interface CompanyService {
      * @param page
      * @return
      */
-    PageList<User> pageQueryUser(Integer companyId, Page page);
+    PageList<User> pageQueryUser(Integer loginUserId, Integer companyId, Page page);
+
+    /**
+     * 
+     * @description 根据主键修改不为空的字段
+     * @author miaoqi
+     * @date 2016年10月27日下午4:06:25
+     *
+     * @param updateUser
+     * @return
+     */
+    Boolean updateBySelective(User updateUser);
 
 }

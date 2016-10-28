@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.celloud.constants.DataState;
 import com.celloud.constants.IconConstants;
 import com.celloud.mapper.CompanyMapper;
 import com.celloud.mapper.UserMapper;
@@ -20,6 +19,7 @@ import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.CompanyService;
+import com.celloud.utils.PropertiesUtil;
 
 @Service("companyService")
 public class CompanyServiceImpl implements CompanyService {
@@ -49,15 +49,14 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public PageList<User> pageQueryUser(Integer companyId, Page page) {
-        // List<User> datas = userMapper.findUsersByCompanyId(companyId, page,
-        // DataState.ACTIVE);
-        User queryUser = new User();
-        queryUser.setCompanyId(companyId);
-        queryUser.setState(DataState.ACTIVE);
-        queryUser.setRole(0);
-        List<User> datas = userMapper.select(queryUser, page);
+    public PageList<User> pageQueryUser(Integer loginUserId, Integer companyId, Page page) {
+        List<User> datas = userMapper.findUsersByCompanyId(loginUserId, companyId, PropertiesUtil.testAccountIds, page);
         return new PageList<User>(page, datas);
+    }
+
+    @Override
+    public Boolean updateBySelective(User updateUser) {
+        return userMapper.updateByPrimaryKeySelective(updateUser) == 1;
     }
 
 }

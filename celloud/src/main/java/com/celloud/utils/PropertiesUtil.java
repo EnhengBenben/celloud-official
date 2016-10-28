@@ -12,6 +12,7 @@ public class PropertiesUtil {
     public static String datalist;
     public static String outputPath;
     public static String experimentExcelPath;
+    public static String testAccountIds;
     /**
      * pdf 的 logo
      */
@@ -26,6 +27,7 @@ public class PropertiesUtil {
             datalist = prop.getProperty("datalist");
             outputPath = prop.getProperty("outputPath");
             img = prop.getProperty("img");
+            testAccountIds = prop.getProperty("testAccountIds");
             experimentExcelPath = prop.getProperty("experimentExcelPath");
 		} catch (IOException e) {
 			logger.info("读取jdbc配置文件失败");
