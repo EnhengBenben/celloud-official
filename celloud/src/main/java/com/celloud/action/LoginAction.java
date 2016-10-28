@@ -43,7 +43,7 @@ import com.celloud.utils.RSAUtil;
 import com.celloud.utils.UserAgentUtil;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
-import com.celloud.wechat.WechatParams;
+import com.celloud.wechat.constant.WechatParams;
 
 /**
  * 登录action
@@ -75,6 +75,7 @@ public class LoginAction {
     @ActionLog(value = "跳转到登录页面", button = "登录")
     @RequestMapping("login")
     public ModelAndView login() {
+    	ConstantsData.getAnotherNamePerlPath();
         ModelAndView mv = new ModelAndView("login");
         User user = new User();
         Subject subject = SecurityUtils.getSubject();
@@ -117,6 +118,7 @@ public class LoginAction {
     public ModelAndView login(User user, String kaptchaCode, String newPassword,
             boolean checked) {
         logger.info("用户正在登陆：" + user.getUsername());
+        ConstantsData.getAnotherNamePerlPath();
         Subject subject = SecurityUtils.getSubject();
         String password = user.getPassword();
         user.setPassword("");

@@ -29,7 +29,7 @@
 		  rememberDataReport.push(remember);
 	  }
 	  
-	  if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94||appId==99||appId==100||appId==101||appId==104||appId==116||appId==119||appId==120||appId==121||appId==122||appId==124||appId==125){
+	  if(appId==81||appId==83||appId==85||appId==86||appId==87||appId==88||appId==91||appId==92||appId==93||appId==94||appId==99||appId==100||appId==101||appId==104||appId==116||appId==119||appId==120||appId==121||appId==122||appId==124||appId==125||appId==129){
 		  var href = "#/reportpro/PGS/" + appId + "/" + dataKey + "/" + proId;
 	  }else{
 		  var href = "#/reportpro/"+ appName + "/" + appId + "/" + dataKey + "/" + proId;
@@ -540,6 +540,11 @@
 		  $scope.hbv = hbvInfo.hbv;
 		  $scope.project = hbvInfo.project;
 		  $scope.uploadPath = hbvInfo.uploadPath;
+		  // $scope.hbvOtherSiteMap = hbvInfo.hbvOtherSiteMap;
+		  $scope.siteKeys = new Array();
+		  for(key in hbvInfo.hbvOtherSiteMap){
+			  $scope.siteKeys.push(key);
+		  }
 		  dataInPro($scope.hbv, $scope.project.projectId, $scope.project.projectName);
 		  $scope.change1 = function(){
 			  $("#nomal").css("display","");
@@ -579,6 +584,19 @@
 			  $("#"+id).modal("show");
 			  $("#"+id).find(".modal-body").scrollTop(0);
 		  }
+		  
+		  // 其他位点突变图表
+//		  var X = new Array();
+//		  var Y = new Array();
+//		  for(key in $scope.hbvOtherSiteMap){
+//			  Y.push(key);
+//			  X.push($scope.hbvOtherSiteMap[key].count);
+//		  }
+//		  X = "[" + X.join(",") + "]";
+//		  Y = "[" + Y.join(",") + "]";
+//		  var div2 = $("<div id='char2' class='col-lg-12' style='width: 1000px;height: " + 40 * $scope.siteKeys.length + "px;'></div>");
+//		  $("#charDiv0").append(div2);
+//		  $.reportChar.draw.echartsShowHorizontalBar("char2", "其他位点", eval(X), eval(Y), 700, 40 * $scope.siteKeys.length, "其他位点数量");
 		  
 		  $.get("count/hbvCompare",{"appId":82,"path":DATAPATH},function(data){
 				var div0 = $("<div id='char0' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
@@ -1461,7 +1479,7 @@
                 }
               }
             }
-            if(appId=="91"||appId=="95"||appId=="92"||appId=="93"||appId=="94"||appId=="86"||appId=="87"||appId=="88"||appId=="81"||appId=="83"||appId=="85"||appId=="96"||appId=="97"||appId=="98"||appId=="99"||appId=="100"||appId=="101"||appId=="102"||appId=="103"||appId=="104"||appId=="116"||appId=="119"||appId=="120"||appId=="121"||appId=="122"||appId=="124"||appId=="125"){
+            if(appId=="91"||appId=="95"||appId=="92"||appId=="93"||appId=="94"||appId=="86"||appId=="87"||appId=="88"||appId=="81"||appId=="83"||appId=="85"||appId=="96"||appId=="97"||appId=="98"||appId=="99"||appId=="100"||appId=="101"||appId=="102"||appId=="103"||appId=="104"||appId=="116"||appId=="119"||appId=="120"||appId=="121"||appId=="122"||appId=="124"||appId=="125"||appId=="129"){
               if(j>0&&i==0){
                 $(this).addClass("sub");
                 var fileName = $(this).html();

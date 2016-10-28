@@ -2,9 +2,19 @@
 	celloudApp.controller("fileUpload", function($route, $location, $scope, $rootScope, uploadService) {
 		$scope.step = 'one';
 		$rootScope.getProTags = function(){
-			if($scope.step == 'one'){
-				$scope.upload.splice();
-				$rootScope.tags = uploadService.getProductTags().query();
+			// 判断是否在产品内部
+			if($location.path().indexOf('/product/rocky') > -1){
+				if($location.path().indexOf('upload') > -1){
+					$route.reload();
+				}else{
+					window.location.href = "#/product/rocky/upload";
+				}
+			}else{
+				if($scope.step == 'one'){
+					$scope.upload.splice();
+					$rootScope.tags = uploadService.getProductTags().query();
+				}
+				$("#upload-modal").modal("show");
 			}
 		}
 		$scope.nextStep = function(){
@@ -29,10 +39,10 @@
 				chunk_size : '1mb',
 				dragdrop : true,
 				unique_names:true,
-				drop_element : 'plupload-content',
+				drop_element : 'plupload-content', // 设置可拖拽上传
 				// Specify what files to browse for
 				filters : {
-					max_file_size : '3gb',
+					max_file_size : '10gb',
 					prevent_duplicates : true, //不允许选取重复文件
 					mime_types : [
 						{title : "bam", extensions : "bam"},
@@ -66,12 +76,12 @@
 					clearInterval(refresh);
 				}
 			});
-			uploader.bind("UploadProgress", function(uploader, file) {
+			uploader.bind("UploadProgress", function(uploader, file) { // 上传过程中
 				$("#uploading-" + file.id +" .plupload-file-status").html(file.percent+"%");
 				$("#uploading-" + file.id + " .plupload-file-surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
 				$("#uploading-" + file.id + " .plupload_file_speed").html(getSize(uploader.total.bytesPerSec)+"/s");
 			});
-			uploader.bind("FilesAdded", function(uploader, files) {
+			uploader.bind("FilesAdded", function(uploader, files) { // 文件添加结束后
 				$scope.isCancel = false;
 				$.get("uploadFile/checkAdminSessionTimeOut",function(response){
 					if(response){//session超时则执行下两步
@@ -131,7 +141,7 @@
 				}
 				handleStatus(file);
 			});
-			uploader.bind("UploadComplete",function(uploader,files){
+			uploader.bind("UploadComplete",function(uploader,files){ // 文件上传完成(只要uploader中没有排队的文件就算完成)
 				$scope.step = 'one';
 				if(!$scope.isCancel){
 					$("#upload-list-tbody").children().remove();
@@ -142,10 +152,10 @@
 					}
 				}
 			});
-			uploader.bind("BeforeUpload", function(uploader, file) {
-				uploader.setOption("multipart_params",{'originalName': file.name,'tagId':$scope.tagSelected.tagId,'batch': $scope.batch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate});
+			uploader.bind("BeforeUpload", function(uploader, file) { // 上传之前设置参数
+				uploader.setOption("multipart_params",{'size':file.size,'lastModifiedDate':file.lastModifiedDate,'originalName': file.name,'tagId':$scope.tagSelected.tagId,'batch': $scope.batch});
 			});
-			uploader.bind("Error", function(uploader, error) {
+			uploader.bind("Error", function(uploader, error) { // 发生错误
 				if(error.code=='-602'){
 					alert("当前队列已存在文件【"+error.file.name+"】，请勿重复添加！");
 				}

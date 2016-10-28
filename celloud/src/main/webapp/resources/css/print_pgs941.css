@@ -1,0 +1,110 @@
+@charset "utf-8";
+/* reset */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	border: 0;
+	width: 96%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+.mt5 {
+	margin-top: 5px;
+}
+
+p {
+	color: #535353;
+	line-height: 1.5em;
+}
+/* base */
+body {
+	font-family: "黑体", "宋体";
+	font-size: 14px;
+	color: #353535;
+}
+
+.wrapper {
+	padding-bottom: 25px;
+}
+
+h1 {
+	text-align: center;
+	font-family: "华文新魏";
+	font-size: 28px;
+	padding: 10px 0 5px 0;
+}
+
+table {
+	max-width: 97%;
+	min-width: 800px;
+	background-color: transparent;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 13px;
+	background-color: transparent;
+	margin: 0 auto;
+}
+
+table td.tdCenter {
+	text-align: center;
+	height: 30px;
+	padding: 3px;
+}
+
+table td.tdLeft {
+    text-align: left;
+    height: 30px;
+    padding: 3px;
+}
+
+td.label{
+	white-space: nowrap;
+}
+
+input.tdInput {
+	width: 98%;
+	margin-left: 3px;
+	line-height: 2em;
+	height: 2em;
+	border-radius: 0px;
+	border: 0px;
+	border-bottom: 1px solid #D4D4D4;
+	box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
+}
+
+#print-form {
+	margin: 0 auto;
+}
+
+@media print {
+	body {
+		font-family: "黑体", "宋体";
+		font-size: 12px;
+	}
+	@page {
+		margin-left: 1.5cm;
+		margin-right: 1.5cm;
+		margin-top: 0.5cm;
+		margin-bottom: 0cm;
+	}
+	.table tr td {
+		padding: 0px 3px
+	}
+	.clearCss_3 img {
+		width: 100px;
+		height: 110px
+	}
+	.clearCss_6 img {
+		width: 550px;
+	}
+	.container {
+		margin-bottom: 10px;
+	}
+}

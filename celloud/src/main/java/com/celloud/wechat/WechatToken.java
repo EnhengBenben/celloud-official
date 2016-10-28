@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.celloud.wechat.constant.WechatConstants;
+
 public class WechatToken {
 	private static Map<String, String> wechatToken = new HashMap<>();
 

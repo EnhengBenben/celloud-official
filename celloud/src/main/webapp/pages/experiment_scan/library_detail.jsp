@@ -12,8 +12,8 @@
                 <tr>
                     <th>文库编号</th>
                     <th>文库index</th>
-                    <th>样品编号</th>
-                    <th>样品类型</th>
+                    <th>样本编号</th>
+                    <th>样本类型</th>
                     <th>建库时间</th>
                     <th>样本index</th>
                     <th>操作</th>

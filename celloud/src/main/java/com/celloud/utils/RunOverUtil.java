@@ -518,7 +518,7 @@ public class RunOverUtil {
 		if (FileTools.countLines(projectFile) == proDataList.size() + 1) {
 			// 4.生成项目pdf
 			try {
-				PGSProjectPDF.createPDF(appPath, appName, 220, 800, sb.toString(), projectId);
+                PGSProjectPDF.createPDF(appPath, appName, 200, 800, sb.toString(), projectId);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

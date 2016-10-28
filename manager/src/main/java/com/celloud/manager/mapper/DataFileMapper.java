@@ -3,6 +3,7 @@ package com.celloud.manager.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.manager.model.DataFile;
@@ -226,4 +227,18 @@ public interface DataFileMapper {
      */
     public List<Map<String, Object>> getHistoryWeekDataSize(@Param("companyId") Integer companyId,
             @Param("testAccountIds") String testAccountIds);
+
+    /**
+     * 
+     * @description 查询某个userId下某个appId的文件的md5出现次数大于1的file_id和md5值
+     * @author miaoqi
+     * @date 2016年10月19日下午1:47:38
+     *
+     * @param userId
+     * @param appId
+     * @return
+     */
+    @MapKey("fileId")
+    Map<Integer, Map<String, String>> getMd5FileIdMap(@Param("userIds") List<Integer> userIds,
+            @Param("appId") Integer appId);
 }

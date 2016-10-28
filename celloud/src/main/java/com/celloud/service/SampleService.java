@@ -138,7 +138,7 @@ public interface SampleService {
      * @author leamo
      * @date 2016年9月5日 下午4:37:38
      */
-    public Integer updateExperState(Integer userId, Integer experState,
+    public String updateExperState(Integer userId, Integer experState,
             Integer sampleId);
     
     /**
@@ -201,4 +201,31 @@ public interface SampleService {
      */
     public List<Map<String, Object>> sampleListInStorage(Integer userId,
             Integer ssId);
+
+    /**
+     * 获取样品订单信息
+     * 
+     * @param userId
+     * @param orderId
+     * @return
+     * @author leamo
+     * @date 2016年10月19日 下午4:42:48
+     */
+    public Map<String, Object> getSampleOrderInfo(Integer userId,
+            Integer orderId);
+
+    public Sample getSampleByNameAndOrderNo(String orderNo, String sampleName);
+
+    /**
+     * 根据实验样本编号及实验状态获取样本信息
+     * 
+     * @param userId
+     * @param experSampleName
+     * @param experState
+     * @return
+     * @author leamo
+     * @date 2016年10月24日 下午4:54:25
+     */
+    public Sample getByExperNameExperState(Integer userId,
+            String experSampleName, Integer experState);
 }

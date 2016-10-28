@@ -18,7 +18,7 @@ $(document).ready(function(){
 	});
 	//变换随机验证码
 	$('#kaptchaImage').click(function() {
-		$(this).hide().attr('src','kaptcha.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
+		$(this).hide().attr('src','kaptcha?' + Math.floor(Math.random() * 100)).fadeIn();
 	});
 	$(".error").hide();
 	error = $("#info").val();

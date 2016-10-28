@@ -1,6 +1,7 @@
 package com.celloud.service;
 
+import com.celloud.model.BoxFile;
+
 public interface BoxApiService {
-	public void finishfile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
-			String newName, String folderByDay);
+	public void downloadFromOSS(BoxFile file);
 }

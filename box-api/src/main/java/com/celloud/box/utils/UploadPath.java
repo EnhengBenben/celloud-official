@@ -13,18 +13,37 @@ public class UploadPath {
 	 * 
 	 * @return
 	 */
-	private static String getRootPath() {
+	public static String getRootPath() {
 		return PATH != null ? PATH : '/' == S ? "/share/data/upload" : System.getProperty("user.home");
 	}
 
 	/**
-	 * 获取文件在盒子上存储的路径
+	 * 获取未上传到OSS的文件在盒子上存储的路径
 	 * 
 	 * @param userId
 	 * @return
 	 */
-	public static String getPath(Integer userId) {
-		return getRootPath() + S + userId + S + new SimpleDateFormat("yyyyMMdd").format(new Date()) + S;
+	public static String getUploadingPath(Integer userId) {
+		return getRootPath() + S + "uploading" + S + DateUtils.formartToday("yyyyMMdd") + S + userId + S;
+	}
+
+	/**
+	 * 获取未上传到OSS的文件在盒子上存储的根路径
+	 * 
+	 * @return
+	 */
+	public static String getUploadingPath() {
+		return getRootPath() + S + "uploading" + S;
+	}
+
+	/**
+	 * 获取已上传到OSS的文件在盒子上存储的路径
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static String getUploadedPath(Integer userId) {
+		return getRootPath() + S + userId + S + DateUtils.formartToday("yyyyMMdd") + S;
 	}
 
 	/**

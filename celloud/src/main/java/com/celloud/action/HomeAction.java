@@ -179,6 +179,10 @@ public class HomeAction {
 
     @RequestMapping("index")
     public String index(HttpServletRequest request) {
+        // XXX 百菌探报证结束后删除
+        if (ConstantsData.getLoginUserId() == 126) {
+            return "bsi/baozheng/index";
+        }
         // 获取防盗链信息
         String referer = request.getHeader("referer");
         // 从登陆页面过来的
@@ -248,5 +252,10 @@ public class HomeAction {
     @RequestMapping("about_us.html")
     public String aboutUs() {
         return "about_us";
+    }
+
+    @RequestMapping("sample_order.html")
+    public String sampleOrder() {
+        return "experiment_scan/sampling_order";
     }
 }

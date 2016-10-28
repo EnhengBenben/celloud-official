@@ -37,7 +37,7 @@
 					   <form name="batchForm">
 							<div class="form-group">
 								<label for="batch-info">数据标签</label> <input type="text"
-									class="form-control" id="batch-info-input" ng-model="batch" name="batch" placeholder="标签" required>
+									class="form-control" id="batch-info-input" ng-model="rockyBatch" name="batch" placeholder="标签" required>
 								<input type="hidden" id="tag-info-input">
 							</div>
 							<button id="upload-next" class="btn -confirm" ng-click="stepTwo()" ng-disabled="batchForm.$invalid">下一步</button>
@@ -53,7 +53,7 @@
 							<i class="celicon -uploadgray"></i> 拖拽文件到此或者点击选择文件上传
 						</div>
 					</div>
-					<table class="table table-main hide" id="upload-list-table">
+					<table class="table table-main hide" id="rocky-upload-list-table">
 						<thead>
 							<tr>
 								<th>文件名</th>
@@ -63,7 +63,7 @@
 								<th>操作</th>
 							</tr>
 						</thead>
-						<tbody id="upload-list-tbody">
+						<tbody id="rocky-upload-list-tbody">
 						</tbody>
 					</table>
 				</div>
@@ -74,8 +74,8 @@
 					<div class="box-body plupload-content">
 						<div class="upload-text">
 							<i class="celicon -uploadgray"></i>文件上传成功，继续上传，请点击 <a
-								ng-click="stepTwo();">继续添加</a> 或 <a
-								ng-click="stepOne();">新上传</a>
+								ng-click="continueUpload();">继续添加</a> 或 <a
+								ng-click="newUpload();">新上传</a>
 						</div>
 					</div>
 				</div>

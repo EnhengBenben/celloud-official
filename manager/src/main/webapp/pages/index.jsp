@@ -91,6 +91,11 @@
                                     <span class="title">数据导出</span>
                                 </a>
                             </li>
+                            <li id="data-othersite-menu">
+                                <a href="javascript:dataFile.toOtherSiteCount();">
+                                    <span class="title">其他位点统计</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li>

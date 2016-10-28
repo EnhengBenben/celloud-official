@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.celloud.box.constants.Response;
+import com.celloud.box.model.DataFile;
+import com.celloud.box.service.ApiService;
 import com.celloud.box.service.BoxService;
+import com.celloud.box.service.FileUploadQueue;
 import com.celloud.box.utils.UploadPath;
 
 @RestController
@@ -30,9 +33,13 @@ import com.celloud.box.utils.UploadPath;
 		"http://celloud.cc", "http://www.genecode.cn",
 		"http://genecode.cn" }, methods = { RequestMethod.POST, RequestMethod.GET }, allowedHeaders = { "*" })
 public class BoxController {
-	private Logger logger = LoggerFactory.getLogger(BoxController.class);
+	private static Logger logger = LoggerFactory.getLogger(BoxController.class);
 	@Resource
 	private BoxService boxService;
+	@Resource
+	private FileUploadQueue queue;
+	@Resource
+	private ApiService apiService;
 
 	@RequestMapping("alive")
 	public Response alive() {
@@ -49,7 +56,7 @@ public class BoxController {
 		tagId = tagId == null ? 118 : tagId;
 		logger.debug("name={}\tsize={}\tlastModifiedDate={}", name, size,
 				new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(lastModifiedDate));
-		String folder = UploadPath.getPath(userId);
+		String folder = UploadPath.getUploadingPath(userId);
 		String uniqueName = UploadPath.getUniqueName(userId, name, lastModifiedDate, size);
 		File chunkFile = new File(folder + uniqueName + "_chunks" + File.separatorChar + chunk);
 		chunkFile.getParentFile().mkdirs();
@@ -66,7 +73,12 @@ public class BoxController {
 			if (f == null) {
 				return new Response("文件上传失败，服务器异常！");
 			}
-			boxService.finish(userId, name, tagId, batch, needSplit, f);
+			DataFile dataFile = boxService.save(userId, name, tagId, batch, needSplit, f);
+			logger.info(dataFile.getUserId() + "");
+			dataFile = boxService.newfile(dataFile);
+			if (dataFile != null) {
+				queue.add(f);
+			}
 		}
 		return Response.SUCCESS;
 	}
@@ -101,7 +113,7 @@ public class BoxController {
 	}
 
 	private long getLoaded(Integer userId, String uniqueName) {
-		String folder = UploadPath.getPath(userId);
+		String folder = UploadPath.getUploadingPath(userId);
 		String path = folder + File.separatorChar + uniqueName + "_chunks";
 		File file = new File(path);
 		long loaded = 0L;

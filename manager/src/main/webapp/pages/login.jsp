@@ -76,7 +76,7 @@
 	<!--#E bgContainer-->
 	<script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.0"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=3.3.6"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/md5.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/security.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/browser.js"></script>

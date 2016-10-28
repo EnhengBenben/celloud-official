@@ -1,7 +1,7 @@
 (function(){
   celloudApp.controller("samplingController", function($scope, samplingService){
     $scope.productTags = samplingService.getProductTags();
-    $scope.typeList = ["血","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
+    $scope.typeList = ["血液","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
     var refreshList = function(){
       $scope.sampleList = samplingService.sampleList();
     }
@@ -19,6 +19,7 @@
     $scope.commitSample = function(){
       samplingService.commitSample($scope.sampleList).success(function(data){
         if(data > 0){
+          window.location.href = window.CONTEXT_PATH+"/sample_order.html#/sampling/order/"+data;
           refreshList();
         }else {
           $.alert("样本已提交");
@@ -35,6 +36,19 @@
         }
       })
     }
+  });
+  
+  celloudApp.controller("sampleOrderController", function($scope, $routeParams, sampleOrderService){
+    sampleOrderService.sampleOrderInfo($routeParams.orderId).success(function(data){
+      if(data != null){
+        $scope.sampleOrderInfo = data;
+      }else {
+        $.alert("样本已提交");
+      }
+    });
+    $scope.print = function(){
+      window.print();
+    };
   });
   
   celloudApp.controller("scanStorageController", function($scope, scanStorageService){
@@ -62,17 +76,21 @@
     }
     
     $scope.scanStorage = function(){
+      if($scope.orderNo == "" || $scope.orderNo == undefined){
+        $.alert("请输入订单编号！");
+        return false;
+      }
     	if($scope.sampleName == "" || $scope.sampleName == undefined){
     		$.alert("请输入样本信息！");
     		return false;
     	}
-      scanStorageService.scanStorage($scope.sampleName).success(function(data){
-        if(data.result == "0"){
-          $.alert("系统中无此样本信息，请确认是已采样样本！")
-        }else if(data.result.length > 2){
+      scanStorageService.scanStorage($scope.orderNo,$scope.sampleName).success(function(data){
+        if(data.error != undefined){
+          $.alert(data.error);
+        }else{
+          //打印二维码
+          printQRCode(data.experName,data.date);
           $scope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
-        }else {
-          $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！")
         }
         $scope.sampleName = "";
       });
@@ -117,18 +135,16 @@
       }
       $scope.tokenDNA = function(){
       	if($scope.sampleName == "" || $scope.sampleName == undefined){
-      		$.alert("请输入样本信息！");
+      		$.alert("请输入实验样本编号！");
       		return false;
       	}
         tokenDNAService.tokenDNA($scope.sampleName).success(function(data){
-          if(data.result == "0"){
-            $.alert("此样本未入库");
-          }else if(data.result.length > 2){
+          if(data.error != undefined){
+            $.alert(data.error);
+          }else{
             //打印二维码
-            printQRCode($scope.sampleName,data.result);
+            printQRCode($scope.sampleName,data.date);
             $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
-          }else {
-            $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
           }
           $scope.sampleName = "";
         });
@@ -164,7 +180,7 @@
       if(sampleList.length>=12){
         $.tips("每个文库最多12个样本！")
       }else if($scope.sampleName == '' || $scope.sampleName == undefined){
-    	  $.alert("请输入样本信息");
+    	  $.alert("请输入实验样本编号");
       }else{
         buidLibraryService.addSample($scope.sampleName,sampleList).success(function(data){
           if(data > 0){
@@ -172,7 +188,7 @@
           }else if(data == 0){
             $.alert("此样本未提取DNA");
           }else {
-            $.alert("此样品信息已经入库，请核查或者扫描下一管样品信息！");
+            $.alert("此样品已在等待建库，请核查或者扫描下一管样品信息！");
           }
         });
       }
@@ -191,10 +207,9 @@
     
     $scope.addLibrary = function(){
       buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
-        alert(data);
         if(data != null && data != undefined){
           //打印二维码
-          printQRCode(data.storageName,data.createDate);
+          printQRCode(data.storageName,data.sindex);
           $scope.infos = buidLibraryService.infos();
           $.alert("建库成功！");
         }else {

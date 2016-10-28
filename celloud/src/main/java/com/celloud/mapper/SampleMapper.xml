@@ -4,7 +4,9 @@
   <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Sample">
     <id column="sample_id" jdbcType="INTEGER" property="sampleId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="sample_name" jdbcType="VARCHAR" property="sampleName" />
+    <result column="exper_sample_name" jdbcType="VARCHAR" property="experSampleName" />
     <result column="is_add" jdbcType="BIT" property="isAdd" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="sindex" property="sindex" jdbcType="VARCHAR" />
@@ -20,10 +22,14 @@
       extends="BaseResultMap">
       <result column="tag_id" property="tagId" jdbcType="INTEGER" />
       <result column="tag_name" property="tagName" jdbcType="VARCHAR" />
-      <result column="sampleLogId" property="sampleLogId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultWithOrder" type="com.celloud.model.mysql.Sample"
+      extends="BaseResultMap">
+      <result column="sampleLogId" property="sampleLogId" jdbcType="INTEGER" />
+      <result column="orderNo" property="orderNo" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    sample_id, user_id, sample_name, is_add, type, sindex, create_date, update_date, state, remark
+    sample_id, user_id, order_id, sample_name,exper_sample_name, is_add, type, sindex, create_date, update_date, state, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -116,8 +122,14 @@
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
       <if test="sampleName != null" >
         sample_name = #{sampleName,jdbcType=VARCHAR},
+      </if>
+      <if test="experSampleName != null" >
+        exper_sample_name = #{experSampleName,jdbcType=VARCHAR},
       </if>
       <if test="isAdd != null" >
         is_add = #{isAdd,jdbcType=BIT},
@@ -143,19 +155,9 @@
     </set>
     where sample_id = #{sampleId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Sample">
-    update tb_sample
-    set user_id = #{userId,jdbcType=INTEGER},
-      sample_name = #{sampleName,jdbcType=VARCHAR},
-      is_add = #{isAdd,jdbcType=BIT},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_date = #{updateDate,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=BIT}
-    where sample_id = #{sampleId,jdbcType=INTEGER}
-  </update>
   <update id="updateAddTypeById">
     update tb_sample
-    set is_add = #{isAdd,jdbcType=BIT}, update_date=#{updateDate, jdbcType=TIMESTAMP}
+    set is_add = #{isAdd,jdbcType=BIT},order_id = #{orderId,jdbcType=INTEGER}, update_date=#{updateDate, jdbcType=TIMESTAMP}
     where sample_id in(
     <foreach item="sampleId" collection="sampleIds" separator=",">
 	     #{sampleId,jdbcType=INTEGER}
@@ -183,10 +185,12 @@
          #{sampleId,jdbcType=INTEGER}
     </foreach>)
   </delete>
-  <select id="getSamples" resultMap="BaseResultMap">
-    select s.*,sl.id sampleLogId from 
-	tb_sample s,tb_sample_log sl
-	where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and sl.state=#{state}
+  <select id="getSamples" resultMap="ResultWithOrder">
+    select s.*,sl.id sampleLogId,so.order_no orderNo from 
+    tb_sample s
+    left join tb_sample_log sl on s.sample_id=sl.sample_id
+    left join tb_sample_order so on s.order_id=so.id
+	where sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and sl.state=#{state}
   </select>
   <select id="getByNameExperState" resultMap="ResultMapWithlogDate">
     select s.*,sl.create_date log_date from 
@@ -195,8 +199,30 @@
     and s.is_add = #{isAdd,jdbcType=BIT}
     order by create_date desc
   </select>
+  <select id="getByExperNameExperState" resultMap="ResultMapWithlogDate">
+    select s.*,sl.create_date log_date from 
+    tb_sample s,tb_sample_log sl
+    where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and s.exper_sample_name=#{experSampleName,jdbcType=VARCHAR}
+    and s.is_add = #{isAdd,jdbcType=BIT}
+    order by create_date desc
+  </select>
   <insert id="addSampleTagRelat" parameterType="java.lang.Integer">
     insert into tb_sample_tag_relat (sample_id,tag_id)
     values (#{sampleId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER})
   </insert>
+  <select id="getSamplesByOrder" resultMap="ResultMapWithTag">
+    select s.sample_id, s.user_id, s.order_id, s.sample_name, s.is_add, s.type, s.sindex, s.create_date, s.update_date,
+     s.state, s.remark,t.tag_id,t.tag_name
+    from tb_sample s
+    left join tb_sample_log sl on s.sample_id=sl.sample_id 
+    left join tb_sample_tag_relat st on s.sample_id=st.sample_id
+    left join tb_tag t on st.tag_id=t.tag_id
+    where s.user_id = #{userId} and s.order_id=#{orderId} and s.state =#{state,jdbcType=BIT}
+    order by s.create_date desc
+  </select>
+  <select id="getSampleByNameAndOrderNo" resultMap="BaseResultMap">
+    select s.*
+    from tb_sample s,tb_sample_order so
+    where s.order_id = so.id and s.sample_name=#{sampleName} and so.order_no=#{orderNo} and s.state =#{state,jdbcType=BIT}
+  </select>
 </mapper>

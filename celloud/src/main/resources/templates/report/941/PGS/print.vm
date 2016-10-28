@@ -1,0 +1,9 @@
+#parse("templates/report/layout.vm")
+#parse("templates/report/941/PGS/reference.vm")
+<div id="printMain">
+    <form id="print-form">
+    #parse("templates/report/941/PGS/title.vm")
+    #parse("templates/report/941/PGS/content.vm")
+    </form>
+</div>  
+#parse("templates/report/941/PGS/js.vm")
