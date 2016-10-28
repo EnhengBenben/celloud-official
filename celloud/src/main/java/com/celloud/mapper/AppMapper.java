@@ -181,4 +181,15 @@ public interface AppMapper {
      * @date 2016年4月22日 上午10:32:45
      */
     public App findAppsByTag(@Param("tagId") Integer tagId);
+
+    /**
+     * 
+     * @description 根据用户id查找appIds
+     * @author miaoqi
+     * @date 2016年10月28日下午2:40:17
+     *
+     * @param loginUserId
+     * @return
+     */
+    public List<Integer> findAppIdsByUserId(@Param("userId") Integer loginUserId);
 }

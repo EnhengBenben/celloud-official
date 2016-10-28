@@ -7,5 +7,8 @@
 		this.updateUserState = function(userId, state){
 			return $http({method:"POST",url:'company/updateUserState',params:{"userId":userId,"state":state}});
 		};
+		this.sendRegisterEmail = function(email, kaptcha){
+			return $http({method:"POST", url:"user/sendRegistEmail", params:{"email":email, "kaptcha":kaptcha}});
+		};
 	});
 }());

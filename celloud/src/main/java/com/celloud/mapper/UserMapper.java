@@ -115,4 +115,15 @@ public interface UserMapper {
     public List<User> findUsersByCompanyId(@Param("loginUserId") Integer loginUserId,
             @Param("companyId") Integer companyId,
             @Param("testAccountIds") String testAccountIds, Page page);
+
+    /**
+     * 
+     * @description 根据用户id查找roleIds
+     * @author miaoqi
+     * @date 2016年10月28日下午2:44:26
+     *
+     * @param userId
+     * @return
+     */
+    public List<Integer> findRoleIdsByUserId(@Param("userId") Integer loginUserId);
 }

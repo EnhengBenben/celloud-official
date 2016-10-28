@@ -489,4 +489,9 @@
         AND user_id != #{loginUserId}
         AND role = 0
     </select>
+    <select id="findRoleIdsByUserId" resultType="java.lang.Integer">
+        SELECT role_id
+        FROM tb_sec_user_role_relat
+        WHERE user_id = #{userId}
+    </select>
 </mapper>

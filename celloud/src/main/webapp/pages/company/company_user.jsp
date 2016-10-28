@@ -18,7 +18,7 @@
             <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
           </div>
           <div class="info-btn-group pull-right">
-            <a class="action" data-toggle="modal" data-target="#company-addUser-modal">新增</a>
+            <a class="action" data-toggle="modal" data-target="#company-addUser-modal" ng-click="showAddUserForm()">新增</a>
           </div>
         </div>
       </div>
@@ -61,17 +61,20 @@
 	      <h4 class="modal-title">增加账号--发送邮件</h4>
 	    </div>
 	    <div class="modal-body form-modal">
-	      <form class="form-horizontal info-form" name="editDataForm" id="editDataForm">
+	      <form class="form-horizontal info-form" name="userAddForm" id="userAddForm">
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">邮件地址：</div>
+	            <div class="control-label form-label col-xs-3">邮箱地址：</div>
 	            <div class="col-xs-9">
-	                <input type="text" name="email">
+	                <input type="text" ng-change="clearState()" name="email" placeholder="邮箱地址" ng-model="email" required="true" ng-pattern="/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/">
+	                <span class="input-alert" ng-show="userAddForm.email.$dirty && userAddForm.email.$invalid">邮箱格式不正确!</span>
+	                <span class="input-alert" ng-show="emailError != null">{{emailError}}</span>
 	            </div>
 	          </div>
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">验证码：</div>
 	            <div class="col-xs-6">
-                    <input type="text" placeholder="验证码" id="captcha" name="kaptchaCode" value="${requestScope.kapcode }" />
+                    <input type="text" ng-change="clearState()" name="kaptcha" placeholder="验证码" ng-model="kaptcha" required="true" />
+	                <span class="input-alert" ng-show="kaptchaError != null">{{kaptchaError}}</span>
 	            </div>
 	            <div class="col-xs-2">
 	               <div style="position: absolute;top: 0px;right: 0px;">
@@ -80,16 +83,12 @@
                     </div>
 	            </div>
 	          </div>
-            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
-              <button type="button" class="close" ng-click="updateState=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-              <span>{{addMessage}}</span>
-            </div>
 	      </form>
 	    </div>
 	    <div class="modal-footer">
 	      <div class="text-center">
               <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
-              <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">提交</button>
+              <button type="submit" class="btn" ng-disabled="userAddForm.$invalid" ng-click="sendEmail()">提交</button>
           </div>
 	    </div>
 	  </div>
