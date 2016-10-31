@@ -15,11 +15,12 @@
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="province" property="province" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="address_detail" property="district" jdbcType="VARCHAR" />
+    <result column="district" property="addressDetail" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     company_id, company_name, english_name, company_icon, address, address_en, zip_code, 
-    tel, state, create_date, update_date, province, city, address_detail
+    tel, state, create_date, update_date, province, city, address_detail, district
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -36,12 +37,12 @@
       company_icon, address, address_en, 
       zip_code, tel, state, 
       create_date, update_date, province, 
-      city, address_detail)
+      city, address_detail, district)
     values (#{companyId,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, #{englishName,jdbcType=VARCHAR}, 
       #{companyIcon,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{addressEn,jdbcType=VARCHAR}, 
       #{zipCode,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
       #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR})
+      #{city,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.Company" >
     insert into tb_company
@@ -88,6 +89,9 @@
       <if test="addressDetail != null" >
         address_detail,
       </if>
+      <if test="district != null" >
+        district,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="companyId != null" >
@@ -131,6 +135,9 @@
       </if>
       <if test="addressDetail != null" >
         #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -176,6 +183,9 @@
       <if test="addressDetail != null" >
         address_detail = #{addressDetail,jdbcType=VARCHAR},
       </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
     </set>
     where company_id = #{companyId,jdbcType=INTEGER}
   </update>
@@ -193,7 +203,8 @@
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       province = #{province,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
-      address_detail = #{addressDetail,jdbcType=VARCHAR}
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR}
     where company_id = #{companyId,jdbcType=INTEGER}
   </update>
 </mapper>

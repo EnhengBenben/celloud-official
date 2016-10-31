@@ -65,4 +65,21 @@
 		});
 		$scope.pageQuery($scope.pageInfo.currnetPage, $scope.pageInfo.pageSize);
 	});
+	celloudApp.controller("companyBaseController", function($scope, companyService){
+		companyService.getCompanyInfo().
+		success(function(data, status){
+			if(status == 200){
+				$scope.company = data;
+				$scope.company_bak = angular.copy(data);
+				$scope.province = data.province;
+				_init_area();
+			}
+		}).
+		error(function(data, status){
+			
+		})
+		$scope.reset = function(){
+			$scope.company = angular.copy($scope.company_bak);
+		}
+	});
 })();

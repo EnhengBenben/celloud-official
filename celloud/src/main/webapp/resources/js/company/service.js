@@ -10,5 +10,8 @@
 		this.sendRegisterEmail = function(email, kaptcha){
 			return $http({method:"POST", url:"user/sendRegistEmail", params:{"email":email, "kaptcha":kaptcha}});
 		};
+		this.getCompanyInfo = function(){
+			return $http({method:"GET", url:"company"});
+		}
 	});
 }());
