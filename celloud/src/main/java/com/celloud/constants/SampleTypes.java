@@ -31,4 +31,20 @@ public class SampleTypes {
             put("肺泡灌洗液", "BA");
         }
     };
+
+    /** 暂存状态 */
+    public static final int NOTADD = 0;
+    /** 已提交 */
+    public static final int ISADD = 1;
+
+    /** 采样 */
+    public static final int SAMPLING = 0;
+    /** 入库 */
+    public static final int SCAN_STORAGE = 1;
+    /** 提DNA */
+    public static final int TOKEN_DNA = 2;
+    /** 建库 */
+    public static final int BUID_LIBRARY = 3;
+    /** 建库完成 */
+    public static final int IN_LIBRARY = 4;
 }
