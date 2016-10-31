@@ -35,6 +35,57 @@
     from tb_file
     where file_id = #{fileId,jdbcType=INTEGER}
   </select>
+  <select id="selectBySelective" resultMap="ResultMapWithBLOBs">
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM tb_file
+    <where>
+        <if test="userId != null">
+            AND user_id = #{userId}
+        </if>
+        <if test="dataKey != null">
+            AND data_key = #{dataKey}
+        </if>
+        <if test="fileName != null">
+            AND file_name = #{fileName}
+        </if>
+        <if test="strain != null">
+            AND strain = #{strain}
+        </if>
+        <if test="size != null">
+            AND size = #{size}
+        </if>
+        <if test="dataTags != null">
+            AND data_tags = #{dataTags}
+        </if>
+        <if test="createDate != null">
+            AND create_date = #{createDate}
+        </if>
+        <if test="updateDate != null">
+            AND update_date = #{updateDate}
+        </if>
+        <if test="path != null">
+            AND path = #{path}
+        </if>
+        <if test="state != null">
+            AND state = #{state}
+        </if>
+        <if test="fileFormat != null">
+            AND file_format = #{fileFormat}
+        </if>
+        <if test="sample != null">
+            AND sample = #{sample}
+        </if>
+        <if test="anotherName != null">
+            AND another_name = #{anotherName}
+        </if>
+        <if test="md5 != null">
+            AND md5 = #{md5}
+        </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_file
     where file_id = #{fileId,jdbcType=INTEGER}

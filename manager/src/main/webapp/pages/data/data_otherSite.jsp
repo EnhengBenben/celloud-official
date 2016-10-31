@@ -41,6 +41,9 @@
 						</table>
 					</div>
 				</c:if>
+				<c:if test="${othserSiteCount == null || fn:length(othserSiteCount) <= 0 }">
+                        暂无数据
+                </c:if>
 				<!-- PAGE CONTENT ENDS -->
 			</div>
 			<!-- /.col -->

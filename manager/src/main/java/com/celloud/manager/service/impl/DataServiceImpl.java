@@ -1,7 +1,9 @@
 package com.celloud.manager.service.impl;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,7 @@ import com.celloud.manager.mapper.CompanyMapper;
 import com.celloud.manager.mapper.DataFileMapper;
 import com.celloud.manager.mapper.UserMapper;
 import com.celloud.manager.model.Company;
+import com.celloud.manager.model.DataFile;
 import com.celloud.manager.model.User;
 import com.celloud.manager.model.mongo.HBV;
 import com.celloud.manager.service.DataService;
@@ -239,7 +242,8 @@ public class DataServiceImpl implements DataService{
         filters.put("other." + site + "_new_png exists", true);
 
         // 该大客户下所有的hbv报告
-        List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters, new String[] { "companyId", "dataKey" });
+        List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters,
+                new String[] { "companyId", "dataKey", "userId" });
 
         // 遍历hbv报告, companyId为key封装结果集
         for (HBV hbv : hbvs) {
@@ -252,6 +256,21 @@ public class DataServiceImpl implements DataService{
         for (Company company : companys) {
             // 如果包含这个医院, 则将医院名字放入值map中
             if (result.containsKey(company.getCompanyId())) {
+                // 根据datakey查询DataFile对象
+                DataFile queryDataFile = new DataFile();
+                queryDataFile.setDataKey(result.get(company.getCompanyId()).get("dataKey"));
+                DataFile dataFile = dataFileMapper.selectBySelective(queryDataFile);
+                // 获取file_name, create_date
+                String fileName = dataFile.getFileName();
+                Date createDate = dataFile.getCreateDate();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Integer userId = dataFile.getUserId();
+                result.get(company.getCompanyId()).put("fileName", fileName);
+                result.get(company.getCompanyId()).put("createDate", sdf.format(createDate));
+                // 根据userId查询账号
+                User user = userMapper.selectByPrimaryKey(userId);
+                result.get(company.getCompanyId()).put("userName", user.getUsername());
+                // 公司名称
                 result.get(company.getCompanyId()).put("companyName", company.getCompanyName());
             }
         }
