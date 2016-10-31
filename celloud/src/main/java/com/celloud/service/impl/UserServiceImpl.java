@@ -224,5 +224,9 @@ public class UserServiceImpl implements UserService {
         return count > 0;
     }
 
+    @Override
+    public Boolean updateBySelective(User updateUser) {
+        return userMapper.updateByPrimaryKeySelective(updateUser) == 1;
+    }
 
 }

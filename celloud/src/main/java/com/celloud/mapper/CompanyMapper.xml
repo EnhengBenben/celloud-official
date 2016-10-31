@@ -15,8 +15,8 @@
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="province" property="province" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="address_detail" property="district" jdbcType="VARCHAR" />
-    <result column="district" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     company_id, company_name, english_name, company_icon, address, address_en, zip_code, 

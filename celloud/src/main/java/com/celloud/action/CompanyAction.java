@@ -16,6 +16,7 @@ import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.CompanyService;
+import com.celloud.service.UserService;
 
 @Controller
 @RequestMapping("company")
@@ -25,6 +26,8 @@ public class CompanyAction {
 
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 
@@ -63,7 +66,7 @@ public class CompanyAction {
         User updateUser = new User();
         updateUser.setUserId(userId);
         updateUser.setState(state == 0 ? 1 : 0);
-        Boolean flag = companyService.updateBySelective(updateUser);
+        Boolean flag = userService.updateBySelective(updateUser);
         if(flag){
             LOGGER.info("医院管理员修改用户状态成功");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -83,13 +86,50 @@ public class CompanyAction {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Company> getCompanyInfo() {
+        LOGGER.info("医院管理员 {} 查询医院信息",ConstantsData.getLoginUserId());
         // 获取医院id
         Integer companyId = ConstantsData.getLoginCompanyId();
         Company company = this.companyService.getCompanyById(companyId);
         if (null == company) {
+            LOGGER.info("医院管理员 {} 查询医院信息失败",ConstantsData.getLoginUserId());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+        LOGGER.info("医院管理员 {} 查询医院信息成功",ConstantsData.getLoginUserId());
         return ResponseEntity.ok(company);
+    }
+    
+    /**
+     * 
+     * @description 修改医院基本信息
+     * @author miaoqi
+     * @date 2016年10月31日下午3:35:05
+     *
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<Void> updateCompanyInfo(String companyName, String englishName, String province, String city,
+            String district, String address, String tel, String zipCode) {
+        LOGGER.info(
+                "医院管理员 {} 修改公司信息, companyName = {}, englishName = {}, provice = {}, city = {}, district = {}, address = {}, tel = {}, zipCode = {}",
+                ConstantsData.getLoginUserId(), companyName, englishName, province, city, district, address, tel,
+                zipCode);
+        Company updateCompany = new Company();
+        updateCompany.setCompanyId(ConstantsData.getLoginCompanyId());
+        updateCompany.setCompanyName(companyName);
+        updateCompany.setEnglishName(englishName);
+        updateCompany.setProvince(province);
+        updateCompany.setCity(city);
+        updateCompany.setDistrict(district);
+        updateCompany.setAddress(address);
+        updateCompany.setTel(tel);
+        updateCompany.setZipCode(zipCode);
+        Boolean flag = companyService.updateByPrimaryKeySelective(updateCompany);
+        if (flag) {
+            LOGGER.info("医院管理员 {} 修改公司信息成功", ConstantsData.getLoginUserId());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        LOGGER.info("医院管理员 {} 修改公司信息失败", ConstantsData.getLoginUserId());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
 }

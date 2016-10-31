@@ -2,6 +2,7 @@ package com.celloud.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -55,13 +56,15 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Boolean updateBySelective(User updateUser) {
-        return userMapper.updateByPrimaryKeySelective(updateUser) == 1;
+    public Company getCompanyById(Integer companyId) {
+        return companyMapper.selectByPrimaryKey(companyId);
     }
 
     @Override
-    public Company getCompanyById(Integer companyId) {
-        return companyMapper.selectByPrimaryKey(companyId);
+    public Boolean updateByPrimaryKeySelective(Company updateCompany) {
+        updateCompany.setCreateDate(null);
+        updateCompany.setUpdateDate(new Date());
+        return companyMapper.updateByPrimaryKeySelective(updateCompany) == 1;
     }
 
 }

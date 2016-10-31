@@ -12,11 +12,13 @@ Dsy.prototype.Exists = function(id){
 	return true;
 }
 
-function change(v){
+function change(v, province, city, district){
 	var str="0";
 	for(i=0;i<v;i++){
 		str+=("_"+(document.getElementById(s[i]).selectedIndex-1));
 	};
+	// 回显的标志符
+	var flag = false;
 	var ss=document.getElementById(s[v]);
 	with(ss){
 		length = 0;
@@ -26,11 +28,28 @@ function change(v){
 				ar = dsy.Items[str];
 				for(i=0;i<ar.length;i++){
 					options[length]=new Option(ar[i],ar[i]);
+					// 传入了自己的province, 则需要回显
+					if(v == 0 && typeof(province) != 'undefined' && province == ar[i]){
+						options[i + 1].selected = true;
+						flag = true;
+					}
+					// 传入了自己的city, 则需要回显
+					if(v == 1 && typeof(city) != 'undefined' && city == ar[i]){
+						options[i + 1].selected = true;
+						flag = true;
+					}
+					// 传入了自己的district, 则需要回显
+					if(v == 2 && typeof(district) != 'undefined' && district == ar[i]){
+						options[i + 1].selected = true;
+						flag = true;
+					}
 				}//end for
-				if(v){ options[0].selected = true; }
+				if(!flag){
+					if(v){ options[0].selected = true; }
+				}
 			}
 		}//end if v
-		if(++v<s.length){change(v);}
+		if(++v<s.length){change(v, province, city, district);}
 	}//End with
 }
 
@@ -414,9 +433,9 @@ dsy.add("0",["北京市","天津市","上海市","重庆市","河北省","山西
 
 var s=["s_province","s_city","s_county"];//三个select的name
 var opt0 = ["省份","地级市","市、县级市"];//初始值
-function _init_area(){  //初始化函数
+function _init_area(province, city, district){  //初始化函数
 	for(i=0;i<s.length-1;i++){
 	  document.getElementById(s[i]).onchange=new Function("change("+(i+1)+")");
 	}
-	change(0);
+	change(0, province, city, district);
 }

@@ -138,7 +138,7 @@ public class Company {
     }
 
     public String getAddressDetail() {
-        return addressDetail;
+        return province + city + district + addressDetail;
     }
 
     public void setAddressDetail(String addressDetail) {

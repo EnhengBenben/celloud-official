@@ -71,8 +71,11 @@
 			if(status == 200){
 				$scope.company = data;
 				$scope.company_bak = angular.copy(data);
-				$scope.province = data.province;
-				_init_area();
+				// 用于reset
+				$scope.province_bak = data.province;
+				$scope.city_bak = data.city;
+				$scope.district_bak = data.district;
+				_init_area($scope.province_bak, $scope.city_bak, $scope.district_bak);
 			}
 		}).
 		error(function(data, status){
@@ -80,6 +83,21 @@
 		})
 		$scope.reset = function(){
 			$scope.company = angular.copy($scope.company_bak);
+			_init_area($scope.province_bak, $scope.city_bak, $scope.district_bak);
+		}
+		$scope.updateCompanyInfo = function(){
+			$scope.company.provice = $("#s_province").val();
+			$scope.company.city = $("#s_city").val();
+			$scope.company.district = $("#s_county").val();
+			companyService.updateCompanyInfo($scope.company).
+			success(function(data, status){
+				if(204 == status){
+					$.alert("修改成功");
+				}
+			}).
+			error(function(data, status){
+				
+			})
 		}
 	});
 })();

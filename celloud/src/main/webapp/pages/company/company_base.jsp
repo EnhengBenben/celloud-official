@@ -12,7 +12,7 @@
         <p>完善基本信息，修改手机。</p>
       </div> -->
       <div class="content-body">
-        <form class="info-form" name="baseForm" novalidate="novalidate" ng-submit="updateCompanyBase()">
+        <form class="info-form" id="baseForm" name="baseForm" novalidate="novalidate" ng-submit="updateCompanyInfo()">
           <div class="info-form-group">
             <label>医院名称:</label>
             <div>
@@ -33,10 +33,24 @@
           </div>
           <div class="info-form-group">
             <label>医院地址:</label>
-		    <select id="s_province" name="s_province" ng-model="province"></select>  
-		    <select id="s_city" name="s_city" ng-model="city"></select>  
-		    <select id="s_county" name="s_county" ng-model="county"></select>
-		</div>
+            <div>
+			    <select id="s_province" name="s_province" ng-model="province"></select>  
+			    <select id="s_city" name="s_city" ng-model="city"></select>  
+    		    <select id="s_county" name="s_county" ng-model="district"></select>
+            </div>
+            <span class="input-alert" ng-show="baseForm.province.$dirty && baseForm.province.$invalid">
+                医院地址不能为空
+            </span>
+		  </div>
+		  <div class="info-form-group">
+            <label>详细地址:</label>
+            <div>
+                <input name="address" type="text" id="input-address" ng-model="company.address" required="true" />
+                <span class="input-alert" ng-show="baseForm.address.$dirty && baseForm.address.$invalid">
+                    医院地址不能为空
+                </span>
+            </div>
+          </div>
           <div class="info-form-group">
             <label>联系电话:</label>
             <div>

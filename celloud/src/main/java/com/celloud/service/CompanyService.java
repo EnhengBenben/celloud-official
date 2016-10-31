@@ -47,17 +47,6 @@ public interface CompanyService {
 
     /**
      * 
-     * @description 根据主键修改不为空的字段
-     * @author miaoqi
-     * @date 2016年10月27日下午4:06:25
-     *
-     * @param updateUser
-     * @return
-     */
-    Boolean updateBySelective(User updateUser);
-
-    /**
-     * 
      * @description 根据医院id获取医院信息
      * @author miaoqi
      * @date 2016年10月30日下午11:47:49
@@ -66,5 +55,15 @@ public interface CompanyService {
      * @return
      */
     Company getCompanyById(Integer companyId);
+
+    /**
+     * 
+     * @description 根据不为空的字段进行更新
+     * @author miaoqi
+     * @date 2016年10月31日下午6:10:06
+     *
+     * @param updateCompany
+     */
+    Boolean updateByPrimaryKeySelective(Company updateCompany);
 
 }
