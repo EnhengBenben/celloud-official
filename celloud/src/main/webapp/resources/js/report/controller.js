@@ -540,11 +540,16 @@
 		  $scope.hbv = hbvInfo.hbv;
 		  $scope.project = hbvInfo.project;
 		  $scope.uploadPath = hbvInfo.uploadPath;
-		  // $scope.hbvOtherSiteMap = hbvInfo.hbvOtherSiteMap;
+		  $scope.hbvOtherSiteList = hbvInfo.hbvOtherSiteList;
 		  $scope.siteKeys = new Array();
-		  for(key in hbvInfo.hbvOtherSiteMap){
-			  $scope.siteKeys.push(key);
+		  for(i in $scope.hbvOtherSiteList){
+			  if(i < 20){
+				  for(j in $scope.hbvOtherSiteList[i]){
+					  $scope.siteKeys.push(j);
+				  }
+			  }
 		  }
+		  console.log($scope.siteKeys);
 		  dataInPro($scope.hbv, $scope.project.projectId, $scope.project.projectName);
 		  $scope.change1 = function(){
 			  $("#nomal").css("display","");
@@ -586,17 +591,23 @@
 		  }
 		  
 		  // 其他位点突变图表
-//		  var X = new Array();
-//		  var Y = new Array();
-//		  for(key in $scope.hbvOtherSiteMap){
-//			  Y.push(key);
-//			  X.push($scope.hbvOtherSiteMap[key].count);
-//		  }
-//		  X = "[" + X.join(",") + "]";
-//		  Y = "[" + Y.join(",") + "]";
-//		  var div2 = $("<div id='char2' class='col-lg-12' style='width: 1000px;height: " + 40 * $scope.siteKeys.length + "px;'></div>");
-//		  $("#charDiv0").append(div2);
-//		  $.reportChar.draw.echartsShowHorizontalBar("char2", "其他位点", eval(X), eval(Y), 700, 40 * $scope.siteKeys.length, "其他位点数量");
+		  var X = new Array();
+		  var Y = new Array();
+		  for(i in $scope.hbvOtherSiteList){
+			  if(i < 20){
+				  for(j in $scope.hbvOtherSiteList[i]){
+					  Y.push(j);
+					  X.push($scope.hbvOtherSiteList[i][j].count);
+				  }
+			  }
+		  }
+		  X = X.reverse();
+		  Y = Y.reverse();
+		  X = "[" + X.join(",") + "]";
+		  Y = "[" + Y.join(",") + "]";
+		  var div2 = $("<div id='char2' class='col-lg-12' style='width: 1000px;height: " + 40 * $scope.siteKeys.length + "px;'></div>");
+		  $("#charDiv0").append(div2);
+		  $.reportChar.draw.echartsShowHorizontalBar("char2", "其他位点", eval(X), eval(Y), 700, 40 * $scope.siteKeys.length, "其他位点数量");
 		  
 		  $.get("count/hbvCompare",{"appId":82,"path":DATAPATH},function(data){
 				var div0 = $("<div id='char0' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
