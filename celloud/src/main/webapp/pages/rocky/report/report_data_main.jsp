@@ -43,7 +43,7 @@
 						<c:forEach items="${rocky.records }" var="record" varStatus="status">
 							<tr>
 								<td>${status.count }</td>
-								<td>${record.gene }</td>
+								<td><i>${record.gene }</i></td>
 								<td>${record.chromosome}</td>
 								<td>${record.acids }</td>
 								<td>${record.nucleotides }</td>
@@ -61,7 +61,7 @@
 					<tbody>
 						<c:forEach items="${rocky.records }" var="record">
 							<tr>
-								<td style="width: 170px;">${record.gene }:&nbsp;${record.acids }</td>
+								<td style="width: 170px;"><i>${record.gene }</i>:&nbsp;${record.acids }<br>${significances[record.significance]}</td>
 								<td>${record.description }</td>
 							</tr>
 						</c:forEach>

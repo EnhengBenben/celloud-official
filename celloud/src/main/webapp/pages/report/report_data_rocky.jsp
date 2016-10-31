@@ -49,11 +49,11 @@
 						<tbody>
 							<tr ng-repeat="record in rocky.records">
 								<td>{{$index + 1}}</td>
-								<td>{{record.gene}}</td>
+								<td><i>{{record.gene}}</i></td>
 								<td>{{record.chromosome}}</td>
 								<td>{{record.acids}}</td>
 								<td>{{record.nucleotides}}</td>
-								<td>{{record.significance}}</td>
+								<td>{{significances[record.significance]}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -65,7 +65,7 @@
 					<table class="table table-main -report">
 						<tbody>
 							<tr ng-repeat="record in rocky.records">
-								<td style="width: 170px;">{{record.gene}}:&nbsp;{{record.acids}}</td>
+								<td style="width: 170px;"><i>{{record.gene}}</i>:&nbsp;{{record.acids}}<br>{{significances[record.significance]}}</td>
 								<td>{{record.description}}</td>
 							</tr>
 						</tbody>

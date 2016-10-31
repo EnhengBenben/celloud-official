@@ -245,4 +245,17 @@ public interface UserService {
 	 * @date 2016年7月11日下午1:35:15
 	 */
 	public int wechatUnBind(String openId, String pwd);
+
+    /**
+     * 
+     * @description 发送用户注册邮件
+     * @author miaoqi
+     * @date 2016年10月28日下午1:45:21
+     *
+     * @param email
+     *            注册邮箱
+     * @param loginUserId
+     *            登录用户id
+     */
+    public Boolean sendRegisterEmail(String email);
 }

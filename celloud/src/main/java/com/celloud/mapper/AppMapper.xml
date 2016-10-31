@@ -394,4 +394,9 @@
   <select id="findAppsByTag" resultMap="BaseResultMap">
     select a.app_id from tb_app a,tb_app_tag_relat at where a.app_id=at.app_id and at.tag_id=#{tagId}
   </select>
+  <select id="findAppIdsByUserId" resultType="java.lang.Integer">
+    SELECT app_id
+    FROM tb_user_app_right
+    WHERE user_id = #{userId}
+  </select>
 </mapper>

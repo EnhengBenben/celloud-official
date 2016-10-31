@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.constants.ConstantsData;
+import com.celloud.model.mysql.Company;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -69,6 +71,25 @@ public class CompanyAction {
             LOGGER.info("医院管理员修改用户状态失败");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    /**
+     * 
+     * @description 获取医院基本信息
+     * @author miaoqi
+     * @date 2016年10月30日下午11:50:28
+     *
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Company> getCompanyInfo() {
+        // 获取医院id
+        Integer companyId = ConstantsData.getLoginCompanyId();
+        Company company = this.companyService.getCompanyById(companyId);
+        if (null == company) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(company);
     }
 
 }

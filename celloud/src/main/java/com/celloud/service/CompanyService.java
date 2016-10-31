@@ -56,4 +56,15 @@ public interface CompanyService {
      */
     Boolean updateBySelective(User updateUser);
 
+    /**
+     * 
+     * @description 根据医院id获取医院信息
+     * @author miaoqi
+     * @date 2016年10月30日下午11:47:49
+     *
+     * @param companyId
+     * @return
+     */
+    Company getCompanyById(Integer companyId);
+
 }

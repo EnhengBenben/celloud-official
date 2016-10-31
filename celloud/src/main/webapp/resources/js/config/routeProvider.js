@@ -241,6 +241,10 @@
 	  templateUrl: "pages/company/company_user.jsp",
       controller: "companyUserController"
     })
+    .when('/company/base',{
+	  templateUrl: "pages/company/company_base.jsp",
+      controller: "companyBaseController"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()

@@ -206,7 +206,8 @@
     }
     
     $scope.addLibrary = function(){
-      buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
+      var select = $scope.sindex.name+":"+$scope.sindex.seq;
+      buidLibraryService.addLibrary($scope.infos.libraryName,select,$scope.infos.pageList.datas).success(function(data){
         if(data != null && data != undefined){
           //打印二维码
           printQRCode(data.storageName,data.sindex);
@@ -219,7 +220,8 @@
       });
     }
     $scope.addAndDownLibrary = function(){
-      buidLibraryService.addLibrary($scope.infos.libraryName,$scope.sindex,$scope.infos.pageList.datas).success(function(data){
+      var select = $scope.sindex.name+":"+$scope.sindex.seq;
+      buidLibraryService.addLibrary($scope.infos.libraryName,select,$scope.infos.pageList.datas).success(function(data){
         if(data == 0){
           $scope.notPrevError = true;
         }else if(data > 0){
