@@ -208,4 +208,6 @@ public interface UserService {
      *
      */
     public List<User> getBigCustomers();
+
+	public List<User> getUserByAppId(Integer appId);
 }
