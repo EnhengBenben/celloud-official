@@ -1,8 +1,10 @@
 package com.celloud.utils;
 
 import java.security.SecureRandom;
+import java.util.HashMap;
 
 import com.celloud.constants.SampleTypes;
+import com.celloud.model.mysql.Metadata;
 
 public class DataUtil {
     /**
@@ -46,7 +48,14 @@ public class DataUtil {
      * @date 2016年10月24日 下午2:30:32
      */
     public static String getExperSampleNo(String type, int id) {
-        String timeStamp = SampleTypes.types.get(type)
+		if (SampleTypes.typesMap == null) {
+			HashMap<String, String> map = new HashMap<>();
+			for (Metadata metadata : SampleTypes.types) {
+				map.put(metadata.getName(), metadata.getSeq());
+			}
+			SampleTypes.typesMap = map;
+		}
+		String timeStamp = SampleTypes.typesMap.get(type)
                 + DateUtil.getDateToString("yyyyMM")
                 + String.format("%06d", id);
         return timeStamp;

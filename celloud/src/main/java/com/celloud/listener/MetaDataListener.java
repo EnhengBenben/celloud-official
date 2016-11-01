@@ -1,9 +1,6 @@
 package com.celloud.listener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -34,21 +31,13 @@ public class MetaDataListener implements ApplicationListener<ContextRefreshedEve
 		if (event.getApplicationContext().getParent() == null) {
 			//样本index
 			List<Metadata> sampleIndex = metadataService.getMetadata(118, 1);
-			List<String> sampleList = new ArrayList<>();
-			for (Metadata metadata : sampleIndex) {
-				sampleList.add(metadata.getName() + ":" + metadata.getSeq());
-			}
-			SampleTypes.index = sampleList;
+			SampleTypes.index = sampleIndex;
 			//文库index
 			List<Metadata> libraryIndex = metadataService.getMetadata(118, 2);
 			SampleTypes.libraryIndex = libraryIndex;
 			//样本类型
 			List<Metadata> sampleType = metadataService.getMetadata(118, 3);
-			Map<String, String> typeList = new HashMap<>();
-			for (Metadata metadata : sampleType) {
-				typeList.put(metadata.getName(), metadata.getSeq());
-			}
-			SampleTypes.types = typeList;
+			SampleTypes.types = sampleType;
 			logger.info("实验元数据初始化完毕");
 		}
 	}

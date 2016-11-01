@@ -9,11 +9,19 @@ public class SampleTypes {
 	/**
 	 * 样本index
 	 */
-	public static List<String> index = null;
+	public static List<Metadata> index = null;
+	/**
+	 * 样本index的String格式
+	 */
+	public static List<String> indexString = null;
 	/**
 	 * 样本类型
 	 */
-	public static Map<String, String> types = null;
+	public static List<Metadata> types = null;
+	/**
+	 * 样本类型的map格式
+	 */
+	public static Map<String, String> typesMap = null;
 	/**
 	 * 文库index
 	 */
