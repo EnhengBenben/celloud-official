@@ -7,7 +7,7 @@
     }
     refreshList();
     $scope.addSample = function(){
-      samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type).success(function(data){
+      samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type.name).success(function(data){
         if(data == 2){
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
         }else {
