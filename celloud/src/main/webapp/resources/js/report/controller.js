@@ -543,10 +543,8 @@
 		  $scope.hbvOtherSiteList = hbvInfo.hbvOtherSiteList;
 		  $scope.siteKeys = new Array();
 		  for(i in $scope.hbvOtherSiteList){
-			  if(i < 20){
-				  for(j in $scope.hbvOtherSiteList[i]){
-					  $scope.siteKeys.push(j);
-				  }
+			  for(j in $scope.hbvOtherSiteList[i]){
+				  $scope.siteKeys.push(j);
 			  }
 		  }
 		  console.log($scope.siteKeys);
@@ -594,20 +592,51 @@
 		  var X = new Array();
 		  var Y = new Array();
 		  for(i in $scope.hbvOtherSiteList){
-			  if(i < 20){
-				  for(j in $scope.hbvOtherSiteList[i]){
-					  Y.push(j);
-					  X.push($scope.hbvOtherSiteList[i][j].count);
-				  }
+			  for(j in $scope.hbvOtherSiteList[i]){
+				  Y.push(j);
+				  X.push($scope.hbvOtherSiteList[i][j].count);
 			  }
 		  }
+		  // 显示20条
+		  if(X.length > 20){
+			  xLess = X.slice(0, 20);
+			  yLess = Y.slice(0, 20);
+		  }else{
+			  xLess = X;
+			  yLess= Y;
+		  }
+		  xLess = xLess.reverse();
+		  yLess = yLess.reverse();
+		  var divLess = $("<div id='less' class='col-lg-12' style='width: 1000px;height: " + 40 * xLess.length + "px;'></div>");
+		  xLessStr = "[" + xLess.join(",") + "]";
+		  yLessStr = "[" + yLess.join(",") + "]";
+		  $("#charDiv0").append(divLess);
+		  $.reportChar.draw.echartsShowHorizontalBar("less", "其他位点", eval(xLessStr), eval(yLessStr), 700, 40 * xLess.length, "其他位点数量");
+		  
+		  // 显示全部
 		  X = X.reverse();
 		  Y = Y.reverse();
-		  X = "[" + X.join(",") + "]";
-		  Y = "[" + Y.join(",") + "]";
-		  var div2 = $("<div id='char2' class='col-lg-12' style='width: 1000px;height: " + 40 * $scope.siteKeys.length + "px;'></div>");
-		  $("#charDiv0").append(div2);
-		  $.reportChar.draw.echartsShowHorizontalBar("char2", "其他位点", eval(X), eval(Y), 700, 40 * $scope.siteKeys.length, "其他位点数量");
+		  var divMore = $("<div id='more' class='col-lg-12' style='width: 1000px;height: " + 40 * X.length + "px;'></div>");
+		  XStr = "[" + X.join(",") + "]";
+		  YStr = "[" + Y.join(",") + "]";
+		  $("#charDiv0").append(divMore);
+		  $.reportChar.draw.echartsShowHorizontalBar("more", "其他位点", eval(XStr), eval(YStr), 700, 40 * X.length, "其他位点数量");
+		  
+		  $scope.more = true;
+		  $("#more").hide();
+		  
+		  $scope.showMore = function(){
+			  $("#more").show();
+			  $("#less").hide();
+			  $scope.more = false;
+			  $scope.less = true;
+		  }
+		  $scope.showLess = function(){
+			  $("#more").hide();
+			  $("#less").show();
+			  $scope.more = true;
+			  $scope.less = false;
+		  }
 		  
 		  $.get("count/hbvCompare",{"appId":82,"path":DATAPATH},function(data){
 				var div0 = $("<div id='char0' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
