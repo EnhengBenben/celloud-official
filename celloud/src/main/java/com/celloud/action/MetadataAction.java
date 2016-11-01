@@ -49,4 +49,17 @@ public class MetadataAction {
 		return SampleTypes.libraryIndex;
 	}
 
+	/**
+	 * 获取系统初始化好的样本类型
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年11月1日下午1:23:33
+	 */
+	@RequestMapping("sampleType")
+	@ResponseBody
+	public List<Metadata> sampleType() {
+		return SampleTypes.types;
+	}
+
 }

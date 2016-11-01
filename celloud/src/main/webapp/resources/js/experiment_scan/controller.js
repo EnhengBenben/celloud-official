@@ -1,7 +1,7 @@
 (function(){
   celloudApp.controller("samplingController", function($scope, samplingService){
     $scope.productTags = samplingService.getProductTags();
-    $scope.typeList = ["血液","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
+    $scope.typeList = samplingService.typeList();
     var refreshList = function(){
       $scope.sampleList = samplingService.sampleList();
     }
