@@ -86,7 +86,7 @@
 			_init_area($scope.province_bak, $scope.city_bak, $scope.district_bak);
 		}
 		$scope.updateCompanyInfo = function(){
-			$scope.company.provice = $("#s_province").val();
+			$scope.company.province = $("#s_province").val();
 			$scope.company.city = $("#s_city").val();
 			$scope.company.district = $("#s_county").val();
 			companyService.updateCompanyInfo($scope.company).
