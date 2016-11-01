@@ -552,10 +552,12 @@
 		  $scope.change1 = function(){
 			  $("#nomal").css("display","");
 			  $("#cfda").css("display","none");
+			  $("#showMain").scrollTop(0);
 		  }
 		  $scope.change2 = function(){
 			  $("#nomal").css("display","none");
 			  $("#cfda").css("display","");
+			  $("#showMain").scrollTop(0);
 		  }
 		  $scope.showModal = function(id,flag,num){
 			  $("#_showOne").css("display","none");

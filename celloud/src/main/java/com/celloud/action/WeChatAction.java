@@ -83,7 +83,7 @@ public class WeChatAction {
 			boolean isTrue = wechatUtils.checkUrl(signature, timestamp, nonce);
 			if (isTrue) {
 				System.out.println("测试通过，需要返回：" + echostr);
-				//TODO 这里需要返回 echostr
+				return echostr;
 			} else {
 				System.out.println("测试失败");
 				return null;
