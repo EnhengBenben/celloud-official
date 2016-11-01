@@ -1,5 +1,6 @@
 $(function(){
 	 var oTable1 = $('#otherSiteDataList').DataTable({
+		 "aLengthMenu": [[20, 30, 50], [20, 30, 50]],
 		 language: {
 		        processing: "正在加载数据...",
 		        search: "搜索",
@@ -14,6 +15,6 @@ $(function(){
 		            last: "尾页"
 		        }
 		    },
-	  	  sorting : [[0, "desc"]]
+	  	  sorting : [[1, "desc"]]
      });
 });
