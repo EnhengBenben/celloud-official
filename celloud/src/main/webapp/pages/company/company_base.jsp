@@ -12,11 +12,11 @@
         <p>完善基本信息，修改手机。</p>
       </div> -->
       <div class="content-body">
-        <form class="info-form" id="baseForm" name="baseForm" novalidate="novalidate" ng-submit="updateCompanyInfo()">
+        <form class="info-form company" id="baseForm" name="baseForm" novalidate="novalidate" ng-submit="updateCompanyInfo()">
           <div class="info-form-group">
             <label>医院名称:</label>
             <div>
-                <input name="companyName" type="text" id="input-name" ng-model="company.companyName" required="true" />
+                <input title="{{company.companyName}}" name="companyName" type="text" id="input-name" ng-model="company.companyName" required="true" />
                 <span class="input-alert" ng-show="baseForm.companyName.$dirty && baseForm.companyName.$invalid">
                     医院名称不能为空
                 </span>
@@ -66,24 +66,21 @@
                 <input name="zipCode" type="text" id="input-zipCode" ng-model="company.zipCode" />
             </div>
           </div>
-          <!-- <div class="info-form-group">
-            <label>医院LOGO:</label>
-            <div>
-                <input name="cellphone" type="text" id="input-phone" ng-model="user.cellphone" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" />
-                <span style="font-size: 14px;">{{user.username}}</span>
-            </div>
-          </div> -->
           <div class="info-form-group">
-            <label></label>
-            <div>
-                <button type="button" ng-click="reset()" class="btn btn-cancel">重置</button>
-                <button type="submit" class="btn"
-                	ng-disabled="baseForm.$invalid">提交</button>
+            <label style="vertical-align: top;">医院LOGO:</label>
+            <div class="bottom-btn">
+		        <div id="clipArea" class="clipArea"></div>
+				<br/>
+				
+				<button type="button" class="btn" ng-click="reset()">重置</button>
+                <button type="submit" class="btn" ng-disabled="baseForm.$invalid">提交</button>
+                <div style="float:left;position: relative;">
+    				<button type="button" class="btn -middle" id="chooseFile">选择图片</button>
+    				<input type="file" id="file" class="file">
+                </div>
+				<button type="button" class="btn -middle" id="clipBtn">截取</button>
+				<div id="view" class="view"></div>
             </div>
-            <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state" ng-cotroller="alertController">
-		      <button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-		      <span>{{message}}</span>
-		    </div>
           </div>
         </form>
       </div>
