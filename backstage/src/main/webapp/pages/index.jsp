@@ -58,6 +58,11 @@
                                     <span class="title">添加应用</span>
                                 </a>
                             </li>
+                            <li id="app-right-menu">
+                                <a href="javascript:app.toAppRight(1);">
+                                    <span class="title">授权查看</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li id="company-manage">
