@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -92,7 +92,7 @@ public class LoginAction {
             loginCaptcha.setExpireDate(calendar.getTime());
             // TODO 临时存文件
             try {
-                FileUtils.forceDeleteOnExit(
+                FileUtils.forceDelete(
                         new File(PropertiesUtil.outputPath + cellphone));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -106,7 +106,6 @@ public class LoginAction {
 
     @ActionLog(value = "C端用户登录", button = "登录")
     @RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
-    @ResponseBody
     public ModelAndView clientLogin(String cellphone, String captcha) {
         ModelAndView mv = new ModelAndView("client");
         File f = new File(
@@ -121,7 +120,7 @@ public class LoginAction {
                         user.getUsername(), user.getPassword(), true);
                 subject.login(token);
                 try {
-                    FileUtils.forceDeleteOnExit(
+                    FileUtils.forceDelete(
                             new File(PropertiesUtil.outputPath + cellphone));
                 } catch (IOException e) {
                     e.printStackTrace();
