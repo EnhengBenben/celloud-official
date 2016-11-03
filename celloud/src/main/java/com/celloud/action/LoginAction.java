@@ -120,7 +120,7 @@ public class LoginAction {
                 User user = userService.findByUsernameOrEmail(
                         "cel_" + cellphone.substring(3, cellphone.length()));
                 UsernamePasswordToken token = new UsernamePasswordToken(
-                        user.getUsername(), user.getPassword(), true);
+                        user.getUsername(), user.getPassword(), false);
                 subject.login(token);
                 try {
                     FileUtils.forceDelete(
