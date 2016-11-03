@@ -165,7 +165,7 @@
 			}
 		}
 		$scope.sumbitRecharge = function(){
-			var payWay = $("input[name=pay-way]:checked").val();
+			var payWay = $("input[name='pay-way']:checked").val();
 			var action = CONTEXT_PATH + "/pay/recharge/" + payWay;
 			$("#rechargeForm").attr("action",action);
 			$rootScope.errorInfo = "请在新打开的页面完成支付操作！";

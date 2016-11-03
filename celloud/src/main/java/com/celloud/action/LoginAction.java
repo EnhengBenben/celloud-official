@@ -14,16 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -91,11 +92,14 @@ public class LoginAction {
             calendar.add(Calendar.MINUTE, AlidayuConfig.captcha_expire_time);
             loginCaptcha.setExpireDate(calendar.getTime());
             // TODO 临时存文件
-            try {
-                FileUtils.forceDeleteOnExit(
-                        new File(PropertiesUtil.outputPath + cellphone));
-            } catch (IOException e) {
-                e.printStackTrace();
+            File f = new File(PropertiesUtil.outputPath + cellphone);
+            if (f.exists()) {
+                try {
+                    FileUtils.forceDelete(
+                            new File(PropertiesUtil.outputPath + cellphone));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             FileTools.createFile(
                     PropertiesUtil.outputPath + cellphone + "/" + captcha);
@@ -106,9 +110,7 @@ public class LoginAction {
 
     @ActionLog(value = "C端用户登录", button = "登录")
     @RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
-    @ResponseBody
-    public ModelAndView clientLogin(String cellphone, String captcha) {
-        ModelAndView mv = new ModelAndView("client");
+    public String clientLogin(String cellphone, String captcha, Model model) {
         File f = new File(
                 PropertiesUtil.outputPath + cellphone + "/" + captcha);
         if (f.exists()) {
@@ -121,17 +123,16 @@ public class LoginAction {
                         user.getUsername(), user.getPassword(), true);
                 subject.login(token);
                 try {
-                    FileUtils.forceDeleteOnExit(
+                    FileUtils.forceDelete(
                             new File(PropertiesUtil.outputPath + cellphone));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                mv.setViewName("loading");
-                return mv;
+                return "redirect:clientindex";
             }
         }
-        mv.addObject("info", "验证码错误，请重新验证！");
-        return mv;
+        model.addAttribute("info", "验证码错误，请重新输入！");
+        return "redirect:client.html";
     }
 
 	/**
