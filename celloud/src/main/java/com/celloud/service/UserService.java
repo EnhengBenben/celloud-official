@@ -258,4 +258,24 @@ public interface UserService {
      *            登录用户id
      */
     public Boolean sendRegisterEmail(String email);
+
+    /**
+     * 新增C端用户
+     * 
+     * @param cellphone
+     * @return
+     * @author leamo
+     * @date 2016年10月31日 下午7:43:07
+     */
+    public Integer addClientUser(String cellphone);
+
+    /**
+     * 判断是否新增C端用户
+     * 
+     * @param cellphone
+     * @return
+     * @author leamo
+     * @date 2016年10月31日 下午8:24:03
+     */
+    public Integer checkAddClientUser(String cellphone);
 }

@@ -24,6 +24,7 @@ var src = {
       'src/main/webapp/resources/less/*.less',
       'src/main/webapp/resources/less/**/*.less'
   ],
+  clientless: 'src/main/webapp/resources/less/client.less',
   mainjs: [
       'src/main/webapp/resources/js/utils.js',
       'src/main/webapp/resources/js/charts.js',
@@ -70,7 +71,18 @@ var src = {
       'src/main/webapp/resources/js/rocky/controller.js',
       'src/main/webapp/resources/js/company/service.js',
       'src/main/webapp/resources/js/company/controller.js'
-  ]
+  ],
+  clientjs: [
+       'src/main/webapp/resources/js/utils.js',
+       'src/main/webapp/resources/js/message.js',
+       'src/main/webapp/resources/js/alert.js',
+       'src/main/webapp/resources/js/confirm.js',
+       'src/main/webapp/resources/js/application.js',
+       'src/main/webapp/resources/js/directive/href.js',
+       'src/main/webapp/resources/js/directive/pagination.js',
+       'src/main/webapp/resources/js/config/clientRouteProvider.js',
+       'src/main/webapp/resources/js/config/sessionInterceptor.js'
+   ]
 }
 var dist = {
   js: 'src/main/webapp/resources/js/',
@@ -111,6 +123,27 @@ gulp.task('less', function() {
       .pipe(autoprefix())
       .pipe(cssmin())
       .pipe(gulp.dest(dist.css));
+});
+
+/* less: 
+** compile less
+*/
+gulp.task('clientless', function() {
+  return gulp.src(src.clientless)
+      .pipe(rename({suffix: '.min'}))
+      .pipe(less())
+      .pipe(autoprefix())
+      .pipe(cssmin())
+      .pipe(gulp.dest(dist.css));
+});
+gulp.task('combineClientjs', function () {
+  gulp.src(src.clientjs)
+    .pipe(uglify({
+      mangle:false,
+      preserveComments : 'some'
+    }))
+    .pipe(concat('client.min.js'))
+    .pipe(gulp.dest(dist.js));
 });
 
 /* default */

@@ -3,6 +3,7 @@ package com.celloud.action;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -22,20 +23,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.IAcsClient;
-import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.exceptions.ServerException;
-import com.aliyuncs.profile.DefaultProfile;
-import com.aliyuncs.profile.IClientProfile;
-import com.aliyuncs.sms.model.v20160927.SingleSendSmsRequest;
-import com.aliyuncs.sms.model.v20160927.SingleSendSmsResponse;
+import com.celloud.alidayu.AliDayuUtils;
+import com.celloud.alidayu.AlidayuConfig;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
+import com.celloud.model.LoginCaptcha;
 import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
 import com.celloud.model.mysql.App;
@@ -45,6 +42,7 @@ import com.celloud.service.AppService;
 import com.celloud.service.RSAKeyService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
+import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
@@ -73,26 +71,53 @@ public class LoginAction {
 	@Resource
 	private AppService appService;
 
-    public static void sendCapcha(Integer cellphone) {
-        String appkey = "kI0Hd8esVLsnf15q";
-        String secret = "ObMM6aAMpo58JrM0zZdNBKNBHV62dn";
-        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou",
-                appkey, secret);
-        try {
-            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Sms",
-                    "sms.aliyuncs.com");
-            IAcsClient client = new DefaultAcsClient(profile);
-            SingleSendSmsRequest request = new SingleSendSmsRequest();
-            request.setSignName("华点云");
-            request.setTemplateCode("SMS_22410134");
-            request.setParamString("{'number':'123456'}");
-            request.setRecNum("18511832690");
-            SingleSendSmsResponse httpResponse = client.getAcsResponse(request);
-        } catch (ServerException e) {
-            e.printStackTrace();
-        } catch (ClientException e) {
-            e.printStackTrace();
+    @ActionLog(value = "发送登录验证码", button = "发送验证码")
+    @RequestMapping("sendLoginCapcha.html")
+    @ResponseBody
+    public String sendCapcha(String cellphone) {
+        String captcha = DataUtil.getCapchaRandom();
+        String result = AliDayuUtils.sendCaptcha(cellphone, captcha);
+        // 验证码已发送
+        if (!result.equals("error")) {
+            // 存储验证码，计算过期时间
+            LoginCaptcha loginCaptcha = new LoginCaptcha();
+            loginCaptcha.setCaptcha(captcha);
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.MINUTE, AlidayuConfig.captcha_expire_time);
+            loginCaptcha.setExpireDate(calendar.getTime());
+            // 移除失效的验证码，添加新的
+            AlidayuConfig.userCapchaMap.remove(cellphone);
+            AlidayuConfig.userCapchaMap.put(cellphone, loginCaptcha);
+            return "succuss";
         }
+        return "error";
+    }
+
+    @ActionLog(value = "C端用户登录", button = "登录")
+    @RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView clientLogin(String cellphone, String captcha) {
+        ModelAndView mv = new ModelAndView("client");
+        LoginCaptcha loginCaptcha = AlidayuConfig.userCapchaMap
+                .get(cellphone);
+        if (loginCaptcha != null && captcha.equals(loginCaptcha.getCaptcha())
+                && Calendar.getInstance()
+                .getTime().compareTo(loginCaptcha.getExpireDate()) < 0) {
+            Integer result = userService.checkAddClientUser(cellphone);
+            if (result != 0) {
+                Subject subject = SecurityUtils.getSubject();
+                User user = userService.findByUsernameOrEmail(
+                        "cel_" + cellphone.substring(3, cellphone.length()));
+                UsernamePasswordToken token = new UsernamePasswordToken(
+                        user.getUsername(), user.getPassword(), true);
+                subject.login(token);
+                AlidayuConfig.userCapchaMap.remove(cellphone);
+                mv.setViewName("loading");
+                return mv;
+            }
+        }
+        mv.addObject("info", "验证码错误，请重新验证！");
+        return mv;
     }
 
 	/**
@@ -308,8 +333,4 @@ public class LoginAction {
 		publicKey.setExponent(rsaPublicKey.getPublicExponent().toString(16));
 		return publicKey;
 	}
-
-    public static void main(String[] args) {
-        sendCapcha(1);
-    }
 }

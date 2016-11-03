@@ -1,18 +1,4 @@
-function CreateScript(file){  
-	var new_element;  
-	new_element=document.createElement("script");  
-	new_element.setAttribute("type","text/javascript");  
-	new_element.setAttribute("src",file);  
-	document.body.appendChild(new_element);
-} 
-/**
- * 加载js百度统计
- */
-document.write("<script src='plugins/baidu.js'><\/script>");
 $(document).ready(function(){
-	var wid =$(window).width();
-	var per =(1-(553/wid))*50; 
-	$(".loginWrapper").css("left",per+"%");
 	$.ajaxSetup ({
 		cache: false //关闭AJAX相应的缓存
 	});
@@ -112,7 +98,6 @@ $(document).ready(function(){
 			checked = $("#checked").val();
 		}
 	});
-	
 });
 function secPWD(password){
 	var modulus = $.trim($("#modulusHidden").val());
