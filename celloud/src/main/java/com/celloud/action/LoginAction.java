@@ -117,13 +117,23 @@ public class LoginAction {
 				Subject subject = SecurityUtils.getSubject();
 				User user = userService.findByUsernameOrEmail("cel_" + cellphone.substring(3, cellphone.length()));
 				UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(), false);
-				subject.login(token);
 				try {
-					FileUtils.forceDelete(new File(PropertiesUtil.outputPath + cellphone));
-				} catch (IOException e) {
-					e.printStackTrace();
+					subject.login(token);
+				} catch (IncorrectCredentialsException | UnknownAccountException e) {
+					model.addAttribute("info", "用户登录失败，用户名密码错误");
+					logger.info("用户登录失败，用户名密码错误：phone={},captcha={}", cellphone, captcha);
+				} catch (Exception e) {
+					model.addAttribute("info", "用户登录失败，未知异常");
+					logger.info("用户登录失败，未知异常：phone={},captcha={}", cellphone, captcha);
 				}
-				return "redirect:clientindex";
+				if (subject.isAuthenticated()) {
+					try {
+						FileUtils.forceDelete(new File(PropertiesUtil.outputPath + cellphone));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					return "redirect:clientindex";
+				}
 			}
 		}
 		model.addAttribute("info", "验证码错误，请重新输入！");
