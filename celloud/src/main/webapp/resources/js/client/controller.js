@@ -32,18 +32,7 @@
       $scope.balance = data;
     });
     $scope.sumbitRecharge = function(){
-      var payWay = $("#alipay").checked?"alipay":"transfer";
-      var action = CONTEXT_PATH + "/pay/recharge/" + payWay;
-      $("#rechargeForm").attr("action",action);
-      $.tips("请在新打开的页面完成支付操作！");
-    }
-  });
-	celloudApp.controller("report",function($scope,$location,expenseService){
-    expenseService.toRecharge().success(function(data){
-      $scope.balance = data;
-    });
-    $scope.sumbitRecharge = function(){
-      var payWay = $("#alipay").checked?"alipay":"transfer";
+      var payWay = $("#alipay").checked?"alipay":"jdpay";
       var action = CONTEXT_PATH + "/pay/recharge/" + payWay;
       $("#rechargeForm").attr("action",action);
       $.tips("请在新打开的页面完成支付操作！");
