@@ -209,7 +209,10 @@ public class UserServiceImpl implements UserService {
         }
         if (roleIdList != null && !roleIdList.isEmpty()) {
             for (Integer roleId : roleIdList) {
-                roleIds.append(roleId + ",");
+                // 排除医院管理员权限
+                if (roleId.intValue() != 6) {
+                    roleIds.append(roleId + ",");
+                }
             }
             roleIds.deleteCharAt(roleIds.length() - 1);
         }

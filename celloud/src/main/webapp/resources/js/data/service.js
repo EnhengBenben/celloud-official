@@ -3,7 +3,7 @@
       var self = this;
       self.pageList = function(){
         var options = $.dataManager.options;
-        return $http.get("data/dataPageListCondition?random="+new Date().getTime(),{params: {page:options.page,size:options.pageSize,condition:options.condition,sort:options.sort,sortDateType:options.sortDateType,sortNameType:options.sortNameType}});
+        return $http.get("data/dataPageListCondition?random="+new Date().getTime(),{params: {page:options.page,size:options.pageSize,condition:options.condition,sort:options.sort,sortDateType:options.sortDateType,sortNameType:options.sortNameType,sortAnotherName:options.sortAnotherName,sortRun:options.sortRun}});
       }
       self.run = function(){
         var checkedIds = $.dataManager.options.checkedIds;
