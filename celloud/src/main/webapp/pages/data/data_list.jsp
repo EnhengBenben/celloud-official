@@ -84,7 +84,8 @@
             <td>{{file.batch}}</td>
             <td>{{file.size | fileSizeFormat}}</td>
             <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td>{{file.reportNum < 1 ? '未运行' : '已运行'}}</td>
+            <td ng-if="file.reportNum < 1" style="font-weight: bold;">未运行</td>
+            <td ng-if="file.reportNum > 0">已运行</td>
             <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
           <tr ng-show="dataList.datas.length == 0">

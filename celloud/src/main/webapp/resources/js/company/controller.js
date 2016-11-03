@@ -32,12 +32,13 @@
 			})
 		}
 		$scope.sendEmail = function(){
+			$("#submit").prop("disabled",true);
 			companyService.sendRegisterEmail($scope.email,$scope.kaptcha).
 			success(function(data, status){
 				 if(status == 204){
 					$("#company-addUser-modal").modal("hide");
 					$.alert("发送成功!");
-				} 
+				}
 			}).
 			error(function(data, status){
 				if(status == 400){

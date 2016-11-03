@@ -513,10 +513,10 @@
 				${sortNameType}
 			</when>
 			<when test="sort == 3">
-			    order by f.another_name ${sortAnotherName}
+			    order by f.another_name ${sortAnotherName}, create_date desc
 			</when>
 			<when test="sort == 4">
-                order by reportNum ${sortRun}
+                order by reportNum ${sortRun}, create_date desc
             </when>
 			<otherwise>
 				order by f.file_name ${sortNameType},f.create_date
