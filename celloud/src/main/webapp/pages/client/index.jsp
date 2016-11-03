@@ -16,6 +16,7 @@
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.3" rel="stylesheet">
 <%--   <link href="<%=request.getContextPath()%>/css/client.min.css" rel="stylesheet"> --%>
   <link href="<%=request.getContextPath()%>/less/client.less" rel="stylesheet/less" type="text/css" />
   <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
@@ -46,7 +47,7 @@
 	            </a>
 	            <div class="dropdown-menu user-dropdown">
 	              <a class="btn" href="#/base">个人信息</a>
-	              <a class="btn btn-reset" href="logout">退出</a>
+	              <a class="btn btn-reset" href="logout?flag=client">退出</a>
 	            </div>
 	          </li>
 	        </ul>
@@ -54,7 +55,7 @@
 	    </nav>
 	  </header>
       <div class="view-container">
-        <div class="pro-body">
+        <div class="pro-body rocky">
           <h1>乳腺癌易感基因(BRCA1/2)检测报告</h1>
           <div ng-view class="content">
           </div>
@@ -81,6 +82,7 @@
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
   <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/area/area.js?v=3.3.4"></script>
   
   <script src="<%=request.getContextPath()%>/js/client.min.js"></script>
   <script type="text/javascript">

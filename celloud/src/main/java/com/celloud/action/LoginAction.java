@@ -74,7 +74,8 @@ public class LoginAction {
     @ActionLog(value = "发送登录验证码", button = "发送验证码")
     @RequestMapping("sendLoginCapcha.html")
     @ResponseBody
-    public String sendCapcha(String cellphone) {
+    public String sendCapcha(HttpServletRequest request, String cellphone) {
+        HttpSession session = request.getSession();
         String captcha = DataUtil.getCapchaRandom();
         String result = AliDayuUtils.sendCaptcha(cellphone, captcha);
         // 验证码已发送
@@ -85,9 +86,8 @@ public class LoginAction {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.MINUTE, AlidayuConfig.captcha_expire_time);
             loginCaptcha.setExpireDate(calendar.getTime());
-            // 移除失效的验证码，添加新的
-            AlidayuConfig.userCapchaMap.remove(cellphone);
-            AlidayuConfig.userCapchaMap.put(cellphone, loginCaptcha);
+            session.removeAttribute("phoneLoginCaptcha");
+            session.setAttribute("phoneLoginCaptcha", loginCaptcha);
             return "succuss";
         }
         return "error";
@@ -96,10 +96,12 @@ public class LoginAction {
     @ActionLog(value = "C端用户登录", button = "登录")
     @RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView clientLogin(String cellphone, String captcha) {
+    public ModelAndView clientLogin(HttpServletRequest request,
+            String cellphone, String captcha) {
+        HttpSession session = request.getSession();
         ModelAndView mv = new ModelAndView("client");
-        LoginCaptcha loginCaptcha = AlidayuConfig.userCapchaMap
-                .get(cellphone);
+        LoginCaptcha loginCaptcha = (LoginCaptcha) session
+                .getAttribute("phoneLoginCaptcha");
         if (loginCaptcha != null && captcha.equals(loginCaptcha.getCaptcha())
                 && Calendar.getInstance()
                 .getTime().compareTo(loginCaptcha.getExpireDate()) < 0) {
@@ -111,7 +113,7 @@ public class LoginAction {
                 UsernamePasswordToken token = new UsernamePasswordToken(
                         user.getUsername(), user.getPassword(), true);
                 subject.login(token);
-                AlidayuConfig.userCapchaMap.remove(cellphone);
+                session.removeAttribute("phoneLoginCaptcha");
                 mv.setViewName("loading");
                 return mv;
             }
@@ -303,7 +305,7 @@ public class LoginAction {
 	 */
 	@ActionLog(value = "用户退出", button = "退出")
 	@RequestMapping("logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
+	public String logout(HttpServletRequest request, HttpServletResponse response, String flag) {
 		HttpSession session = request.getSession();
 		User user = ConstantsData.getLoginUser();
 		session.removeAttribute(Constants.SESSION_LOGIN_USER);
@@ -312,6 +314,9 @@ public class LoginAction {
 			session.removeAttribute(names.nextElement());
 		}
 		SecurityUtils.getSubject().logout();
+		if ((user != null && user.getRole().equals(3)) || "client".equals(flag)) {
+			return "redirect:client.html";
+		}
 		logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());
 		return "redirect:login";
 	}

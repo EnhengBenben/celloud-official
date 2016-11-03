@@ -81,7 +81,7 @@ var src = {
        'src/main/webapp/resources/js/directive/href.js',
        'src/main/webapp/resources/js/directive/pagination.js',
        'src/main/webapp/resources/js/config/clientRouteProvider.js',
-       'src/main/webapp/resources/js/config/sessionInterceptor.js',
+       'src/main/webapp/resources/js/client/sessionInterceptor.js',
        'src/main/webapp/resources/js/client/service.js',
        'src/main/webapp/resources/js/expense/service.js',
        'src/main/webapp/resources/js/client/controller.js'
@@ -159,5 +159,6 @@ gulp.task('default', function(){
 */
 gulp.task('watch', function() {
   gulp.watch(src.mainjs, ['combinejs']);
+  gulp.watch(src.clientjs, ['combineClientjs']);
   gulp.watch(src.lessdir, ['less']);
 });
