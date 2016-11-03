@@ -17,6 +17,9 @@
 @import "mixins/content.less";
 @import "mixins/report.less";
 @import "rocky.less";
+.navbar-logo{
+    width: 91px;
+}
 .client{
     height: initial;
     .view-container{
@@ -62,7 +65,16 @@
             .info-form{
                 margin-top: 50px;
                 padding: 0px 72px;
+                input{
+                    width: 260px;
+                }
+                .info-form-group .btn{
+                    padding: 0;
+                }
             }
         }
+    }
+    .pay-content .pay-money-detail h2{
+        line-height: 30px;
     }
 }

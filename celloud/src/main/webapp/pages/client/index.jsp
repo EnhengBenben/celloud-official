@@ -55,7 +55,7 @@
 	    </nav>
 	  </header>
       <div class="view-container">
-        <div class="pro-body">
+        <div class="pro-body rocky">
           <h1>乳腺癌易感基因(BRCA1/2)检测报告</h1>
           <div ng-view class="content">
           </div>
