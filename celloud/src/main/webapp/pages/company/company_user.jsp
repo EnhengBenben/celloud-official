@@ -82,7 +82,7 @@
 	    <div class="modal-footer">
 	      <div class="text-center">
               <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
-              <button type="submit" class="btn" ng-disabled="userAddForm.$invalid" ng-click="sendEmail()">提交</button>
+              <button type="submit" class="btn" ng-disabled="userAddForm.$invalid" ng-click="sendEmail()" id="submit">提交</button>
           </div>
 	    </div>
 	  </div>

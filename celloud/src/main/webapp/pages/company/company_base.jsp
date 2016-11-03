@@ -38,8 +38,8 @@
 			    <select id="s_city" name="s_city" ng-model="city"></select>  
     		    <select id="s_county" name="s_county" ng-model="district"></select>
             </div>
-            <span class="input-alert" ng-show="baseForm.province.$dirty && baseForm.province.$invalid">
-                医院地址不能为空
+            <span class="input-alert" ng-show="province == '省份' || city == '地级市' || district == '市、县级市'">
+                    医院地址不能为空
             </span>
 		  </div>
 		  <div class="info-form-group">
@@ -47,7 +47,7 @@
             <div>
                 <input name="address" type="text" id="input-address" ng-model="company.address" required="true" />
                 <span class="input-alert" ng-show="baseForm.address.$dirty && baseForm.address.$invalid">
-                    医院地址不能为空
+                    医院详细地址不能为空
                 </span>
             </div>
           </div>
@@ -71,9 +71,8 @@
             <div class="bottom-btn">
 		        <div id="clipArea" class="clipArea"></div>
 				<br/>
-				
 				<button type="button" class="btn" ng-click="reset()">重置</button>
-                <button type="submit" class="btn" ng-disabled="baseForm.$invalid">提交</button>
+                <button type="submit" class="btn" ng-disabled="baseForm.$invalid || province == '省份' || city == '地级市' || district == '市、县级市'">提交</button>
                 <div style="float:left;position: relative;">
     				<button type="button" class="btn -middle" id="chooseFile">选择图片</button>
     				<input type="file" id="file" class="file">
