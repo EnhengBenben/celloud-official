@@ -16,6 +16,7 @@
 	    	<select onchange="$.metadata.change()" id="metadataFlag">
 	    		<option value="1">样本index</option>
 	    		<option value="2">文库index</option>
+	    		<option value="3">样本类型</option>
 	    	</select>
 	     </div>
 		 <div style="float: right;">
@@ -38,7 +39,7 @@
 				        <c:if test="${metadataList!=null && metadataList.size()>0 }">
 	                        <c:forEach items="${metadataList}" var="data" varStatus="st">
 	                            <tr>
-	                                <td>${data.flag==1?'样本index':data.flag==2?'文库index':'错误的种类' }</td>
+	                                <td>${data.flag==1?'样本index':data.flag==2?'文库index':data.flag==3?'样本类型':'错误的种类' }</td>
 	                                <td>${data.name }</td>
 	                                <td>${data.seq }</td>
 	                                <td>${data.priority }</td>

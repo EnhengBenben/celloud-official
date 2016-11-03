@@ -12,6 +12,9 @@
 		};
 		this.getCompanyInfo = function(){
 			return $http({method:"GET", url:"company"});
+		};
+		this.updateCompanyInfo = function(company){
+			return $http({method:"POST", url:"company", data:$.param(company), headers: {'Content-Type': 'application/x-www-form-urlencoded' }});
 		}
 	});
 }());

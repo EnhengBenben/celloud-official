@@ -206,4 +206,15 @@ public interface UserMapper {
 
     public void addUserRoleRight(@Param("userId") Integer userId, @Param("roleIds") String[] roleIds);
 
+    /**
+     * 
+     * @description 根据id集合查询用户集合
+     * @author miaoqi
+     * @date 2016年11月3日上午10:24:59
+     *
+     * @param userIds
+     * @return
+     */
+    public List<User> findUsersByIds(@Param("userIds") List<Integer> userIds);
+
 }

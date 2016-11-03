@@ -686,6 +686,25 @@ var app=(function(app){
 			$("#app-manage").addClass("active").addClass("opened").addClass("expanded");
 		});
 	}
+	self.toAppRight=function(currentPage){
+	  self.currentPage=currentPage;
+	  $.post("app/appRight",{currentPage:currentPage},function(responseText){
+	    $("#main-content").html(responseText);
+	    $("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+	    $("#app-right-menu").addClass("active");
+	    $("#app-manage").addClass("active").addClass("opened").addClass("expanded");
+	  });
+	}
+	self.toShowRight = function(appId){
+	  $.post("app/getUsersByApp",{"appId":appId},function(response){
+	    $("#right_body").html(response);
+	    $("#showRight").modal("show");
+	  });
+	}
+	self.downEmailFile = function(path){
+	  var url = window.location.href.split("index")[0];
+    window.location.href=url+"app/downEmailFile?path="+path;
+	}
 	self.getAppList=function(currentPage){
 		self.currentPage=currentPage;
 		$.post("app/appList",{currentPage:currentPage},function(responseText){

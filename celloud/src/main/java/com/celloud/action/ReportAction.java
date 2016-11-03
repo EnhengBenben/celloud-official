@@ -1181,11 +1181,10 @@ public class ReportAction {
     public Map<String, Object> getHBVInfo(String dataKey, Integer projectId, Integer appId) {
         HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
         hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
-        // TODO 暂时注释, 3.3.7上线
-        // Map<String, Map<String, String>> hbvOtherSiteMap = reportService
-        // .getHBVOtherSiteByUserId(ConstantsData.getLoginUserId(), appId);
+        List<Map.Entry<String, Map<String, String>>> hbvOtherSiteList = reportService
+                .getHBVOtherSiteByUserId(ConstantsData.getLoginUserId(), appId);
         Map<String, Object> map = getCommonInfo(projectId);
-        // map.put("hbvOtherSiteMap", hbvOtherSiteMap);
+        map.put("hbvOtherSiteList", hbvOtherSiteList);
         map.put("hbv", hbv);
         return map;
     }

@@ -23,7 +23,9 @@
 	                            <c:set value="true" var="b" />
 	                        </c:if>
 	                    </c:forEach>
-	                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' ${b?'checked':'' } value='${companyRole.id }' >${companyRole.name }</label>
+	                    <c:if test="${companyRole.code != 'hospitalmanager' }">
+    	                    <label class='checkbox-inline'><input name='roleIdArray' type='checkbox' ${b?'checked':'' } value='${companyRole.id }' >${companyRole.name }</label>
+	                    </c:if>
 	                </c:forEach>
                </c:if>
                <c:if test="${empty companyRoleList }">

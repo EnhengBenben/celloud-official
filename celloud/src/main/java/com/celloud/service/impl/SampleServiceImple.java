@@ -21,6 +21,7 @@ import com.celloud.mapper.SampleMapper;
 import com.celloud.mapper.SampleOrderMapper;
 import com.celloud.mapper.SampleStorageMapper;
 import com.celloud.mapper.TaskMapper;
+import com.celloud.model.mysql.Metadata;
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleLog;
 import com.celloud.model.mysql.SampleOrder;
@@ -168,8 +169,15 @@ public class SampleServiceImple implements SampleService {
     @Override
     public Integer updateExperStateAndIndex(Integer userId, Integer experState,
             Integer sampleId, List<String> sindexList) {
+		if (SampleTypes.indexString == null) {
+			List<String> sampleList = new ArrayList<>();
+			for (Metadata metadata : SampleTypes.index) {
+				sampleList.add(metadata.getName() + ":" + metadata.getSeq());
+			}
+			SampleTypes.indexString = sampleList;
+		}
         List<String> indexList = new ArrayList<>();
-        indexList.addAll(SampleTypes.index);
+		indexList.addAll(SampleTypes.indexString);
         if (sindexList != null) {
             for (String s : sindexList) {
                 indexList.remove(s);

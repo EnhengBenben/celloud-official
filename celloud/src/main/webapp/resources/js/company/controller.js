@@ -71,8 +71,38 @@
 			if(status == 200){
 				$scope.company = data;
 				$scope.company_bak = angular.copy(data);
-				$scope.province = data.province;
-				_init_area();
+				// 用于reset
+				$scope.province_bak = data.province;
+				$scope.city_bak = data.city;
+				$scope.district_bak = data.district;
+				$scope.companyIcon_bak = data.companyIcon;
+				
+				$("#view").css("background-color","rgb(102, 102, 102)");
+				$("#view").css("background-repeat","no-repeat");
+				$("#view").css("background-position","center center");
+				$("#view").css("background-size","contain");
+				$("#view").css("background-image","url(" + $scope.company.companyIcon + ")");
+				
+				
+				_init_area($scope.province_bak, $scope.city_bak, $scope.district_bak);
+				
+				var clipArea = new bjj.PhotoClip("#clipArea", {
+			        size: [120, 50],
+			        outputSize: [120, 50],
+			        file: "#file",
+			        view: "#view",
+			        ok: "#clipBtn",
+			        loadStart: function() {
+			            console.log("照片读取中");
+			        },
+			        loadComplete: function() {
+			            console.log("照片读取完成");
+			        },
+			        clipFinish: function(dataURL) {
+			        	$scope.company.companyIcon = dataURL;
+			        }
+			    });
+				
 			}
 		}).
 		error(function(data, status){
@@ -80,6 +110,27 @@
 		})
 		$scope.reset = function(){
 			$scope.company = angular.copy($scope.company_bak);
+			$("#view").css("background-image","url(" + $scope.company.companyIcon + ")");
+			_init_area($scope.province_bak, $scope.city_bak, $scope.district_bak);
+		}
+		$scope.updateCompanyInfo = function(){
+			$scope.company.province = $("#s_province").val();
+			$scope.company.city = $("#s_city").val();
+			$scope.company.district = $("#s_county").val();
+			companyService.updateCompanyInfo($scope.company).
+			success(function(data, status){
+				if(204 == status){
+					$.alert("修改成功");
+				}
+			}).
+			error(function(data, status){
+				if(400 == status){
+					$.alert("您填写的数据有误, 请核查后再提交");
+				}
+				if(500 == status){
+					$.alert("提交失败, 请联系管理员");
+				}
+			})
 		}
 	});
 })();

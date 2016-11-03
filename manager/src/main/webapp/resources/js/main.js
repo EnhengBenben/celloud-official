@@ -31,6 +31,7 @@ var dataFile=(function(dataFile){
 	self.getSiteInfo = function(site){
 		$.post("getSiteInfo", {"site" : site}, function(responseText){
 			$("#siteInfoRow").html(responseText);
+			$(document).scrollTop(600);
 		});
 	};
 	self.toOtherSiteCount = function(){

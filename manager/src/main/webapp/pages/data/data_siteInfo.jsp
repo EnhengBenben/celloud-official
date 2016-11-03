@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src="js/data_siteInfo.js"></script>
 <div class="widget-header widget-header-flat">
-     <h3 class="header smaller lighter green">医院名称</h3>
+     <h3 class="header smaller lighter green">位点信息</h3>
 </div>
 <div class="col-xs-11 table-div">
     <c:if test="${siteInfo != null && fn:length(siteInfo) > 0 }">
@@ -21,10 +21,10 @@
                 <tbody>
                     <c:forEach items="${siteInfo }" var="siteInfo">
                         <tr>
-                            <td>${siteInfo.value['fileName'] }</td>
-                            <td>${siteInfo.value['createDate'] }</td>
-                            <td>${siteInfo.value['userName'] }</td>
-                            <td>${siteInfo.value['companyName'] }</td>
+                            <td>${siteInfo['fileName'] }</td>
+                            <td>${siteInfo['createDate'] }</td>
+                            <td>${siteInfo['userName'] }</td>
+                            <td>${siteInfo['companyName'] }</td>
                         </tr>
                     </c:forEach>
                 </tbody>

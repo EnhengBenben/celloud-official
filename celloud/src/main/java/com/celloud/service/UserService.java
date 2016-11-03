@@ -278,4 +278,15 @@ public interface UserService {
      * @date 2016年10月31日 下午8:24:03
      */
     public Integer checkAddClientUser(String cellphone);
+    
+    /**
+     * 
+     * @description 根据主键修改不为空的字段
+     * @author miaoqi
+     * @date 2016年10月27日下午4:06:25
+     *
+     * @param updateUser
+     * @return
+     */
+    Boolean updateBySelective(User updateUser);
 }

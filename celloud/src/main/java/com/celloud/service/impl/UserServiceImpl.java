@@ -247,4 +247,8 @@ public class UserServiceImpl implements UserService {
         }
         return -1;
     }
+
+    public Boolean updateBySelective(User updateUser) {
+        return userMapper.updateByPrimaryKeySelective(updateUser) == 1;
+    }
 }
