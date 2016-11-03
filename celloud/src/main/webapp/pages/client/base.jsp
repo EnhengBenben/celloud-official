@@ -13,8 +13,8 @@
     <div class="info-form-group">
       <label>&nbsp;<strong class="pull-right">*</strong></label>
       <div>
-          <input name="cellphone" type="text" id="input-phone" ng-model="user.cellphone" placeholder="详细地址" />
-          <span class="input-alert" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">
+          <input name="address" type="text" ng-model="user.address" placeholder="详细地址" />
+          <span class="input-alert" ng-show="userForm.address.$dirty && userForm.address.$invalid">
              详细地址不能为空
           </span>
       </div>
@@ -22,14 +22,14 @@
     <div class="info-form-group">
       <label>邮编:</label>
       <div>
-          <input name="cellphone" type="text" id="input-phone" ng-model="user.cellphone" placeholder="邮编" />
+          <input name="zipCode" type="text" ng-model="user.zipCode" placeholder="邮编" />
       </div>
     </div>
     <div class="info-form-group">
       <label>姓名:<strong class="pull-right">*</strong></label>
       <div>
-          <input name="cellphone" type="text" id="input-phone" ng-model="user.cellphone" placeholder="姓名" />
-          <span class="input-alert" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">
+          <input name="truename" type="text" id="input-phone" ng-model="user.truename" placeholder="姓名" />
+          <span class="input-alert" ng-show="userForm.truename.$dirty && userForm.truename.$invalid">
               姓名不能为空
           </span>
       </div>
@@ -37,8 +37,8 @@
     <div class="info-form-group">
       <label>年龄:<strong class="pull-right">*</strong></label>
       <div>
-          <input name="cellphone" type="text" id="input-phone" ng-model="user.cellphone" placeholder="年龄" />
-          <span class="input-alert" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">
+          <input name="age" type="text" ng-model="user.age" placeholder="年龄" />
+          <span class="input-alert" ng-show="userForm.age.$dirty && userForm.age.$invalid">
               年龄不能为空
           </span>
       </div>
@@ -47,18 +47,15 @@
       <label>性别:<strong class="pull-right">*</strong></label>
       <div>
           <label class="radio-lable">
-            <input class="radio" type="radio" name="pay_type" ng-click="pay_type = 'online'" checked>
+            <input class="radio" type="radio" name="sex" value="0" checked>
             <span class="info"></span>
           </label>
                男
           <label class="radio-lable">
-            <input class="radio" type="radio" name="pay_type" ng-click="pay_type = 'transfer'">
+            <input class="radio" type="radio" name="sex" value="0">
             <span class="info"></span>
           </label>
                女
-          <span class="input-alert" ng-show="userForm.cellphone.$dirty && userForm.cellphone.$invalid">
-              性别不能为空
-          </span>
       </div>
     </div>
     <div class="info-form-group">
@@ -74,7 +71,7 @@
       <label></label>
       <div>
           <button type="submit" class="btn btn-cancel" ng-disabled="userForm.$invalid">保存</button>
-          <button type="submit" class="btn btn-black" ng-disabled="userForm.$invalid">保存并付费</button>
+          <button type="button" class="btn btn-black" ng-disabled="userForm.$invalid" ng-click="updateToPay()">保存并付费</button>
       </div>
     </div>
   </form>

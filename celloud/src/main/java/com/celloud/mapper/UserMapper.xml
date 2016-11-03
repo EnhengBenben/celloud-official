@@ -19,6 +19,13 @@
 		<result column="company_id" property="companyId" jdbcType="INTEGER" />
 		<result column="sign" property="sign" jdbcType="VARCHAR" />
 		<result column="balances" property="balances" jdbcType="DECIMAL" />
+        
+	</resultMap>
+	<resultMap id="ClientResultMap" type="com.celloud.model.mysql.User" extends="BaseResultMap">
+	    <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+        <result column="age" property="age" jdbcType="INTEGER" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		user_id, username, email, cellphone, create_date,
@@ -29,9 +36,13 @@
 		login_uuid,
 		company_id, sign,balances
 	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	<sql id="Client_Column_List">
+        address,zip_code,age,sex
+    </sql>
+	<select id="selectByPrimaryKey" resultMap="ClientResultMap" parameterType="java.lang.Integer">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Base_Column_List" />,
+		<include refid="Client_Column_List" />
 		from tb_user
 		where user_id = #{userId,jdbcType=INTEGER}
 	</select>
@@ -232,6 +243,19 @@
 			<if test="balances != null">
 				balances = #{balances,jdbcType=DECIMAL},
 			</if>
+			
+			<if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null">
+                zip_code = #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
 		</set>
 		where user_id = #{userId,jdbcType=INTEGER}
 	</update>

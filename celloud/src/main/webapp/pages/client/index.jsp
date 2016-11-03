@@ -38,14 +38,14 @@
 	        </div>
 	        <ul class="nav navbar-nav pull-right">
 	          <li class="dropdown">
-	            <a href="javascript:void(0)"  role="button" aria-haspopup="true" aria-expanded="false"><i class="c-rocky-home"></i></a>
+	            <a href="#/"  role="button" aria-haspopup="true" aria-expanded="false"><i class="c-rocky-home"></i></a>
 	          </li>
 	          <li class="dropdown">
 	            <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
 	              <i class="c-rocky-exit"></i>
 	            </a>
 	            <div class="dropdown-menu user-dropdown">
-	              <a class="btn" href="<%=request.getContextPath()%>/index#/user/base">个人信息</a>
+	              <a class="btn" href="#/base">个人信息</a>
 	              <a class="btn btn-reset" href="logout">退出</a>
 	            </div>
 	          </li>

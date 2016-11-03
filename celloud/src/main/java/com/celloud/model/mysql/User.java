@@ -45,6 +45,11 @@ public class User implements Serializable {
 
     private BigDecimal balances;
 
+    private String address;
+    private String zipCode;
+    private Integer age;
+    private Integer sex;
+
     public Integer getUserId() {
         return userId;
     }
@@ -187,6 +192,38 @@ public class User implements Serializable {
 
     public void setBalances(BigDecimal balances) {
         this.balances = balances;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
 }

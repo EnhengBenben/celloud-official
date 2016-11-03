@@ -113,6 +113,11 @@ public class UserServiceImpl implements UserService {
         temp.setUserId(ConstantsData.getLoginUserId());
         temp.setIcon(user.getIcon());
         temp.setNavigation(user.getNavigation());
+        temp.setTruename(user.getTruename());
+        temp.setAddress(user.getAddress());
+        temp.setZipCode(user.getZipCode());
+        temp.setAge(user.getAge());
+        temp.setSex(user.getSex());
         return userMapper.updateByPrimaryKeySelective(temp);
     }
 
