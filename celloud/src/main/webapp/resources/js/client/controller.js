@@ -19,6 +19,9 @@
       });
 		};
 		$scope.updateToPay = function(){
+			$scope.user.province = $("#s_province").val();
+			$scope.user.city = $("#s_city").val();
+			$scope.user.district = $("#s_county").val();
 		  clientBaseService.updateUserInfo($scope.user).success(function(data){
         $.alert(data.message);
         $location.path("/pay");
