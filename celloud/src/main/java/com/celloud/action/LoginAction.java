@@ -6,6 +6,7 @@ import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -77,63 +78,57 @@ public class LoginAction {
 	@Resource
 	private AppService appService;
 
-    @ActionLog(value = "发送登录验证码", button = "发送验证码")
-    @RequestMapping("sendLoginCapcha.html")
-    @ResponseBody
-    public String sendCapcha(String cellphone) {
-        String captcha = DataUtil.getCapchaRandom();
-        String result = AliDayuUtils.sendCaptcha(cellphone, captcha);
-        // 验证码已发送
-        if (!result.equals("error")) {
-            // 存储验证码，计算过期时间
-            LoginCaptcha loginCaptcha = new LoginCaptcha();
-            loginCaptcha.setCaptcha(captcha);
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.MINUTE, AlidayuConfig.captcha_expire_time);
-            loginCaptcha.setExpireDate(calendar.getTime());
-            // TODO 临时存文件
-            File f = new File(PropertiesUtil.outputPath + cellphone);
-            if (f.exists()) {
-                try {
-                    FileUtils.forceDelete(
-                            new File(PropertiesUtil.outputPath + cellphone));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            FileTools.createFile(
-                    PropertiesUtil.outputPath + cellphone + "/" + captcha);
-            return "succuss";
-        }
-        return "error";
-    }
+	@ActionLog(value = "发送登录验证码", button = "发送验证码")
+	@RequestMapping("sendLoginCapcha.html")
+	@ResponseBody
+	public String sendCapcha(String cellphone) {
+		String captcha = DataUtil.getCapchaRandom();
+		String result = AliDayuUtils.sendCaptcha(cellphone, captcha);
+		// 验证码已发送
+		if (!result.equals("error")) {
+			// 存储验证码，计算过期时间
+			LoginCaptcha loginCaptcha = new LoginCaptcha();
+			loginCaptcha.setCaptcha(captcha);
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.MINUTE, AlidayuConfig.captcha_expire_time);
+			loginCaptcha.setExpireDate(calendar.getTime());
+			// TODO 临时存文件
+			File f = new File(PropertiesUtil.outputPath + cellphone);
+			if (f.exists()) {
+				try {
+					FileUtils.forceDelete(new File(PropertiesUtil.outputPath + cellphone));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			FileTools.createFile(PropertiesUtil.outputPath + cellphone + "/" + captcha);
+			return "succuss";
+		}
+		return "error";
+	}
 
-    @ActionLog(value = "C端用户登录", button = "登录")
-    @RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
-    public String clientLogin(String cellphone, String captcha, Model model) {
-        File f = new File(
-                PropertiesUtil.outputPath + cellphone + "/" + captcha);
-        if (f.exists()) {
-            Integer result = userService.checkAddClientUser(cellphone);
-            if (result != 0) {
-                Subject subject = SecurityUtils.getSubject();
-                User user = userService.findByUsernameOrEmail(
-                        "cel_" + cellphone.substring(3, cellphone.length()));
-                UsernamePasswordToken token = new UsernamePasswordToken(
-                        user.getUsername(), user.getPassword(), false);
-                subject.login(token);
-                try {
-                    FileUtils.forceDelete(
-                            new File(PropertiesUtil.outputPath + cellphone));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return "redirect:clientindex";
-            }
-        }
-        model.addAttribute("info", "验证码错误，请重新输入！");
-        return "redirect:client.html";
-    }
+	@ActionLog(value = "C端用户登录", button = "登录")
+	@RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
+	public String clientLogin(String cellphone, String captcha, Model model) {
+		File f = new File(PropertiesUtil.outputPath + cellphone + "/" + captcha);
+		if (f.exists() && new Date().getTime() - f.lastModified() > 1000 * 60 * 5) {
+			Integer result = userService.checkAddClientUser(cellphone);
+			if (result != 0) {
+				Subject subject = SecurityUtils.getSubject();
+				User user = userService.findByUsernameOrEmail("cel_" + cellphone.substring(3, cellphone.length()));
+				UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(), false);
+				subject.login(token);
+				try {
+					FileUtils.forceDelete(new File(PropertiesUtil.outputPath + cellphone));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return "redirect:clientindex";
+			}
+		}
+		model.addAttribute("info", "验证码错误，请重新输入！");
+		return "redirect:client.html";
+	}
 
 	/**
 	 * 跳转到登录页面
