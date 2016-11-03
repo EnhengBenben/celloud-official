@@ -24,6 +24,7 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -109,8 +110,7 @@ public class LoginAction {
 
     @ActionLog(value = "C端用户登录", button = "登录")
     @RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
-    public ModelAndView clientLogin(String cellphone, String captcha) {
-        ModelAndView mv = new ModelAndView("client");
+    public String clientLogin(String cellphone, String captcha, Model model) {
         File f = new File(
                 PropertiesUtil.outputPath + cellphone + "/" + captcha);
         if (f.exists()) {
@@ -128,12 +128,11 @@ public class LoginAction {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                mv.setViewName("loading");
-                return mv;
+                return "redirect:clientindex";
             }
         }
-        mv.addObject("info", "验证码错误，请重新验证！");
-        return mv;
+        model.addAttribute("info", "验证码错误，请重新输入！");
+        return "redirect:client.html";
     }
 
 	/**
