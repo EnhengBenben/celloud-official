@@ -25,6 +25,8 @@ $(document).ready(function(){
                 $("#times").html(time);
             }
         }, 1000);
+      }else{
+        $(".error").html("验证码发送时间需要间隔一分钟以上并且每小时不超过七条！");
       }
     });
   });

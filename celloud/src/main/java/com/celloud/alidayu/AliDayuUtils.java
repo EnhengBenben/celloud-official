@@ -1,5 +1,8 @@
 package com.celloud.alidayu;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
@@ -16,6 +19,7 @@ import com.aliyuncs.sms.model.v20160927.SingleSendSmsResponse;
  * @date 2016年10月31日 下午3:09:30
  */
 public class AliDayuUtils {
+	private static Logger logger = LoggerFactory.getLogger(AliDayuUtils.class);
     public static String sendCaptcha(String mobile, String info) {
         IClientProfile profile = DefaultProfile.getProfile(
                 AlidayuConfig.region_id, AlidayuConfig.access_key,
@@ -33,9 +37,9 @@ public class AliDayuUtils {
             SingleSendSmsResponse httpResponse = client.getAcsResponse(request);
             return httpResponse.getRequestId();
         } catch (ServerException e) {
-            e.printStackTrace();
+			logger.error("验证码发送失败！" + e);
         } catch (ClientException e) {
-            e.printStackTrace();
+			logger.error("验证码发送失败！" + e);
         }
         return "error";
     }
