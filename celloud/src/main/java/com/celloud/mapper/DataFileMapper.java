@@ -182,7 +182,9 @@ public interface DataFileMapper {
 	List<DataFile> findDataLists(Page page, @Param("userId") Integer userId, @Param("condition") String condition,
 			@Param("sort") Integer sort, @Param("sortDateType") String sortDateType,
 			@Param("sortNameType") String sortNameType, @Param("state") Integer state,
-			@Param("reportType") Integer reportType, @Param("period") Integer period);
+            @Param("reportType") Integer reportType, @Param("period") Integer period,
+            @Param("sortAnotherName") String sortAnotherName,
+            @Param("sortRun") String sortRun);
 
 	/**
 	 * 按条件检索数据列表

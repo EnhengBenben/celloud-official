@@ -281,6 +281,7 @@
 		    <div class="m-box">
 		        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
 		        <div class="m-boxCon">
+		          <div style="width: 80%;margin-left: 80px;">该统计结果，针对无文献支持的“其他突变位点”。统计结果根据突变次数及所占比例由大到小排序，页面展示前20个突变位点，查看其他位点请点击“显示全部”。</div>
 		          <div id="tableDiv">
 		            <table class="table table-main" ng-show="more" id="site_table_less" style="width: 80%;margin: 0 auto;">
 				        <thead>

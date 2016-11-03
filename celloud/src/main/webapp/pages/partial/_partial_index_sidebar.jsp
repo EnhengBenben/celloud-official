@@ -53,7 +53,7 @@
         </li>
         <shiro:hasPermission name="hospital:menu">
 	        <li ng-class="{active: isActive('/company')}">
-	          <a di-href="<%=request.getContextPath()%>/index#/company/user"><i class="account-icon"></i><span>医院管理</span></a>
+	          <a di-href="<%=request.getContextPath()%>/index#/company/user"><i class="company-icon"></i><span>医院管理</span></a>
 	        </li>
         </shiro:hasPermission>
         <li ng-class="{active: isActive('/feedback')}">

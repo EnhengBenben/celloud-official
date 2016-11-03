@@ -160,7 +160,9 @@ public class DataAction {
             @RequestParam(defaultValue = "") String condition,
             @RequestParam(defaultValue = "0") int sort,
 			@RequestParam(defaultValue = "desc") String sortDateType,
-			@RequestParam(defaultValue = "asc") String sortNameType) {
+            @RequestParam(defaultValue = "asc") String sortNameType,
+            @RequestParam(defaultValue = "asc") String sortRun,
+            @RequestParam(defaultValue = "desc") String sortAnotherName) {
 		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
 		Matcher m = p.matcher(condition);
 		StringBuffer con_sb = new StringBuffer();
@@ -171,7 +173,7 @@ public class DataAction {
 		m.appendTail(con_sb);
 		Page pager = new Page(page, size);
 		PageList<DataFile> dataList = dataService.dataLists(pager, ConstantsData.getLoginUserId(), con_sb.toString(),
-				sort, sortDateType, sortNameType);
+                sort, sortDateType, sortNameType, sortAnotherName, sortRun);
 
 		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
 		return dataList;
