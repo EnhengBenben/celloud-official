@@ -314,6 +314,9 @@ public class LoginAction {
 			session.removeAttribute(names.nextElement());
 		}
 		SecurityUtils.getSubject().logout();
+		if (user.getRole().equals(3)) {
+			return "redirect:client.html";
+		}
 		logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());
 		return "redirect:login";
 	}
