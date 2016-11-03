@@ -18,7 +18,7 @@
 	<sql id="Base_Column_List">
 		tb_log.user_id as user_id, operate, message, log_date, browser,
 		browser_version, os,
-		os_version, ip, address
+		os_version, ip, tb_log.address
 	</sql>
 	<insert id="insert" parameterType="com.celloud.model.mysql.ActionLog">
 		insert into tb_log
