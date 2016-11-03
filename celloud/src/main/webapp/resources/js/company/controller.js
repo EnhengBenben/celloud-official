@@ -75,6 +75,7 @@
 				$scope.province_bak = data.province;
 				$scope.city_bak = data.city;
 				$scope.district_bak = data.district;
+				$scope.companyIcon_bak = data.companyIcon;
 				
 				$("#view").css("background-color","rgb(102, 102, 102)");
 				$("#view").css("background-repeat","no-repeat");
@@ -109,6 +110,7 @@
 		})
 		$scope.reset = function(){
 			$scope.company = angular.copy($scope.company_bak);
+			$("#view").css("background-image","url(" + $scope.company.companyIcon + ")");
 			_init_area($scope.province_bak, $scope.city_bak, $scope.district_bak);
 		}
 		$scope.updateCompanyInfo = function(){
