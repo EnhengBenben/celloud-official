@@ -47,12 +47,12 @@
       <label>性别:<strong class="pull-right">*</strong></label>
       <div>
           <label class="radio-lable">
-            <input class="radio" type="radio" ng-checked="{{user.sex== 0}}" name="sex" value="0" checked>
+            <input class="radio" type="radio" ng-checked="user.sex == 0" name="sex" value="0">
             <span class="info"></span>
           </label>
                男
           <label class="radio-lable">
-            <input class="radio" type="radio" ng-checked="{{user.sex== 1}}" name="sex" value="1">
+            <input class="radio" type="radio" ng-checked="user.sex == 1" name="sex" value="1">
             <span class="info"></span>
           </label>
                女
