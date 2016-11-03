@@ -111,7 +111,7 @@ public class LoginAction {
 	@RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
 	public String clientLogin(String cellphone, String captcha, Model model) {
 		File f = new File(PropertiesUtil.outputPath + cellphone + "/" + captcha);
-		if (f.exists() && new Date().getTime() - f.lastModified() > 1000 * 60 * 5) {
+		if (f.exists() && (new Date().getTime() - f.lastModified()) < 1000 * 60 * 5L) {
 			Integer result = userService.checkAddClientUser(cellphone);
 			if (result != 0) {
 				Subject subject = SecurityUtils.getSubject();
