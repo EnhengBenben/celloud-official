@@ -12,6 +12,9 @@
       templateUrl: "pages/client/pay.jsp",
       controller: "toRecharge"
     })
+    .when('/report',{
+      templateUrl: "pages/client/report.jsp"
+    })
     .otherwise({redirectTo:'/'});
   });
 })()
