@@ -37,7 +37,7 @@
     <div class="info-form-group">
       <label>年龄:<strong class="pull-right">*</strong></label>
       <div>
-          <input name="age" type="text" ng-model="user.age" placeholder="年龄" required="true" />
+          <input name="age" type="number" ng-model="user.age" placeholder="年龄" required="true" min="0" max="100" />
           <span class="input-alert" ng-show="userForm.age.$dirty && userForm.age.$invalid">
               请输入正确的年龄
           </span>
@@ -47,12 +47,12 @@
       <label>性别:<strong class="pull-right">*</strong></label>
       <div>
           <label class="radio-lable">
-            <input class="radio" type="radio" name="sex" value="0" checked>
+            <input class="radio" type="radio" ng-checked="{{user.sex== 0}}" name="sex" value="0" checked>
             <span class="info"></span>
           </label>
                男
           <label class="radio-lable">
-            <input class="radio" type="radio" name="sex" value="1">
+            <input class="radio" type="radio" ng-checked="{{user.sex== 1}}" name="sex" value="1">
             <span class="info"></span>
           </label>
                女

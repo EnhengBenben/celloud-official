@@ -10,6 +10,7 @@
       });
       $.dataManager.refreshDataList("clean");
     }
+    $.dataManager.options.sort = 0;
     $scope.sortQuery = function(column, order){
     	console.log(column, order);
     	if(column == 'anotherName'){

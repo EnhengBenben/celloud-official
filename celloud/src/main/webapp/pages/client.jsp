@@ -29,6 +29,7 @@
 		<div class="logo-name">生物信息云平台</div>
 		<form action="clientLogin.html" method="post" id="clientLoginForm">
 			<div class="login-main clearfix">
+			    <input type="hidden" name="info" id="info" value="${requestScope.info }" />
 			    <div class="error">&nbsp;</div>
 				<input type="text" class="username input-top" placeholder="手机号码" id="cellphone" name="cellphone"/>
 				<div class="yzm">

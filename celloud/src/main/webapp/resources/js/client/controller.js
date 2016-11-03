@@ -19,6 +19,9 @@
       });
 		};
 		$scope.updateToPay = function(){
+			$scope.user.province = $("#s_province").val();
+			$scope.user.city = $("#s_city").val();
+			$scope.user.district = $("#s_county").val();
 		  clientBaseService.updateUserInfo($scope.user).success(function(data){
         $.alert(data.message);
         $location.path("/pay");
@@ -32,18 +35,7 @@
       $scope.balance = data;
     });
     $scope.sumbitRecharge = function(){
-      var payWay = $("#alipay").checked?"alipay":"transfer";
-      var action = CONTEXT_PATH + "/pay/recharge/" + payWay;
-      $("#rechargeForm").attr("action",action);
-      $.tips("请在新打开的页面完成支付操作！");
-    }
-  });
-	celloudApp.controller("report",function($scope,$location,expenseService){
-    expenseService.toRecharge().success(function(data){
-      $scope.balance = data;
-    });
-    $scope.sumbitRecharge = function(){
-      var payWay = $("#alipay").checked?"alipay":"transfer";
+      var payWay = $("input[name=pay-way]:checked").val() == "alipay"?"alipay":"jdpay";
       var action = CONTEXT_PATH + "/pay/recharge/" + payWay;
       $("#rechargeForm").attr("action",action);
       $.tips("请在新打开的页面完成支付操作！");
