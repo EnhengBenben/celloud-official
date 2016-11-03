@@ -5,6 +5,18 @@ $(document).ready(function(){
   var time = 0;
   //变换随机验证码
   $("#getcaptcha").click(function(){
+    var cellphone = $.trim($("#cellphone").val());
+    if(cellphone==""||cellphone==$.trim($("#cellphone").attr("placeholder"))){
+      $(".error").html("请输入手机号！");
+      $("#cellphone").val('').focus();
+      return false;
+    }else{
+      var mobileregex = /^[\d+]{11}$/;
+      if(!mobileregex.test(cellphone)){
+        $(".error").html("手机号格式不正确！");
+        return false;
+      }
+    }
     if(time > 0){
       return false;
     }
