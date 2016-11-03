@@ -22,6 +22,7 @@ $(document).ready(function(){
     }
     $("#getcaptcha").attr("readonly","true");
     $.get("sendLoginCapcha.html",{"cellphone":$("#cellphone").val()},function(result){
+      
       if(result == "succuss"){
         time = 60;
         $("#getcaptcha").addClass("disabled");
@@ -38,7 +39,9 @@ $(document).ready(function(){
             }
         }, 1000);
       }else{
-        $(".error").html("验证码发送时间需要间隔一分钟以上并且每小时不超过七条！");
+        setTimeout(function(){
+          $(".error").html("请勿频繁获取验证码！")
+        }, 5000);
       }
     });
   });
