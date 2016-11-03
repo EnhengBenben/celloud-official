@@ -112,7 +112,7 @@ public class LoginAction {
 	public ModelAndView clientLogin(String cellphone, String captcha, Model model) {
 		File f = new File(PropertiesUtil.outputPath + cellphone + "/" + captcha);
 		ModelAndView mv = new ModelAndView("client");
-		if (f.exists() && new Date().getTime() - f.lastModified() > 1000 * 60 * 5) {
+		if (f.exists() && new Date().getTime() - f.lastModified() < 1000 * 60 * 5) {
 			Integer result = userService.checkAddClientUser(cellphone);
 			if (result != 0) {
 				Subject subject = SecurityUtils.getSubject();
