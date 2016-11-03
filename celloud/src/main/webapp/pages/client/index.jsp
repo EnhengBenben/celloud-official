@@ -81,6 +81,7 @@
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
   <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/area/area.js?v=3.3.4"></script>
   
   <script src="<%=request.getContextPath()%>/js/client.min.js"></script>
   <script type="text/javascript">

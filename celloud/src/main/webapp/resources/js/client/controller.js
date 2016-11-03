@@ -3,8 +3,15 @@
 	  clientBaseService.getUserInfo().
 		success(function(data){
 			$scope.user = data;
+			$scope.province_bak = data.province;
+			$scope.city_bak = data.city;
+			$scope.district_bak = data.district;
+			_init_area($scope.province_bak,$scope.city_bak, $scope.district_bak);
 		});
 		$scope.updateUserInfo = function(){
+			$scope.user.province = $("#s_province").val();
+			$scope.user.city = $("#s_city").val();
+			$scope.user.district = $("#s_county").val();
 		  clientBaseService.updateUserInfo($scope.user).success(function(data){
         $.alert(data.message);
       }).error(function(data){

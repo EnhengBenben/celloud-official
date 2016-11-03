@@ -21,6 +21,8 @@ public interface UserMapper {
 
     public int updateByPrimaryKeySelective(User record);
 
+    public int customUpdateByPrimaryKeySelective(User record);
+
     public int updateByPrimaryKey(User record);
 
     public User checkLogin(User user);

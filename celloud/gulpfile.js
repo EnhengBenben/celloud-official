@@ -159,5 +159,6 @@ gulp.task('default', function(){
 */
 gulp.task('watch', function() {
   gulp.watch(src.mainjs, ['combinejs']);
+  gulp.watch(src.clientjs, ['combineClientjs']);
   gulp.watch(src.lessdir, ['less']);
 });

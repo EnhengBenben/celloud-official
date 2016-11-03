@@ -23,7 +23,6 @@ function change(v, province, city, district){
 	with(ss){
 		length = 0;
 		options[0]=new Option(opt0[v],opt0[v]);
-		options[0].checked = true;
 		if(v && document.getElementById(s[v-1]).selectedIndex>0 || !v){
 			if(dsy.Exists(str)){
 				ar = dsy.Items[str];
@@ -435,6 +434,7 @@ dsy.add("0",["北京","天津","上海","重庆","河北","山西","内蒙古","
 var s=["s_province","s_city","s_county"];//三个select的name
 var opt0 = ["省份","地级市","市、县级市"];//初始值
 function _init_area(province, city, district){  //初始化函数
+	console.log("ssssssssss");
 	for(i=0;i<s.length-1;i++){
 	  document.getElementById(s[i]).onchange=new Function("change("+(i+1)+")");
 	}

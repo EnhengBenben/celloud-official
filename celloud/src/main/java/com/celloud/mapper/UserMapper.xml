@@ -19,13 +19,15 @@
 		<result column="company_id" property="companyId" jdbcType="INTEGER" />
 		<result column="sign" property="sign" jdbcType="VARCHAR" />
 		<result column="balances" property="balances" jdbcType="DECIMAL" />
-        
 	</resultMap>
 	<resultMap id="ClientResultMap" type="com.celloud.model.mysql.User" extends="BaseResultMap">
 	    <result column="address" property="address" jdbcType="VARCHAR" />
         <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
         <result column="age" property="age" jdbcType="INTEGER" />
         <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="district" property="district" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		user_id, username, email, cellphone, create_date,
@@ -37,7 +39,7 @@
 		company_id, sign,balances
 	</sql>
 	<sql id="Client_Column_List">
-        address,zip_code,age,sex
+        address,zip_code,age,sex, province, city, district
     </sql>
 	<select id="selectByPrimaryKey" resultMap="ClientResultMap" parameterType="java.lang.Integer">
 		select
@@ -256,9 +258,103 @@
             <if test="sex != null">
                 sex = #{sex,jdbcType=INTEGER},
             </if>
+            <if test="province != null">
+                province = #{province,jdbcType=INTEGER},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=INTEGER},
+            </if>
+            <if test="district != null">
+                district = #{district,jdbcType=INTEGER},
+            </if>
 		</set>
 		where user_id = #{userId,jdbcType=INTEGER}
 	</update>
+	<update id="customUpdateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.User">
+        update tb_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="cellphone != null">
+                cellphone = #{cellphone,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                role = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="navigation != null">
+                navigation = #{navigation,jdbcType=INTEGER},
+            </if>
+            <if test="truename != null">
+                truename = #{truename,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="loginUuid != null">
+                login_uuid = #{loginUuid,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="sign != null">
+                sign = #{sign,jdbcType=VARCHAR},
+            </if>
+            <if test="balances != null">
+                balances = #{balances,jdbcType=DECIMAL},
+            </if>
+            
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null">
+                zip_code = #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=INTEGER},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=INTEGER},
+            </if>
+            <if test="district != null">
+                district = #{district,jdbcType=INTEGER},
+            </if>
+            <if test="province == null">
+                province = NULL,
+            </if>
+            <if test="city == null">
+                city = NULL,
+            </if>
+            <if test="district == null">
+                district = NULL,
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
 	<update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.User">
 		update tb_user
 		set
@@ -287,7 +383,14 @@
 		company_id =
 		#{companyId,jdbcType=INTEGER},
 		sign = #{sign,jdbcType=VARCHAR},
-		balances = #{balances,jdbcType=DECIMAL}),
+		balances = #{balances,jdbcType=DECIMAL},
+		address = #{address},
+		zip_code = #{zipCode},
+        age = #{age},
+        sex = #{sex},
+        province = #{province},		
+        city = #{city},	
+        district = #{district}		
 		where
 		user_id = #{userId,jdbcType=INTEGER}
 	</update>
