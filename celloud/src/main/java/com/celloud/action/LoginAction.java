@@ -305,7 +305,7 @@ public class LoginAction {
 	 */
 	@ActionLog(value = "用户退出", button = "退出")
 	@RequestMapping("logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
+	public String logout(HttpServletRequest request, HttpServletResponse response, String flag) {
 		HttpSession session = request.getSession();
 		User user = ConstantsData.getLoginUser();
 		session.removeAttribute(Constants.SESSION_LOGIN_USER);
@@ -314,7 +314,7 @@ public class LoginAction {
 			session.removeAttribute(names.nextElement());
 		}
 		SecurityUtils.getSubject().logout();
-		if (user.getRole().equals(3)) {
+		if ((user != null && user.getRole().equals(3)) || "client".equals(flag)) {
 			return "redirect:client.html";
 		}
 		logger.info("用户({})主动退出", user == null ? "null..." : user.getUsername());

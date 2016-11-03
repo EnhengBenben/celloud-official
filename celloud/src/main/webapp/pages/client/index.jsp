@@ -45,7 +45,7 @@
 	            </a>
 	            <div class="dropdown-menu user-dropdown">
 	              <a class="btn" href="#/base">个人信息</a>
-	              <a class="btn btn-reset" href="logout">退出</a>
+	              <a class="btn btn-reset" href="logout?flag=client">退出</a>
 	            </div>
 	          </li>
 	        </ul>
