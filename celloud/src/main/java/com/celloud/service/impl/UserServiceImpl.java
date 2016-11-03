@@ -120,11 +120,17 @@ public class UserServiceImpl implements UserService {
         temp.setSex(user.getSex());
         if ("省份".equals(user.getProvince())) {
             temp.setProvince(null);
+        } else {
+            temp.setProvince(user.getProvince());
         }
         if ("地级市".equals(user.getCity())) {
             temp.setCity(user.getCity());
+        } else {
+            temp.setCity(user.getCity());
         }
         if ("市、县级市".equals(user.getDistrict())) {
+            temp.setDistrict(user.getDistrict());
+        } else {
             temp.setDistrict(user.getDistrict());
         }
         return userMapper.customUpdateByPrimaryKeySelective(temp);
