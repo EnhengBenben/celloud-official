@@ -1,5 +1,7 @@
 package com.celloud.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -18,6 +20,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -44,7 +47,9 @@ import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
+import com.celloud.utils.FileTools;
 import com.celloud.utils.MD5Util;
+import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.RSAUtil;
 import com.celloud.utils.UserAgentUtil;
 import com.celloud.wechat.ParamFormat;
@@ -74,8 +79,7 @@ public class LoginAction {
     @ActionLog(value = "发送登录验证码", button = "发送验证码")
     @RequestMapping("sendLoginCapcha.html")
     @ResponseBody
-    public String sendCapcha(HttpServletRequest request, String cellphone) {
-        HttpSession session = request.getSession();
+    public String sendCapcha(String cellphone) {
         String captcha = DataUtil.getCapchaRandom();
         String result = AliDayuUtils.sendCaptcha(cellphone, captcha);
         // 验证码已发送
@@ -86,8 +90,15 @@ public class LoginAction {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.MINUTE, AlidayuConfig.captcha_expire_time);
             loginCaptcha.setExpireDate(calendar.getTime());
-            session.removeAttribute("phoneLoginCaptcha");
-            session.setAttribute("phoneLoginCaptcha", loginCaptcha);
+            // TODO 临时存文件
+            try {
+                FileUtils.forceDeleteOnExit(
+                        new File(PropertiesUtil.outputPath + cellphone));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            FileTools.createFile(
+                    PropertiesUtil.outputPath + cellphone + "/" + captcha);
             return "succuss";
         }
         return "error";
@@ -96,15 +107,11 @@ public class LoginAction {
     @ActionLog(value = "C端用户登录", button = "登录")
     @RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView clientLogin(HttpServletRequest request,
-            String cellphone, String captcha) {
-        HttpSession session = request.getSession();
+    public ModelAndView clientLogin(String cellphone, String captcha) {
         ModelAndView mv = new ModelAndView("client");
-        LoginCaptcha loginCaptcha = (LoginCaptcha) session
-                .getAttribute("phoneLoginCaptcha");
-        if (loginCaptcha != null && captcha.equals(loginCaptcha.getCaptcha())
-                && Calendar.getInstance()
-                .getTime().compareTo(loginCaptcha.getExpireDate()) < 0) {
+        File f = new File(
+                PropertiesUtil.outputPath + cellphone + "/" + captcha);
+        if (f.exists()) {
             Integer result = userService.checkAddClientUser(cellphone);
             if (result != 0) {
                 Subject subject = SecurityUtils.getSubject();
@@ -113,7 +120,12 @@ public class LoginAction {
                 UsernamePasswordToken token = new UsernamePasswordToken(
                         user.getUsername(), user.getPassword(), true);
                 subject.login(token);
-                session.removeAttribute("phoneLoginCaptcha");
+                try {
+                    FileUtils.forceDeleteOnExit(
+                            new File(PropertiesUtil.outputPath + cellphone));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 mv.setViewName("loading");
                 return mv;
             }
