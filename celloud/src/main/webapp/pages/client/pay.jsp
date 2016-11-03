@@ -18,7 +18,7 @@
 	          <li class="bank-item">
 	            <label class="checkbox-inline">
 	              <label class="radio-lable">
-	                <input class="radio" type="radio" name="pay-bank" ng-checked="tab == 'pay_tab_alipay'" value="alipay" checked="checked">
+	                <input class="radio" type="radio" name="pay-bank" value="alipay" checked="checked">
 	                <span class="info"></span>
 	              </label>
 	              <img alt="支付宝" src="<%=request.getContextPath()%>/images/bank/alipay.gif" data-pin-nopin="true">
@@ -31,7 +31,7 @@
 	            <li class="bank-item">
 	              <label class="checkbox-inline">
 	                <label class="radio-lable">
-	                  <input class="radio" type="radio" name="pay_bank" <c:if test="${st.first }">ng-checked="tab == 'pay_tab_b2c'"</c:if> value="${bank.bankCode }">
+	                  <input class="radio" type="radio" name="pay-bank" <c:if test="${st.first }">ng-checked="tab == 'pay_tab_b2c'"</c:if> value="${bank.bankCode }">
 	                  <span class="info"></span>
 	                </label>
 	                <img alt="${bank.bankName }" title="${bank.bankName }" src="<%=request.getContextPath()%>/images/bank/${bank.bankLogo }.gif">
