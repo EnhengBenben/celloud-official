@@ -109,8 +109,9 @@ public class LoginAction {
 
 	@ActionLog(value = "C端用户登录", button = "登录")
 	@RequestMapping(value = "clientLogin.html", method = RequestMethod.POST)
-	public String clientLogin(String cellphone, String captcha, Model model) {
+	public ModelAndView clientLogin(String cellphone, String captcha, Model model) {
 		File f = new File(PropertiesUtil.outputPath + cellphone + "/" + captcha);
+		ModelAndView mv = new ModelAndView("client");
 		if (f.exists() && new Date().getTime() - f.lastModified() > 1000 * 60 * 5) {
 			Integer result = userService.checkAddClientUser(cellphone);
 			if (result != 0) {
@@ -120,24 +121,25 @@ public class LoginAction {
 				try {
 					subject.login(token);
 				} catch (IncorrectCredentialsException | UnknownAccountException e) {
-					model.addAttribute("info", "用户登录失败，用户名密码错误");
+					mv.addObject("info", "用户登录失败，用户名密码错误");
 					logger.info("用户登录失败，用户名密码错误：phone={},captcha={}", cellphone, captcha);
 				} catch (Exception e) {
-					model.addAttribute("info", "用户登录失败，未知异常");
+					mv.addObject("info", "用户登录失败，未知异常");
 					logger.info("用户登录失败，未知异常：phone={},captcha={}", cellphone, captcha);
 				}
 				if (subject.isAuthenticated()) {
+					mv.setViewName("loading");
 					try {
 						FileUtils.forceDelete(new File(PropertiesUtil.outputPath + cellphone));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					return "redirect:clientindex";
+					return mv;
 				}
 			}
 		}
-		model.addAttribute("info", "验证码错误，请重新输入！");
-		return "redirect:client.html";
+		mv.addObject("info", "验证码错误，请重新输入！");
+		return mv;
 	}
 
 	/**
