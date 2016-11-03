@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.celloud.constants.ConstantsData;
 import com.celloud.listener.FileDownloadErrorEvent;
 import com.celloud.listener.FileDownloadedEvent;
 import com.celloud.model.BoxFile;
@@ -28,13 +27,14 @@ public class BoxApiServiceImpl implements BoxApiService {
 	@Override
 	public void downloadFromOSS(BoxFile file) {
 		boolean isDownloaded = false;
+		ossService.refreshConfig();
 		for (int i = 0; i < 5; i++) {
-			ConstantsData.setOSSConfig(ossService.getLatest());
 			String temp = OSSUtils.download(file.getObjectKey(), file.getPath());
 			if (file.getMd5().equals(temp)) {
 				isDownloaded = true;
 				break;
 			} else {
+				ossService.refreshConfig();
 				logger.info("从oss下载文件错误，进行第{}次重试：{}", i + 1, file.getObjectKey());
 			}
 		}
