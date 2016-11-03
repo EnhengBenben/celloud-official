@@ -50,7 +50,7 @@ public class DataAction {
         ModelAndView mv = new ModelAndView("data/data_siteInfo");
         User user = ConstantsData.getLoginUser();
         if (user != null) {
-            Map<Integer, Map<String, String>> siteInfo = null;
+            List<Map<String, String>> siteInfo = null;
             Integer role = user.getRole();
             if (UserRole.ADMINISTRATOR.equals(role)) {// 超级管理员
                 siteInfo = this.dataService.getSiteInfo(null, site);

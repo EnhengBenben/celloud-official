@@ -547,7 +547,6 @@
 				  $scope.siteKeys.push(j);
 			  }
 		  }
-		  console.log($scope.siteKeys);
 		  dataInPro($scope.hbv, $scope.project.projectId, $scope.project.projectName);
 		  $scope.change1 = function(){
 			  $("#nomal").css("display","");
@@ -627,17 +626,30 @@
 		  $scope.more = true;
 		  $("#more").hide();
 		  
-		  $scope.showMore = function(){
+		  $scope.tablePos = document.getElementById('tableDiv').offsetTop;
+		  $scope.chartPos = document.getElementById('charDiv0').offsetTop;
+		  
+		  $scope.showMore = function(flag){
 			  $("#more").show();
 			  $("#less").hide();
 			  $scope.more = false;
 			  $scope.less = true;
+			  if(flag == 'table'){
+				  console.log(document.getElementById('tableDiv').offsetTop);
+			  }else{
+				  console.log(document.getElementById('charDiv0').offsetTop);
+			  }
 		  }
-		  $scope.showLess = function(){
+		  $scope.showLess = function(flag){
 			  $("#more").hide();
 			  $("#less").show();
 			  $scope.more = true;
 			  $scope.less = false;
+			  if(flag == 'table'){
+				  console.log(document.getElementById('tableDiv').offsetTop);
+			  }else{
+				  console.log(document.getElementById('charDiv0').offsetTop);
+			  }
 		  }
 		  
 		  $.get("count/hbvCompare",{"appId":82,"path":DATAPATH},function(data){

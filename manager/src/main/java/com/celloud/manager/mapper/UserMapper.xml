@@ -362,4 +362,14 @@
             (#{userId},#{appAdd.appId},#{appAdd.isAdd})
         </foreach> 
     </insert>
+    <select id="findUsersByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tb_user
+        WHERE user_id
+        IN
+        <foreach collection="userIds" item="userId" separator="," open="(" close=")">
+        #{userId}
+        </foreach>
+    </select>
 </mapper>
