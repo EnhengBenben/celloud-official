@@ -15,6 +15,8 @@ import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.DataState;
+import com.celloud.constants.UserRole;
 import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.UserMapper;
 import com.celloud.mapper.UserRegisterMapper;
@@ -228,8 +230,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Integer addClientUser(String cellphone) {
+        User user = new User();
+        user.setCellphone(cellphone);
+        user.setUsername("cel_" + cellphone.substring(3, cellphone.length()));
+        // 客户端默认密码：CelLoud+手机号
+        user.setPassword(MD5Util.getMD5("CelLoud" + cellphone));
+        user.setCreateDate(new Date());
+        user.setRole(UserRole.C_USER);
+        return userMapper.insertSelective(user);
+    }
+
+    @Override
+    public Integer checkAddClientUser(String cellphone) {
+        User user = userMapper.findUserByCellphoneAndRole(cellphone,
+                UserRole.C_USER, DataState.ACTIVE);
+        if (user == null && cellphone != null) {
+            return addClientUser(cellphone);
+        }
+        return -1;
+    }
+
     public Boolean updateBySelective(User updateUser) {
         return userMapper.updateByPrimaryKeySelective(updateUser) == 1;
     }
-
 }

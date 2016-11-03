@@ -208,6 +208,9 @@ public class HomeAction {
                 return "redirect:bsi";
             }
         }
+        if (referer != null && referer.contains("client")) {
+            return "redirect:clientindex";
+        }
         return "index";
     }
 
@@ -219,6 +222,11 @@ public class HomeAction {
     @RequestMapping("rocky")
     public String rocky() {
         return "rocky/index";
+    }
+
+    @RequestMapping("clientindex")
+    public String clientIndex() {
+        return "client/index";
     }
 
     @RequestMapping("download.html")
