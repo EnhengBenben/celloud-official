@@ -18,7 +18,7 @@
 	          <li class="bank-item">
 	            <label class="checkbox-inline">
 	              <label class="radio-lable">
-	                <input class="radio" type="radio" name="pay-bank" value="alipay" checked="checked">
+	                <input id="alipay" class="radio" type="radio" name="pay-bank" value="alipay" checked="checked">
 	                <span class="info"></span>
 	              </label>
 	              <img alt="支付宝" src="<%=request.getContextPath()%>/images/bank/alipay.gif" data-pin-nopin="true">
