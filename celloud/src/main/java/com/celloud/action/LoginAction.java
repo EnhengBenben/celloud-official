@@ -91,11 +91,14 @@ public class LoginAction {
             calendar.add(Calendar.MINUTE, AlidayuConfig.captcha_expire_time);
             loginCaptcha.setExpireDate(calendar.getTime());
             // TODO 临时存文件
-            try {
-                FileUtils.forceDelete(
-                        new File(PropertiesUtil.outputPath + cellphone));
-            } catch (IOException e) {
-                e.printStackTrace();
+            File f = new File(PropertiesUtil.outputPath + cellphone);
+            if (f.exists()) {
+                try {
+                    FileUtils.forceDelete(
+                            new File(PropertiesUtil.outputPath + cellphone));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             FileTools.createFile(
                     PropertiesUtil.outputPath + cellphone + "/" + captcha);
