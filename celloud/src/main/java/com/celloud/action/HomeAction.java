@@ -210,7 +210,6 @@ public class HomeAction {
 			}
 		}
 		if (referer != null && referer.contains("client")) {
-			System.out.println(referer);
 			return "redirect:clientindex";
 		}
 		return "index";
