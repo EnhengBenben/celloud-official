@@ -11,6 +11,7 @@
     <div style="top: 30%; left: 40%; position: absolute;"><font color="#ccc">页面加载中。。。</font></div>
     <script type="text/javascript">
         setTimeout(function() {
+        	alert( window.location.href);
            window.location.href = "index${route}";
         }, 0);
     </script>
