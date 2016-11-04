@@ -40,7 +40,7 @@
       $scope.balance = data;
     });
     $scope.sumbitRecharge = function(){
-      var payWay = $("input[name=pay-way]:checked").val() == "alipay"?"alipay":"jdpay";
+      var payWay = $("input[name='pay_bank']:checked").val() == "alipay"?"alipay":"jdpay";
       var action = CONTEXT_PATH + "/pay/recharge/" + payWay;
       $("#rechargeForm").attr("action",action);
       $.tips("请在新打开的页面完成支付操作！");
