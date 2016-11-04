@@ -128,7 +128,7 @@ public class LoginAction {
 					logger.info("用户登录失败，未知异常：phone={},captcha={}", cellphone, captcha);
 				}
 				if (subject.isAuthenticated()) {
-					mv.setViewName("clientindex");
+					mv.setViewName("client/index");
 					try {
 						FileUtils.forceDelete(new File(PropertiesUtil.outputPath + cellphone));
 					} catch (IOException e) {
