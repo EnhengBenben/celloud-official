@@ -7,7 +7,8 @@
 	            if(sessionstatus=="timeout" && !window.sessionTimeoutFlagClient){
 	            	window.sessionTimeoutFlagClient=true;
 	            	alert("登录超时，请重新登录！");
-	            	window.location.href="client.html";
+	            	alert(window.location.href);
+//	            	window.location.href="client.html";
 	            }
 	            return response;
 	        }
