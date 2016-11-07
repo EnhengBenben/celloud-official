@@ -105,4 +105,14 @@
 	<delete id="deleteByUserId">
 	   delete from tb_sec_user_role_relat where user_id = #{userId}
 	</delete>
+	<select id="findRoleByIds" resultMap="BaseResultMap">
+	   SELECT
+	   <include refid="Base_Column_List"/>
+	   FROM tb_sec_role
+	   WHERE id
+	   IN
+	   <foreach collection="roleIds" item="roleId" separator="," open="(" close=")">
+	       #{roleId}
+	   </foreach>
+	</select>
 </mapper>

@@ -29,6 +29,9 @@
 		truename, state, dept_id, login_uuid,
 		company_id, sign, balances
 	</sql>
+	<sql id="App_Right">
+		u.user_id, u.username, u.email
+	</sql>
 	<select id="getOpenIdByUser" resultType="java.lang.String">
         select open_id from tb_user_wechat
         where user_id=#{userId}
@@ -409,4 +412,11 @@
         from tb_user
         where state = #{state} and (role = #{role} or role = 2)     
     </select>
+   
+  <select id="getUserByAppId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select 
+	<include refid="App_Right" />
+    from tb_user u,tb_user_app_right uar
+    where u.user_id = uar.user_id and uar.app_id = #{appId} and u.state = #{state}
+  </select>
 </mapper>

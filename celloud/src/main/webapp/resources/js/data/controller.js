@@ -10,6 +10,34 @@
       });
       $.dataManager.refreshDataList("clean");
     }
+    $.dataManager.options.sort = 0;
+    $scope.sortQuery = function(column, order){
+    	console.log(column, order);
+    	if(column == 'anotherName'){
+    		$scope.column = 'anotherName';
+    		$.dataManager.options.sort = 3;
+    		if(order == 'asc'){
+    			$scope.order = 'desc';
+    			$.dataManager.options.sortAnotherName = 'desc';
+    		}else{
+    			$scope.order = 'asc';
+    			$.dataManager.options.sortAnotherName = 'asc';
+    		}
+    	}else if(column == 'run'){
+    		$scope.column = 'run';
+    		$.dataManager.options.sort = 4;
+    		if(order == 'asc'){
+    			$scope.order = 'desc';
+    			$.dataManager.options.sortRun = 'desc';
+    		}else{
+    			$scope.order = 'asc';
+    			$.dataManager.options.sortRun = 'asc';
+    		}
+    	}
+    	runService.pageList().success(function(response){
+    		$scope.dataList = response;
+        });
+    }
     //初始化列表
     $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
     //条件检索

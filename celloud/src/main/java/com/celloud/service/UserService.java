@@ -245,4 +245,48 @@ public interface UserService {
 	 * @date 2016年7月11日下午1:35:15
 	 */
 	public int wechatUnBind(String openId, String pwd);
+
+    /**
+     * 
+     * @description 发送用户注册邮件
+     * @author miaoqi
+     * @date 2016年10月28日下午1:45:21
+     *
+     * @param email
+     *            注册邮箱
+     * @param loginUserId
+     *            登录用户id
+     */
+    public Boolean sendRegisterEmail(String email);
+
+    /**
+     * 新增C端用户
+     * 
+     * @param cellphone
+     * @return
+     * @author leamo
+     * @date 2016年10月31日 下午7:43:07
+     */
+    public Integer addClientUser(String cellphone);
+
+    /**
+     * 判断是否新增C端用户
+     * 
+     * @param cellphone
+     * @return
+     * @author leamo
+     * @date 2016年10月31日 下午8:24:03
+     */
+    public Integer checkAddClientUser(String cellphone);
+    
+    /**
+     * 
+     * @description 根据主键修改不为空的字段
+     * @author miaoqi
+     * @date 2016年10月27日下午4:06:25
+     *
+     * @param updateUser
+     * @return
+     */
+    Boolean updateBySelective(User updateUser);
 }

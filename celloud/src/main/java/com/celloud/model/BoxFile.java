@@ -4,9 +4,11 @@ public class BoxFile {
 	private Integer userId;
 	private Integer fileId;
 	private String fileName;
+	private String anotherName;
 	private String dataKey;
 	private String objectKey;
 	private Integer needSplit;
+	private boolean splited;
 	private String md5;
 	private String path;
 	private Integer tagId;
@@ -36,6 +38,14 @@ public class BoxFile {
 		this.fileName = fileName;
 	}
 
+	public String getAnotherName() {
+		return anotherName;
+	}
+
+	public void setAnotherName(String anotherName) {
+		this.anotherName = anotherName;
+	}
+
 	public String getDataKey() {
 		return dataKey;
 	}
@@ -58,6 +68,14 @@ public class BoxFile {
 
 	public void setNeedSplit(Integer needSplit) {
 		this.needSplit = needSplit;
+	}
+
+	public boolean isSplited() {
+		return splited;
+	}
+
+	public void setSplited(boolean splited) {
+		this.splited = splited;
 	}
 
 	public String getMd5() {

@@ -79,4 +79,26 @@ public interface CompanyMapper {
     public List<Map<String, String>> getAllToSelect();
 
     public int addCompany(Company company);
+
+    /**
+     * 
+     * @description 根据角色id查找companyids
+     * @author miaoqi
+     * @date 2016年10月26日下午4:34:03
+     *
+     * @param roleId
+     * @return
+     */
+    public List<String> findCompanyIdsByRoleId(@Param("roleId") Integer roleId);
+
+    /**
+     * 
+     * @description 根据id集合查询公司集合
+     * @author miaoqi
+     * @date 2016年11月3日上午10:36:11
+     *
+     * @param companyIds
+     * @return
+     */
+    public List<Company> findCompanysByIds(@Param("companyIds") List<Integer> companyIds);
 }

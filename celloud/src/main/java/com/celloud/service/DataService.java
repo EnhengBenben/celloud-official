@@ -108,7 +108,7 @@ public interface DataService {
 	 * @return
 	 */
 	PageList<DataFile> dataLists(Page page, Integer userId, String condition, int sort, String sortDateType,
-			String sortNameType);
+            String sortNameType, String sortAnotherName, String sortRun);
 
 	/**
 	 * 按条件检索数据列表

@@ -273,4 +273,25 @@
       now(), #{province }, 
       #{city }, #{addressDetail })
   </insert>
+  <select id="findCompanyIdsByRoleId" resultType="java.lang.String">
+    SELECT company_id
+    FROM tb_user
+    WHERE user_id
+    IN(
+        SELECT user_id
+        FROM tb_sec_user_role_relat
+        WHERE role_id = #{roleId}
+    )
+    AND role = 0
+  </select>
+  <select id="findCompanysByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tb_company
+        WHERE company_id
+        IN
+        <foreach collection="companyIds" item="companyId" separator="," open="(" close=")">
+        #{companyId}
+        </foreach>
+    </select>
 </mapper>

@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
 import com.celloud.constants.IconConstants;
-import com.celloud.constants.SampleExperState;
-import com.celloud.constants.SampleIsCommit;
 import com.celloud.constants.SampleTypes;
 import com.celloud.constants.TaskPeriod;
 import com.celloud.mapper.SampleLogMapper;
@@ -23,6 +21,7 @@ import com.celloud.mapper.SampleMapper;
 import com.celloud.mapper.SampleOrderMapper;
 import com.celloud.mapper.SampleStorageMapper;
 import com.celloud.mapper.TaskMapper;
+import com.celloud.model.mysql.Metadata;
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleLog;
 import com.celloud.model.mysql.SampleOrder;
@@ -78,7 +77,7 @@ public class SampleServiceImple implements SampleService {
         sampleOrderMapper.insert(so);
         // 修改sample状态为已添加，并添加订单编号
         Integer result = sampleMapper.updateAddTypeById(sampleIds,
-                SampleIsCommit.ISADD, so.getId(), new Date());
+                SampleTypes.ISADD, so.getId(), new Date());
         for (Integer sampleId : sampleIds) {
             Task task = new Task();
             task.setAppId(appId);
@@ -106,15 +105,15 @@ public class SampleServiceImple implements SampleService {
         so.setOrderNo(DataUtil.getSampleOrderNo(so.getId()));
         sampleOrderMapper.updateByPrimaryKeySelective(so);
         // 修改sample状态为已添加，并添加订单编号
-        sampleMapper.updateAddTypeById(sampleIds, SampleIsCommit.ISADD,
+        sampleMapper.updateAddTypeById(sampleIds, SampleTypes.ISADD,
                 so.getId(), new Date());
         return so.getId();
     }
 
 	@Override
 	public List<Sample> allUnaddSample(Integer userId) {
-        return sampleMapper.selectAllByUser(userId, SampleIsCommit.NOTADD,
-                DataState.ACTIVE, SampleExperState.SAMPLING);
+        return sampleMapper.selectAllByUser(userId, SampleTypes.NOTADD,
+                DataState.ACTIVE, SampleTypes.SAMPLING);
 	}
 
 	@Override
@@ -144,7 +143,7 @@ public class SampleServiceImple implements SampleService {
     public Sample getByNameExperState(Integer userId, String sampleName,
             Integer experState) {
         return sampleMapper.getByNameExperState(userId, sampleName, experState,
-                DataState.ACTIVE, SampleIsCommit.ISADD);
+                DataState.ACTIVE, SampleTypes.ISADD);
     }
 
     @Override
@@ -157,7 +156,7 @@ public class SampleServiceImple implements SampleService {
         slog.setCreateDate(new Date());
         slog.setExperState(experState);
         sampleLogMapper.insertSelective(slog);
-        if (experState == SampleExperState.SCAN_STORAGE) {
+        if (experState == SampleTypes.SCAN_STORAGE) {
             Sample s = sampleMapper.selectByPrimaryKey(sampleId);
             s.setExperSampleName(
                     DataUtil.getExperSampleNo(s.getType(), sampleId));
@@ -170,8 +169,15 @@ public class SampleServiceImple implements SampleService {
     @Override
     public Integer updateExperStateAndIndex(Integer userId, Integer experState,
             Integer sampleId, List<String> sindexList) {
+		if (SampleTypes.indexString == null) {
+			List<String> sampleList = new ArrayList<>();
+			for (Metadata metadata : SampleTypes.index) {
+				sampleList.add(metadata.getName() + ":" + metadata.getSeq());
+			}
+			SampleTypes.indexString = sampleList;
+		}
         List<String> indexList = new ArrayList<>();
-        indexList.addAll(SampleTypes.index);
+		indexList.addAll(SampleTypes.indexString);
         if (sindexList != null) {
             for (String s : sindexList) {
                 indexList.remove(s);
@@ -238,7 +244,7 @@ public class SampleServiceImple implements SampleService {
         sampleStorageMapper.insertSelective(ss);
 
         for (Integer sampleId : sampleIds) {
-            updateExperState(userId, SampleExperState.IN_LIBRARY, sampleId);
+            updateExperState(userId, SampleTypes.IN_LIBRARY, sampleId);
         }
         sampleStorageMapper.addSampleStorageRelat(ss.getId(), sampleIds);
         return ss;
@@ -283,6 +289,12 @@ public class SampleServiceImple implements SampleService {
     public Sample getByExperNameExperState(Integer userId,
             String experSampleName, Integer experState) {
         return sampleMapper.getByExperNameExperState(userId, experSampleName,
-                experState, DataState.ACTIVE, SampleIsCommit.ISADD);
+                experState, DataState.ACTIVE, SampleTypes.ISADD);
+    }
+
+    @Override
+    public List<Sample> getSamplesByStorageName(String storageName) {
+        return sampleMapper.getSamplesByStorageName(storageName,
+                DataState.ACTIVE);
     }
 }

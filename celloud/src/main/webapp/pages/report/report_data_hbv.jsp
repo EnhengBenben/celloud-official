@@ -281,7 +281,9 @@
 		    <div class="m-box">
 		        <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
 		        <div class="m-boxCon">
-		            <!-- <table class="table table-main" id="site_table" style="width: 80%;margin: 0 auto;">
+		          <div class="alert alert-success" style="width:80%;margin: 0 auto;margin-bottom: 20px;">该统计结果，针对无文献支持的“其他突变位点”。<br/>统计结果根据突变次数及所占比例由大到小排序，页面展示前20个突变位点，查看其他位点请点击“显示全部”。</div>
+		          <div id="tableDiv">
+		            <table class="table table-main" ng-show="more" id="site_table_less" style="width: 80%;margin: 0 auto;">
 				        <thead>
 				          <tr>
 				            <th>位点</th>
@@ -290,16 +292,41 @@
 				          </tr>
 				        </thead>
 				        <tbody>
-				          <tr ng-repeat="site in siteKeys">
-				            <td>{{site}}</td>
-				            <td>{{hbvOtherSiteMap[site].count}}</td>
-				            <td>{{hbvOtherSiteMap[site].percent}}</td>
+				          <tr ng-repeat="hbvOtherSite in hbvOtherSiteList" ng-if="$index < 20">
+				            <td>{{siteKeys[$index]}}</td>
+				            <td>{{hbvOtherSite[siteKeys[$index]]['count']}}</td>
+				            <td>{{hbvOtherSite[siteKeys[$index]]['percent']}}</td>
 				          </tr>
 				        </tbody>
 			        </table>
+			        <table class="table table-main" ng-show="less" id="site_table_more" style="width: 80%;margin: 0 auto;">
+                        <thead>
+                          <tr>
+                            <th>位点</th>
+                            <th>出现次数</th>
+                            <th>比例</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="hbvOtherSite in hbvOtherSiteList">
+                            <td>{{siteKeys[$index]}}</td>
+                            <td>{{hbvOtherSite[siteKeys[$index]]['count']}}</td>
+                            <td>{{hbvOtherSite[siteKeys[$index]]['percent']}}</td>
+                          </tr>
+                        </tbody>
+                     </table>
+                    </div>
+			        <div class="text-center mb20 mt20">
+                        <a href="javascript:void(0)" ng-show="more" ng-click="showMore('table');" class="btn -low"><i class="i-view"></i>显示全部</a>
+                        <a href="javascript:void(0)" ng-show="less" ng-click="showLess('table');" class="btn -low"><i class="i-view"></i>收起</a>
+                    </div>
 			        <br/>
 			        <div class="row" id="charDiv0">
-                    </div> -->
+                    </div>
+                    <div class="text-center mb20">
+		                <a href="javascript:void(0)" ng-show="more" ng-click="showMore('charts');" class="btn -low"><i class="i-view"></i>显示全部</a>
+		                <a href="javascript:void(0)" ng-show="less" ng-click="showLess('charts');" class="btn -low"><i class="i-view"></i>收起</a>
+		            </div>
 		        	<div class="row" id="charDiv">
 			        </div>
 		        </div>

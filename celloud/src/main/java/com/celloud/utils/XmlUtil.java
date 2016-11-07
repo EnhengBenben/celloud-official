@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -118,6 +119,7 @@ public class XmlUtil {
 		Map<String, String> map = new HashMap<>();
 		// 获取根节点
 		Element root = document.getRootElement();
+		@SuppressWarnings("unchecked")
 		Iterator<Element> element = root.elementIterator();
 		while (element.hasNext()) {
 			Element y = element.next();
@@ -126,9 +128,29 @@ public class XmlUtil {
 		return map;
 	}
 
-	public static void main(String[] args) {
-		String context = "<xml><ToUserName>toUserddd<data>test</data></ToUserName><FromUserName><![CDATA[FromUser]]></FromUserName><CreateTime>123456789</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[VIEW]]></Event><EventKey><![CDATA[www.qq.com]]></EventKey><MenuId>MENUID</MenuId></xml>";
-		readXMLToMap(context);
+	/**
+	 * 将map转成xml
+	 * 
+	 * @param map
+	 * @param rootName
+	 * @return
+	 * @author lin
+	 * @date 2016年10月24日下午2:39:08
+	 */
+	public static Document mapToXML(Map<String, String> map, String rootName) {
+		Document doc = DocumentHelper.createDocument();
+		Element root = DocumentHelper.createElement(rootName);
+		doc.add(root);
+		for (Entry<String, String> entry : map.entrySet()) {
+			root.addElement(entry.getKey()).setText(entry.getValue());
+		}
+		return doc;
 	}
-
+	
+	public static void main(String[] args) {
+		String context = "<xml><ToUserName>您好</ToUserName><FromUserName><![CDATA[FromUser中文]]></FromUserName><CreateTime>123456789</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[VIEW]]></Event><EventKey><![CDATA[www.qq.com]]></EventKey><MenuId>MENUID</MenuId></xml>";
+		Map<String, String> map = readXMLToMap(context);
+		Document result = mapToXML(map,"xml");
+		System.out.println(result.asXML());
+	}
 }

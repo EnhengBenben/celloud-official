@@ -91,11 +91,13 @@
                                     <span class="title">数据导出</span>
                                 </a>
                             </li>
-                            <li id="data-othersite-menu">
-                                <a href="javascript:dataFile.toOtherSiteCount();">
-                                    <span class="title">其他位点统计</span>
-                                </a>
-                            </li>
+                            <c:if test="${loginUserInSession.companyId == 3 || loginUserInSession.role == 2}">
+	                            <li id="data-othersite-menu">
+	                                <a href="javascript:dataFile.toOtherSiteCount();">
+	                                    <span class="title">其他位点统计</span>
+	                                </a>
+                                </li>
+                            </c:if>
                         </ul>
                     </li>
                     <li>
@@ -126,13 +128,11 @@
                                     <span class="title">医院报告统计</span>
                                 </a>
                             </li>
-                            <c:if test="${ loginUserInSession.role=='2'}">
                             <li id="company-bigcustomer-menu">
                                 <a href="javascript:companyCount.toBigCustomerCount();">
                                     <span class="title">大客户统计</span>
                                 </a>
                             </li>
-                            </c:if>
                         </ul>
                     </li>
                     <li id="company-menu">

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,222 +41,236 @@ import com.celloud.utils.UserAgentUtil;
  */
 @Controller
 public class HomeAction {
-    private static final Logger logger = LoggerFactory.getLogger(HomeAction.class);
-    @Resource
-    private UserService userService;
+	private static final Logger logger = LoggerFactory.getLogger(HomeAction.class);
+	@Resource
+	private UserService userService;
 	@Resource
 	private AliEmailUtils emailUtils;
-    @Resource
-    private ClientService clientService;
-    @Resource
-    private AppService appService;
+	@Resource
+	private ClientService clientService;
+	@Resource
+	private AppService appService;
 
-    /**
-     * 用户重置密码--跳转到重置密码页面
-     * 
-     * @return
-     */
-    @RequestMapping(value = "resetPassword/{username}/{randomCode}.html", method = RequestMethod.GET)
-    public ModelAndView resetPassword(HttpSession session, @PathVariable String username,
-            @PathVariable String randomCode) {
-        // TODO 添加rsa加密
-        ModelAndView mv = new ModelAndView("user/user_pwd_reset");
-        User user = userService.getUserByFindPwd(username, randomCode);
-        if (user == null) {
-            return mv.addObject("info", "找回密码的链接错误或已过期");
-        }
-        logger.info("用户正在找回密码：userId={},username={},randomCode={}", user.getUserId(), username, randomCode);
-        session.setAttribute(Constants.RESET_PASSWORD_USER_ID, user.getUserId());
-        return mv.addObject("user", user).addObject("randomCode", randomCode);
-    }
+	/**
+	 * 用户重置密码--跳转到重置密码页面
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "resetPassword/{username}/{randomCode}.html", method = RequestMethod.GET)
+	public ModelAndView resetPassword(HttpSession session, @PathVariable String username,
+			@PathVariable String randomCode) {
+		// TODO 添加rsa加密
+		ModelAndView mv = new ModelAndView("user/user_pwd_reset");
+		User user = userService.getUserByFindPwd(username, randomCode);
+		if (user == null) {
+			return mv.addObject("info", "找回密码的链接错误或已过期");
+		}
+		logger.info("用户正在找回密码：userId={},username={},randomCode={}", user.getUserId(), username, randomCode);
+		session.setAttribute(Constants.RESET_PASSWORD_USER_ID, user.getUserId());
+		return mv.addObject("user", user).addObject("randomCode", randomCode);
+	}
 
-    @RequestMapping(value = "resetEmail/{username}/{randomCode}.html", method = RequestMethod.GET)
-    public ModelAndView resetEmail(HttpSession session, @PathVariable String username,
-            @PathVariable String randomCode) {
-        ModelAndView mv = new ModelAndView("user/user_email_reset");
-        User user = userService.getUserByFindPwd(username, randomCode);
-        if (user == null) {
-            return mv.addObject("info", "修改邮箱的链接错误或已过期");
-        }
-        logger.info("用户正在修改邮箱：userId={},username={},randomCode={}", user.getUserId(), username, randomCode);
-        return mv.addObject("user", user).addObject("randomCode", randomCode);
-    }
+	@RequestMapping(value = "resetEmail/{username}/{randomCode}.html", method = RequestMethod.GET)
+	public ModelAndView resetEmail(HttpSession session, @PathVariable String username,
+			@PathVariable String randomCode) {
+		ModelAndView mv = new ModelAndView("user/user_email_reset");
+		User user = userService.getUserByFindPwd(username, randomCode);
+		if (user == null) {
+			return mv.addObject("info", "修改邮箱的链接错误或已过期");
+		}
+		logger.info("用户正在修改邮箱：userId={},username={},randomCode={}", user.getUserId(), username, randomCode);
+		return mv.addObject("user", user).addObject("randomCode", randomCode);
+	}
 
-    /**
-     * 用户重置密码--保存
-     * 
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "resetPassword.html", method = RequestMethod.POST)
-    public ModelAndView resetPassword(String username, String password, String randomCode, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        // TODO 添加rsa加密
-        logger.info("【重置密码】username=" + username);
-        logger.info("【重置密码】randomCode=" + randomCode);
-        ModelAndView mv = new ModelAndView("user/user_pwd_reset");
-        String userId = String.valueOf(session.getAttribute(Constants.RESET_PASSWORD_USER_ID));
-        logger.info("【重置密码】userId=" + userId);
-        if (userId == null || userId.equalsIgnoreCase("null")) {
-            logger.warn("用户进行了非法请求：重置密码时未检查到session中的userId.{},{},{}", username, randomCode,
-                    UserAgentUtil.getUrl(request));
-            return mv.addObject("info", "请求不合法").addObject("forbidden", "forbidden");
-        }
-        User user = userService.getUserByFindPwd(username, randomCode);
-        if (user == null || !userId.equals(String.valueOf(user.getUserId()))) {
-            if (user == null) {
-                logger.warn("用户进行了非法请求：重置密码时未检查到要修改的用户{},{}.{}", username, randomCode, UserAgentUtil.getUrl(request));
-            } else {
-                logger.warn("用户进行了非法请求：重置密码时检测到的userId不正确{}={},{},{}.{}", userId, String.valueOf(user.getUserId()),
-                        username, randomCode, UserAgentUtil.getUrl(request));
-            }
-            return mv.addObject("info", "请求不合法").addObject("forbidden", "forbidden");
-        }
-        session.removeAttribute(Constants.RESET_PASSWORD_USER_ID);
-        userService.updatePassword(user.getUserId(), password);
-        userService.cleanFindPwd(user.getUserId(), new Date());
-        return mv.addObject("info", "密码重置成功");
-    }
+	/**
+	 * 用户重置密码--保存
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "resetPassword.html", method = RequestMethod.POST)
+	public ModelAndView resetPassword(String username, String password, String randomCode, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		// TODO 添加rsa加密
+		logger.info("【重置密码】username=" + username);
+		logger.info("【重置密码】randomCode=" + randomCode);
+		ModelAndView mv = new ModelAndView("user/user_pwd_reset");
+		String userId = String.valueOf(session.getAttribute(Constants.RESET_PASSWORD_USER_ID));
+		logger.info("【重置密码】userId=" + userId);
+		if (userId == null || userId.equalsIgnoreCase("null")) {
+			logger.warn("用户进行了非法请求：重置密码时未检查到session中的userId.{},{},{}", username, randomCode,
+					UserAgentUtil.getUrl(request));
+			return mv.addObject("info", "请求不合法").addObject("forbidden", "forbidden");
+		}
+		User user = userService.getUserByFindPwd(username, randomCode);
+		if (user == null || !userId.equals(String.valueOf(user.getUserId()))) {
+			if (user == null) {
+				logger.warn("用户进行了非法请求：重置密码时未检查到要修改的用户{},{}.{}", username, randomCode, UserAgentUtil.getUrl(request));
+			} else {
+				logger.warn("用户进行了非法请求：重置密码时检测到的userId不正确{}={},{},{}.{}", userId, String.valueOf(user.getUserId()),
+						username, randomCode, UserAgentUtil.getUrl(request));
+			}
+			return mv.addObject("info", "请求不合法").addObject("forbidden", "forbidden");
+		}
+		session.removeAttribute(Constants.RESET_PASSWORD_USER_ID);
+		userService.updatePassword(user.getUserId(), password);
+		userService.cleanFindPwd(user.getUserId(), new Date());
+		return mv.addObject("info", "密码重置成功");
+	}
 
-    /**
-     * 用户找回密码
-     * 
-     * @param email
-     * @param kaptchaCode
-     * @param session
-     * @return
-     */
-    @RequestMapping(value = "findPassword.html", method = RequestMethod.POST)
-    public ModelAndView findPassword(String email, String kaptchaCode, HttpSession session) {
-        ModelAndView mv = new ModelAndView("user/user_pwd_find").addObject("sucess", "fail");
-        String kaptchaExpected = String
-                .valueOf(session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY));
-        // 干掉session中的验证码，避免用户刷新页面重复提交
-        session.removeAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
-        if (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode)) {
-            return mv.addObject("info", "验证码错误，请重新输入！");
-        }
-        User user = userService.getUserByEmail(email);
-        if (user == null) {
-            return mv.addObject("info", "邮箱不存在，请重新输入！");
-        }
-        String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
-        userService.insertFindPwdInfo(user.getUserId(), randomCode);
-        String url = ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
-                .replaceAll("resetpwdcode", randomCode);
+	/**
+	 * 用户找回密码
+	 * 
+	 * @param email
+	 * @param kaptchaCode
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "findPassword.html", method = RequestMethod.POST)
+	public ModelAndView findPassword(String email, String kaptchaCode, HttpSession session) {
+		ModelAndView mv = new ModelAndView("user/user_pwd_find").addObject("sucess", "fail");
+		String kaptchaExpected = String
+				.valueOf(session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY));
+		// 干掉session中的验证码，避免用户刷新页面重复提交
+		session.removeAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+		if (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptchaCode)) {
+			return mv.addObject("info", "验证码错误，请重新输入！");
+		}
+		User user = userService.getUserByEmail(email);
+		if (user == null) {
+			return mv.addObject("info", "邮箱不存在，请重新输入！");
+		}
+		String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
+		userService.insertFindPwdInfo(user.getUserId(), randomCode);
+		String url = ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
+				.replaceAll("resetpwdcode", randomCode);
 		AliEmail aliEmail = AliEmail.template(EmailType.PWD_FIND)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.PWD_FIND.url.name(), url));
 		emailUtils.simpleSend(aliEmail, email);
 
-        email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
-        String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
-        return mv.addObject("success", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
-    }
+		email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));
+		String emailAddress = "http://mail." + email.substring(email.lastIndexOf("@") + 1);
+		return mv.addObject("success", "ok").addObject("email", email).addObject("emailAddress", emailAddress);
+	}
 
-    @RequestMapping(value = "findPassword.html", method = RequestMethod.GET)
-    public String findPassword() {
-        return "redirect:forgot.html";
-    }
+	@RequestMapping(value = "findPassword.html", method = RequestMethod.GET)
+	public String findPassword() {
+		return "redirect:forgot.html";
+	}
 
-    @RequestMapping("service.html")
-    public String service() {
-        return "service";
-    }
+	@RequestMapping("service.html")
+	public String service() {
+		return "service";
+	}
 
-    @RequestMapping("feedback.html")
-    public String feedBack() {
-        return "feedback";
-    }
+	@RequestMapping("feedback.html")
+	public String feedBack() {
+		return "feedback";
+	}
 
 	@RequestMapping("feedback_for_phone.html")
 	public String feedBackForPhone() {
 		return "feedback_for_phone";
 	}
 
-    @RequestMapping("home.html")
-    public String home() {
-        return "home";
-    }
+	@RequestMapping("home.html")
+	public String home() {
+		return "home";
+	}
 
-    @RequestMapping("index")
-    public String index(HttpServletRequest request) {
-        // XXX 百菌探报证结束后删除
-        if (ConstantsData.getLoginUserId() == 126) {
-            return "bsi/baozheng/index";
-        }
-        // 获取防盗链信息
-        String referer = request.getHeader("referer");
-        // 从登陆页面过来的
-        if (referer != null && referer.contains("login")) {
-            // 获取当前用户所有的app
-            List<App> appList = appService.getMyAppList(ConstantsData.getLoginUserId());
-            // 该用户appId不为空, 判断是否包含bsi与rocky
-            boolean bsi = false;
-            boolean rocky = false;
-            if (appList != null && appList.size() > 0) {
-                for (App app : appList) {
-                    // 获取该app的appId
-                    Integer appId = app.getAppId();
-                    // bsi
-                    if (appId == 118) {
-                        bsi = true;
-                    } else if (appId == 123) {
-                        rocky = true;
-                    }
-                }
-            }
-            if (bsi && !rocky) {
-                return "redirect:bsi";
-            }
-        }
-        return "index";
-    }
+	@RequestMapping("index")
+	public String index(HttpServletRequest request) {
+		// XXX 百菌探报证结束后删除
+		if (ConstantsData.getLoginUserId() == 126) {
+			return "bsi/baozheng/index";
+		}
+		// 获取防盗链信息
+		String referer = request.getHeader("referer");
+		// 从登陆页面过来的
+		if (referer != null && referer.contains("login")) {
+			// 获取当前用户所有的app
+			List<App> appList = appService.getMyAppList(ConstantsData.getLoginUserId());
+			// 该用户appId不为空, 判断是否包含bsi与rocky
+			boolean bsi = false;
+			boolean rocky = false;
+			if (appList != null && appList.size() > 0) {
+				for (App app : appList) {
+					// 获取该app的appId
+					Integer appId = app.getAppId();
+					// bsi
+					if (appId == 118) {
+						bsi = true;
+					} else if (appId == 123) {
+						rocky = true;
+					}
+				}
+			}
+			if (bsi && !rocky) {
+				return "redirect:bsi";
+			}
+		}
+		if (referer != null && referer.contains("client")) {
+			return "redirect:clientindex";
+		}
+		return "index";
+	}
 
-    @RequestMapping("bsi")
-    public String bsi() {
-        return "bsi/index";
-    }
+	@RequestMapping("bsi")
+	public String bsi() {
+		return "bsi/index";
+	}
 
-    @RequestMapping("rocky")
-    public String rocky() {
-        return "rocky/index";
-    }
+	@RequestMapping("rocky")
+	public String rocky() {
+		return "rocky/index";
+	}
 
-    @RequestMapping("download.html")
-    public ModelAndView download() {
-        ModelAndView mv = new ModelAndView("download");
-        Client client = clientService.getLast();
-        mv.addObject("client", client);
-        return mv;
-    }
+	@RequestMapping("clientindex")
+	public String clientIndex() {
+		return "client/index";
+	}
 
-    @RequestMapping("join_us.html")
-    public String joinUs() {
-        return "join_us";
-    }
+	@RequestMapping("download.html")
+	public ModelAndView download() {
+		ModelAndView mv = new ModelAndView("download");
+		Client client = clientService.getLast();
+		mv.addObject("client", client);
+		return mv;
+	}
 
-    @RequestMapping("forgot.html")
-    public String forgot() {
-        return "user/user_pwd_find";
-    }
+	@RequestMapping("join_us.html")
+	public String joinUs() {
+		return "join_us";
+	}
 
-    @RequestMapping("browser.html")
-    public String browser() {
-        return "browser";
-    }
+	@RequestMapping("forgot.html")
+	public String forgot() {
+		return "user/user_pwd_find";
+	}
 
-    @RequestMapping("home_phone.html")
-    public String homePhone() {
-        return "home_phone";
-    }
+	@RequestMapping("browser.html")
+	public String browser() {
+		return "browser";
+	}
 
-    @RequestMapping("about_us.html")
-    public String aboutUs() {
-        return "about_us";
-    }
+	@RequestMapping("home_phone.html")
+	public String homePhone() {
+		return "home_phone";
+	}
 
-    @RequestMapping("sample_order.html")
-    public String sampleOrder() {
-        return "experiment_scan/sampling_order";
-    }
+	@RequestMapping("about_us.html")
+	public String aboutUs() {
+		return "about_us";
+	}
+
+	@RequestMapping("sample_order.html")
+	public String sampleOrder() {
+		return "experiment_scan/sampling_order";
+	}
+
+	@RequestMapping("client.html")
+	public String client(String info, Model model) {
+		model.addAttribute("info", info);
+		return "client";
+	}
 }

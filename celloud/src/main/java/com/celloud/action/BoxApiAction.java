@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.celloud.constants.BoxUploadState;
+import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.model.BoxFile;
 import com.celloud.model.mysql.DataFile;
@@ -55,7 +56,8 @@ public class BoxApiAction {
 	 * @return
 	 */
 	@RequestMapping("newfile")
-	public Response newfile(Integer userId, String name, String md5, long size, Integer tagId, String batch) {
+	public Response newfile(Integer userId, String name, String anotherName, String md5, long size, Integer tagId,
+			String batch) {
 		logger.info("user {} new file : {}", userId, name);
 		Map<String, Object> values = new HashMap<>();
 		int dataId = dataService.addFileInfo(userId, name);
@@ -64,6 +66,7 @@ public class BoxApiAction {
 		DataFile data = new DataFile();
 		data.setFileId(dataId);
 		data.setDataKey(fileDataKey);
+		data.setAnotherName(anotherName);
 		data.setMd5(md5);
 		data.setSize(size);
 		data.setBatch(batch);
@@ -89,7 +92,8 @@ public class BoxApiAction {
 	 */
 	@RequestMapping("updatefile")
 	public Response updatefile(String objectKey, Integer fileId, Integer tagId, String batch, Integer needSplit,
-			HttpServletRequest request) {
+			boolean splited, HttpServletRequest request) {
+		ConstantsData.getAnotherNamePerlPath(request);
 		logger.info("updating file : {}", objectKey);
 		DataFile file = dataService.getDataById(fileId);
 		Integer userId = file.getUserId();
@@ -100,8 +104,10 @@ public class BoxApiAction {
 		boxFile.setFileId(fileId);
 		boxFile.setBatch(batch);
 		boxFile.setFileName(file.getFileName());
+		boxFile.setAnotherName(file.getAnotherName());
 		boxFile.setDataKey(file.getDataKey());
 		boxFile.setMd5(file.getMd5());
+		boxFile.setSplited(splited);
 		boxFile.setNeedSplit(needSplit);
 		boxFile.setObjectKey(objectKey);
 		boxFile.setPath(folderByDay + File.separator + newName);
@@ -124,6 +130,9 @@ public class BoxApiAction {
 	@RequestMapping("health")
 	public Response health(HttpServletRequest request, String serialNumber, String version, String ip, Integer port) {
 		String extranet = UserAgentUtil.getIp(request);
+		if (extranet.startsWith("192.168.22")) {
+			extranet = "127.0.0.1";
+		}
 		logger.info("更新盒子状态：serialNumber={},version={},intranet={},extranet={},port={}", serialNumber, version, ip,
 				extranet, port);
 		boolean result = configService.updateBoxHealth(serialNumber, version, ip, extranet, port);
@@ -138,10 +147,12 @@ public class BoxApiAction {
 		boolean result = configService.checkConfig(serialNumber, version, ip, extranet, port);
 		OSSConfig config = null;
 		if (!result) {
+			logger.info("获取oos配置的参数不合法：serialNumber={},version={},intranet={},extranet={},port={}", serialNumber,
+					version, ip, extranet, port);
 			response.setMessage("参数不合法！");
-		} else if (result) {
-			config = ossService.getLatest();
+			return response;
 		}
+		config = ossService.getLatest();
 		if (config == null) {
 			response.setMessage("没有可用的oss配置");
 		} else {

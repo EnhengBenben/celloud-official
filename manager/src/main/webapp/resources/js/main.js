@@ -31,6 +31,7 @@ var dataFile=(function(dataFile){
 	self.getSiteInfo = function(site){
 		$.post("getSiteInfo", {"site" : site}, function(responseText){
 			$("#siteInfoRow").html(responseText);
+			$(document).scrollTop(600);
 		});
 	};
 	self.toOtherSiteCount = function(){
@@ -248,33 +249,56 @@ var user=(function(user){
 				$(this).parent().parent().find(".help-inline").html("该项为必选项，请选择");
 			}
 		});
-		if(isPass){
-			var params = $("#emailForm").serialize(); 
-			$.get("user/checkEmail",params,function(flag){
-				if(flag.indexOf("1")>=0){
-						if(flag==1){
-							$("#emailArray").parent().parent().addClass("error");
-							$("#emailArray").parent().parent().find(".help-inline").html("此邮箱已经添加！");
-						}else{
-							$("#emailArray").parent().parent().removeClass("error");
-							$("#emailArray").parent().parent().find(".help-inline").html("");
-						}
-						$("#send").removeAttr("disabled");
-				}else{
-					$.get("user/sendEmail",params,function(){
-						$("#sendEmailTip").html("邮件发送成功!");
-						$("#user-sendEmailModal").fadeOut("slow",function(){
-							$("#user-sendEmailModal").modal("hide");
-							$("#send").removeAttr("disabled");
-						});
-					});
+		var params = $("#emailForm").serialize(); 
+		$.ajax({
+			url : "user/checkEmail",
+			type : "GET",
+			data : params,
+			async : false,
+			success : function(data){
+				if(data.indexOf("1")>=0){
+					if(data==1){
+						$("#emailArray").parent().parent().addClass("error");
+						$("#emailArray").parent().parent().find(".help-inline").html("此邮箱已经添加！");
+						isPass = false;
+					}else{
+						$("#emailArray").parent().parent().removeClass("error");
+						$("#emailArray").parent().parent().find(".help-inline").html("");
+					}
 				}
+			}
+		});
+		$.ajax({
+			url : "user/checkRoleCompany",
+			type : "GET",
+			data : params,
+			async : false,
+			success : function(data){
+				// 校验失败
+				if(data == "0"){
+					$("#companyList").parent().parent().addClass("error");
+					$("#companyList").parent().parent().find(".help-inline").html("该医院已经存在医院管理员！");
+					isPass = false;
+				}else{
+					$("#companyList").parent().parent().removeClass("error");
+					$("#companyList").parent().parent().find(".help-inline").html("");
+				}
+			}
+		});
+		if(isPass){
+			$.get("user/sendEmail",params,function(){
+				$("#sendEmailTip").html("邮件发送成功!");
+				$("#user-sendEmailModal").fadeOut("slow",function(){
+					$("#user-sendEmailModal").modal("hide");
+					$("#send").removeAttr("disabled");
+				});
 			});
 		}else{
 			$("#send").removeAttr("disabled");
 		}
 	};
 	self.toUserMain=function(){
+		self.keyword = "";
 		$.post("user/userList",{searchFiled:self.searchFiled,keyword:""},function(responseText){
 			$("#main-content").html(responseText);
 			$("#main-menu li").removeClass("active").removeClass("opened");

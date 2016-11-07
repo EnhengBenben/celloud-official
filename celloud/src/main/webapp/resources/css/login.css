@@ -252,7 +252,18 @@ input:focus {
 	left: 230px;
 	top: 10px
 }
-
+.yzm a {
+	position: absolute;
+    right: 10px;
+	top: 12px;
+	font-size: 14px;
+    color: #78BC28;
+    cursor: pointer;
+}
+.yzm a.disabled {
+    color: #9abf9f;
+    cursor: default;
+}
 .autolog {
 	font-size: 14px;
 	color: #a0a0a0;

@@ -25,18 +25,19 @@ public class CleanService {
 	private BoxConfig config;
 
 	@Async
-	@Scheduled(cron = "0 0 0/2 * * ? ")
+	@Scheduled(cron = "${box.clean-cron}")
 	public void clean() {
 		logger.info("cleanning...");
-		File rootPath = new File(UploadPath.getRootPath());
+		File rootPath = new File(UploadPath.getUploadedPath());
 		if (!rootPath.exists()) {
 			return;
 		}
 		File[] userPath = rootPath.listFiles();
+		if (userPath == null || userPath.length == 0) {
+			return;
+		}
 		for (File file : userPath) {
-			if (isNumber(file.getName())) {// userId必须为数字
-				delete(file);
-			}
+			delete(file);
 		}
 	}
 
@@ -44,6 +45,9 @@ public class CleanService {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_YEAR, 0 - config.getRetentionDays());
 		File[] toBeDeleted = userPath.listFiles();
+		if (toBeDeleted == null || toBeDeleted.length == 0) {
+			return;
+		}
 		for (File file : toBeDeleted) {
 			Date date = DateUtils.parse(file.getName(), "yyyyMMdd");
 			if (date == null || calendar.getTime().after(date)) {

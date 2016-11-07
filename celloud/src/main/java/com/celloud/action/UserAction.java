@@ -4,12 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +55,8 @@ import com.celloud.utils.ResetPwdUtils;
 import com.celloud.utils.Response;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
-import com.celloud.wechat.constant.WechatParams;
 import com.celloud.wechat.WechatUtils;
+import com.celloud.wechat.constant.WechatParams;
 
 /**
  * 用户管理
@@ -194,6 +199,8 @@ public class UserAction {
 	@RequestMapping("updateInfo")
 	@ResponseBody
 	public Response updateInfo(User user, HttpServletRequest request) {
+        logger.info("用户{}修改用户基本信息", ConstantsData.getLoginUserName());
+         
 		// 其他待修改字段可以在这里添加，不允许修改的字段一定要过滤掉
 		user.setUserId(ConstantsData.getLoginUserId());
 		if (userService.isEmailInUse(user.getEmail(), user.getUserId())) {
@@ -292,6 +299,48 @@ public class UserAction {
 		}
 	}
 
+    /**
+     * 
+     * @description 医院管理员添加用户, 所有信息与管理员保持一致
+     * @author miaoqi
+     * @date 2016年10月28日下午1:44:14
+     *
+     * @param emailArray
+     */
+    @RequestMapping("/sendRegistEmail")
+    public ResponseEntity<Map<String, String>> sendEmail(String email, String kaptcha) {
+        logger.info("医院管理员 {} 发送注册邮件 email = {}, kaptchat = {}", ConstantsData.getLoginUserId(), email, kaptcha);
+        Boolean flag = true;
+        Map<String, String> errorMap = new HashMap<String, String>();
+        // 校验email是否合法
+        if (checkEmail(email, null) == 0) { // 邮箱已被使用
+            logger.info("邮箱已被占用 email = {}", email);
+            flag = false;
+            errorMap.put("emailError", "邮箱已被使用");
+        }
+        // 校验验证码
+        Subject subject = SecurityUtils.getSubject();
+        // 获取Shiro的session
+        Session session = subject.getSession();
+        if (!checkKaptcha(kaptcha, session)) {
+            flag = false;
+            errorMap.put("kaptchaError", "验证码错误");
+        }
+        // 邮箱和验证码均合法
+        if (flag) {
+            flag = userService.sendRegisterEmail(email);
+            if (flag) {
+                logger.info("注册邮件发送成功 email = {}", email);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            }
+            logger.info("注册邮件发送失败 email = {}", email);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMap);
+        }
+
+    }
+
 	/**
 	 * 获取当前用户的账户余额
 	 * 
@@ -355,4 +404,13 @@ public class UserAction {
 		userService.updateUserEmail(user);
 		return mv.addObject("info", "邮箱修改成功");
 	}
+
+    public boolean checkKaptcha(String kaptcha, Session session) {
+        String kaptchaExpected = (String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+        if (kaptchaExpected == null || !kaptchaExpected.equalsIgnoreCase(kaptcha)) {
+            logger.info("医院管理员新增用户验证码错误：param : {} \t session : {}", kaptcha, kaptchaExpected);
+            return false;
+        }
+        return true;
+    }
 }

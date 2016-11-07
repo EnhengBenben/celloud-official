@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.celloud.mapper.BoxConfigMapper;
 import com.celloud.model.mysql.BoxConfig;
 import com.celloud.service.BoxConfigService;
-import com.celloud.utils.CustomStringUtils;
 
 @Service
 public class BoxConfigServiceIpml implements BoxConfigService {
@@ -28,15 +27,16 @@ public class BoxConfigServiceIpml implements BoxConfigService {
 		if (config == null) {
 			return false;
 		}
-		if (CustomStringUtils.equals(version, config.getVersion())
-				&& CustomStringUtils.equals(exIp, config.getExtranetAddress())
-				&& CustomStringUtils.equals(ip, config.getIntranetAddress())
-				&& (port == null || port.equals(config.getPort()))) {
-			// 参数一致则不修改数据库，减轻数据库压力
-			return true;
-		}
+//		if (CustomStringUtils.equals(version, config.getVersion())
+//				&& CustomStringUtils.equals(exIp, config.getExtranetAddress())
+//				&& CustomStringUtils.equals(ip, config.getIntranetAddress())
+//				&& (port == null || port.equals(config.getPort()))) {
+//			// 参数一致则不修改数据库，减轻数据库压力
+//			return true;
+//		}
 		config.setExtranetAddress(exIp);
 		config.setIntranetAddress(ip);
+		config.setPort(port);
 		config.setLastAlive(new Date());
 		config.setSerialNumber(serialNumber);
 		config.setVersion(version);

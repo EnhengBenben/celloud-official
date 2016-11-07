@@ -540,19 +540,23 @@
 		  $scope.hbv = hbvInfo.hbv;
 		  $scope.project = hbvInfo.project;
 		  $scope.uploadPath = hbvInfo.uploadPath;
-		  // $scope.hbvOtherSiteMap = hbvInfo.hbvOtherSiteMap;
+		  $scope.hbvOtherSiteList = hbvInfo.hbvOtherSiteList;
 		  $scope.siteKeys = new Array();
-		  for(key in hbvInfo.hbvOtherSiteMap){
-			  $scope.siteKeys.push(key);
+		  for(i in $scope.hbvOtherSiteList){
+			  for(j in $scope.hbvOtherSiteList[i]){
+				  $scope.siteKeys.push(j);
+			  }
 		  }
 		  dataInPro($scope.hbv, $scope.project.projectId, $scope.project.projectName);
 		  $scope.change1 = function(){
 			  $("#nomal").css("display","");
 			  $("#cfda").css("display","none");
+			  $("#showMain").scrollTop(0);
 		  }
 		  $scope.change2 = function(){
 			  $("#nomal").css("display","none");
 			  $("#cfda").css("display","");
+			  $("#showMain").scrollTop(0);
 		  }
 		  $scope.showModal = function(id,flag,num){
 			  $("#_showOne").css("display","none");
@@ -586,17 +590,67 @@
 		  }
 		  
 		  // 其他位点突变图表
-//		  var X = new Array();
-//		  var Y = new Array();
-//		  for(key in $scope.hbvOtherSiteMap){
-//			  Y.push(key);
-//			  X.push($scope.hbvOtherSiteMap[key].count);
-//		  }
-//		  X = "[" + X.join(",") + "]";
-//		  Y = "[" + Y.join(",") + "]";
-//		  var div2 = $("<div id='char2' class='col-lg-12' style='width: 1000px;height: " + 40 * $scope.siteKeys.length + "px;'></div>");
-//		  $("#charDiv0").append(div2);
-//		  $.reportChar.draw.echartsShowHorizontalBar("char2", "其他位点", eval(X), eval(Y), 700, 40 * $scope.siteKeys.length, "其他位点数量");
+		  var X = new Array();
+		  var Y = new Array();
+		  for(i in $scope.hbvOtherSiteList){
+			  for(j in $scope.hbvOtherSiteList[i]){
+				  Y.push(j);
+				  X.push($scope.hbvOtherSiteList[i][j].count);
+			  }
+		  }
+		  // 显示20条
+		  if(X.length > 20){
+			  xLess = X.slice(0, 20);
+			  yLess = Y.slice(0, 20);
+		  }else{
+			  xLess = X;
+			  yLess= Y;
+		  }
+		  xLess = xLess.reverse();
+		  yLess = yLess.reverse();
+		  var divLess = $("<div id='less' class='col-lg-12' style='width: 1000px;height: " + 40 * xLess.length + "px;'></div>");
+		  xLessStr = "[" + xLess.join(",") + "]";
+		  yLessStr = "[" + yLess.join(",") + "]";
+		  $("#charDiv0").append(divLess);
+		  $.reportChar.draw.echartsShowHorizontalBar("less", "其他位点", eval(xLessStr), eval(yLessStr), 700, 40 * xLess.length, "其他位点数量");
+		  
+		  // 显示全部
+		  X = X.reverse();
+		  Y = Y.reverse();
+		  var divMore = $("<div id='more' class='col-lg-12' style='width: 1000px;height: " + 40 * X.length + "px;'></div>");
+		  XStr = "[" + X.join(",") + "]";
+		  YStr = "[" + Y.join(",") + "]";
+		  $("#charDiv0").append(divMore);
+		  $.reportChar.draw.echartsShowHorizontalBar("more", "其他位点", eval(XStr), eval(YStr), 700, 40 * X.length, "其他位点数量");
+		  
+		  $scope.more = true;
+		  $("#more").hide();
+		  
+		  $scope.tablePos = document.getElementById('tableDiv').offsetTop;
+		  $scope.chartPos = document.getElementById('charDiv0').offsetTop;
+		  
+		  $scope.showMore = function(flag){
+			  $("#more").show();
+			  $("#less").hide();
+			  $scope.more = false;
+			  $scope.less = true;
+			  if(flag == 'table'){
+				  console.log(document.getElementById('tableDiv').offsetTop);
+			  }else{
+				  console.log(document.getElementById('charDiv0').offsetTop);
+			  }
+		  }
+		  $scope.showLess = function(flag){
+			  $("#more").hide();
+			  $("#less").show();
+			  $scope.more = true;
+			  $scope.less = false;
+			  if(flag == 'table'){
+				  console.log(document.getElementById('tableDiv').offsetTop);
+			  }else{
+				  console.log(document.getElementById('charDiv0').offsetTop);
+			  }
+		  }
 		  
 		  $.get("count/hbvCompare",{"appId":82,"path":DATAPATH},function(data){
 				var div0 = $("<div id='char0' class='col-lg-12' style='width: 1000px;height: 450px;'></div>");
@@ -927,7 +981,7 @@
 		  $scope.rocky = rockyInfo.rocky;
 		  $scope.project = rockyInfo.project;
 		  $scope.uploadPath = rockyInfo.uploadPath;
-
+		  $scope.significances=rockyInfo.significances;
 	  });
   });
   /**

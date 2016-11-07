@@ -55,4 +55,8 @@ public interface SampleMapper {
             @Param("experSampleName") String experSampleName,
             @Param("experState") Integer experState,
             @Param("state") Integer state, @Param("isAdd") Integer isAdd);
+
+    List<Sample> getSamplesByStorageName(
+            @Param("storageName") String storageName,
+            @Param("state") Integer state);
 }

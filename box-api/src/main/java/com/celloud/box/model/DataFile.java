@@ -12,6 +12,7 @@ public class DataFile {
 	private Integer userId;
 	private Integer fileId;
 	private String filename;
+	private String anotherName;
 	private String dataKey;
 	private Integer needSplit;
 	private Integer tagId;
@@ -22,6 +23,8 @@ public class DataFile {
 	private Long fileSize;
 	private String md5;
 	private String path;
+	private boolean splited;
+	private boolean uploaded;
 
 	public Integer getUserId() {
 		return userId;
@@ -45,6 +48,14 @@ public class DataFile {
 
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+
+	public String getAnotherName() {
+		return anotherName;
+	}
+
+	public void setAnotherName(String anotherName) {
+		this.anotherName = anotherName;
 	}
 
 	public String getDataKey() {
@@ -127,6 +138,22 @@ public class DataFile {
 		this.path = path;
 	}
 
+	public boolean isSplited() {
+		return this.needSplit == null || splited;
+	}
+
+	public void setSplited(boolean splited) {
+		this.splited = splited;
+	}
+
+	public boolean isUploaded() {
+		return uploaded;
+	}
+
+	public void setUploaded(boolean uploaded) {
+		this.uploaded = uploaded;
+	}
+
 	public boolean serialize(String path) {
 		return serialize(new File(path));
 	}
@@ -138,6 +165,9 @@ public class DataFile {
 
 	public boolean serialize(File file) {
 		try {
+			if (this.needSplit == null) {
+				this.splited = true;
+			}
 			new ObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, Boolean.TRUE).writeValue(file, this);
 		} catch (IOException e) {
 			return false;

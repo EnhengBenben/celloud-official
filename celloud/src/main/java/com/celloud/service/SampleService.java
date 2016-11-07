@@ -228,4 +228,14 @@ public interface SampleService {
      */
     public Sample getByExperNameExperState(Integer userId,
             String experSampleName, Integer experState);
+
+    /**
+     * 根据文库名称获取样本列表
+     * 
+     * @param storageName
+     * @return
+     * @author leamo
+     * @date 2016年10月25日 下午4:15:40
+     */
+    public List<Sample> getSamplesByStorageName(String storageName);
 }

@@ -7,16 +7,28 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.celloud.alimail.AliEmail;
+import com.celloud.alimail.AliEmailUtils;
+import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.DataState;
+import com.celloud.constants.UserRole;
+import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.UserMapper;
+import com.celloud.mapper.UserRegisterMapper;
 import com.celloud.model.mysql.User;
+import com.celloud.sendcloud.EmailParams;
+import com.celloud.sendcloud.EmailType;
 import com.celloud.service.SecResourceService;
 import com.celloud.service.SecRoleService;
 import com.celloud.service.UserService;
+import com.celloud.utils.Base64Util;
 import com.celloud.utils.MD5Util;
+import com.celloud.utils.ResetPwdUtils;
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
@@ -26,6 +38,12 @@ public class UserServiceImpl implements UserService {
     private SecRoleService roleService;
     @Resource
     private UserMapper userMapper;
+    @Autowired
+    private UserRegisterMapper userRegisterMapper;
+    @Autowired
+    private AliEmailUtils aliEmail;
+    @Autowired
+    private AppMapper appMapper;
 
     @Override
     public User login(User user) {
@@ -45,13 +63,13 @@ public class UserServiceImpl implements UserService {
         userMapper.insertFindPwdInfo(userId, calendar.getTime(), randomCode);
     }
 
-	@Override
-	public void insertWechatCode(Integer userId, String randomCode) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MINUTE, Constants.WECHAT_EXPIRE_TIME);
-		cleanFindPwd(userId, new Date());
-		userMapper.insertFindPwdInfo(userId, calendar.getTime(), randomCode);
-	}
+    @Override
+    public void insertWechatCode(Integer userId, String randomCode) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, Constants.WECHAT_EXPIRE_TIME);
+        cleanFindPwd(userId, new Date());
+        userMapper.insertFindPwdInfo(userId, calendar.getTime(), randomCode);
+    }
 
     @Override
     public void cleanFindPwd(int userId, Date expireDate) {
@@ -82,10 +100,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByPrimaryKey(userId);
     }
 
-	@Override
-	public User selectUserByIdNotIcon(int userId) {
-		return userMapper.selectUserByIdNotIcon(userId);
-	}
+    @Override
+    public User selectUserByIdNotIcon(int userId) {
+        return userMapper.selectUserByIdNotIcon(userId);
+    }
 
     @Override
     public Integer updateUserInfo(User user) {
@@ -95,12 +113,32 @@ public class UserServiceImpl implements UserService {
         temp.setUserId(ConstantsData.getLoginUserId());
         temp.setIcon(user.getIcon());
         temp.setNavigation(user.getNavigation());
-        return userMapper.updateByPrimaryKeySelective(temp);
+        temp.setTruename(user.getTruename());
+        temp.setAddress(user.getAddress());
+        temp.setZipCode(user.getZipCode());
+        temp.setAge(user.getAge());
+        temp.setSex(user.getSex());
+        if ("省份".equals(user.getProvince())) {
+            temp.setProvince(null);
+        } else {
+            temp.setProvince(user.getProvince());
+        }
+        if ("地级市".equals(user.getCity())) {
+            temp.setCity(user.getCity());
+        } else {
+            temp.setCity(user.getCity());
+        }
+        if ("市、县级市".equals(user.getDistrict())) {
+            temp.setDistrict(user.getDistrict());
+        } else {
+            temp.setDistrict(user.getDistrict());
+        }
+        return userMapper.customUpdateByPrimaryKeySelective(temp);
     }
-    
+
     @Override
     public Integer updateUserEmail(User user) {
-    	return userMapper.updateByPrimaryKeySelective(user);
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
@@ -138,16 +176,14 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByIds(userIds);
     }
 
-	@Override
-	public List<User> selectUserByIds(String userIds) {
-		return userMapper.selectUserByIds(userIds);
-	}
+    @Override
+    public List<User> selectUserByIds(String userIds) {
+        return userMapper.selectUserByIds(userIds);
+    }
 
     @Override
-    public Integer insertUserWechatInfo(Integer userId, String openId,
-            String unionId) {
-        return userMapper.insertUserWechatInfo(userId, openId, unionId,
-                new Date());
+    public Integer insertUserWechatInfo(Integer userId, String openId, String unionId) {
+        return userMapper.insertUserWechatInfo(userId, openId, unionId, new Date());
     }
 
     @Override
@@ -160,19 +196,82 @@ public class UserServiceImpl implements UserService {
         return userMapper.getUserByOpenId(openId);
     }
 
-	@Override
-	public int checkWechatBind(String openId, Integer userId) {
-		return userMapper.checkWechatBind(openId, userId);
-	}
+    @Override
+    public int checkWechatBind(String openId, Integer userId) {
+        return userMapper.checkWechatBind(openId, userId);
+    }
 
-	@Override
-	public int checkWechatUnBind(String openId, String pwd) {
-		return userMapper.checkWechatUnBind(openId, pwd);
-	}
+    @Override
+    public int checkWechatUnBind(String openId, String pwd) {
+        return userMapper.checkWechatUnBind(openId, pwd);
+    }
 
-	@Override
-	public int wechatUnBind(String openId, String pwd) {
-		return userMapper.wechatUnBind(openId, pwd);
-	}
+    @Override
+    public int wechatUnBind(String openId, String pwd) {
+        return userMapper.wechatUnBind(openId, pwd);
+    }
 
+    @Override
+    public Boolean sendRegisterEmail(String email) {
+        userRegisterMapper.deleteUserRegisterInfo(email);
+        String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
+        StringBuffer appIds = new StringBuffer();
+        StringBuilder roleIds = new StringBuilder();
+        // 获取登录用户
+        User loginUser = ConstantsData.getLoginUser();
+        Integer loginUserId = loginUser.getUserId();
+        List<Integer> appIdList = appMapper.findAppIdsByUserId(loginUserId);
+        List<Integer> roleIdList = userMapper.findRoleIdsByUserId(loginUserId);
+        Integer appCompanyId = userMapper.getCompanyIdByUserId(loginUserId);
+        if (appIdList != null && !appIdList.isEmpty()) {
+            for (Integer appId : appIdList) {
+                appIds.append(appId + ",");
+            }
+            appIds.deleteCharAt(appIds.length() - 1);
+        }
+        if (roleIdList != null && !roleIdList.isEmpty()) {
+            for (Integer roleId : roleIdList) {
+                // 排除医院管理员权限
+                if (roleId.intValue() != 6) {
+                    roleIds.append(roleId + ",");
+                }
+            }
+            roleIds.deleteCharAt(roleIds.length() - 1);
+        }
+        Integer count = userRegisterMapper.insertUserRegisterInfo(email, randomCode, appIds.toString(),
+                roleIds.toString());
+        String param = Base64Util.encrypt(email + "/" + randomCode + "/" + loginUser.getDeptId() + "/"
+                + loginUser.getCompanyId() + "/" + appCompanyId + "/" + 0);
+        aliEmail.simpleSend(
+                AliEmail.template(EmailType.USER_REGISTER).substitutionVars(AliSubstitution.sub()
+                        .set(EmailParams.USER_REGISTER.url.name(), ResetPwdUtils.userPath.replaceAll("path", param))),
+                email);
+        return count > 0;
+    }
+
+    @Override
+    public Integer addClientUser(String cellphone) {
+        User user = new User();
+        user.setCellphone(cellphone);
+        user.setUsername("cel_" + cellphone.substring(3, cellphone.length()));
+        // 客户端默认密码：CelLoud+手机号
+        user.setPassword(MD5Util.getMD5("CelLoud" + cellphone));
+        user.setCreateDate(new Date());
+        user.setRole(UserRole.C_USER);
+        return userMapper.insertSelective(user);
+    }
+
+    @Override
+    public Integer checkAddClientUser(String cellphone) {
+        User user = userMapper.findUserByCellphoneAndRole(cellphone,
+                UserRole.C_USER, DataState.ACTIVE);
+        if (user == null && cellphone != null) {
+            return addClientUser(cellphone);
+        }
+        return -1;
+    }
+
+    public Boolean updateBySelective(User updateUser) {
+        return userMapper.updateByPrimaryKeySelective(updateUser) == 1;
+    }
 }

@@ -137,4 +137,15 @@ public interface UserMapper {
      *
      */
     public List<User> findUserByRole(@Param("state") Integer state, @Param("role") Integer role);
+
+	/**
+	 * 根据APPID查询APP使用者
+	 * 
+	 * @param state
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年11月1日下午3:47:23
+	 */
+	public List<User> getUserByAppId(@Param("state") Integer state, @Param("appId") Integer appId);
 }

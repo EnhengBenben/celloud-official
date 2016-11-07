@@ -743,6 +743,6 @@ public interface ReportService {
      *
      * @param userId
      */
-    public Map<String, Map<String, String>> getHBVOtherSiteByUserId(Integer userId, Integer appId);
+    public List<Map.Entry<String, Map<String, String>>> getHBVOtherSiteByUserId(Integer userId, Integer appId);
 
 }

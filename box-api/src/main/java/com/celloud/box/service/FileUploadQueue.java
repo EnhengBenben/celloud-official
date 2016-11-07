@@ -1,6 +1,7 @@
 package com.celloud.box.service;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -18,9 +19,9 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 import com.celloud.box.config.BoxConfig;
-import com.celloud.box.constants.FileAddedEvent;
-import com.celloud.box.constants.FileUploadErrorEvent;
-import com.celloud.box.constants.FileUploadedEvent;
+import com.celloud.box.event.FileAddedEvent;
+import com.celloud.box.event.FileUploadErrorEvent;
+import com.celloud.box.event.FileUploadedEvent;
 import com.celloud.box.model.DataFile;
 import com.celloud.box.utils.OSSProgressListener;
 
@@ -87,7 +88,7 @@ public class FileUploadQueue {
 	}
 
 	public List<String> getAll() {
-		return Arrays.asList((String[]) queue.toArray());
+		return new ArrayList<String>(queue);
 	}
 
 	public void printAll() {

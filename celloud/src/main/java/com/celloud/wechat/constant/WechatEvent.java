@@ -35,37 +35,15 @@ public class WechatEvent {
 	}
 
 	/**
-	 * 校验url
-	 * 
-	 * @author lin
-	 * @date 2016年10月24日 上午10:57:01
-	 */
-	public class checkUrl {
-		/**
-		 * 微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
-		 */
-		public static final String signature = "signature";
-		/**
-		 * 时间戳
-		 */
-		public static final String timestamp = "timestamp";
-		/**
-		 * 随机数
-		 */
-		public static final String nonce = "nonce";
-		/**
-		 * 随机字符串
-		 */
-		public static final String echostr = "echostr";
-	}
-
-	/**
 	 * 点击事件的参数
 	 * 
 	 * @author lin
 	 * @date 2016年10月20日 下午1:44:21
 	 */
 	public class click extends base {
+		/**
+		 * Event:click
+		 */
 	}
 
 	/**
@@ -76,6 +54,7 @@ public class WechatEvent {
 	 */
 	public class url extends base {
 		/**
+		 * Event:view <br>
 		 * 指菜单ID，如果是个性化菜单，则可以通过这个字段，知道是哪个规则的菜单被点击了。
 		 */
 		public static final String MenuId = "MenuId";

@@ -937,6 +937,9 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public Rocky getRockyReport(String dataKey, Integer projectId, Integer appId) {
 		Rocky rocky = reportDao.getDataReport(Rocky.class, dataKey, projectId, appId);
+        if (rocky == null) {
+            return rocky;
+        }
 		Map<String, String> baseInfo = rocky.getBaseInfo();
 		if (baseInfo == null) {
 			baseInfo = new HashMap<>();
@@ -1096,10 +1099,10 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Map<String, Map<String, String>> getHBVOtherSiteByUserId(Integer userId, Integer appId) {
+    public List<Map.Entry<String, Map<String, String>>> getHBVOtherSiteByUserId(Integer userId, Integer appId) {
 
         // 结果Map
-        // {"206":{"count":"20","percent":"10%"},"207":{"count":"30","percent":"30%%}}
+        // {"206":{"count":"20","percent":"10%"},"207":{"count":"30","percent":"30%}}
         Map<String, Map<String, String>> result = new HashMap<String, Map<String, String>>();
         // 封装过滤条件
         Map<String, Object> filters = new HashMap<String, Object>();
@@ -1138,12 +1141,6 @@ public class ReportServiceImpl implements ReportService {
                     for (String site : map.keySet()) {
                         totalSite++;
                         site = site.split("_")[0]; // 获取位点值
-                        // if ("152".equals(site) || "154".equals(site) ||
-                        // "153".equals(site) || "166".equals(site)
-                        // || "149".equals(site) || "175".equals(site)) {
-                        // System.out.println("site: " + site + " dataKey: " +
-                        // hbv.getDataKey());
-                        // }
                         if(result.containsKey(site)){ // 结果map中已经统计过该位点, 则取出该位点的Map
                             Map<String,String> siteMap = result.get(site);
                             siteMap.put("count", String.valueOf(Integer.parseInt(siteMap.get("count")) + 1));// 数量+1
@@ -1163,7 +1160,16 @@ public class ReportServiceImpl implements ReportService {
                 }
             }
         }
-        return result;
+        List<Map.Entry<String, Map<String, String>>> resultList = new ArrayList<Map.Entry<String, Map<String, String>>>(
+                result.entrySet());
+        Collections.sort(resultList, new Comparator<Map.Entry<String, Map<String, String>>>() {
+            @Override
+            public int compare(Entry<String, Map<String, String>> o1, Entry<String, Map<String, String>> o2) {
+                return Integer.parseInt(o2.getValue().get("count")) - Integer.parseInt(o1.getValue().get("count"));
+            }
+
+        });
+        return resultList;
     }
 
 }

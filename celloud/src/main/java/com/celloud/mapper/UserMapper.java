@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.mysql.User;
+import com.celloud.page.Page;
 
 public interface UserMapper {
     public int deleteByPrimaryKey(Integer userId);
@@ -19,6 +20,8 @@ public interface UserMapper {
 	public User selectUserByIdNotIcon(Integer userId);
 
     public int updateByPrimaryKeySelective(User record);
+
+    public int customUpdateByPrimaryKeySelective(User record);
 
     public int updateByPrimaryKey(User record);
 
@@ -88,4 +91,44 @@ public interface UserMapper {
 	 * @date 2016年7月11日下午1:35:58
 	 */
 	public int wechatUnBind(@Param("openId") String openId, @Param("pwd") String pwd);
+
+    /**
+     * 
+     * @description 根据条件查询用户
+     * @author miaoqi
+     * @date 2016年10月27日上午11:12:50
+     *
+     * @param user
+     * @return
+     */
+    public List<User> select(@Param("user") User user, @Param("testAccountIds") String testAccountIds, Page page);
+
+    /**
+     * 
+     * @description 根据所属公司查找用户
+     * @author miaoqi
+     * @date 2016年10月27日下午5:20:27
+     *
+     * @param companyId
+     * @param testAccountIds
+     * @param page
+     * @return
+     */
+    public List<User> findUsersByCompanyId(@Param("loginUserId") Integer loginUserId,
+            @Param("companyId") Integer companyId,
+            @Param("testAccountIds") String testAccountIds, Page page);
+
+    /**
+     * 
+     * @description 根据用户id查找roleIds
+     * @author miaoqi
+     * @date 2016年10月28日下午2:44:26
+     *
+     * @param userId
+     * @return
+     */
+    public List<Integer> findRoleIdsByUserId(@Param("userId") Integer loginUserId);
+
+    public User findUserByCellphoneAndRole(@Param("cellphone") String cellphone,
+            @Param("role") Integer role, @Param("state") Integer state);
 }

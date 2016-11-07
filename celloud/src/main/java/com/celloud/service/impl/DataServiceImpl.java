@@ -89,7 +89,10 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
-		dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+		Integer result = dataFileMapper.selectTagRelat(data.getFileId(), tagId);
+		if (result == null || result.intValue() == 0) {
+			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+		}
 		return dataFileMapper.updateDataInfoByFileId(data);
 	}
 
@@ -115,9 +118,9 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public PageList<DataFile> dataLists(Page page, Integer userId, String condition, int sort, String sortDateType,
-			String sortNameType) {
+            String sortNameType, String sortAnotherName, String sortRun) {
 		List<DataFile> lists = dataFileMapper.findDataLists(page, userId, condition, sort, sortDateType, sortNameType,
-				DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE);
+                DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE, sortAnotherName, sortRun);
 		return new PageList<>(page, lists);
 	}
 
@@ -294,7 +297,7 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public String getAnotherName(String perlPath, String filePath, String outPath) {
-		perlPath = !StringUtils.isBlank(perlPath) ? perlPath : ConstantsData.getAnotherNamePerlPath();
+		perlPath = !StringUtils.isBlank(perlPath) ? perlPath : ConstantsData.getAnotherNamePerlPath(null);
 		outPath = !StringUtils.isBlank(outPath) ? outPath : filePath + ".txt";
 		StringBuffer command = new StringBuffer();
 		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);

@@ -182,10 +182,6 @@ $.reportChar.draw = {
         		tooltip : {
         	        trigger: 'axis'
         	    },
-        	    legend: {
-        	        data:[title],
-        	        top : 15
-        	    },
         	    calculable : true,
         	    xAxis : [
         	        {

@@ -17,6 +17,17 @@ public interface DataFileMapper {
 
     DataFile selectByPrimaryKey(Integer fileId);
 
+    /**
+     * 
+     * @description 根据不为null的条件查询
+     * @author miaoqi
+     * @date 2016年10月31日下午1:07:41
+     *
+     * @param record
+     * @return
+     */
+    DataFile selectBySelective(DataFile record);
+
     int updateByPrimaryKeySelective(DataFile record);
 
     int updateByPrimaryKeyWithBLOBs(DataFile record);
@@ -241,4 +252,16 @@ public interface DataFileMapper {
     @MapKey("fileId")
     Map<Integer, Map<String, String>> getMd5FileIdMap(@Param("userIds") List<Integer> userIds,
             @Param("appId") Integer appId);
+
+    /**
+     * 
+     * @description 根据id集合查询文件集合
+     * @author miaoqi
+     * @date 2016年11月3日上午10:36:11
+     *
+     * @param fileIds
+     * @return
+     */
+    public List<DataFile> findFilesByIds(@Param("fileIds") List<Integer> fileIds);
+
 }

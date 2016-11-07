@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
-import com.celloud.constants.SampleExperState;
+import com.celloud.constants.SampleTypes;
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleStorage;
 import com.celloud.page.Page;
@@ -170,7 +170,7 @@ public class SampleAction {
     public PageList<Sample> getScanStorageSamples(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
-        return getSamples(page, size, SampleExperState.SCAN_STORAGE);
+        return getSamples(page, size, SampleTypes.SCAN_STORAGE);
     }
 
     @ActionLog(value = "扫码样本入库", button = "扫码入库")
@@ -187,7 +187,7 @@ public class SampleAction {
         // 判断样本是否已采集
         Integer userId = ConstantsData.getLoginUserId();
         Sample sampling = sampleService.getByNameExperState(
-                userId, sampleName, SampleExperState.SAMPLING);
+                userId, sampleName, SampleTypes.SAMPLING);
         if (sampling == null){
             map.put("error", "系统中无此样本信息，请确认是已采样样本！");
             return map;
@@ -195,7 +195,7 @@ public class SampleAction {
         // 判断样本是否已入库
         Sample scanStorage = sampleService.getByNameExperState(
                 userId, sampleName,
-                SampleExperState.SCAN_STORAGE);
+                SampleTypes.SCAN_STORAGE);
         if (scanStorage != null){
             map.put("error", "此样品信息已经收集过，请核查或者采集下一管样品信息！");
             return map;
@@ -203,7 +203,7 @@ public class SampleAction {
         // 修改样本状态为入库
         map.put("experName",
                 sampleService.updateExperState(ConstantsData.getLoginUserId(),
-                        SampleExperState.SCAN_STORAGE, sampling.getSampleId()));
+                        SampleTypes.SCAN_STORAGE, sampling.getSampleId()));
         map.put("date", DateUtil.getDateToString(sampling.getLogDate(),
                 "yyyy-MM-dd HH:mm:ss"));
         return map;
@@ -215,7 +215,7 @@ public class SampleAction {
     public PageList<Sample> getTokenDnaSamples(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size) {
-        return getSamples(page, size, SampleExperState.TOKEN_DNA);
+        return getSamples(page, size, SampleTypes.TOKEN_DNA);
     }
 
     @ActionLog(value = "扫码提取DNA", button = "提取DNA")
@@ -226,21 +226,21 @@ public class SampleAction {
         // 判断样本是否已入库
         Integer userId = ConstantsData.getLoginUserId();
         Sample scanStorage = sampleService.getByExperNameExperState(userId,
-                experSampleName, SampleExperState.SCAN_STORAGE);
+                experSampleName, SampleTypes.SCAN_STORAGE);
         if (scanStorage == null) {
             map.put("error", "此样本未入库");
             return map;
         }
         // 判断样本是否已提取DNA
         Sample tokenDNA = sampleService.getByExperNameExperState(userId,
-                experSampleName, SampleExperState.TOKEN_DNA);
+                experSampleName, SampleTypes.TOKEN_DNA);
         if (tokenDNA != null) {
             map.put("error", "此样品信息已经收集过，请核查或者采集下一管样品信息！");
             return map;
         }
         // 修改样本状态为提取DNA
         sampleService.updateExperState(ConstantsData.getLoginUserId(),
-                SampleExperState.TOKEN_DNA, scanStorage.getSampleId());
+                SampleTypes.TOKEN_DNA, scanStorage.getSampleId());
         map.put("date", DateUtil.getDateToString(scanStorage.getLogDate(),
                 "yyyy-MM-dd HH:mm:ss"));
         return map;
@@ -249,13 +249,14 @@ public class SampleAction {
     @ActionLog(value = "获取建库中的样本列表", button = "建库")
     @RequestMapping("getBuidLibrarySamples")
     @ResponseBody
-    public Map<String,Object> getBuidLibrarySamples() {
+	public Map<String, Object> getBuidLibrarySamples() {
         Map<String,Object> map = new HashMap<>();
-        PageList<Sample> pageList = getSamples(1, 12, SampleExperState.BUID_LIBRARY);
+        PageList<Sample> pageList = getSamples(1, 12, SampleTypes.BUID_LIBRARY);
         map.put("pageList", pageList);
         SecureRandom s = new SecureRandom();
         map.put("libraryName", DateUtil.getDateToString()
                 + String.format("%02d", s.nextInt(99)));
+		map.put("metaList", SampleTypes.libraryIndex);
         return map;
     }
 
@@ -275,17 +276,17 @@ public class SampleAction {
             String[] sindexs) {
         Integer userId = ConstantsData.getLoginUserId();
         Sample prevSamp = sampleService.getByExperNameExperState(userId,
-                experSampleName, SampleExperState.TOKEN_DNA);
+                experSampleName, SampleTypes.TOKEN_DNA);
         if (prevSamp == null)
             return 0;
         Sample currentSamp = sampleService.getByExperNameExperState(userId,
-                experSampleName, SampleExperState.BUID_LIBRARY);
+                experSampleName, SampleTypes.BUID_LIBRARY);
         if (currentSamp != null)
             return -1;
         List<String> sindexList = sindexs == null || sindexs.length <= 0 ? null
                 : Arrays.asList(sindexs);
         return sampleService.updateExperStateAndIndex(userId,
-                SampleExperState.BUID_LIBRARY,
+                SampleTypes.BUID_LIBRARY,
                 prevSamp.getSampleId(), sindexList);
     }
 
@@ -297,7 +298,8 @@ public class SampleAction {
                 : Arrays.asList(sampleIds);
         SampleStorage ss = sampleService.addStorage(libraryName, sindex, list,
                 ConstantsData.getLoginUserId());
-        List<String> header = Arrays.asList("文库编号", "文库index", "样品编号", "样品类型",
+        List<String> header = Arrays.asList("文库编号", "文库index", "医院样品编号",
+                "实验样品编号", "样品类型",
                 "建库时间", "样本index");
         ExcelUtil.listToExcel(header,
                 sampleService.sampleListInStorage(

@@ -7,6 +7,9 @@
     self.getProductTags = function(){
       return $resource("uploadFile/getProductTag").query();
     }
+    self.typeList = function(){
+      return $resource("metadata/sampleType").query();
+    }
     self.sampling = function(sampleName,tagId,type){
       return $http({method:"POST",url:'sample/sampling',params:{"sampleName":sampleName,"tagId":tagId,"type":type}});
     }

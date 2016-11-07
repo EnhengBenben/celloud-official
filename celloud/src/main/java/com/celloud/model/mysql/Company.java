@@ -31,6 +31,8 @@ public class Company {
 
     private String addressDetail;
 
+    private String district;
+
     public Integer getCompanyId() {
         return companyId;
     }
@@ -136,10 +138,20 @@ public class Company {
     }
 
     public String getAddressDetail() {
-        return addressDetail;
+        return getProvince() == null ? ""
+                : getProvince() + getCity() == null ? "" : getCity() + getDistrict() == null ? "" : getDistrict();
     }
 
     public void setAddressDetail(String addressDetail) {
         this.addressDetail = addressDetail == null ? null : addressDetail.trim();
     }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
 }

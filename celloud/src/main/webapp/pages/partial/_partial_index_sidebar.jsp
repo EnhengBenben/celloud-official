@@ -48,9 +48,14 @@
       </ul>
       <ul class="sidebar-menu">
         <li class="sidebar-header">用户中心</li>
-        <li ng-class="{active: isActive('/user')}">
+        <li ng-class="{active: isActive('/user/')}">
           <a di-href="<%=request.getContextPath()%>/index#/user/base"><i class="account-icon"></i><span>账号管理</span></a>
         </li>
+        <shiro:hasPermission name="hospital:menu">
+	        <li ng-class="{active: isActive('/company')}">
+	          <a di-href="<%=request.getContextPath()%>/index#/company/user"><i class="company-icon"></i><span>医院管理</span></a>
+	        </li>
+        </shiro:hasPermission>
         <li ng-class="{active: isActive('/feedback')}">
           <a di-href="<%=request.getContextPath()%>/index#/feedback"><i class="qa-icon"></i><span>问题反馈</span></a>
         </li>

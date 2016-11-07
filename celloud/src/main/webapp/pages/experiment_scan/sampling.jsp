@@ -13,8 +13,10 @@
           <form name="samplingForm">
             <span class="input-alert" ng-show="samplingForm.$invalid">需要输入完整信息</span>
             <select class="form-control tag-select" name="selTags" ng-model="selTags" ng-options="tag.tagName for tag in productTags" required>
+            	<option value="">--请选择产品--</option>
             </select>
-            <select class="form-control type-select" name="type" ng-model="type" ng-options="type for type in typeList" required>
+            <select class="form-control type-select" name="type" ng-model="type" ng-options="metadata.name for metadata in typeList" required>
+            	<option value="">--请选择样本类型--</option>
             </select>
             <div class="info-btn-group">
               <input class="field" type="text" ng-trim="true" name="sampleName" ng-model="sampleName" placeholder="扫码或者输入样本编号" required/>

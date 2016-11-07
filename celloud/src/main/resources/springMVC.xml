@@ -209,11 +209,12 @@
 	<bean id="wechatProperties" class="com.celloud.wechat.WechatUtils">
 		<property name="appId" value="${wechat.appId}" />
 		<property name="appSecret" value="${wechat.appSecret}" />
-		<property name="loginHtml" value="${wechat.loginHtml}" />
-		<property name="oAuth2Url" value="${wechat.oAuth2Url}" />
+		<property name="urlToken" value="${wechat.urlToken}" />
 		<property name="oAuth2TokenUrl" value="${wechat.oAuth2TokenUrl}" />
 		<property name="tokenUrl" value="${wechat.tokenUrl}" />
 		<property name="templateUrl" value="${wechat.templateUrl}" />
+		<property name="qrcodeCreate" value="${wechat.qrcodeCreate}" />
+		<property name="qrcodeShow" value="${wechat.qrcodeShow}" />
 	</bean>
 	<bean id="velocityEngine"
 		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
