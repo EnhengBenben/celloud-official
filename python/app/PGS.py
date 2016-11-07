@@ -97,7 +97,7 @@ class PGS:
 				elif(x.endswith('.png') and ('chr-point' in x)):
 					##此处处理VgDNA_1M下的图片
 					charKeys = x.split('.')[-2];
-					result[pgs[charKeys.split('-')[0] + charKeys.split('-')[1] + 'Png']] = x
+					result[charKeys.split('-')[0] + charKeys.split('-')[1] + 'Png'] = x
 				elif(x.endswith('.png')):
 					##此处处理所有png
 					result[pgs[x.split('.')[-2] + 'Png']] = x
