@@ -27,19 +27,14 @@
 			</a>
 		</div>
 		<div class="logo-name">生物信息云平台</div>
-		<form action="login" method="post" id="loginForm">
+		<form action="clientLogin.html" method="post" id="clientLoginForm">
 			<div class="login-main clearfix">
+			    <input type="hidden" name="info" id="info" value="${requestScope.info }" />
 			    <div class="error">&nbsp;</div>
-				<input type="hidden" id="modulusHidden" name="modulus" value="${publicKey.modulus }" />
-				<input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />
-				<input type="hidden" name="checked" id="checked" value="${requestScope.checked }" />
-				<input type="hidden" name="info" id="info" value="${requestScope.info }" />
 				<input type="text" class="username input-top" placeholder="手机号码" id="cellphone" name="cellphone"/>
 				<div class="yzm">
-					<input type="text" class="yzm input-bottom" placeholder="验证码" id="captcha" name="kaptchaCode" value="${requestScope.kapcode }" />
-<%-- 					<img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage" alt="验证码" --%>
-<!-- 						class="validateCode" style="cursor: pointer;" /> -->
-				    <a class="validateCode">获取验证码</a>
+					<input type="text" class="yzm input-bottom" placeholder="验证码" id="captcha" name="captcha" />
+				    <a id="getcaptcha" class="validateCode">获取验证码</a>
 				</div>
 				<a id="submit" class="btn-login sign-in" href="javascript:void(0);">登录</a>
 			</div>
@@ -62,14 +57,12 @@
 	<!--#E bgContainer-->
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/utils.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/tologin.js?version=1.1"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/security.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/client_login.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js?version=3.1.16.1"></script>
 	<script type="text/javascript">
 		var browser = $.NV();
 		if(browser.name=='ie'&&browser.version<9){
-			$("#loginForm").load("<%=request.getContextPath()%>/browser.html");
+			$("#clientLoginForm").load("<%=request.getContextPath()%>/browser.html");
 		}else{
 			//根据视口和文档的宽高设置背景图片的尺寸
 			utils.setDocSize();

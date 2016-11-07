@@ -138,7 +138,8 @@ public class Company {
     }
 
     public String getAddressDetail() {
-        return province + city + district + addressDetail;
+        return getProvince() == null ? ""
+                : getProvince() + getCity() == null ? "" : getCity() + getDistrict() == null ? "" : getDistrict();
     }
 
     public void setAddressDetail(String addressDetail) {

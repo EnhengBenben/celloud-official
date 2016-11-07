@@ -6,6 +6,24 @@
     background-position: @position-x @position-y;
     vertical-align: text-bottom;
 }
+.client-bg-icons(@width,@height,@position-x,@position-y){
+    .bg-icons(@width,@height,@position-x,@position-y,@client-bg-img);
+}
+.c-rocky-logo{
+    .client-bg-icons(81px,50px,0,0);
+}
+.c-rocky-home{
+    .client-bg-icons(16px,15px,-93px,0px);
+}
+.c-rocky-exit{
+    .client-bg-icons(15px,16px,-143px,0px);
+}
+.c-sample-send{
+    .client-bg-icons(134px,117px,0px,-66px);
+}
+.c-report{
+    .client-bg-icons(134px,117px,-150px,-66px);
+}
 .logo{
     .bg-icons(108px,50px,0,0);
     .center-block();
@@ -69,6 +87,9 @@
 }
 .statistics-icon{
     .bg-icons(19px,17px,-599px,-100px);
+}
+.company-icon{
+    .bg-icons(19px,17px,-660px,-100px);
 }
 .myapp-icon{
     .bg-icons(15px,16px,0px,-150px);
@@ -142,5 +163,20 @@
     }
     .statistics-icon{
         .bg-icons(19px,17px,-599px,-126px);
+    }
+    .company-icon{
+        .bg-icons(19px,17px,-660px,-126px);
+    }
+    .c-rocky-home{
+        .client-bg-icons(16px,15px,-119px,0px);
+    }
+    .c-rocky-exit{
+        .client-bg-icons(15px,16px,-170px,0px);
+    }
+    .c-sample-send{
+        .client-bg-icons(134px,117px,-1px,-187px);
+    }
+    .c-report{
+        .client-bg-icons(134px,117px,-150px,-187px);
     }
 }

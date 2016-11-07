@@ -16,7 +16,7 @@
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
-  <link href="<%=request.getContextPath()%>/css/celloud.min.css?version=3.3.7.01" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css?version=3.3.7.03" rel="stylesheet">
 <%--   <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" /> --%>
 <!--   <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script> -->
   <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
@@ -63,6 +63,10 @@
   </script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="<%=request.getContextPath()%>/plugins/photoClip/iscroll-zoom.js?v=3.3.4"></script>
+  <script src="<%=request.getContextPath()%>/plugins/photoClip/hammer.js?v=3.3.4"></script>
+  <script src="<%=request.getContextPath()%>/plugins/photoClip/lrz.all.bundle.js?v=3.3.4"></script>
+  <script src="<%=request.getContextPath()%>/plugins/photoClip/jquery.photoClip.js?v=3.3.4"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
   <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js"></script>
@@ -80,7 +84,7 @@
   <script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/area/area.js?v=3.3.4"></script>
   
-  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.7.31"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.7.37"></script>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
 	  window.username = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUsername() %>';

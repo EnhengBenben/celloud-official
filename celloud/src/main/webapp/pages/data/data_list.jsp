@@ -39,12 +39,34 @@
               </label>
             </th>
             <th>文件名称</th>
-            <th>文件别名</th>
+            <th>
+                            文件别名
+              <a ng-show="column=='anotherName' && order=='asc'" ng-click="sortQuery('anotherName','asc')" href="javascript:void(0);">
+                  <i class="fa fa-sort-amount-asc"></i>
+              </a>
+              <a ng-show="column=='anotherName' && order=='desc'" ng-click="sortQuery('anotherName','desc')" href="javascript:void(0);">
+                  <i class="fa fa-sort-amount-desc"></i>
+              </a>
+              <a ng-show="column!='anotherName'" ng-click="sortQuery('anotherName','desc')" href="javascript:void(0);">
+                  <i class="fa fa-sort" aria-hidden="true"></i>
+              </a>
+            </th>
             <th>产品标签</th>
             <th>数据标签</th>
             <th>数据大小</th>
             <th>上传时间</th>
-            <th>是否运行</th>
+            <th>
+                            是否运行
+              <a ng-show="column=='run' && order=='asc'" ng-click="sortQuery('run','asc')" href="javascript:void(0);">
+                  <i class="fa fa-sort-amount-asc"></i>
+              </a>
+              <a ng-show="column=='run' && order=='desc'" ng-click="sortQuery('run','desc')" href="javascript:void(0);">
+                  <i class="fa fa-sort-amount-desc"></i>
+              </a>
+              <a ng-show="column!='run'" ng-click="sortQuery('run','desc')" href="javascript:void(0);">
+                  <i class="fa fa-sort" aria-hidden="true"></i>
+              </a>
+            </th>
             <th>操作</th>
           </tr>
         </thead>
@@ -62,7 +84,8 @@
             <td>{{file.batch}}</td>
             <td>{{file.size | fileSizeFormat}}</td>
             <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td>{{file.reportNum < 1 ? '未运行' : '已运行'}}</td>
+            <td ng-if="file.reportNum < 1" style="font-weight: bold;">未运行</td>
+            <td ng-if="file.reportNum > 0">已运行</td>
             <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
           <tr ng-show="dataList.datas.length == 0">

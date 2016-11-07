@@ -15,6 +15,8 @@ import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.DataState;
+import com.celloud.constants.UserRole;
 import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.UserMapper;
 import com.celloud.mapper.UserRegisterMapper;
@@ -111,7 +113,27 @@ public class UserServiceImpl implements UserService {
         temp.setUserId(ConstantsData.getLoginUserId());
         temp.setIcon(user.getIcon());
         temp.setNavigation(user.getNavigation());
-        return userMapper.updateByPrimaryKeySelective(temp);
+        temp.setTruename(user.getTruename());
+        temp.setAddress(user.getAddress());
+        temp.setZipCode(user.getZipCode());
+        temp.setAge(user.getAge());
+        temp.setSex(user.getSex());
+        if ("省份".equals(user.getProvince())) {
+            temp.setProvince(null);
+        } else {
+            temp.setProvince(user.getProvince());
+        }
+        if ("地级市".equals(user.getCity())) {
+            temp.setCity(user.getCity());
+        } else {
+            temp.setCity(user.getCity());
+        }
+        if ("市、县级市".equals(user.getDistrict())) {
+            temp.setDistrict(user.getDistrict());
+        } else {
+            temp.setDistrict(user.getDistrict());
+        }
+        return userMapper.customUpdateByPrimaryKeySelective(temp);
     }
 
     @Override
@@ -209,7 +231,10 @@ public class UserServiceImpl implements UserService {
         }
         if (roleIdList != null && !roleIdList.isEmpty()) {
             for (Integer roleId : roleIdList) {
-                roleIds.append(roleId + ",");
+                // 排除医院管理员权限
+                if (roleId.intValue() != 6) {
+                    roleIds.append(roleId + ",");
+                }
             }
             roleIds.deleteCharAt(roleIds.length() - 1);
         }
@@ -225,8 +250,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Integer addClientUser(String cellphone) {
+        User user = new User();
+        user.setCellphone(cellphone);
+        user.setUsername("cel_" + cellphone.substring(3, cellphone.length()));
+        // 客户端默认密码：CelLoud+手机号
+        user.setPassword(MD5Util.getMD5("CelLoud" + cellphone));
+        user.setCreateDate(new Date());
+        user.setRole(UserRole.C_USER);
+        return userMapper.insertSelective(user);
+    }
+
+    @Override
+    public Integer checkAddClientUser(String cellphone) {
+        User user = userMapper.findUserByCellphoneAndRole(cellphone,
+                UserRole.C_USER, DataState.ACTIVE);
+        if (user == null && cellphone != null) {
+            return addClientUser(cellphone);
+        }
+        return -1;
+    }
+
     public Boolean updateBySelective(User updateUser) {
         return userMapper.updateByPrimaryKeySelective(updateUser) == 1;
     }
-
 }

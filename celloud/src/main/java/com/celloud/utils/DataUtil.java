@@ -7,6 +7,7 @@ import com.celloud.constants.SampleTypes;
 import com.celloud.model.mysql.Metadata;
 
 public class DataUtil {
+    private static SecureRandom s = new SecureRandom();
     /**
      * 生成dataKey
      * 
@@ -15,7 +16,6 @@ public class DataUtil {
      * @return
      */
     public static String getNewDataKey(int id) {
-        SecureRandom s = new SecureRandom();
         String timeStamp = DateUtil.getDateToString()
                 + String.format("%06d", id) + ""
                 + String.format("%02d", s.nextInt(99));
@@ -32,7 +32,6 @@ public class DataUtil {
      * @date 2016年10月25日 下午1:48:38
      */
     public static String getSampleOrderNo(int id) {
-        SecureRandom s = new SecureRandom();
         String timeStamp = DateUtil.getDateToString("yyyyMM")
                 + String.format("%06d", id)
                 + String.format("%02d", s.nextInt(99));
@@ -59,5 +58,16 @@ public class DataUtil {
                 + DateUtil.getDateToString("yyyyMM")
                 + String.format("%06d", id);
         return timeStamp;
+    }
+
+    /**
+     * 生成6位随机数验证码
+     * 
+     * @return
+     * @author leamo
+     * @date 2016年10月31日 下午5:37:15
+     */
+    public static String getCapchaRandom() {
+        return String.format("%06d", s.nextInt(999999));
     }
 }

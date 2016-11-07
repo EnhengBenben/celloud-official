@@ -90,4 +90,15 @@ public interface CompanyMapper {
      * @return
      */
     public List<String> findCompanyIdsByRoleId(@Param("roleId") Integer roleId);
+
+    /**
+     * 
+     * @description 根据id集合查询公司集合
+     * @author miaoqi
+     * @date 2016年11月3日上午10:36:11
+     *
+     * @param companyIds
+     * @return
+     */
+    public List<Company> findCompanysByIds(@Param("companyIds") List<Integer> companyIds);
 }

@@ -21,6 +21,8 @@ public interface UserMapper {
 
     public int updateByPrimaryKeySelective(User record);
 
+    public int customUpdateByPrimaryKeySelective(User record);
+
     public int updateByPrimaryKey(User record);
 
     public User checkLogin(User user);
@@ -126,4 +128,7 @@ public interface UserMapper {
      * @return
      */
     public List<Integer> findRoleIdsByUserId(@Param("userId") Integer loginUserId);
+
+    public User findUserByCellphoneAndRole(@Param("cellphone") String cellphone,
+            @Param("role") Integer role, @Param("state") Integer state);
 }

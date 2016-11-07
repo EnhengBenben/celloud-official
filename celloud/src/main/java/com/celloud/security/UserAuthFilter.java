@@ -36,14 +36,18 @@ public class UserAuthFilter extends UserFilter {
 	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest req, ServletResponse res) throws Exception {
-		HttpServletRequest request = (HttpServletRequest) req;
-		HttpServletResponse response = (HttpServletResponse) res;
-		if ("XMLHttpRequest".equalsIgnoreCase(request.getHeader("x-requested-with"))) {
-			// 如果是ajax请求响应头会有，x-requested-with
-			response.setHeader("sessionstatus", "timeout");// 在响应头设置session状态
-		} else {
-			WebUtils.issueRedirect(request, response, "/login");
-		}
-		return false;
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
+        String url = request.getRequestURI();
+        if ("XMLHttpRequest"
+                .equalsIgnoreCase(request.getHeader("x-requested-with"))) {
+            // 如果是ajax请求响应头会有，x-requested-with
+            response.setHeader("sessionstatus", "timeout");// 在响应头设置session状态
+        } else if (url.contains("client")) {
+            WebUtils.issueRedirect(request, response, "/client.html");
+        } else {
+            WebUtils.issueRedirect(request, response, "/login");
+        }
+        return false;
 	}
 }

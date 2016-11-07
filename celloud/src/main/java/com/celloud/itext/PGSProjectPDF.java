@@ -38,7 +38,10 @@ public class PGSProjectPDF {
 	 */
 	public static void createPDF(String path, String appName, int posX, int posY, String keys, String projectId)
 			throws Exception {
-		path = path.endsWith("/") ? path : path + "/";
+        path = path.endsWith("/") ? path : path + "/";
+
+        Integer userId = Integer.parseInt(StringUtils.split(path, "/")[StringUtils.split(path, "/").length - 2]);
+
 		// 定义中文
 		BaseFont bfChinese = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
 		// 定义Title字体样式
@@ -67,14 +70,48 @@ public class PGSProjectPDF {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < key.length; i++) {
 			String info[] = key[i].split(",");
+            // datakey目录
 			String result = path + info[0] + "/";
 			String errorFile = result + "no_enough_reads.xls";
 			if (!FileTools.checkPath(errorFile)) {
+
+                // 读取report.txt内容
+                File r = new File(result + "report.txt");
+                String report = "";
+                if (r.exists()) {
+                    report = FileUtils.readFileToString(r);
+                }
+
 				boolean isBigPic = true;
-				String finalPng = FileTools.fileExist(result, "final.txt.final.png", "endsWith");
-				if (finalPng.equals("")) {
+                String finalPng = null;
+                if (userId.intValue() == 25) { // xiongbo
+                    finalPng = FileTools.fileExist(result, "final.txt.final.png", "endsWith");
+                } else {
+                    // 判断report.txt
+                    if (StringUtils.isNotEmpty(report)) {
+                        if (report.contains("+X") || report.contains("+Y") || report.contains("-X")
+                                || report.contains("-Y")) {
+                            finalPng = FileTools.fileExist(result, "final.txt.final.png", "endsWith");
+                        } else {
+                            finalPng = FileTools.fileExist(result, "report.txt.final.png", "endsWith");
+                        }
+                    }
+                }
+                if ("".equals(finalPng)) {
 					isBigPic = false;
-					finalPng = FileTools.fileExist(result, "final.txt.mini.png", "endsWith");
+                    if (userId.intValue() == 25) { // xiongbo
+                        finalPng = FileTools.fileExist(result, "final.txt.mini.png", "endsWith");
+                    } else {
+                        // 判断report.txt
+                        if (StringUtils.isNotEmpty(report)) {
+                            if (report.contains("+X") || report.contains("+Y") || report.contains("-X")
+                                    || report.contains("-Y")) {
+                                finalPng = FileTools.fileExist(result, "final.txt.mini.png", "endsWith");
+                            } else {
+                                finalPng = FileTools.fileExist(result, "report.txt.mini.png", "endsWith");
+                            }
+                        }
+                    }
 				}
 				String fileName = "";
 				String tableTitle = "";
@@ -85,11 +122,6 @@ public class PGSProjectPDF {
 					fileName = xlsContext[0];
 					tableTitle = xlsContext[1];
 					tableContext = xlsContext[2];
-				}
-				File r = new File(result + "report.txt");
-				String report = "";
-				if(r.exists()){
-					report = FileUtils.readFileToString(r);
 				}
 
 				// 文件名
@@ -270,6 +302,6 @@ public class PGSProjectPDF {
 
 	public static void main(String[] args) throws Exception {
 		PGSProjectPDF pdf = new PGSProjectPDF();
-		pdf.createPDF("/Users/lin", "JBRH-PGS", 100, 200, "16072100012030,test_t,;", "222");
+        pdf.createPDF("G:\\15\\119", "JBRH-PGS", 100, 200, "16102600215933,test_t,;", "1334");
 	}
 }

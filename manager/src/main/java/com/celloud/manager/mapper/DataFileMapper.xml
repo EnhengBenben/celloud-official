@@ -541,5 +541,16 @@
             AND flag = 0
             AND period = 3
         )
+        ORDER BY create_date DESC
+    </select>
+    <select id="findFilesByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tb_file
+        WHERE file_id
+        IN
+        <foreach collection="fileIds" item="fileId" separator="," open="(" close=")">
+        #{fileId}
+        </foreach>
     </select>
 </mapper>

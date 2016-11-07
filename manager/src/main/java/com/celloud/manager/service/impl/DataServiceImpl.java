@@ -1,9 +1,7 @@
 package com.celloud.manager.service.impl;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +22,7 @@ import com.celloud.manager.model.DataFile;
 import com.celloud.manager.model.User;
 import com.celloud.manager.model.mongo.HBV;
 import com.celloud.manager.service.DataService;
+import com.celloud.manager.utils.DateUtil;
 import com.celloud.manager.utils.PropertiesUtil;
 
 @Service("dataService")
@@ -223,9 +222,9 @@ public class DataServiceImpl implements DataService{
     }
 
     @Override
-    public Map<Integer, Map<String, String>> getSiteInfo(Integer companyId, Integer site) {
+    public List<Map<String, String>> getSiteInfo(Integer companyId, Integer site) {
         // 结果Map
-        Map<Integer, Map<String, String>> result = new HashMap<Integer, Map<String, String>>();
+        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
         Map<String, Object> filters = new HashMap<String, Object>();
         // 如果是超级管理员, 则查找所有hbv的报告, 不用就5筛选用户
         List<Integer> userIds = null;
@@ -241,37 +240,63 @@ public class DataServiceImpl implements DataService{
         }
         filters.put("other." + site + "_new_png exists", true);
 
-        // 该大客户下所有的hbv报告
+        // 该大客户下存在该位点的数据报告
         List<HBV> hbvs = reportDao.queryByFilters(HBV.class, filters,
-                new String[] { "companyId", "dataKey", "userId" });
+                new String[] { "companyId", "dataKey", "userId", "fileId" });
 
-        // 遍历hbv报告, companyId为key封装结果集
+        // 保存datakey, 用于去除重复运行
+        Map<String, Object> dataKeyMap = new HashMap<String, Object>();
+        // 保存md5, 用于去除重复文件
+        Map<String, Object> md5Map = new HashMap<String, Object>();
+        // hbv对应的文件map集合{"21":{"md5":"xfdsghfsgh"},"22":{"md5":"dgdfsgsdgf"},...}
+        Map<Integer, Map<String, String>> md5FileIdMap = dataFileMapper.getMd5FileIdMap(userIds, 82);
+
+        List<Integer> queryUserIds = new ArrayList<Integer>();
+        List<Integer> queryCompanyIds = new ArrayList<Integer>();
+        List<Integer> queryFileIds = new ArrayList<Integer>();
+
         for (HBV hbv : hbvs) {
-            Map<String,String> valueMap = new HashMap<String, String>();
-            valueMap.put("dataKey", hbv.getDataKey());
-            result.put(hbv.getCompanyId(), valueMap);
+            if (dataKeyMap.containsKey(hbv.getDataKey())) { // map中已经存在该datakey代表已经存在该文件(去除重复运行)
+                continue;
+            } else {
+                // 判断是否已经添加过了
+                if (md5Map.get(md5FileIdMap.get(hbv.getFileId()).get("md5")) != null) { // 代表保存md5的map中已经存在该MD5(去除重复文件)
+                    continue;
+                } else {
+                    md5Map.put(md5FileIdMap.get(hbv.getFileId()).get("md5"), new Object());
+                    // 代表第一次读取到该datakey作为键存入map中, 用于下次过滤
+                    dataKeyMap.put(hbv.getDataKey(), new Object());
+                    // 该hbv数据既不属于重复运行, 也不属于重复文件
+                    // 根据userId封装userIds, 获取用户名
+                    queryUserIds.add(hbv.getUserId());
+                    // 根据companyId封装companyIds, 获取公司名称
+                    queryCompanyIds.add(hbv.getCompanyId());
+                    // 根据fileId封装fileIds, 获取上传时间, 文件名
+                    queryFileIds.add(hbv.getFileId());
+                }
+            }
         }
-        // 查询该大客户下的医院
-        List<Company> companys = companyMapper.getCompany(companyId, DataState.ACTIVE, PropertiesUtil.testAccountIds);
+        List<User> users = userMapper.findUsersByIds(queryUserIds);
+        Map<Integer, User> userMap = new HashMap<Integer, User>();
+        for (User user : users) {
+            userMap.put(user.getUserId(), user);
+        }
+        List<Company> companys = companyMapper.findCompanysByIds(queryCompanyIds);
+        Map<Integer, String> companyNameMap = new HashMap<Integer, String>();
         for (Company company : companys) {
-            // 如果包含这个医院, 则将医院名字放入值map中
-            if (result.containsKey(company.getCompanyId())) {
-                // 根据datakey查询DataFile对象
-                DataFile queryDataFile = new DataFile();
-                queryDataFile.setDataKey(result.get(company.getCompanyId()).get("dataKey"));
-                DataFile dataFile = dataFileMapper.selectBySelective(queryDataFile);
-                // 获取file_name, create_date
-                String fileName = dataFile.getFileName();
-                Date createDate = dataFile.getCreateDate();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Integer userId = dataFile.getUserId();
-                result.get(company.getCompanyId()).put("fileName", fileName);
-                result.get(company.getCompanyId()).put("createDate", sdf.format(createDate));
-                // 根据userId查询账号
-                User user = userMapper.selectByPrimaryKey(userId);
-                result.get(company.getCompanyId()).put("userName", user.getUsername());
-                // 公司名称
-                result.get(company.getCompanyId()).put("companyName", company.getCompanyName());
+            companyNameMap.put(company.getCompanyId(), company.getCompanyName());
+        }
+        // 按照files遍历, 因为files本身就是去重的
+        List<DataFile> files = dataFileMapper.findFilesByIds(queryFileIds);
+        if (null != files) {
+            for (int i = 0; i < files.size(); i++) {
+                Map<String, String> map = new HashMap<String, String>();
+                DataFile file = files.get(i);
+                map.put("fileName", file.getFileName());
+                map.put("createDate", DateUtil.getDateToString(file.getCreateDate(), "yyyy-MM-dd"));
+                map.put("userName", userMap.get(file.getUserId()).getUsername());
+                map.put("companyName", companyNameMap.get(userMap.get(file.getUserId()).getCompanyId()));
+                result.add(map);
             }
         }
         return result;
