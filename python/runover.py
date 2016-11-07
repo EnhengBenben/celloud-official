@@ -58,7 +58,8 @@ method_dic = {
 122:PGS,
 124:PGS,
 125:PGS,
-129:PGS
+129:PGS,
+130:PGS
 }
 
 #对应database名
@@ -92,7 +93,8 @@ collection_dic = {
 122:"Pgs",
 124:"Pgs",
 125:"Pgs",
-129:"Pgs"
+129:"Pgs",
+130:"Pgs"
 }
 
 if len(sys.argv) != 4:
