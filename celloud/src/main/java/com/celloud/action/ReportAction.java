@@ -1305,7 +1305,6 @@ public class ReportAction {
 	public Map<String, Object> getPgsInfo(String dataKey, Integer projectId, Integer appId) {
 		Map<String, Object> map = getCommonInfo(projectId);
 		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
-        pgs.setCompanyId(949);
 		List<Experiment> expList = null;
 		if (pgs != null) {
 			expList = expService.getReportList(pgs.getUserId(), dataKey, appId);
@@ -1929,7 +1928,6 @@ public class ReportAction {
 	public void printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
 		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
 		// 涉及共享，此处不能取登陆者的companyId
-        pgs.setCompanyId(949);
         String path = null;
         // 如果是上海国妇婴医院就判断report.txt中的内容
         if (pgs.getCompanyId().intValue() == 949) {
