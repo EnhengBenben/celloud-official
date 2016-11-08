@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.AuthMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.Auth" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="access_key_id" property="accessKeyId" jdbcType="INTEGER" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="token_expire_date" property="tokenExpireDate" jdbcType="TIMESTAMP" />
+    <result column="refresh_token" property="refreshToken" jdbcType="VARCHAR" />
+    <result column="refresh_token_expire_date" property="refreshTokenExpireDate" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, access_key_id, token, token_expire_date, refresh_token, refresh_token_expire_date, 
+    create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_auth
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_auth
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.model.mysql.Auth" >
+    insert into tb_auth (id, user_id, access_key_id, 
+      token, token_expire_date, refresh_token, 
+      refresh_token_expire_date, create_date)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{accessKeyId,jdbcType=INTEGER}, 
+      #{token,jdbcType=VARCHAR}, #{tokenExpireDate,jdbcType=TIMESTAMP}, #{refreshToken,jdbcType=VARCHAR}, 
+      #{refreshTokenExpireDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Auth" >
+    insert into tb_auth
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="accessKeyId != null" >
+        access_key_id,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="tokenExpireDate != null" >
+        token_expire_date,
+      </if>
+      <if test="refreshToken != null" >
+        refresh_token,
+      </if>
+      <if test="refreshTokenExpireDate != null" >
+        refresh_token_expire_date,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="accessKeyId != null" >
+        #{accessKeyId,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenExpireDate != null" >
+        #{tokenExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refreshToken != null" >
+        #{refreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="refreshTokenExpireDate != null" >
+        #{refreshTokenExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Auth" >
+    update tb_auth
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="accessKeyId != null" >
+        access_key_id = #{accessKeyId,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenExpireDate != null" >
+        token_expire_date = #{tokenExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refreshToken != null" >
+        refresh_token = #{refreshToken,jdbcType=VARCHAR},
+      </if>
+      <if test="refreshTokenExpireDate != null" >
+        refresh_token_expire_date = #{refreshTokenExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.Auth" >
+    update tb_auth
+    set user_id = #{userId,jdbcType=INTEGER},
+      access_key_id = #{accessKeyId,jdbcType=INTEGER},
+      token = #{token,jdbcType=VARCHAR},
+      token_expire_date = #{tokenExpireDate,jdbcType=TIMESTAMP},
+      refresh_token = #{refreshToken,jdbcType=VARCHAR},
+      refresh_token_expire_date = #{refreshTokenExpireDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByRefreshToken" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_auth
+    where refresh_token = #{refreshToken,jdbcType=VARCHAR} and refresh_token_expire_date &lt; now()
+  </select>
+</mapper>

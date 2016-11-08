@@ -1,17 +1,19 @@
 package com.celloud.action;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.celloud.model.mysql.Auth;
 import com.celloud.service.ReportAPIService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("api/report")
@@ -20,32 +22,47 @@ public class ReportAPIAction {
 	@Resource
 	private ReportAPIService reportAPI;
 
-	//TODO create方法要删除
-	@RequestMapping("create")
-	@ResponseBody
-	public Map<String, String> create() {
-		return reportAPI.createAccount();
-	}
-
 	/**
 	 * 获取token
 	 * 
-	 * @param id
-	 * @param scret
+	 * @param keyId
+	 * @param keySecret
 	 * @return
 	 * @author lin
 	 * @date 2016年11月3日下午3:09:10
 	 */
-	@RequestMapping(value = "getToken", method = RequestMethod.POST)
+	@RequestMapping(value = "getToken")
 	@ResponseBody
-	public Map<String, String> getToken(String id, String scret) {
-		return null;
+	public String getToken(String keyId, String keySecret) {
+		Auth auth = reportAPI.getToken(keyId, keySecret);
+		if (auth == null) {
+			log.error("没有找到对应的keyId和keySecret，keyId=" + keyId + ",keySecret=" + keySecret);
+		}
+		return JSONObject.fromObject(auth).toString();
 	}
 
-	@RequestMapping(value = "refreshToken", method = RequestMethod.POST)
+	/**
+	 * 刷新token超时时间
+	 * 
+	 * @param refreshToken
+	 * @return
+	 * @author lin
+	 * @date 2016年11月7日下午3:17:20
+	 */
+	@RequestMapping(value = "refreshToken")
 	@ResponseBody
-	public Map<String, String> refreshToken(String token) {
+	public String refreshToken(String refreshToken) {
+		Auth auth = reportAPI.refreshToken(refreshToken);
+		if (auth == null) {
+			log.error("refreshToken不存在或者已过期：" + refreshToken);
+			return null;
+		}
+		ObjectMapper om = new ObjectMapper();
+		try {
+			return om.writeValueAsString(auth);
+		} catch (JsonProcessingException e) {
+			log.error("对象转json失败：" + auth.toString());
+		}
 		return null;
 	}
-
 }
