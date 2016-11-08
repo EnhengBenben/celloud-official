@@ -14,6 +14,7 @@ charMap[122] = "totalReads,duplicate,sd";
 charMap[124] = "totalReads,duplicate,sd";
 charMap[125] = "totalReads,duplicate,sd";
 charMap[129] = "totalReads,duplicate,sd";
+charMap[130] = "totalReads,duplicate,sd";
 charMap[91] = "totalReads,duplicate,gcCount";
 charMap[92] = "totalReads,duplicate,sd";
 charMap[93] = "totalReads,duplicate,sd";
