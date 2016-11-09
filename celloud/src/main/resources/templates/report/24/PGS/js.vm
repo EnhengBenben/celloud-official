@@ -6,7 +6,7 @@ $(function(){
         var baseNames = new Array();
         $(".baseTextarea").each(function(){
             inputVal = $(this).children().val();
-            baseNames.unshift($(this).children().attr("name"));
+            baseNames.push($(this).children().attr("name"));
             if(inputVal){
                 inputVal = inputVal.replace(/\r\n/g,"<br>");
             }
