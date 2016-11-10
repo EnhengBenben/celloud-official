@@ -55,7 +55,7 @@
 		        <div id="to-sl-period">
 		            <div id="period-lists" class="sl-val">
 		                <div class="sl-val-content" ng-click="periodLists('finish')">
-		                    <div class="celicon on_check checkbox checkbox-un hide" id="finish""></div>
+		                    <div class="celicon on_check checkbox checkbox-un hide" id="finish"></div>
 		                    <a data-click="report-period-search" ng-click="reportPeriodSearch('finish')" href="javascript:void(0)">
 		                        <input type="hidden" value="2">
 		                        <span>完成</span>

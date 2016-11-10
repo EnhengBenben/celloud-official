@@ -39,7 +39,7 @@
 			}
 		}
 		/**
-		 * 取消标签时的搜索
+		 * 取消单个标签时的搜索
 		 */
 		$scope.clearSlBatch = function(){
 			$("#selected-batch").addClass("hide");
@@ -51,7 +51,155 @@
 	        $scope.params.page = 1;
 	        $scope.pageQuery();
 		}
-		
+		/**
+		 * 更多, 收起
+		 */
+		$scope.batchMore = function(){
+			if($("#batch-lists").hasClass("show-more")){
+				$("#batch-lists").removeClass("show-more");
+				$("#batch-more span").html("更多");
+	            $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+			}else{
+	            $("#batch-lists").addClass("show-more");
+	            $("#batch-more span").html("收起");
+	            $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+			}
+		}
+		/**
+		 * 标签(批次)多选按钮
+		 */
+		$scope.batchMultiselect = function(){
+			$(".selector-line").removeClass("select-more");
+	        $("#report-multibatch-search").addClass("disabled");
+	        $("#report-multibatch-search").attr("disabled",true);
+	        $(".selector-line .checkbox").removeClass("checkbox-ed").addClass("checkbox-un").addClass("hide");
+	        $(".selector-line").find("[name='sl-confirm']").addClass("disabled");
+	        $(".selector-line").find("[name='sl-confirm']").attr("disabled",true);
+	        $(".selector-line").find(".multisl-btns").addClass("hide");
+	        var selectorline = $("#batch-sl");
+	        selectorline.addClass("select-more");
+	        selectorline.find(".sl-val").addClass("show-more");
+	        selectorline.find(".checkbox").removeClass("hide");
+	        selectorline.find(".multisl-btns").removeClass("hide");
+	        
+	        $("#batch-lists").addClass("show-more");
+            $("#batch-more span").html("收起");
+            $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+            $("#batch-lists .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
+            $("#report-multibatch-search").addClass("disabled");
+            $("#report-multibatch-search").attr("disabled",true);
+            $("#batch-more").addClass("disabled");
+            $("#batch-more").attr("disabled",true);
+		}
+		/**
+		 * 标签(批次)多选框按钮
+		 */
+		$scope.batchLists = function(batchId){
+			$("#" + batchId).toggleClass("checkbox-un");
+	        $("#" + batchId).toggleClass("checkbox-ed");
+	        if($("#batch-lists .checkbox-ed").size() > 0){
+	            $("#report-multibatch-search").removeClass("disabled");
+	            $("#report-multibatch-search").attr("disabled",false);
+	        }else{
+	            $("#report-multibatch-search").addClass("disabled");
+	            $("#report-multibatch-search").attr("disabled",true);
+	        }
+		}
+		/**
+		 * 取消标签(批次)多选
+		 */
+		$scope.resetBatchMultiSelect = function(){
+			var selectorline = $("#batch-sl");
+			selectorline.removeClass("select-more");
+			selectorline.find(".sl-val").removeClass("show-more");
+			selectorline.find(".checkbox").addClass("hide").addClass("checkbox-un").removeClass("checkbox-ed");
+			selectorline.find(".multisl-btns").addClass("hide");
+			if($("#batch-more").hasClass("disabled")){
+				$("#batch-more").removeClass("disabled");
+				$("#batch-more").attr("disabled",false);
+				$("#batch-more span").html("更多");
+				$("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+			}
+		}
+		/**
+		 * 点击单个状态搜索
+		 */
+		$scope.reportPeriodSearch = function(periodId){
+			if(!$("#period-sl").hasClass("select-more")){
+				$scope.params.period = $("#" + periodId).next().find("input").val();
+				$scope.params.page = 1;
+				$scope.pageQuery();
+				$("#selected-period span").html($("#" + periodId).next().find("span").text());
+				$("#selected-period").removeClass("hide");
+				$("#to-sl-period").addClass("hide");
+			}
+		}
+		/**
+		 * 取消单个状态搜索
+		 */
+		$scope.clearSlPeriod = function(){
+			$("#selected-period").addClass("hide");
+			$("#to-sl-period").removeClass("hide");
+			$scope.params.period = null;
+			$scope.pageQuery();
+		}
+		/**
+		 * 状态多选按钮
+		 */
+		$scope.periodMultiselect = function(){
+			$(".selector-line").removeClass("select-more");
+	        $("#report-multibatch-search").addClass("disabled");
+	        $("#report-multibatch-search").attr("disabled",true);
+	        $(".selector-line .checkbox").removeClass("checkbox-ed").addClass("checkbox-un").addClass("hide");
+	        $(".selector-line").find("[name='sl-confirm']").addClass("disabled");
+	        $(".selector-line").find("[name='sl-confirm']").attr("disabled",true);
+	        $(".selector-line").find(".multisl-btns").addClass("hide");
+	        var selectorline = $("#period-sl");
+	        selectorline.addClass("select-more");
+	        selectorline.find(".sl-val").addClass("show-more");
+	        selectorline.find(".checkbox").removeClass("hide");
+	        selectorline.find(".multisl-btns").removeClass("hide");
+		}
+		/**
+		 * 取消状态多选
+		 */
+		$scope.resetPeriodMultiSelect = function(){
+			var selectorline = $("#period-sl");
+	        selectorline.removeClass("select-more");
+	        selectorline.find(".sl-val").removeClass("show-more");
+	        selectorline.find(".checkbox").addClass("hide").addClass("checkbox-un").removeClass("checkbox-ed");
+	        selectorline.find(".multisl-btns").addClass("hide");
+	        if($("#batch-more").hasClass("disabled")){
+	        	$("#batch-more").removeClass("disabled");
+	        	$("#batch-more").attr("disabled",false);
+	        	$("#batch-more span").html("更多");
+	        	$("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+	        }
+		}
+		/**
+		 * 按照日期查询
+		 */
+		$scope.dateQuery = function(){
+          $scope.params.beginDate = $("#report-begindate-search").val();
+          $scope.params.endDate = $("#report-enddate-search").val();
+          $scope.pageQuery();
+        }
+		/**
+		 * 是否分发
+		 */
+		$scope.distributeQuery = function(){
+			var distribute = $("#distribute");
+			if(distribute.find(".sl-judge-no").hasClass("hide")){
+				distribute.find(".sl-judge-no").removeClass("hide");
+				distribute.find(".sl-judge-yes").addClass("hide");
+	            $scope.params.distributed = 1;
+	        }else{
+	        	distribute.find(".sl-judge-yes").removeClass("hide");
+	            distribute.find(".sl-judge-no").addClass("hide");
+	            $scope.params.distributed = 0;
+	        }
+	        $scope.pageQuery();
+		}
 //		$("#condition-find").unbind("click");
 //        $("#condition-find").on("click",function(){
 //          $.report.options.condition = $("#condition-input").val();
@@ -64,78 +212,6 @@
 //          }else{
 //            $(this).removeClass("checkbox-un").addClass("checkbox-ed");
 //            $(".table>tbody .checkbox,.pagination .checkbox").addClass("checkbox-ed").removeClass("checkbox-un");
-//          }
-//        });
-//        $("body").on("click","[data-click='report-period-search']",function(){
-//          if(!$("#period-sl").hasClass("select-more")){
-//            $.report.options.period = $(this).find("input").val();
-//            $.report.find.condition();
-//            $("#selected-period span").html($(this).find("span").html());
-//            $("#selected-period").removeClass("hide");
-//            $("#to-sl-period").addClass("hide");
-//          }
-//        });
-//        $("body").on("click","[data-click='report-date-search']",function(){
-//          $.report.options.beginDate = $("#report-begindate-search").val();
-//          $.report.options.endDate = $("#report-enddate-search").val();
-//          $.report.find.condition();
-//        });
-//        $("body").on("click","[data-click='report-distributed-search']",function(){
-//          if($(this).find(".sl-judge-no").hasClass("hide")){
-//            $(this).find(".sl-judge-no").removeClass("hide");
-//            $(this).find(".sl-judge-yes").addClass("hide");
-//            $.report.options.distributed = 1;
-//          }else{
-//            $(this).find(".sl-judge-yes").removeClass("hide");
-//            $(this).find(".sl-judge-no").addClass("hide");
-//            $.report.options.distributed = 0;
-//          }
-//          $.report.find.condition();
-//        });
-//        $("#batch-more").on("click",function(){
-//          if($("#batch-lists").hasClass("show-more")){
-//            $("#batch-lists").removeClass("show-more");
-//            $("#batch-more span").html("更多");
-//            $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
-//          }else{
-//            $("#batch-lists").addClass("show-more");
-//            $("#batch-more span").html("收起");
-//            $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
-//          }
-//        });
-//        $("body").on("click","[data-click='report-select-more']",function(){
-//          $(".selector-line").removeClass("select-more");
-//          $("#report-multibatch-search").addClass("disabled");
-//          $("#report-multibatch-search").attr("disabled",true);
-//          $(".selector-line .checkbox").removeClass("checkbox-ed").addClass("checkbox-un").addClass("hide");
-//          $(".selector-line").find("[name='sl-confirm']").addClass("disabled");
-//          $(".selector-line").find("[name='sl-confirm']").attr("disabled",true);
-//          $(".selector-line").find(".multisl-btns").addClass("hide");
-//          var selectorline = $(this).parent().parent().parent();
-//          $(selectorline).addClass("select-more");
-//          $(selectorline).find(".sl-val").addClass("show-more");
-//          $(selectorline).find(".checkbox").removeClass("hide");
-//          $(selectorline).find(".multisl-btns").removeClass("hide");
-//        });
-//        $("#batch-multiselect").on("click",function(){
-//          $("#batch-lists").addClass("show-more");
-//          $("#batch-more span").html("收起");
-//          $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
-//          $("#batch-lists .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
-//          $("#report-multibatch-search").addClass("disabled");
-//          $("#report-multibatch-search").attr("disabled",true);
-//          $("#batch-more").addClass("disabled");
-//          $("#batch-more").attr("disabled",true);
-//        });
-//        $("#batch-lists .sl-val-content").on("click",function(){
-//          $(this).find(".checkbox").toggleClass("checkbox-un");
-//          $(this).find(".checkbox").toggleClass("checkbox-ed");
-//          if($("#batch-lists .checkbox-ed").size() > 0){
-//            $("#report-multibatch-search").removeClass("disabled");
-//            $("#report-multibatch-search").attr("disabled",false);
-//          }else{
-//            $("#report-multibatch-search").addClass("disabled");
-//            $("#report-multibatch-search").attr("disabled",true);
 //          }
 //        });
 //        $("#report-multibatch-search").on("click",function(){
@@ -154,17 +230,6 @@
 //          $("#batch-more span").html("更多");
 //          $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
 //        });
-//        $("#period-lists .sl-val-content").on("click",function(){
-//          $(this).find(".checkbox").toggleClass("checkbox-un");
-//          $(this).find(".checkbox").toggleClass("checkbox-ed");
-//          if($("#period-lists .checkbox-ed").size() > 0){
-//            $("#report-multiperiod-search").removeClass("disabled");
-//            $("#report-multiperiod-search").attr("disabled",false);
-//          }else{
-//            $("#report-multiperiod-search").addClass("disabled");
-//            $("#report-multiperiod-search").attr("disabled",true);
-//          }
-//        });
 //        $("#report-multiperiod-search").on("click",function(){
 //          var show_val = [];
 //          $("#period-lists .checkbox-ed").each(function(){
@@ -180,30 +245,6 @@
 //          $("#period-sl").find(".multisl-btns").addClass("hide");
 //          $("#period-lists .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
 //        });
-//        $("#clear-sl-period").on("click",function(){
-//          $("#selected-period").addClass("hide");
-//          $("#to-sl-period").removeClass("hide");
-//          $.report.options.period = null;
-//          $.report.find.condition();
-//        });
-//        $("body").on("click","[data-click='reset-multiselect']",function(){
-//          var selectorline = $(this).parent().parent().parent().parent();
-//          $(selectorline).removeClass("select-more");
-//          $(selectorline).find(".sl-val").removeClass("show-more");
-//          $(selectorline).find(".checkbox").addClass("hide").addClass("checkbox-un").removeClass("checkbox-ed");
-//          $(selectorline).find(".multisl-btns").addClass("hide");
-//          if($("#batch-more").hasClass("disabled"))
-//            $("#batch-more").removeClass("disabled");
-//            $("#batch-more").attr("disabled",false);
-//            $("#batch-more span").html("更多");
-//            $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
-//          $.report.options.batch = null;
-//          $.report.options.period = null;
-//        });
-		
-		
-		
-//		  
 //		    all: function(){
 //		      $.get("report/bsi/reportList",function(response){
 //		        $.report.loadlist(response);
