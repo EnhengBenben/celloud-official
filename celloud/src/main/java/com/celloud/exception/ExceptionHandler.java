@@ -36,7 +36,6 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 		AliEmail aliEmail = AliEmail.template(EmailType.EXCEPTION)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.EXCEPTION.context.name(), errorInfo));
 		aliEmailUtils.simpleSend(aliEmail, emailUtils.getErrorMailTo());
-
 		response.setHeader("exceptionstatus", "exception");
 		if (exception instanceof BusinessException) {
 			return new ModelAndView("errors/business").addObject("exception", exception);

@@ -12,16 +12,16 @@
 		    <div class="o-app-list">
 			  <ul>
 			    <li ng-if="userProduct.app118==118">
-			      <a href="<%=request.getContextPath()%>/bsi">
+			      <a href="${pageContext.request.contextPath }/index#/product/bsi/report">
 			        <div class="inner">
-			          <img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探">
+			          <img src="${pageContext.request.contextPath }/app/image?file=bsi.png" alt="百菌探" title="百菌探">
 			        </div>
 			      </a>
 			    </li>
 			    <li ng-if="userProduct.app123==123">
 			      <a href="${pageContext.request.contextPath }/index#/product/rocky/upload">
 			        <div class="inner">
-			          <img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰">
+			          <img src="${pageContext.request.contextPath }/app/image?file=rocky.png" alt="华木兰" title="华木兰">
 			        </div>
 			      </a>
 			    </li>

@@ -22,18 +22,18 @@
 				        </div>
 					    <div id="to-sl-batch">
 					        <div id="batch-lists" class="sl-val">
-				                <div class="sl-val-content" ng-repeat="batch in batchList">
+				                <div class="sl-val-content" ng-repeat="batch in batchList" ng-click="batchLists('batchId' + $index)">
                                     <div class="celicon checkbox checkbox-un hide" id="batchId{{$index}}"></div>
                                     <a ng-click="reportBatchSearch('batchId' + $index)" href="javascript:void(0)"><span>{{batch}}</span></a>
                                 </div>
 						        <div class="multisl-btns hide">
 						            <button id="report-multibatch-search" name="sl-confirm" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
-						            <button data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</button>
+						            <button data-click="reset-multiselect" ng-click="resetBatchMultiSelect()" class="sl-btn" href="javascript:void(0)">取消</button>
 						        </div>
 				            </div>
 					        <div class="sl-ext">
-					            <button id="batch-more" class="sl-more" href="javascript:void(0)"><span>更多</span><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
-					            <button id="batch-multiselect" data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></button>
+					            <button id="batch-more" ng-click="batchMore()" class="sl-more" href="javascript:void(0)"><span>更多</span><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+					            <button id="batch-multiselect" ng-click="batchMultiselect()" data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></button>
 					        </div>
 					    </div>
 				    </div>
@@ -41,60 +41,60 @@
 				        <div class="sl-key">状态：</div>
 				        <div id="selected-period" class="sl-val selected-val hide">
 				            <span></span>
-				            <a id="clear-sl-period"><i class="fa fa-times"></i></a>
+				            <a id="clear-sl-period" ng-click="clearSlPeriod()"><i class="fa fa-times"></i></a>
 				        </div>
 				        <div id="to-sl-period">
 				            <div id="period-lists" class="sl-val">
 				                <div class="sl-val-content">
-				                    <div class="celicon on_check checkbox checkbox-un hide"></div>
-				                    <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="2"><span>完成</span></a>
+				                    <div class="celicon on_check checkbox checkbox-un hide" id="finish"></div>
+				                    <a ng-click="reportPeriodSearch('finish')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="2"><span>完成</span></a>
 				                </div>
 				                <div class="sl-val-content">
-				                    <div class="celicon on_check checkbox checkbox-un hide"></div>
-				                    <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>正在分析</span></a>
+				                    <div class="celicon on_check checkbox checkbox-un hide" id="inanalysis"></div>
+				                    <a ng-click="reportPeriodSearch('inanalysis')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>正在分析</span></a>
 				                </div>
 				                <div class="sl-val-content">
-				                    <div class="celicon on_check checkbox checkbox-un hide"></div>
-				                    <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="0"><span>等待分析</span></a>
+				                    <div class="celicon on_check checkbox checkbox-un hide" id="waitanalysis"></div>
+				                    <a ng-click="reportPeriodSearch('waitanalysis')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="0"><span>等待分析</span></a>
 					            </div>
 					            <div class="sl-val-content">
-						            <div class="celicon on_check checkbox checkbox-un hide"></div>
-						            <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据不完整</span></a>
+						            <div class="celicon on_check checkbox checkbox-un hide" id="incomplete"></div>
+						            <a ng-click="reportPeriodSearch('incomplete')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据不完整</span></a>
 					            </div>
 					            <div class="sl-val-content">
-						            <div class="celicon on_check checkbox checkbox-un hide"></div>
-						            <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="4"><span>异常终止</span></a>
+						            <div class="celicon on_check checkbox checkbox-un hide" id="exception"></div>
+						            <a ng-click="reportPeriodSearch('exception')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="4"><span>异常终止</span></a>
 					            </div>
 					            <div class="sl-val-content">
-						            <div class="celicon on_check checkbox checkbox-un hide"></div>
-						            <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验中</span></a>
+						            <div class="celicon on_check checkbox checkbox-un hide" id="experiment"></div>
+						            <a ng-click="reportPeriodSearch('experiment')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验中</span></a>
 					            </div>
 					            <div class="sl-val-content">
-						            <div class="celicon on_check checkbox checkbox-un hide"></div>
-						            <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
+						            <div class="celicon on_check checkbox checkbox-un hide" id="sample"></div>
+						            <a ng-click="reportPeriodSearch('sample')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
 					            </div>
 					            <div class="multisl-btns hide">
 						            <button id="report-multiperiod-search" name="sl-confirm" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
-						            <button data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</button>
+						            <button data-click="reset-multiselect" ng-click="resetPeriodMultiSelect()" class="sl-btn" href="javascript:void(0)">取消</button>
 					            </div>
 				            </div>
 				            <div class="sl-ext">
-				                <button data-click="report-select-more" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></button>
+				                <button data-click="report-select-more" ng-click="periodMultiselect()" class="sl-multiple" href="javascript:void(0)">多选<i class="fa fa-plus" aria-hidden="true"></i></button>
 				            </div>
 				        </div>
 				    </div>
 				    <div class="selector-line">
 				        <div class="sl-key">时间：</div>
 				        <div class="sl-val">
-				            <input id="report-begindate-search" type="text" class="Wdate" onclick="WdatePicker()" readonly="readonly" placeholder="  年    月    日"> - 
-				            <input id="report-enddate-search" type="text" class="Wdate" onclick="WdatePicker()" readonly="readonly" placeholder="  年    月    日">
-				            <button data-click="report-date-search" class="sl-btn" href="javascript:void(0)">确定</button>
+				            <input id="report-begindate-search" type="text" class="Wdate" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'report-enddate-search\')}'})" readonly="readonly" placeholder="  年    月    日"> - 
+				            <input id="report-enddate-search" type="text" class="Wdate" onclick="WdatePicker({minDate:'#F{$dp.$D(\'report-begindate-search\')}',maxDate:'%y-%M-%d'})" readonly="readonly" placeholder="  年    月    日">
+				            <button data-click="report-date-search" ng-click="dateQuery()" class="sl-btn" href="javascript:void(0)">确定</button>
 				        </div>
 				    </div>
 				    <div class="selector-line">
 				        <div class="sl-key">是否分发：</div>
 				        <div class="sl-val">
-				            <a data-click="report-distributed-search" class="sl-judge" href="javascript:void(0)">
+				            <a id="distribute" ng-click="distributeQuery()" data-click="report-distributed-search" class="sl-judge" href="javascript:void(0)">
 				                <span class="sl-judge-yes">是</span>
 				                <span class="sl-judge-no hide">否</span>
 				            </a>

@@ -4,16 +4,20 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.model.mysql.Auth;
 import com.celloud.service.ReportAPIService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import net.sf.json.JSONObject;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 
 @Controller
 @RequestMapping("api/report")
@@ -31,14 +35,22 @@ public class ReportAPIAction {
 	 * @author lin
 	 * @date 2016年11月3日下午3:09:10
 	 */
-	@RequestMapping(value = "getToken")
 	@ResponseBody
-	public String getToken(String keyId, String keySecret) {
+	@RequestMapping(value = "getToken", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ApiOperation(value = "获取Token", httpMethod = "GET", response = Auth.class, notes = "请登录平台后获取 keyId 和 keySecret ")
+	@ApiResponses({ @ApiResponse(code = 200, message = "操作成功！", response = Auth.class),
+			@ApiResponse(code = 400, message = "操作失败！", response = Auth.class) })
+	public ResponseEntity<Auth> getToken(
+			@ApiParam(required = true, name = "keyId", value = "keyId") @RequestParam("keyId") String keyId,
+			@ApiParam(required = true, name = "keySecret", value = "keySecret") @RequestParam("keySecret") String keySecret) {
 		Auth auth = reportAPI.getToken(keyId, keySecret);
 		if (auth == null) {
-			log.error("没有找到对应的keyId和keySecret，keyId=" + keyId + ",keySecret=" + keySecret);
+			String error = "没有找到对应的keyId和keySecret";
+			log.error(error + "，keyId=" + keyId + ",keySecret=" + keySecret);
+			auth = new Auth(error);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(auth);
 		}
-		return JSONObject.fromObject(auth).toString();
+		return ResponseEntity.ok(auth);
 	}
 
 	/**
@@ -49,20 +61,18 @@ public class ReportAPIAction {
 	 * @author lin
 	 * @date 2016年11月7日下午3:17:20
 	 */
-	@RequestMapping(value = "refreshToken")
-	@ResponseBody
-	public String refreshToken(String refreshToken) {
+	@RequestMapping(value = "refreshToken", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
+	@ApiOperation(value = "刷新Token", httpMethod = "PUT", response = Auth.class, notes = "通过 refreshToken 刷新 Token 超时时间")
+	@ApiResponses({ @ApiResponse(code = 200, message = "刷新成功！", response = Auth.class),
+			@ApiResponse(code = 400, message = "操作失败！", response = Auth.class) })
+	public ResponseEntity<Auth> refreshToken(
+			@ApiParam(required = true, name = "refreshToken", value = "refreshToken") @RequestParam("refreshToken") String refreshToken) {
 		Auth auth = reportAPI.refreshToken(refreshToken);
 		if (auth == null) {
-			log.error("refreshToken不存在或者已过期：" + refreshToken);
-			return null;
+			String error = "refreshToken不存在或者已过期";
+			log.error(error + "：" + refreshToken);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Auth(error));
 		}
-		ObjectMapper om = new ObjectMapper();
-		try {
-			return om.writeValueAsString(auth);
-		} catch (JsonProcessingException e) {
-			log.error("对象转json失败：" + auth.toString());
-		}
-		return null;
+		return ResponseEntity.ok(auth);
 	}
 }
