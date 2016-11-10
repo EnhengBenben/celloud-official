@@ -4,7 +4,7 @@
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li>实验管理</li>
-      <li>扫码入库</li>
+      <li>样本入库</li>
     </ol>
     <div class="content sample">
         <div class="content-header clearfix">

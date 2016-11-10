@@ -3,6 +3,52 @@ $(function(){
     var url = window.location.href.split("print")[0];
     $("#print").on("click",function(){
     
+        var baseNames = new Array();
+        $(".baseTextarea").each(function(){
+            inputVal = $(this).children().val();
+            baseNames.push($(this).children().attr("name"));
+            if(inputVal){
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+            }
+            $(this).html(inputVal);             
+        });
+        $(".womanBaseClinicalTextarea").each(function(){
+            inputVal = $(this).children().val();
+            if(inputVal){
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+            }
+            $(this).html(inputVal);             
+        });
+        $(".manBaseClinicalTextarea").each(function(){
+            inputVal = $(this).children().val();
+            if(inputVal){
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+            }
+            $(this).html(inputVal);             
+        });
+        
+        $(".result").each(function(){
+            inputVal = $(this).children().val();
+            if(inputVal){
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+            }
+            $(this).html("<br/>" + inputVal);               
+        });
+        $(".embryoRating").each(function(){
+            inputVal = $(this).children().val();
+            if(inputVal){
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+            }
+            $(this).html("<br/>" + inputVal);               
+        });
+        $(".advice").each(function(){
+            inputVal = $(this).children().val();
+            if(inputVal){
+                inputVal = inputVal.replace(/\r\n/g,"<br>");
+            }
+            $(this).html("<br/>" + inputVal);               
+        });
+        
     	var explainResult = $("#explainResult").children().val();
 		tempExplainResultName = $("#explainResult").children().attr("name");
 		tempExplainResultWidth = $("#explainResult").children().css("width");
@@ -12,7 +58,6 @@ $(function(){
 			explainResult = "";
 		}
 		$("#explainResult").html(explainResult);
-		
     	var explainGeneticCounseling = $("#explainGeneticCounseling").children().val();
 		tempExplainGeneticCounselingName = $("#explainGeneticCounseling").children().attr("name");
 		tempExplainGeneticCounselingWidth = $("#explainGeneticCounseling").children().css("width");
@@ -39,6 +84,51 @@ $(function(){
         explainGeneticCounseling = $("#explainGeneticCounseling").html();
 		explainGeneticCounseling = explainGeneticCounseling.replace(/<br>/g,"\n");
 		$("#explainGeneticCounseling").html("<textarea style=\"width:"+tempExplainGeneticCounselingWidth+"\" name=\""+tempExplainGeneticCounselingName+"\" rows=\"3\">"+explainGeneticCounseling+"</textarea>");
+		
+		$(".baseTextarea").each(function(){
+            inputVal = $(this).html();
+            $(this).prev().css("width","35%");
+            if(inputVal){
+                 inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:100%\" rows=\"1\" name=" + baseNames.shift() + ">" + inputVal + "</textarea>");               
+        });
+        $(".womanBaseClinicalTextarea").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                 inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:100%\" rows=\"1\" name=\"baseInfo['womanClinical']\">" + inputVal + "</textarea>");               
+        });
+        $(".manBaseClinicalTextarea").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                 inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:100%\" rows=\"1\" name=\"baseInfo['manClinical']\">" + inputVal + "</textarea>");               
+        });
+        
+        $(".advice").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:98%;max-height:50px;height:50px;font-size:14px;\" name=\"baseInfo['advice']\">"+inputVal+"</textarea>");
+        });
+        $(".embryoRating").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:98%;max-height:50px;height:50px;font-size:14px;\" name=\"baseInfo['embryoRating']\">"+inputVal+"</textarea>");
+        });
+        $(".result").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:98%;max-height:50px;height:50px;font-size:14px;\" name=\"baseInfo['result']\">"+inputVal+"</textarea>");
+        });
     });
     
     $("#save").on("click",function(){
