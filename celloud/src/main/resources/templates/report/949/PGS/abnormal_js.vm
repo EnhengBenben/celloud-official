@@ -2,6 +2,13 @@
 $(function(){
     var url = window.location.href.split("print")[0];
     $("#print").on("click",function(){
+        baseInfoNames = new Array();
+        $(".baseInfo").each(function(){
+            inputVal = $(this).children().val();
+            baseInfoNames.unshift($(this).children().attr("name"));
+            $(this).html(inputVal);
+        });
+        
         baseNames = new Array();
         $(".resultTextarea").each(function(){
             inputVal = $(this).children().val();
@@ -20,6 +27,10 @@ $(function(){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
             $(this).html("<textarea name=\"" + baseNames.shift() + "\" style=\"width:99.8%;height:50px;\">" + inputVal + "</textarea>");
+        });
+        $(".baseInfo").each(function(){
+            inputVal = $(this).html();
+            $(this).html("<input style=\"width:100%;\" name=\"" + baseInfoNames.shift() + "\" value=\"" + inputVal + "\" type=\"text\">");
         });
     });
     
