@@ -11,63 +11,63 @@ $(function(){
     		inputVal = $(this).children().val();
     		baseNames.push($(this).children().attr("name"));
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
     		}
             $(this).html(inputVal);    		    
 		});
         $(".womanBaseClinicalTextarea").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
     		}
             $(this).html(inputVal);    		    
 		});
         $(".manBaseClinicalTextarea").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
     		}
             $(this).html(inputVal);    		    
 		});
         $(".embryoNumber").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
     		}
             $(this).html("<br/>" + inputVal);    		    
 		});
 		$(".result").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
     		}
             $(this).html("<br/>" + inputVal);    		    
 		});
 		$(".embryoRating").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
     		}
             $(this).html("<br/>" + inputVal);    		    
 		});
 		$(".advice").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
     		}
             $(this).html("<br/>" + inputVal);    		    
 		});
 		$(".explainResult").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
     		}
             $(this).html(inputVal);    		    
 		});
 		$(".explainGeneticCounseling").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
-    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		    inputVal = inputVal.replace(/\n/g,"<br>");
     		}
             $(this).html(inputVal);    		    
 		});
