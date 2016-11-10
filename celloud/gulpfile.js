@@ -69,6 +69,8 @@ var src = {
       'src/main/webapp/resources/js/feedback/controller.js',
       'src/main/webapp/resources/js/rocky/service.js',
       'src/main/webapp/resources/js/rocky/controller.js',
+      'src/main/webapp/resources/js/bsi/service.js',
+      'src/main/webapp/resources/js/bsi/controller.js',
       'src/main/webapp/resources/js/company/service.js',
       'src/main/webapp/resources/js/company/controller.js'
   ],

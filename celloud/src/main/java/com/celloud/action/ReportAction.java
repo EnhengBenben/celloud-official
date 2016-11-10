@@ -3578,22 +3578,6 @@ public class ReportAction {
 		}
 	}
 
-    @ActionLog(value = "打开报告列表", button = "百菌探报告")
-    @RequestMapping("bsi/reportMain")
-    public ModelAndView reportMain() {
-        ModelAndView mv = new ModelAndView("bsi/report_main");
-        Integer userId = ConstantsData.getLoginUserId();
-        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118,
-                userId);
-        List<String> batchList = dataService.getBatchList(userId);
-        periodMap.put("uploaded", batchList.size());
-        mv.addObject("periodMap", periodMap);
-        mv.addObject("batchList", batchList);
-        mv.addObject("nowDate", new Date());
-        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
-        return mv;
-    }
-
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/bsi/reportMain")
     public ModelAndView reportMain1() {
@@ -3781,6 +3765,21 @@ public class ReportAction {
 		return map;
 	}
 
+    @ActionLog(value = "打开报告列表", button = "百菌探报告")
+    @RequestMapping("bsi/reportMain")
+    public ModelAndView reportMain() {
+        ModelAndView mv = new ModelAndView("bsi/report_main");
+        Integer userId = ConstantsData.getLoginUserId();
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+        List<String> batchList = dataService.getBatchList(userId);
+        periodMap.put("uploaded", batchList.size());
+        mv.addObject("periodMap", periodMap);
+        mv.addObject("batchList", batchList);
+        mv.addObject("nowDate", new Date());
+        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
 	/**
 	 * 根据条件获取数据列表
 	 * 
@@ -3820,6 +3819,60 @@ public class ReportAction {
 		log.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
 		return mv;
 	}
+
+    /**
+     * 
+     * @description 整合bsi的分页查询
+     * @author miaoqi
+     * @date 2016年11月9日上午11:26:12
+     *
+     * @param page
+     * @param size
+     * @param condition
+     * @param sort
+     * @param sortDate
+     * @param sortBatch
+     * @param sortName
+     * @param sortPeriod
+     * @param batch
+     * @param period
+     * @param beginDate
+     * @param endDate
+     * @param sampleName
+     * @return
+     */
+    @ActionLog(value = "条件检索任务列表", button = "报告搜索/分页")
+    @RequestMapping("bsi/reportPageQuery")
+    @ResponseBody
+    public Map<String, Object> reportPageQuery(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
+            String batch, String period, String beginDate, String endDate, String sampleName) {
+        log.info("用户 {} 根据条件检索数据列表", ConstantsData.getLoginUserName());
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        Integer userId = ConstantsData.getLoginUserId();
+        // 封装结果map
+        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+        List<String> batchList = dataService.getBatchList(userId);
+        periodMap.put("uploaded", batchList.size());
+        map.put("periodMap", periodMap);
+        map.put("batchList", batchList);
+        map.put("nowDate", new Date());
+        Page pager = new Page(page, size);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod, batch, period, beginDate, endDate, 118, sampleName);
+        map.put("pageList", pageList);
+        return map;
+    }
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/bsi/searchReportList")

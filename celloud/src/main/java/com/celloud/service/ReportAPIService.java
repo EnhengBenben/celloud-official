@@ -1,6 +1,7 @@
 package com.celloud.service;
 
-import java.util.Map;
+import com.celloud.model.mysql.AccessKey;
+import com.celloud.model.mysql.Auth;
 
 public interface ReportAPIService {
 	/**
@@ -10,5 +11,26 @@ public interface ReportAPIService {
 	 * @author lin
 	 * @date 2016年11月3日下午3:00:50
 	 */
-	public Map<String, String> createAccount();
+	public AccessKey createAccount(Integer userId);
+
+	/**
+	 * 获取token
+	 * 
+	 * @param keyId
+	 * @param keySecret
+	 * @return
+	 * @author lin
+	 * @date 2016年11月7日下午4:12:44
+	 */
+	public Auth getToken(String keyId, String keySecret);
+
+	/**
+	 * 刷新token
+	 * 
+	 * @param refreshToken
+	 * @return
+	 * @author lin
+	 * @date 2016年11月7日下午4:12:55
+	 */
+	public Auth refreshToken(String refreshToken);
 }

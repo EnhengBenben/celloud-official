@@ -268,8 +268,9 @@ public class LoginAction {
 		}
 		if (!bsi && rocky) {
 			mv.addObject("route", "#/product/rocky/upload");
+        } else if (bsi && !rocky) {
+            mv.addObject("route", "#/product/bsi/report");
 		}
-
 		return mv;
 	}
 
