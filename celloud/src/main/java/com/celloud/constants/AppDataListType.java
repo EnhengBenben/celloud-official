@@ -22,8 +22,13 @@ public class AppDataListType {
 	public static final List<Integer> FASTQ_PATH = Arrays.asList(110, 111, 112, 114, 118, 123, 126, 127, 128);
 
 	/**
-	 * split
-	 */
+     * 两对fastq文件 ...(A/B)_(R1/R2).fastq
+     */
+    public static final List<Integer> AB_FASTQ_PATH = Arrays.asList(131);
+
+    /**
+     * split
+     */
 	public static final List<Integer> SPLIT = Arrays.asList(113);
 
 	/**

@@ -244,4 +244,8 @@ public interface TaskMapper {
             @Param("period") Integer period,
             @Param("beginDate") String beginDate,
             @Param("endDate") String endDate, @Param("sord") String sord);
+
+    List<String> findDataKeys(@Param("userId") Integer userId,
+            @Param("state") Integer state, @Param("appId") Integer appId,
+            @Param("proId") Integer proId, @Param("params") String params);
 }

@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,6 @@ import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
-import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.Task;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
@@ -72,7 +70,9 @@ public class RunServiceImpl implements RunService {
 			dataFilePathMap = DataKeyListToFile.containName(dataList);
 		} else if (AppDataListType.SPLIT.contains(appId)) {
 			dataFilePathMap = DataKeyListToFile.toSplit(dataList);
-		}
+        } else if (AppDataListType.AB_FASTQ_PATH.contains(appId)) {
+            dataFilePathMap = DataKeyListToFile.abFastqPath(dataList);
+        }
 		return dataFilePathMap;
 	}
 
@@ -358,9 +358,6 @@ public class RunServiceImpl implements RunService {
                     hasR2 = true;
                 }
             }
-            String storageName = StringUtils.split(pubName, "_")[0];
-            List<Sample> samples = sampleService
-                    .getSamplesByStorageName(storageName);
             Task task = new Task();
             task.setUserId(userId);
             task.setDataKey(dataKey);
