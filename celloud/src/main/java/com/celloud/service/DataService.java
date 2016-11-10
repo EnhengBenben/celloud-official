@@ -348,4 +348,11 @@ public interface DataService {
 	 */
 	public List<DataFile> getDataFileFromTbTask(Integer projectId);
 
+	/**
+	 * 创建文件
+	 * @param userId
+	 * @param objectKey
+	 * @return
+	 */
+	public Integer addFile(Integer userId, String objectKey);
 }

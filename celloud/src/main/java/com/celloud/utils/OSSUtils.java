@@ -2,8 +2,12 @@ package com.celloud.utils;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
@@ -16,6 +20,7 @@ import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.ListObjectsRequest;
 import com.aliyun.oss.model.OSSObjectSummary;
 import com.aliyun.oss.model.ObjectListing;
+import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.UploadFileRequest;
 import com.aliyun.oss.model.UploadFileResult;
 import com.celloud.constants.ConstantsData;
@@ -58,6 +63,23 @@ public class OSSUtils {
 	}
 
 	/**
+	 * 将本地文件上传到oss
+	 * 
+	 * @param objectKey
+	 *            oss存储路径和文件名，如为空则默认为本地文件名称
+	 * @param filePath
+	 *            要上传文件的本地路径
+	 * @return 标识Multipart上传的OSSObject的URL地址。
+	 */
+	public static String upload(String objectKey, String filePath) {
+		File file = new File(filePath);
+		if (objectKey == null || objectKey.trim().length() == 0) {
+			objectKey = file.getName();
+		}
+		return upload(objectKey, file);
+	}
+
+	/**
 	 * 上传文件到oss
 	 * 
 	 * @param objectKey
@@ -96,6 +118,9 @@ public class OSSUtils {
 		return location;
 	}
 
+	/**
+	 * 清空bucket
+	 */
 	public static void clearBucket() {
 		OSSClient client = getClient();
 		ObjectListing list = null;
@@ -118,18 +143,40 @@ public class OSSUtils {
 
 	}
 
-	public static String upload(String objectKey, String filePath) {
-		File file = new File(filePath);
-		if (objectKey == null || objectKey.trim().length() == 0) {
-			objectKey = file.getName();
-		}
-		return upload(objectKey, file);
+	/**
+	 * 获取文件的用户自定义元信息
+	 * 
+	 * @param objectKey
+	 * @return
+	 */
+	public static Map<String, String> getMetaData(String objectKey) {
+		OSSClient client = getClient();
+		ObjectMetadata metadata = client.getObjectMetadata(ConstantsData.getOSSConfig().getBucket(), objectKey);
+		Map<String, String> result = new HashMap<String, String>(metadata.getUserMetadata());
+		result.put("md5", metadata.getContentMD5());
+		result.put("size", String.valueOf(metadata.getContentLength()));
+		result.put("etag", metadata.getETag());
+		return result;
 	}
 
 	private static OSSClient getClient() {
 		OSSConfig config = ConstantsData.getOSSConfig();
 		Validate.notNull(config, "没有获取到oss配置");
 		return new OSSClient(config.getEndpoint(), config.getKeyId(), config.getKeySecret());
+	}
+
+	/**
+	 * 获取文件在oss上存储的objectKey<br>
+	 * 命名规则:{userId}/{yyyyMMdd}/{dataKey}.{extName}
+	 * 
+	 * @param userId
+	 * @param dataKey
+	 * @param ext
+	 * @return
+	 */
+	public static String getObjectKey(Integer userId, String dataKey, String ext) {
+		return userId + "/" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/" + dataKey
+				+ (ext.startsWith(".") ? ext : "." + ext);
 	}
 
 	private static String formatSpead(long size, long timeMillis) {

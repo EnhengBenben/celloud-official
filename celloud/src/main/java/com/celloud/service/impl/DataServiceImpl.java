@@ -33,7 +33,9 @@ import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
 import com.celloud.service.TaskService;
+import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.OSSUtils;
 import com.celloud.utils.PerlUtils;
 
 /**
@@ -46,8 +48,6 @@ import com.celloud.utils.PerlUtils;
 public class DataServiceImpl implements DataService {
 	@Resource
 	DataFileMapper dataFileMapper;
-	@Resource
-	private DataService dataService;
 	@Resource
 	private AppService appService;
 	@Resource
@@ -332,9 +332,9 @@ public class DataServiceImpl implements DataService {
 			data.setAnotherName(anotherName);
 		}
 		if (tagId == null) {
-			return dataService.updateDataInfoByFileId(data);
+			return updateDataInfoByFileId(data);
 		} else {
-			return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+			return updateDataInfoByFileIdAndTagId(data, tagId);
 		}
 	}
 
@@ -344,7 +344,7 @@ public class DataServiceImpl implements DataService {
 		data.setFileId(fileId);
 		data.setOssPath(objectKey);
 		data.setUploadState(state);
-		dataService.updateByPrimaryKeySelective(data);
+		updateByPrimaryKeySelective(data);
 	}
 
 	@Override
@@ -358,11 +358,33 @@ public class DataServiceImpl implements DataService {
 		// replaceAll()将中文标号替换成英文标号
 		data.setFileName(m.replaceAll("").trim());
 		data.setState(DataState.DEELTED);
-		return dataService.addDataInfo(data);
+		return addDataInfo(data);
 	}
 
 	@Override
 	public List<DataFile> getDataFileFromTbTask(Integer projectId) {
 		return this.dataFileMapper.getDataFileFromTbTask(projectId);
+	}
+
+	@Override
+	public Integer addFile(Integer userId, String objectKey) {
+		Map<String, String> metadata = OSSUtils.getMetaData(objectKey);
+		long size = Long.parseLong(metadata.get("size"));
+		int tagId = Integer.parseInt(metadata.get("tagid"));
+		String name = metadata.get("name");
+		int dataId = addFileInfo(userId, name);
+		String fileDataKey = DataUtil.getNewDataKey(dataId);
+		DataFile data = new DataFile();
+		data.setFileId(dataId);
+		data.setDataKey(fileDataKey);
+		data.setSize(size);
+		data.setBatch(metadata.get("batch"));
+		data.setMd5(metadata.get("md5"));
+		data.setState(DataState.ACTIVE);
+		data.setCreateDate(new Date());
+		data.setOssPath(objectKey);
+		data.setUserId(userId);
+		updateDataInfoByFileIdAndTagId(data, tagId);
+		return dataId;
 	}
 }
