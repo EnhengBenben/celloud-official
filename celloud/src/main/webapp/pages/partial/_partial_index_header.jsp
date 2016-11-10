@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <div class="navbar-logo {{collapsed|logoMiniFilter}}">
-            <a class="logo" href="#"></a>
+            <a class="logo" href="#/"></a>
           </div>
         </div>
         <ul class="nav navbar-nav pull-left">

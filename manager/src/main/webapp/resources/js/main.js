@@ -298,6 +298,7 @@ var user=(function(user){
 		}
 	};
 	self.toUserMain=function(){
+		self.keyword = "";
 		$.post("user/userList",{searchFiled:self.searchFiled,keyword:""},function(responseText){
 			$("#main-content").html(responseText);
 			$("#main-menu li").removeClass("active").removeClass("opened");

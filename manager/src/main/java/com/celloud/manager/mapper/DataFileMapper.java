@@ -253,4 +253,15 @@ public interface DataFileMapper {
     Map<Integer, Map<String, String>> getMd5FileIdMap(@Param("userIds") List<Integer> userIds,
             @Param("appId") Integer appId);
 
+    /**
+     * 
+     * @description 根据id集合查询文件集合
+     * @author miaoqi
+     * @date 2016年11月3日上午10:36:11
+     *
+     * @param fileIds
+     * @return
+     */
+    public List<DataFile> findFilesByIds(@Param("fileIds") List<Integer> fileIds);
+
 }

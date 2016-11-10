@@ -1,13 +1,13 @@
 (function(){
   celloudApp.controller("samplingController", function($scope, samplingService){
     $scope.productTags = samplingService.getProductTags();
-    $scope.typeList = ["血液","组织液","引流液","关节液","心包积液","胸水","脓液","脑脊液","阴道拭子","腹水","尿液","肺泡灌洗液"];
+    $scope.typeList = samplingService.typeList();
     var refreshList = function(){
       $scope.sampleList = samplingService.sampleList();
     }
     refreshList();
     $scope.addSample = function(){
-      samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type).success(function(data){
+      samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type.name).success(function(data){
         if(data == 2){
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
         }else {
@@ -19,7 +19,7 @@
     $scope.commitSample = function(){
       samplingService.commitSample($scope.sampleList).success(function(data){
         if(data > 0){
-          window.location.href = window.CONTEXT_PATH+"/sample_order.html#/sampling/order/"+data;
+          window.open(window.CONTEXT_PATH+"/sample_order.html#/sampling/order/"+data);
           refreshList();
         }else {
           $.alert("样本已提交");

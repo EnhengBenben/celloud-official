@@ -2,6 +2,7 @@ package com.celloud.backstage.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,17 +25,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.backstage.constants.ConstantsData;
 import com.celloud.backstage.constants.IconConstants;
 import com.celloud.backstage.model.App;
 import com.celloud.backstage.model.Classify;
 import com.celloud.backstage.model.Company;
 import com.celloud.backstage.model.FileFormat;
+import com.celloud.backstage.model.User;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.AppService;
 import com.celloud.backstage.service.ClassifyService;
 import com.celloud.backstage.service.CompanyService;
 import com.celloud.backstage.service.FileFormatService;
+import com.celloud.backstage.service.UserService;
+import com.celloud.backstage.utils.FileTools;
+import com.celloud.backstage.utils.PropertiesUtil;
 
 @Controller
 public class AppAction {
@@ -47,7 +53,35 @@ public class AppAction {
     private ClassifyService classifyService;
     @Resource
     private FileFormatService fileFormatService;
+	@Resource
+	private UserService userService;
     
+	@RequestMapping("app/getUsersByApp")
+	public ModelAndView getUsersByApp(Integer appId) {
+		ModelAndView mv = new ModelAndView("app/to_show_app_right");
+		List<User> list = userService.getUserByAppId(appId);
+		String path = createEmailFile(list);
+		mv.addObject("userList", list).addObject("path", path);
+		return mv;
+	}
+
+	@RequestMapping("app/downEmailFile")
+	@ResponseBody
+	public void downEmailFile(String path) {
+		FileTools.fileDownLoad(ConstantsData.getResponse(), path);
+	}
+
+	private String createEmailFile(List<User> list) {
+		String path = PropertiesUtil.weeklyReportPath + "email_" + new Date().getTime() + ".txt";
+		StringBuffer sb = new StringBuffer();
+		for (User user : list) {
+			sb.append(user.getEmail()).append(";");
+		}
+		FileTools.createFile(path);
+		FileTools.appendWrite(path, sb.toString());
+		return path;
+	}
+
     @RequestMapping("app/appList")
     public ModelAndView getAppListByPage(@RequestParam(defaultValue="1") int currentPage,@RequestParam(defaultValue="10") int pageSize){
         ModelAndView mv=new ModelAndView("app/app_list");
@@ -56,6 +90,16 @@ public class AppAction {
         mv.addObject("pageList", pageList);
         return mv;
     }
+
+	@RequestMapping("app/appRight")
+	public ModelAndView getAppRight(@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(defaultValue = "10") int pageSize) {
+		ModelAndView mv = new ModelAndView("app/app_right");
+		Page page = new Page(currentPage, pageSize);
+		PageList<App> pageList = appService.getAppByPage(page);
+		mv.addObject("pageList", pageList);
+		return mv;
+	}
     
     @ResponseBody
     @RequestMapping("app/on")

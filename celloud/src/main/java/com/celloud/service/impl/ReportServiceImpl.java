@@ -937,6 +937,9 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public Rocky getRockyReport(String dataKey, Integer projectId, Integer appId) {
 		Rocky rocky = reportDao.getDataReport(Rocky.class, dataKey, projectId, appId);
+        if (rocky == null) {
+            return rocky;
+        }
 		Map<String, String> baseInfo = rocky.getBaseInfo();
 		if (baseInfo == null) {
 			baseInfo = new HashMap<>();

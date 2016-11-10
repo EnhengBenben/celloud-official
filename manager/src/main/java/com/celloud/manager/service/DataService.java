@@ -196,5 +196,5 @@ public interface DataService {
      *            位点
      * @return
      */
-    public Map<Integer, Map<String, String>> getSiteInfo(Integer companyId, Integer site);
+    public List<Map<String, String>> getSiteInfo(Integer companyId, Integer site);
 }

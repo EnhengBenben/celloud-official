@@ -199,6 +199,8 @@ public class UserAction {
 	@RequestMapping("updateInfo")
 	@ResponseBody
 	public Response updateInfo(User user, HttpServletRequest request) {
+        logger.info("用户{}修改用户基本信息", ConstantsData.getLoginUserName());
+         
 		// 其他待修改字段可以在这里添加，不允许修改的字段一定要过滤掉
 		user.setUserId(ConstantsData.getLoginUserId());
 		if (userService.isEmailInUse(user.getEmail(), user.getUserId())) {

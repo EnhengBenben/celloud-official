@@ -284,4 +284,14 @@
     )
     AND role = 0
   </select>
+  <select id="findCompanysByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tb_company
+        WHERE company_id
+        IN
+        <foreach collection="companyIds" item="companyId" separator="," open="(" close=")">
+        #{companyId}
+        </foreach>
+    </select>
 </mapper>

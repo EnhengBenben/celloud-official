@@ -118,9 +118,9 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public PageList<DataFile> dataLists(Page page, Integer userId, String condition, int sort, String sortDateType,
-			String sortNameType) {
+            String sortNameType, String sortAnotherName, String sortRun) {
 		List<DataFile> lists = dataFileMapper.findDataLists(page, userId, condition, sort, sortDateType, sortNameType,
-				DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE);
+                DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE, sortAnotherName, sortRun);
 		return new PageList<>(page, lists);
 	}
 

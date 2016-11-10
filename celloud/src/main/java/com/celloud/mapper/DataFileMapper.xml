@@ -481,15 +481,16 @@
 		,
 		<include refid="Blob_Column_List" />
 		,
-		(select count(*) reportNum from tb_report r where r.period = #{period
-		} and
-		r.flag = #{reportType } and r.state = #{state } and
-		r.file_id=f.file_id) reportNum,
+		(select count(*) reportNum from tb_report r where r.period = #{period} 
+		and r.flag = #{reportType }
+		and r.state = #{state }
+		and r.file_id = f.file_id) reportNum,
 		(select count(*) isRunning from
-		tb_report r where r.period != #{period } and
-		r.flag = #{reportType }
-		and r.state = #{state } and
-		r.file_id=f.file_id) isRunning
+		tb_report r
+		where r.period != #{period }
+		and r.flag = #{reportType }
+		and r.state = #{state }
+		and r.file_id=f.file_id) isRunning
 		,
 		<include refid="Tag_Column_List" />
 		from tb_file f
@@ -511,6 +512,12 @@
 				order by f.create_date ${sortDateType},f.file_name
 				${sortNameType}
 			</when>
+			<when test="sort == 3">
+			    order by f.another_name ${sortAnotherName}, create_date desc
+			</when>
+			<when test="sort == 4">
+                order by reportNum ${sortRun}, create_date desc
+            </when>
 			<otherwise>
 				order by f.file_name ${sortNameType},f.create_date
 				${sortDateType}

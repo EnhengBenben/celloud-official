@@ -298,7 +298,8 @@ public class SampleAction {
                 : Arrays.asList(sampleIds);
         SampleStorage ss = sampleService.addStorage(libraryName, sindex, list,
                 ConstantsData.getLoginUserId());
-        List<String> header = Arrays.asList("文库编号", "文库index", "样品编号", "样品类型",
+        List<String> header = Arrays.asList("文库编号", "文库index", "医院样品编号",
+                "实验样品编号", "样品类型",
                 "建库时间", "样本index");
         ExcelUtil.listToExcel(header,
                 sampleService.sampleListInStorage(

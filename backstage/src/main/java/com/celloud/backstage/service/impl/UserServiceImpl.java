@@ -204,4 +204,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.findUserByRole(DataState.ACTIVE, 1);
     }
 
+	@Override
+	public List<User> getUserByAppId(Integer appId) {
+		return userMapper.getUserByAppId(DataState.ACTIVE, appId);
+	}
+
 }
