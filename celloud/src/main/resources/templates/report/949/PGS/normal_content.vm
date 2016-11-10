@@ -1,0 +1,60 @@
+<div class="content">
+    <input type="hidden" name="id" value="${pgs.id}" id="pgsId" />
+    <table class="contentTable">
+        <tr>
+            <td style="width: 33%;"><div style="float:left;">姓名:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['name']" value="$!{pgs.baseInfo.name}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">性别:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['gender']" value="$!{pgs.baseInfo.gender}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">年龄:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['age']" value="$!{pgs.baseInfo.age}" type="text"></div></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="width: 33%;"><div style="float:left;">门诊/ 住院号:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:60%;"><input style="width:100%;" name="baseInfo['inpatientNumber']" value="$!{pgs.baseInfo.inpatientNumber}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">床号:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['bedNumber']" value="$!{pgs.baseInfo.bedNumber}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">样品种类:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['sampleType']" value="$!{pgs.baseInfo.sampleType}" type="text"></div></td>
+            <td></td>
+        </tr>                                     
+        <tr>                                      
+            <td style="width: 33%;"><div style="float:left;">家系编号:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['familyNumber']" value="$!{pgs.baseInfo.familyNumber}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">样本编号:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['sampleNumber']" value="$!{pgs.baseInfo.sampleNumber}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">Genome build name:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:50%;"><input style="width:100%;" name="baseInfo['genome']" value="$!{pgs.baseInfo.genome}" type="text"></div></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="width: 25%;"><div style="float:left;">简要病史:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['briefHistory']" value="$!{pgs.baseInfo.briefHistory}" type="text"></div></td>
+            <td></td>                  
+            <td style="width: 25%;"><div style="float:left;">联系电话:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['cellphone']" value="$!{pgs.baseInfo.cellphone}" type="text"></div></td>
+            <td></td>
+        </tr>
+        <tr class="focus hr">
+            <td colspan="4"><hr/></td>
+        </tr>
+        <tr class="focus">
+            <td colspan="4">检测项目: 全基因组拷贝数变异分析</td>
+        </tr>
+        <tr class="focus hr">
+            <td colspan="4"><hr/></td>
+        </tr>
+        <tr class="focus">
+            <td colspan="4">分析结果: 未见染色体拷贝数的增加/缺失</td>
+        </tr>
+        <tr>
+            <td colspan="4"><span class="focus">注释：</span>全基因组筛查未见染色体拷贝数增加/缺失（>1 Mb）</td>
+        </tr>
+        <tr class="focus">
+            <td colspan="4" style="font-size:20px;"><br/>结果模式图</td>
+        </tr>
+    </table>
+    #if($flag == 0)
+        <img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;">
+    #elseif($flag == 2)
+        <img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportMiniPng}" style="width:100%;">
+    #end
+    <p>
+        说明：<br/>
+    1.本方法采用高通量测序覆盖全基因组，可筛查除染色体着丝粒区和异染色质区以外的、大于1Mb的重复缺失异常区域。<br/>
+    2.本方法不能检测平衡性染色体重排、低比例嵌合及检测范围之外的其他遗传性疾病，只能以特定的分辨率筛查染色体拷贝数的增加和缺失，不能对分辨率以下的更小染色体片段异常和基因点突变做出诊断。本方法不可以检测除69XXY，69XYY之外的其他整倍体。<br/>
+    3.拷贝数异常临床性质分析采用的公共数据库有：ClinVar: http://www.ncbi.nlm.nih.gov/clinvar/，Decipher: https://decipher.sanger.ac.uk/，DGV: http://www.ebi.ac.uk/dgva/，OMIM: http://www.ncbi.nlm.nih.gov/omim/。<br/>
+    4.公共数据库提示为人群多态或临床意义不明但不影响临床诊疗方案的CNV不列在最终报告中。检测数据临床意义分析基于现有知识水平，随着数据库资料积累和医学进步，检测数据的临床意义解读可随之发生变化。<br/>
+    5.本报告仅对检测样品负责，供医生参考。本检测由中福会国际和平妇幼保健院生殖遗传科完成，高通量测序在Illumina Miseq平台上进行。
+    </p>
+</div>

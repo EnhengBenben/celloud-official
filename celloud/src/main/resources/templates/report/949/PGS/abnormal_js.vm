@@ -1,0 +1,50 @@
+<script type="text/javascript">
+$(function(){
+    var url = window.location.href.split("print")[0];
+    $("#print").on("click",function(){
+        baseNames = new Array();
+        $(".resultTextarea").each(function(){
+            inputVal = $(this).children().val();
+            baseNames.unshift($(this).children().attr("name"));
+            if(inputVal){
+                inputVal = inputVal.replace(/\n/g,"<br>");
+            }
+            $(this).html(inputVal);
+        });
+        $("input").css("border-bottom", "0");
+        window.print();
+        $("input").css("border-bottom", "1px solid #D4D4D4");
+        $(".resultTextarea").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea name=\"" + baseNames.shift() + "\" style=\"width:99.8%;height:50px;\">" + inputVal + "</textarea>");
+        });
+    });
+    
+    $("#save").on("click",function(){
+        $.post(url+"updatePgsFilling",$("#print-form").serialize(),function(result){
+            if(result==1){
+                $.lAlert("信息保存成功！");
+            }else{
+                $.lAlert("信息保存失败！");
+                $("#isSaved").attr("value","1");
+            }
+        });
+    });
+
+    $("#reset").on("click",function(){
+        $.lConfirm('确认重置？', function() {
+            $.post(url+"updatePgsFilling",{id:$("#pgsId").val()},function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
+        });
+    });
+});
+
+</script>

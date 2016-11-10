@@ -113,7 +113,7 @@ public interface SampleService {
      * @author leamo
      * @date 2016年9月5日 下午4:26:07
      */
-    public Sample getByNameExperState(Integer userId, String sampleName,
+    public Sample getByNameExperState(String sampleName,
             Integer experState);
 
     /**

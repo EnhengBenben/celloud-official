@@ -10,33 +10,32 @@
             <td colspan="4"><hr/></td>
         </tr>
         <tr>
-            <td>女方姓名:<span><input name="projectInfo['womanName']" value="$!{pgs.projectInfo.womanName}" type="text" class="tdInput"></span></td>
-            <td>年       龄:<span><input name="projectInfo['womanAge']" value="$!{pgs.projectInfo.womanAge}" type="text" class="tdInput"></span></td>
-            <td>男方姓名:<span><input name="projectInfo['manName']" value="$!{pgs.projectInfo.manName}" type="text" class="tdInput"></span></td>
-            <td>年       龄:<span><input name="projectInfo['manAge']" value="$!{pgs.projectInfo.manAge}" type="text" class="tdInput"></span></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">女方姓名:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['womanName']">$!{pgs.projectInfo.womanName}</textarea></div></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">年&nbsp;&nbsp;&nbsp;&nbsp;龄:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['womanAge']">$!{pgs.projectInfo.womanAge}</textarea></div></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">男方姓名:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['manName']">$!{pgs.projectInfo.manName}</textarea></div></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">年&nbsp;&nbsp;&nbsp;&nbsp;龄:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['manAge']">$!{pgs.projectInfo.manAge}</textarea></div></td>
         </tr>
         <tr>
-            <td>病历号:<span><input name="projectInfo['recordNumber']" value="$!{pgs.projectInfo.recordNumber}" type="text" class="tdInput"></span></td>
-            <td>实验编号:<span><input name="projectInfo['experimentNumber']" value="$!{pgs.projectInfo.experimentNumber}" type="text" class="tdInput"></span></td>
-            <td>样本类型:<span><input name="projectInfo['sampleType']" value="$!{pgs.projectInfo.sampleType}" type="text" class="tdInput"></span></td>
-            <td>胚胎数量:<span><input name="projectInfo['embryoCount']" value="$!{pgs.projectInfo.embryoCount}" type="text" class="tdInput"></span></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">病历号:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['recordNumber']">$!{pgs.projectInfo.recordNumber}</textarea></div></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">实验编号:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['experimentNumber']">$!{pgs.projectInfo.experimentNumber}</textarea></div></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">样本类型:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['sampleType']">$!{pgs.projectInfo.sampleType}</textarea></div></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">胚胎数量:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['embryoCount']">$!{pgs.projectInfo.embryoCount}</textarea></div></td>
         </tr>
         <tr>
-            <td>活检时期:<span><input name="projectInfo['biopsyPeriod']" value="$!{pgs.projectInfo.biopsyPeriod}" type="text" class="tdInput"></span></td>
-            <td>样本状态:<span><input name="projectInfo['embryoState']" value="$!{pgs.projectInfo.embryoState}" type="text" class="tdInput"></span></td>
-            <td>接收时间:<span><input name="projectInfo['receiveDate']" value="$!{pgs.projectInfo.receiveDate}" type="text" class="tdInput"></span></td>
-            <td>检测时间:<span><input name="projectInfo['detectionDate']" value="$!{pgs.projectInfo.detectionDate}" type="text" class="tdInput"></span></td>
-        </tr>
-        <tr>
-            <td>送检单位:<span><input name="projectInfo['inspectionUnit']" value="$!{pgs.projectInfo.inspectionUnit}" type="text" class="tdInput"></span></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">活检时期:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['biopsyPeriod']">$!{pgs.projectInfo.biopsyPeriod}</textarea></div></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">样本状态:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['embryoState']">$!{pgs.projectInfo.embryoState}</textarea></div></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">接收时间:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['receiveDate']">$!{pgs.projectInfo.receiveDate}</textarea></div></td>
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">检测时间:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['detectionDate']">$!{pgs.projectInfo.detectionDate}</textarea></div></td>
+        </tr>              
+        <tr>                           
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">送检单位:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['inspectionUnit']">$!{pgs.projectInfo.inspectionUnit}</textarea></div></td>
+            <td></td>                  
+            <td style="vertical-align: top;width: 25%;"><div style="float:left;width:35%;">送检人:</div><div class="baseTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><textarea style="width:100%" rows="1" name="projectInfo['forPeople']">$!{pgs.projectInfo.forPeople}</textarea></div></td>
             <td></td>
-            <td>送检人:<span><input name="projectInfo['forPeople']" value="$!{pgs.projectInfo.forPeople}" type="text" class="tdInput"></span></td>
-            <td></td>
         </tr>
         <tr>
-            <td>女方临床诊断:<span><input name="projectInfo['womanClinical']" value="$!{pgs.projectInfo.womanClinical}" type="text" class="tdInput"></span></td>
+            <td style="vertical-align: top;width: 25%;" colspan="2"><div style="float:left;width:17%;">临床诊断:</div><div style="float:left;width:10%;">女方:</div><div class="womanBaseClinicalTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:13%;"><textarea style="width:100%" rows="1" name="projectInfo['womanClinical']">$!{pgs.projectInfo.womanClinical}</textarea></div><div style="float:left;width:10%;margin-left:10px;">男方:</div><div class="manBaseClinicalTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:13%;"><textarea style="width:100%" rows="1" name="projectInfo['manClinical']">$!{pgs.projectInfo.manClinical}</textarea></div></td>
             <td></td>
-            <td>男方临床诊断:<span><input name="projectInfo['manClinical']" value="$!{pgs.projectInfo.manClinical}" type="text" class="tdInput"></span></td>
             <td></td>
         </tr>
         <tr class="focus">

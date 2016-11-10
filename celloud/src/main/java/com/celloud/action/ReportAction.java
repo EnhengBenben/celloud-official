@@ -1928,7 +1928,19 @@ public class ReportAction {
 	public void printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
 		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
 		// 涉及共享，此处不能取登陆者的companyId
-		String path = pgs.getCompanyId() + "/PGS/print.vm";
+        String path = null;
+        // 如果是上海国妇婴医院就判断report.txt中的内容
+        if (pgs.getCompanyId().intValue() == 949) {
+            String report = pgs.getReport() != null ? pgs.getReport().trim() : null;
+            // 只包含XY或者XX, 代表正常
+            if ("XY".equals(report) || ("XX").equals(report)) {
+                path = pgs.getCompanyId() + "/PGS/normal_print.vm";
+            } else { // 有突变
+                path = pgs.getCompanyId() + "/PGS/abnormal_print.vm";
+            }
+        } else {
+            path = pgs.getCompanyId() + "/PGS/print.vm";
+        }
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/PGS/print.vm";
 		}
