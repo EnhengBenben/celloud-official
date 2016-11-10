@@ -37,8 +37,8 @@
         <tr class="focus">
             <td colspan="4">分析结果: 未见染色体拷贝数的增加/缺失</td>
         </tr>
-        <tr class="focus">
-            <td colspan="4">注释：全基因组筛查未见染色体拷贝数增加/缺失（>1 Mb）</td>
+        <tr>
+            <td colspan="4"><span class="focus">注释：</span>全基因组筛查未见染色体拷贝数增加/缺失（>1 Mb）</td>
         </tr>
         <tr class="focus">
             <td colspan="4" style="font-size:20px;"><br/>结果模式图</td>

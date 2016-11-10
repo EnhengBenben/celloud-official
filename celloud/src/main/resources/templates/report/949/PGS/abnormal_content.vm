@@ -39,7 +39,7 @@
         </tr>
         <tr>
             <td colspan="4">
-                <table border='1' cellspacing="0" cellpadding="0">
+                <table border='1' cellspacing="0" cellpadding="0" style="min-width:899px;">
                     <tr>
                         <th>变异类型</th>
                         <th>ISCN描述</th>
