@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Key;
 
 import com.celloud.model.mongo.ABINJ;
+import com.celloud.model.mongo.AccuSeqα2;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
@@ -353,6 +354,19 @@ public interface ReportService {
 	 * @date 2016-1-10 下午10:51:50
 	 */
 	public CmpReport getCMPReport(String dataKey, Integer projectId, Integer appId);
+
+    /**
+     * 获取 AccuSeqα2 数据报告信息
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author leamo
+     * @date 2016年11月10日 下午2:25:12
+     */
+    public AccuSeqα2 getAccuSeqα2Report(String dataKey, Integer projectId,
+            Integer appId);
 
 	/**
 	 * 修改CMP用户填写信息
