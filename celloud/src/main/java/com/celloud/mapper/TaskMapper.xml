@@ -501,7 +501,7 @@
 	            s.sample_name like '%${condition}%')
 	        </if>
 	        <if test="batch != null and batch != ''">
-	            and f.batch in ('${batch}')
+	            and f.batch in (${batch})
 	        </if>
 	        <if test="period != null and period != ''">
 	            and t.period in (${period})

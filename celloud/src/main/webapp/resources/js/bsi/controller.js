@@ -30,7 +30,7 @@
 		 */
 		$scope.reportBatchSearch = function(batchId){
 			if(!$("#batch-sl").hasClass("select-more")){
-				$scope.params.batch = $("#" + batchId).next().find("span").text();
+				$scope.params.batch = "'" + $("#" + batchId).next().find("span").text() + "'";
 				$scope.params.page = 1;
 				$scope.pageQuery();
 				$("#selected-batch span").html($("#" + batchId).next().find("span").text());
@@ -104,6 +104,25 @@
 	            $("#report-multibatch-search").addClass("disabled");
 	            $("#report-multibatch-search").attr("disabled",true);
 	        }
+		}
+		/**
+		 * 确定标签(批次)多选框按钮
+		 */
+		$scope.reportMultibatchSearch = function(){
+			var show_val = [];
+	        $("#batch-lists .checkbox-ed").each(function(){
+	            $scope.params.batch == null? $scope.params.batch = "'"+$(this).next().text()+"'" : $scope.params.batch += ",'"+$(this).next().text() + "'";
+	            show_val.push($(this).next().text());
+	        });
+	        $scope.pageQuery();
+	        $("#selected-batch span").html(show_val.toString());
+	        $("#selected-batch").removeClass("hide");
+	        $("#to-sl-batch").addClass("hide");
+	        $("#batch-sl").removeClass("select-more");
+	        $("#batch-lists").removeClass("show-more");
+	        $("#batch-lists").find(".checkbox").addClass("hide");
+	        $("#batch-more span").html("更多");
+	        $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
 		}
 		/**
 		 * 取消标签(批次)多选
@@ -205,6 +224,7 @@
 //          $.report.options.condition = $("#condition-input").val();
 //          $.report.find.condition();
 //        });
+		
 //        $("body").on("click","[data-click='report-check-all']",function(){
 //          if($(this).hasClass("checkbox-ed")){
 //            $(this).removeClass("checkbox-ed").addClass("checkbox-un");
@@ -213,22 +233,6 @@
 //            $(this).removeClass("checkbox-un").addClass("checkbox-ed");
 //            $(".table>tbody .checkbox,.pagination .checkbox").addClass("checkbox-ed").removeClass("checkbox-un");
 //          }
-//        });
-//        $("#report-multibatch-search").on("click",function(){
-//          var show_val = [];
-//          $("#batch-lists .checkbox-ed").each(function(){
-//            $.report.options.batch == null? $.report.options.batch = "'"+$(this).next().text()+"'" : $.report.options.batch += ",'"+$(this).next().text() + "'";
-//            show_val.push($(this).next().text());
-//          });
-//          $.report.find.condition();
-//          $("#selected-batch span").html(show_val.toString());
-//          $("#selected-batch").removeClass("hide");
-//          $("#to-sl-batch").addClass("hide");
-//          $("#batch-sl").removeClass("select-more");
-//          $("#batch-lists").removeClass("show-more");
-//          $("#batch-lists").find(".checkbox").addClass("hide");
-//          $("#batch-more span").html("更多");
-//          $("#batch-more i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
 //        });
 //        $("#report-multiperiod-search").on("click",function(){
 //          var show_val = [];

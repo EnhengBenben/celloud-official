@@ -27,7 +27,7 @@
                                     <a ng-click="reportBatchSearch('batchId' + $index)" href="javascript:void(0)"><span>{{batch}}</span></a>
                                 </div>
 						        <div class="multisl-btns hide">
-						            <button id="report-multibatch-search" name="sl-confirm" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
+						            <button id="report-multibatch-search" ng-click="reportMultibatchSearch()" name="sl-confirm" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
 						            <button data-click="reset-multiselect" ng-click="resetBatchMultiSelect()" class="sl-btn" href="javascript:void(0)">取消</button>
 						        </div>
 				            </div>
