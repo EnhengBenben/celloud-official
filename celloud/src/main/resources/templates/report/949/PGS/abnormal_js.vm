@@ -7,7 +7,7 @@ $(function(){
             inputVal = $(this).children().val();
             baseNames.unshift($(this).children().attr("name"));
             if(inputVal){
-                inputVal = inputVal.replace(/\r\n/g,"<br>");
+                inputVal = inputVal.replace(/\n/g,"<br>");
             }
             $(this).html(inputVal);
         });
