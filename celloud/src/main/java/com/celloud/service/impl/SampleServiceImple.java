@@ -140,9 +140,9 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Sample getByNameExperState(Integer userId, String sampleName,
+    public Sample getByNameExperState(String sampleName,
             Integer experState) {
-        return sampleMapper.getByNameExperState(userId, sampleName, experState,
+        return sampleMapper.getByNameExperState(sampleName, experState,
                 DataState.ACTIVE, SampleTypes.ISADD);
     }
 

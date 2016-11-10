@@ -6,6 +6,29 @@ $(function(){
         $(".buttons").hide();
         lookHide.removeClass("look_hide");
         $("input").css("border-bottom", "0");
+        var baseNames = new Array();
+        $(".baseTextarea").each(function(){
+    		inputVal = $(this).children().val();
+    		baseNames.push($(this).children().attr("name"));
+    		if(inputVal){
+    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		}
+            $(this).html(inputVal);    		    
+		});
+        $(".womanBaseClinicalTextarea").each(function(){
+    		inputVal = $(this).children().val();
+    		if(inputVal){
+    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		}
+            $(this).html(inputVal);    		    
+		});
+        $(".manBaseClinicalTextarea").each(function(){
+    		inputVal = $(this).children().val();
+    		if(inputVal){
+    		    inputVal = inputVal.replace(/\r\n/g,"<br>");
+    		}
+            $(this).html(inputVal);    		    
+		});
         $(".embryoNumber").each(function(){
     		inputVal = $(this).children().val();
     		if(inputVal){
@@ -90,6 +113,29 @@ $(function(){
                 inputVal = inputVal.replace(/<br>/g,"\n");
             }
             $(this).html("<textarea style=\"width:98%;height:50px;font-size:14px;\" name=\"projectInfo['embryoNumber']\">"+inputVal+"</textarea>");
+        });
+        
+        $(".baseTextarea").each(function(){
+            inputVal = $(this).html();
+            $(this).prev().css("width","35%");
+            if(inputVal){
+                 inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:100%\" rows=\"1\" name=" + baseNames.shift() + ">" + inputVal + "</textarea>");               
+        });
+        $(".womanBaseClinicalTextarea").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                 inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:100%\" rows=\"1\" name=\"projectInfo['womanClinical']\">" + inputVal + "</textarea>");               
+        });
+        $(".manBaseClinicalTextarea").each(function(){
+            inputVal = $(this).html();
+            if(inputVal){
+                 inputVal = inputVal.replace(/<br>/g,"\n");
+            }
+            $(this).html("<textarea style=\"width:100%\" rows=\"1\" name=\"projectInfo['manClinical']\">" + inputVal + "</textarea>");               
         });
         $("input").css("border-bottom", "1px solid #D4D4D4");
         lookHide.addClass("look_hide");

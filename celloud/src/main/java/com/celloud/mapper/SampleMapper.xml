@@ -195,7 +195,7 @@
   <select id="getByNameExperState" resultMap="ResultMapWithlogDate">
     select s.*,sl.create_date log_date from 
     tb_sample s,tb_sample_log sl
-    where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and s.sample_name=#{sampleName,jdbcType=VARCHAR}
+    where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and s.state=#{state} and s.sample_name=#{sampleName,jdbcType=VARCHAR}
     and s.is_add = #{isAdd,jdbcType=BIT}
     order by create_date desc
   </select>

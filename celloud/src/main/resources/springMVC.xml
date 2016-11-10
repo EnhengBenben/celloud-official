@@ -31,6 +31,7 @@
 	<mvc:resources mapping="/less/**" location="/resources/less/" />
 	<mvc:resources mapping="/images/**" location="/resources/img/" />
 	<mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
+	<mvc:resources mapping="/api/**" location="/resources/api/" />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<!--配置一个返回视图用的bean，下面的这个class整合了jstl技术 -->
 	<bean id="jspViewResolver"
@@ -115,6 +116,8 @@
 	</bean>
 	<!-- 异常处理配置 -->
 	<bean id="exceptionHandler" class="com.celloud.exception.ExceptionHandler" />
+	<!-- API文档配置 -->
+	<bean id="apiDoc" class="com.celloud.config.CustomSwaggerConfig"></bean>
 	<!-- 拦截器配置 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -129,6 +132,7 @@
 			<mvc:exclude-mapping path="/feedback/save" />
 			<mvc:exclude-mapping path="/**/*.html" />
 			<mvc:exclude-mapping path="/api/**" />
+			<mvc:exclude-mapping path="/api-docs/**" />
 			<bean class="com.celloud.interceptor.BehaviorInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
@@ -255,6 +259,8 @@
 				/favicon.ico = anon
 				/css/** = anon
 				/plugins/** = anon
+				/api/** = anon
+				/api-docs/** = anon
 				/resources/** = anon
 				/kaptcha = anon
 				/home/** = anon
