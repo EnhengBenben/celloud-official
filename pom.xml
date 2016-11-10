@@ -16,6 +16,7 @@
 		<shiro.version>1.2.4</shiro.version>
 		<kafka.version>0.10.0.0</kafka.version>
 		<jsoup.version>1.9.2</jsoup.version>
+		<swagger.version>0.9.5</swagger.version>
 	</properties>
 
 	<dependencyManagement>
@@ -273,6 +274,11 @@
 				<groupId>org.apache.kafka</groupId>
 				<artifactId>kafka-clients</artifactId>
 				<version>${kafka.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mangofactory</groupId>
+				<artifactId>swagger-springmvc</artifactId>
+				<version>${swagger.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
