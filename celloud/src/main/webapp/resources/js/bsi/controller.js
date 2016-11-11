@@ -180,6 +180,38 @@
 	        selectorline.find(".multisl-btns").removeClass("hide");
 		}
 		/**
+		 * 状态多选框按钮
+		 */
+		$scope.periodLists = function(periodId){
+			$("#" + periodId).toggleClass("checkbox-un");
+	        $("#" + periodId).toggleClass("checkbox-ed");
+	        if($("#period-lists .checkbox-ed").size() > 0){
+	            $("#report-multiperiod-search").removeClass("disabled");
+	            $("#report-multiperiod-search").attr("disabled",false);
+	        }else{
+	            $("#report-multiperiod-search").addClass("disabled");
+	            $("#report-multiperiod-search").attr("disabled",true);
+	        }
+		}
+		/**
+		 * 确定状态多选按钮
+		 */
+		$scope.reportMultiperiodSearch = function(){
+			var show_val = [];
+            $("#period-lists .checkbox-ed").each(function(){
+              $scope.params.period == null? $scope.params.period = $(this).next().find("input[type='hidden']").val() : $scope.params.period += ","+$(this).next().find("input[type='hidden']").val();
+              show_val.push($(this).next().find("span").html());
+            });
+            $scope.pageQuery();
+            $("#selected-period span").html(show_val.toString());
+            $("#selected-period").removeClass("hide");
+            $("#to-sl-period").addClass("hide");
+            $("#period-sl").removeClass("select-more");
+            $("#period-sl").find(".checkbox").addClass("hide");
+            $("#period-sl").find(".multisl-btns").addClass("hide");
+            $("#period-lists .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
+		}
+		/**
 		 * 取消状态多选
 		 */
 		$scope.resetPeriodMultiSelect = function(){
@@ -233,21 +265,6 @@
 //            $(this).removeClass("checkbox-un").addClass("checkbox-ed");
 //            $(".table>tbody .checkbox,.pagination .checkbox").addClass("checkbox-ed").removeClass("checkbox-un");
 //          }
-//        });
-//        $("#report-multiperiod-search").on("click",function(){
-//          var show_val = [];
-//          $("#period-lists .checkbox-ed").each(function(){
-//            $.report.options.period == null? $.report.options.period = $(this).next().find("input[type='hidden']").val() : $.report.options.period += ","+$(this).next().find("input[type='hidden']").val();
-//            show_val.push($(this).next().find("span").html());
-//          });
-//          $.report.find.condition();
-//          $("#selected-period span").html(show_val.toString());
-//          $("#selected-period").removeClass("hide");
-//          $("#to-sl-period").addClass("hide");
-//          $("#period-sl").removeClass("select-more");
-//          $("#period-sl").find(".checkbox").addClass("hide");
-//          $("#period-sl").find(".multisl-btns").addClass("hide");
-//          $("#period-lists .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
 //        });
 //		    all: function(){
 //		      $.get("report/bsi/reportList",function(response){

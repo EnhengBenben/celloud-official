@@ -45,36 +45,36 @@
 				        </div>
 				        <div id="to-sl-period">
 				            <div id="period-lists" class="sl-val">
-				                <div class="sl-val-content">
+				                <div class="sl-val-content" ng-click="periodLists('finish')">
 				                    <div class="celicon on_check checkbox checkbox-un hide" id="finish"></div>
 				                    <a ng-click="reportPeriodSearch('finish')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="2"><span>完成</span></a>
 				                </div>
-				                <div class="sl-val-content">
+				                <div class="sl-val-content" ng-click="periodLists('inanalysis')">
 				                    <div class="celicon on_check checkbox checkbox-un hide" id="inanalysis"></div>
 				                    <a ng-click="reportPeriodSearch('inanalysis')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="1"><span>正在分析</span></a>
 				                </div>
-				                <div class="sl-val-content">
+				                <div class="sl-val-content" ng-click="periodLists('waitanalysis')">
 				                    <div class="celicon on_check checkbox checkbox-un hide" id="waitanalysis"></div>
 				                    <a ng-click="reportPeriodSearch('waitanalysis')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="0"><span>等待分析</span></a>
 					            </div>
-					            <div class="sl-val-content">
+					            <div class="sl-val-content" ng-click="periodLists('incomplete')">
 						            <div class="celicon on_check checkbox checkbox-un hide" id="incomplete"></div>
 						            <a ng-click="reportPeriodSearch('incomplete')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据不完整</span></a>
 					            </div>
-					            <div class="sl-val-content">
+					            <div class="sl-val-content" ng-click="periodLists('exception')">
 						            <div class="celicon on_check checkbox checkbox-un hide" id="exception"></div>
 						            <a ng-click="reportPeriodSearch('exception')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="4"><span>异常终止</span></a>
 					            </div>
-					            <div class="sl-val-content">
+					            <div class="sl-val-content" ng-click="periodLists('experiment')">
 						            <div class="celicon on_check checkbox checkbox-un hide" id="experiment"></div>
 						            <a ng-click="reportPeriodSearch('experiment')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验中</span></a>
 					            </div>
-					            <div class="sl-val-content">
+					            <div class="sl-val-content" ng-click="periodLists('sample')">
 						            <div class="celicon on_check checkbox checkbox-un hide" id="sample"></div>
 						            <a ng-click="reportPeriodSearch('sample')" data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
 					            </div>
 					            <div class="multisl-btns hide">
-						            <button id="report-multiperiod-search" name="sl-confirm" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
+						            <button id="report-multiperiod-search" ng-click="reportMultiperiodSearch()" name="sl-confirm" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
 						            <button data-click="reset-multiselect" ng-click="resetPeriodMultiSelect()" class="sl-btn" href="javascript:void(0)">取消</button>
 					            </div>
 				            </div>
