@@ -3784,7 +3784,7 @@ public class ReportAction {
     @ActionLog(value = "条件检索任务列表", button = "报告搜索/分页")
     @RequestMapping("bsi/reportPageQuery")
     @ResponseBody
-    public Map<String, Object> reportPageQuery(@RequestParam(defaultValue = "1") int page,
+    public Map<String, Object> bsiReportPageQuery(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
             @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
             @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,

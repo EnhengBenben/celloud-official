@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div class="pro-body">
     <ol class="breadcrumb">
@@ -184,34 +182,34 @@
 				        </ul>
 				        <ul id="pagination-task" class="pages pull-right">
 				          <!-- 显示prev -->
-				          <li><a id="prev-page-task" class="ends" href="javascript:void(0);">&lt;&lt;</a></li>
+				          <li><a id="prev-page-task" class="ends" href="javascript:void(0);" ng-click="paginationBtn(pageList.page.currentPage>1?pageList.page.currentPage-1:1)">&lt;&lt;</a></li>
 			              <li ng-if="pageList.page.totalPage<=7" ng-repeat="step in [1,2,3,4,5,6,7]" ng-class="{active: step == pageList.page.currentPage}">
-			                <a ng-if="step == pageList.page.currentPage && step <= pageList.page.totalPage" ng-href="#">{{step}}</a>
-			                <a ng-if="step != pageList.page.currentPage && step <= pageList.page.totalPage" name="pagination-task" ng-href="javascript:void(0)">{{step}}</a>
+			                <a ng-if="step == pageList.page.currentPage && step <= pageList.page.totalPage" href="javascript:void(0)">{{step}}</a>
+			                <a ng-if="step != pageList.page.currentPage && step <= pageList.page.totalPage" name="pagination-task" ng-click="paginationBtn(step)">{{step}}</a>
 			              </li>
 			              
 			              <li ng-if="pageList.page.currentPage <= 4 && pageList.page.totalPage > 7" ng-repeat="step in [1,2,3,4,5]" ng-class="{active: step == pageList.page.currentPage}">
-                            <a ng-if="step == pageList.page.currentPage" ng-href="#">{{step}}</a>
-                            <a ng-if="step != pageList.page.currentPage" name="pagination-task" ng-href="javascript:void(0)">{{step}}</a>
+                            <a ng-if="step == pageList.page.currentPage" href="javascript:void(0)">{{step}}</a>
+                            <a ng-if="step != pageList.page.currentPage" name="pagination-task" ng-href="javascript:void(0)" ng-click="paginationBtn(step)">{{step}}</a>
                           </li>
 		                  <li ng-if="pageList.page.currentPage <= 4 && pageList.page.totalPage > 7"><a href="javascript:void(0)">…</a></li>
-		                  <li ng-if="pageList.page.currentPage <= 4 && pageList.page.totalPage > 7"><a name="pagination-task" href="javascript:void(0)">{{pageList.page.totalPage}}</a></li>
+		                  <li ng-if="pageList.page.currentPage <= 4 && pageList.page.totalPage > 7"><a name="pagination-task" ng-click="paginationBtn(pageList.page.totalPage)">{{pageList.page.totalPage}}</a></li>
 				              
-			              <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)">1</a></li>
+			              <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(step)">1</a></li>
                           <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a href="javascript:void(0)">…</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)">{{pageList.page.currentPage - 1}}</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3" class="active"><a href="#">{{pageList.page.currentPage}}</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)">{{pageList.page.currentPage + 1}}</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(pageList.page.currentPage - 1)">{{pageList.page.currentPage - 1}}</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3" class="active"><a href="javascript:void(0)">{{pageList.page.currentPage}}</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(pageList.page.currentPage + 1)">{{pageList.page.currentPage + 1}}</a></li>
                           <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a href="javascript:void(0)">…</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)">{{pageList.page.totalPage}}</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(pageList.page.totalPage)">{{pageList.page.totalPage}}</a></li>
 			              
-			              <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage >= pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)">1</a></li>
+			              <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage >= pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(1)">1</a></li>
                           <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage >= pageList.page.totalPage-3"><a href="javascript:void(0)">…</a></li> 
                           <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>=pageList.page.totalPage-3" ng-repeat="step in [1,2,3,4,5]" ng-class="{active: step == pageList.page.currentPage}">
-                            <a ng-if="dataList.page.currentPage == pageList.page.totalPage - 4 + $index" ng-href="#">{{pageList.page.totalPage - 4 + $index}}</a>
-                            <a ng-if="dataList.page.currentPage != pageList.page.totalPage - 4 + $index" name="pagination-task" ng-href="javascript:void(0)">{{pageList.page.totalPage - 4 + $index}}</a>
+                            <a ng-if="dataList.page.currentPage == pageList.page.totalPage - 4 + $index" href="javascript:void(0)">{{pageList.page.totalPage - 4 + $index}}</a>
+                            <a ng-if="dataList.page.currentPage != pageList.page.totalPage - 4 + $index" name="pagination-task" ng-click="paginationBtn(pageList.page.totalPage - 4 + $index)">{{pageList.page.totalPage - 4 + $index}}</a>
                           </li>
-				          <li><a id="next-page-task" class="ends" href="javascript:void(0)">&gt;&gt;</a></li>
+				          <li><a id="next-page-task" class="ends" ng-click="paginationBtn(pageList.page.currentPage < pageList.page.totalPage?pageList.page.currentPage+1:pageList.page.totalPage)">&gt;&gt;</a></li>
 				        </ul>
 				    </div>
 				</div>

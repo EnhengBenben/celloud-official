@@ -237,11 +237,11 @@
       templateUrl: "pages/rocky/rocky_report.jsp",
       controller: "rockyReportController"
     })
-    .when('/product/bsi/report',{
+    .when('/product/bsi/bsireport',{
       templateUrl: "pages/bsi/bsi_report_list.jsp",
       controller: "bsiReportController"
     })
-    .when('/product/bsi/data',{
+    .when('/product/bsi/bsidata',{
       templateUrl: "pages/bsi/bsi_data.jsp",
       controller: "bsiDataController"
     })
