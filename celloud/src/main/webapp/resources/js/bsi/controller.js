@@ -429,7 +429,7 @@
 	celloudApp.controller("bsiDataController", function($scope, bsiService) {
 		$scope.params = {
 			page: 1,
-			pageSize: $("#page-size-sel").val(),
+			size: $("#page-size-sel").val(),
 	        condition: null,
 	        sort: 0,
 	        sortBatch: "asc",
@@ -442,31 +442,55 @@
 				$scope.pageList = dataMap.pageList;
 			})
 		}
+		// 分页按钮
 		$scope.paginationBtn = function(currentPage){
 			$scope.params.page = currentPage;
 			$scope.pageQuery();
 		}
+		$scope.sortDate = function(){
+			$scope.params.sort = 0;
+			$scope.params.sortDate = $scope.params.sortDate == "desc" ? "asc" : "desc";
+			$scope.base.sortIcon();
+			$scope.pageQuery();
+		}
+		$scope.sortBatch = function(){
+			$scope.params.sort = 1;
+			$scope.params.sortBatch = $scope.params.sortBatch == "desc" ? "asc" : "desc";
+			$scope.base.sortIcon();
+			$scope.pageQuery();
+		}
+		$scope.sortName = function(){
+			$scope.params.sort = 2;
+			$scope.params.sortName = $scope.params.sortName == "desc" ? "asc" : "desc";
+			$scope.base.sortIcon();
+			$scope.pageQuery();
+		}
+		$scope.pageSizeQuery = function(){
+			$scope.params.size = $("#page-size-sel").val();
+			$scope.params.page = 1;
+			$scope.pageQuery();
+		}
+		$scope.base = {
+		  sortIcon : function(){
+		    if($scope.params.sortDate=="asc"){
+		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if($scope.params.sortBatch=="asc"){
+		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if($scope.params.sortName=="asc"){
+		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		  }
+		}
 		$scope.pageQuery();
 	});
-//	    find : {
-//	        all: function(){
-//	          $.get("data/bsiDataList",function(response){
-//	            $.data_.loadlist(response);
-//	          });
-//	        },
-//	        condition: function(){
-//	          var options = $.data_.options;
-//	          $.get("data/bsiDataList",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
-//	            $.data_.loadlist(response);
-//	          });
-//	        },
-//	        pagination: function(currentPage){
-//	          var options = $.data_.options;
-//	          $.get("data/bsiDataList",{"page":currentPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortBatch":options.sortBatch,"sortName":options.sortName,"size":options.pageSize},function(response){
-//	            $.data_.loadlist(response);
-//	          });
-//	        }
-//	    },
 //	    loadlist: function(response){
 //	      $("#container").html(response);
 //	      $("#data-list-tbody").find("td[name='data-name-td']").each(function(){
@@ -475,54 +499,6 @@
 //	          var newData = utils.splitDataByInfo(_data, "\r\n" ,40);
 //	          $(this).attr("title",newData);
 //	        }
-//	      });
-//	      var options = $.data_.options;
-//	      $.base.sortIcon(options.sortDate,options.sortBatch,options.sortName,null);
-//	      $("#pagination-data").on("click","a",function(e){
-//	        var id = $(this).attr("id");
-//	        var currentPage = parseInt($("#current-page-hide").val());
-//	        var totalPage = parseInt($("#total-page-hide").val());
-//	        var page;
-//	        if(id == undefined){
-//	          page = $(this).html();
-//	        }else if(id.indexOf("prev")>=0){
-//	          if(currentPage == 1){
-//	            page = 1;
-//	          }else{
-//	            page = currentPage-1;
-//	          }
-//	        }else if(id.indexOf("next")>=0){
-//	          page = currentPage+1;
-//	          if(currentPage == totalPage){
-//	            page = currentPage;
-//	          }else{
-//	            page = currentPage+1;
-//	          }
-//	        }else if(id.indexOf("first")>=0){
-//	          page = 1;
-//	        }else if(id.indexOf("last")>=0){
-//	          page = totalPage;
-//	        }
-//	        $.data_.find.pagination(page);
-//	      });
-//	      $("#sort-date").on("click",function(e){
-//	        $.data_.options.sort = 0;
-//	        $.data_.options.sortDate = $.data_.options.sortDate=="desc"?"asc":"desc";
-//	        $.data_.find.condition();
-//	      });
-//	      $("#sort-batch").on("click",function(e){
-//	        $.data_.options.sort = 1;
-//	        $.data_.options.sortBatch = $.data_.options.sortBatch=="desc"?"asc":"desc";
-//	        $.data_.find.condition();
-//	      });
-//	      $("#sort-name").on("click",function(e){
-//	        $.data_.options.sort = 2;
-//	        $.data_.options.sortName = $.data_.options.sortName=="desc"?"asc":"desc";
-//	        $.data_.find.condition();
-//	      });
-//	      $("#page-size-sel").on("change",function(e){
-//	        $.data_.options.pageSize = $("#page-size-sel").val()
-//	        $.data_.find.condition();
 //	      });
 //	    }
 })();

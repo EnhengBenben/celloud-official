@@ -16,11 +16,11 @@
                 <table class="table table-main">
 				  <thead>
 				    <tr>
-				      <th>批次/标签</th>
-				      <th>文件名</th>
+				      <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()"><i id="sort-batch-icon" class="fa fa-sort-amount-asc"></i></a></th>
+				      <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()"><i id="sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
 				      <th>文件编号</th>
 				      <th>文件大小</th>
-				      <th>上传时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
+				      <th>上传时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()"><i id="sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
 				    </tr>
 				  </thead>
 				  <tbody id="data-list-tbody" ng-if="pageList.datas.length > 0">
@@ -65,7 +65,7 @@
 
                       <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage >= pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(1)">1</a></li>
                       <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage >= pageList.page.totalPage-3"><a href="javascript:void(0)">…</a></li> 
-                      <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>=pageList.page.totalPage-3" ng-repeat="step in [1,2,3,4,5]" ng-class="{active: step == pageList.page.currentPage}">
+                      <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>=pageList.page.totalPage-3" ng-repeat="step in [1,2,3,4,5]" ng-class="{active: pageList.page.totalPage - 4 + $index == pageList.page.currentPage}">
                          <a ng-if="dataList.page.currentPage == pageList.page.totalPage - 4 + $index" href="javascript:void(0)">{{pageList.page.totalPage - 4 + $index}}</a>
                          <a ng-if="dataList.page.currentPage != pageList.page.totalPage - 4 + $index" name="pagination-task" ng-click="paginationBtn(pageList.page.totalPage - 4 + $index)">{{pageList.page.totalPage - 4 + $index}}</a>
                       </li>				          
@@ -75,7 +75,7 @@
 				    <ul class="pagination-data pull-right">
 				      <li><span>共{{pageList.page.rowCount}}条</span></li>
 				      <li>每页
-				        <select id="page-size-sel">
+				        <select id="page-size-sel" ng-model="dataPageSize" ng-change="pageSizeQuery()">
 				          <option value="10" ng-selected="pageList.page.pageSize == 10">10</option>
 				          <option value="20" ng-selected="pageList.page.pageSize == 20">20</option>
 				          <option value="30" ng-selected="pageList.page.pageSize == 30">30</option>
