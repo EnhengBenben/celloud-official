@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div class="topbar-menu">
+<div class="topbar-menu" ng-controller="bsiCommon">
     <header class="common-menu">
         <div class="common-menu-logo">
             <img alt="百菌探" src="<%=request.getContextPath()%>/images/app/bsi.png">

@@ -109,10 +109,10 @@
 				          <th width="140">
 				            <input id="sample-selector" type="text" placeholder="样本编号/病历号">
 				          </th>
-				          <th>批次/标签<a id="sort-batch" href="javascript:void(0);"><i id="sort-batch-icon" class="fa fa-sort" aria-hidden="true"></i></a></th>
-				          <th>文件名<a id="sort-name" href="javascript:void(0);"><i id="sort-name-icon" class="fa fa-sort" aria-hidden="true"></i></a></th>
-				          <th>状态<a id="sort-period" href="javascript:void(0);"><i id="sort-period-icon" class="fa fa-sort" aria-hidden="true"></i></a></th>
-				          <th class="date-td">更新时间<a id="sort-date" href="javascript:void(0);"><i id="sort-date-icon" class="fa fa-sort-amount-asc"></i></a></th>
+				          <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()"><i id="sort-batch-icon" class="fa fa-sort-amount-asc"></i></a></th>
+				          <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()"><i id="sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
+				          <th>状态<a id="sort-period" href="javascript:void(0);" ng-click="sortPeriod()"><i id="sort-period-icon" class="fa fa-sort-amount-asc"></i></a></th>
+				          <th>更新时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()"><i id="sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
 				          <th>操作</th>
 				        </tr>
 				      </thead>
@@ -146,7 +146,7 @@
 				              <a title="查看报告" ng-href="javascript:$.report.detail.patient('{{task.dataKey}}',{{task.projectId}},{{task.appId}},{{$index + 1}},{{pageList.page.currentPage}})" ng-if="task.period == 2"><i class="fa fa-eye"></i></a>
 				              <a title="查看报告" class="disabled"  disabled="disabled" ng-if="task.period != 2"><i class="fa fa-eye"></i></a>
 				              <a title="打印患者报告" target="_blank" ng-href="${pageContext.request.contextPath }/report/printBSIReport?projectId={{task.projectId}}&dataKey={{task.dataKey}}&appId={{task.appId}}&templateType=print_patient"" ng-if="task.period == 2"><i class="fa fa-print"></i></a>
-				              <a title="打印患者报告" class="disabled"  disabled="disabled" ng-href="task.period != 2"><i class="fa fa-print"></i></a>
+				              <a title="打印患者报告" class="disabled"  disabled="disabled" ng-if="task.period != 2"><i class="fa fa-print"></i></a>
 				              <a title="共享报告" href="javascript:void(0)"><i class="fa fa-share-square-o"></i></a>
 				              <a title="重新运行" ng-href="javascript:$.report.reRun({{task.dataKey}},{{task.appId}},{{task.projectId}})" ng-if="task.period==1 || task.period==2 || task.period==4 || task.period == null" ><i class="fa fa-refresh"></i></a>
 				              <a title="重新运行" class="disabled"  disabled="disabled" ng-if="task.period!=1 && task.period!=2 && task.period!=4 && task.period != null" ><i class="fa fa-refresh"></i></a>
@@ -171,7 +171,7 @@
 				        <ul class="pagination-data pull-right">
 				          <li><span>共&nbsp;&nbsp;{{pageList.page.rowCount}}&nbsp;&nbsp;条</span></li>
 				          <li>每页
-				            <select id="page-size-sel">
+				            <select id="page-size-sel" ng-model="reportPageSize" ng-change="pageSizeQuery()">
 				              <option value="10" ng-selected="pageList.page.pageSize==10">10</option>
 				              <option value="20" ng-selected="pageList.page.pageSize==20">20</option>
 				              <option value="30" ng-selected="pageList.page.pageSize==30">30</option>

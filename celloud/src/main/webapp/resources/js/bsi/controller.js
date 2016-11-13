@@ -1,8 +1,32 @@
 (function() {
-	celloudApp.controller("bsiReportController", function($scope, bsiService) {
+	celloudApp.controller("bsiCommon",function($rootScope){
+		$rootScope.sortIcon = function(params){
+		    if(params.sortDate=="asc"){
+		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if(params.sortBatch=="asc"){
+		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if(params.sortName=="asc"){
+		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if(params.sortPeriod=="asc"){
+		    	$("#sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		    	$("#sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+	   }
+	}); 
+	celloudApp.controller("bsiReportController", function($scope, $rootScope, bsiService) {
 		$scope.params = {
 			page: 1,
-		    pageSize: $("#page-size-sel").val(),
+		    size: $("#page-size-sel").val(),
 		    condition: null,
 		    sort: 0,
 		    sortBatch: "asc",
@@ -252,6 +276,35 @@
 	        }
 	        $scope.pageQuery();
 		}
+		$scope.sortDate = function(){
+			$scope.params.sort = 0;
+			$scope.params.sortDate = $scope.params.sortDate == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($scope.params);
+			$scope.pageQuery();
+		}
+		$scope.sortBatch = function(){
+			$scope.params.sort = 1;
+			$scope.params.sortBatch = $scope.params.sortBatch == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($scope.params);
+			$scope.pageQuery();
+		}
+		$scope.sortName = function(){
+			$scope.params.sort = 2;
+			$scope.params.sortName = $scope.params.sortName == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($scope.params);
+			$scope.pageQuery();
+		}
+		$scope.sortPeriod = function(){
+			$scope.params.sort = 3;
+			$scope.params.sortPeriod = $scope.params.sortPeriod == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($scope.params);
+			$scope.pageQuery();
+		}
+		$scope.pageSizeQuery = function(){
+			$scope.params.size = $("#page-size-sel").val();
+			$scope.params.page = 1;
+			$scope.pageQuery();
+		}
 		$scope.paginationBtn = function(currentPage){
 			$scope.params.page = currentPage;
 			$scope.pageQuery();
@@ -322,58 +375,6 @@
 //		        $(this).attr("title",newData);
 //		      }
 //		    });
-//		    $.base.sortIcon($.report.options.sortDate,$.report.options.sortBatch,$.report.options.sortName,$.report.options.sortPeriod);
-//		    $("#pagination-task").on("click","a",function(e){
-//		      var id = $(this).attr("id");
-//		      var currentPage = parseInt($("#current-page-hide").val());
-//		      var totalPage = parseInt($("#total-page-hide").val());
-//		      var page;
-//		      if(id == undefined){
-//		        page = $(this).html();
-//		      }else if(id.indexOf("prev")>=0){
-//		        if(currentPage == 1){
-//		          page = 1;
-//		        }else{
-//		          page = currentPage-1;
-//		        }
-//		      }else if(id.indexOf("next")>=0){
-//		        page = currentPage+1;
-//		        if(currentPage == totalPage){
-//		          page = currentPage;
-//		        }else{
-//		          page = currentPage+1;
-//		        }
-//		      }else if(id.indexOf("first")>=0){
-//		        page = 1;
-//		      }else if(id.indexOf("last")>=0){
-//		        page = totalPage;
-//		      }
-//		      $.report.find.pagination(page);
-//		    });
-//		    $("#sort-date").on("click",function(e){
-//		      $.report.options.sort = 0;
-//		      $.report.options.sortDate = $.report.options.sortDate=="desc"?"asc":"desc";
-//		      $.report.find.condition();
-//		    });
-//		    $("#sort-batch").on("click",function(e){
-//		      $.report.options.sort = 1;
-//		      $.report.options.sortBatch = $.report.options.sortBatch=="desc"?"asc":"desc";
-//		      $.report.find.condition();
-//		    });
-//		    $("#sort-name").on("click",function(e){
-//		      $.report.options.sort = 2;
-//		      $.report.options.sortName = $.report.options.sortName=="desc"?"asc":"desc";
-//		      $.report.find.condition();
-//		    });
-//		    $("#sort-period").on("click",function(e){
-//		      $.report.options.sort = 3;
-//		      $.report.options.sortPeriod = $.report.options.sortPeriod=="desc"?"asc":"desc";
-//		      $.report.find.condition();
-//		    });
-//		    $("#page-size-sel").on("change",function(e){
-//		      $.report.options.pageSize = $("#page-size-sel").val()
-//		      $.report.find.condition();
-//		    });
 //		  },
 //		  reRun: function(dataKey,appId,projectId){
 //		    $.get("data/reRun",{"dataKey":dataKey,"appId":appId,"projectId":projectId},function(result){
@@ -426,7 +427,7 @@
 //		  }
 		$scope.pageQuery();
 	});
-	celloudApp.controller("bsiDataController", function($scope, bsiService) {
+	celloudApp.controller("bsiDataController", function($scope, $rootScope, bsiService) {
 		$scope.params = {
 			page: 1,
 			size: $("#page-size-sel").val(),
@@ -450,44 +451,25 @@
 		$scope.sortDate = function(){
 			$scope.params.sort = 0;
 			$scope.params.sortDate = $scope.params.sortDate == "desc" ? "asc" : "desc";
-			$scope.base.sortIcon();
+			$rootScope.sortIcon($scope.params);
 			$scope.pageQuery();
 		}
 		$scope.sortBatch = function(){
 			$scope.params.sort = 1;
 			$scope.params.sortBatch = $scope.params.sortBatch == "desc" ? "asc" : "desc";
-			$scope.base.sortIcon();
+			$rootScope.sortIcon($scope.params);
 			$scope.pageQuery();
 		}
 		$scope.sortName = function(){
 			$scope.params.sort = 2;
 			$scope.params.sortName = $scope.params.sortName == "desc" ? "asc" : "desc";
-			$scope.base.sortIcon();
+			$rootScope.sortIcon($scope.params);
 			$scope.pageQuery();
 		}
 		$scope.pageSizeQuery = function(){
 			$scope.params.size = $("#page-size-sel").val();
 			$scope.params.page = 1;
 			$scope.pageQuery();
-		}
-		$scope.base = {
-		  sortIcon : function(){
-		    if($scope.params.sortDate=="asc"){
-		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if($scope.params.sortBatch=="asc"){
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if($scope.params.sortName=="asc"){
-		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		  }
 		}
 		$scope.pageQuery();
 	});
