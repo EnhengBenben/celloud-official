@@ -148,7 +148,7 @@
 				              <a title="打印患者报告" target="_blank" ng-href="${pageContext.request.contextPath }/report/printBSIReport?projectId={{task.projectId}}&dataKey={{task.dataKey}}&appId={{task.appId}}&templateType=print_patient"" ng-if="task.period == 2"><i class="fa fa-print"></i></a>
 				              <a title="打印患者报告" class="disabled"  disabled="disabled" ng-if="task.period != 2"><i class="fa fa-print"></i></a>
 				              <a title="共享报告" href="javascript:void(0)"><i class="fa fa-share-square-o"></i></a>
-				              <a title="重新运行" ng-href="javascript:$.report.reRun({{task.dataKey}},{{task.appId}},{{task.projectId}})" ng-if="task.period==1 || task.period==2 || task.period==4 || task.period == null" ><i class="fa fa-refresh"></i></a>
+				              <a title="重新运行" ng-click="reRun(task.dataKey,task.appId,task.projectId)" ng-if="task.period==1 || task.period==2 || task.period==4 || task.period == null" ><i class="fa fa-refresh"></i></a>
 				              <a title="重新运行" class="disabled"  disabled="disabled" ng-if="task.period!=1 && task.period!=2 && task.period!=4 && task.period != null" ><i class="fa fa-refresh"></i></a>
 				            </td>
 				          </tr>

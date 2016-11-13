@@ -3,6 +3,9 @@
 		this.reportPageQuery = function(params){
 			return $http({method:"POST",url:'report/bsi/reportPageQuery',data:$.param(params),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
 		}
+		this.reportReRun = function(dataKey,appId,projectId){
+			return $http({method:"POST",url:'data/reRun',data:$.param({"dataKey":dataKey,"appId":appId,"projectId":projectId}),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+		}
 		this.dataPageQuery = function(params){
 			return $http({method:"POST",url:'data/bsi/dataPageQuery',data:$.param(params),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
 		}

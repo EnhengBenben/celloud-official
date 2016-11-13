@@ -305,6 +305,12 @@
 			$scope.params.page = 1;
 			$scope.pageQuery();
 		}
+		$scope.reRun = function(dataKey,appId,projectId){
+			bsiService.reportReRun(dataKey,appId,projectId).
+			success(function(){
+				$scope.pageQuery();
+			})
+		}
 		$scope.paginationBtn = function(currentPage){
 			$scope.params.page = currentPage;
 			$scope.pageQuery();
@@ -374,11 +380,6 @@
 //		        var newData = utils.splitDataByInfo(_data, "\r\n" ,40);
 //		        $(this).attr("title",newData);
 //		      }
-//		    });
-//		  },
-//		  reRun: function(dataKey,appId,projectId){
-//		    $.get("data/reRun",{"dataKey":dataKey,"appId":appId,"projectId":projectId},function(result){
-//		      $.report.find.condition();
 //		    });
 //		  },
 //		  detail: {
