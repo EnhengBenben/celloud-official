@@ -12,7 +12,7 @@
 		    <div class="o-app-list">
 			  <ul>
 			    <li ng-if="userProduct.app118==118">
-			      <a href="${pageContext.request.contextPath }/index#/product/bsi/report">
+			      <a href="${pageContext.request.contextPath }/index#/product/bsi/bsireport">
 			        <div class="inner">
 			          <img src="${pageContext.request.contextPath }/app/image?file=bsi.png" alt="百菌探" title="百菌探">
 			        </div>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div class="topbar-menu" ng-controller="bsiCommon">
+<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
+<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
+<div class="topbar-menu bsi" ng-controller="bsiCommon">
     <header class="common-menu">
         <div class="common-menu-logo">
             <img alt="百菌探" src="<%=request.getContextPath()%>/images/app/bsi.png">
@@ -7,7 +9,7 @@
         <hr class="-left">
         <div id="common-menu-center" class="info">
             <div id="common-menu" class="common-menu-btn pull-left">
-               <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)" ng-click="toUpload()">
+               <a class="item-btn upload-btn" id="to-upload-a" href="javascript:void(0)" ng-click="stepOne()">
                    <i class="celicon my-upload-icon"></i><br>上传
                    <canvas id="upload-progress" class="upload-progress" width="64" height="64"></canvas>
                </a>
@@ -33,7 +35,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button id="close-upload-modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button id="close-upload-modal" type="button" class="close" ng-click="closeUploadModal()" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">
                             <i class="fa fa-times-circle"></i>
                         </span>
@@ -61,10 +63,10 @@
                                 示例：外科5月；ICU-9床；急诊发热
                                 <span>
                         </p>
-                        <a id="next-step" class="btn" href="javascript:void(0)" ng-click="nextStep()">下一步</a>
+                        <a id="next-step" class="btn" href="javascript:void(0)" ng-click="stepTwo()">下一步</a>
                     </div>
                     <div class="step-two-content hide">
-                        <div class="upload-container">
+                        <div class="upload-container" style="position: relative;">
                             <div id="plupload-content" class="box-body plupload-content">
                                 <ul id="upload-filelist" class="plupload-filelist"></ul>
                                 <div class="upload-text">
@@ -88,7 +90,7 @@
                             <span>&gt;数据拆分(Split) 选中时系统先按index文件对数据拆分并重命名.</span>
                         </p>
                         <input id="tag-info" type="hidden" value="1" />
-                        <a id="begin-upload" class="btn" href="javascript:void(0)">开始上传</a>
+                        <a id="begin-upload" class="btn" href="javascript:void(0)" ng-click="beginUpload()">开始上传</a>
                     </div>
                     <div class="step-three-content hide">
                         <div class="upload-status">

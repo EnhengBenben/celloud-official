@@ -112,7 +112,7 @@
 				          <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()"><i id="sort-batch-icon" class="fa fa-sort-amount-asc"></i></a></th>
 				          <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()"><i id="sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
 				          <th>状态<a id="sort-period" href="javascript:void(0);" ng-click="sortPeriod()"><i id="sort-period-icon" class="fa fa-sort-amount-asc"></i></a></th>
-				          <th>更新时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()"><i id="sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
+				          <th class="date-td">更新时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()"><i id="sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
 				          <th>操作</th>
 				        </tr>
 				      </thead>
@@ -127,9 +127,9 @@
 				                <a ng-if="task.period == 2" ng-href="javascript:$.report.detail.patient('{{task.dataKey}}',{{task.projectId}},{{task.appId}},{{$index + 1}},{{pageList.page.currentPage}})">
 				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
 				                </a>
-				                <span ng-if="task.period != 2">
+				                <a ng-if="task.period != 2" ng-href="javascript:void(0)">
 				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
-				                </span>
+				                </a>
 				            </td>
 				            <td>
 				              <a ng-if="task.period == 0" href="javascript:void(0)">等待运行</a>
