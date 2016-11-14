@@ -34,7 +34,7 @@
 			if($rootScope.bsiUploader && $rootScope.bsiStep == 'two'){
 				$scope.stepTwo();
 				$("#upload-filelist").children().remove();
-				$("#uploading-filelist").children().remove();
+				$("#uploading-filelist").children(":not(:first)").remove();
 				$.each($rootScope.bsiUploader.files, function(index, item) {
 			    	var $fileDom = $('<li class="plupload_delete" id="' + item.id + '">');
 			        $fileDom.append($('<div class="plupload-file-name"><span>' + item.name + '</span></div>'));
@@ -42,7 +42,38 @@
 			        $fileDom.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
 			        $fileDom.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
 			        $("#upload-filelist").append($fileDom);
-			        var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
+			        handleStatus(item);
+			        var params = {"size":item.size,"lastModifiedDate":item.lastModifiedDate,"name":item.name};
+					if(box!=null){
+						$.get(box+"/box/checkBreakpoints",params,function(data){
+							if(data.data){
+								item.loaded = data.data;
+								$("#uploading-" + item.id +" .plupload-file-status").html((item.loaded/item.size).toFixed(2)*100+"%");
+							}
+						});
+					}
+			        $('#' + item.id + '.plupload_delete a').click(function(e) {
+			        	$('#' + item.id).remove();
+			        	$('#uploading-' + item.id).remove();
+			        	$rootScope.bsiUploader.removeFile(item);
+			        	e.preventDefault();
+			        	utils.stopBubble(e);
+			        	$scope.uploadTextType();
+			        });
+			        $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
+			        	$('#' + item.id).remove();
+			        	$('#uploading-' + item.id).remove();
+			        	$rootScope.bsiUploader.removeFile(item);
+			        	e.preventDefault();
+			        	utils.stopBubble(e);
+			        });
+		        });
+			}else if($rootScope.bsiUploader && $rootScope.bsiStep == 'three'){ // 在第三步
+				$scope.beginUpload();
+				$("#upload-filelist").children().remove();
+				$("#uploading-filelist").children(":not(:first)").remove();
+				$.each($rootScope.bsiUploader.files, function(index, item) {
+					var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
 			        $fileDom_uploading.append($('<div class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></div>'));
 			        $fileDom_uploading.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
 			        $fileDom_uploading.append($('<div class="plupload-file-surplus">_</div>'));
@@ -105,7 +136,7 @@
 		    $(".step-two").addClass("active");
 		    $scope.uploadTextType();
 		    // 如果不存在bsiUploader才去创建, 用于回显
-		    if(!$rootScope.bsiUploader){
+		    if($rootScope.bsiStep == 'one'){
 		    	initUploader();
 		    }
 		}
@@ -264,6 +295,9 @@
 			    	$(".step-three").removeClass("active");
 			    	$("#batch-info").val("")
 			    	uploader.splice();
+			    	$rootScope.bsiStep = "one";
+			    	$rootScope.bsiUploader.destroy();
+			    	$rootScope.bsiUploader = undefined;
 			    	$("#uploading-filelist .plupload_done").remove();
 			    	$("#upload-modal").modal("hide");
 			    });
@@ -279,15 +313,17 @@
 			});
 		}
 		$scope.beginUpload = function(){
-			if($rootScope.bsiUploader.files.length>0){
+			$(".step-three-content").removeClass("hide");
+    		$(".step-one-content").addClass("hide");
+    		$(".step-two-content").addClass("hide");
+    		$("#two-to-three").addClass("active");
+    		$(".step-two").addClass("active");
+    		$(".step-three").addClass("active");
+    		$("#tags-review").html($("#batch-info").val());
+			if($rootScope.bsiUploader.files.length>0 && $rootScope.bsiStep != 'three'){
 	    		$("#upload-filelist").html("");
 	    		$rootScope.bsiUploader.start();
-	    		$(".step-three-content").removeClass("hide");
-	    		$(".step-one-content").addClass("hide");
-	    		$(".step-two-content").addClass("hide");
-	    		$("#two-to-three").addClass("active");
-	    		$(".step-three").addClass("active");
-	    		$("#tags-review").html($("#batch-info").val());
+	    		$rootScope.bsiStep = 'three';
 	    		waveLoading.init({
 	    			haveInited: true,
 	    			target: document.querySelector('#upload-progress'),
