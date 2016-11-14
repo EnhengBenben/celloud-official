@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
-<div class="topbar-menu" ng-controller="bsiCommon">
+<div class="topbar-menu bsi" ng-controller="bsiCommon">
     <header class="common-menu">
         <div class="common-menu-logo">
             <img alt="百菌探" src="<%=request.getContextPath()%>/images/app/bsi.png">
