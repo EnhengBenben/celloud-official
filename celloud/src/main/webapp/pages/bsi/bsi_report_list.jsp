@@ -127,9 +127,9 @@
 				                <a ng-if="task.period == 2" ng-href="javascript:$.report.detail.patient('{{task.dataKey}}',{{task.projectId}},{{task.appId}},{{$index + 1}},{{pageList.page.currentPage}})">
 				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
 				                </a>
-				                <span ng-if="task.period != 2">
+				                <a ng-if="task.period != 2" ng-href="javascript:void(0)">
 				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
-				                </span>
+				                </a>
 				            </td>
 				            <td>
 				              <a ng-if="task.period == 0" href="javascript:void(0)">等待运行</a>
