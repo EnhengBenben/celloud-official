@@ -354,5 +354,5 @@ public interface DataService {
 	 * @param objectKey
 	 * @return
 	 */
-	public Integer addFile(Integer userId, String objectKey);
+	public Integer addAndRunFile(Integer userId, String objectKey);
 }

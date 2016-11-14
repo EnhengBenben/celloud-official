@@ -24,7 +24,6 @@ import com.celloud.model.mysql.OSSConfig;
 import com.celloud.service.DataService;
 import com.celloud.service.OSSConfigService;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.OSSUtils;
 
 /**
  * 
@@ -70,7 +69,7 @@ public class OssUploadAction {
 
 	@RequestMapping(value = "newfile")
 	public ResponseEntity<?> newfile(String objectKey) {
-		int dataId = dataService.addFile(ConstantsData.getLoginUserId(), objectKey);
+		int dataId = dataService.addAndRunFile(ConstantsData.getLoginUserId(), objectKey);
 		return dataId == 0 ? ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null) : ResponseEntity.ok(null);
 	}
 }

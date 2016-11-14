@@ -27,16 +27,20 @@ import com.celloud.model.mysql.DataFile;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
+import com.celloud.service.BoxApiService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExpensesService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.RunService;
 import com.celloud.service.TaskService;
+import com.celloud.utils.CheckFileTypeUtil;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.OSSUtils;
 import com.celloud.utils.PerlUtils;
+import com.celloud.utils.UploadPathUtils;
 
 /**
  * 数据管理服务实现类
@@ -60,6 +64,10 @@ public class DataServiceImpl implements DataService {
 	ExpensesService expenseService;
 	@Resource
 	ExperimentService expService;
+	@Resource
+	private RunService runService;
+	@Resource
+	private BoxApiService boxApiService;
 
 	@Override
 	public Integer countData(Integer userId) {
@@ -118,9 +126,9 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public PageList<DataFile> dataLists(Page page, Integer userId, String condition, int sort, String sortDateType,
-            String sortNameType, String sortAnotherName, String sortRun) {
+			String sortNameType, String sortAnotherName, String sortRun) {
 		List<DataFile> lists = dataFileMapper.findDataLists(page, userId, condition, sort, sortDateType, sortNameType,
-                DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE, sortAnotherName, sortRun);
+				DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE, sortAnotherName, sortRun);
 		return new PageList<>(page, lists);
 	}
 
@@ -367,7 +375,7 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public Integer addFile(Integer userId, String objectKey) {
+	public Integer addAndRunFile(Integer userId, String objectKey) {
 		Map<String, String> metadata = OSSUtils.getMetaData(objectKey);
 		long size = Long.parseLong(metadata.get("size"));
 		int tagId = Integer.parseInt(metadata.get("tagid"));
@@ -379,12 +387,22 @@ public class DataServiceImpl implements DataService {
 		data.setDataKey(fileDataKey);
 		data.setSize(size);
 		data.setBatch(metadata.get("batch"));
-		data.setMd5(metadata.get("md5"));
+		data.setMd5(metadata.get("etag").toLowerCase());
+		data.setFileName(name);
 		data.setState(DataState.ACTIVE);
 		data.setCreateDate(new Date());
 		data.setOssPath(objectKey);
 		data.setUserId(userId);
 		updateDataInfoByFileIdAndTagId(data, tagId);
+		String path = UploadPathUtils.getLocalPath(userId, fileDataKey, FileTools.getExtName(name));
+		boxApiService.downloadFromOSS(objectKey, path, data.getMd5());
+		data.setAnotherName(getAnotherName("", path, ""));
+		data.setPath(path);
+		int fileFormat = new CheckFileTypeUtil().checkFileType(new File(path).getName(), new File(path).getParentFile().getAbsolutePath());
+		data.setFileFormat(fileFormat);
+		dataFileMapper.updateByPrimaryKeySelective(data);
+		data = dataFileMapper.selectByPrimaryKey(dataId);
+		runService.rockyCheckRun(123, data);
 		return dataId;
 	}
 }
