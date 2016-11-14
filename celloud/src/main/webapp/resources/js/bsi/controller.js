@@ -1,5 +1,5 @@
 (function() {
-	celloudApp.controller("bsiCommon",function($rootScope){
+	celloudApp.controller("bsiCommon",function($scope, $rootScope){
 		$rootScope.sortIcon = function(params){
 		    if(params.sortDate=="asc"){
 		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
@@ -21,7 +21,47 @@
 		    }else{
 		    	$("#sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
 		    }
-	   }
+	    }
+		$scope.uploadPercent = 0;
+		// 上传
+		$scope.itemBtnToggleActive = function(){
+		    $("#common-menu .item-btn").removeClass("active");
+		    $("#to-upload-a").addClass("active");
+		}
+		$scope.toUpload = function(){
+			$scope.itemBtnToggleActive();
+		    if($(".plupload_filelist li").hasClass("plupload_droptext")){
+		      $("#batch-info").val("");
+		      $("#batch-div").removeClass("hide");
+		      $("#upload-content").addClass("upload-step-one");
+		    }
+		    $("#upload-modal").modal("show");
+		    if($scope.uploadPercent >= 100){
+		      waveLoading.setProgress(0);
+		      document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
+		    }
+		}
+		$scope.uploadTextType = function(){
+			if($("#uploading-filelist").children().length> 2){
+				$(".upload-text").addClass("hide");
+	        }else{
+	        	$(".upload-text").removeClass("hide");
+	        }
+		}
+		// 下一步按钮
+		$scope.nextStep = function(){
+			$(".step-one-content").addClass("hide");
+		    $(".step-two-content").removeClass("hide");
+		    $("#one-to-two").addClass("active");
+		    $(".step-two").addClass("active");
+		    $scope.uploadTextType();	
+		}
+		// 第一步输入标签的回车事件
+		$scope.batchInfo = function($event){
+			if ($event.keyCode == 13) {
+				$scope.nextStep();
+			}
+		}
 	}); 
 	celloudApp.controller("bsiReportController", function($scope, $rootScope, bsiService) {
 		$scope.params = {
