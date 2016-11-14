@@ -276,7 +276,7 @@
 			       }
 			    });
 			    $rootScope.bsiUploader = uploader;
-//			});
+			});
 		}
 		$scope.beginUpload = function(){
 			if($rootScope.bsiUploader.files.length>0){
