@@ -395,10 +395,12 @@ public class DataServiceImpl implements DataService {
 		data.setUserId(userId);
 		updateDataInfoByFileIdAndTagId(data, tagId);
 		String path = UploadPathUtils.getLocalPath(userId, fileDataKey, FileTools.getExtName(name));
+		//String path = ConstantsData.getOfsPath() + objectKey;
+		//data.setPath(path);
 		boxApiService.downloadFromOSS(objectKey, path, data.getMd5());
 		data.setAnotherName(getAnotherName("", path, ""));
-		data.setPath(path);
-		int fileFormat = new CheckFileTypeUtil().checkFileType(new File(path).getName(), new File(path).getParentFile().getAbsolutePath());
+		int fileFormat = new CheckFileTypeUtil().checkFileType(new File(path).getName(),
+				new File(path).getParentFile().getAbsolutePath());
 		data.setFileFormat(fileFormat);
 		dataFileMapper.updateByPrimaryKeySelective(data);
 		data = dataFileMapper.selectByPrimaryKey(dataId);

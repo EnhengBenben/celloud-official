@@ -1,5 +1,6 @@
 package com.celloud.constants;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -222,6 +223,17 @@ public class ConstantsData {
 			loadSystemProperties();
 		}
 		return systemProperties.getProperty("context_url");
+	}
+
+	public static String getOfsPath() {
+		if (systemProperties == null) {
+			loadSystemProperties();
+		}
+		String ofsPath = systemProperties.getProperty("ofsPath");
+		if (ofsPath != null && !ofsPath.endsWith(File.separatorChar + "")) {
+			ofsPath = ofsPath + File.separatorChar;
+		}
+		return ofsPath;
 	}
 
 	public static String getLocalIp() {
