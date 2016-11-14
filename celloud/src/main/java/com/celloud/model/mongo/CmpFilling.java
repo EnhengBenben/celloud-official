@@ -1,4 +1,3 @@
-/**  */
 package com.celloud.model.mongo;
 
 import java.util.List;
@@ -7,7 +6,7 @@ import java.util.Map;
 /**
  * CMP报告——用户填写部分
  * 
- * @author <a href="mailto:liuqingxiao@celloud.cn">liuqx</a>
+ * @author <a href="mailto:liuqingxiao@celloud.cn">leamo</a>
  * @date 2015-7-13下午1:37:58
  * @version Revision: 1.0
  */

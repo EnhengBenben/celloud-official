@@ -91,6 +91,10 @@ public class Response {
 		return new Response("210", "操作失败，原因未知！").setData(data);
 	}
 
+	public static Response FAILANDKNOWREASON(Object data) {
+		return new Response("210", "操作失败！").setData(data);
+	}
+
 	public static Response SUCCESS_SAVE(Object data) {
 		return new Response(true, "102", "保存成功！").setData(data);
 	}

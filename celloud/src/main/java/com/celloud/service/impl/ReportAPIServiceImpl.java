@@ -1,59 +1,80 @@
 package com.celloud.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.Calendar;
+import java.util.Date;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.bson.types.ObjectId;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
+import com.celloud.model.mysql.AccessKey;
+import com.celloud.model.mysql.Auth;
+import com.celloud.service.AccessKeyService;
+import com.celloud.service.AuthService;
 import com.celloud.service.ReportAPIService;
-import com.celloud.utils.MD5Util;
+import com.celloud.utils.APIUtils;
 
 @Service
 public class ReportAPIServiceImpl implements ReportAPIService {
 
-	private static final String celLoudId = "celloudId";
-	private static final String celLoudSecret = "celloudSecret";
+	@Resource
+	private AccessKeyService accessKeyService;
+	@Resource
+	private AuthService authService;
 
 	@Override
-	public Map<String, String> createAccount() {
-		Map<String, String> map = new HashMap<>();
-		String celloudId = getUUID();
-		String celloudSecret = getCelLoudSecret();
-		map.put(celLoudId, celloudId);
-		map.put(celLoudSecret, celloudSecret);
-		String token = getToken();
-		System.out.println(getUUID().length());
-		System.out.println(celloudId.length());
-		System.out.println(celloudSecret.length());
-		System.out.println(token.length());
-		System.out.println(getRefreshToken().length());
-		return map;
+	public AccessKey createAccount(Integer userId) {
+		String keyId = APIUtils.getCelLoudId();
+		String keySecret = APIUtils.getCelLoudSecret();
+		AccessKey accessKey = new AccessKey();
+		accessKey.setUserId(userId);
+		accessKey.setCreateDate(new Date());
+		accessKey.setKeyId(keyId);
+		accessKey.setKeySecret(keySecret);
+		accessKeyService.insertSelective(accessKey);
+		return accessKey;
 	}
 
-	private String getObjectId() {
-		return new ObjectId().toString();
+	@Override
+	public Auth getToken(String keyId, String keySecret) {
+		AccessKey accessKey = accessKeyService.selectByIdAndSecret(keyId, keySecret);
+		if (accessKey == null)
+			return null;
+		Calendar rightNow = Calendar.getInstance();
+		Date createDate = rightNow.getTime();
+		rightNow.add(Calendar.HOUR, 1);
+		Date tokenExpireDate = rightNow.getTime();
+		rightNow.add(Calendar.HOUR, 1);
+		Date refreshTokenExpireDate = rightNow.getTime();
+
+		String refreshToken = APIUtils.getRefreshToken();
+		String token = APIUtils.getToken();
+
+		Auth auth = new Auth();
+		auth.setAccessKeyId(accessKey.getId());
+		auth.setCreateDate(createDate);
+		auth.setToken(token);
+		auth.setTokenExpireDate(tokenExpireDate);
+		auth.setRefreshToken(refreshToken);
+		auth.setRefreshTokenExpireDate(refreshTokenExpireDate);
+		auth.setUserId(accessKey.getUserId());
+		authService.insertSelective(auth);
+		return auth;
 	}
 
-	private String getUUID() {
-		return UUID.randomUUID().toString().replace("-", "");
+	@Override
+	public Auth refreshToken(String refreshToken) {
+		Auth auth = authService.selectByRefreshToken(refreshToken);
+		if (auth == null)
+			return null;
+		Calendar rightNow = Calendar.getInstance();
+		rightNow.add(Calendar.HOUR, 1);
+		Date tokenExpireDate = rightNow.getTime();
+		rightNow.add(Calendar.HOUR, 1);
+		Date refreshTokenExpireDate = rightNow.getTime();
+		auth.setTokenExpireDate(tokenExpireDate);
+		auth.setRefreshTokenExpireDate(refreshTokenExpireDate);
+		authService.updateByPrimaryKeySelective(auth);
+		return auth;
 	}
-
-
-	private String getCelLoudSecret() {
-		return DigestUtils.sha1Hex(DigestUtils.sha512Hex(getUUID()));
-	}
-
-	private String getToken() {
-		String base = getUUID() + getCelLoudSecret();
-		return DigestUtils.sha256Hex(DigestUtils.sha1Hex(base));
-	}
-
-	private String getRefreshToken() {
-		String base = getObjectId() + getCelLoudSecret();
-		return DigestUtils.sha1Hex(MD5Util.getMD5(base));
-	}
-
 }

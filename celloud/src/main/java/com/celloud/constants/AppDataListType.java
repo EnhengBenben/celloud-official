@@ -22,8 +22,13 @@ public class AppDataListType {
 	public static final List<Integer> FASTQ_PATH = Arrays.asList(110, 111, 112, 114, 118, 123, 126, 127, 128);
 
 	/**
-	 * split
-	 */
+     * 两对fastq文件 ...(A/B)_(R1/R2).fastq
+     */
+    public static final List<Integer> AB_FASTQ_PATH = Arrays.asList(131);
+
+    /**
+     * split
+     */
 	public static final List<Integer> SPLIT = Arrays.asList(113);
 
 	/**
@@ -35,7 +40,7 @@ public class AppDataListType {
 	 * path and name
 	 */
 	public static final List<Integer> PATH_AND_NAME = Arrays.asList(11, 80, 85, 87, 88, 91, 94, 104, 109, 116, 119, 120,
-			121, 122, 124, 125, 129);
+            121, 122, 124, 125, 129, 130);
 
 	/**
 	 * 调用封装的API运行

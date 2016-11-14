@@ -1,0 +1,11 @@
+<div class="foot">
+    <br/><br/>
+    <table class="footTable">
+        <tr>
+            <td style="width: 22%;"><div style="float:left;">检测:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['detection']" value="$!{pgs.baseInfo.detection}" type="text"></div></td>
+            <td style="width: 22%;"><div style="float:left;">核对:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['review']" value="$!{pgs.baseInfo.review}" type="text"></div></td>
+            <td style="width: 28%;"><div style="float:left;">报告签发:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><input style="width:100%;" name="baseInfo['reportIssue']" value="$!{pgs.baseInfo.reportIssue}" type="text"></div></td>
+            <td style="width: 28%;"><div style="float:left;">报告日期:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:63%;"><input style="width:100%;" name="baseInfo['reportDate']" value="$!{pgs.baseInfo.reportDate}" type="text"></div></td>
+        </tr>  
+    </table>
+</div>

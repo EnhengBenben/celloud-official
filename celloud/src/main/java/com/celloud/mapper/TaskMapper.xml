@@ -335,13 +335,13 @@
 		and state=#{state}
 	</select>
 	<select id="findTaskInfoByProId" resultType="map" parameterType="java.lang.Integer">
-		select t.app_id appId,t.user_id userId,a.title,a.method,a.app_name
+		select t.app_id appId,t.user_id userId,t.params,a.title,a.method,a.app_name
 		appName,u.username,u.email
 		from tb_task t left join tb_app a on
 		t.app_id=a.app_id left join tb_user u
 		on t.user_id=u.user_id
 		where
-		project_id=#{projectId} group by project_id;
+		project_id=#{projectId} group by project_id
 	</select>
 	<update id="updatePeriodByProAndData">
 		update tb_task
@@ -494,27 +494,28 @@
 		left join tb_sample s
 		on
 		s.sample_id=t.sample_id
-		where 1=1
-		<if test="condition != null">
-			and (file_name like '%${condition}%' or f.batch like
-			'%${condition}%' or
-			s.sample_name like '%${condition}%')
-		</if>
-		<if test="batch != null and batch != ''">
-			and f.batch in (${batch})
-		</if>
-		<if test="period != null and period != ''">
-			and t.period in (${period})
-		</if>
-		<if test="beginDate != null and beginDate != ''">
-			and t.update_date &gt;= '${beginDate} 00:00:00'
-		</if>
-		<if test="endDate != null and endDate != ''">
-			and t.update_date &lt;= '${endDate} 23:59:59'
-		</if>
-		<if test="sampleName != null and sampleName != ''">
-			and s.sample_name like '%${sampleName}%'
-		</if>
+		<where>
+            <if test="condition != null">
+	            and (file_name like '%${condition}%' or f.batch like
+	            '%${condition}%' or
+	            s.sample_name like '%${condition}%')
+	        </if>
+	        <if test="batch != null and batch != ''">
+	            and f.batch in (${batch})
+	        </if>
+	        <if test="period != null and period != ''">
+	            and t.period in (${period})
+	        </if>
+	        <if test="beginDate != null and beginDate != ''">
+	            and t.update_date &gt;= '${beginDate} 00:00:00'
+	        </if>
+	        <if test="endDate != null and endDate != ''">
+	            and t.update_date &lt;= '${endDate} 23:59:59'
+	        </if>
+	        <if test="sampleName != null and sampleName != ''">
+	            and s.sample_name like '%${sampleName}%'
+	        </if>
+        </where>
 		<if test="sort == 0">
 			order by t.update_date ${sortDate},f.batch
 			${sortBatch},f.file_name

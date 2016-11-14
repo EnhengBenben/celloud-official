@@ -237,6 +237,14 @@
       templateUrl: "pages/rocky/rocky_report.jsp",
       controller: "rockyReportController"
     })
+    .when('/product/bsi/bsireport',{
+      templateUrl: "pages/bsi/bsi_report_list.jsp",
+      controller: "bsiReportController"
+    })
+    .when('/product/bsi/bsidata',{
+      templateUrl: "pages/bsi/bsi_data.jsp",
+      controller: "bsiDataController"
+    })
     .when('/company/user',{
 	  templateUrl: "pages/company/company_user.jsp",
       controller: "companyUserController"

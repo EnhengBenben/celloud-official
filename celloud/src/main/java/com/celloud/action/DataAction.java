@@ -196,22 +196,38 @@ public class DataAction {
 	 * @return
 	 */
 	@ActionLog(value = "条件检索bsi数据列表", button = "我的搜索/分页")
-    @RequestMapping("bsiDataList")
-    public ModelAndView bsiDataList(
+    @RequestMapping("bsi/dataPageQuery")
+    @ResponseBody
+    public Map<String, Object> bsiDataPageQuery(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "20") Integer size, String condition,
             @RequestParam(defaultValue = "0") Integer sort,
 			@RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
 			@RequestParam(defaultValue = "asc") String sortName) {
-		ModelAndView mv = new ModelAndView("bsi/data_list");
+        logger.info("用户 {} 根据条件检索数据列表", ConstantsData.getLoginUserId());
+        Map<String, Object> dataMap = new HashMap<String, Object>();
 		Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataListByAppId(pager,
                 ConstantsData.getLoginUserId(), IconConstants.APP_ID_BSI,
                 condition, sort, sortDate, sortName, sortBatch);
-		mv.addObject("pageList", dataList);
-		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
-		return mv;
+        dataMap.put("pageList", dataList);
+        return dataMap;
 	}
+
+    @ActionLog(value = "条件检索bsi数据列表", button = "我的搜索/分页")
+    @RequestMapping("bsiDataList")
+    public ModelAndView bsiDataList(@RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "20") Integer size, String condition,
+            @RequestParam(defaultValue = "0") Integer sort, @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch, @RequestParam(defaultValue = "asc") String sortName) {
+        ModelAndView mv = new ModelAndView("bsi/data_list");
+        Page pager = new Page(page, size);
+        PageList<DataFile> dataList = dataService.dataListByAppId(pager, ConstantsData.getLoginUserId(),
+                IconConstants.APP_ID_BSI, condition, sort, sortDate, sortName, sortBatch);
+        mv.addObject("pageList", dataList);
+        logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/bsiDataList")

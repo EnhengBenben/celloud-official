@@ -5,7 +5,7 @@
 		<HOST>140.206.208.50</HOST>
 		<PORT>22</PORT>
 		<USERNAME>celloud</USERNAME>
-		<PWD>CelLoud@nova</PWD>
+		<PWD>root@CelLoud_2016</PWD>
 	</machine>
 	<machine>
 		<NAME>spark</NAME>

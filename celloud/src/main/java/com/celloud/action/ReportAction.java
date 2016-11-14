@@ -44,6 +44,7 @@ import com.celloud.constants.IconConstants;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.ABINJ;
+import com.celloud.model.mongo.AccuSeqα2;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
@@ -283,37 +284,53 @@ public class ReportAction {
 		return map;
 	}
 
-	/**
-	 * 用于 ModelAndView 加载CMP信息
-	 * 
-	 * @param path
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author leamo
-	 * @date 2016年1月18日 上午11:13:31
-	 */
-	private ModelAndView getCMPModelAndView(String path, String dataKey, Integer projectId, Integer appId) {
-		CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId, appId);
-		ModelAndView mv = getModelAndView(path, projectId);
-		return mv.addObject("cmpReport", cmpReport);
-	}
+    /**
+     * 获取AccuSeqα2数据报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @author leamo
+     * @date 2016年11月10日 下午2:31:58
+     */
+    @ActionLog(value = "查看AccuSeqα2数据报告", button = "数据报告")
+    @RequestMapping("getAccuSeqα2Info")
+    @ResponseBody
+    public Map<String, Object> getAccuSeqα2Info(String dataKey,
+            Integer projectId, Integer appId) {
+        AccuSeqα2 accuSeqα2 = reportService.getAccuSeqα2Report(dataKey,
+                projectId, appId);
+        Map<String, Object> map = getCommonInfo(projectId);
+        map.put("accuSeqα2", accuSeqα2);
+        return map;
+    }
 
-	/**
-	 * 获取 CMP 报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @date 2016-1-10 下午10:57:24
-	 */
-	@ActionLog(value = "查看CMP数据报告", button = "数据报告")
-	@RequestMapping("getCMPReport")
-	public ModelAndView getCMPReport(String dataKey, Integer projectId, Integer appId) {
-		return getCMPModelAndView("report/report_data_cmp", dataKey, projectId, appId);
-	}
+    /**
+     * 打印 AccuSeqα2详细报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @author leamo
+     * @date 2016年11月10日 下午2:32:30
+     */
+    @ActionLog(value = "打印 AccuSeqα2详细报告", button = "打印报告")
+    @RequestMapping("printMoreAccuSeqα2Report")
+    @ResponseBody
+    public void printMoreAccuSeqα2Report(String dataKey, Integer projectId,
+            Integer appId) {
+        String path = ConstantsData.getLoginCompanyId() + "/" + appId
+                + "print_more.vm";
+        if (ReportAction.class
+                .getResource("/templates/report/" + path) == null) {
+            path = "default/" + appId + "/print_more.vm";
+        }
+        Map<String, Object> context = new HashMap<String, Object>();
+        context.put("cmpReport",
+                reportService.getAccuSeqα2Report(dataKey, projectId, appId));
+        returnToVelocity(path, context, projectId);
+    }
 
 	/**
 	 * 
@@ -382,21 +399,6 @@ public class ReportAction {
 		CmpReport cmpReport = reportService.getCMPReport(dataKey, projectId, appId);
 		context.put("cmpReport", cmpReport);
 		returnToVelocity(path, context, projectId);
-	}
-
-	/**
-	 * 获取 GDD 报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @date 2016-1-10 下午10:57:13
-	 */
-	@ActionLog(value = "查看GDD数据报告", button = "数据报告")
-	@RequestMapping("getGDDReport")
-	public ModelAndView getGDDReport(String dataKey, Integer projectId, Integer appId) {
-		return getCMPModelAndView("report/report_data_gdd", dataKey, projectId, appId);
 	}
 
 	/**
@@ -619,38 +621,6 @@ public class ReportAction {
 	}
 
 	/**
-	 * 用于 ModelAndView 加载split信息
-	 * 
-	 * @param path
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author leamo
-	 * @date 2016年1月17日 下午1:10:57
-	 */
-	private ModelAndView getSplitModelAndView(String path, String dataKey, Integer projectId, Integer appId) {
-		Split split = reportService.getSplitReport(dataKey, projectId, appId);
-		ModelAndView mv = getModelAndView(path, projectId);
-		return mv.addObject("split", split);
-	}
-
-	/**
-	 * 获取 Split 数据报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @date 2016-1-10 下午10:44:45
-	 */
-	@ActionLog(value = "查看split数据报告", button = "数据报告")
-	@RequestMapping("getSplitReport")
-	public ModelAndView getSplitReport(String dataKey, Integer projectId, Integer appId) {
-		return getSplitModelAndView("report/report_data_split", dataKey, projectId, appId);
-	}
-
-	/**
 	 * 获取 Split 数据报告
 	 * 
 	 * @param dataKey
@@ -693,33 +663,6 @@ public class ReportAction {
 		returnToVelocity(path, context, projectId);
 	}
 
-	/**
-	 * 用于 ModelAndView 加载MIB信息
-	 * 
-	 * @param path
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @author leamo
-	 * @date 2016年1月17日 下午1:10:57
-	 */
-	private ModelAndView getMIBModelAndView(String path, String dataKey, Integer projectId, Integer appId) {
-		MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
-		Map<String, JSONArray> mibCharList = new HashMap<>();
-		ModelAndView mv = getModelAndView(path, projectId);
-		if (mib == null)
-			return mv;
-		if (mib.getReadsDistributionInfo() != null && mib.getReadsDistributionInfo().size() > 0)
-			mibCharList.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
-		if (mib.getFamilyDistributionInfo() != null && mib.getFamilyDistributionInfo().size() > 0)
-			mibCharList.put("familyDistributionInfo", JSONArray.fromObject(mib.getFamilyDistributionInfo()));
-		if (mib.getGenusDistributionInfo() != null && mib.getGenusDistributionInfo().size() > 0)
-			mibCharList.put("genusDistributionInfo", JSONArray.fromObject(mib.getGenusDistributionInfo()));
-		mv.addObject("mibCharList", mibCharList);
-		return mv.addObject("mib", mib);
-	}
-
 	@RequestMapping("getMIBReportInfo")
 	@ResponseBody
 	public Map<String, Object> getMIBReportInfo(String dataKey, Integer projectId, Integer appId) {
@@ -734,21 +677,6 @@ public class ReportAction {
 		map.put("mib", mib);
 		map.put("uploadPath", "/upload/");
 		return map;
-	}
-
-	/**
-	 * 获取 MIB 的数据报告
-	 * 
-	 * @param dataKey
-	 * @param projectId
-	 * @param appId
-	 * @return
-	 * @date 2016-1-10 下午10:40:40
-	 */
-	@ActionLog(value = "查看MIB数据报告", button = "数据报告")
-	@RequestMapping("getMIBReport")
-	public ModelAndView getMIBReport(String dataKey, Integer projectId, Integer appId) {
-		return getMIBModelAndView("report/report_data_mib", dataKey, projectId, appId);
 	}
 
 	/**
@@ -1928,7 +1856,19 @@ public class ReportAction {
 	public void printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
 		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
 		// 涉及共享，此处不能取登陆者的companyId
-		String path = pgs.getCompanyId() + "/PGS/print.vm";
+        String path = null;
+        // 如果是上海国妇婴医院就判断report.txt中的内容
+        if (pgs.getCompanyId().intValue() == 949) {
+            String report = pgs.getReport() != null ? pgs.getReport().trim() : null;
+            // 只包含XY或者XX, 代表正常
+            if ("XY".equals(report) || ("XX").equals(report)) {
+                path = pgs.getCompanyId() + "/PGS/normal_print.vm";
+            } else { // 有突变
+                path = pgs.getCompanyId() + "/PGS/abnormal_print.vm";
+            }
+        } else {
+            path = pgs.getCompanyId() + "/PGS/print.vm";
+        }
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/PGS/print.vm";
 		}
@@ -3578,22 +3518,6 @@ public class ReportAction {
 		}
 	}
 
-    @ActionLog(value = "打开报告列表", button = "百菌探报告")
-    @RequestMapping("bsi/reportMain")
-    public ModelAndView reportMain() {
-        ModelAndView mv = new ModelAndView("bsi/report_main");
-        Integer userId = ConstantsData.getLoginUserId();
-        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118,
-                userId);
-        List<String> batchList = dataService.getBatchList(userId);
-        periodMap.put("uploaded", batchList.size());
-        mv.addObject("periodMap", periodMap);
-        mv.addObject("batchList", batchList);
-        mv.addObject("nowDate", new Date());
-        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
-        return mv;
-    }
-
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/bsi/reportMain")
     public ModelAndView reportMain1() {
@@ -3781,6 +3705,21 @@ public class ReportAction {
 		return map;
 	}
 
+    @ActionLog(value = "打开报告列表", button = "百菌探报告")
+    @RequestMapping("bsi/reportMain")
+    public ModelAndView reportMain() {
+        ModelAndView mv = new ModelAndView("bsi/report_main");
+        Integer userId = ConstantsData.getLoginUserId();
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+        List<String> batchList = dataService.getBatchList(userId);
+        periodMap.put("uploaded", batchList.size());
+        mv.addObject("periodMap", periodMap);
+        mv.addObject("batchList", batchList);
+        mv.addObject("nowDate", new Date());
+        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
+
 	/**
 	 * 根据条件获取数据列表
 	 * 
@@ -3820,6 +3759,60 @@ public class ReportAction {
 		log.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
 		return mv;
 	}
+
+    /**
+     * 
+     * @description 整合bsi的分页查询
+     * @author miaoqi
+     * @date 2016年11月9日上午11:26:12
+     *
+     * @param page
+     * @param size
+     * @param condition
+     * @param sort
+     * @param sortDate
+     * @param sortBatch
+     * @param sortName
+     * @param sortPeriod
+     * @param batch
+     * @param period
+     * @param beginDate
+     * @param endDate
+     * @param sampleName
+     * @return
+     */
+    @ActionLog(value = "条件检索任务列表", button = "报告搜索/分页")
+    @RequestMapping("bsi/reportPageQuery")
+    @ResponseBody
+    public Map<String, Object> bsiReportPageQuery(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
+            String batch, String period, String beginDate, String endDate, String sampleName) {
+        log.info("用户 {} 根据条件检索数据列表", ConstantsData.getLoginUserName());
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        Integer userId = ConstantsData.getLoginUserId();
+        // 封装结果map
+        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+        List<String> batchList = dataService.getBatchList(userId);
+        periodMap.put("uploaded", batchList.size());
+        map.put("periodMap", periodMap);
+        map.put("batchList", batchList);
+        map.put("nowDate", new Date());
+        Page pager = new Page(page, size);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod, batch, period, beginDate, endDate, 118, sampleName);
+        map.put("pageList", pageList);
+        return map;
+    }
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/bsi/searchReportList")
