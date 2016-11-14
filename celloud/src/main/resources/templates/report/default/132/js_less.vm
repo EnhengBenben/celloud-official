@@ -1,0 +1,32 @@
+<script type="text/javascript">
+$(function(){
+
+    $("#save").hide();
+    $("#reset").hide();
+
+    var url = window.location.href.split("print")[0];
+    var sex = $("#men").prop("checked");
+    
+    $("#print").on("click",function(){
+        var inputVal;
+        var textareaVal;
+        var classname;
+        var cmpDrug = "";
+        $("#print").hide();
+        window.print();
+        $("#print").show();
+        $("#change").show();
+    });
+    
+});
+
+function radioClick(num){
+    if(num==0){
+        $("#men").attr("checked","checked");
+        $("#women").removeAttr("checked");
+    }else{
+        $("#women").attr("checked","checked");
+        $("#men").removeAttr("checked");
+    }
+};
+</script>
