@@ -107,4 +107,9 @@ public class CompanyServiceImpl implements CompanyService {
         return companyMapper.getComanyList(DataState.ACTIVE);
     }
 
+	@Override
+	public List<Company> getAllCompanyHaveApp() {
+		return companyMapper.getAllCompanyHaveApp();
+	}
+
 }

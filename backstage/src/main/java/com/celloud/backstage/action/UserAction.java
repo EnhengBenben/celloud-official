@@ -64,8 +64,10 @@ public class UserAction {
     public ModelAndView toSendEmail(){
         ModelAndView mv=new ModelAndView("user/user_sendEmail");
         List<Company> companyList=companyService.getAllCompany();
+		List<Company> companyAppList = companyService.getAllCompanyHaveApp();
         List<App> appPublicList=appService.getAppListPulbicAdded();
         mv.addObject("companyList", companyList);
+		mv.addObject("companyAppList", companyAppList);
         mv.addObject("publicApp", appPublicList);
         return mv;
     }

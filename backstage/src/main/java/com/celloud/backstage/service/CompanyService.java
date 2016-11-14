@@ -32,5 +32,14 @@ public interface CompanyService {
      * @date 2016年1月27日 下午2:49:23
      */
     public List<Company> getAllCompany();
+
+	/**
+	 * 获取所有拥有APP的公司
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年11月14日下午2:05:15
+	 */
+	public List<Company> getAllCompanyHaveApp();
     
 }

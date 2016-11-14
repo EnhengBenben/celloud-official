@@ -38,4 +38,13 @@ public interface CompanyMapper {
     
     public Company getCompanyById(@Param("companyId") int companyId,@Param("state") int state);
     
+	/**
+	 * 获取所有拥有APP的公司
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年11月14日下午2:06:02
+	 */
+	public List<Company> getAllCompanyHaveApp();
+
 }

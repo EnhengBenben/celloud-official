@@ -13,7 +13,7 @@
                <div class="col-sm-10">
 	               <select class="form-control" name="appCompanyId" onchange="user.changeAppCompany(this,'email-appIds')">
 	                  <option value=''>--请选择--</option>
-	                   <c:forEach items="${companyList }" var="company">
+	                   <c:forEach items="${companyAppList }" var="company">
 	                       <option value="${company.companyId }" >${company.companyName }</option>
 	                   </c:forEach>
 	               </select>
