@@ -1179,8 +1179,15 @@
 		  });
 	  });
   });
-  
-  
+  celloudApp.controller("accuseqα2DataReportController", function($scope, $routeParams, dataReportService){
+    dataReportService.getDataReportInfo("report/getAccuSeqα2Info",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+    success(function(info){
+      $scope.accuSeqα2 = info.accuSeqα2;
+      $scope.project = info.project;
+      $scope.uploadPath = info.uploadPath;
+      dataInPro($scope.accuSeqα2, $scope.project.projectId, $scope.project.projectName);
+    });
+  });
   
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     $scope.companyId = companyId;
