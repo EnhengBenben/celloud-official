@@ -790,6 +790,7 @@ public class ReportAction {
             @RequestParam(defaultValue = "asc") String sortBatch, @RequestParam(defaultValue = "asc") String sortName,
             @RequestParam(defaultValue = "asc") String sortPeriod, String batch, String period, String beginDate,
             String endDate, String sampleName) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
         StringBuffer con_sb = new StringBuffer();
@@ -802,7 +803,6 @@ public class ReportAction {
         PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod, batch, period, beginDate, endDate, appId, sampleName);
 
-        Map<String, Object> dataMap = new HashMap<String, Object>();
         BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
         Map<String, List<List<String>>> mibCharList = new HashMap<>();
         if (bsi == null)
@@ -810,18 +810,20 @@ public class ReportAction {
         mibCharList.put("readsDistributionInfo", bsi.getReadsDistributionInfo());
         mibCharList.put("familyDistributionInfo", bsi.getFamilyDistributionInfo());
         mibCharList.put("genusDistributionInfo", bsi.getGenusDistributionInfo());
-        // mibCharList.put("readsDistributionInfo",
-        // JSONArray.fromObject(bsi.getReadsDistributionInfo()));
-        // mibCharList.put("familyDistributionInfo",
-        // JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
-        // mibCharList.put("genusDistributionInfo",
-        // JSONArray.fromObject(bsi.getGenusDistributionInfo()));
         dataMap.put("bsiCharList", mibCharList);
         dataMap.put("bsi", bsi);
 
         DataFile df = dataService.getDataByKey(dataKey);
         dataMap.put("pageList", pageList);
         dataMap.put("data", df);
+
+        // 获取右侧列表
+        Page batchPager = new Page(page, size);
+        PageList<Task> batchPageList = taskService.findTasksByBatch(batchPager, ConstantsData.getLoginUserId(), appId,
+                df.getBatch());
+        dataMap.put("batchPageList", batchPageList);
+        log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
+
         return dataMap;
     }
 
@@ -902,6 +904,60 @@ public class ReportAction {
 		}
 
 	}
+
+    @ActionLog(value = "查看BSI患者报告", button = "数据报告")
+    @RequestMapping("getPrevOrNextBSIReportInfo")
+    @ResponseBody
+    public Map<String, Object> getPrevOrNextBSIReportInfo(@RequestParam(defaultValue = "1") int page, String condition,
+            @RequestParam(defaultValue = "0") int totalPage, @RequestParam(defaultValue = "0") int sort,
+            @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+            @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
+            Boolean isPrev, String batch, String period, String beginDate, String endDate, String sampleName) {
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        Page pager = new Page(page, 1);
+        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod, isPrev, totalPage, batch, period, beginDate, endDate,
+                118, sampleName);
+        if (pageList != null) {
+            List<Task> list = pageList.getDatas();
+            if (list != null) {
+                Task task = list.get(0);
+                if (task != null) {
+                    Map<String, Object> dataMap = new HashMap<String, Object>();
+                    String dataKey = task.getDataKey();
+                    BSI bsi = reportService.getBSIReport(dataKey, task.getProjectId(), task.getAppId());
+                    Map<String, List<List<String>>> mibCharList = new HashMap<>();
+                    dataMap.put("uploadPath", "/upload/");
+                    Project project = projectService.selectByPrimaryKey(task.getProjectId());
+                    dataMap.put("project", project);
+
+                    dataMap.put("readsDistributionInfo", bsi.getReadsDistributionInfo());
+                    dataMap.put("familyDistributionInfo", bsi.getFamilyDistributionInfo());
+                    mibCharList.put("genusDistributionInfo", bsi.getGenusDistributionInfo());
+                    dataMap.put("bsiCharList", mibCharList);
+                    dataMap.put("bsi", bsi);
+                    DataFile df = dataService.getDataByKey(dataKey);
+                    dataMap.put("data", df);
+                    dataMap.put("pageList", pageList);
+                    return dataMap;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+    }
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/getPrevOrNextBSIReport")

@@ -1,37 +1,12 @@
 (function() {
-	celloudApp.controller("bsiCommon",function($scope, $rootScope){
-		
-		$scope.box = null;
-		
-		$rootScope.sortIcon = function(params){
-		    if(params.sortDate=="asc"){
-		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortBatch=="asc"){
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortName=="asc"){
-		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortPeriod=="asc"){
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-	    }
+	celloudApp.controller("bsiFileUpload",function($scope, $rootScope){
 		$scope.uploadPercent = 0;
 		//  ============================上传============================
 		$scope.itemBtnToggleActive = function(){
 		    $("#common-menu .item-btn").removeClass("active");
 		    $("#to-upload-a").addClass("active");
 		}
-		$scope.stepOne = function(){
+		$rootScope.bsiStepOne = function(){
 			$scope.itemBtnToggleActive();
 			// 判断是否在第二步, 进行回显
 			if($rootScope.bsiUploader && $rootScope.bsiStep == 'two'){
@@ -142,10 +117,7 @@
 			      document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
 			    }
 			}
-			$("#upload-modal").modal("show");
-//			if($rootScope.bsiUploader && $rootScope.bsiStep != 'one'){
-//				$rootScope.bsiUploader.setOption("browse_button" , ['plupload-content','upload-more']);
-//			}
+			$("#bsi-upload-modal").modal("show");
 		}
 		$scope.uploadTextType = function(){
 			if($("#upload-filelist").children().length> 2){
@@ -198,7 +170,7 @@
 //				var uploadUrl = "../uploadFile/uploadManyFile";
 				var uploader = new plupload.Uploader({
 					runtimes : 'html5,flash,silverlight,html4',
-					browse_button : ['plupload-content','upload-more'],
+					browse_button : ['bsi-plupload-content','bsi-upload-more'],
 					url :uploadUrl,
 					// Maximum file size
 					chunk_size : '1mb',
@@ -329,7 +301,7 @@
 			    	$rootScope.bsiUploader.destroy();
 			    	$rootScope.bsiUploader = undefined;
 			    	$("#uploading-filelist .plupload_done").remove();
-			    	$("#upload-modal").modal("hide");
+			    	$("#bsi-upload-modal").modal("hide");
 			    });
 			    uploader.bind("BeforeUpload", function(uploader, file) {
 			    	uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
@@ -351,6 +323,7 @@
     		$(".step-two").addClass("active");
     		$(".step-three").addClass("active");
     		$("#tags-review").html($rootScope.bsiBatch);
+    		console.log("33333:" + $rootScope.bsiUploader.files.length);
 			if($rootScope.bsiUploader.files.length>0 && $rootScope.bsiStep != 'three'){
 	    		$("#upload-filelist").html("");
 	    		$rootScope.bsiUploader.start();
@@ -426,6 +399,35 @@
 	    		icon.attr('title', file.hint);  
 	    	}
 	    }
+	})
+	
+	celloudApp.controller("bsiCommon",function($scope, $rootScope){
+		
+		$scope.box = null;
+		
+		$rootScope.sortIcon = function(params){
+		    if(params.sortDate=="asc"){
+		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if(params.sortBatch=="asc"){
+		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if(params.sortName=="asc"){
+		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if(params.sortPeriod=="asc"){
+		    	$("#sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		    	$("#sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+	    }
+		
 	});
 	celloudApp.controller("bsiReportDataController",function($scope, $rootScope, $routeParams, bsiService){
 		var params = {
@@ -448,14 +450,17 @@
 			$scope.bsiCharList = dataMap.bsiCharList;
 			$scope.bsi = dataMap.bsi;
 			$scope.pageList = dataMap.pageList;
-			$scope.data = $scope.data;
+			$scope.batchPageList = dataMap.batchPageList;
+			$scope.data = dataMap.data;
 			
 			$scope.tab = 'patient';
 		    var havestrain = "";
-		    for(var i=0;i<$scope.bsi.species_20.length;i++){
-		        havestrain += $scope.bsi.species_20[i].species_zh + ",";
+		    if($scope.bsi.species_20){
+		    	for(var i=0;i<$scope.bsi.species_20.length;i++){
+			        havestrain += $scope.bsi.species_20[i].species_zh + ",";
+			    }
+			    $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		    }
-		    $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		    $scope.getRowspan = function(val1, val2, val3){
 		  	    var val0 = 1;
 		  	    if(val1 != null){
@@ -469,6 +474,28 @@
 		  	    }
 		  	    return val0;
 		    }
+		    $scope.reportPrev = function(currentPage){
+				if(currentPage > 1){
+					var options = $rootScope.bsiReportParams;
+					$.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+						if(response != null &&response !=""){
+							$("#container").html(response);
+						}
+					});
+				}
+			}
+			$scope.reportNext = function(currentPage){
+				var totalPage = $("#total-page-hide").val();
+				currentPage = parseInt(currentPage);
+				if(currentPage < totalPage){
+					var options = $rootScope.bsiReportParams;
+					$.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+						if(response != null &&response !=""){
+							$("#container").html(response);
+						}
+					});
+				}
+			}
 		});
 	});
 	celloudApp.controller("bsiReportController", function($scope, $rootScope, bsiService) {
@@ -767,29 +794,6 @@
 			$("#run-error-data").html(dataName);
 			$("#running-error-modal").modal("show");
 		}
-		$scope.reportPrev = function(currentPage){
-			if(currentPage > 1){
-				var options = $rootScope.bsiReportParams;
-				$.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
-					if(response != null &&response !=""){
-						$("#container").html(response);
-					}
-				});
-			}
-		}
-		$scope.reportNext = function(currentPage){
-			var totalPage = $("#total-page-hide").val();
-			currentPage = parseInt(currentPage);
-			if(currentPage < totalPage){
-				var options = $rootScope.bsiReportParams;
-				$.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
-					if(response != null &&response !=""){
-						$("#container").html(response);
-					}
-				});
-			}
-		}
-		
 //		$("#condition-find").unbind("click");
 //        $("#condition-find").on("click",function(){
 //          $.report.options.condition = $("#condition-input").val();
