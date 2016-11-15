@@ -1,5 +1,8 @@
 (function() {
 	celloudApp.controller("bsiCommon",function($scope, $rootScope){
+		
+		$scope.box = null;
+		
 		$rootScope.sortIcon = function(params){
 		    if(params.sortDate=="asc"){
 		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
@@ -32,7 +35,6 @@
 			$scope.itemBtnToggleActive();
 			// 判断是否在第二步, 进行回显
 			if($rootScope.bsiUploader && $rootScope.bsiStep == 'two'){
-				$scope.stepTwo();
 				$("#upload-filelist").children().remove();
 				$("#uploading-filelist").children(":not(:first)").remove();
 				$.each($rootScope.bsiUploader.files, function(index, item) {
@@ -42,38 +44,7 @@
 			        $fileDom.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
 			        $fileDom.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
 			        $("#upload-filelist").append($fileDom);
-			        handleStatus(item);
-			        var params = {"size":item.size,"lastModifiedDate":item.lastModifiedDate,"name":item.name};
-					if(box!=null){
-						$.get(box+"/box/checkBreakpoints",params,function(data){
-							if(data.data){
-								item.loaded = data.data;
-								$("#uploading-" + item.id +" .plupload-file-status").html((item.loaded/item.size).toFixed(2)*100+"%");
-							}
-						});
-					}
-			        $('#' + item.id + '.plupload_delete a').click(function(e) {
-			        	$('#' + item.id).remove();
-			        	$('#uploading-' + item.id).remove();
-			        	$rootScope.bsiUploader.removeFile(item);
-			        	e.preventDefault();
-			        	utils.stopBubble(e);
-			        	$scope.uploadTextType();
-			        });
-			        $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
-			        	$('#' + item.id).remove();
-			        	$('#uploading-' + item.id).remove();
-			        	$rootScope.bsiUploader.removeFile(item);
-			        	e.preventDefault();
-			        	utils.stopBubble(e);
-			        });
-		        });
-			}else if($rootScope.bsiUploader && $rootScope.bsiStep == 'three'){ // 在第三步
-				$scope.beginUpload();
-				$("#upload-filelist").children().remove();
-				$("#uploading-filelist").children(":not(:first)").remove();
-				$.each($rootScope.bsiUploader.files, function(index, item) {
-					var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
+			        var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
 			        $fileDom_uploading.append($('<div class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></div>'));
 			        $fileDom_uploading.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
 			        $fileDom_uploading.append($('<div class="plupload-file-surplus">_</div>'));
@@ -83,8 +54,8 @@
 			        $("#uploading-filelist").append($fileDom_uploading);
 			        handleStatus(item);
 			        var params = {"size":item.size,"lastModifiedDate":item.lastModifiedDate,"name":item.name};
-					if(box!=null){
-						$.get(box+"/box/checkBreakpoints",params,function(data){
+					if($scope.box!=null){
+						$.get($scope.box+"/box/checkBreakpoints",params,function(data){
 							if(data.data){
 								item.loaded = data.data;
 								$("#uploading-" + item.id +" .plupload-file-status").html((item.loaded/item.size).toFixed(2)*100+"%");
@@ -107,6 +78,58 @@
 			        	utils.stopBubble(e);
 			        });
 		        });
+				$scope.stepTwo();
+			}else if($rootScope.bsiUploader && $rootScope.bsiStep == 'three'){ // 在第三步
+				$("#upload-filelist").children().remove();
+				$("#uploading-filelist").children(":not(:first)").remove();
+				console.log($rootScope.bsiUploader.files.length);
+				$.each($rootScope.bsiUploader.files, function(index, item) {
+					if(item.percent == 100){
+						var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
+				        $fileDom_uploading.append($('<div class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></div>'));
+				        $fileDom_uploading.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
+				        $fileDom_uploading.append($('<div class="plupload-file-surplus">00:00:00</div>'));
+				        $fileDom_uploading.append($('<div class="plupload-file-status">100%</div>'));
+				        $fileDom_uploading.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
+				        $fileDom_uploading.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
+				        $("#uploading-filelist").append($fileDom_uploading);
+					}else{
+						var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
+				        $fileDom_uploading.append($('<div class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></div>'));
+				        $fileDom_uploading.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
+				        $fileDom_uploading.append($('<div class="plupload-file-surplus">_</div>'));
+				        $fileDom_uploading.append($('<div class="plupload-file-status">_</div>'));
+				        $fileDom_uploading.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
+				        $fileDom_uploading.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
+				        $("#uploading-filelist").append($fileDom_uploading);
+					}
+			        handleStatus(item);
+			        var params = {"size":item.size,"lastModifiedDate":item.lastModifiedDate,"name":item.name};
+					if($scope.box!=null){
+						$.get($scope.box+"/box/checkBreakpoints",params,function(data){
+							if(data.data){
+								item.loaded = data.data;
+								$("#uploading-" + item.id +" .plupload-file-status").html((item.loaded/item.size).toFixed(2)*100+"%");
+							}
+						});
+					}
+			        $('#' + item.id + '.plupload_delete a').click(function(e) {
+			        	$('#' + item.id).remove();
+			        	$('#uploading-' + item.id).remove();
+			        	$rootScope.bsiUploader.removeFile(item);
+			        	e.preventDefault();
+			        	utils.stopBubble(e);
+			        	$scope.uploadTextType();
+			        });
+			        $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
+			        	$('#' + item.id).remove();
+			        	$('#uploading-' + item.id).remove();
+			        	$rootScope.bsiUploader.removeFile(item);
+			        	e.preventDefault();
+			        	utils.stopBubble(e);
+			        });
+		        });
+				$scope.beginUpload();
 			}else{ // 第一步
 				$rootScope.bsiStep = 'one';
 			    if($(".plupload_filelist li").hasClass("plupload_droptext")){
@@ -120,9 +143,12 @@
 			    }
 			}
 			$("#upload-modal").modal("show");
+//			if($rootScope.bsiUploader && $rootScope.bsiStep != 'one'){
+//				$rootScope.bsiUploader.setOption("browse_button" , ['plupload-content','upload-more']);
+//			}
 		}
 		$scope.uploadTextType = function(){
-			if($("#uploading-filelist").children().length> 2){
+			if($("#upload-filelist").children().length> 2){
 				$(".upload-text").addClass("hide");
 	        }else{
 	        	$(".upload-text").removeClass("hide");
@@ -136,7 +162,10 @@
 		    $(".step-two").addClass("active");
 		    $scope.uploadTextType();
 		    // 如果不存在bsiUploader才去创建, 用于回显
-		    if($rootScope.bsiStep == 'one'){
+		    if(!$rootScope.bsiBatch){
+				$rootScope.bsiBatch = $scope.bsiBatch;
+			}
+		    if(!$rootScope.bsiUploader){
 		    	initUploader();
 		    }
 		}
@@ -153,7 +182,6 @@
 		
 		var initUploader = function(){
 			$.get(CONTEXT_PATH+"/box/configs",function(configs){
-				var box = null;
 				for(var index in configs){
 					var config = configs[index];
 				    var port = config.port||80;
@@ -161,12 +189,12 @@
 				    config = "http://"+config.intranetAddress+":"+port+context;
 				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
 				    if(response && JSON.parse(response).success){
-				    	box=config;
+				    	$scope.box=config;
 				    	break;
 				    }
 			    }
-				var uploadUrl = box==null?"../uploadFile/uploadManyFile":(box+"/box/upload");
-				console.log(box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+box);
+				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
+				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
 //				var uploadUrl = "../uploadFile/uploadManyFile";
 				var uploader = new plupload.Uploader({
 					runtimes : 'html5,flash,silverlight,html4',
@@ -244,8 +272,8 @@
 				        $("#uploading-filelist").append($fileDom_uploading);
 				        handleStatus(item);
 				        var params = {"size":item.size,"lastModifiedDate":item.lastModifiedDate,"name":item.name};
-						if(box!=null){
-							$.get(box+"/box/checkBreakpoints",params,function(data){
+						if($scope.box!=null){
+							$.get($scope.box+"/box/checkBreakpoints",params,function(data){
 								if(data.data){
 									item.loaded = data.data;
 									$("#uploading-" + item.id +" .plupload-file-status").html((item.loaded/item.size).toFixed(2)*100+"%");
@@ -268,7 +296,9 @@
 				        	utils.stopBubble(e);
 				        });
 			        });
-			    	$rootScope.bsiStep = 'two';
+			    	if($rootScope.bsiStep == 'one'){
+			    		$rootScope.bsiStep = 'two';
+			    	}
 			        $scope.uploadTextType();
 			    });
 			    uploader.bind("FileUploaded", function(uploader, file, response) {
@@ -316,10 +346,11 @@
 			$(".step-three-content").removeClass("hide");
     		$(".step-one-content").addClass("hide");
     		$(".step-two-content").addClass("hide");
+    		$("#one-to-two").addClass("active");
     		$("#two-to-three").addClass("active");
     		$(".step-two").addClass("active");
     		$(".step-three").addClass("active");
-    		$("#tags-review").html($("#batch-info").val());
+    		$("#tags-review").html($rootScope.bsiBatch);
 			if($rootScope.bsiUploader.files.length>0 && $rootScope.bsiStep != 'three'){
 	    		$("#upload-filelist").html("");
 	    		$rootScope.bsiUploader.start();
@@ -736,6 +767,28 @@
 			$("#run-error-data").html(dataName);
 			$("#running-error-modal").modal("show");
 		}
+		$scope.reportPrev = function(currentPage){
+			if(currentPage > 1){
+				var options = $rootScope.bsiReportParams;
+				$.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+					if(response != null &&response !=""){
+						$("#container").html(response);
+					}
+				});
+			}
+		}
+		$scope.reportNext = function(currentPage){
+			var totalPage = $("#total-page-hide").val();
+			currentPage = parseInt(currentPage);
+			if(currentPage < totalPage){
+				var options = $rootScope.bsiReportParams;
+				$.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
+					if(response != null &&response !=""){
+						$("#container").html(response);
+					}
+				});
+			}
+		}
 		
 //		$("#condition-find").unbind("click");
 //        $("#condition-find").on("click",function(){
@@ -819,28 +872,6 @@
 //		        $("#myTabContent").html(response);
 //		      });
 //		    },
-//		    prev: function(currentPage){
-//		      if(currentPage > 1){
-//		        var options = $.report.options;
-//		        $.post("report/getPrevOrNextBSIReport",{"sampleName":options.sampleName,"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
-//		          if(response != null &&response !=""){
-//		            $("#container").html(response);
-//		          }
-//		        });
-//		      }
-//		    },
-//		    next: function(currentPage){
-//		      var totalPage = $("#total-page-hide").val();
-//		      currentPage = parseInt(currentPage);
-//		      if(currentPage < totalPage){
-//		        var options = $.report.options;
-//		        $.post("report/getPrevOrNextBSIReport",{"sampleName":options.sampleName,"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
-//		          if(response != null &&response !=""){
-//		            $("#container").html(response);
-//		          }
-//		        });
-//		      }
-//		    }
 //		  },
 //		  period: {
 //		      error: function(dataName){

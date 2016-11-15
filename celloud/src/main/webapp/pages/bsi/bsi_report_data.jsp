@@ -322,16 +322,14 @@
               </div>
           </div>
           <div class="report-opera col-sm-2">
-            <%-- <div class="nav-pub">
-              <div >
-                <c:if test="{{pageList.datas.size()>0}">
+            <div class="nav-pub">
+              <div ng-if="pageList.datas.length > 0">
                   <input id="total-page-hide" value="{{pageList.page.totalPage}}" type="hidden" >
-                  <a class="prev-btn" href="javascript:$.report.detail.prev({{pageList.page.currentPage}})"><i class="fa fa-chevron-circle-left"></i>上一份</a>
-                  <a class="next-btn" href="javascript:$.report.detail.next({{pageList.page.currentPage}})">下一份<i class="fa fa-chevron-circle-right"></i></a>
-                </c:if>
+                  <a class="prev-btn" href="javascript:void(0)" ng-click="reportPrev()"><i class="fa fa-chevron-circle-left"></i>上一份</a>
+                  <a class="next-btn" href="javascript:void(0)" ng-click="reportNext()">下一份<i class="fa fa-chevron-circle-right"></i></a>
               </div>
             </div>
-            <div id="report-pagination" class="report-pagination"></div> --%>
+            <%-- <div id="report-pagination" class="report-pagination"></div> --%>
             <div class="report-btn-group pull-right">
                <a class="btn" ng-class="{hide : tab == 'analy'}" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
                <a class="btn" ng-class="{hide : tab == 'patient'}" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
