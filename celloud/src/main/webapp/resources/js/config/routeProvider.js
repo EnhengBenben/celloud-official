@@ -245,6 +245,10 @@
       templateUrl: "pages/bsi/bsi_data.jsp",
       controller: "bsiDataController"
     })
+    .when('/product/bsi/bsireportdata/:dataKey/:projectId/:appId/:reportIndex',{
+      templateUrl: "pages/bsi/bsi_report_data.jsp",
+      controller: "bsiReportDataController"
+    })
     .when('/company/user',{
 	  templateUrl: "pages/company/company_user.jsp",
       controller: "companyUserController"

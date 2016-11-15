@@ -395,11 +395,55 @@
 	    		icon.attr('title', file.hint);  
 	    	}
 	    }
-	}); 
+	});
+	celloudApp.controller("bsiReportDataController",function($scope, $rootScope, $routeParams, bsiService){
+		var params = {
+			"reportIndex":$routeParams.reportIndex,
+			"dataKey":$routeParams.dataKey,
+			"projectId":$routeParams.projectId,
+			"appId":$routeParams.appId,
+			"page":$rootScope.bsiReportParams.page,
+			"condition":$rootScope.bsiReportParams.condition,
+			"sort":$rootScope.bsiReportParams.sort,
+			"sortDate":$rootScope.bsiReportParams.sortDate,
+			"sortPeriod":$rootScope.bsiReportParams.sortPeriod,
+			"sortBatch":$rootScope.bsiReportParams.sortBatch,
+			"sortName":$rootScope.bsiReportParams.sortName,
+			"size":$rootScope.bsiReportParams.size
+		};
+		
+		bsiService.getBSIPatientReport(params).
+		success(function(dataMap){
+			$scope.bsiCharList = dataMap.bsiCharList;
+			$scope.bsi = dataMap.bsi;
+			$scope.pageList = dataMap.pageList;
+			$scope.data = $scope.data;
+			
+			$scope.tab = 'patient';
+		    var havestrain = "";
+		    for(var i=0;i<$scope.bsi.species_20.length;i++){
+		        havestrain += $scope.bsi.species_20[i].species_zh + ",";
+		    }
+		    $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
+		    $scope.getRowspan = function(val1, val2, val3){
+		  	    var val0 = 1;
+		  	    if(val1 != null){
+		  	  	  val0++;
+		  	    }
+		  	    if(val2 != null){
+		  	  	  val0++;
+		  	    }
+		  	    if(val3 != null){
+		  	  	  val0++;
+		  	    }
+		  	    return val0;
+		    }
+		});
+	});
 	celloudApp.controller("bsiReportController", function($scope, $rootScope, bsiService) {
-		$scope.params = {
+		$rootScope.bsiReportParams = {
 			page: 1,
-		    size: $("#page-size-sel").val(),
+		    size: 20,
 		    condition: null,
 		    sort: 0,
 		    sortBatch: "asc",
@@ -415,7 +459,7 @@
 		    sampleName: null
 		},
 		$scope.pageQuery = function(){
-			bsiService.reportPageQuery($scope.params).
+			bsiService.reportPageQuery($rootScope.bsiReportParams).
 			success(function(dataMap){
 				$scope.batchList = dataMap.batchList;
 				$scope.pageList = dataMap.pageList;
@@ -428,8 +472,8 @@
 		 */
 		$scope.reportBatchSearch = function(batchId){
 			if(!$("#batch-sl").hasClass("select-more")){
-				$scope.params.batch = "'" + $("#" + batchId).next().find("span").text() + "'";
-				$scope.params.page = 1;
+				$rootScope.bsiReportParams.batch = "'" + $("#" + batchId).next().find("span").text() + "'";
+				$rootScope.bsiReportParams.page = 1;
 				$scope.pageQuery();
 				$("#selected-batch span").html($("#" + batchId).next().find("span").text());
 				$("#selected-batch").removeClass("hide");
@@ -445,8 +489,8 @@
 	        $("#batch-more").removeClass("disabled");
 	        $("#batch-more").attr("disabled",false);
 	        $("#batch-lists").find(".multisl-btns").addClass("hide");
-	        $scope.params.batch = null;
-	        $scope.params.page = 1;
+	        $rootScope.bsiReportParams.batch = null;
+	        $rootScope.bsiReportParams.page = 1;
 	        $scope.pageQuery();
 		}
 		/**
@@ -509,7 +553,7 @@
 		$scope.reportMultibatchSearch = function(){
 			var show_val = [];
 	        $("#batch-lists .checkbox-ed").each(function(){
-	            $scope.params.batch == null? $scope.params.batch = "'"+$(this).next().text()+"'" : $scope.params.batch += ",'"+$(this).next().text() + "'";
+	            $rootScope.bsiReportParams.batch == null? $rootScope.bsiReportParams.batch = "'"+$(this).next().text()+"'" : $rootScope.bsiReportParams.batch += ",'"+$(this).next().text() + "'";
 	            show_val.push($(this).next().text());
 	        });
 	        $scope.pageQuery();
@@ -543,8 +587,8 @@
 		 */
 		$scope.reportPeriodSearch = function(periodId){
 			if(!$("#period-sl").hasClass("select-more")){
-				$scope.params.period = $("#" + periodId).next().find("input").val();
-				$scope.params.page = 1;
+				$rootScope.bsiReportParams.period = $("#" + periodId).next().find("input").val();
+				$rootScope.bsiReportParams.page = 1;
 				$scope.pageQuery();
 				$("#selected-period span").html($("#" + periodId).next().find("span").text());
 				$("#selected-period").removeClass("hide");
@@ -557,7 +601,7 @@
 		$scope.clearSlPeriod = function(){
 			$("#selected-period").addClass("hide");
 			$("#to-sl-period").removeClass("hide");
-			$scope.params.period = null;
+			$rootScope.bsiReportParams.period = null;
 			$scope.pageQuery();
 		}
 		/**
@@ -597,7 +641,7 @@
 		$scope.reportMultiperiodSearch = function(){
 			var show_val = [];
             $("#period-lists .checkbox-ed").each(function(){
-              $scope.params.period == null? $scope.params.period = $(this).next().find("input[type='hidden']").val() : $scope.params.period += ","+$(this).next().find("input[type='hidden']").val();
+              $rootScope.bsiReportParams.period == null? $rootScope.bsiReportParams.period = $(this).next().find("input[type='hidden']").val() : $rootScope.bsiReportParams.period += ","+$(this).next().find("input[type='hidden']").val();
               show_val.push($(this).next().find("span").html());
             });
             $scope.pageQuery();
@@ -629,8 +673,8 @@
 		 * 按照日期查询
 		 */
 		$scope.dateQuery = function(){
-          $scope.params.beginDate = $("#report-begindate-search").val();
-          $scope.params.endDate = $("#report-enddate-search").val();
+          $rootScope.bsiReportParams.beginDate = $("#report-begindate-search").val();
+          $rootScope.bsiReportParams.endDate = $("#report-enddate-search").val();
           $scope.pageQuery();
         }
 		/**
@@ -641,41 +685,41 @@
 			if(distribute.find(".sl-judge-no").hasClass("hide")){
 				distribute.find(".sl-judge-no").removeClass("hide");
 				distribute.find(".sl-judge-yes").addClass("hide");
-	            $scope.params.distributed = 1;
+	            $rootScope.bsiReportParams.distributed = 1;
 	        }else{
 	        	distribute.find(".sl-judge-yes").removeClass("hide");
 	            distribute.find(".sl-judge-no").addClass("hide");
-	            $scope.params.distributed = 0;
+	            $rootScope.bsiReportParams.distributed = 0;
 	        }
 	        $scope.pageQuery();
 		}
 		$scope.sortDate = function(){
-			$scope.params.sort = 0;
-			$scope.params.sortDate = $scope.params.sortDate == "desc" ? "asc" : "desc";
-			$rootScope.sortIcon($scope.params);
+			$rootScope.bsiReportParams.sort = 0;
+			$rootScope.bsiReportParams.sortDate = $rootScope.bsiReportParams.sortDate == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($rootScope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortBatch = function(){
-			$scope.params.sort = 1;
-			$scope.params.sortBatch = $scope.params.sortBatch == "desc" ? "asc" : "desc";
-			$rootScope.sortIcon($scope.params);
+			$rootScope.bsiReportParams.sort = 1;
+			$rootScope.bsiReportParams.sortBatch = $rootScope.bsiReportParams.sortBatch == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($rootScope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortName = function(){
-			$scope.params.sort = 2;
-			$scope.params.sortName = $scope.params.sortName == "desc" ? "asc" : "desc";
-			$rootScope.sortIcon($scope.params);
+			$rootScope.bsiReportParams.sort = 2;
+			$rootScope.bsiReportParams.sortName = $rootScope.bsiReportParams.sortName == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($rootScope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortPeriod = function(){
-			$scope.params.sort = 3;
-			$scope.params.sortPeriod = $scope.params.sortPeriod == "desc" ? "asc" : "desc";
-			$rootScope.sortIcon($scope.params);
+			$rootScope.bsiReportParams.sort = 3;
+			$rootScope.bsiReportParams.sortPeriod = $rootScope.bsiReportParams.sortPeriod == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($rootScope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.pageSizeQuery = function(){
-			$scope.params.size = $("#page-size-sel").val();
-			$scope.params.page = 1;
+			$rootScope.bsiReportParams.size = $("#page-size-sel").val();
+			$rootScope.bsiReportParams.page = 1;
 			$scope.pageQuery();
 		}
 		$scope.reRun = function(dataKey,appId,projectId){
@@ -685,9 +729,14 @@
 			})
 		}
 		$scope.paginationBtn = function(currentPage){
-			$scope.params.page = currentPage;
+			$rootScope.bsiReportParams.page = currentPage;
 			$scope.pageQuery();
 		}
+		$scope.periodError = function(dataName){
+			$("#run-error-data").html(dataName);
+			$("#running-error-modal").modal("show");
+		}
+		
 //		$("#condition-find").unbind("click");
 //        $("#condition-find").on("click",function(){
 //          $.report.options.condition = $("#condition-input").val();

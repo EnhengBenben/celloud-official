@@ -771,6 +771,60 @@ public class ReportAction {
 		return mv;
 	}
 
+    /**
+     * 获取 BSI 的患者报告
+     * 
+     * @param dataKey
+     * @param projectId
+     * @param appId
+     * @return
+     * @date 2016-1-10 下午10:40:40
+     */
+    @ActionLog(value = "查看BSI患者报告", button = "数据报告")
+    @RequestMapping("getBSIPatientReportInfo")
+    @ResponseBody
+    public Map<String, Object> getBSIPatientReportInfo(String dataKey, Integer projectId, Integer appId,
+            Integer reportIndex,
+            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size, String condition,
+            @RequestParam(defaultValue = "0") int sort, @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch, @RequestParam(defaultValue = "asc") String sortName,
+            @RequestParam(defaultValue = "asc") String sortPeriod, String batch, String period, String beginDate,
+            String endDate, String sampleName) {
+        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+        Matcher m = p.matcher(condition);
+        StringBuffer con_sb = new StringBuffer();
+        while (m.find()) {
+            String rep = "\\\\" + m.group(0);
+            m.appendReplacement(con_sb, rep);
+        }
+        m.appendTail(con_sb);
+        Page pager = new Page((page - 1) * size + reportIndex, 1);
+        PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
+                sort, sortDate, sortBatch, sortName, sortPeriod, batch, period, beginDate, endDate, appId, sampleName);
+
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+        BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+        Map<String, List<List<String>>> mibCharList = new HashMap<>();
+        if (bsi == null)
+            return dataMap;
+        mibCharList.put("readsDistributionInfo", bsi.getReadsDistributionInfo());
+        mibCharList.put("familyDistributionInfo", bsi.getFamilyDistributionInfo());
+        mibCharList.put("genusDistributionInfo", bsi.getGenusDistributionInfo());
+        // mibCharList.put("readsDistributionInfo",
+        // JSONArray.fromObject(bsi.getReadsDistributionInfo()));
+        // mibCharList.put("familyDistributionInfo",
+        // JSONArray.fromObject(bsi.getFamilyDistributionInfo()));
+        // mibCharList.put("genusDistributionInfo",
+        // JSONArray.fromObject(bsi.getGenusDistributionInfo()));
+        dataMap.put("bsiCharList", mibCharList);
+        dataMap.put("bsi", bsi);
+
+        DataFile df = dataService.getDataByKey(dataKey);
+        dataMap.put("pageList", pageList);
+        dataMap.put("data", df);
+        return dataMap;
+    }
+
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/getBSIPatientReport")
     public ModelAndView getBSIPatientReport1(String dataKey, Integer projectId,
