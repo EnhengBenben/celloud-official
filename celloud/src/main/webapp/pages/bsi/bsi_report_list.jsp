@@ -112,7 +112,7 @@
 				          <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()"><i id="sort-batch-icon" class="fa fa-sort-amount-asc"></i></a></th>
 				          <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()"><i id="sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
 				          <th>状态<a id="sort-period" href="javascript:void(0);" ng-click="sortPeriod()"><i id="sort-period-icon" class="fa fa-sort-amount-asc"></i></a></th>
-				          <th>更新时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()"><i id="sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
+				          <th class="date-td">更新时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()"><i id="sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
 				          <th>操作</th>
 				        </tr>
 				      </thead>
@@ -124,26 +124,26 @@
 				            <td>{{task.sampleName}}</td>
 				            <td>{{task.batch}}</td>
 				            <td title="{{task.fileName}}" name="data-name-td" >
-				                <a ng-if="task.period == 2" ng-href="javascript:$.report.detail.patient('{{task.dataKey}}',{{task.projectId}},{{task.appId}},{{$index + 1}},{{pageList.page.currentPage}})">
+				                <a ng-if="task.period == 2" ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/{{$index + 1}}">
 				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
 				                </a>
-				                <span ng-if="task.period != 2">
+				                <a ng-if="task.period != 2" ng-href="javascript:void(0)">
 				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
-				                </span>
+				                </a>
 				            </td>
 				            <td>
 				              <a ng-if="task.period == 0" href="javascript:void(0)">等待运行</a>
 				              <a ng-if="task.period == 1" data-toggle="modal" data-target="#running-modal">正在分析</a>
-				              <a ng-if="task.period == 2" ng-href="javascript:$.report.detail.patient('{{task.dataKey}}',{{task.projectId}},{{task.appId}},{{$index + 1}},{{pageList.page.currentPage}})">完成</a>
+				              <a ng-if="task.period == 2" ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/{{$index + 1}}">完成</a>
 				              <a ng-if="task.period == 3" data-toggle="modal" data-target="#report-uploading-modal">数据不完整</a>
 				              <a ng-if="task.period == 4" data-toggle="modal" data-target="#running-error-modal">异常终止</a>
 				              <a ng-if="task.period == 5" href="javascript:void(0)">送样中</a>
 				              <a ng-if="task.period == 6" href="javascript:void(0)">实验中</a>
-				              <a ng-if="task.period == null" href="javascript:void(0)" ng-click="$.report.period.error('{{task.fileName}}')" class="wrong">运行异常</a>
+				              <a ng-if="task.period == null" href="javascript:void(0)" ng-click="periodError(task.fileName)" class="wrong">运行异常</a>
 				            </td>
 				            <td class="date-td">{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 				            <td>
-				              <a title="查看报告" ng-href="javascript:$.report.detail.patient('{{task.dataKey}}',{{task.projectId}},{{task.appId}},{{$index + 1}},{{pageList.page.currentPage}})" ng-if="task.period == 2"><i class="fa fa-eye"></i></a>
+				              <a title="查看报告" ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/{{$index + 1}}" ng-if="task.period == 2"><i class="fa fa-eye"></i></a>
 				              <a title="查看报告" class="disabled"  disabled="disabled" ng-if="task.period != 2"><i class="fa fa-eye"></i></a>
 				              <a title="打印患者报告" target="_blank" ng-href="${pageContext.request.contextPath }/report/printBSIReport?projectId={{task.projectId}}&dataKey={{task.dataKey}}&appId={{task.appId}}&templateType=print_patient"" ng-if="task.period == 2"><i class="fa fa-print"></i></a>
 				              <a title="打印患者报告" class="disabled"  disabled="disabled" ng-if="task.period != 2"><i class="fa fa-print"></i></a>

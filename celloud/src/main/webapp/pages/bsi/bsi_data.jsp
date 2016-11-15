@@ -28,7 +28,7 @@
 				          <td>{{data.batch}}</td>
 				          <td title="{{data.fileName}}" name="data-name-td" >
 				              <span>{{data.fileName.length > 60 ? data.fileName.substring(0,60) + '...' : data.fileName}}</span>
-				              <span ng-if="data.createDate != null">({{data.anotherName}})</span>
+				              <span ng-if="data.anotherName != null">({{data.anotherName}})</span>
 				          </td>
 				          <td>{{data.dataKey}}</td>
 				          <td>{{data.size | fileSizeFormat}}</td>

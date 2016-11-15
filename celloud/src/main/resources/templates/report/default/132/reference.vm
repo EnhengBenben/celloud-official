@@ -1,0 +1,4 @@
+<link rel="stylesheet" href="${base}/css/font.css">
+<link rel="stylesheet" href="${base}/css/print_cmp.css?version=3.1.15">
+<script language="javascript" src="${base}/plugins/calendar/WdatePicker.js"></script>
+<script type="text/javascript" src="${base}/js/browser.js"></script>
