@@ -35,6 +35,7 @@ public class ConstantsData {
 	private static Logger logger = LoggerFactory.getLogger(ConstantsData.class);
 	public static Map<String, Map<String, String>> machines = null;
 	private static Properties systemProperties;
+	private static Properties filePathProperties;
 	private static Properties bioinfoServices;
 	private static String anotherNamePerlPath;
 	private static OSSConfig ossConfig;
@@ -226,10 +227,10 @@ public class ConstantsData {
 	}
 
 	public static String getOfsPath() {
-		if (systemProperties == null) {
-			loadSystemProperties();
+		if (filePathProperties == null) {
+			filePathProperties=loadProperties(Constants.FILEPATH_PROPERTIES_FILE);
 		}
-		String ofsPath = systemProperties.getProperty("ossfsPath");
+		String ofsPath = filePathProperties.getProperty("ossfsPath");
 		if (ofsPath != null && !ofsPath.endsWith(File.separatorChar + "")) {
 			ofsPath = ofsPath + File.separatorChar;
 		}
