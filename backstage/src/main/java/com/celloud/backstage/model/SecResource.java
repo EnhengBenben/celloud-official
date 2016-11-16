@@ -2,7 +2,7 @@ package com.celloud.backstage.model;
 
 import java.util.Date;
 
-public class SecResource {
+public class SecResource extends Tree {
     private Integer id;
 
     // 资源名称(用于显示)

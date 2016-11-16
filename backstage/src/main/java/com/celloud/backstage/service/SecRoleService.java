@@ -103,4 +103,13 @@ public interface SecRoleService {
      *
      */
     public int grant(Integer roleId, Integer[] resourceIds);
+
+	/**
+	 * 查询所有的角色并排序
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年11月16日下午1:50:15
+	 */
+	List<SecRole> selectAll();
 }

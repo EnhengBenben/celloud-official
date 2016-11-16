@@ -24,6 +24,8 @@ public interface SecRoleMapper {
 
     List<SecRole> pageQuery(Page page);
 
+	List<SecRole> selectAll();
+
     List<SecRole> findByName(@Param("name") String name, @Param("id") Integer id);
 
     List<SecRole> findByCode(@Param("code") String code, @Param("id") Integer id);

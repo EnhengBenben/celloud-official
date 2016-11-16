@@ -15,6 +15,7 @@ import com.celloud.backstage.model.User;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.SecRoleService;
+import com.celloud.backstage.utils.SortUtils;
 
 /** 
  * @author MQ: 
@@ -90,5 +91,11 @@ public class SecRoleServiceImpl implements SecRoleService {
             return roleMapper.insertRoleResourceRelat(roleId, resourceIds);
         }
     }
+
+	@Override
+	public List<SecRole> selectAll() {
+		List<SecRole> list = roleMapper.selectAll();
+		return SortUtils.listToTree(list);
+	}
 
 }

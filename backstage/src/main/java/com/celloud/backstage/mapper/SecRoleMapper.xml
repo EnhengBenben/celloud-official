@@ -8,9 +8,12 @@
 		<result column="description" property="description" jdbcType="VARCHAR" />
 		<result column="disabled" property="disabled" jdbcType="INTEGER" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    	<result column="mutex" property="mutex" jdbcType="VARCHAR" />
+    	<result column="attract" property="attract" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, code, name, description, disabled, create_date
+		id, code, description, disabled, name, create_date, parent_id, mutex, attract
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
@@ -23,85 +26,124 @@
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.celloud.backstage.model.SecRole">
-		insert into tb_sec_role (id, code, name, description,
-		disabled, create_date)
-		values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-		#{disabled,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP})
+		insert into tb_sec_role (id, code, description, 
+	      disabled, name, create_date, 
+	      parent_id, mutex, attract
+	      )
+	    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+	      #{disabled,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+	      #{parentId,jdbcType=INTEGER}, #{mutex,jdbcType=VARCHAR}, #{attract,jdbcType=VARCHAR}
+	      )
 	</insert>
 	<insert id="insertSelective" parameterType="com.celloud.backstage.model.SecRole">
 		insert into tb_sec_role
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
-			<if test="code != null">
-                code,
-            </if>
-			<if test="name != null">
-				name,
-			</if>
-			<if test="description != null">
-				description,
-			</if>
-			<if test="disabled != null">
-				disabled,
-			</if>
-			<if test="createDate != null">
-                create_date,
-            </if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=INTEGER},
-			</if>
-			<if test="code != null">
-                #{code,jdbcType=VARCHAR},
-            </if>
-			<if test="name != null">
-				#{name,jdbcType=VARCHAR},
-			</if>
-			<if test="description != null">
-				#{description,jdbcType=VARCHAR},
-			</if>
-			<if test="disabled != null">
-				#{disabled,jdbcType=BIT},
-			</if>
-			<if test="createDate != null">
-                #{createDate,jdbcType=TIMESTAMP},
-            </if>
-		</trim>
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="id != null" >
+	        id,
+	      </if>
+	      <if test="code != null" >
+	        code,
+	      </if>
+	      <if test="description != null" >
+	        description,
+	      </if>
+	      <if test="disabled != null" >
+	        disabled,
+	      </if>
+	      <if test="name != null" >
+	        name,
+	      </if>
+	      <if test="createDate != null" >
+	        create_date,
+	      </if>
+	      <if test="parentId != null" >
+	        parent_id,
+	      </if>
+	      <if test="mutex != null" >
+	        mutex,
+	      </if>
+	      <if test="attract != null" >
+	        attract,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="id != null" >
+	        #{id,jdbcType=INTEGER},
+	      </if>
+	      <if test="code != null" >
+	        #{code,jdbcType=VARCHAR},
+	      </if>
+	      <if test="description != null" >
+	        #{description,jdbcType=VARCHAR},
+	      </if>
+	      <if test="disabled != null" >
+	        #{disabled,jdbcType=BIT},
+	      </if>
+	      <if test="name != null" >
+	        #{name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createDate != null" >
+	        #{createDate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="parentId != null" >
+	        #{parentId,jdbcType=INTEGER},
+	      </if>
+	      <if test="mutex != null" >
+	        #{mutex,jdbcType=VARCHAR},
+	      </if>
+	      <if test="attract != null" >
+	        #{attract,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="com.celloud.backstage.model.SecRole">
 		update tb_sec_role
-		<set>
-		    <if test="code != null">
-                code = #{code,jdbcType=VARCHAR},
-            </if>
-			<if test="name != null">
-				name = #{name,jdbcType=VARCHAR},
-			</if>
-			<if test="description != null">
-				description = #{description,jdbcType=VARCHAR},
-			</if>
-			<if test="disabled != null">
-				disabled = #{disabled,jdbcType=BIT},
-			</if>
-			<if test="createDate != null">
-                create_date = #{createDate,jdbcType=TIMESTAMP},
-            </if>
-		</set>
-		where id = #{id,jdbcType=INTEGER}
+	    <set >
+	      <if test="code != null" >
+	        code = #{code,jdbcType=VARCHAR},
+	      </if>
+	      <if test="description != null" >
+	        description = #{description,jdbcType=VARCHAR},
+	      </if>
+	      <if test="disabled != null" >
+	        disabled = #{disabled,jdbcType=BIT},
+	      </if>
+	      <if test="name != null" >
+	        name = #{name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createDate != null" >
+	        create_date = #{createDate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="parentId != null" >
+	        parent_id = #{parentId,jdbcType=INTEGER},
+	      </if>
+	      <if test="mutex != null" >
+	        mutex = #{mutex,jdbcType=VARCHAR},
+	      </if>
+	      <if test="attract != null" >
+	        attract = #{attract,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+	    where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.celloud.backstage.model.SecRole">
 		update tb_sec_role
-		set code = #{code,jdbcType=VARCHAR},
-		name = #{name,jdbcType=VARCHAR},
-		description = #{description,jdbcType=VARCHAR},
-		disabled = #{disabled,jdbcType=BIT},
-		create_date = #{createDate,jdbcType=TIMESTAMP}
-		where id = #{id,jdbcType=INTEGER}
+	    set code = #{code,jdbcType=VARCHAR},
+	      description = #{description,jdbcType=VARCHAR},
+	      disabled = #{disabled,jdbcType=BIT},
+	      name = #{name,jdbcType=VARCHAR},
+	      create_date = #{createDate,jdbcType=TIMESTAMP},
+	      parent_id = #{parentId,jdbcType=INTEGER},
+	      mutex = #{mutex,jdbcType=VARCHAR},
+	      attract = #{attract,jdbcType=VARCHAR}
+	    where id = #{id,jdbcType=INTEGER}
 	</update>
 	<select id="pageQuery" resultMap="BaseResultMap">
+	   select
+	   <include refid="Base_Column_List"/>
+	   from tb_sec_role
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
 	   select
 	   <include refid="Base_Column_List"/>
 	   from tb_sec_role

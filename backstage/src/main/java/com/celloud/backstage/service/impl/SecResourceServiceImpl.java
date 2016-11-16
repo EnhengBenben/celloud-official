@@ -1,10 +1,7 @@
 package com.celloud.backstage.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,6 +11,7 @@ import com.celloud.backstage.constants.DataState;
 import com.celloud.backstage.mapper.SecResourceMapper;
 import com.celloud.backstage.model.SecResource;
 import com.celloud.backstage.service.SecResourceService;
+import com.celloud.backstage.utils.SortUtils;
 
 /** 
  * @author MQ: 
@@ -53,50 +51,14 @@ public class SecResourceServiceImpl implements SecResourceService {
     @Override
     public List<SecResource> list() {
         List<SecResource> list = resourceMapper.list();
-        // 遍历集合, 根据parentId进行分组
-        Map<Integer, List<SecResource>> map = new HashMap<Integer, List<SecResource>>();
-        for (SecResource r : list) {
-            if (map.containsKey(r.getParentId())) {
-                map.get(r.getParentId()).add(r);
-            } else {
-                List<SecResource> temp = new ArrayList<SecResource>();
-                temp.add(r);
-                map.put(r.getParentId(), temp);
-            }
-        }
-        List<SecResource> pageList = new ArrayList<SecResource>();
-        recursionResource(map, pageList, 0);
-        return pageList;
+		return SortUtils.listToTree(list);
 
-    }
-
-    public void recursionResource(Map<Integer, List<SecResource>> map, List<SecResource> pageList, Integer parentId) {
-        for (SecResource r : map.get(parentId)) {
-            pageList.add(r);
-            if (map.containsKey(r.getId())) {
-                recursionResource(map, pageList, r.getId());
-            }
-        }
     }
 
     @Override
     public List<SecResource> findAllActive() {
         List<SecResource> list = resourceMapper.findAllActive(DataState.ACTIVE);
-        // 遍历集合, 根据parentId进行分组
-        Map<Integer, List<SecResource>> map = new HashMap<Integer, List<SecResource>>();
-        for (SecResource r : list) {
-            if (map.containsKey(r.getParentId())) {
-                map.get(r.getParentId()).add(r);
-            } else {
-                List<SecResource> temp = new ArrayList<SecResource>();
-                temp.add(r);
-                map.put(r.getParentId(), temp);
-            }
-        }
-        List<SecResource> pageList = new ArrayList<SecResource>();
-        recursionResource(map, pageList, 0);
-        return pageList;
-
+		return SortUtils.listToTree(list);
     }
 
     @Override

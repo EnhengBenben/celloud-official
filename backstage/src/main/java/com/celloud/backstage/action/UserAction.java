@@ -17,12 +17,14 @@ import com.celloud.backstage.constants.ConstantsData;
 import com.celloud.backstage.model.App;
 import com.celloud.backstage.model.Company;
 import com.celloud.backstage.model.Dept;
+import com.celloud.backstage.model.SecRole;
 import com.celloud.backstage.model.User;
 import com.celloud.backstage.page.Page;
 import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.AppService;
 import com.celloud.backstage.service.CompanyService;
 import com.celloud.backstage.service.DeptService;
+import com.celloud.backstage.service.SecRoleService;
 import com.celloud.backstage.service.UserService;
 import com.celloud.backstage.utils.Base64Util;
 import com.celloud.backstage.utils.MD5Util;
@@ -44,6 +46,8 @@ public class UserAction {
     private AppService appService;
     @Resource
     private DeptService deptService;
+	@Resource
+	private SecRoleService secRoleService;
     
     
     @RequestMapping("user/userList")
@@ -66,9 +70,11 @@ public class UserAction {
         List<Company> companyList=companyService.getAllCompany();
 		List<Company> companyAppList = companyService.getAllCompanyHaveApp();
         List<App> appPublicList=appService.getAppListPulbicAdded();
+		List<SecRole> roleList = secRoleService.selectAll();
         mv.addObject("companyList", companyList);
 		mv.addObject("companyAppList", companyAppList);
         mv.addObject("publicApp", appPublicList);
+		mv.addObject("roleList", roleList);
         return mv;
     }
     

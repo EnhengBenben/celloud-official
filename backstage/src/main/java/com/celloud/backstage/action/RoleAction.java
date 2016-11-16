@@ -15,8 +15,6 @@ import com.celloud.backstage.constants.ConstantsData;
 import com.celloud.backstage.model.SecResource;
 import com.celloud.backstage.model.SecRole;
 import com.celloud.backstage.model.User;
-import com.celloud.backstage.page.Page;
-import com.celloud.backstage.page.PageList;
 import com.celloud.backstage.service.SecResourceService;
 import com.celloud.backstage.service.SecRoleService;
 import com.celloud.backstage.service.UserService;
@@ -39,13 +37,13 @@ public class RoleAction {
     private SecResourceService resourceService;
 
     @RequestMapping("pageQuery")
-    public ModelAndView pageQuery(Page page) {
+	public ModelAndView pageQuery() {
         logger.info("用户{}查看角色列表", ConstantsData.getLoginUserName());
         ModelAndView mv = new ModelAndView("permission/role_main");
-        PageList<SecRole> pageList = roleService.pageQuery(page);
+		List<SecRole> list = roleService.selectAll();
         List<User> bigCustomers = userService.getBigCustomers();
         List<SecResource> resourceList = resourceService.findAllActive();
-        mv.addObject("pageList", pageList);
+		mv.addObject("list", list);
         mv.addObject("bigCustomers", bigCustomers);
         mv.addObject("resourceList", resourceList);
         return mv;

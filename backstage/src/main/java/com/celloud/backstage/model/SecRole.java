@@ -2,8 +2,8 @@ package com.celloud.backstage.model;
 
 import java.util.Date;
 
-public class SecRole {
-    private Integer id;
+public class SecRole extends Tree{
+	private Integer id;
 
     // 角色代码(用于判断)
     private String code;
@@ -20,14 +20,19 @@ public class SecRole {
     // 创建时间
     private Date createDate;
 
+	private Integer parentId;
 
-    public Integer getId() {
-        return id;
-    }
+	private String mutex;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	private String attract;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
     public String getName() {
         return name;
@@ -68,5 +73,29 @@ public class SecRole {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getMutex() {
+		return mutex;
+	}
+
+	public void setMutex(String mutex) {
+		this.mutex = mutex;
+	}
+
+	public String getAttract() {
+		return attract;
+	}
+
+	public void setAttract(String attract) {
+		this.attract = attract;
+	}
 
 }
