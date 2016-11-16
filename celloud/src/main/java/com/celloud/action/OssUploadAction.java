@@ -49,7 +49,8 @@ public class OssUploadAction {
 		long expireEndTime = System.currentTimeMillis() + 1000 * 60 * 60 * 24;// policy有效时间：24小时
 		Date expiration = new Date(expireEndTime);
 		PolicyConditions policyConds = new PolicyConditions();
-		String dir = ConstantsData.getLoginUserId() + "/" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/";
+		String dir = "file/" + ConstantsData.getLoginUserId() + "/"
+				+ new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/";
 		policyConds.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0, 1048576000);// 使用此policy上传的文件不能超过10GB
 		policyConds.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, dir);// 使用此policy上传的文件必须以dir开头
 		String postPolicy = client.generatePostPolicy(expiration, policyConds);
