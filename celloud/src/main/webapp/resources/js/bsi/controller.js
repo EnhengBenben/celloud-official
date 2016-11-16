@@ -57,7 +57,6 @@
 			}else if($rootScope.bsiUploader && $rootScope.bsiStep == 'three'){ // 在第三步
 				$("#upload-filelist").children().remove();
 				$("#uploading-filelist").children(":not(:first)").remove();
-				console.log($rootScope.bsiUploader.files.length);
 				$.each($rootScope.bsiUploader.files, function(index, item) {
 					if(item.percent == 100){
 						var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
@@ -133,10 +132,8 @@
 		    $("#one-to-two").addClass("active");
 		    $(".step-two").addClass("active");
 		    $scope.uploadTextType();
-		    // 如果不存在bsiUploader才去创建, 用于回显
-		    if(!$rootScope.bsiBatch){
-				$rootScope.bsiBatch = $scope.bsiBatch;
-			}
+			$rootScope.bsiBatch = $scope.bsiBatch;
+			// 如果不存在bsiUploader才去创建, 用于回显
 		    if(!$rootScope.bsiUploader){
 		    	initUploader();
 		    }
@@ -323,7 +320,6 @@
     		$(".step-two").addClass("active");
     		$(".step-three").addClass("active");
     		$("#tags-review").html($rootScope.bsiBatch);
-    		console.log("33333:" + $rootScope.bsiUploader.files.length);
 			if($rootScope.bsiUploader.files.length>0 && $rootScope.bsiStep != 'three'){
 	    		$("#upload-filelist").html("");
 	    		$rootScope.bsiUploader.start();
