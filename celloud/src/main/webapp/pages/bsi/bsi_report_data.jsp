@@ -325,11 +325,66 @@
             <div class="nav-pub">
               <div ng-if="pageList.datas.length > 0">
                   <input id="total-page-hide" value="{{pageList.page.totalPage}}" type="hidden" >
-                  <a class="prev-btn" href="javascript:void(0)" ng-click="reportPrev()"><i class="fa fa-chevron-circle-left"></i>上一份</a>
-                  <a class="next-btn" href="javascript:void(0)" ng-click="reportNext()">下一份<i class="fa fa-chevron-circle-right"></i></a>
+                  <a class="prev-btn" href="javascript:void(0)" ng-click="reportPrev(pageList.page.currentPage)"><i class="fa fa-chevron-circle-left"></i>上一份</a>
+                  <a class="next-btn" href="javascript:void(0)" ng-click="reportNext(pageList.page.currentPage)">下一份<i class="fa fa-chevron-circle-right"></i></a>
               </div>
             </div>
-            <%-- <div id="report-pagination" class="report-pagination"></div> --%>
+            <div id="report-pagination" class="report-pagination">
+                <table class="table table-main">
+				  <thead>
+				    <tr>
+				      <th>相同标签报告</th>
+				    </tr>
+				  </thead>
+				  <tbody id="data-list-tbody" ng-if="batchPageList.datas.length > 0">
+			        <tr id="reportbatch{{task.dataKey}}" ng-class="{active: task.dataKey == bsi.dataKey }" ng-repeat="task in batchPageList.datas">
+			          <td title="{{task.fileName}}" name="data-name-td" >
+		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/{{$index + 1}}/{{params.page}}/{{params.condition==null?'null':params.condition}}/{{params.sort}}/{{params.sortDate}}/{{params.sortPeriod}}/{{params.sortBatch}}/{{params.sortName}}/{{params.size}}/{{params.batch==null?'null':params.batch}}/{{params.period==null?'null':params.period}}/{{params.beginDate==null?'null':params.beginDate}}/{{params.endDate==null?'null':params.endDate}}" ng-if="task.period == 2">
+		                   {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName == null? '' : task.anotherName}}
+		                 </a>
+		                 <a href="javascript:void(0)" ng-if="task.period != 2">
+                           {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName == null? '' : task.anotherName}}
+                         </a>
+			          </td>
+			        </tr>
+				  </tbody>
+				</table>
+				<%-- <div class="pagination text-center">
+				  <c:if test="${pageList.datas.size()>0}">
+				    <input id="batch-current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
+				    <input id="batch-total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
+				    <ul id="pagination-data-report" class="pages">
+				      <li><a id="prev-page-task" class="ends pull-left" href="javascript:void(0);">&lt;&lt;</a></li>
+				      <!-- 显示第一页 -->
+				      <c:choose>
+				        <c:when test="${pageList.page.totalPage<=3}">
+				          <c:forEach begin="1" end="${pageList.page.totalPage}" step="1" var="step">
+				            <li <c:if test="${step==pageList.page.currentPage }">class="active"</c:if>><a name="pagination-task" href="javascript:void(0);">${step }</a></li>
+				          </c:forEach>
+				        </c:when>
+				        <c:otherwise>
+				          <c:if test="${pageList.page.currentPage==1}">
+				            <li class="active"><a name="pagination-task" href="javascript:void(0);">1</a></li>
+				            <li><a name="pagination-task" href="javascript:void(0);">2</a></li>
+				            <li><a name="pagination-task" href="javascript:void(0);">3</a></li>
+				          </c:if>
+				          <c:if test="${pageList.page.currentPage==pageList.page.totalPage}">
+				            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-2}</a></li>
+				            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
+				            <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
+				          </c:if>
+				          <c:if test="${pageList.page.currentPage>1 && pageList.page.currentPage<pageList.page.totalPage}">
+				            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
+				            <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
+				            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage+1}</a></li>
+				          </c:if>
+				        </c:otherwise>
+				      </c:choose>
+				      <li><a id="next-page-task" class="ends pull-right" href="javascript:void(0)">&gt;&gt;</a></li>
+				    </ul>
+				  </c:if>
+				</div> --%>
+            </div>
             <div class="report-btn-group pull-right">
                <a class="btn" ng-class="{hide : tab == 'analy'}" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
                <a class="btn" ng-class="{hide : tab == 'patient'}" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
