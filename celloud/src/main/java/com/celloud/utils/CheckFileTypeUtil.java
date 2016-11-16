@@ -27,7 +27,9 @@ public class CheckFileTypeUtil {
 		if (fileName.lastIndexOf(".") > 0) {
 			extName = fileName.substring(fileName.lastIndexOf("."));
 		}
-		if (checkTileType(FileTitleType.ABI, fileName, dayPath)
+		if (fileName.toLowerCase().indexOf(".fastq") != -1 || fileName.toLowerCase().indexOf(".fq") != -1) {
+			fileType = FileFormat.FQ;
+		} else if (checkTileType(FileTitleType.ABI, fileName, dayPath)
 				&& (".ab1".equals(extName.toLowerCase()) || ".abi".equals(extName.toLowerCase()))) {
 			// 文件为峰图文件
 			fileType = FileFormat.FENGTU;
@@ -43,8 +45,6 @@ public class CheckFileTypeUtil {
 		} else if (checkTileType(FileTitleType.FASTA, fileName, dayPath) && (checkFasta(fileName, dayPath)
 				|| ".fa".equals(extName.toLowerCase()) || ".fasta".equals(extName.toLowerCase()))) {
 			fileType = FileFormat.FA;
-		} else if (fileName.toLowerCase().indexOf(".fastq") != -1 || fileName.toLowerCase().indexOf(".fq") != -1) {
-			fileType = FileFormat.FQ;
 		} else if (extName.equals(".tsv")) {
 			fileType = FileFormat.TSV;
 		}

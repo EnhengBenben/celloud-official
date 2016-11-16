@@ -412,6 +412,7 @@ public class DataServiceImpl implements DataService {
 		data.setFileFormat(fileFormat);
 		dataFileMapper.updateByPrimaryKeySelective(data);
 		data = dataFileMapper.selectByPrimaryKey(dataId);
+		//TODO 需要根据tagId判断是否rocky
 		runService.rockyCheckRun(123, data);
 		return dataId;
 	}
