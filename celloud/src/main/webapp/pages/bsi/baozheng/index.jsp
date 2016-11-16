@@ -98,7 +98,7 @@
           </div>
           <div class="step-one-content">
             <input id="batch-info" type="text" placeholder="请输入标签" value=""/><br>
-            <p><span>为每次上传数据按输入加入标签，提升后续报告查询、数据管理、分类汇总提供快捷服务。<span></p>
+            <p><span>添加数据标签，便于使用报告查询、数据管理、分类汇总等平台功能。<span></p>
             <p><span>示例：外科5月；ICU-9床；急诊发热<span></p>
             <a id="next-step" class="btn" href="javascript:void(0)">下一步</a>
           </div>
