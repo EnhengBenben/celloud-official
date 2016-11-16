@@ -1,37 +1,12 @@
 (function() {
-	celloudApp.controller("bsiCommon",function($scope, $rootScope){
-		
-		$scope.box = null;
-		
-		$rootScope.sortIcon = function(params){
-		    if(params.sortDate=="asc"){
-		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortBatch=="asc"){
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortName=="asc"){
-		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortPeriod=="asc"){
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-	    }
+	celloudApp.controller("bsiFileUpload",function($scope, $rootScope){
 		$scope.uploadPercent = 0;
 		//  ============================上传============================
 		$scope.itemBtnToggleActive = function(){
 		    $("#common-menu .item-btn").removeClass("active");
 		    $("#to-upload-a").addClass("active");
 		}
-		$scope.stepOne = function(){
+		$rootScope.bsiStepOne = function(){
 			$scope.itemBtnToggleActive();
 			// 判断是否在第二步, 进行回显
 			if($rootScope.bsiUploader && $rootScope.bsiStep == 'two'){
@@ -82,7 +57,6 @@
 			}else if($rootScope.bsiUploader && $rootScope.bsiStep == 'three'){ // 在第三步
 				$("#upload-filelist").children().remove();
 				$("#uploading-filelist").children(":not(:first)").remove();
-				console.log($rootScope.bsiUploader.files.length);
 				$.each($rootScope.bsiUploader.files, function(index, item) {
 					if(item.percent == 100){
 						var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
@@ -142,10 +116,7 @@
 			      document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
 			    }
 			}
-			$("#upload-modal").modal("show");
-//			if($rootScope.bsiUploader && $rootScope.bsiStep != 'one'){
-//				$rootScope.bsiUploader.setOption("browse_button" , ['plupload-content','upload-more']);
-//			}
+			$("#bsi-upload-modal").modal("show");
 		}
 		$scope.uploadTextType = function(){
 			if($("#upload-filelist").children().length> 2){
@@ -161,10 +132,8 @@
 		    $("#one-to-two").addClass("active");
 		    $(".step-two").addClass("active");
 		    $scope.uploadTextType();
-		    // 如果不存在bsiUploader才去创建, 用于回显
-		    if(!$rootScope.bsiBatch){
-				$rootScope.bsiBatch = $scope.bsiBatch;
-			}
+			$rootScope.bsiBatch = $scope.bsiBatch;
+			// 如果不存在bsiUploader才去创建, 用于回显
 		    if(!$rootScope.bsiUploader){
 		    	initUploader();
 		    }
@@ -198,7 +167,7 @@
 //				var uploadUrl = "../uploadFile/uploadManyFile";
 				var uploader = new plupload.Uploader({
 					runtimes : 'html5,flash,silverlight,html4',
-					browse_button : ['plupload-content','upload-more'],
+					browse_button : ['bsi-plupload-content','bsi-upload-more'],
 					url :uploadUrl,
 					// Maximum file size
 					chunk_size : '1mb',
@@ -329,7 +298,7 @@
 			    	$rootScope.bsiUploader.destroy();
 			    	$rootScope.bsiUploader = undefined;
 			    	$("#uploading-filelist .plupload_done").remove();
-			    	$("#upload-modal").modal("hide");
+			    	$("#bsi-upload-modal").modal("hide");
 			    });
 			    uploader.bind("BeforeUpload", function(uploader, file) {
 			    	uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
@@ -366,7 +335,7 @@
 	        }
 		}
 		$scope.closeUploadModal = function(){
-			if($rootScope.bsiUploader.files.length<=0){
+			if($rootScope.bsiUploader && $rootScope.bsiUploader.files.length<=0){
 	    		$(".step-one-content").removeClass("hide");
 	    		$(".step-two-content").addClass("hide");
 	    		$("#one-to-two").removeClass("active");
@@ -426,36 +395,71 @@
 	    		icon.attr('title', file.hint);  
 	    	}
 	    }
+	})
+	
+	celloudApp.controller("bsiCommon",function($scope, $rootScope){
+		
+		$scope.box = null;
+		
+		$rootScope.sortIcon = function(params){
+		    if(params.sortDate=="asc"){
+		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if(params.sortBatch=="asc"){
+		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if(params.sortName=="asc"){
+		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+		    if(params.sortPeriod=="asc"){
+		    	$("#sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    }else{
+		    	$("#sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    }
+	    }
+		
 	});
 	celloudApp.controller("bsiReportDataController",function($scope, $rootScope, $routeParams, bsiService){
-		var params = {
+		$scope.params = {
 			"reportIndex":$routeParams.reportIndex,
 			"dataKey":$routeParams.dataKey,
 			"projectId":$routeParams.projectId,
 			"appId":$routeParams.appId,
-			"page":$rootScope.bsiReportParams.page,
-			"condition":$rootScope.bsiReportParams.condition,
-			"sort":$rootScope.bsiReportParams.sort,
-			"sortDate":$rootScope.bsiReportParams.sortDate,
-			"sortPeriod":$rootScope.bsiReportParams.sortPeriod,
-			"sortBatch":$rootScope.bsiReportParams.sortBatch,
-			"sortName":$rootScope.bsiReportParams.sortName,
-			"size":$rootScope.bsiReportParams.size
+			"page":$routeParams.page,
+			"condition":$routeParams.condition == 'null' ? null : $routeParams.condition,
+			"sort":$routeParams.sort,
+			"sortDate":$routeParams.sortDate,
+			"sortPeriod":$routeParams.sortPeriod,
+			"sortBatch":$routeParams.sortBatch,
+			"sortName":$routeParams.sortName,
+			"size":$routeParams.size,
+			"batch":$routeParams.batch == 'null' ? null : $routeParams.batch,
+			"period": $routeParams.period == 'null' ? null : $routeParams.period,
+		    "beginDate": $routeParams.beginDate == 'null' ? null : $routeParams.beginDate,
+		    "endDate": $routeParams.endDate == 'null' ? null : $routeParams.endDate,
 		};
 		
-		bsiService.getBSIPatientReport(params).
+		bsiService.getBSIPatientReport($scope.params).
 		success(function(dataMap){
 			$scope.bsiCharList = dataMap.bsiCharList;
 			$scope.bsi = dataMap.bsi;
 			$scope.pageList = dataMap.pageList;
-			$scope.data = $scope.data;
-			
+			$scope.batchPageList = dataMap.batchPageList;
+			$scope.data = dataMap.data;
 			$scope.tab = 'patient';
-		    var havestrain = "";
-		    for(var i=0;i<$scope.bsi.species_20.length;i++){
-		        havestrain += $scope.bsi.species_20[i].species_zh + ",";
+		    $scope.havestrain = "";
+		    if($scope.bsi && $scope.bsi.species_20){
+		    	for(var i=0;i<$scope.bsi.species_20.length;i++){
+		    		$scope.havestrain += $scope.bsi.species_20[i].species_zh + ",";
+			    }
+			    $scope.havestrain = $scope.havestrain.substr(0,$scope.havestrain.length - 1);
 		    }
-		    $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		    $scope.getRowspan = function(val1, val2, val3){
 		  	    var val0 = 1;
 		  	    if(val1 != null){
@@ -469,10 +473,149 @@
 		  	    }
 		  	    return val0;
 		    }
+		    $scope.reportPrev = function(currentPage){
+				if(currentPage > 1){
+					var options = $scope.params;
+					window.location.href = "index#/product/bsi/bsiprevreportdata/"+options.batch+"/"+options.period+"/"+options.beginDate+"/"+options.endDate+"/"+(currentPage-1)+"/"+options.condition+"/"+options.sort+"/"+options.sortDate+"/"+options.sortPeriod+"/"+options.sortBatch+"/"+options.sortName+"/"+options.size;
+				}
+			}
+			$scope.reportNext = function(currentPage){
+				var totalPage = $scope.pageList.page.totalPage;
+				currentPage = parseInt(currentPage);
+				if(currentPage < totalPage){
+					var options = $scope.params;
+					window.location.href = "index#/product/bsi/bsinextreportdata/"+options.batch+"/"+options.period+"/"+options.beginDate+"/"+options.endDate+"/"+(currentPage+1)+"/"+totalPage+"/"+options.condition+"/"+options.sort+"/"+options.sortDate+"/"+options.sortPeriod+"/"+options.sortBatch+"/"+options.sortName+"/"+options.size;
+				}
+			}
 		});
 	});
+	
+	celloudApp.controller("bsiPrevReportDataController",function($scope, $routeParams, bsiService){
+		$scope.params = {
+			"batch":$routeParams.batch == 'null' ? null : $routeParams.batch,
+			"period": $routeParams.period == 'null' ? null : $routeParams.period,
+		    "beginDate": $routeParams.beginDate == 'null' ? null : $routeParams.beginDate,
+		    "endDate": $routeParams.endDate == 'null' ? null : $routeParams.endDate,
+    		"isPrev":true,
+    		"page": $routeParams.page,
+    		"condition":$routeParams.condition == 'null' ? null : $routeParams.condition,
+			"sort":$routeParams.sort,
+			"sortDate":$routeParams.sortDate,
+			"sortPeriod":$routeParams.sortPeriod,
+			"sortBatch":$routeParams.sortBatch,
+			"size":$routeParams.size,
+			"sortName":$routeParams.sortName
+		};
+		
+		bsiService.getPrevOrNextBSIReport($scope.params).
+		success(function(dataMap){
+			$scope.bsiCharList = dataMap.bsiCharList;
+			$scope.bsi = dataMap.bsi;
+			$scope.pageList = dataMap.pageList;
+			$scope.batchPageList = dataMap.batchPageList;
+			$scope.data = dataMap.data;
+			$scope.tab = 'patient';
+		    $scope.havestrain = "";
+		    if($scope.bsi && $scope.bsi.species_20){
+		    	for(var i=0;i<$scope.bsi.species_20.length;i++){
+		    		$scope.havestrain += $scope.bsi.species_20[i].species_zh + ",";
+			    }
+			    $scope.havestrain = $scope.havestrain.substr(0,$scope.havestrain.length - 1);
+		    }
+		    $scope.getRowspan = function(val1, val2, val3){
+		  	    var val0 = 1;
+		  	    if(val1 != null){
+		  	  	  val0++;
+		  	    }
+		  	    if(val2 != null){
+		  	  	  val0++;
+		  	    }
+		  	    if(val3 != null){
+		  	  	  val0++;
+		  	    }
+		  	    return val0;
+		    }
+		    $scope.reportPrev = function(currentPage){
+		    	if(currentPage > 1){
+					var options = $scope.params;
+					window.location.href = "index#/product/bsi/bsiprevreportdata/"+options.batch+"/"+options.period+"/"+options.beginDate+"/"+options.endDate+"/"+(currentPage-1)+"/"+options.condition+"/"+options.sort+"/"+options.sortDate+"/"+options.sortPeriod+"/"+options.sortBatch+"/"+options.sortName+"/"+options.size;
+				}
+			}
+			$scope.reportNext = function(currentPage){
+				var totalPage = $scope.pageList.page.totalPage;
+				currentPage = parseInt(currentPage);
+				if(currentPage < totalPage){
+					var options = $scope.params;
+					window.location.href = "index#/product/bsi/bsinextreportdata/"+options.batch+"/"+options.period+"/"+options.beginDate+"/"+options.endDate+"/"+(currentPage+1)+"/"+totalPage+"/"+options.condition+"/"+options.sort+"/"+options.sortDate+"/"+options.sortPeriod+"/"+options.sortBatch+"/"+options.sortName+"/"+options.size;
+				}
+			}
+		});
+	});
+	
+	celloudApp.controller("bsiNextReportDataController",function($scope, $routeParams, bsiService){
+		$scope.params = {
+			"batch":$routeParams.batch == 'null' ? null : $routeParams.batch,
+			"period": $routeParams.period == 'null' ? null : $routeParams.period,
+			"beginDate": $routeParams.beginDate == 'null' ? null : $routeParams.beginDate,
+			"endDate": $routeParams.endDate == 'null' ? null : $routeParams.endDate,
+			"isPrev":false,
+			"page": $routeParams.page,
+			"condition":$routeParams.condition == 'null' ? null : $routeParams.condition,
+			"sort":$routeParams.sort,
+			"sortDate":$routeParams.sortDate,
+			"sortPeriod":$routeParams.sortPeriod,
+			"sortBatch":$routeParams.sortBatch,
+			"sortName":$routeParams.sortName,
+			"size":$routeParams.size,
+			"totalPage":$routeParams.totalPage
+		};
+		
+		bsiService.getPrevOrNextBSIReport($scope.params).
+		success(function(dataMap){
+			$scope.bsiCharList = dataMap.bsiCharList;
+			$scope.bsi = dataMap.bsi;
+			$scope.pageList = dataMap.pageList;
+			$scope.batchPageList = dataMap.batchPageList;
+			$scope.data = dataMap.data;
+			$scope.tab = 'patient';
+			$scope.havestrain = "";
+			if($scope.bsi && $scope.bsi.species_20){
+				for(var i=0;i<$scope.bsi.species_20.length;i++){
+					$scope.havestrain += $scope.bsi.species_20[i].species_zh + ",";
+				}
+				$scope.havestrain = $scope.havestrain.substr(0,$scope.havestrain.length - 1);
+			}
+			$scope.getRowspan = function(val1, val2, val3){
+				var val0 = 1;
+				if(val1 != null){
+					val0++;
+				}
+				if(val2 != null){
+					val0++;
+				}
+				if(val3 != null){
+					val0++;
+				}
+				return val0;
+			}
+			$scope.reportPrev = function(currentPage){
+				if(currentPage > 1){
+					var options = $scope.params;
+					window.location.href = "index#/product/bsi/bsiprevreportdata/"+options.batch+"/"+options.period+"/"+options.beginDate+"/"+options.endDate+"/"+(currentPage-1)+"/"+options.condition+"/"+options.sort+"/"+options.sortDate+"/"+options.sortPeriod+"/"+options.sortBatch+"/"+options.sortName+"/"+options.size;
+				}
+			}
+			$scope.reportNext = function(currentPage){
+				var totalPage = $scope.pageList.page.totalPage;
+				currentPage = parseInt(currentPage);
+				if(currentPage < totalPage){
+					var options = $scope.params;
+					window.location.href = "index#/product/bsi/bsinextreportdata/"+options.batch+"/"+options.period+"/"+options.beginDate+"/"+options.endDate+"/"+(currentPage+1)+"/"+totalPage+"/"+options.condition+"/"+options.sort+"/"+options.sortDate+"/"+options.sortPeriod+"/"+options.sortBatch+"/"+options.sortName+"/"+options.size;
+				}
+			}
+		});
+	});	
 	celloudApp.controller("bsiReportController", function($scope, $rootScope, bsiService) {
-		$rootScope.bsiReportParams = {
+		$scope.bsiReportParams = {
 			page: 1,
 		    size: 20,
 		    condition: null,
@@ -490,7 +633,7 @@
 		    sampleName: null
 		},
 		$scope.pageQuery = function(){
-			bsiService.reportPageQuery($rootScope.bsiReportParams).
+			bsiService.reportPageQuery($scope.bsiReportParams).
 			success(function(dataMap){
 				$scope.batchList = dataMap.batchList;
 				$scope.pageList = dataMap.pageList;
@@ -503,8 +646,8 @@
 		 */
 		$scope.reportBatchSearch = function(batchId){
 			if(!$("#batch-sl").hasClass("select-more")){
-				$rootScope.bsiReportParams.batch = "'" + $("#" + batchId).next().find("span").text() + "'";
-				$rootScope.bsiReportParams.page = 1;
+				$scope.bsiReportParams.batch = "'" + $("#" + batchId).next().find("span").text() + "'";
+				$scope.bsiReportParams.page = 1;
 				$scope.pageQuery();
 				$("#selected-batch span").html($("#" + batchId).next().find("span").text());
 				$("#selected-batch").removeClass("hide");
@@ -520,8 +663,8 @@
 	        $("#batch-more").removeClass("disabled");
 	        $("#batch-more").attr("disabled",false);
 	        $("#batch-lists").find(".multisl-btns").addClass("hide");
-	        $rootScope.bsiReportParams.batch = null;
-	        $rootScope.bsiReportParams.page = 1;
+	        $scope.bsiReportParams.batch = null;
+	        $scope.bsiReportParams.page = 1;
 	        $scope.pageQuery();
 		}
 		/**
@@ -584,7 +727,7 @@
 		$scope.reportMultibatchSearch = function(){
 			var show_val = [];
 	        $("#batch-lists .checkbox-ed").each(function(){
-	            $rootScope.bsiReportParams.batch == null? $rootScope.bsiReportParams.batch = "'"+$(this).next().text()+"'" : $rootScope.bsiReportParams.batch += ",'"+$(this).next().text() + "'";
+	            $scope.bsiReportParams.batch == null? $scope.bsiReportParams.batch = "'"+$(this).next().text()+"'" : $scope.bsiReportParams.batch += ",'"+$(this).next().text() + "'";
 	            show_val.push($(this).next().text());
 	        });
 	        $scope.pageQuery();
@@ -618,8 +761,8 @@
 		 */
 		$scope.reportPeriodSearch = function(periodId){
 			if(!$("#period-sl").hasClass("select-more")){
-				$rootScope.bsiReportParams.period = $("#" + periodId).next().find("input").val();
-				$rootScope.bsiReportParams.page = 1;
+				$scope.bsiReportParams.period = $("#" + periodId).next().find("input").val();
+				$scope.bsiReportParams.page = 1;
 				$scope.pageQuery();
 				$("#selected-period span").html($("#" + periodId).next().find("span").text());
 				$("#selected-period").removeClass("hide");
@@ -632,7 +775,7 @@
 		$scope.clearSlPeriod = function(){
 			$("#selected-period").addClass("hide");
 			$("#to-sl-period").removeClass("hide");
-			$rootScope.bsiReportParams.period = null;
+			$scope.bsiReportParams.period = null;
 			$scope.pageQuery();
 		}
 		/**
@@ -672,7 +815,7 @@
 		$scope.reportMultiperiodSearch = function(){
 			var show_val = [];
             $("#period-lists .checkbox-ed").each(function(){
-              $rootScope.bsiReportParams.period == null? $rootScope.bsiReportParams.period = $(this).next().find("input[type='hidden']").val() : $rootScope.bsiReportParams.period += ","+$(this).next().find("input[type='hidden']").val();
+              $scope.bsiReportParams.period == null? $scope.bsiReportParams.period = $(this).next().find("input[type='hidden']").val() : $scope.bsiReportParams.period += ","+$(this).next().find("input[type='hidden']").val();
               show_val.push($(this).next().find("span").html());
             });
             $scope.pageQuery();
@@ -704,8 +847,8 @@
 		 * 按照日期查询
 		 */
 		$scope.dateQuery = function(){
-          $rootScope.bsiReportParams.beginDate = $("#report-begindate-search").val();
-          $rootScope.bsiReportParams.endDate = $("#report-enddate-search").val();
+          $scope.bsiReportParams.beginDate = $("#report-begindate-search").val();
+          $scope.bsiReportParams.endDate = $("#report-enddate-search").val();
           $scope.pageQuery();
         }
 		/**
@@ -716,41 +859,41 @@
 			if(distribute.find(".sl-judge-no").hasClass("hide")){
 				distribute.find(".sl-judge-no").removeClass("hide");
 				distribute.find(".sl-judge-yes").addClass("hide");
-	            $rootScope.bsiReportParams.distributed = 1;
+	            $scope.bsiReportParams.distributed = 1;
 	        }else{
 	        	distribute.find(".sl-judge-yes").removeClass("hide");
 	            distribute.find(".sl-judge-no").addClass("hide");
-	            $rootScope.bsiReportParams.distributed = 0;
+	            $scope.bsiReportParams.distributed = 0;
 	        }
 	        $scope.pageQuery();
 		}
 		$scope.sortDate = function(){
-			$rootScope.bsiReportParams.sort = 0;
-			$rootScope.bsiReportParams.sortDate = $rootScope.bsiReportParams.sortDate == "desc" ? "asc" : "desc";
-			$rootScope.sortIcon($rootScope.bsiReportParams);
+			$scope.bsiReportParams.sort = 0;
+			$scope.bsiReportParams.sortDate = $scope.bsiReportParams.sortDate == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortBatch = function(){
-			$rootScope.bsiReportParams.sort = 1;
-			$rootScope.bsiReportParams.sortBatch = $rootScope.bsiReportParams.sortBatch == "desc" ? "asc" : "desc";
-			$rootScope.sortIcon($rootScope.bsiReportParams);
+			$scope.bsiReportParams.sort = 1;
+			$scope.bsiReportParams.sortBatch = $scope.bsiReportParams.sortBatch == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortName = function(){
-			$rootScope.bsiReportParams.sort = 2;
-			$rootScope.bsiReportParams.sortName = $rootScope.bsiReportParams.sortName == "desc" ? "asc" : "desc";
-			$rootScope.sortIcon($rootScope.bsiReportParams);
+			$scope.bsiReportParams.sort = 2;
+			$scope.bsiReportParams.sortName = $scope.bsiReportParams.sortName == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortPeriod = function(){
-			$rootScope.bsiReportParams.sort = 3;
-			$rootScope.bsiReportParams.sortPeriod = $rootScope.bsiReportParams.sortPeriod == "desc" ? "asc" : "desc";
-			$rootScope.sortIcon($rootScope.bsiReportParams);
+			$scope.bsiReportParams.sort = 3;
+			$scope.bsiReportParams.sortPeriod = $scope.bsiReportParams.sortPeriod == "desc" ? "asc" : "desc";
+			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.pageSizeQuery = function(){
-			$rootScope.bsiReportParams.size = $("#page-size-sel").val();
-			$rootScope.bsiReportParams.page = 1;
+			$scope.bsiReportParams.size = $("#page-size-sel").val();
+			$scope.bsiReportParams.page = 1;
 			$scope.pageQuery();
 		}
 		$scope.reRun = function(dataKey,appId,projectId){
@@ -760,36 +903,13 @@
 			})
 		}
 		$scope.paginationBtn = function(currentPage){
-			$rootScope.bsiReportParams.page = currentPage;
+			$scope.bsiReportParams.page = currentPage;
 			$scope.pageQuery();
 		}
 		$scope.periodError = function(dataName){
 			$("#run-error-data").html(dataName);
 			$("#running-error-modal").modal("show");
 		}
-		$scope.reportPrev = function(currentPage){
-			if(currentPage > 1){
-				var options = $rootScope.bsiReportParams;
-				$.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":true,"page":currentPage-1,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
-					if(response != null &&response !=""){
-						$("#container").html(response);
-					}
-				});
-			}
-		}
-		$scope.reportNext = function(currentPage){
-			var totalPage = $("#total-page-hide").val();
-			currentPage = parseInt(currentPage);
-			if(currentPage < totalPage){
-				var options = $rootScope.bsiReportParams;
-				$.post("report/getPrevOrNextBSIReport",{"batch":options.batch,"period":options.period,"beginDate":options.beginDate,"endDate":options.endDate,"isPrev":false,"page":currentPage+1,"totalPage":totalPage,"condition":options.condition,"sort":options.sort,"sortDate":options.sortDate,"sortPeriod":options.sortPeriod,"sortBatch":options.sortBatch,"sortName":options.sortName},function(response){
-					if(response != null &&response !=""){
-						$("#container").html(response);
-					}
-				});
-			}
-		}
-		
 //		$("#condition-find").unbind("click");
 //        $("#condition-find").on("click",function(){
 //          $.report.options.condition = $("#condition-input").val();
