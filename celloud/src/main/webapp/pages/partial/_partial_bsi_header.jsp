@@ -16,7 +16,7 @@
                <a class="item-btn" ng-class="{active: isActive('bsidata')}" id="to-data-a" di-href="${pageContext.request.contextPath }/index#/product/bsi/bsidata">
                    <i class="celicon my-data-icon"></i><br>数据
                </a>
-               <a class="item-btn" ng-class="{active: isActive('bsireport')}" id="to-report-a" di-href="${pageContext.request.contextPath }/index#/product/bsi/bsireport">
+               <a class="item-btn" ng-class="{active: isActive('bsireport') || isActive('bsiprevreportdata') || isActive('bsinextreportdata')}" id="to-report-a" di-href="${pageContext.request.contextPath }/index#/product/bsi/bsireport">
                    <i class="celicon my-report-icon"></i><br>报告
                </a>
             </div>

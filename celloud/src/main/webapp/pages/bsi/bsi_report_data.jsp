@@ -337,9 +337,9 @@
 				    </tr>
 				  </thead>
 				  <tbody id="data-list-tbody" ng-if="batchPageList.datas.length > 0">
-			        <tr id="reportbatch{{task.dataKey}}" ng-repeat="task in batchPageList.datas">
+			        <tr id="reportbatch{{task.dataKey}}" ng-class="{active: task.dataKey == bsi.dataKey }" ng-repeat="task in batchPageList.datas">
 			          <td title="{{task.fileName}}" name="data-name-td" >
-		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/{{$index + 1}}" ng-if="task.period == 2">
+		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/{{$index + 1}}/{{params.page}}/{{params.condition==null?'null':params.condition}}/{{params.sort}}/{{params.sortDate}}/{{params.sortPeriod}}/{{params.sortBatch}}/{{params.sortName}}/{{params.size}}/{{params.batch==null?'null':params.batch}}/{{params.period==null?'null':params.period}}/{{params.beginDate==null?'null':params.beginDate}}/{{params.endDate==null?'null':params.endDate}}" ng-if="task.period == 2">
 		                   {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName == null? '' : task.anotherName}}
 		                 </a>
 		                 <a href="javascript:void(0)" ng-if="task.period != 2">

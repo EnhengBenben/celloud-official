@@ -946,17 +946,17 @@ public class ReportAction {
                     DataFile df = dataService.getDataByKey(dataKey);
                     dataMap.put("data", df);
                     dataMap.put("pageList", pageList);
-                    return dataMap;
-                } else {
-                    return null;
-                }
-            } else {
-                return null;
-            }
-        } else {
-            return null;
-        }
 
+                    // 获取右侧列表
+                    Page batchPager = new Page(1, 10);
+                    PageList<Task> batchPageList = taskService.findTasksByBatch(batchPager,
+                            ConstantsData.getLoginUserId(), bsi.getAppId(), df.getBatch());
+                    dataMap.put("batchPageList", batchPageList);
+                    return dataMap;
+                }
+            }
+        }
+        return null;
     }
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）

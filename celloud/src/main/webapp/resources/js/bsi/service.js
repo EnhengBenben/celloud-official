@@ -12,5 +12,8 @@
 		this.dataPageQuery = function(params){
 			return $http({method:"POST",url:'data/bsi/dataPageQuery',data:$.param(params),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
 		}
+		this.getPrevOrNextBSIReport = function(params){
+			return $http({method:"POST",url:'report/getPrevOrNextBSIReportInfo',data:$.param(params),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+		}
 	});
 })();

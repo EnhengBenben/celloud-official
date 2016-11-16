@@ -249,9 +249,17 @@
       templateUrl: "pages/bsi/bsi_data.jsp",
       controller: "bsiDataController"
     })
-    .when('/product/bsi/bsireportdata/:dataKey/:projectId/:appId/:reportIndex',{
+    .when('/product/bsi/bsireportdata/:dataKey/:projectId/:appId/:reportIndex/:page/:condition/:sort/:sortDate/:sortPeriod/:sortBatch/:sortName/:size/:batch/:period/:beginDate/:endDate',{
       templateUrl: "pages/bsi/bsi_report_data.jsp",
       controller: "bsiReportDataController"
+    })
+    .when('/product/bsi/bsiprevreportdata/:batch/:period/:beginDate/:endDate/:page/:condition/:sort/:sortDate/:sortPeriod/:sortBatch/:sortName/:size',{
+    	templateUrl: "pages/bsi/bsi_report_data.jsp",
+    	controller: "bsiPrevReportDataController"
+    })
+    .when('/product/bsi/bsinextreportdata/:batch/:period/:beginDate/:endDate/:page/:totalPage/:condition/:sort/:sortDate/:sortPeriod/:sortBatch/:sortName/:size',{
+    	templateUrl: "pages/bsi/bsi_report_data.jsp",
+    	controller: "bsiNextReportDataController"
     })
     .when('/company/user',{
 	  templateUrl: "pages/company/company_user.jsp",
