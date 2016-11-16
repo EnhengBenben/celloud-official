@@ -89,6 +89,7 @@
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
 	  window.username = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUsername() %>';
+	  window.userId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUserId() %>';
   </script>
 </body>
 </html>

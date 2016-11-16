@@ -22,14 +22,14 @@ public class UploadPathUtils {
 	}
 
 	public static String getListPathInOSS() {
-		return ConstantsData.getOfsPath() + "list" + S + DateUtil.getDateToString("yyyyMMdd") + S;
+		return ConstantsData.getOfsPath() + "list/" + DateUtil.getDateToString("yyyyMMdd") + "/";
 	}
 
 	public static String getObjectKeyByPath(String path) {
 		return path.startsWith(ConstantsData.getOfsPath()) ? path.substring(ConstantsData.getOfsPath().length()) : null;
 	}
 
-	public static String getObjectKeyByFile(File file) {
-		return getObjectKeyByPath(file.getAbsolutePath());
+	public static String getOutPathInOSS(Integer userId, Integer appId) {
+		return ConstantsData.getOfsPath() + "output/" + userId + "/" + appId + "/";
 	}
 }

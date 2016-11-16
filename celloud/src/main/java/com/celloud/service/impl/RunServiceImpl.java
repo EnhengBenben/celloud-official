@@ -39,6 +39,7 @@ import com.celloud.utils.AppSubmitUtil;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.Response;
+import com.celloud.utils.UploadPathUtils;
 
 @Service("runService")
 public class RunServiceImpl implements RunService {
@@ -194,7 +195,7 @@ public class RunServiceImpl implements RunService {
 			new File(appPath).mkdirs();
 		}
 		if (dataList.get(0).getOssPath() != null) {
-			appPath = "";
+			appPath = UploadPathUtils.getObjectKeyByPath(UploadPathUtils.getOutPathInOSS(userId, appId));
 		}
 		for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
 			String dataKey = entry.getKey();

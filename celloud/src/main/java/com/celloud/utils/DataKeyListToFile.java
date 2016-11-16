@@ -1,6 +1,5 @@
 package com.celloud.utils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,7 +35,7 @@ public class DataKeyListToFile {
 			String dataListFile = getDataListFile(data.getOssPath() != null);
 			FileTools.appendWrite(dataListFile,
 					data.getOssPath() == null ? data.getPath() : data.getOssPath() + "\t" + data.getFileName());
-			dataListFileMap.put(data.getDataKey(), UploadPathUtils.getObjectKeyByFile(new File(dataListFile)));
+			dataListFileMap.put(data.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, String.valueOf(dataList.size()));
 		return dataListFileMap;
@@ -55,7 +54,7 @@ public class DataKeyListToFile {
 			DataFile data = iterator.next();
 			String dataListFile = getDataListFile(data.getOssPath() != null);
 			FileTools.appendWrite(dataListFile, data.getOssPath() == null ? data.getPath() : data.getOssPath());
-			dataListFileMap.put(data.getDataKey(), UploadPathUtils.getObjectKeyByFile(new File(dataListFile)));
+			dataListFileMap.put(data.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, String.valueOf(dataList.size()));
 		return dataListFileMap;
@@ -115,8 +114,7 @@ public class DataKeyListToFile {
 							.append("\t");
 					String dataListFile = getDataListFile(data_AR1.getOssPath() != null);
 					FileTools.appendWrite(dataListFile, dataFileInfo.toString());
-					dataListFileMap.put(data_AR1.getDataKey(),
-							UploadPathUtils.getObjectKeyByFile(new File(dataListFile)));
+					dataListFileMap.put(data_AR1.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
 					dataReportNum++;
 				}
 			}
@@ -161,7 +159,7 @@ public class DataKeyListToFile {
 			}
 			String dataListFile = getDataListFile(data.getOssPath() != null);
 			FileTools.appendWrite(dataListFile, sb.toString());
-			dataListFileMap.put(dataKey, UploadPathUtils.getObjectKeyByFile(new File(dataListFile)));
+			dataListFileMap.put(dataKey, UploadPathUtils.getObjectKeyByPath(dataListFile));
 			dataReportNum++;
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, dataReportNum.toString());
@@ -199,7 +197,7 @@ public class DataKeyListToFile {
 		String dataListFile = getDataListFile(inOSS);
 		sb.append(pathList.get(0)).append("\t").append(pathList.get(1)).append("\t").append(endPath);
 		FileTools.appendWrite(dataListFile, sb.toString());
-		dataListFileMap.put(dataKey, UploadPathUtils.getObjectKeyByFile(new File(dataListFile)));
+		dataListFileMap.put(dataKey, UploadPathUtils.getObjectKeyByPath(dataListFile));
 		dataListFileMap.put(DATA_REPORT_NUM, "1");
 		return dataListFileMap;
 	}
