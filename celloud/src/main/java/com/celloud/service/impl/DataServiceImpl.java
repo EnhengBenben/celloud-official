@@ -322,6 +322,10 @@ public class DataServiceImpl implements DataService {
 			anotherName = m1.replaceAll("").trim();
 			new File(outPath).delete();
 		}
+		File file = new File(outPath);
+		if (file.exists()) {
+			file.delete();
+		}
 		return anotherName;
 	}
 
@@ -412,7 +416,7 @@ public class DataServiceImpl implements DataService {
 		data.setFileFormat(fileFormat);
 		dataFileMapper.updateByPrimaryKeySelective(data);
 		data = dataFileMapper.selectByPrimaryKey(dataId);
-		//TODO 需要根据tagId判断是否rocky
+		// TODO 需要根据tagId判断是否rocky
 		runService.rockyCheckRun(123, data);
 		return dataId;
 	}
