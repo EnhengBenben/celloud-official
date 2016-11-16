@@ -400,9 +400,10 @@ public class DataServiceImpl implements DataService {
 		// FileTools.getExtName(name));
 		String path = ConstantsData.getOfsPath() + objectKey;
 		// data.setPath(path);
-		boxApiService.downloadFromOSS(objectKey, path, data.getMd5());
+		// boxApiService.downloadFromOSS(objectKey, path, data.getMd5());
 		long time = System.currentTimeMillis();
 		data.setAnotherName(getAnotherName("", path, ""));
+		logger.info("文件：name={},path={}", data.getFileName(), path);
 		logger.info("获取anotherName用时：{}", System.currentTimeMillis() - time);
 		time = System.currentTimeMillis();
 		int fileFormat = new CheckFileTypeUtil().checkFileType(new File(path).getName(),
