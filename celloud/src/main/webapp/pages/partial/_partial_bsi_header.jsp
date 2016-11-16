@@ -51,7 +51,7 @@
                         <div class="step-three">3</div>
                     </div>
                     <div class="step-one-content">
-                        <input id="batch-info" type="text" placeholder="请输入标签" value="" ng-keypress="batchInfo($event)" />
+                        <input id="batch-info" type="text" placeholder="请输入标签" ng-model="bsiBatch" ng-keypress="batchInfo($event)" />
                         <br>
                         <p>
                             <span>
