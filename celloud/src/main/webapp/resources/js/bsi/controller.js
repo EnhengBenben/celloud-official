@@ -339,7 +339,7 @@
 	        }
 		}
 		$scope.closeUploadModal = function(){
-			if($rootScope.bsiUploader.files.length<=0){
+			if($rootScope.bsiUploader && $rootScope.bsiUploader.files.length<=0){
 	    		$(".step-one-content").removeClass("hide");
 	    		$(".step-two-content").addClass("hide");
 	    		$("#one-to-two").removeClass("active");
