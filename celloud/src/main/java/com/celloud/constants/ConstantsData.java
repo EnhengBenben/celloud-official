@@ -229,7 +229,7 @@ public class ConstantsData {
 		if (systemProperties == null) {
 			loadSystemProperties();
 		}
-		String ofsPath = systemProperties.getProperty("ofsPath");
+		String ofsPath = systemProperties.getProperty("ossfsPath");
 		if (ofsPath != null && !ofsPath.endsWith(File.separatorChar + "")) {
 			ofsPath = ofsPath + File.separatorChar;
 		}
