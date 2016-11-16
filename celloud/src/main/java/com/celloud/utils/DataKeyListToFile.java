@@ -212,8 +212,8 @@ public class DataKeyListToFile {
 	}
 
 	private static String getDataListFile(boolean inOSS) {
-		return inOSS ? UploadPathUtils.getListPathInOSS()
-				: datalist + new Date().getTime() + "_" + new Double(Math.random() * 1000).intValue() + ".txt";
+		return (inOSS ? UploadPathUtils.getListPathInOSS() : datalist) + new Date().getTime() + "_"
+				+ new Double(Math.random() * 1000).intValue() + ".txt";
 	}
 
 }
