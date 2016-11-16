@@ -26,7 +26,7 @@ public class UploadPathUtils {
 	}
 
 	public static String getObjectKeyByPath(String path) {
-		return path.startsWith(ConstantsData.getOfsPath()) ? path.substring(ConstantsData.getOfsPath().length()) : null;
+		return path.startsWith(ConstantsData.getOfsPath()) ? path.substring(ConstantsData.getOfsPath().length()) : path;
 	}
 
 	public static String getOutPathInOSS(Integer userId, Integer appId) {
