@@ -14,6 +14,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.BoxUploadState;
@@ -40,7 +42,6 @@ import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.OSSUtils;
 import com.celloud.utils.PerlUtils;
-import com.celloud.utils.UploadPathUtils;
 
 /**
  * 数据管理服务实现类
@@ -50,6 +51,7 @@ import com.celloud.utils.UploadPathUtils;
  */
 @Service("dataService")
 public class DataServiceImpl implements DataService {
+	private static Logger logger = LoggerFactory.getLogger(DataServiceImpl.class);
 	@Resource
 	DataFileMapper dataFileMapper;
 	@Resource
@@ -394,13 +396,18 @@ public class DataServiceImpl implements DataService {
 		data.setOssPath(objectKey);
 		data.setUserId(userId);
 		updateDataInfoByFileIdAndTagId(data, tagId);
-		String path = UploadPathUtils.getLocalPath(userId, fileDataKey, FileTools.getExtName(name));
-		//String path = ConstantsData.getOfsPath() + objectKey;
-		//data.setPath(path);
+		// String path = UploadPathUtils.getLocalPath(userId, fileDataKey,
+		// FileTools.getExtName(name));
+		String path = ConstantsData.getOfsPath() + objectKey;
+		// data.setPath(path);
 		boxApiService.downloadFromOSS(objectKey, path, data.getMd5());
+		long time = System.currentTimeMillis();
 		data.setAnotherName(getAnotherName("", path, ""));
+		logger.info("获取anotherName用时：{}", System.currentTimeMillis() - time);
+		time = System.currentTimeMillis();
 		int fileFormat = new CheckFileTypeUtil().checkFileType(new File(path).getName(),
 				new File(path).getParentFile().getAbsolutePath());
+		logger.info("获取文件类型用时：{}", System.currentTimeMillis() - time);
 		data.setFileFormat(fileFormat);
 		dataFileMapper.updateByPrimaryKeySelective(data);
 		data = dataFileMapper.selectByPrimaryKey(dataId);

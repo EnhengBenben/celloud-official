@@ -2,6 +2,8 @@ package com.celloud.utils;
 
 import java.io.File;
 
+import com.celloud.constants.ConstantsData;
+
 /**
  * 生成上传文件的各种路径的工具类
  * 
@@ -19,4 +21,15 @@ public class UploadPathUtils {
 				.append(ext).toString();
 	}
 
+	public static String getListPathInOSS() {
+		return ConstantsData.getOfsPath() + "list" + S + DateUtil.getDateToString("yyyyMMdd") + S;
+	}
+
+	public static String getObjectKeyByPath(String path) {
+		return path.startsWith(ConstantsData.getOfsPath()) ? path.substring(ConstantsData.getOfsPath().length()) : null;
+	}
+
+	public static String getObjectKeyByFile(File file) {
+		return getObjectKeyByPath(file.getAbsolutePath());
+	}
 }
