@@ -11,6 +11,12 @@ jarfile=$filepath/box-1.0.1-SNAPSHOT.jar
 function start(){
 	check
 	num=$?
+    if [ ! -f $jarfile ]
+    then
+        echo "[ ERROR ] File is not found : $jarfile"
+        exit
+    fi
+
 	if [ $num -eq 0 ]
 	then
 		echo 'Application is already running !'
