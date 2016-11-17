@@ -783,7 +783,9 @@ public class ReportAction {
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getBSIPatientReportInfo")
     @ResponseBody
-    public Map<String, Object> getBSIPatientReportInfo(String dataKey, Integer projectId, Integer appId,
+    public Map<String, Object> getBSIPatientReportInfo(String dataKey,
+            Integer projectId,
+            Integer appId,
             Integer reportIndex,
             @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size, String condition,
             @RequestParam(defaultValue = "0") int sort, @RequestParam(defaultValue = "desc") String sortDate,
@@ -817,11 +819,6 @@ public class ReportAction {
         dataMap.put("pageList", pageList);
         dataMap.put("data", df);
 
-        // 获取右侧列表
-        Page batchPager = new Page(page, size);
-        PageList<Task> batchPageList = taskService.findTasksByBatch(batchPager, ConstantsData.getLoginUserId(), appId,
-                df.getBatch());
-        dataMap.put("batchPageList", batchPageList);
         log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
 
         return dataMap;
@@ -947,11 +944,6 @@ public class ReportAction {
                     dataMap.put("data", df);
                     dataMap.put("pageList", pageList);
 
-                    // 获取右侧列表
-                    Page batchPager = new Page(1, 10);
-                    PageList<Task> batchPageList = taskService.findTasksByBatch(batchPager,
-                            ConstantsData.getLoginUserId(), bsi.getAppId(), df.getBatch());
-                    dataMap.put("batchPageList", batchPageList);
                     return dataMap;
                 }
             }
@@ -3965,6 +3957,20 @@ public class ReportAction {
 		log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
 		return mv;
 	}
+
+    @ActionLog(value = "获取所有数据任务列表", button = "报告详情翻页")
+    @RequestMapping("bsi/batchReportListInfo")
+    @ResponseBody
+    public Map<String, Object> batchReportListInfo(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size, String batch, Integer appId) {
+        log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+        Page pager = new Page(page, size);
+        PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
+                batch);
+        dataMap.put("batchPageList", batchPageList);
+        return dataMap;
+    }
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/bsi/batchReportList")

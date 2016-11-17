@@ -1199,6 +1199,7 @@ a, a:link, a:hover, a:active, a:visited {
 	font-weight: bold;
 }
 .rdata-content{
+	margin-top: 20px;
 	margin-right: 90px;
 }
 .content .data-content-footer ul>li>span{

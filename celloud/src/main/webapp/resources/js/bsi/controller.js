@@ -445,15 +445,37 @@
 		    "endDate": $routeParams.endDate == 'null' ? null : $routeParams.endDate,
 		};
 		
+		$scope.batchPageQuery = function(params){
+			bsiService.getBatchPageList(params).
+	    	success(function(dataMap){
+	    		$scope.batchPageList = dataMap.batchPageList;
+	    	})
+		}
+		
+		$scope.batchPageQueryBtn = function(currentPage){
+			$scope.batchParams.page = currentPage;
+			$scope.batchPageQuery($scope.batchParams);
+		}
+		
 		bsiService.getBSIPatientReport($scope.params).
 		success(function(dataMap){
 			$scope.bsiCharList = dataMap.bsiCharList;
 			$scope.bsi = dataMap.bsi;
 			$scope.pageList = dataMap.pageList;
-			$scope.batchPageList = dataMap.batchPageList;
 			$scope.data = dataMap.data;
 			$scope.tab = 'patient';
 		    $scope.havestrain = "";
+		    
+		    if($scope.bsi){
+		    	$scope.batchParams = {
+		    		"page" : 1,
+		    		"size" : 10,
+		    		"batch" : $scope.data.batch,
+		    		"appId" : $scope.bsi.appId
+		    	}
+		    }
+		    $scope.batchPageQuery($scope.batchParams);
+		    
 		    if($scope.bsi && $scope.bsi.species_20){
 		    	for(var i=0;i<$scope.bsi.species_20.length;i++){
 		    		$scope.havestrain += $scope.bsi.species_20[i].species_zh + ",";
@@ -507,6 +529,13 @@
 			"sortName":$routeParams.sortName
 		};
 		
+		$scope.batchPageQuery = function(params){
+			bsiService.getBatchPageList(params).
+	    	success(function(dataMap){
+	    		$scope.batchPageList = dataMap.batchPageList;
+	    	})
+		}
+		
 		bsiService.getPrevOrNextBSIReport($scope.params).
 		success(function(dataMap){
 			$scope.bsiCharList = dataMap.bsiCharList;
@@ -516,6 +545,17 @@
 			$scope.data = dataMap.data;
 			$scope.tab = 'patient';
 		    $scope.havestrain = "";
+		    
+		    if($scope.bsi){
+		    	$scope.batchParams = {
+		    		"page" : 1,
+		    		"size" : 10,
+		    		"batch" : $scope.data.batch,
+		    		"appId" : $scope.bsi.appId
+		    	}
+		    }
+		    $scope.batchPageQuery($scope.batchParams);
+		    
 		    if($scope.bsi && $scope.bsi.species_20){
 		    	for(var i=0;i<$scope.bsi.species_20.length;i++){
 		    		$scope.havestrain += $scope.bsi.species_20[i].species_zh + ",";
@@ -570,6 +610,13 @@
 			"totalPage":$routeParams.totalPage
 		};
 		
+		$scope.batchPageQuery = function(params){
+			bsiService.getBatchPageList(params).
+	    	success(function(dataMap){
+	    		$scope.batchPageList = dataMap.batchPageList;
+	    	})
+		}
+		
 		bsiService.getPrevOrNextBSIReport($scope.params).
 		success(function(dataMap){
 			$scope.bsiCharList = dataMap.bsiCharList;
@@ -579,6 +626,17 @@
 			$scope.data = dataMap.data;
 			$scope.tab = 'patient';
 			$scope.havestrain = "";
+			
+			if($scope.bsi){
+		    	$scope.batchParams = {
+		    		"page" : 1,
+		    		"size" : 10,
+		    		"batch" : $scope.data.batch,
+		    		"appId" : $scope.bsi.appId
+		    	}
+		    }
+		    $scope.batchPageQuery($scope.batchParams);
+			
 			if($scope.bsi && $scope.bsi.species_20){
 				for(var i=0;i<$scope.bsi.species_20.length;i++){
 					$scope.havestrain += $scope.bsi.species_20[i].species_zh + ",";
@@ -640,6 +698,15 @@
 				$scope.periodMap = dataMap.periodMap;
 				$scope.nowDate = dataMap.nowDate;
 			})
+		}
+		$scope.conditionFind = function(){
+			$scope.bsiReportParams.condition = $("#condition-input").val();
+			$scope.pageQuery();
+		}
+		$scope.conditionSearch = function($event){
+			if($event.keyCode == 13){
+	    		$scope.conditionFind();
+	    	}
 		}
 		/**
 		 * 点击单个标签时的搜索
@@ -1016,6 +1083,15 @@
 			success(function(dataMap){
 				$scope.pageList = dataMap.pageList;
 			})
+		}
+		$scope.conditionFind = function(){
+			$scope.params.condition = $("#condition-input").val();
+			$scope.pageQuery();
+		}
+		$scope.conditionSearch = function($event){
+			if($event.keyCode == 13){
+	    		$scope.conditionFind();
+	    	}
 		}
 		// 分页按钮
 		$scope.paginationBtn = function(currentPage){
