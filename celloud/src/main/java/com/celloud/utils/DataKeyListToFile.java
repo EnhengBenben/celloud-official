@@ -34,7 +34,7 @@ public class DataKeyListToFile {
 			DataFile data = iterator.next();
 			String dataListFile = getDataListFile(data.getOssPath() != null);
 			FileTools.appendWrite(dataListFile,
-					data.getOssPath() == null ? data.getPath() : data.getOssPath() + "\t" + data.getFileName());
+					(data.getOssPath() == null ? data.getPath() : data.getOssPath()) + "\t" + data.getFileName());
 			dataListFileMap.put(data.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, String.valueOf(dataList.size()));
