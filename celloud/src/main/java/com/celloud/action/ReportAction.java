@@ -783,44 +783,26 @@ public class ReportAction {
     @ActionLog(value = "查看BSI患者报告", button = "数据报告")
     @RequestMapping("getBSIPatientReportInfo")
     @ResponseBody
-    public Map<String, Object> getBSIPatientReportInfo(String dataKey,
-            Integer projectId,
-            Integer appId,
-            Integer reportIndex,
-            @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size, String condition,
-            @RequestParam(defaultValue = "0") int sort, @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch, @RequestParam(defaultValue = "asc") String sortName,
-            @RequestParam(defaultValue = "asc") String sortPeriod, String batch, String period, String beginDate,
-            String endDate, String sampleName) {
-        Map<String, Object> dataMap = new HashMap<String, Object>();
-        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
-        Matcher m = p.matcher(condition);
-        StringBuffer con_sb = new StringBuffer();
-        while (m.find()) {
-            String rep = "\\\\" + m.group(0);
-            m.appendReplacement(con_sb, rep);
-        }
-        m.appendTail(con_sb);
-        Page pager = new Page((page - 1) * size + reportIndex, 1);
-        PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
-                sort, sortDate, sortBatch, sortName, sortPeriod, batch, period, beginDate, endDate, appId, sampleName);
-
-        BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
-        Map<String, List<List<String>>> mibCharList = new HashMap<>();
-        if (bsi == null)
-            return dataMap;
-        mibCharList.put("readsDistributionInfo", bsi.getReadsDistributionInfo());
-        mibCharList.put("familyDistributionInfo", bsi.getFamilyDistributionInfo());
-        mibCharList.put("genusDistributionInfo", bsi.getGenusDistributionInfo());
-        dataMap.put("bsiCharList", mibCharList);
-        dataMap.put("bsi", bsi);
-
-        DataFile df = dataService.getDataByKey(dataKey);
-        dataMap.put("pageList", pageList);
-        dataMap.put("data", df);
-
+    public Map<String, Object> getBSIPatientReportInfo(String dataKey, Integer projectId, Integer appId, String batch,
+            Integer dataIndex) {
         log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
-
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+        // 代表上一页, 下一页, 需要动态获取dataKey, projectId, dataKey
+        if (dataIndex != 0) {
+            Page pager = new Page(dataIndex, 1);
+            PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
+                    batch);
+            BSI bsi = reportService.getBSIReport(batchPageList.getDatas().get(0).getDataKey(),
+                    batchPageList.getDatas().get(0).getProjectId(), batchPageList.getDatas().get(0).getAppId());
+            DataFile df = dataService.getDataByKey(dataKey);
+            dataMap.put("bsi", bsi);
+            dataMap.put("data", df);
+        } else {
+            BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+            DataFile df = dataService.getDataByKey(dataKey);
+            dataMap.put("bsi", bsi);
+            dataMap.put("data", df);
+        }
         return dataMap;
     }
 
@@ -3961,14 +3943,51 @@ public class ReportAction {
     @ActionLog(value = "获取所有数据任务列表", button = "报告详情翻页")
     @RequestMapping("bsi/batchReportListInfo")
     @ResponseBody
-    public Map<String, Object> batchReportListInfo(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size, String batch, Integer appId) {
-        log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
+    public Map<String, Object> batchReportListInfo(Integer page, String batch, Integer appId, String dataKey,
+            Integer dataIndex) {
         Map<String, Object> dataMap = new HashMap<String, Object>();
-        Page pager = new Page(page, size);
-        PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
-                batch);
-        dataMap.put("batchPageList", batchPageList);
+        if (dataIndex != 0) {
+            log.info("血流用户 {} 查看报告(点击上一份或下一份)", ConstantsData.getLoginUserId());
+            // 此处是上一份, 下一份, 直接会传递dataIndex, 可直接根据dataIndex和batch查询分页列表
+            Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex;
+            Page pager = new Page(currentPage, 10);
+            PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
+                    batch);
+            dataMap.put("batchPageList", batchPageList);
+            dataMap.put("dataIndex", dataIndex);
+            dataMap.put("dataIndexFlag", true);
+        } else if (StringUtils.isNotEmpty(dataKey)) {
+            log.info("血流用户 {} 查看报告(点击报告列表查看)", ConstantsData.getLoginUserId());
+            // 直接点击报告, 会带batch, 需要算出page, 但不带dataIndex
+            // 首先查询相同batch的所有Task
+            List<Task> taskList = taskService.findAllByBatch(batch, ConstantsData.getLoginUserId(), appId);
+            // 遍历taskList, 根据dataKey判断当前报告的dataIndex
+            // dataIndex代表该数据所在的记录位置, 可算出当前页
+            dataIndex = 0;
+            for (Task task : taskList) {
+                dataIndex++;
+                if (task.getDataKey().equals(dataKey)) {
+                    break;
+                }
+            }
+            // 首先根据dataIndex算出分页列表下方的当前页
+            Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex;
+            Page pager = new Page(currentPage, 10);
+            PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
+                    batch);
+            dataMap.put("batchPageList", batchPageList);
+            dataMap.put("dataIndex", dataIndex);
+            dataMap.put("dataIndexFlag", true);
+        } else {
+            log.info("血流用户 {} 查看报告(下侧分页按钮)", ConstantsData.getLoginUserId());
+            // 此处代表既没有dataIndex也没有batch, 是点击下方分页按钮
+            Page pager = new Page(page, 10);
+            PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
+                    batch);
+            dataMap.put("batchPageList", batchPageList);
+            // 标识是否刷新dataIndex
+            dataMap.put("dataIndexFlag", false);
+        }
         return dataMap;
     }
 

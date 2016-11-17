@@ -221,4 +221,18 @@ public interface TaskService {
     public PageList<Task> findAllTasks(Page pager, Integer userId,
             String condition, Integer tagId, String batch, Integer period,
             String beginDate, String endDate, String sord);
+
+    /**
+     * 
+     * @description 根据标签查询全部task
+     * @author miaoqi
+     * @date 2016年11月17日上午11:20:44
+     *
+     * @param batch
+     * @param loginUserId
+     * @param appId
+     * @return
+     */
+    public List<Task> findAllByBatch(String batch, Integer loginUserId, Integer appId);
+
 }
