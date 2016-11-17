@@ -23,8 +23,8 @@
         </div>
         <div id="common-menu-right" class="searchs common-menu-btn">
             <div class="data-search">
-                <input id="condition-input" class="input-sm" type="text" placeholder="搜索" />
-                <a id="condition-find" class="input-group-btn">
+                <input id="condition-input" class="input-sm" type="text" placeholder="搜索" ng-keypress="conditionSearch($event)" />
+                <a id="condition-find" class="input-group-btn" ng-click="conditionFind()">
                     <i class="fa fa-search"></i>
                 </a>
             </div>

@@ -9,8 +9,8 @@
         <li>我的产品</li>
         <li>百菌探</li>
     </ol>
-    <ng-include src="'pages/partial/_partial_bsi_header.jsp'"></ng-include>
     <div class="content">
+	    <ng-include src="'pages/partial/_partial_bsi_header.jsp'"></ng-include>
         <div class="row rdata-content">
           <div class="col-sm-10">
               <ul id="myTabs" class="nav nav-tabs" role="tablist">
@@ -20,11 +20,12 @@
               <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane" ng-class="{active : tab == 'patient'}" id="patient-report" aria-labelledby="patient-tab">
                   <h4>检测结果：</h4>
-                  <div class="test-info" ng-if="bsi.species_20 != null">
+                  <div class="test-info">
                     <span ng-repeat="species20 in bsi.species_20">
                       <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
                       <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
                     </span>
+                    <span ng-if="bsi.species_20 == null"></span>
                   </div>
                   <h4>检测范围(20种)：</h4>
                   <table class="table table-main">
@@ -339,7 +340,7 @@
 				  <tbody id="data-list-tbody" ng-if="batchPageList.datas.length > 0">
 			        <tr id="reportbatch{{task.dataKey}}" ng-class="{active: task.dataKey == bsi.dataKey }" ng-repeat="task in batchPageList.datas">
 			          <td title="{{task.fileName}}" name="data-name-td" >
-		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/{{$index + 1}}/{{params.page}}/{{params.condition==null?'null':params.condition}}/{{params.sort}}/{{params.sortDate}}/{{params.sortPeriod}}/{{params.sortBatch}}/{{params.sortName}}/{{params.size}}/{{params.batch==null?'null':params.batch}}/{{params.period==null?'null':params.period}}/{{params.beginDate==null?'null':params.beginDate}}/{{params.endDate==null?'null':params.endDate}}" ng-if="task.period == 2">
+		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/{{$index + 1}}/{{batchParams.page}}/{{params.condition==null?'null':params.condition}}/{{params.sort}}/{{params.sortDate}}/{{params.sortPeriod}}/{{params.sortBatch}}/{{params.sortName}}/{{params.size}}/{{params.batch==null?'null':params.batch}}/{{params.period==null?'null':params.period}}/{{params.beginDate==null?'null':params.beginDate}}/{{params.endDate==null?'null':params.endDate}}" ng-if="task.period == 2">
 		                   {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName == null? '' : task.anotherName}}
 		                 </a>
 		                 <a href="javascript:void(0)" ng-if="task.period != 2">
@@ -349,41 +350,32 @@
 			        </tr>
 				  </tbody>
 				</table>
-				<%-- <div class="pagination text-center">
-				  <c:if test="${pageList.datas.size()>0}">
-				    <input id="batch-current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
-				    <input id="batch-total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
+				<div class="pagination text-center" ng-if="batchPageList.datas.length > 0">
+				    <input id="batch-current-page-hide" value="{{batchPageList.page.currentPage}}" type="hidden" >
+				    <input id="batch-total-page-hide" value="{{batchPageList.page.totalPage}}" type="hidden" >
 				    <ul id="pagination-data-report" class="pages">
-				      <li><a id="prev-page-task" class="ends pull-left" href="javascript:void(0);">&lt;&lt;</a></li>
-				      <!-- 显示第一页 -->
-				      <c:choose>
-				        <c:when test="${pageList.page.totalPage<=3}">
-				          <c:forEach begin="1" end="${pageList.page.totalPage}" step="1" var="step">
-				            <li <c:if test="${step==pageList.page.currentPage }">class="active"</c:if>><a name="pagination-task" href="javascript:void(0);">${step }</a></li>
-				          </c:forEach>
-				        </c:when>
-				        <c:otherwise>
-				          <c:if test="${pageList.page.currentPage==1}">
-				            <li class="active"><a name="pagination-task" href="javascript:void(0);">1</a></li>
-				            <li><a name="pagination-task" href="javascript:void(0);">2</a></li>
-				            <li><a name="pagination-task" href="javascript:void(0);">3</a></li>
-				          </c:if>
-				          <c:if test="${pageList.page.currentPage==pageList.page.totalPage}">
-				            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-2}</a></li>
-				            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
-				            <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
-				          </c:if>
-				          <c:if test="${pageList.page.currentPage>1 && pageList.page.currentPage<pageList.page.totalPage}">
-				            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage-1}</a></li>
-				            <li class="active"><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage}</a></li>
-				            <li><a name="pagination-task" href="javascript:void(0);">${pageList.page.currentPage+1}</a></li>
-				          </c:if>
-				        </c:otherwise>
-				      </c:choose>
-				      <li><a id="next-page-task" class="ends pull-right" href="javascript:void(0)">&gt;&gt;</a></li>
+				        <li><a id="prev-page-task" class="ends pull-left" ng-click="batchPageQueryBtn(batchPageList.page.currentPage>1?batchPageList.page.currentPage-1:1)" href="javascript:void(0);">&lt;&lt;</a></li>
+				        <!-- 显示第一页 -->
+			            <li ng-if="batchPageList.page.totalPage <= 3 && step <= batchPageList.page.totalPage" ng-class="{active: step == batchPageList.page.currentPage}" ng-repeat="step in [1,2,3]">
+			             <a ng-if="step == batchPageList.page.currentPage" name="pagination-task" href="javascript:void(0);">{{step}}</a>
+			             <a ng-if="step != batchPageList.page.currentPage" name="pagination-task" href="javascript:void(0);" ng-click="batchPageQueryBtn(step)">{{step}}</a>
+			            </li>
+			            
+			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == 1" class="active"><a name="pagination-task" href="javascript:void(0);">1</a></li>
+			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == 1"><a name="pagination-task" href="javascript:void(0);" ng-click="batchPageQueryBtn(2)">2</a></li>
+			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == 1"><a name="pagination-task" href="javascript:void(0);" ng-click="batchPageQueryBtn(3)">3</a></li>
+				            
+			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage"><a name="pagination-task" href="javascript:void(0);" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-2)">{{batchPageList.page.currentPage-2}}</a></li>
+			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage"><a name="pagination-task" href="javascript:void(0);" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-1)">{{batchPageList.page.currentPage-1}}</a></li>
+			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage" class="active"><a name="pagination-task" href="javascript:void(0);">{{batchPageList.page.currentPage}}</a></li>
+				            
+			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" href="javascript:void(0);" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-1)">{{batchPageList.page.currentPage-1}}</a></li>
+			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage" class="active"><a name="pagination-task" href="javascript:void(0);">{{batchPageList.page.currentPage}}</a></li>
+			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" href="javascript:void(0);" ng-click="batchPageQueryBtn(batchPageList.page.currentPage+1)">{{batchPageList.page.currentPage+1}}</a></li>
+				      
+				        <li><a id="next-page-task" class="ends pull-right" href="javascript:void(0)">&gt;&gt;</a></li>
 				    </ul>
-				  </c:if>
-				</div> --%>
+				</div>
             </div>
             <div class="report-btn-group pull-right">
                <a class="btn" ng-class="{hide : tab == 'analy'}" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
