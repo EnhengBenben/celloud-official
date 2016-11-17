@@ -302,4 +302,10 @@ public class TaskServiceImpl implements TaskService {
                 sord);
         return new PageList<>(pager, list);
     }
+
+    @Override
+    public List<Task> findAllByBatch(String batch, Integer loginUserId, Integer appId) {
+        List<Task> list = taskMapper.findAllByBatch(loginUserId, appId, TaskPeriod.DONE, DataState.ACTIVE, batch);
+        return list;
+    }
 }

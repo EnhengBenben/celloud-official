@@ -324,10 +324,10 @@
           </div>
           <div class="report-opera col-sm-2">
             <div class="nav-pub">
-              <div ng-if="pageList.datas.length > 0">
+              <div>
                   <input id="total-page-hide" value="{{pageList.page.totalPage}}" type="hidden" >
-                  <a class="prev-btn" href="javascript:void(0)" ng-click="reportPrev(pageList.page.currentPage)"><i class="fa fa-chevron-circle-left"></i>上一份</a>
-                  <a class="next-btn" href="javascript:void(0)" ng-click="reportNext(pageList.page.currentPage)">下一份<i class="fa fa-chevron-circle-right"></i></a>
+                  <a class="prev-btn" href="javascript:void(0)" ng-click="reportPrev(dataIndex - 1)"><i class="fa fa-chevron-circle-left"></i>上一份</a>
+                  <a class="next-btn" href="javascript:void(0)" ng-click="reportNext(dataIndex + 1)">下一份<i class="fa fa-chevron-circle-right"></i></a>
               </div>
             </div>
             <div id="report-pagination" class="report-pagination">
@@ -340,7 +340,7 @@
 				  <tbody id="data-list-tbody" ng-if="batchPageList.datas.length > 0">
 			        <tr id="reportbatch{{task.dataKey}}" ng-class="{active: task.dataKey == bsi.dataKey }" ng-repeat="task in batchPageList.datas">
 			          <td title="{{task.fileName}}" name="data-name-td" >
-		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/{{$index + 1}}/{{batchParams.page}}/{{params.condition==null?'null':params.condition}}/{{params.sort}}/{{params.sortDate}}/{{params.sortPeriod}}/{{params.sortBatch}}/{{params.sortName}}/{{params.size}}/{{params.batch==null?'null':params.batch}}/{{params.period==null?'null':params.period}}/{{params.beginDate==null?'null':params.beginDate}}/{{params.endDate==null?'null':params.endDate}}" ng-if="task.period == 2">
+		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/null/0" ng-if="task.period == 2">
 		                   {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName == null? '' : task.anotherName}}
 		                 </a>
 		                 <a href="javascript:void(0)" ng-if="task.period != 2">
@@ -373,7 +373,7 @@
 			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage" class="active"><a name="pagination-task" href="javascript:void(0);">{{batchPageList.page.currentPage}}</a></li>
 			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" href="javascript:void(0);" ng-click="batchPageQueryBtn(batchPageList.page.currentPage+1)">{{batchPageList.page.currentPage+1}}</a></li>
 				      
-				        <li><a id="next-page-task" class="ends pull-right" href="javascript:void(0)">&gt;&gt;</a></li>
+				        <li><a id="next-page-task" class="ends pull-right" ng-click="batchPageQueryBtn(batchPageList.page.currentPage < batchPageList.page.totalPage ? batchPageList.page.currentPage + 1 : batchPageList.page.totalPage)" href="javascript:void(0)">&gt;&gt;</a></li>
 				    </ul>
 				</div>
             </div>
