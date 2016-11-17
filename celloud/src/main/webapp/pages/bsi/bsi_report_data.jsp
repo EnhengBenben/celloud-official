@@ -373,7 +373,7 @@
 			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage" class="active"><a name="pagination-task" href="javascript:void(0);">{{batchPageList.page.currentPage}}</a></li>
 			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" href="javascript:void(0);" ng-click="batchPageQueryBtn(batchPageList.page.currentPage+1)">{{batchPageList.page.currentPage+1}}</a></li>
 				      
-				        <li><a id="next-page-task" class="ends pull-right" href="javascript:void(0)">&gt;&gt;</a></li>
+				        <li><a id="next-page-task" class="ends pull-right" ng-click="batchPageQueryBtn(batchPageList.page.currentPage < batchPageList.page.totalPage ? batchPageList.page.currentPage + 1 : batchPageList.page.totalPage)" href="javascript:void(0)">&gt;&gt;</a></li>
 				    </ul>
 				</div>
             </div>

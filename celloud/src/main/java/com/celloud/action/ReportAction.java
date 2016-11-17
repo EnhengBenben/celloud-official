@@ -3949,7 +3949,7 @@ public class ReportAction {
         if (dataIndex != 0) {
             log.info("血流用户 {} 查看报告(点击上一份或下一份)", ConstantsData.getLoginUserId());
             // 此处是上一份, 下一份, 直接会传递dataIndex, 可直接根据dataIndex和batch查询分页列表
-            Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex;
+            Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex / 10;
             Page pager = new Page(currentPage, 10);
             PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
                     batch);
@@ -3971,7 +3971,7 @@ public class ReportAction {
                 }
             }
             // 首先根据dataIndex算出分页列表下方的当前页
-            Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex;
+            Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex / 10;
             Page pager = new Page(currentPage, 10);
             PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
                     batch);
