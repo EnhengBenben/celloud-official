@@ -155,7 +155,6 @@
 			uploader.bind("FilesAdded", function(uploader, files) {
 				$("#rocky-upload-list-table").removeClass("hide");
 				$.each(files, function(index, item) {
-					console.log(item.id);
 					var $fileDom = $('<tr id="' + item.id + '"></tr>');
 					$fileDom.append($('<td class="filename">' + item.name + '</td>'));
 					$fileDom.append($('<td class="percent">等待上传</td>'));
@@ -204,9 +203,6 @@
 				},function(data){
 					console.log(data);
 				});
-			});
-			uploader.bind("StateChanged",function(uploader){
-				console.log('StateChanged');
 			});
 			uploader.bind("UploadComplete",function(uploader,files){
 				uploader.splice(0, uploader.files.length);
