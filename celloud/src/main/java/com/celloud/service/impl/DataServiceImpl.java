@@ -42,6 +42,7 @@ import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.OSSUtils;
 import com.celloud.utils.PerlUtils;
+import com.celloud.utils.UploadPathUtils;
 
 /**
  * 数据管理服务实现类
@@ -383,7 +384,7 @@ public class DataServiceImpl implements DataService {
 	@Override
 	public Integer addAndRunFile(Integer userId, String objectKey) {
 		logger.info("创建web直传oss的文件({})：{}", userId, objectKey);
-		Map<String, String> metadata = OSSUtils.getMetaData(objectKey);
+		Map<String, String> metadata = OSSUtils.getMetadata(objectKey);
 		long size = Long.parseLong(metadata.get("size"));
 		int tagId = Integer.parseInt(metadata.get("tagid"));
 		String name = metadata.get("name");
@@ -401,12 +402,12 @@ public class DataServiceImpl implements DataService {
 		data.setOssPath(objectKey);
 		data.setUserId(userId);
 		updateDataInfoByFileIdAndTagId(data, tagId);
-		// String path = UploadPathUtils.getLocalPath(userId, fileDataKey,
-		// FileTools.getExtName(name));
-		String path = ConstantsData.getOfsPath() + objectKey;
-		// data.setPath(path);
-		// boxApiService.downloadFromOSS(objectKey, path, data.getMd5());
+		String newObjectKey = UploadPathUtils.getObjectKey(userId, fileDataKey, FileTools.getExtName(name));
 		long time = System.currentTimeMillis();
+		OSSUtils.moveObject(objectKey, newObjectKey, metadata);
+		logger.info("移动oss文件用时：{}", System.currentTimeMillis() - time);
+		time = System.currentTimeMillis();
+		String path = ConstantsData.getOfsPath() + newObjectKey;
 		data.setAnotherName(getAnotherName("", path, ""));
 		logger.info("文件：name={},path={}", data.getFileName(), path);
 		logger.info("获取anotherName用时：{}", System.currentTimeMillis() - time);
@@ -415,6 +416,7 @@ public class DataServiceImpl implements DataService {
 				new File(path).getParentFile().getAbsolutePath());
 		logger.info("获取文件类型用时：{}", System.currentTimeMillis() - time);
 		data.setFileFormat(fileFormat);
+		data.setOssPath(newObjectKey);
 		dataFileMapper.updateByPrimaryKeySelective(data);
 		data = dataFileMapper.selectByPrimaryKey(dataId);
 		// TODO 需要根据tagId判断是否rocky
