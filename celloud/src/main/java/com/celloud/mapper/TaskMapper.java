@@ -248,4 +248,8 @@ public interface TaskMapper {
     List<String> findDataKeys(@Param("userId") Integer userId,
             @Param("state") Integer state, @Param("appId") Integer appId,
             @Param("proId") Integer proId, @Param("params") String params);
+
+    List<Task> findAllByBatch(@Param("userId") Integer userId, @Param("appId") Integer appId,
+            @Param("period") Integer period, @Param("state") Integer state, @Param("batch") String batch);
+
 }
