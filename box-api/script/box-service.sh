@@ -16,8 +16,10 @@ function start(){
 		echo 'Application is already running !'
 	else
         opts=""
+        echo "Start application with args : "
         for opt in ${opt_array[@]}
         do
+            echo "    $opt"
             opts="$opts $opt"
         done
         nohup java -jar $jarfile $opts > $filepath/nohup.out 2>&1 &
@@ -80,7 +82,8 @@ function check(){
 		fi
 	fi
 }
-
+args=($@)
+opt_array=(${opt_array[*]} ${args[*]:1})
 case "$1" in 
 	start)
 		start
