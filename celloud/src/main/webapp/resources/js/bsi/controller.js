@@ -492,7 +492,6 @@
 		  	    return val0;
 		    }
 		    $scope.reportPrev = function(currentPage){
-		    	console.log(currentPage);
 				if(currentPage > 0){
 					var options = $scope.params;
 					window.location.href = "index#/product/bsi/bsireportdata/" + $scope.params.dataKey + "/" + $scope.params.projectId + "/" + $scope.params.appId + "/" + $scope.data.batch + "/" + currentPage;
@@ -501,7 +500,7 @@
 			$scope.reportNext = function(currentPage){
 				var rowCount = $scope.batchPageList.page.rowCount;
 				currentPage = parseInt(currentPage);
-				if(currentPage < rowCount){
+				if(currentPage <= rowCount){
 					var options = $scope.params;
 					window.location.href = "index#/product/bsi/bsireportdata/" + $scope.params.dataKey + "/" + $scope.params.projectId + "/" + $scope.params.appId + "/" + $scope.data.batch + "/" + currentPage;
 				}
