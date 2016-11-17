@@ -382,6 +382,7 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public Integer addAndRunFile(Integer userId, String objectKey) {
+		logger.info("创建web直传oss的文件({})：{}", userId, objectKey);
 		Map<String, String> metadata = OSSUtils.getMetaData(objectKey);
 		long size = Long.parseLong(metadata.get("size"));
 		int tagId = Integer.parseInt(metadata.get("tagid"));
