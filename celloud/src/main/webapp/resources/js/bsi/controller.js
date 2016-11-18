@@ -1,11 +1,19 @@
 (function() {
-	celloudApp.controller("bsiFileUpload",function($scope, $rootScope){
+	celloudApp.controller("bsiFileUpload",function($scope, $location, $rootScope){
 		$scope.uploadPercent = 0;
 		//  ============================上传============================
 		$scope.itemBtnToggleActive = function(){
 		    $("#common-menu .item-btn").removeClass("active");
 		    $("#to-upload-a").addClass("active");
 		}
+		$("#bsi-upload-modal").on("hidden.bs.modal",function(e){
+			$("#to-upload-a").removeClass("active");
+			if($location.path().indexOf("bsidata") > -1){
+				$("#to-data-a").addClass("active");
+			}else if($location.path().indexOf("bsireport") > -1){
+				$("#to-report-a").addClass("active");
+			}
+		});
 		$rootScope.bsiStepOne = function(){
 			$scope.itemBtnToggleActive();
 			// 判断是否在第二步, 进行回显
