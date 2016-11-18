@@ -6,6 +6,7 @@
         <li>CelLoud</li>
         <li>我的产品</li>
         <li>百菌探</li>
+        <li>报告</li>
     </ol>
     <div class="content">
         <div class="page-layout page-main-content">

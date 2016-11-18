@@ -8,6 +8,8 @@
         <li>CelLoud</li>
         <li>我的产品</li>
         <li>百菌探</li>
+        <li><a href="${pageContext.request.contextPath }/index#/product/bsi/bsireport">报告</a></li>
+        <li>查看报告</li>
     </ol>
     <div class="content">
 	    <ng-include src="'pages/partial/_partial_bsi_header.jsp'"></ng-include>
@@ -323,13 +325,13 @@
               </div>
           </div>
           <div class="report-opera col-sm-2">
-            <div class="nav-pub">
+            <!-- <div class="nav-pub">
               <div>
                   <input id="total-page-hide" value="{{pageList.page.totalPage}}" type="hidden" >
                   <a class="prev-btn" href="javascript:void(0)" ng-click="reportPrev(dataIndex - 1)"><i class="fa fa-chevron-circle-left"></i>上一份</a>
                   <a class="next-btn" href="javascript:void(0)" ng-click="reportNext(dataIndex + 1)">下一份<i class="fa fa-chevron-circle-right"></i></a>
               </div>
-            </div>
+            </div> -->
             <div id="report-pagination" class="report-pagination">
                 <table class="table table-main">
 				  <thead>
