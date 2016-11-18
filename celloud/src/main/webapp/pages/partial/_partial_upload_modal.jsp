@@ -132,7 +132,7 @@
 	                        <span>&gt;数据拆分(Split) 选中时系统先按index文件对数据拆分并重命名.</span>
 	                    </p>
 	                    <input id="tag-info" type="hidden" value="1" />
-	                    <button ng-click="beginBsiUpload()" class="btn" ng-disabled="bsiUploader.files.length < 1">开始上传</button>
+	                    <button ng-click="beginBsiUpload()" class="btn" ng-disabled="bsiUploader == null || bsiUploader.files.length < 1">开始上传</button>
 	                </div>
 	                <div class="step-three-content hide">
 	                    <div class="upload-status">
