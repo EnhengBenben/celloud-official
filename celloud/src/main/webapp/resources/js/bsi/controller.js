@@ -150,21 +150,21 @@
 		}
 		
 		var initUploader = function(){
-//			$.get(CONTEXT_PATH+"/box/configs",function(configs){
-//				for(var index in configs){
-//					var config = configs[index];
-//				    var port = config.port||80;
-//				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
-//				    config = "http://"+config.intranetAddress+":"+port+context;
-//				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
-//				    if(response && JSON.parse(response).success){
-//				    	$scope.box=config;
-//				    	break;
-//				    }
-//			    }
-//				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
-//				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
-				var uploadUrl = "../uploadFile/uploadManyFile";
+			$.get(CONTEXT_PATH+"/box/configs",function(configs){
+				for(var index in configs){
+					var config = configs[index];
+				    var port = config.port||80;
+				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
+				    config = "http://"+config.intranetAddress+":"+port+context;
+				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
+				    if(response && JSON.parse(response).success){
+				    	$scope.box=config;
+				    	break;
+				    }
+			    }
+				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
+				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
+//				var uploadUrl = "../uploadFile/uploadManyFile";
 				var uploader = new plupload.Uploader({
 					runtimes : 'html5,flash,silverlight,html4',
 					browse_button : ['bsi-plupload-content','bsi-upload-more'],
@@ -313,7 +313,7 @@
 			       }
 			    });
 			    $rootScope.bsiUploader = uploader;
-//			});
+			});
 		}
 		
 		window.onbeforeunload=function(){
