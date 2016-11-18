@@ -9,7 +9,7 @@
 		$rootScope.bsiStepOne = function(){
 			$scope.itemBtnToggleActive();
 			// 判断是否在第二步, 进行回显
-			if($rootScope.bsiUploader && $rootScope.bsiStep == 'two'){
+			if($rootScope.bsiUploader && $rootScope.bsiStep == 'two' && $rootScope.bsiUploader.files.length > 0){
 				$("#upload-filelist").children().remove();
 				$("#uploading-filelist").children(":not(:first)").remove();
 				$.each($rootScope.bsiUploader.files, function(index, item) {
@@ -54,7 +54,7 @@
 			        });
 		        });
 				$scope.stepTwo();
-			}else if($rootScope.bsiUploader && $rootScope.bsiStep == 'three'){ // 在第三步
+			}else if($rootScope.bsiUploader && $rootScope.bsiStep == 'three' && $rootScope.bsiUploader.files.length > 0){ // 在第三步
 				$("#upload-filelist").children().remove();
 				$("#uploading-filelist").children(":not(:first)").remove();
 				$.each($rootScope.bsiUploader.files, function(index, item) {
@@ -103,7 +103,7 @@
 			        	utils.stopBubble(e);
 			        });
 		        });
-				$scope.beginUpload();
+				$scope.beginBsiUpload();
 			}else{ // 第一步
 				$rootScope.bsiStep = 'one';
 			    if($(".plupload_filelist li").hasClass("plupload_droptext")){
@@ -129,7 +129,7 @@
 		$scope.stepTwo = function(){
 			$(".step-one-content").addClass("hide");
 		    $(".step-two-content").removeClass("hide");
-		    $("#one-to-two").addClass("active");
+		    $("#bsi-one-to-two").addClass("active");
 		    $(".step-two").addClass("active");
 		    $scope.uploadTextType();
 			$rootScope.bsiBatch = $scope.bsiBatch;
@@ -150,21 +150,21 @@
 		}
 		
 		var initUploader = function(){
-			$.get(CONTEXT_PATH+"/box/configs",function(configs){
-				for(var index in configs){
-					var config = configs[index];
-				    var port = config.port||80;
-				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
-				    config = "http://"+config.intranetAddress+":"+port+context;
-				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
-				    if(response && JSON.parse(response).success){
-				    	$scope.box=config;
-				    	break;
-				    }
-			    }
-				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
-				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
-//				var uploadUrl = "../uploadFile/uploadManyFile";
+//			$.get(CONTEXT_PATH+"/box/configs",function(configs){
+//				for(var index in configs){
+//					var config = configs[index];
+//				    var port = config.port||80;
+//				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
+//				    config = "http://"+config.intranetAddress+":"+port+context;
+//				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
+//				    if(response && JSON.parse(response).success){
+//				    	$scope.box=config;
+//				    	break;
+//				    }
+//			    }
+//				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
+//				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
+				var uploadUrl = "../uploadFile/uploadManyFile";
 				var uploader = new plupload.Uploader({
 					runtimes : 'html5,flash,silverlight,html4',
 					browse_button : ['bsi-plupload-content','bsi-upload-more'],
@@ -216,6 +216,7 @@
 			    	handleStatus(uploader.total.percent);
 			    });
 			    uploader.bind("FilesAdded", function(uploader, files) {
+			    	$rootScope.$apply();
 			    	$.get("uploadFile/checkAdminSessionTimeOut",function(response){
 			    		if(response){//session超时则执行下两步
 			          
@@ -255,7 +256,7 @@
 				        	uploader.removeFile(item);
 				        	e.preventDefault();
 				        	utils.stopBubble(e);
-				        	$.upload.uploadTextType();
+				        	$scope.uploadTextType();
 				        });
 				        $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
 				        	$('#' + item.id).remove();
@@ -274,6 +275,9 @@
 			    	var res = response.response;
 			    	handleStatus(file);
 			    });
+			    uploader.bind("FilesRemoved", function(uploader, files) {
+			    	$rootScope.$apply();
+			    });
 			    uploader.bind("UploadComplete",function(uploader,files){
 			    	if(files.length>0){
 			    		waveLoading.setProgress(100);
@@ -288,8 +292,8 @@
 			    	$(".step-one-content").removeClass("hide");
 			    	$(".step-two-content").addClass("hide");
 			    	$(".step-three-content").addClass("hide");
-			    	$("#one-to-two").removeClass("active");
-			    	$("#two-to-three").removeClass("active");
+			    	$("#bsi-one-to-two").removeClass("active");
+			    	$("#bsi-two-to-three").removeClass("active");
 			    	$(".step-two").removeClass("active");
 			    	$(".step-three").removeClass("active");
 			    	$("#batch-info").val("")
@@ -309,41 +313,48 @@
 			       }
 			    });
 			    $rootScope.bsiUploader = uploader;
-			});
+//			});
 		}
-		$scope.beginUpload = function(){
-			if($rootScope.bsiUploader.files.length>0){
-				$(".step-three-content").removeClass("hide");
-	    		$(".step-one-content").addClass("hide");
-	    		$(".step-two-content").addClass("hide");
-	    		$("#one-to-two").addClass("active");
-	    		$("#two-to-three").addClass("active");
-	    		$(".step-two").addClass("active");
-	    		$(".step-three").addClass("active");
-	    		$("#tags-review").html($rootScope.bsiBatch);
-				if($rootScope.bsiStep != 'three'){
-		    		$("#upload-filelist").html("");
-		    		$rootScope.bsiUploader.start();
-		    		$rootScope.bsiStep = 'three';
-		    		waveLoading.init({
-		    			haveInited: true,
-		    			target: document.querySelector('#upload-progress'),
-		    			color: 'rgba(40, 230, 200, 0.6)',
-		    			showText: false
-		    		});
-		    		waveLoading.draw();
-		        	waveLoading.setProgress(0);
-		        }
+		
+		window.onbeforeunload=function(){
+			var qp=$$rootScope.bsiUploader.total;
+			var percent=qp.percent;
+			if(qp.size>0&&percent<100&&percent>0){
+				return "数据正在上传，您确定要关闭页面吗?"
 			}
+		}
+		
+		$scope.beginBsiUpload = function(){
+			$(".step-three-content").removeClass("hide");
+    		$(".step-one-content").addClass("hide");
+    		$(".step-two-content").addClass("hide");
+    		$("#bsi-one-to-two").addClass("active");
+    		$("#bsi-two-to-three").addClass("active");
+    		$(".step-two").addClass("active");
+    		$(".step-three").addClass("active");
+    		$("#tags-review").html($rootScope.bsiBatch);
+			if($rootScope.bsiStep != 'three'){
+	    		$("#upload-filelist").html("");
+	    		$rootScope.bsiUploader.start();
+	    		$rootScope.bsiStep = 'three';
+	    		waveLoading.init({
+	    			haveInited: true,
+	    			target: document.querySelector('#upload-progress'),
+	    			color: 'rgba(40, 230, 200, 0.6)',
+	    			showText: false
+	    		});
+	    		waveLoading.draw();
+	        	waveLoading.setProgress(0);
+	        }
 		}
 		$scope.closeUploadModal = function(){
 			if($rootScope.bsiUploader && $rootScope.bsiUploader.files.length<=0){
 	    		$(".step-one-content").removeClass("hide");
 	    		$(".step-two-content").addClass("hide");
-	    		$("#one-to-two").removeClass("active");
+	    		$("#bsi-one-to-two").removeClass("active");
 	    		$(".step-two").removeClass("active");
 	    		$(".step-three-content").addClass("hide");
-	    		$("#two-to-three").removeClass("active");
+	    		$("#bsi-two-to-three").removeClass("active");
 	    		$(".step-three").removeClass("active");
 	    	}
 	    	var text = $("body .breadcrumb").text();
