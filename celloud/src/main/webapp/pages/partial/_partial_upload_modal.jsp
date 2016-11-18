@@ -87,9 +87,9 @@
 	            <div class="modal-body row">
 	                <div class="step-item">
 	                    <div class="step-one active">1</div>
-	                    <hr id="one-to-two">
+	                    <hr id="bsi-one-to-two">
 	                    <div class="step-two">2</div>
-	                    <hr id="two-to-three">
+	                    <hr id="bsi-two-to-three">
 	                    <div class="step-three">3</div>
 	                </div>
 	                <div class="step-one-content">
@@ -132,7 +132,7 @@
 	                        <span>&gt;数据拆分(Split) 选中时系统先按index文件对数据拆分并重命名.</span>
 	                    </p>
 	                    <input id="tag-info" type="hidden" value="1" />
-	                    <a id="bsi-begin-upload" class="btn" href="javascript:void(0)" ng-click="beginUpload()">开始上传</a>
+	                    <button ng-click="beginBsiUpload()" class="btn" ng-disabled="bsiUploader.files.length < 1">开始上传</button>
 	                </div>
 	                <div class="step-three-content hide">
 	                    <div class="upload-status">
