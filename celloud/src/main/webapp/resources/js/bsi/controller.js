@@ -415,25 +415,33 @@
 		$scope.box = null;
 		
 		$rootScope.sortIcon = function(params){
-		    if(params.sortDate=="asc"){
-		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			if(params.sort == 0){
+			    if(params.sortDate=="asc"){
+			      $(".sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+			    }else{
+			      $(".sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			    }
+			}
+			if(params.sort == 1){
+			    if(params.sortBatch=="asc"){
+			      $(".sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+			    }else{
+			      $(".sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			    }
+			}
+		    if(params.sort == 2){
+		    	if(params.sortName=="asc"){
+	    		  $(".sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    	}else{
+	    		  $(".sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    	}
 		    }
-		    if(params.sortBatch=="asc"){
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortName=="asc"){
-		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortPeriod=="asc"){
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    if(params.sort == 3){
+			    if(params.sortPeriod=="asc"){
+		    	  $(".sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+			    }else{
+		    	  $(".sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			    }
 		    }
 	    }
 		
@@ -536,7 +544,7 @@
 		    endDate: null,
 		    distributed: null, //0:是   1： 否
 		    sampleName: null
-		},
+		}
 		$scope.pageQuery = function(){
 			bsiService.reportPageQuery($scope.bsiReportParams).
 			success(function(dataMap){
@@ -790,19 +798,19 @@
 		}
 		$scope.sortBatch = function(){
 			$scope.bsiReportParams.sort = 1;
-			$scope.bsiReportParams.sortBatch = $scope.bsiReportParams.sortBatch == "desc" ? "asc" : "desc";
+			$scope.bsiReportParams.sortBatch = $scope.bsiReportParams.sortBatch == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortName = function(){
 			$scope.bsiReportParams.sort = 2;
-			$scope.bsiReportParams.sortName = $scope.bsiReportParams.sortName == "desc" ? "asc" : "desc";
+			$scope.bsiReportParams.sortName = $scope.bsiReportParams.sortName == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortPeriod = function(){
 			$scope.bsiReportParams.sort = 3;
-			$scope.bsiReportParams.sortPeriod = $scope.bsiReportParams.sortPeriod == "desc" ? "asc" : "desc";
+			$scope.bsiReportParams.sortPeriod = $scope.bsiReportParams.sortPeriod == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
@@ -836,7 +844,7 @@
 	        sortBatch: "asc",
 	        sortName: "asc",
 	        sortDate: "desc"
-	    },
+	    }
 	    $scope.pageQuery = function(){
 			bsiService.dataPageQuery($scope.params).
 			success(function(dataMap){
@@ -866,13 +874,13 @@
 		}
 		$scope.sortBatch = function(){
 			$scope.params.sort = 1;
-			$scope.params.sortBatch = $scope.params.sortBatch == "desc" ? "asc" : "desc";
+			$scope.params.sortBatch = $scope.params.sortBatch == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.params);
 			$scope.pageQuery();
 		}
 		$scope.sortName = function(){
 			$scope.params.sort = 2;
-			$scope.params.sortName = $scope.params.sortName == "desc" ? "asc" : "desc";
+			$scope.params.sortName = $scope.params.sortName == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.params);
 			$scope.pageQuery();
 		}

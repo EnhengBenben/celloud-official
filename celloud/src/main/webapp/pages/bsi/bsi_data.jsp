@@ -16,11 +16,20 @@
                 <table class="table table-main">
 				  <thead>
 				    <tr>
-				      <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()"><i id="sort-batch-icon" class="fa fa-sort-amount-asc"></i></a></th>
-				      <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()"><i id="sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
+				      <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()">
+				        <i ng-show="params.sort == 1" class="sort-batch-icon fa fa-sort-amount-asc"></i>
+				        <i ng-show="params.sort != 1" class="fa fa-sort"></i></a>
+				      </th>
+				      <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()">
+				        <i ng-show="params.sort == 2" class="sort-name-icon fa fa-sort-amount-asc"></i>
+				        <i ng-show="params.sort != 2" class="fa fa-sort"></i></a>
+				      </th>
 				      <th>文件编号</th>
 				      <th>文件大小</th>
-				      <th>上传时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()"><i id="sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
+				      <th>上传时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()">
+				        <i ng-show="params.sort == 0" class="sort-date-icon fa fa-sort-amount-desc"></i>
+				        <i ng-show="params.sort != 0" class="fa fa-sort"></i></a>
+				      </th>
 				    </tr>
 				  </thead>
 				  <tbody id="data-list-tbody" ng-if="pageList.datas.length > 0">
