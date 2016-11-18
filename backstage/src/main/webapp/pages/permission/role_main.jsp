@@ -30,7 +30,11 @@
         <tbody>
             <c:forEach items="${list }" var="role" varStatus="status">
                 <tr class="treegrid-${role.id } <c:if test="${role.parentId != 0 }">treegrid-parent-${role.parentId }</c:if>">
-                	<td style="text-align: center;"><input class="resourceCheck" type="checkbox" value="${role.id }"></td>
+                	<td style="text-align: center;">
+                		<c:if test="${role.parentId==0 }">
+	                		<input class="resourceCheck" type="radio" value="${role.id }" name="rootId">
+                		</c:if>
+                	</td>
                     <td>${role.name }</td>
 	                <td>${role.code }</td>
 	                <td>
@@ -41,15 +45,17 @@
 	                <td><fmt:formatDate value="${role.createDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 	                <td>
 	                   <a href="javascript:permission.role.toEdit('${role.id }');">编辑</a>
-	                   <!-- 上下线 -->
-	                   <c:if test="${role.disabled==1 }">
-                            <a href="javascript:permission.role.onOrOff('${role.id }','0',1);">启用</a>
-                       </c:if>
-	                   <c:if test="${role.disabled==0 }">
-                            <a href="javascript:permission.role.onOrOff('${role.id }','1',1);">禁用</a>
-                       </c:if>
-                       <a href="javascript:permission.role.toDistribution('${role.id }');">分配</a>
-                       <a href="javascript:permission.role.toGrant('${role.id }');">授权</a>
+	                   <c:if test="${role.parentId!=0 }">
+		                   <!-- 上下线 -->
+		                   <c:if test="${role.disabled==1 }">
+	                            <a href="javascript:permission.role.onOrOff('${role.id }','0',1);">启用</a>
+	                       </c:if>
+		                   <c:if test="${role.disabled==0 }">
+	                            <a href="javascript:permission.role.onOrOff('${role.id }','1',1);">禁用</a>
+	                       </c:if>
+	                       <a href="javascript:permission.role.toDistribution('${role.id }');">分配</a>
+	                       <a href="javascript:permission.role.toGrant('${role.id }');">授权</a>
+	                   </c:if>
 	                </td>
                 </tr>
             </c:forEach>
@@ -74,6 +80,7 @@
 	                        <label class="col-sm-2 control-label">角色名称<font color="red">*</font></label>
 	                        <div class="col-sm-10">
 	                           <input type="text" id="name" class="form-control" name="name" required="required" >
+	                           <input type="hidden" id="parentId" class="form-control" name="parentId">
 	                           <span class="help-inline text-danger"></span>
 	                        </div>
 	                    </div>

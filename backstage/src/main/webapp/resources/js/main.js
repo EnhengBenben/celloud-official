@@ -1534,6 +1534,11 @@ var permission = (function(permission){
 				}
 			},
 			toAdd : function(){
+			  var parentId = $("input[type='radio'][name='rootId']:checked").val();
+			  if(!parentId){
+			    parentId = 0;
+			  }
+			  $("#parentId").val(parentId);
 				$("#roleForm input").val("");
 				$(".help-inline").html("");
 				$("#saveUpdateFlag").val("save");
