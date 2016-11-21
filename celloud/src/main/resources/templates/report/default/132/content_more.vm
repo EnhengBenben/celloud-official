@@ -59,6 +59,7 @@
   <h3>二、基因检测结果简述</h3>
   <h4>1、检测有指导意义的阳性位点简述：</h4>
   <div id="secion2_info1" class="info">
+    <input type="hidden" id="usefulGeneResult_tr_length" value="$!{accuSeqα2.accuSeqα2Fill.usefulGeneResult.size()}">
     <table class="table table-green table-striped-green table-text-center">
       <thead>
           <tr>
@@ -98,7 +99,41 @@
             #end
         #end
       </tbody>
+      <tbody id="usefulGeneResult">
+        #set($usefulGeneResultIndex=0)
+        #if(${accuSeqα2.accuSeqα2Fill.usefulGeneResult.size()}>0)
+            #foreach(${li} in ${accuSeqα2.accuSeqα2Fill.usefulGeneResult})
+                #set($temp=${velocityCount} - 1)
+                <tr id="usefulGeneResult_tr${temp}" name="usefulGeneResult_tr">
+                    <td><input type="text" name="usefulGeneResult[${temp}].gene" class="form-control" value="$!{li.gene}"></td>
+                    <td><input type="text" name="usefulGeneResult[${temp}].refBase" class="form-control" value="$!{li.refBase}"></td>
+                    <td><input type="text" name="usefulGeneResult[${temp}].depth" class="form-control" value="$!{li.depth}"></td>
+                    <td><input type="text" name="usefulGeneResult[${temp}].mutBase" class="form-control" value="$!{li.mutBase}"></td>
+                    <td><input type="text" name="usefulGeneResult[${temp}].cdsMutSyntax" class="form-control" value="$!{li.cdsMutSyntax}"></td>
+                    <td class="havedel">
+                        <input type="text" name="usefulGeneResult[${temp}].aaMutSyntax" class="form-control" value="$!{li.aaMutSyntax}">
+                        <a href="javascript:removeTr('usefulGeneResult_tr${temp}')" title="删除整行"/>
+                    </td>
+                </tr>
+            #end
+            #set($usefulGeneResultIndex=${accuSeqα2.accuSeqα2Fill.resistanceSiteSum.size()})
+        #else
+            <tr id="usefulGeneResult_tr0" name="usefulGeneResult_tr">
+                <td><input type="text" name="usefulGeneResult[0].gene" class="form-control"></td>
+                <td><input type="text" name="usefulGeneResult[0].refBase" class="form-control"></td>
+                <td><input type="text" name="usefulGeneResult[0].depth" class="form-control"></td>
+                <td><input type="text" name="usefulGeneResult[0].mutBase" class="form-control"></td>
+                <td><input type="text" name="usefulGeneResult[0].cdsMutSyntax" class="form-control"></td>
+                <td class="havedel">
+                    <input type="text" name="usefulGeneResult[0].aaMutSyntax" class="form-control">
+                    <a href="javascript:removeTr('usefulGeneResult_tr0')" title="删除整行"/>
+                </td>
+            </tr>
+        #end
+      </tbody>
     </table>
+    <a href="javascript:removeTableTr('usefulGeneResult')" >删除行</a>&nbsp;&nbsp;
+    <a href="javascript:addUsefulGeneResult('usefulGeneResult',$!{usefulGeneResultIndex})" >添加行</a>
   </div>
   <h4>2、耐药信息汇总：</h4>
   <div id="secion2_info2" class="info">
@@ -120,7 +155,10 @@
                     <tr id="drugTbody_3_tr${temp}" name="drugTbody_3_tr">
                         <td><input type="text" name="resistanceSiteSum[${temp}].geneName" class="form-control" value="$!{li.geneName}"></td>
                         <td><input type="text" name="resistanceSiteSum[${temp}].mutationSite" class="form-control" value="$!{li.mutationSite}"></td>
-                        <td><input type="text" name="resistanceSiteSum[${temp}].drug" class="form-control" value="$!{li.drug}"></td>
+                        <td class="havedel">
+                            <input type="text" name="resistanceSiteSum[${temp}].drug" class="form-control" value="$!{li.drug}">
+                            <a href="javascript:removeTr('drugTbody_3_tr${temp}')" title="删除整行"/>
+                        </td>
                     </tr>
                 #end
                 #set($resistanceIndex=${accuSeqα2.accuSeqα2Fill.resistanceSiteSum.size()})
@@ -128,27 +166,13 @@
                 <tr id="drugTbody_3_tr0" name="drugTbody_3_tr">
                     <td><input type="text" name="resistanceSiteSum[0].geneName" class="form-control"></td>
                     <td><input type="text" name="resistanceSiteSum[0].mutationSite" class="form-control"></td>
-                    <td><input type="text" name="resistanceSiteSum[0].drug" class="form-control"></td>
-                </tr>
-            #end
-        </tbody>
-    </table>
-    <table class="table-del" id="del_drugTbody_3">
-        <tr>
-            <th>&nbsp;</th>
-        </tr>
-        #if(${accuSeqα2.accuSeqα2Fill.resistanceSiteSum.size()}>0)
-            #foreach(${li} in ${accuSeqα2.accuSeqα2Fill.resistanceSiteSum})
-                #set($temp=${velocityCount} - 1)
-                <tr id="drugTbody_3_deltr${temp}">
-                    <td>
-                        <a href="javascript:removeThisTr('drugTbody_3',${temp})" title="删除所有"/>
+                    <td class="havedel">
+                        <input type="text" name="resistanceSiteSum[0].drug" class="form-control">
+                        <a href="javascript:removeTr('drugTbody_3_tr0')" title="删除整行"/>
                     </td>
                 </tr>
             #end
-        #else
-            <tr id="drugTbody_3_deltr0"><td><a href="javascript:removeThisTr('drugTbody_3',0)" title="删除所有"/></td></tr>
-        #end
+        </tbody>
     </table>
     <a href="javascript:removeTableTr('drugTbody_3')" >删除行</a>&nbsp;&nbsp;
     <a href="javascript:addDrugResistance('drugTbody_3',$!{resistanceIndex})" >添加行</a>
@@ -170,7 +194,10 @@
                 <tr id="drugTbody_4_tr${temp}" name="drugTbody_4_tr">
                     <td><input type="text" name="personalizedMedicine[${temp}].geneName" class="form-control" value="$!{li.geneName}"></td>
                     <td><input type="text" name="personalizedMedicine[${temp}].mutationSite" class="form-control" value="$!{li.mutationSite}"></td>
-                    <td><input type="text" name="personalizedMedicine[${temp}].drug" class="form-control" value="$!{li.drug}"></td>
+                    <td class="havedel">
+                        <input type="text" name="personalizedMedicine[${temp}].drug" class="form-control" value="$!{li.drug}">
+                        <a href="javascript:removeTr('drugTbody_4_tr${temp}')" title="删除整行"/>
+                    </td>
                 </tr>
             #end
             #set($personMedicineIndex=${accuSeqα2.accuSeqα2Fill.personalizedMedicine.size()} - 1)
@@ -178,20 +205,13 @@
             <tr id="drugTbody_4_tr0" name="drugTbody_4_tr">
                 <td><input type="text" name="personalizedMedicine[0].geneName" class="form-control"></td>
                 <td><input type="text" name="personalizedMedicine[0].mutationSite" class="form-control"></td>
-                <td><input type="text" name="personalizedMedicine[0].drug" class="form-control"></td>
+                <td class="havedel">
+                    <input type="text" name="personalizedMedicine[0].drug" class="form-control">
+                    <a href="javascript:removeTr('drugTbody_4_tr0')" title="删除整行"/>
+                </td>
             </tr>
         #end
     </tbody>
-  </table>
-  <table class="table-del" id="del_drugTbody_4">
-    #if(${accuSeqα2.accuSeqα2Fill.personalizedMedicine.size()}>0)
-        #foreach(${li} in ${accuSeqα2.accuSeqα2Fill.personalizedMedicine})
-            #set($temp=${velocityCount} - 1)
-            <tr id="drugTbody_4_deltr${temp}"><td><a href="javascript:removeThisTr('drugTbody_4',${temp})" title="删除所有"/></td></tr>
-        #end
-    #else
-        <tr id="drugTbody_4_deltr0"><td><a href="javascript:removeThisTr('drugTbody_4',0)" title="删除所有"/></td></tr>
-    #end
   </table>
   <a href="javascript:removeTableTr('drugTbody_4')">删除行</a>&nbsp;&nbsp;
   <a href="javascript:addPersonalizedMedicine('drugTbody_4',${personMedicineIndex})">添加行</a>

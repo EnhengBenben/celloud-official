@@ -1,6 +1,5 @@
 <script type="text/javascript">
 $(function(){
-    
     var url = window.location.href.split("print")[0];
     var sex = $("#men").prop("checked");
     
@@ -148,7 +147,6 @@ $(function(){
     printSection6Table();
     
 });
-
 function radioClick(num){
     if(num==0){
         $("#men").attr("checked","checked");
@@ -168,15 +166,35 @@ function unitySamplingDate(name){
   $("#samplingDate1").val(name);
 }
 
+function removeTr(id){
+    $("#"+id).remove();
+}
+var usefulGeneResultIndex = 0;
+function addUsefulGeneResult(tbody,index){
+  if(usefulGeneResultIndex == 0){
+      usefulGeneResultIndex = index;
+  }
+  usefulGeneResultIndex++;
+  var tr = "<tr id=\""+tbody+"_tr"+usefulGeneResultIndex+"\" name="usefulGeneResult_tr">"
+        + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].gene\" class=\"form-control\"></td>"
+        + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].refBase\" class=\"form-control\"></td>"
+        + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].depth\" class=\"form-control\"></td>"
+        + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].mutBase\" class=\"form-control\"></td>"
+        + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].cdsMutSyntax\" class=\"form-control\"></td>"
+        + "<td class=\"havedel\">"
+        + "<input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].aaMutSyntax\" class=\"form-control\">"
+        + "<a href=\"javascript:removeTr('"+tbody+"_tr"+usefulGeneResultIndex+"')\" title=\"删除整行\"/>"
+        + "</td></tr>"
+  $("#"+tbody).append(v1);
+}
 var drugResistanceIndex = 0;
 function addDrugResistance(tbody,index){
   if(drugResistanceIndex == 0){
       drugResistanceIndex = index;
   }
   drugResistanceIndex++;
-  var v1="<tr id=\""+tbody+"_tr"+drugResistanceIndex+"\"><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].geneName\" class=\"form-control\"></td><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].mutationSite\" class=\"form-control\"></td><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].drug\" class=\"form-control\"></td></tr>";
+  var v1="<tr id=\""+tbody+"_tr"+drugResistanceIndex+"\"><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].geneName\" class=\"form-control\"></td><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].mutationSite\" class=\"form-control\"></td><td class=\"havedel\"><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].drug\" class=\"form-control\">"<a href=\"javascript:removeTr('"+tbody+"_tr"+drugResistanceIndex+"')\" title=\"删除整行\"/>"</td></tr>";
   $("#"+tbody).append(v1);
-  $("#del_"+tbody).append("<tr id='"+tbody+"_deltr"+drugResistanceIndex+"'><td><a href='javascript:removeThisTr(\""+tbody+"\","+drugResistanceIndex+")' title='删除此行'/></td></tr>");
 }
 var personalizedMedicineIndex = 0;
 function addPersonalizedMedicine(tbody,index){
@@ -184,7 +202,7 @@ function addPersonalizedMedicine(tbody,index){
     personalizedMedicineIndex = index;
   }
   personalizedMedicineIndex++;
-  var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+personalizedMedicineIndex+"\"><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].geneName\" class=\"form-control\"></td><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].mutationSite\" class=\"form-control\"></td><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].drug\" class=\"form-control\"></td></tr>";
+  var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+personalizedMedicineIndex+"\"><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].geneName\" class=\"form-control\"></td><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].mutationSite\" class=\"form-control\"></td><td class=\"havedel\"><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].drug\" class=\"form-control\">"<a href=\"javascript:removeTr('"+tbody+"_tr"+personalizedMedicineIndex+"')\" title=\"删除整行\"/>"</td></tr>";
   $("#"+tbody).append(v1);
   $("#del_"+tbody).append("<tr id='"+tbody+"_deltr"+personalizedMedicineIndex+"'><td><a href='javascript:removeThisTr(\""+tbody+"\","+personalizedMedicineIndex+")' title='删除此行'/></td></tr>");
 }
@@ -198,7 +216,6 @@ function addDrugInput(div,index){
 }
 function removeTableTr(tbody){
     $("#"+tbody).children("tr:last-child").remove();
-    $("#del_"+tbody).find("tbody").children("tr:last-child").remove();
 }
 function removeThisTr(tbody,num){
     $("#"+tbody+"_tr"+num).remove();

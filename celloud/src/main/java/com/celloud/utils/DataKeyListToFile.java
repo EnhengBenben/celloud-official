@@ -107,7 +107,7 @@ public class DataKeyListToFile {
 
                     dataFileInfo = new StringBuffer();
                     dataFileInfo.append(data_AR1.getPath()).append("\t")
-                            .append(data_AR2.getPath()).append("\n")
+                            .append(data_AR2.getPath()).append("\t")
                             .append(data_BR1.getPath()).append("\t")
                             .append(data_BR2.getPath()).append("\t");
                     String dataListFile = getDataListFile();
