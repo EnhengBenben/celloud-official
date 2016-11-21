@@ -83,6 +83,27 @@ public class UploadAction {
     public String uploadManyFile(String name, String originalName, Integer chunk,
             Integer chunks, MultipartFile file, HttpServletRequest request, Integer tagId, String batch,
             Integer needSplit, Long size, Date lastModifiedDate) {
+
+        // 如果是百菌探, 先检查同一批次下, 是否包含相同文件名的文件, 如果有 则直接返回
+        if (tagId.intValue() == 1) {
+            if (chunk.intValue() == 0) {
+                logger.info("用户 {} 上传文件, 检查批次 {} 下是否含有文件名 {} 相同的文件, 仅第一块文件检查", ConstantsData.getLoginUserId(), batch,
+                        originalName);
+            }
+            List<DataFile> dataFiles = dataService.getDataByBatchAndFileName(ConstantsData.getLoginUserId(), batch,
+                    originalName);
+            if (dataFiles.size() > 0) {
+                if (chunk.intValue() == 0) {
+                    logger.info("批次 {} 下包含文件名为 {} 的相同文件, 直接返回", batch, originalName);
+                }
+                if (chunk.intValue() == chunks.intValue() - 1) {
+                    logger.info("批次 {} 下文件名为 {} 的相同文件上传完毕", batch, originalName);
+                }
+                return "1";
+            } else {
+                logger.info("批次 {} 下不包含文件名为 {} 的相同文件, 继续执行正常的上传功能", batch, originalName);
+            }
+        }
         /**
          * 在用户文件夹下为每一个上传的文件创建一个块的存储目录用来存储该文件的每一块,最后将该目录下的每个文件都写到用户真实的存储目录下
          */
