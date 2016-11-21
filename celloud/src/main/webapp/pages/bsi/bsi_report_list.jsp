@@ -6,6 +6,7 @@
         <li>CelLoud</li>
         <li>我的产品</li>
         <li>百菌探</li>
+        <li>报告</li>
     </ol>
     <div class="content">
         <div class="page-layout page-main-content">
@@ -109,10 +110,22 @@
 				          <th width="140">
 				            <input id="sample-selector" type="text" placeholder="样本编号/病历号">
 				          </th>
-				          <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()"><i id="sort-batch-icon" class="fa fa-sort-amount-asc"></i></a></th>
-				          <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()"><i id="sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
-				          <th>状态<a id="sort-period" href="javascript:void(0);" ng-click="sortPeriod()"><i id="sort-period-icon" class="fa fa-sort-amount-asc"></i></a></th>
-				          <th class="date-td">更新时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()"><i id="sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
+				          <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()">
+				            <i ng-show="bsiReportParams.sort == 1" class="sort-batch-icon fa fa-sort-amount-asc"></i>
+				            <i ng-show="bsiReportParams.sort != 1" class="fa fa-sort"></i></a>
+				          </th>
+				          <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()">
+				            <i ng-show="bsiReportParams.sort == 2" class="sort-name-icon fa fa-sort-amount-asc"></i>
+				            <i ng-show="bsiReportParams.sort != 2" class="fa fa-sort"></i></a>
+				          </th>
+				          <th>状态<a id="sort-period" href="javascript:void(0);" ng-click="sortPeriod()">
+				            <i ng-show="bsiReportParams.sort == 3" class="sort-period-icon fa fa-sort-amount-asc"></i>
+				            <i ng-show="bsiReportParams.sort != 3" class="fa fa-sort"></i></a>
+				          </th>
+				          <th class="date-td">更新时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()">
+				            <i ng-show="bsiReportParams.sort == 0" class="sort-date-icon fa fa-sort-amount-desc"></i>
+				            <i ng-show="bsiReportParams.sort != 0" class="fa fa-sort"></i></a>
+				          </th>
 				          <th>操作</th>
 				        </tr>
 				      </thead>
@@ -125,10 +138,10 @@
 				            <td>{{task.batch}}</td>
 				            <td title="{{task.fileName}}" name="data-name-td" >
 				                <a ng-if="task.period == 2" ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/null/0">
-				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
+				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName != null ? '(' + task.anotherName + ')' : ''}}
 				                </a>
 				                <a ng-if="task.period != 2" ng-href="javascript:void(0)">
-				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
+				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName != null ? '(' + task.anotherName + ')' : ''}}
 				                </a>
 				            </td>
 				            <td>

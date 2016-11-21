@@ -1,15 +1,23 @@
 (function() {
-	celloudApp.controller("bsiFileUpload",function($scope, $rootScope){
+	celloudApp.controller("bsiFileUpload",function($scope, $location, $rootScope){
 		$scope.uploadPercent = 0;
 		//  ============================上传============================
 		$scope.itemBtnToggleActive = function(){
 		    $("#common-menu .item-btn").removeClass("active");
 		    $("#to-upload-a").addClass("active");
 		}
+		$("#bsi-upload-modal").on("hidden.bs.modal",function(e){
+			$("#to-upload-a").removeClass("active");
+			if($location.path().indexOf("bsidata") > -1){
+				$("#to-data-a").addClass("active");
+			}else if($location.path().indexOf("bsireport") > -1){
+				$("#to-report-a").addClass("active");
+			}
+		});
 		$rootScope.bsiStepOne = function(){
 			$scope.itemBtnToggleActive();
 			// 判断是否在第二步, 进行回显
-			if($rootScope.bsiUploader && $rootScope.bsiStep == 'two'){
+			if($rootScope.bsiUploader && $rootScope.bsiStep == 'two' && $rootScope.bsiUploader.files.length > 0){
 				$("#upload-filelist").children().remove();
 				$("#uploading-filelist").children(":not(:first)").remove();
 				$.each($rootScope.bsiUploader.files, function(index, item) {
@@ -54,7 +62,7 @@
 			        });
 		        });
 				$scope.stepTwo();
-			}else if($rootScope.bsiUploader && $rootScope.bsiStep == 'three'){ // 在第三步
+			}else if($rootScope.bsiUploader && $rootScope.bsiStep == 'three' && $rootScope.bsiUploader.files.length > 0){ // 在第三步
 				$("#upload-filelist").children().remove();
 				$("#uploading-filelist").children(":not(:first)").remove();
 				$.each($rootScope.bsiUploader.files, function(index, item) {
@@ -103,7 +111,7 @@
 			        	utils.stopBubble(e);
 			        });
 		        });
-				$scope.beginUpload();
+				$scope.beginBsiUpload();
 			}else{ // 第一步
 				$rootScope.bsiStep = 'one';
 			    if($(".plupload_filelist li").hasClass("plupload_droptext")){
@@ -129,7 +137,7 @@
 		$scope.stepTwo = function(){
 			$(".step-one-content").addClass("hide");
 		    $(".step-two-content").removeClass("hide");
-		    $("#one-to-two").addClass("active");
+		    $("#bsi-one-to-two").addClass("active");
 		    $(".step-two").addClass("active");
 		    $scope.uploadTextType();
 			$rootScope.bsiBatch = $scope.bsiBatch;
@@ -216,6 +224,7 @@
 			    	handleStatus(uploader.total.percent);
 			    });
 			    uploader.bind("FilesAdded", function(uploader, files) {
+			    	$rootScope.$apply();
 			    	$.get("uploadFile/checkAdminSessionTimeOut",function(response){
 			    		if(response){//session超时则执行下两步
 			          
@@ -255,7 +264,7 @@
 				        	uploader.removeFile(item);
 				        	e.preventDefault();
 				        	utils.stopBubble(e);
-				        	$.upload.uploadTextType();
+				        	$scope.uploadTextType();
 				        });
 				        $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
 				        	$('#' + item.id).remove();
@@ -274,6 +283,9 @@
 			    	var res = response.response;
 			    	handleStatus(file);
 			    });
+			    uploader.bind("FilesRemoved", function(uploader, files) {
+			    	$rootScope.$apply();
+			    });
 			    uploader.bind("UploadComplete",function(uploader,files){
 			    	if(files.length>0){
 			    		waveLoading.setProgress(100);
@@ -288,8 +300,8 @@
 			    	$(".step-one-content").removeClass("hide");
 			    	$(".step-two-content").addClass("hide");
 			    	$(".step-three-content").addClass("hide");
-			    	$("#one-to-two").removeClass("active");
-			    	$("#two-to-three").removeClass("active");
+			    	$("#bsi-one-to-two").removeClass("active");
+			    	$("#bsi-two-to-three").removeClass("active");
 			    	$(".step-two").removeClass("active");
 			    	$(".step-three").removeClass("active");
 			    	$("#batch-info").val("")
@@ -311,39 +323,46 @@
 			    $rootScope.bsiUploader = uploader;
 			});
 		}
-		$scope.beginUpload = function(){
-			if($rootScope.bsiUploader.files.length>0){
-				$(".step-three-content").removeClass("hide");
-	    		$(".step-one-content").addClass("hide");
-	    		$(".step-two-content").addClass("hide");
-	    		$("#one-to-two").addClass("active");
-	    		$("#two-to-three").addClass("active");
-	    		$(".step-two").addClass("active");
-	    		$(".step-three").addClass("active");
-	    		$("#tags-review").html($rootScope.bsiBatch);
-				if($rootScope.bsiStep != 'three'){
-		    		$("#upload-filelist").html("");
-		    		$rootScope.bsiUploader.start();
-		    		$rootScope.bsiStep = 'three';
-		    		waveLoading.init({
-		    			haveInited: true,
-		    			target: document.querySelector('#upload-progress'),
-		    			color: 'rgba(40, 230, 200, 0.6)',
-		    			showText: false
-		    		});
-		    		waveLoading.draw();
-		        	waveLoading.setProgress(0);
-		        }
+		
+		window.onbeforeunload=function(){
+			var qp=$rootScope.bsiUploader.total;
+			var percent=qp.percent;
+			if(qp.size>0&&percent<100&&percent>0){
+				return "数据正在上传，您确定要关闭页面吗?"
 			}
+		}
+		
+		$scope.beginBsiUpload = function(){
+			$(".step-three-content").removeClass("hide");
+    		$(".step-one-content").addClass("hide");
+    		$(".step-two-content").addClass("hide");
+    		$("#bsi-one-to-two").addClass("active");
+    		$("#bsi-two-to-three").addClass("active");
+    		$(".step-two").addClass("active");
+    		$(".step-three").addClass("active");
+    		$("#tags-review").html($rootScope.bsiBatch);
+			if($rootScope.bsiStep != 'three'){
+	    		$("#upload-filelist").html("");
+	    		$rootScope.bsiUploader.start();
+	    		$rootScope.bsiStep = 'three';
+	    		waveLoading.init({
+	    			haveInited: true,
+	    			target: document.querySelector('#upload-progress'),
+	    			color: 'rgba(40, 230, 200, 0.6)',
+	    			showText: false
+	    		});
+	    		waveLoading.draw();
+	        	waveLoading.setProgress(0);
+	        }
 		}
 		$scope.closeUploadModal = function(){
 			if($rootScope.bsiUploader && $rootScope.bsiUploader.files.length<=0){
 	    		$(".step-one-content").removeClass("hide");
 	    		$(".step-two-content").addClass("hide");
-	    		$("#one-to-two").removeClass("active");
+	    		$("#bsi-one-to-two").removeClass("active");
 	    		$(".step-two").removeClass("active");
 	    		$(".step-three-content").addClass("hide");
-	    		$("#two-to-three").removeClass("active");
+	    		$("#bsi-two-to-three").removeClass("active");
 	    		$(".step-three").removeClass("active");
 	    	}
 	    	var text = $("body .breadcrumb").text();
@@ -403,26 +422,45 @@
 		
 		$scope.box = null;
 		
+		if($rootScope.bsiUploader){
+			waveLoading.init({
+    			haveInited: true,
+    			target: document.querySelector('#upload-progress'),
+    			color: 'rgba(40, 230, 200, 0.6)',
+    			showText: false
+    		});
+    		waveLoading.draw();
+    		waveLoading.setProgress($rootScope.bsiUploader.total.percent);
+		}
+		
 		$rootScope.sortIcon = function(params){
-		    if(params.sortDate=="asc"){
-		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			if(params.sort == 0){
+			    if(params.sortDate=="asc"){
+			      $(".sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+			    }else{
+			      $(".sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			    }
+			}
+			if(params.sort == 1){
+			    if(params.sortBatch=="asc"){
+			      $(".sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+			    }else{
+			      $(".sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			    }
+			}
+		    if(params.sort == 2){
+		    	if(params.sortName=="asc"){
+	    		  $(".sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    	}else{
+	    		  $(".sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    	}
 		    }
-		    if(params.sortBatch=="asc"){
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortName=="asc"){
-		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortPeriod=="asc"){
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    if(params.sort == 3){
+			    if(params.sortPeriod=="asc"){
+		    	  $(".sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+			    }else{
+		    	  $(".sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			    }
 		    }
 	    }
 		
@@ -525,7 +563,7 @@
 		    endDate: null,
 		    distributed: null, //0:是   1： 否
 		    sampleName: null
-		},
+		}
 		$scope.pageQuery = function(){
 			bsiService.reportPageQuery($scope.bsiReportParams).
 			success(function(dataMap){
@@ -779,19 +817,19 @@
 		}
 		$scope.sortBatch = function(){
 			$scope.bsiReportParams.sort = 1;
-			$scope.bsiReportParams.sortBatch = $scope.bsiReportParams.sortBatch == "desc" ? "asc" : "desc";
+			$scope.bsiReportParams.sortBatch = $scope.bsiReportParams.sortBatch == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortName = function(){
 			$scope.bsiReportParams.sort = 2;
-			$scope.bsiReportParams.sortName = $scope.bsiReportParams.sortName == "desc" ? "asc" : "desc";
+			$scope.bsiReportParams.sortName = $scope.bsiReportParams.sortName == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortPeriod = function(){
 			$scope.bsiReportParams.sort = 3;
-			$scope.bsiReportParams.sortPeriod = $scope.bsiReportParams.sortPeriod == "desc" ? "asc" : "desc";
+			$scope.bsiReportParams.sortPeriod = $scope.bsiReportParams.sortPeriod == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
@@ -825,7 +863,7 @@
 	        sortBatch: "asc",
 	        sortName: "asc",
 	        sortDate: "desc"
-	    },
+	    }
 	    $scope.pageQuery = function(){
 			bsiService.dataPageQuery($scope.params).
 			success(function(dataMap){
@@ -855,13 +893,13 @@
 		}
 		$scope.sortBatch = function(){
 			$scope.params.sort = 1;
-			$scope.params.sortBatch = $scope.params.sortBatch == "desc" ? "asc" : "desc";
+			$scope.params.sortBatch = $scope.params.sortBatch == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.params);
 			$scope.pageQuery();
 		}
 		$scope.sortName = function(){
 			$scope.params.sort = 2;
-			$scope.params.sortName = $scope.params.sortName == "desc" ? "asc" : "desc";
+			$scope.params.sortName = $scope.params.sortName == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.params);
 			$scope.pageQuery();
 		}

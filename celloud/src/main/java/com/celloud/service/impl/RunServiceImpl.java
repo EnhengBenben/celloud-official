@@ -302,7 +302,7 @@ public class RunServiceImpl implements RunService {
 			task.setPeriod(TaskPeriod.UPLOADING);
 			task.setParams(pubName);
 			task.setAppId(appId);
-			taskService.addOrUpdateUploadTaskByParam(task, isR1);
+            taskService.addOrUpdateUploadTaskByParamAndBatch(task, isR1, batch);
 			if (needSplit == null && hasR1 && hasR2) {
 				runSingle(userId, appId, dataList);
 			} else if (needSplit != null && hasR1 && hasR2 && hasIndex) {
