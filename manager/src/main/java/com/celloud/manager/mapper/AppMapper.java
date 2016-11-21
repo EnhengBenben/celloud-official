@@ -117,6 +117,9 @@ public interface AppMapper {
     List<App> getAppListByCompany(@Param("companyId") int companyId, @Param("attribute") Integer attribute,
             @Param("offLine") Integer offLine);
 
+	List<App> getAppListByUserId(@Param("userId") int userId, @Param("attribute") Integer attribute,
+			@Param("offLine") Integer offLine);
+
     /**
      * 根据attribute获取非工具类appList
      *

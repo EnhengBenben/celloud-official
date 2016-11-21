@@ -170,7 +170,8 @@ public class UserServiceImpl implements UserService {
 			}
 			appIds.deleteCharAt(appIds.length() - 1);
 		}
-		userRegisterMapper.insertUserRegisterInfo(emailArray, randomCode, appIds.toString(), secRole);
+		Integer userId = ConstantsData.getLoginUserId();
+		userRegisterMapper.insertUserRegisterInfo(emailArray, randomCode, appIds.toString(), secRole, userId);
 		String param = Base64Util.encrypt(
 				emailArray + "/" + randomCode + "/" + deptId + "/" + companyId + "/" + appCompanyId + "/" + role);
 		String context = ResetPwdUtils.userContent.replaceAll("url",

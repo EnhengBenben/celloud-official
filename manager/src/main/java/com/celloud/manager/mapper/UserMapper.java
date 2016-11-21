@@ -162,7 +162,7 @@ public interface UserMapper {
      * @date 2016年1月29日 下午1:51:39
      */
     public int addUserAppRight(@Param("userId") int userId, @Param("appIds") String[] appIds,
-            @Param("isAdded") int isAdded);
+			@Param("isAdded") int isAdded, @Param("authFrom") Integer authFrom);
 
     /**
      * 注册用户增加用户和大客户关系
@@ -204,7 +204,8 @@ public interface UserMapper {
     public void grantUserApp(@Param("userId") Integer userId,
             @Param("appAddList") List<Map<String, String>> appAddList);
 
-    public void addUserRoleRight(@Param("userId") Integer userId, @Param("roleIds") String[] roleIds);
+	public void addUserRoleRight(@Param("userId") Integer userId, @Param("roleIds") String[] roleIds,
+			@Param("authFrom") Integer authFrom);
 
     /**
      * 

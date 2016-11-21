@@ -407,6 +407,10 @@
     <select id="getAppListByCompany" resultMap="BaseResultMap">
     select app_id,app_name,create_date from tb_app where company_id = #{companyId } and attribute = #{attribute } and off_line=#{offLine } and run_type != 0
   </select>
+    <select id="getAppListByUserId" resultMap="BaseResultMap">
+    select app_id,app_name,create_date from tb_app where attribute = #{attribute } and off_line=#{offLine } and run_type != 0
+    and app_id in (select app_id from tb_user_app_right where user_id = #{userId})
+  </select>
   <select id="getAppListAdded" resultMap="BaseResultMap">
     select app_id,app_name from tb_app where run_type != 0 and attribute = #{attribute } and off_line=#{offLine }
   </select>

@@ -17,6 +17,8 @@ public class UserRegister {
 
     private String roleIds;
 
+	private Integer authFrom;
+
     public Integer getId() {
         return id;
     }
@@ -72,4 +74,13 @@ public class UserRegister {
     public void setRoleIds(String roleIds) {
         this.roleIds = roleIds;
     }
+
+	public Integer getAuthFrom() {
+		return authFrom;
+	}
+
+	public void setAuthFrom(Integer authFrom) {
+		this.authFrom = authFrom;
+	}
+
 }

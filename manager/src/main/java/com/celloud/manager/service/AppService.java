@@ -59,6 +59,8 @@ public interface AppService {
 
     List<App> getAppListByCompany(Integer companyId);
 
+	List<App> getAppListByUserId(Integer userId);
+
     /**
      * 获取公共的非工具类appList
      *

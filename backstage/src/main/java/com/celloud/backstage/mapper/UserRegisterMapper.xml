@@ -127,12 +127,14 @@
   </update>
   <insert id="insertUserRegisterInfo">
         insert into tb_user_register (email, expire_date,
-        md5,app_ids,role_ids)
+        md5,app_ids,role_ids,auth_from)
         values (#{email,jdbcType=VARCHAR},
         DATE_ADD(now(),INTERVAL 1 DAY),
         #{randomCode,jdbcType=VARCHAR},
         #{appIds,jdbcType=VARCHAR},
-        #{secRole,jdbcType=VARCHAR})
+        #{secRole,jdbcType=VARCHAR},
+        #{authFrom,jdbcType=INTEGER}
+        )
     </insert>
     
     <select id="getValidate" resultType="java.lang.Integer">

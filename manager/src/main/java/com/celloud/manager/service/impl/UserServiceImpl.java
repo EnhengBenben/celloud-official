@@ -149,18 +149,19 @@ public class UserServiceImpl implements UserService {
     public boolean addUser(User user, String md5code, Integer appCompanyId) {
         user.setPassword(MD5Util.getMD5(user.getPassword()));
         user.setState(DataState.ACTIVE);
-        UserRegister ur = userRegisterMapper.getUserRegisterInfo(user.getEmail(), md5code);
         int addNum = userMapper.addUser(user);
         if (addNum > 0) {
+			UserRegister ur = userRegisterMapper.getUserRegisterInfo(user.getEmail(), md5code);
             String appIdStr = ur != null ? ur.getAppIds() : null;
             String roleIdStr = ur != null ? ur.getRoleIds() : null;
+			Integer authFrom = ur != null ? ur.getAuthFrom() : 0;
             if (StringUtils.isNotBlank(appIdStr)) {
                 String[] appIds = appIdStr.split(",");
-                userMapper.addUserAppRight(user.getUserId(), appIds, AppIsAdd.NOT_ADDED);
+				userMapper.addUserAppRight(user.getUserId(), appIds, AppIsAdd.NOT_ADDED, authFrom);
             }
             if (StringUtils.isNotBlank(roleIdStr)) {
                 String[] roleIds = roleIdStr.split(",");
-                userMapper.addUserRoleRight(user.getUserId(), roleIds);
+				userMapper.addUserRoleRight(user.getUserId(), roleIds, authFrom);
             }
             if (appCompanyId != null) {
                 userMapper.addUserCompanyRelat(user.getUserId(), appCompanyId);
@@ -174,9 +175,8 @@ public class UserServiceImpl implements UserService {
                                             ResetPwdUtils.officialWebsite)),
                     user.getEmail());
             return true;
-        } else {
-            return false;
         }
+		return false;
     }
 
     @Override
@@ -232,7 +232,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void grantUserRole(Integer userId, String[] roleIds) {
-        userMapper.addUserRoleRight(userId, roleIds);
+		Integer authFrom = ConstantsData.getLoginUserId();
+		userMapper.addUserRoleRight(userId, roleIds, authFrom);
     }
 
     @Override
