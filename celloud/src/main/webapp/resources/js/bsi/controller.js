@@ -1,11 +1,19 @@
 (function() {
-	celloudApp.controller("bsiFileUpload",function($scope, $rootScope){
+	celloudApp.controller("bsiFileUpload",function($scope, $location, $rootScope){
 		$scope.uploadPercent = 0;
 		//  ============================上传============================
 		$scope.itemBtnToggleActive = function(){
 		    $("#common-menu .item-btn").removeClass("active");
 		    $("#to-upload-a").addClass("active");
 		}
+		$("#bsi-upload-modal").on("hidden.bs.modal",function(e){
+			$("#to-upload-a").removeClass("active");
+			if($location.path().indexOf("bsidata") > -1){
+				$("#to-data-a").addClass("active");
+			}else if($location.path().indexOf("bsireport") > -1){
+				$("#to-report-a").addClass("active");
+			}
+		});
 		$rootScope.bsiStepOne = function(){
 			$scope.itemBtnToggleActive();
 			// 判断是否在第二步, 进行回显
@@ -150,21 +158,21 @@
 		}
 		
 		var initUploader = function(){
-//			$.get(CONTEXT_PATH+"/box/configs",function(configs){
-//				for(var index in configs){
-//					var config = configs[index];
-//				    var port = config.port||80;
-//				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
-//				    config = "http://"+config.intranetAddress+":"+port+context;
-//				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
-//				    if(response && JSON.parse(response).success){
-//				    	$scope.box=config;
-//				    	break;
-//				    }
-//			    }
-//				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
-//				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
-				var uploadUrl = "../uploadFile/uploadManyFile";
+			$.get(CONTEXT_PATH+"/box/configs",function(configs){
+				for(var index in configs){
+					var config = configs[index];
+				    var port = config.port||80;
+				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
+				    config = "http://"+config.intranetAddress+":"+port+context;
+				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
+				    if(response && JSON.parse(response).success){
+				    	$scope.box=config;
+				    	break;
+				    }
+			    }
+				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
+				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
+//				var uploadUrl = "../uploadFile/uploadManyFile";
 				var uploader = new plupload.Uploader({
 					runtimes : 'html5,flash,silverlight,html4',
 					browse_button : ['bsi-plupload-content','bsi-upload-more'],
@@ -313,11 +321,11 @@
 			       }
 			    });
 			    $rootScope.bsiUploader = uploader;
-//			});
+			});
 		}
 		
 		window.onbeforeunload=function(){
-			var qp=$$rootScope.bsiUploader.total;
+			var qp=$rootScope.bsiUploader.total;
 			var percent=qp.percent;
 			if(qp.size>0&&percent<100&&percent>0){
 				return "数据正在上传，您确定要关闭页面吗?"
@@ -414,26 +422,45 @@
 		
 		$scope.box = null;
 		
+		if($rootScope.bsiUploader){
+			waveLoading.init({
+    			haveInited: true,
+    			target: document.querySelector('#upload-progress'),
+    			color: 'rgba(40, 230, 200, 0.6)',
+    			showText: false
+    		});
+    		waveLoading.draw();
+    		waveLoading.setProgress($rootScope.bsiUploader.total.percent);
+		}
+		
 		$rootScope.sortIcon = function(params){
-		    if(params.sortDate=="asc"){
-		      $("#sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			if(params.sort == 0){
+			    if(params.sortDate=="asc"){
+			      $(".sort-date-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+			    }else{
+			      $(".sort-date-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			    }
+			}
+			if(params.sort == 1){
+			    if(params.sortBatch=="asc"){
+			      $(".sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+			    }else{
+			      $(".sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			    }
+			}
+		    if(params.sort == 2){
+		    	if(params.sortName=="asc"){
+	    		  $(".sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+		    	}else{
+	    		  $(".sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    	}
 		    }
-		    if(params.sortBatch=="asc"){
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-batch-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortName=="asc"){
-		      $("#sort-name-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		      $("#sort-name-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-		    }
-		    if(params.sortPeriod=="asc"){
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-		    }else{
-		    	$("#sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+		    if(params.sort == 3){
+			    if(params.sortPeriod=="asc"){
+		    	  $(".sort-period-icon").removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+			    }else{
+		    	  $(".sort-period-icon").removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+			    }
 		    }
 	    }
 		
@@ -536,7 +563,7 @@
 		    endDate: null,
 		    distributed: null, //0:是   1： 否
 		    sampleName: null
-		},
+		}
 		$scope.pageQuery = function(){
 			bsiService.reportPageQuery($scope.bsiReportParams).
 			success(function(dataMap){
@@ -790,19 +817,19 @@
 		}
 		$scope.sortBatch = function(){
 			$scope.bsiReportParams.sort = 1;
-			$scope.bsiReportParams.sortBatch = $scope.bsiReportParams.sortBatch == "desc" ? "asc" : "desc";
+			$scope.bsiReportParams.sortBatch = $scope.bsiReportParams.sortBatch == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortName = function(){
 			$scope.bsiReportParams.sort = 2;
-			$scope.bsiReportParams.sortName = $scope.bsiReportParams.sortName == "desc" ? "asc" : "desc";
+			$scope.bsiReportParams.sortName = $scope.bsiReportParams.sortName == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
 		$scope.sortPeriod = function(){
 			$scope.bsiReportParams.sort = 3;
-			$scope.bsiReportParams.sortPeriod = $scope.bsiReportParams.sortPeriod == "desc" ? "asc" : "desc";
+			$scope.bsiReportParams.sortPeriod = $scope.bsiReportParams.sortPeriod == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.bsiReportParams);
 			$scope.pageQuery();
 		}
@@ -836,7 +863,7 @@
 	        sortBatch: "asc",
 	        sortName: "asc",
 	        sortDate: "desc"
-	    },
+	    }
 	    $scope.pageQuery = function(){
 			bsiService.dataPageQuery($scope.params).
 			success(function(dataMap){
@@ -866,13 +893,13 @@
 		}
 		$scope.sortBatch = function(){
 			$scope.params.sort = 1;
-			$scope.params.sortBatch = $scope.params.sortBatch == "desc" ? "asc" : "desc";
+			$scope.params.sortBatch = $scope.params.sortBatch == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.params);
 			$scope.pageQuery();
 		}
 		$scope.sortName = function(){
 			$scope.params.sort = 2;
-			$scope.params.sortName = $scope.params.sortName == "desc" ? "asc" : "desc";
+			$scope.params.sortName = $scope.params.sortName == "asc" ? "desc" : "asc";
 			$rootScope.sortIcon($scope.params);
 			$scope.pageQuery();
 		}
