@@ -325,7 +325,7 @@
 		}
 		
 		window.onbeforeunload=function(){
-			var qp=$$rootScope.bsiUploader.total;
+			var qp=$rootScope.bsiUploader.total;
 			var percent=qp.percent;
 			if(qp.size>0&&percent<100&&percent>0){
 				return "数据正在上传，您确定要关闭页面吗?"
@@ -421,6 +421,17 @@
 	celloudApp.controller("bsiCommon",function($scope, $rootScope){
 		
 		$scope.box = null;
+		
+		if($rootScope.bsiUploader){
+			waveLoading.init({
+    			haveInited: true,
+    			target: document.querySelector('#upload-progress'),
+    			color: 'rgba(40, 230, 200, 0.6)',
+    			showText: false
+    		});
+    		waveLoading.draw();
+    		waveLoading.setProgress($rootScope.bsiUploader.total.percent);
+		}
 		
 		$rootScope.sortIcon = function(params){
 			if(params.sort == 0){
