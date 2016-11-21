@@ -96,15 +96,8 @@ public class UserAction {
      */
     @ResponseBody
     @RequestMapping("user/checkEmail")
-    public String checkEmail(@RequestParam("emailArray") String[] emailArray) {
-        StringBuffer sb = new StringBuffer();
-        for (String email : emailArray) {
-            int result = userService.isEmailInUse(email,null) ? 1 : 0;
-            sb.append(result).append(",");
-        }
-        sb.delete(sb.length() - 1, sb.length());
-        String email = sb.toString();
-        return email;
+	public String checkEmail(@RequestParam("emailArray") String emailArray) {
+		return userService.isEmailInUse(emailArray, null) ? "1" : "0";
     }
     /**
      * 发送添加用户邮件
@@ -117,10 +110,13 @@ public class UserAction {
      */
     @ResponseBody
     @RequestMapping("user/sendEmail")
-    public void sendEmail(@RequestParam("emailArray") String[] emailArray,@RequestParam("deptId") Integer deptId,
+	public void sendEmail(@RequestParam("emailArray") String emailArray, @RequestParam("deptId") Integer deptId,
             @RequestParam("companyId") Integer companyId,@RequestParam("appCompanyId") Integer appCompanyId,
-            @RequestParam("appIdArray") Integer[] appIdArray,@RequestParam("role") Integer role) {
-        userService.sendRegisterEmail(emailArray, deptId, companyId, appCompanyId, appIdArray,role);
+			@RequestParam("appIdArray") Integer[] appIdArray, @RequestParam("role") Integer role,
+			@RequestParam("secRole") String secRole) {
+		//TODO backstage注册限定为大客户
+		role = 1;
+		userService.sendRegisterEmail(emailArray, deptId, companyId, appCompanyId, appIdArray, role, secRole);
     }
     
     /**

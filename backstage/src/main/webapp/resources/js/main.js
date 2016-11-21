@@ -381,6 +381,14 @@ var user=(function(user){
 		}
 	}
 	self.sendEmail=function(){
+	  var secRole = "";
+    $("#emailForm").find(".resourceCheck:checked").each(function(){
+      if($(this).attr("_parentId")!=0){
+        secRole += $(this).val()+",";
+      }
+    });
+    secRole = secRole.substring(0,secRole.length-1);
+    $("#secRole").val(secRole);
 		var isPass = true;
 		$("#emailForm").find("input:text").each(function(){
 			var email = $(this).val();
@@ -411,7 +419,7 @@ var user=(function(user){
 		if(isPass){
 			var params = $("#emailForm").serialize(); 
 			$.get("user/checkEmail",params,function(flag){
-				if(flag.indexOf("1")>=0){
+				if(flag=="1"){
 						if(flag==1){
 							$("#emailArray").parent().parent().addClass("error");
 							$("#emailArray").parent().parent().find(".help-inline").html("此邮箱已经添加！");

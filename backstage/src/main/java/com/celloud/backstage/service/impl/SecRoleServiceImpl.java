@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.celloud.backstage.constants.ConstantsData;
 import com.celloud.backstage.constants.DataState;
 import com.celloud.backstage.mapper.SecRoleMapper;
 import com.celloud.backstage.model.SecResource;
@@ -73,7 +74,8 @@ public class SecRoleServiceImpl implements SecRoleService {
         } else {
             roleMapper.deleteRoleBigCustomerRelatByRoleId(roleId);
             // 为该角色添加大客户
-            return roleMapper.insertRoleBigCustomerRelat(roleId, bigCustomerIds);
+			Integer userId = ConstantsData.getLoginUserId();
+			return roleMapper.insertRoleBigCustomerRelat(roleId, bigCustomerIds, userId);
         }
     }
 

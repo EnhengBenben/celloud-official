@@ -62,7 +62,6 @@
                <label class="col-sm-2 control-label" for="tel">身份<font color="red">*</font> </label>
                <div class="col-sm-10">
                    <select name="role">
-                       <option value="0">普通用户</option>
                        <option value="1">大客户</option>
                    </select>
                    <span class="help-inline text-danger"></span>
@@ -71,9 +70,33 @@
            <div class="form-group">
                <label class="col-sm-2 control-label" for="tel">角色<font color="red">*</font> </label>
                <div class="col-sm-10">
-               	<c:forEach items="${roleList }" var="role">
-               		<input type="checkbox" name="roleList" value="${role.id }"> ${role.name }
-               	</c:forEach>               	
+               	<input name="secRole" type="hidden" id="secRole" value="">
+               	<table class="table table-bordered table-striped tree" cellspacing="0" width="100%">
+			        <thead>
+			            <tr>
+			                <th>选择</th>
+			                <th>角色名称</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <c:forEach items="${roleList }" var="role" varStatus="status">
+			                <tr class="treegrid-${role.id } <c:if test="${role.parentId != 0 }">treegrid-parent-${role.parentId }</c:if>">
+			                	<td style="text-align: center;">
+			                		<c:choose>
+			                			<c:when test="${role.parentId==0 }">
+				                			<c:set value="${role.id }" var="num"></c:set>
+			                			</c:when>
+			                			<c:otherwise>
+			                				<c:set value="${role.parentId }" var="num"></c:set>
+			                			</c:otherwise>
+			                		</c:choose>
+				                	<input class="resourceCheck" _parentId="${role.parentId }" type="checkbox" value="${role.id }" name="checkBox${num }" onclick="checkBoxClick('checkBox${num }',${role.parentId })">
+			                	</td>
+			                    <td>${role.name }</td>
+			                </tr>
+			            </c:forEach>
+			        </tbody>
+			    </table>
                    <span class="help-inline text-danger"></span>
                </div>
            </div>
@@ -87,3 +110,28 @@
        </form>
   </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.tree').treegrid({
+		treeColumn: 1
+	});
+});
+function checkBoxClick(name,parentId){
+  var isCheckAll = true;
+  $("input[type='checkbox'][name='"+name+"']").each(function(i){
+    if(parentId==0){
+      if(i==0){
+        isCheckAll = $(this).prop("checked");
+      }else{
+        $(this).prop("checked",isCheckAll);
+      }
+    }else if(i>0 && !$(this).prop("checked")){
+      isCheckAll = false;
+    }
+  });
+  var array = $("input[type='checkbox'][name='"+name+"']");
+  if(parentId!=0){
+    $(array[0]).prop("checked",isCheckAll);
+  }
+}
+</script>
