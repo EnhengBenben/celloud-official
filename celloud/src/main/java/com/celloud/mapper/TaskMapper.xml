@@ -565,6 +565,20 @@
 		from tb_task WHERE user_id=#{userId} and state=#{state} and period =
 		#{period} and params=#{params}
 	</select>
+	<select id="findTaskByParamsAndPeriodAndBatch" resultMap="BaseResultMap">
+        SELECT
+        t.task_id, t.user_id, t.app_id, t.data_key, t.command, t.period,
+        t.create_date, t.start_date, t.end_date, t.update_date, t.project_id,
+        t.delete_date, t.state, t.sample_id, t.datalist, t.result
+        FROM tb_task t
+        LEFT JOIN tb_file f
+        ON t.data_key = f.data_key
+        WHERE t.user_id = #{userId}
+        AND t.state=#{state}
+        AND t.period = #{period}
+        AND t.params=#{params}
+        AND f.batch = #{batch}
+    </select>
 	<select id="findTaskByDataKeyAndApp" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />

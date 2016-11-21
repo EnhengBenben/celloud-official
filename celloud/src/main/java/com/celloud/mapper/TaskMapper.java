@@ -180,6 +180,21 @@ public interface TaskMapper {
             @Param("params") String params);
 
     /**
+     * 
+     * @description 按照运行状态, 参数, 批次查找任务
+     * @author miaoqi
+     * @date 2016年11月21日上午11:02:19
+     *
+     * @param userId
+     * @param state
+     * @param period
+     * @param params
+     * @return
+     */
+    Task findTaskByParamsAndPeriodAndBatch(@Param("userId") Integer userId, @Param("state") Integer state,
+            @Param("period") Integer period, @Param("params") String params, @Param("batch") String batch);
+
+    /**
      * 根据数据编号获取任务信息
      * 
      * @param state
