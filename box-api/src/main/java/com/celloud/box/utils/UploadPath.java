@@ -124,7 +124,7 @@ public class UploadPath {
 	 * @return
 	 */
 	public static String getObjectKey(Integer userId, String dataKey, String ext) {
-		return userId + "/" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/" + dataKey
+		return "file/"+userId + "/" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "/" + dataKey
 				+ (ext.startsWith(".") ? ext : "." + ext);
 	}
 
