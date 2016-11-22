@@ -220,8 +220,8 @@ public class RunServiceImpl implements RunService {
 					AppSubmitUtil.http(appId, dataListFile, appPath, projectId);
 				} else {
 					AppSubmitUtil.ssh("sge", command, false);
+					logger.info("任务{}运行命令：{}", taskId, command);
 				}
-				logger.info("任务{}运行命令：{}", taskId, command);
 				taskService.updateToRunning(taskId);
 			} else {
 				logger.info("数据{}排队运行{}", dataKey, app.getAppName());
