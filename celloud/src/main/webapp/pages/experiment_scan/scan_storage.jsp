@@ -16,6 +16,7 @@
           <input class="order-input" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="orderNo" required placeholder="扫码或者输入订单号码"/>
           <div class="info-btn-group">
             <input class="field" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="sampleName" required placeholder="扫码或者输入样本编号"/>
+            <button ng-disabled="checkedLength == 0" class="action" style="right:510px;width:80px;" ng-click="printQRCode()">打印</button>
             <a class="action" ng-click="scanStorage()">扫码入库</a>
           </div>
         </div>
@@ -23,6 +24,12 @@
           <table class="table table-main">
             <thead>
                 <tr>
+                    <th class="th-checkoutbox">
+		              <label class="checkbox-lable">
+		                <input class="checkbox" type="checkbox" name="checkAll" ng-click="checkAll()" >
+		                <span class="info"></span>
+		              </label>
+		            </th>
                     <th>订单编号</th>
                     <th>医院样本编号</th>
                     <th>实验样本编号</th>
@@ -35,11 +42,17 @@
             </thead>
             <tbody>
                 <tr ng-repeat="sample in sampleList.datas">
+                    <td>
+		              <label class="checkbox-lable">
+		                <input class="checkbox" type="checkbox" name="checkOne" ng-click="checkOne()" value="{{sample.experSampleName}}">
+		                <span class="info"></span>
+		              </label>
+		            </td>
                     <td>{{sample.orderNo }}</td>
                     <td>{{sample.sampleName }}</td>
-                    <td>{{sample.experSampleName }}</td>
+                    <td class="experSampleName">{{sample.experSampleName }}</td>
                     <td>{{sample.type }}</td>
-                    <td>{{sample.createDate  | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td class="createDate">{{sample.createDate  | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>入库</td>
                     <td>{{sample.remark }}</td>
                     <td>

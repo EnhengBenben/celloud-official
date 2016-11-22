@@ -18,6 +18,7 @@
           <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入实验样本编号！</span>
           <div class="info-btn-group">
             <input class="field" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="sampleName" required placeholder="扫码或者输入实验样本编号"/>
+            <button ng-disabled="checkedLength == 0" class="action" style="right:510px;width:80px;" ng-click="printQRCode()">打印</button>
             <a class="action" ng-click="tokenDNA()">扫码提DNA</a>
           </div>
         </div>
@@ -25,6 +26,12 @@
           <table class="table table-main">
             <thead>
                 <tr>
+                    <th class="th-checkoutbox">
+                      <label class="checkbox-lable">
+                        <input class="checkbox" type="checkbox" name="checkAll" ng-click="checkAll()" >
+                        <span class="info"></span>
+                      </label>
+                    </th>
                     <th>实验样本编号</th>
                     <th>样本类型</th>
                     <th>采样时间</th>
@@ -35,9 +42,15 @@
             </thead>
             <tbody>
                 <tr ng-repeat="sample in sampleList.datas">
-                    <td>{{sample.experSampleName }}</td>
+                    <td>
+                      <label class="checkbox-lable">
+                        <input class="checkbox" type="checkbox" name="checkOne" ng-click="checkOne()" value="{{sample.experSampleName}}">
+                        <span class="info"></span>
+                      </label>
+                    </td>
+                    <td class="experSampleName">{{sample.experSampleName }}</td>
                     <td>{{sample.type }}</td>
-                    <td>{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td class="createDate">{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td>提DNA</td>
                     <td>{{sample.remark }}</td>
                     <td>
