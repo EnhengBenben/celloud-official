@@ -16,4 +16,8 @@ public interface OSSConfigService {
 	 */
 	OSSConfig getLatest();
 
+	/**
+	 * 自动更新当前可用的oss配置
+	 */
+	void refreshConfig();
 }
