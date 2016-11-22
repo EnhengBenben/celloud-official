@@ -39,6 +39,7 @@ import com.celloud.utils.AppSubmitUtil;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.Response;
+import com.celloud.utils.UploadPathUtils;
 
 @Service("runService")
 public class RunServiceImpl implements RunService {
@@ -56,8 +57,8 @@ public class RunServiceImpl implements RunService {
 	private ExpensesService expenseService;
 	@Resource
 	private DataService dataService;
-    @Resource
-    private SampleService sampleService;
+	@Resource
+	private SampleService sampleService;
 
 	@Override
 	public Map<String, String> getDataListFile(Integer appId, List<DataFile> dataList) {
@@ -70,9 +71,9 @@ public class RunServiceImpl implements RunService {
 			dataFilePathMap = DataKeyListToFile.containName(dataList);
 		} else if (AppDataListType.SPLIT.contains(appId)) {
 			dataFilePathMap = DataKeyListToFile.toSplit(dataList);
-        } else if (AppDataListType.AB_FASTQ_PATH.contains(appId)) {
-            dataFilePathMap = DataKeyListToFile.abFastqPath(dataList);
-        }
+		} else if (AppDataListType.AB_FASTQ_PATH.contains(appId)) {
+			dataFilePathMap = DataKeyListToFile.abFastqPath(dataList);
+		}
 		return dataFilePathMap;
 	}
 
@@ -192,6 +193,9 @@ public class RunServiceImpl implements RunService {
 		String appPath = SparkPro.TOOLSPATH + userId + "/" + appId + "/";
 		if (!FileTools.checkPath(appPath)) {
 			new File(appPath).mkdirs();
+		}
+		if (dataList.get(0).getOssPath() != null) {
+			appPath = UploadPathUtils.getObjectKeyByPath(UploadPathUtils.getOutPathInOSS(userId, appId));
 		}
 		for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
 			String dataKey = entry.getKey();
@@ -314,71 +318,68 @@ public class RunServiceImpl implements RunService {
 
 	}
 
-    // XXX百菌探上传数据与实验数据绑定方法
-    public String bsiCheckRun(String batch, Integer dataId, String dataKey,
-            String originalName, Integer userId, Integer fileFormat) {
-        logger.info("判断是否数据{}上传完即刻运行", originalName);
-        Integer appId;
-        String pubName = "";
-        if (fileFormat == FileFormat.FQ) {
-            appId = IconConstants.APP_ID_SPLIT;
-            Boolean isR1 = false;
-            if (originalName.contains("R1")) {
-                pubName = originalName.substring(0,
-                        originalName.lastIndexOf("R1"));
-                isR1 = true;
-            } else if (originalName.contains("R2")) {
-                pubName = originalName.substring(0,
-                        originalName.lastIndexOf("R2"));
-            }
-            Pattern p = Pattern.compile("\\_|\\%");
-            Matcher m = p.matcher(pubName);
-            StringBuffer sb = new StringBuffer();
-            while (m.find()) {
-                String rep = "\\\\" + m.group(0);
-                m.appendReplacement(sb, rep);
-            }
-            m.appendTail(sb);
-            List<DataFile> dataList = dataService
-                    .getDataByBatchAndFileName(userId, batch, sb.toString());
-            boolean hasR1 = false;
-            boolean hasR2 = false;
-            for (DataFile d : dataList) {
-                if (d.getPath() == null) {
-                    continue;
-                }
-                File f = new File(d.getPath());
-                if (!f.exists() || f.length() != d.getSize().longValue()) {
-                    continue;
-                }
-                String name_tmp = d.getFileName();
-                if (name_tmp.contains("R1")) {
-                    hasR1 = true;
-                } else if (name_tmp.contains("R2")) {
-                    hasR2 = true;
-                }
-            }
-            Task task = new Task();
-            task.setUserId(userId);
-            task.setDataKey(dataKey);
-            task.setPeriod(TaskPeriod.UPLOADING);
-            task.setParams(pubName);
-            task.setAppId(appId);
-            taskService.addOrUpdateUploadTaskByParam(task, isR1);
-            if (hasR1 && hasR2) {
-                runSingle(userId, appId, dataList);
-            } else if (hasR1 && hasR2) {
-                runSingle(userId, appId, dataList);
-            }
-        } else if (fileFormat == FileFormat.YASUO) {
-            appId = IconConstants.APP_ID_BSI;
-            List<DataFile> dataList = new ArrayList<>();
-            DataFile data = dataService.getDataById(dataId);
-            dataList.add(data);
-            runSingle(userId, appId, dataList);
-        }
-        return "1";
-    }
+	// XXX百菌探上传数据与实验数据绑定方法
+	public String bsiCheckRun(String batch, Integer dataId, String dataKey, String originalName, Integer userId,
+			Integer fileFormat) {
+		logger.info("判断是否数据{}上传完即刻运行", originalName);
+		Integer appId;
+		String pubName = "";
+		if (fileFormat == FileFormat.FQ) {
+			appId = IconConstants.APP_ID_SPLIT;
+			Boolean isR1 = false;
+			if (originalName.contains("R1")) {
+				pubName = originalName.substring(0, originalName.lastIndexOf("R1"));
+				isR1 = true;
+			} else if (originalName.contains("R2")) {
+				pubName = originalName.substring(0, originalName.lastIndexOf("R2"));
+			}
+			Pattern p = Pattern.compile("\\_|\\%");
+			Matcher m = p.matcher(pubName);
+			StringBuffer sb = new StringBuffer();
+			while (m.find()) {
+				String rep = "\\\\" + m.group(0);
+				m.appendReplacement(sb, rep);
+			}
+			m.appendTail(sb);
+			List<DataFile> dataList = dataService.getDataByBatchAndFileName(userId, batch, sb.toString());
+			boolean hasR1 = false;
+			boolean hasR2 = false;
+			for (DataFile d : dataList) {
+				if (d.getPath() == null) {
+					continue;
+				}
+				File f = new File(d.getPath());
+				if (!f.exists() || f.length() != d.getSize().longValue()) {
+					continue;
+				}
+				String name_tmp = d.getFileName();
+				if (name_tmp.contains("R1")) {
+					hasR1 = true;
+				} else if (name_tmp.contains("R2")) {
+					hasR2 = true;
+				}
+			}
+			Task task = new Task();
+			task.setUserId(userId);
+			task.setDataKey(dataKey);
+			task.setPeriod(TaskPeriod.UPLOADING);
+			task.setParams(pubName);
+			task.setAppId(appId);
+			taskService.addOrUpdateUploadTaskByParam(task, isR1);
+			if (hasR1 && hasR2) {
+				runSingle(userId, appId, dataList);
+			} else if (hasR1 && hasR2) {
+				runSingle(userId, appId, dataList);
+			}
+		} else if (fileFormat == FileFormat.YASUO) {
+			appId = IconConstants.APP_ID_BSI;
+			List<DataFile> dataList = new ArrayList<>();
+			DataFile data = dataService.getDataById(dataId);
+			dataList.add(data);
+			runSingle(userId, appId, dataList);
+		}
+		return "1";
+	}
 
 	@Override
 	public void rockyCheckRun(Integer appId, DataFile data) {
@@ -426,8 +427,8 @@ public class RunServiceImpl implements RunService {
 				logger.info("数据{}上传完可以运行", originalName);
 				runSingle(data.getUserId(), appId, new ArrayList<>(datas.values()));
 			}
-        } else {
-            logger.info("数据{}上传完不可以运行", originalName);
+		} else {
+			logger.info("数据{}上传完不可以运行", originalName);
 		}
 	}
 

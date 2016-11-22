@@ -91,5 +91,6 @@ public class Constants {
 	public static final String MESSAGE_USER_TOPIC = "user-message";
 
 	public static final String MESSAGE_USER_CHANNEL = "userMessage";
+	public static final String FILEPATH_PROPERTIES_FILE = "file_path.properties";
 
 }

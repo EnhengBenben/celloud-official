@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 /**
  * App启动类<br>
  * 
@@ -18,6 +20,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
+@EnableSwagger2
 public class Application extends AsyncConfigurerSupport {
 	private static Logger logger = LoggerFactory.getLogger(Application.class);
 

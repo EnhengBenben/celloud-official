@@ -1,5 +1,6 @@
 package com.celloud.constants;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -34,6 +35,7 @@ public class ConstantsData {
 	private static Logger logger = LoggerFactory.getLogger(ConstantsData.class);
 	public static Map<String, Map<String, String>> machines = null;
 	private static Properties systemProperties;
+	private static Properties filePathProperties;
 	private static Properties bioinfoServices;
 	private static String anotherNamePerlPath;
 	private static OSSConfig ossConfig;
@@ -222,6 +224,17 @@ public class ConstantsData {
 			loadSystemProperties();
 		}
 		return systemProperties.getProperty("context_url");
+	}
+
+	public static String getOfsPath() {
+		if (filePathProperties == null) {
+			filePathProperties=loadProperties(Constants.FILEPATH_PROPERTIES_FILE);
+		}
+		String ofsPath = filePathProperties.getProperty("ossfsPath");
+		if (ofsPath != null && !ofsPath.endsWith(File.separatorChar + "")) {
+			ofsPath = ofsPath + File.separatorChar;
+		}
+		return ofsPath;
 	}
 
 	public static String getLocalIp() {
