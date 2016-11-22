@@ -458,6 +458,59 @@ public class RunOverUtil {
 		return true;
 	}
 
+    /**
+     * AccuSeqα2流程运行结束后的处理
+     * 
+     * @param reportPath
+     * @param dataKey
+     * @param appTitle
+     * @param projectFile
+     * @param projectId
+     * @param dataList
+     * @return
+     */
+    public boolean AccuSeqα2(String reportPath, String dataKey, String appTitle,
+            String projectFile, String projectId, List<DataFile> dataList) {
+        // 1. 追加表头
+        StringBuffer resultArray = new StringBuffer();
+        if (FileTools.countLines(projectFile) < 1) {
+            resultArray.append(appTitle).append("\n");
+        }
+        resultArray.append(dataKey).append("\t");
+        for (int i = 0; i < dataList.size(); i++) {
+            resultArray.append(dataList.get(i).getFileName());
+            if (i < dataList.size() - 1) {
+                resultArray.append("&");
+            }
+        }
+        resultArray.append("\t");
+        reportPath = reportPath + "B/";
+        File f = new File(reportPath + "result/statistic.xls");
+        if (f.exists()) {
+            List<String> list = FileTools
+                    .readLinestoString(reportPath + "result/statistic.xls");
+            if (!(list == null || list.isEmpty())) {
+                resultArray.append(FileTools.listIsNull(list, 0)).append("\t")
+                        .append(FileTools.listIsNull(list, 1)).append("\t")
+                        .append(FileTools.listIsNull(list, 2)).append("\t");
+            } else {
+                resultArray.append("运行结果异常").append("\t&nbsp;\t&nbsp;\t");
+            }
+            File avgFile = new File(reportPath + "result/average.info");
+            if (avgFile.exists()) {
+                resultArray.append(FileTools
+                        .getFirstLine(reportPath + "/result/average.info"));
+            } else {
+                resultArray.append("&nbsp;");
+            }
+        } else {
+            resultArray.append("运行结果异常").append("\t&nbsp;\t&nbsp;\t&nbsp;");
+        }
+
+        FileTools.appendWrite(projectFile, resultArray.toString() + "\n");
+        return true;
+    }
+
 	/**
 	 * PGS系列流程项目运行结束后的处理
 	 * 
