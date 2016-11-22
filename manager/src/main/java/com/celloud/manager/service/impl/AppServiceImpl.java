@@ -77,6 +77,14 @@ public class AppServiceImpl implements AppService {
         return appMapper.getAppListByCompany(companyId, AppPermission.PRIVATE, AppOffline.ON);
     }
 
+	@Override
+	public List<App> getAppListByUserId(Integer userId) {
+		if (userId == null) {
+			return null;
+		}
+		return appMapper.getAppListByUserId(userId, AppPermission.PRIVATE, AppOffline.ON);
+	}
+
     @Override
     public List<App> getAppListPulbicAdded() {
         return appMapper.getAppListAdded(AppPermission.PUBLIC, AppOffline.ON);

@@ -10,12 +10,13 @@
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.backstage.model.UserRegister" extends="BaseResultMap" >
     <result column="app_ids" property="appIds" jdbcType="LONGVARCHAR" />
+    <result column="role_ids" property="roleIds" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, expire_date, md5, email
   </sql>
   <sql id="Blob_Column_List" >
-    app_ids
+    app_ids,role_ids
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
@@ -58,6 +59,9 @@
       <if test="appIds != null" >
         app_ids,
       </if>
+      <if test="roleIds != null" >
+        role_ids,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -77,6 +81,9 @@
       </if>
       <if test="appIds != null" >
         #{appIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="roleIds != null" >
+        #{roleIds,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -120,11 +127,14 @@
   </update>
   <insert id="insertUserRegisterInfo">
         insert into tb_user_register (email, expire_date,
-        md5,app_ids)
+        md5,app_ids,role_ids,auth_from)
         values (#{email,jdbcType=VARCHAR},
         DATE_ADD(now(),INTERVAL 1 DAY),
         #{randomCode,jdbcType=VARCHAR},
-        #{appIds,jdbcType=VARCHAR})
+        #{appIds,jdbcType=VARCHAR},
+        #{secRole,jdbcType=VARCHAR},
+        #{authFrom,jdbcType=INTEGER}
+        )
     </insert>
     
     <select id="getValidate" resultType="java.lang.Integer">

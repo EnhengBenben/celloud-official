@@ -80,7 +80,7 @@ public class UserAction {
         Integer appCompanyId = ConstantsData.getLoginCompanyId();
         Integer userId = ConstantsData.getLoginUserId();
         // 获取当前大客户下的app列表
-        List<App> appList = appService.getAppListByCompany(appCompanyId);
+		List<App> appList = appService.getAppListByUserId(userId);
         // 获取当前大客户下的role列表
         List<SecRole> roleList = secRoleService.findRoleListByUserId(userId);
         mv.addObject("appList", appList);
@@ -283,9 +283,7 @@ public class UserAction {
     @RequestMapping("addUser/{email}")
     public ModelAndView register(@PathVariable String email) {
         ModelAndView mv = new ModelAndView("user/user_add");
-        System.out.println("email:" + email);
         String param = Base64Util.decrypt(email);
-        System.out.println(param);
         mv.addObject("officialWebsite", ResetPwdUtils.officialWebsite);
         logger.info("注册邮件{}", param);
         String p[] = param.split("/");

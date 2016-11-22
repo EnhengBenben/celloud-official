@@ -19,7 +19,8 @@ public interface UserRegisterMapper {
 
     int updateByPrimaryKey(UserRegister record);
     
-    public void insertUserRegisterInfo(@Param("email") String email,@Param("randomCode") String randomCode,@Param("appIds") String appIds);
+	public void insertUserRegisterInfo(@Param("email") String email, @Param("randomCode") String randomCode,
+			@Param("appIds") String appIds, @Param("secRole") String secRole, @Param("authFrom") Integer userId);
     /**
      * 删除验证码
      *

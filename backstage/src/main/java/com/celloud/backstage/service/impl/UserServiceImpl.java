@@ -159,27 +159,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void sendRegisterEmail(String[] emailArray, Integer deptId, Integer companyId, Integer appCompanyId,
-            Integer[] appIdArray,Integer role) {
-        for (String email : emailArray) {
-            userRegisterMapper.deleteUserRegisterInfo(email);
-            String randomCode = MD5Util.getMD5(String.valueOf(new Date()
-                    .getTime()));
-            StringBuffer appIds=new StringBuffer();;
-            if(appIdArray!=null&&appIdArray.length>0){
-                for(Integer appId:appIdArray){
-                    appIds.append(appId+",");
-                }
-                appIds.deleteCharAt(appIds.length()-1);
-            }
-            userRegisterMapper.insertUserRegisterInfo(email, randomCode, appIds.toString());
-            String param = Base64Util.encrypt(email + "/" + randomCode + "/"
-                    + deptId + "/" + companyId+"/"+appCompanyId+"/"+role);
-            String context = ResetPwdUtils.userContent.replaceAll("url",
-                    "<a href='"+ResetPwdUtils.userPath.replaceAll("path", param)+"'>"+ResetPwdUtils.userPath.replaceAll("path", param)+"</a>");
-			aliEmail.simpleSend(ResetPwdUtils.userTitle, context, email);
-        }
-        
+	public void sendRegisterEmail(String emailArray, Integer deptId, Integer companyId, Integer appCompanyId,
+			Integer[] appIdArray, Integer role, String secRole) {
+		userRegisterMapper.deleteUserRegisterInfo(emailArray);
+		String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
+		StringBuffer appIds = new StringBuffer();
+		if (appIdArray != null && appIdArray.length > 0) {
+			for (Integer appId : appIdArray) {
+				appIds.append(appId + ",");
+			}
+			appIds.deleteCharAt(appIds.length() - 1);
+		}
+		Integer userId = ConstantsData.getLoginUserId();
+		userRegisterMapper.insertUserRegisterInfo(emailArray, randomCode, appIds.toString(), secRole, userId);
+		String param = Base64Util.encrypt(
+				emailArray + "/" + randomCode + "/" + deptId + "/" + companyId + "/" + appCompanyId + "/" + role);
+		String context = ResetPwdUtils.userContent.replaceAll("url",
+				"<a href='" + ResetPwdUtils.userPath.replaceAll("path", param) + "'>"
+						+ ResetPwdUtils.userPath.replaceAll("path", param) + "</a>");
+		aliEmail.simpleSend(ResetPwdUtils.userTitle, context, emailArray);
     }
 
     @Override

@@ -15,6 +15,10 @@ public class UserRegister {
 
     private String appIds;
 
+	private String roleIds;
+
+	private String authFrom;
+
     public Integer getId() {
         return id;
     }
@@ -62,4 +66,21 @@ public class UserRegister {
     public void setAppIds(String appIds) {
         this.appIds = appIds == null ? null : appIds.trim();
     }
+
+	public String getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(String roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	public String getAuthFrom() {
+		return authFrom;
+	}
+
+	public void setAuthFrom(String authFrom) {
+		this.authFrom = authFrom;
+	}
+
 }

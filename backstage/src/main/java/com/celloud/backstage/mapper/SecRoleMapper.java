@@ -34,7 +34,8 @@ public interface SecRoleMapper {
 
     int deleteRoleBigCustomerRelatByRoleId(@Param("roleId") Integer roleId);
 
-    int insertRoleBigCustomerRelat(@Param("roleId") Integer roleId, @Param("bigCustomerIds") Integer[] bigCustomerIds);
+	int insertRoleBigCustomerRelat(@Param("roleId") Integer roleId, @Param("bigCustomerIds") Integer[] bigCustomerIds,
+			@Param("userId") Integer userId);
 
     List<SecResource> findResourcesByRole(@Param("roleId") Integer roleId);
 
