@@ -141,7 +141,7 @@
 				inner += "<a class='btn -low "+isActive+"' style='font-size:12px;width:100%;margin-top:1px;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
 				$("#fileListUl").append(inner);
 				$("#fileA"+proId+item.fileId).bind("click", function() {
-					viewDataReport(userId,item.dataKey,item.fileName,appId,appInfo.appName,proId,projectName,$(this));
+					viewDataReport(userId,item.dataKey,item.fileName,appId,appInfo.englishName,proId,projectName,$(this));
 					$.get("report/clickItemDataReport",{},function(state){});
 				});
 			});
