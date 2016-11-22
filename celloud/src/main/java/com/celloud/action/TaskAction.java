@@ -127,11 +127,11 @@ public class TaskAction {
 		List<DataFile> dataList = dataService.selectDataByKeys(dataNames);
 		// 2. 利用 python将数据报告插入 mongodb
 		StringBuffer command = new StringBuffer();
-		command.append("python ")
+		command.append("python ").append(SparkPro.TASKOVERPY).append(" ")
 				.append(dataList.get(0).getOssPath() == null ? SparkPro.TASKOVERPY
-						: ConstantsData.getOfsPath() + "/output")
-				.append(" ").append(SparkPro.TOOLSPATH).append(" ").append(userId).append(" ").append(appId).append(" ")
-				.append(dataNames).append(" ").append(projectId);
+						: ConstantsData.getOfsPath() + "output")
+				.append(" ").append(userId).append(" ").append(appId).append(" ").append(dataNames).append(" ")
+				.append(projectId);
 		PerlUtils.excutePerl(command.toString());
 		// 3. 创建项目结果文件
 		StringBuffer basePath = new StringBuffer();
