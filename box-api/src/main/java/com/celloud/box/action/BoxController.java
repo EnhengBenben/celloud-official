@@ -24,6 +24,11 @@ import com.celloud.box.service.BoxService;
 import com.celloud.box.service.FileUploadQueue;
 import com.celloud.box.utils.UploadPath;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("box")
 @CrossOrigin(origins = { "http://localhost:8080", "http://127.0.0.1:8080", "https://www.celloud.cn",
@@ -31,6 +36,7 @@ import com.celloud.box.utils.UploadPath;
 		"https://genecode.cn", "http://www.celloud.cn", "http://celloud.cn", "http://www.celloud.cc",
 		"http://celloud.cc", "http://www.genecode.cn",
 		"http://genecode.cn" }, methods = { RequestMethod.POST, RequestMethod.GET }, allowedHeaders = { "*" })
+@Api(value="box-controller",description="盒子上传数据的接口",produces="application/json;charset=utf-8")
 public class BoxController {
 	private static Logger logger = LoggerFactory.getLogger(BoxController.class);
 	@Resource
@@ -40,15 +46,27 @@ public class BoxController {
 	@Resource
 	private ApiService apiService;
 
-	@RequestMapping("alive")
+	@RequestMapping(value = "alive", method = RequestMethod.GET)
+	@ApiOperation(value = "检测盒子是否存活", produces = "application/json;charset=utf-8")
 	public Response alive() {
 		logger.info("checking alive...");
 		return Response.SUCCESS;
 	}
 
-	@RequestMapping("upload")
-	public Response upload(@RequestParam("file") MultipartFile file, Integer userId, Integer chunk, Integer chunks,
-			String name, Date lastModifiedDate, long size, Integer tagId, String batch, Integer needSplit) {
+	@RequestMapping(value = "upload", method = RequestMethod.POST)
+	@ApiOperation(value = "上传文件", produces = "application/json;charset=utf-8")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "userId", value = "用户id", dataType = "Integer", required = true),
+			@ApiImplicitParam(name = "chunk", value = "正在上传的文件分片编号", dataType = "Integer", required = true),
+			@ApiImplicitParam(name = "chunks", value = "文件分片总片数", dataType = "Integer", required = true),
+			@ApiImplicitParam(name = "name", value = "文件名", dataType = "String", required = true),
+			@ApiImplicitParam(name = "lastModifiedDate", value = "文件最后修改时间", dataType = "Date", required = true),
+			@ApiImplicitParam(name = "size", value = "文件大小", dataType = "Long", required = true),
+			@ApiImplicitParam(name = "tagId", value = "文件数据标签", dataType = "Integer", required = true),
+			@ApiImplicitParam(name = "batch", value = "文件批次", dataType = "String", required = true),
+			@ApiImplicitParam(name = "needSplit", value = "是否需要先运行split", dataType = "Integer", required = true) })
+	public Response upload(@RequestParam(name = "file", value = "file", required = true) MultipartFile file,
+			Integer userId, Integer chunk, Integer chunks, String name, Date lastModifiedDate, long size, Integer tagId,
+			String batch, Integer needSplit) {
 		if (file == null || file.isEmpty()) {
 			return new Response("没有要上传的文件！");
 		}
@@ -82,7 +100,12 @@ public class BoxController {
 		return Response.SUCCESS;
 	}
 
-	@RequestMapping("checkBreakpoints")
+	@RequestMapping(value = "checkBreakpoints", method = RequestMethod.GET)
+	@ApiOperation(value = "获取文件上传上传的断点位置", produces = "application/json;charset=utf-8")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "userId", value = "用户id", dataType = "Integer", required = true),
+			@ApiImplicitParam(name = "name", value = "文件名", dataType = "String", required = true),
+			@ApiImplicitParam(name = "size", value = "文件大小", dataType = "Long", required = true),
+			@ApiImplicitParam(name = "lastModifiedDate", value = "文件最后修改时间", dataType = "Date", required = true) })
 	public Response checkBreakpoints(Integer userId, String name, Date lastModifiedDate, long size) {
 		String uniqueName = UploadPath.getUniqueName(userId, name, lastModifiedDate.getTime(), size);
 		return Response.SUCCESS.setData(getLoaded(userId, uniqueName));
