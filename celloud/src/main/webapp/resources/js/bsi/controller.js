@@ -299,6 +299,9 @@
 			    });
 			    uploader.bind("FilesRemoved", function(uploader, files) {
 			    	$rootScope.$apply();
+			    	if(files.length <= 0){
+			    		$scope.bsiBatch = "";
+			    	}
 			    });
 			    uploader.bind("UploadComplete",function(uploader,files){
 			    	if(files.length>0){
