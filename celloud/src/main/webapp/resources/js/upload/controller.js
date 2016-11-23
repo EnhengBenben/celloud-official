@@ -84,7 +84,6 @@
 				$("#uploading-" + file.id + " .plupload_file_speed").html(getSize(uploader.total.bytesPerSec)+"/s");
 			});
 			uploader.bind("FilesAdded", function(uploader, files) { // 文件添加结束后
-				$scope.isCancel = false;
 				$.get("uploadFile/checkAdminSessionTimeOut",function(response){
 					if(response){//session超时则执行下两步
 					  
@@ -94,45 +93,52 @@
 					}
 				});
 				$.each(files, function(index, item) {
-					// 第二步骤
-					var $fileDom_upload = $('<tr class="plupload_delete" id="upload-' + item.id + '">');
-					$fileDom_upload.append($('<td class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></td>'));
-					$fileDom_upload.append($('<td class="plupload-file-size">'+getSize(item.size)+'</td>'));
-					$fileDom_upload.append($('<td class="plupload-file-action"><a href="#" style="display: block;line-height: 30px;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
-					$fileDom_upload.append($('</tr>'));
-					$("#upload-list-tbody").append($fileDom_upload);
-					// 第三步
-					var $fileDom_uploading = $('<tr class="plupload_delete" id="uploading-' + item.id + '">');
-					$fileDom_uploading.append($('<td class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></td>'));
-					$fileDom_uploading.append($('<td class="plupload-file-status">_</td>'));
-					$fileDom_uploading.append($('<td class="plupload-file-surplus">_</td>'));
-					$fileDom_uploading.append($('<td class="plupload_file_speed">_</td>'));
-					$fileDom_uploading.append($('<td class="plupload-file-action"><a href="#" style="display: block;line-height: 30px;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
-					$fileDom_uploading.append($('</tr>'));
-					$("#uploading-list-tbody").append($fileDom_uploading);
-					
-					handleStatus(item);
-					$('#upload-' + item.id + '.plupload_delete a').click(function(e) {
-						$('#upload-' + item.id).remove();
-						$('#uploading-' + item.id).remove();
+					if(item.size > 0){
+						// 第二步骤
+						var $fileDom_upload = $('<tr class="plupload_delete" id="upload-' + item.id + '">');
+						$fileDom_upload.append($('<td class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></td>'));
+						$fileDom_upload.append($('<td class="plupload-file-size">'+getSize(item.size)+'</td>'));
+						$fileDom_upload.append($('<td class="plupload-file-action"><a href="#" style="display: block;line-height: 30px;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
+						$fileDom_upload.append($('</tr>'));
+						$("#upload-list-tbody").append($fileDom_upload);
+						// 第三步
+						var $fileDom_uploading = $('<tr class="plupload_delete" id="uploading-' + item.id + '">');
+						$fileDom_uploading.append($('<td class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></td>'));
+						$fileDom_uploading.append($('<td class="plupload-file-status">_</td>'));
+						$fileDom_uploading.append($('<td class="plupload-file-surplus">_</td>'));
+						$fileDom_uploading.append($('<td class="plupload_file_speed">_</td>'));
+						$fileDom_uploading.append($('<td class="plupload-file-action"><a href="#" style="display: block;line-height: 30px;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></td>'));
+						$fileDom_uploading.append($('</tr>'));
+						$("#uploading-list-tbody").append($fileDom_uploading);
+						
+						handleStatus(item);
+						$('#upload-' + item.id + '.plupload_delete a').click(function(e) {
+							$('#upload-' + item.id).remove();
+							$('#uploading-' + item.id).remove();
+							uploader.removeFile(item);
+							e.preventDefault();
+							utils.stopBubble(e);
+							$scope.$apply();
+						});
+						$('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
+							var count = getUploadingCount(uploader);
+							if(count == 1 && item.status != 5){
+								$scope.isCancel = true;
+							}
+							$('#upload-' + item.id).remove();
+							$('#uploading-' + item.id).remove();
+							uploader.removeFile(item);
+							e.preventDefault();
+							utils.stopBubble(e);
+						});
+					}else{
 						uploader.removeFile(item);
-						e.preventDefault();
-						utils.stopBubble(e);
-						$scope.$apply();
-					});
-					$('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
-						var count = getUploadingCount(uploader);
-						if(count == 1 && item.status != 5){
-							$scope.isCancel = true;
-						}
-						$('#upload-' + item.id).remove();
-						$('#uploading-' + item.id).remove();
-						uploader.removeFile(item);
-						e.preventDefault();
-						utils.stopBubble(e);
-					});
+					}
 				});
-				$scope.$apply();
+				if(uploader.files.length > 0){
+					$scope.isCancel = false;
+					$scope.$apply();
+				}
 			});
 			uploader.bind("FileUploaded", function(uploader, file, response) {
 				var res = response.response;
