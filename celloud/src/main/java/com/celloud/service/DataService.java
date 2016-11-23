@@ -247,6 +247,15 @@ public interface DataService {
 	 */
 	public List<DataFile> getDatasInProject(Integer projectId);
 
+    /**
+     * 检索某个项目下的所有数据
+     * 
+     * @param projectId
+     * @return
+     * @date 2016-1-9 上午3:05:40
+     */
+    public List<Map<String, Object>> getDatasMapInProject(Integer projectId);
+
 	/**
 	 * 根据用户编号,统计各周的数据
 	 * 
@@ -346,7 +355,7 @@ public interface DataService {
 	 * @description 从TbTask中获取运行结束的数据报告
 	 *
 	 */
-	public List<DataFile> getDataFileFromTbTask(Integer projectId);
+    public List<Map<String, Object>> getDataFileFromTbTask(Integer projectId);
 
 	/**
 	 * 创建文件

@@ -592,6 +592,19 @@
 		)
 		ORDER BY another_name DESC
 	</select>
+	<select id="getDatasMapInProject" resultType="java.util.Map">
+		SELECT f.file_id fileId, f.user_id userId, f.data_key dataKey, f.file_name fileName,
+        f.strain strain, f.size size, f.create_date createDate, f.update_date updateDate,
+        f.path path, f.state state, f.file_format fileFormat, f.sample sample, f.another_name anotherName,
+        f.md5 md5, f.batch batch, f.oss_path ossPath, f.upload_state uploadState, a.code code
+		FROM tb_report r
+		LEFT JOIN tb_file f
+		ON r.file_id  = f.file_id
+		LEFT JOIN tb_app a
+		ON r.app_id = a.app_id
+		WHERE project_id = #{projectId}
+		ORDER BY another_name DESC
+	</select>
 	<select id="countDataFileWeek" resultType="map">
 		select
 		left(date_add(f.create_date ,INTERVAL -weekday(f.create_date )
@@ -722,18 +735,19 @@
 			</otherwise>
 		</choose>
 	</select>
-	<select id="getDataFileFromTbTask" resultMap="BaseResultMap">
-	   SELECT
-       <include refid="Base_Column_List" />
-       FROM tb_file
-       WHERE data_key
-       IN(
-	       SELECT data_key
-	       FROM tb_task
-	       WHERE project_id = #{projectId}
-	       AND period = 2
-       )
-       ORDER BY another_name DESC
+	<select id="getDataFileFromTbTask" resultType="java.util.Map">
+       SELECT f.file_id fileId, f.user_id userId, f.data_key dataKey, f.file_name fileName,
+       f.strain strain, f.size size, f.create_date createDate, f.update_date updateDate,
+       f.path path, f.state state, f.file_format fileFormat, f.sample sample, f.another_name anotherName,
+       f.md5 md5, f.batch batch, f.oss_path ossPath, f.upload_state uploadState, a.code code
+       FROM tb_task t
+       LEFT JOIN tb_file f
+       ON t.data_key = f.data_key
+       LEFT JOIN tb_app a
+       ON t.app_id = a.app_id
+       WHERE project_id = #{projectId}
+       AND period = 2
+       ORDER BY f.another_name DESC
 	</select>
 	<select id="getMd5FileIdMap" resultType="java.util.Map">
         SELECT

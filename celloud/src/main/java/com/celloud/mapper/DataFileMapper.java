@@ -69,6 +69,15 @@ public interface DataFileMapper {
 	 */
 	public List<DataFile> getDatasInProject(@Param("projectId") Integer projectId);
 
+    /**
+     * 检索某个项目下的所有数据
+     * 
+     * @param projectId
+     * @return
+     * @date 2016-1-9 上午3:06:47
+     */
+    public List<Map<String, Object>> getDatasMapInProject(@Param("projectId") Integer projectId);
+
 	/**
 	 * 统计帐号下的文件数量
 	 * 
@@ -338,7 +347,7 @@ public interface DataFileMapper {
 	 * @return 项目下数据报告对应的文件集合
 	 *
 	 */
-	List<DataFile> getDataFileFromTbTask(@Param("projectId") Integer projectId);
+    List<Map<String, Object>> getDataFileFromTbTask(@Param("projectId") Integer projectId);
 
 	/**
 	 * 
