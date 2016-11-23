@@ -17,18 +17,6 @@
 		});
 		$rootScope.bsiStepOne = function(){
 			
-//			if(!$rootScope.bsiUploader){
-//				waveLoading.init({
-//	    			haveInited: true,
-//	    			target: document.querySelector('#upload-progress'),
-//	    			color: 'rgba(40, 230, 200, 0.6)',
-//	    			showText: false
-//	    		});
-//	    		waveLoading.draw();
-//	    		waveLoading.setProgress(0);
-//	    		$rootScope.bsiFinished = false;
-//			}
-			
 			$scope.itemBtnToggleActive();
 			// 判断是否在第二步, 进行回显
 			if($rootScope.bsiUploader && $rootScope.bsiStep == 'two' && $rootScope.bsiUploader.files.length > 0){
@@ -172,21 +160,21 @@
 		}
 		
 		var initUploader = function(){
-//			$.get(CONTEXT_PATH+"/box/configs",function(configs){
-//				for(var index in configs){
-//					var config = configs[index];
-//				    var port = config.port||80;
-//				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
-//				    config = "http://"+config.intranetAddress+":"+port+context;
-//				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
-//				    if(response && JSON.parse(response).success){
-//				    	$scope.box=config;
-//				    	break;
-//				    }
-//			    }
-//				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
-//				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
-				var uploadUrl = "../uploadFile/uploadManyFile";
+			$.get(CONTEXT_PATH+"/box/configs",function(configs){
+				for(var index in configs){
+					var config = configs[index];
+				    var port = config.port||80;
+				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
+				    config = "http://"+config.intranetAddress+":"+port+context;
+				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
+				    if(response && JSON.parse(response).success){
+				    	$scope.box=config;
+				    	break;
+				    }
+			    }
+				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
+				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
+//				var uploadUrl = "../uploadFile/uploadManyFile";
 				var uploader = new plupload.Uploader({
 					runtimes : 'html5,flash,silverlight,html4',
 					browse_button : ['bsi-plupload-content','bsi-upload-more'],
@@ -325,6 +313,7 @@
 			    	uploader.splice();
 			    	$rootScope.bsiFinished = true;
 			    	$rootScope.bsiStep = "one";
+			    	$scope.bsiBatch = "";
 			    	$rootScope.bsiUploader.destroy();
 			    	$rootScope.bsiUploader = undefined;
 			    	$("#uploading-filelist .plupload_done").remove();
@@ -339,7 +328,7 @@
 			       }
 			    });
 			    $rootScope.bsiUploader = uploader;
-//			});
+			});
 		}
 		
 		window.onbeforeunload=function(){

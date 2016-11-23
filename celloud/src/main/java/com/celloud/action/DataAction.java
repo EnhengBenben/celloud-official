@@ -96,13 +96,13 @@ public class DataAction {
     @ActionLog(value = "从tb_task中根据project_id检索数据", button = "报告管理/查看数据报告")
     @RequestMapping("getDataFromTbTask")
     @ResponseBody
-    public List<DataFile> getDataFromTbTask(Integer projectId) {
+    public List<Map<String, Object>> getDataFromTbTask(Integer projectId) {
         logger.info("项目报告中加载右侧浮动窗 projectId = {}", projectId);
-        List<DataFile> dataList = null;
+        List<Map<String, Object>> dataList = null;
         // 从tb_task中加载数据
         dataList = this.dataService.getDataFileFromTbTask(projectId);
         if (null == dataList || dataList.isEmpty()) { // tb_task中查找不到数据代表是老数据采用老的方法加载数据
-            dataList = this.dataService.getDatasInProject(projectId);
+            dataList = this.dataService.getDatasMapInProject(projectId);
         }
         return dataList;
     }

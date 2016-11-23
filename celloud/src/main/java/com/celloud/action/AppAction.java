@@ -22,9 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.IconConstants;
+import com.celloud.constants.AppPermission;
 import com.celloud.constants.ClassifyFloor;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.IconConstants;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Classify;
 import com.celloud.model.mysql.Screen;
@@ -222,14 +223,23 @@ public class AppAction {
 		Integer userId = ConstantsData.getLoginUserId();
 		Map<String, Object> map = new HashMap<>();
 		List<App> appList = appService.getMyAppList(userId);
+        Boolean hasPrivate = false;
 		for (App app : appList) {
 			if (app.getAppId().equals(118)) {
 				map.put("app" + app.getAppId(), app.getAppId());
-			}
-			if (app.getAppId().equals(123)) {
+                map.put("onlyBSI", true);
+            } else if (app.getAppId().equals(123)) {
 				map.put("app" + app.getAppId(), app.getAppId());
+                hasPrivate = true;
+            } else {
+                if (app.getAttribute() == AppPermission.PRIVATE) {
+                    hasPrivate = true;
+                }
 			}
 		}
+        if (hasPrivate) {
+            map.put("onlyBSI", false);
+        }
 		return map;
 	}
 

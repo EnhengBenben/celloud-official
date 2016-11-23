@@ -232,6 +232,11 @@ public class DataServiceImpl implements DataService {
 		return dataFileMapper.getDatasInProject(projectId);
 	}
 
+    @Override
+    public List<Map<String, Object>> getDatasMapInProject(Integer projectId) {
+        return dataFileMapper.getDatasMapInProject(projectId);
+    }
+
 	@Override
 	public List<Map<String, String>> countDataFile(Integer userId) {
 		return null;
@@ -377,7 +382,7 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public List<DataFile> getDataFileFromTbTask(Integer projectId) {
+    public List<Map<String, Object>> getDataFileFromTbTask(Integer projectId) {
 		return this.dataFileMapper.getDataFileFromTbTask(projectId);
 	}
 

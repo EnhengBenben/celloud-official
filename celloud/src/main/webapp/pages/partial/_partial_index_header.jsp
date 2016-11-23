@@ -19,7 +19,7 @@
             </div>
           </li>
           <shiro:hasPermission name="upload:menu">
-	          <li data-step="1" data-position="right" data-intro="" data-img="upload.png">
+	          <li data-step="1" data-position="right" data-intro="" data-img="upload.png" ng-show="!userProduct.onlyBSI">
 	            <a ng-click="getProTags()"><i class="upload-icon"></i></a>
 	          </li>
           </shiro:hasPermission>

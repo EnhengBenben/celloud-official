@@ -141,7 +141,7 @@
 				inner += "<a class='btn -low "+isActive+"' style='font-size:12px;width:100%;margin-top:1px;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
 				$("#fileListUl").append(inner);
 				$("#fileA"+proId+item.fileId).bind("click", function() {
-					viewDataReport(userId,item.dataKey,item.fileName,appId,appInfo.appName,proId,projectName,$(this));
+					viewDataReport(userId,item.dataKey,item.fileName,appId,item.code,proId,projectName,$(this));
 					$.get("report/clickItemDataReport",{},function(state){});
 				});
 			});
@@ -952,11 +952,14 @@
 		  $scope.uploadPath = bsiInfo.uploadPath;
 
 		  $scope.tab = 'patient';
-		  var havestrain = "";
-		  for(var i=0;i<$scope.bsi.species_20.length;i++){
-		    havestrain += $scope.bsi.species_20[i].species_zh + ",";
+		  $scope.havestrain = "";
+		  
+		  if($scope.bsi && $scope.bsi.species_20){
+			  for(var i=0;i<$scope.bsi.species_20.length;i++){
+				  havestrain += $scope.bsi.species_20[i].species_zh + ",";
+			  }
+			  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		  }
-		  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		  $scope.getRowspan = function(val1, val2, val3){
 			  var val0 = 1;
 			  if(val1 != null){

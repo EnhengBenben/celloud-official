@@ -23,18 +23,18 @@
 	        </li>
         </shiro:hasPermission>
         <shiro:hasPermission name="data:menu">
-	        <li ng-class="{active: isActive('/data')}">
+	        <li ng-class="{active: isActive('/data')}" ng-show="!userProduct.onlyBSI">
 	          <a di-href="<%=request.getContextPath()%>/index#/data"><i class="data-icon"></i><span>数据管理</span></a>
 	        </li>
 	    </shiro:hasPermission>
         <shiro:hasPermission name="proReport:menu">
-            <li ng-class="{active: isActive('/reportpro')}">
-                <a di-href="<%=request.getContextPath()%>/index#/reportpro/1/10/1/0/all/all/0/all"><i class="report-icon"></i><span>报告管理</span></a>
+            <li ng-class="{active: isActive('/reportpro')}" ng-show="!userProduct.onlyBSI">
+                <a di-href="<%=request.getContextPath()%>/index#/reportpro/1/10/1/0/all/all/0/all"  ng-show="!userProduct.onlyBSI"><i class="report-icon"></i><span>报告管理</span></a>
 	        </li>
         </shiro:hasPermission>
         <shiro:hasPermission name="dataReport:menu">
-            <li ng-class="{active: isActive('/reportdata')}">
-	            <a di-href="<%=request.getContextPath()%>/index#/reportdata/1/20/0/all/all/all/all/all/all"><i class="report-icon"></i><span>报告管理</span></a>
+            <li ng-class="{active: isActive('/reportdata')}" ng-show="!userProduct.onlyBSI">
+	            <a di-href="<%=request.getContextPath()%>/index#/reportdata/1/20/0/all/all/all/all/all/all"  ng-show="!userProduct.onlyBSI"><i class="report-icon"></i><span>报告管理</span></a>
 	        </li>
         </shiro:hasPermission>
         <li ng-class="{active: isActive('/app')}">
