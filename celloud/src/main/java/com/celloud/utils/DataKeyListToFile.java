@@ -27,8 +27,8 @@ public class DataKeyListToFile {
 	 * @param dataKeyList
 	 * @return
 	 */
-	public static Map<String, String> containName(List<DataFile> dataList) {
-		Map<String, String> dataListFileMap = new HashMap<>();
+    public static Map<String, Object> containName(List<DataFile> dataList) {
+        Map<String, Object> dataListFileMap = new HashMap<>();
 		Iterator<DataFile> iterator = dataList.iterator();
 		while (iterator.hasNext()) {
 			DataFile data = iterator.next();
@@ -47,8 +47,8 @@ public class DataKeyListToFile {
 	 * @param dataKeyList
 	 * @return
 	 */
-	public static Map<String, String> onlyPath(List<DataFile> dataList) {
-		Map<String, String> dataListFileMap = new HashMap<>();
+    public static Map<String, Object> onlyPath(List<DataFile> dataList) {
+        Map<String, Object> dataListFileMap = new HashMap<>();
 		Iterator<DataFile> iterator = dataList.iterator();
 		while (iterator.hasNext()) {
 			DataFile data = iterator.next();
@@ -74,9 +74,10 @@ public class DataKeyListToFile {
 	 * @author leamo
 	 * @date 2016年11月8日 下午2:16:01
 	 */
-	public static Map<String, String> abFastqPath(List<DataFile> dataList) {
-		Map<String, String> dataListFileMap = new HashMap<>();
+    public static Map<String, Object> abFastqPath(List<DataFile> dataList) {
+        Map<String, Object> dataListFileMap = new HashMap<>();
 		sortDataList(dataList);
+        List<DataFile> canRunDataList = new ArrayList<>();
 		Iterator<DataFile> chk_it = dataList.iterator();
 		StringBuffer dataFileInfo = null;
 		Integer dataReportNum = 0;
@@ -87,7 +88,7 @@ public class DataKeyListToFile {
 
 			String fname_AR1 = data_AR1.getFileName();
 			// 从A_R1数据开始向下查找数据
-			if (fname_AR1.contains("A_R1")) {
+            if (fname_AR1.contains("_A_R1")) {
 				int index_AR1 = fname_AR1.lastIndexOf("A_R1");
 				String commonPrefix = fname_AR1.substring(0, index_AR1);
 				// 满足条件：1. A_R1数据之后还有至少3个数据
@@ -116,10 +117,15 @@ public class DataKeyListToFile {
 					FileTools.appendWrite(dataListFile, dataFileInfo.toString());
 					dataListFileMap.put(data_AR1.getDataKey(), dataListFile);
 					dataReportNum++;
+                    canRunDataList.add(data_AR1);
+                    canRunDataList.add(data_AR2);
+                    canRunDataList.add(data_BR1);
+                    canRunDataList.add(data_BR2);
 				}
 			}
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, dataReportNum.toString());
+        dataListFileMap.put("canRunDataList", canRunDataList);
 		return dataListFileMap;
 	}
 
@@ -129,40 +135,52 @@ public class DataKeyListToFile {
 	 * @param dataKeyList
 	 * @return
 	 */
-	public static Map<String, String> onlyFastqPath(List<DataFile> dataList) {
-		Map<String, String> dataListFileMap = new HashMap<>();
+    public static Map<String, Object> onlyFastqPath(List<DataFile> dataList) {
+        Map<String, Object> dataListFileMap = new HashMap<>();
+        List<DataFile> canRunDataList = new ArrayList<>();
 		sortDataList(dataList);
 		Iterator<DataFile> chk_it = dataList.iterator();
-		StringBuffer sb = null;
+        StringBuffer dataFileInfo = null;
 		Integer dataReportNum = 0;
+        Integer listIndex = 0;
+        while (chk_it.hasNext()) {
+            DataFile data_R1 = chk_it.next();
+            listIndex++;
 
-		while (chk_it.hasNext()) {
-			sb = new StringBuffer();
+            String fname_R1 = data_R1.getFileName();
+            // 从A_R1数据开始向下查找数据
+            if (fname_R1.contains("R1")) {
+                int index_R1 = fname_R1.lastIndexOf("R1");
+                String commonPrefix = fname_R1.substring(0, index_R1);
+                // 满足条件：1. R1数据之后还有至少1个数据
+                // 2. 向下第二个是以 “ 数据的公共部分+R2”开始
+                if (dataList.size() >= (listIndex + 1)
+                        && dataList.get(listIndex).getFileName()
+                                .startsWith(commonPrefix + "R2")) {
+                    DataFile data_R2 = chk_it.next();
+                    listIndex++;
 
-			DataFile data = chk_it.next();
-			String dataKey = data.getDataKey();
-			String fname = data.getFileName();
-			if (fname.contains("R1") || fname.contains("R2")) {
-				int index_r1 = fname.lastIndexOf("R1");
-				String commonPrefix = fname.substring(0, index_r1);
-				String commonSuffix = fname.substring(index_r1 + 2, fname.length());
-				DataFile data_r2 = chk_it.next();
-				String fname_r2 = data_r2.getFileName();
-				String r2_Suffix = fname_r2.substring(fname_r2.lastIndexOf("R2") + 2, fname_r2.length());
-				if (fname_r2.contains(commonPrefix + "R2") && r2_Suffix.equals(commonSuffix)) {
-					sb.append(data.getOssPath() == null ? data.getPath() : data.getOssPath()).append("\t")
-							.append(data_r2.getOssPath() == null ? data_r2.getPath() : data_r2.getOssPath())
-							.append("\t");
-				}
-			} else {
-				sb.append(data.getOssPath() == null ? data.getPath() : data.getOssPath());
-			}
-			String dataListFile = getDataListFile(data.getOssPath() != null);
-			FileTools.appendWrite(dataListFile, sb.toString());
-			dataListFileMap.put(dataKey, UploadPathUtils.getObjectKeyByPath(dataListFile));
-			dataReportNum++;
-		}
+                    dataFileInfo = new StringBuffer();
+                    dataFileInfo
+                            .append(data_R1.getOssPath() == null
+                                    ? data_R1.getPath() : data_R1.getOssPath())
+                            .append("\t")
+                            .append(data_R2.getOssPath() == null
+                                    ? data_R2.getPath() : data_R2.getOssPath())
+                            .append("\t");
+                    String dataListFile = getDataListFile(
+                            data_R1.getOssPath() != null);
+                    FileTools.appendWrite(dataListFile,
+                            dataFileInfo.toString());
+                    dataListFileMap.put(data_R1.getDataKey(), dataListFile);
+                    dataReportNum++;
+                    canRunDataList.add(data_R1);
+                    canRunDataList.add(data_R2);
+                }
+            }
+        }
 		dataListFileMap.put(DATA_REPORT_NUM, dataReportNum.toString());
+        dataListFileMap.put("canRunDataList", canRunDataList);
 		return dataListFileMap;
 	}
 
@@ -172,8 +190,8 @@ public class DataKeyListToFile {
 	 * @param dataKeyList
 	 * @return
 	 */
-	public static Map<String, String> toSplit(List<DataFile> dataList) {
-		Map<String, String> dataListFileMap = new HashMap<>();
+    public static Map<String, Object> toSplit(List<DataFile> dataList) {
+        Map<String, Object> dataListFileMap = new HashMap<>();
 		StringBuffer sb = new StringBuffer();
 		sortDataList(dataList);
 		List<String> pathList = new ArrayList<>();
