@@ -11,7 +11,7 @@ from mongo.mongoOperate import mongo
 from utils.StringUtils import *
 
 
-class AccuSeqα2:
+class AccuSeqa2:
     path = None
     instance = None
     locker = threading.Lock()
@@ -22,13 +22,13 @@ class AccuSeqα2:
     # 获取单例对象
     @staticmethod
     def getInstance():
-        AccuSeqα2.locker.acquire()
+        AccuSeqa2.locker.acquire()
         try:
-            if not AccuSeqα2.instance:
-                AccuSeqα2.instance = AccuSeqα2()
-            return AccuSeqα2.instance
+            if not AccuSeqa2.instance:
+                AccuSeqa2.instance = AccuSeqa2()
+            return AccuSeqa2.instance
         finally:
-            AccuSeqα2.locker.release()
+            AccuSeqa2.locker.release()
 
     # 执行
     def getResult(self, path, appId, dataKey):
@@ -57,6 +57,7 @@ class AccuSeqα2:
         return result
 
     def commonInfo(self, path):
+        print "in "+path
         result = {}
         if not os.path.exists(path):
             return result
