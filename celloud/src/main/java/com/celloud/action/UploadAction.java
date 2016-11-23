@@ -101,7 +101,9 @@ public class UploadAction {
                 }
                 return "1";
             } else {
-                logger.info("批次 {} 下不包含文件名为 {} 的相同文件, 继续执行正常的上传功能", batch, originalName);
+                if (chunk.intValue() == 0) {
+                    logger.info("批次 {} 下不包含文件名为 {} 的相同文件, 继续执行正常的上传功能", batch, originalName);
+                }
             }
         }
         /**

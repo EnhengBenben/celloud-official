@@ -107,7 +107,8 @@
 				fileNames.sort();
 				var fileId_n = "fileId:";
 				var fileName_n=",fileName:'";
-				var dataKey_n=",dataKey:'"
+				var dataKey_n=",dataKey:'";
+				var code_n = ",code:'";
 				for(var i=0;i<fileNames.length;i++){
 					fileName_n+=fileNames[i]
 					if(i<fileNames.length-1){
@@ -118,9 +119,10 @@
 					if(fileNames[0] == item.fileName){
 						fileId_n+=item.fileId;
 						dataKey_n+=item.dataKey;
+						code_n += item.code; 
 					}
 				});
-				newList+=fileId_n+fileName_n+"'"+dataKey_n+"'}]";
+				newList+=fileId_n+fileName_n+"'"+dataKey_n+"'"+code_n+"'}]";
 				newList=eval(newList);
 			}else{
 				newList=fileList;
