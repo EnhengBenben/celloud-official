@@ -1,4 +1,4 @@
 #parse("templates/report/layout.vm")
-#parse("templates/report/default/${cmpReport.appId}/reference.vm")
-#parse("templates/report/default/${cmpReport.appId}/content_less.vm")
-#parse("templates/report/default/${cmpReport.appId}/js_less.vm")
+#parse("templates/report/default/${accuSeqα2.appId}/reference.vm")
+#parse("templates/report/default/${accuSeqα2.appId}/content_less.vm")
+#parse("templates/report/default/${accuSeqα2.appId}/js_less.vm")
