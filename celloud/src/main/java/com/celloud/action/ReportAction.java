@@ -299,10 +299,15 @@ public class ReportAction {
     @ResponseBody
     public Map<String, Object> getAccuSeqα2Info(String dataKey,
             Integer projectId, Integer appId) {
+        log.info("用户{}查看AccuSeqα2数据报告:proID:{},dataKey:{},appId:{}",
+                ConstantsData.getLoginUserName(), projectId, dataKey, appId);
         AccuSeqα2 accuSeqα2 = reportService.getAccuSeqα2Report(dataKey,
                 projectId, appId);
         Map<String, Object> map = getCommonInfo(projectId);
         map.put("accuSeqα2", accuSeqα2);
+        System.out.println(
+                "AccuSeq报告=============================================");
+        System.out.println(accuSeqα2);
         return map;
     }
 

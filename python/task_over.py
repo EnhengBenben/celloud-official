@@ -12,7 +12,7 @@ from app.split import split
 from app.MIB import MIB
 from app.BSI import BSI
 from app.Rocky import Rocky
-from app.AccuSeqα2 import AccuSeqα2
+from app.AccuSeqa2 import AccuSeqa2
 
 # command: python *.py basePath userId appId dataKey projectId
 # eg : python task_over.py '/share/data/webapps/Tools/upload/' 88 110 20151119290394,20151119898677 proID
@@ -20,7 +20,7 @@ from app.AccuSeqα2 import AccuSeqα2
 # eg : python e:/git/celloud/python/task_over.py d:/share/data/webapps/Tools/upload/ 88 112 15112501860090,15112501860183
 
 # 对应class名
-method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI, 123: Rocky, 126: CMP, 127: CMP, 128: CMP, 131: AccuSeqα2}
+method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI, 123: Rocky, 126: CMP, 127: CMP, 128: CMP, 131: AccuSeqa2}
 
 # 对应database名
 collection_dic = {110: "CmpReport", 111: "CmpReport", 112: "CmpReport", 113: "Split", 114: "MIB", 118: "BSI",
