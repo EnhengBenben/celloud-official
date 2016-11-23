@@ -332,7 +332,7 @@ public class ReportAction {
             path = "default/" + appId + "/print_more.vm";
         }
         Map<String, Object> context = new HashMap<String, Object>();
-        context.put("accuSeqα2",
+        context.put("accuSeq",
                 reportService.getAccuSeqα2Report(dataKey, projectId, appId));
         returnToVelocity(path, context, projectId);
     }

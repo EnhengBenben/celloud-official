@@ -1,22 +1,22 @@
-<input type="hidden" name="cmpId" id="cmpId" value="${accuSeqα2.id}">
-<input type="hidden" name="accuSeqα2.dataKey" value="${accuSeqα2.dataKey}">
-<input type="hidden" name="accuSeqα2.userId" value="${accuSeqα2.userId}">
+<input type="hidden" name="cmpId" id="cmpId" value="${accuSeq.id}">
+<input type="hidden" name="accuSeq.dataKey" value="${accuSeq.dataKey}">
+<input type="hidden" name="accuSeq.userId" value="${accuSeq.userId}">
 <section class="section1 border1 w3cbbs">
     <h3>一、基本信息</h3>
     <h4>1、送检基本信息</h4>
     <ul class="info">
-        <li>姓名：<span><input type="text" id="patientName" name="patientName" value="$!{accuSeqα2.accuSeqα2Fill.patientName}"></span></li>
-        <li>收样日期：<span><input type="text" id="samplingDate" name="samplingDate" value="$!{accuSeqα2.accuSeqα2Fill.samplingDate}"></span></li>
-        <li>性别： <span id="_sex"><input type="radio" name="patientSex" value="男" #if(${accuSeqα2.accuSeqα2Fill.patientSex}!='女')checked="checked"#end>男<input type="radio" name="patientSex" value="女" #if(${accuSeqα2.accuSeqα2Fill.patientSex}=='女')checked="checked"#end>女</span></li>
-        <li>样本来源：<span><input type="text" id="sampleSource" name="sampleSource" value="$!{accuSeqα2.accuSeqα2Fill.sampleSource}"></span></li>
-        <li>年龄：<span><input type="text" id="patientAge" name="patientAge" value="$!{accuSeqα2.accuSeqα2Fill.patientAge}"></span>岁</li>
-        <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="clinicalDiagnosis" value="$!{accuSeqα2.accuSeqα2Fill.clinicalDiagnosis}"></span></li>
-        <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="pathologicDiagnosis" value="$!{accuSeqα2.accuSeqα2Fill.pathologicDiagnosis}"></span></li>
-        <li>分析日期：<span><input type="text" id="analysisDate" name="analysisDate" value="$!{accuSeqα2.accuSeqα2Fill.analysisDate}"></span></li>
-        <li>病理位置：<span><input type="text" id="pathologicalPosition" name="pathologicalPosition" value="$!{accuSeqα2.accuSeqα2Fill.pathologicalPosition}"></span></li>
-        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="molecularBioExperOper" value="$!{accuSeqα2.accuSeqα2Fill.molecularBioExperOper}"></span></li>
-        <li>病理类型：<span><input type="text" id="pathologicalType" name="pathologicalType" value="$!{accuSeqα2.accuSeqα2Fill.pathologicalType}"></span></li>
-        <li>基因分析：<span><input type="text" id="geneAnalysis" name="geneAnalysis" value="$!{accuSeqα2.accuSeqα2Fill.geneAnalysis}"></span></li>
+        <li>姓名：<span><input type="text" id="patientName" name="patientName" value="$!{accuSeq.accuSeqα2Fill.patientName}"></span></li>
+        <li>收样日期：<span><input type="text" id="samplingDate" name="samplingDate" value="$!{accuSeq.accuSeqα2Fill.samplingDate}"></span></li>
+        <li>性别： <span id="_sex"><input type="radio" name="patientSex" value="男" #if(${accuSeq.accuSeqα2Fill.patientSex}!='女')checked="checked"#end>男<input type="radio" name="patientSex" value="女" #if(${accuSeq.accuSeqα2Fill.patientSex}=='女')checked="checked"#end>女</span></li>
+        <li>样本来源：<span><input type="text" id="sampleSource" name="sampleSource" value="$!{accuSeq.accuSeqα2Fill.sampleSource}"></span></li>
+        <li>年龄：<span><input type="text" id="patientAge" name="patientAge" value="$!{accuSeq.accuSeqα2Fill.patientAge}"></span>岁</li>
+        <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="clinicalDiagnosis" value="$!{accuSeq.accuSeqα2Fill.clinicalDiagnosis}"></span></li>
+        <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="pathologicDiagnosis" value="$!{accuSeq.accuSeqα2Fill.pathologicDiagnosis}"></span></li>
+        <li>分析日期：<span><input type="text" id="analysisDate" name="analysisDate" value="$!{accuSeq.accuSeqα2Fill.analysisDate}"></span></li>
+        <li>病理位置：<span><input type="text" id="pathologicalPosition" name="pathologicalPosition" value="$!{accuSeq.accuSeqα2Fill.pathologicalPosition}"></span></li>
+        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="molecularBioExperOper" value="$!{accuSeq.accuSeqα2Fill.molecularBioExperOper}"></span></li>
+        <li>病理类型：<span><input type="text" id="pathologicalType" name="pathologicalType" value="$!{accuSeq.accuSeqα2Fill.pathologicalType}"></span></li>
+        <li>基因分析：<span><input type="text" id="geneAnalysis" name="geneAnalysis" value="$!{accuSeq.accuSeqα2Fill.geneAnalysis}"></span></li>
     </ul>
     <h4>2、送检要求</h4>
     <div class="info">
@@ -59,7 +59,7 @@
   <h3>二、基因检测结果简述</h3>
   <h4>1、检测有指导意义的阳性位点简述：</h4>
   <div id="secion2_info1" class="info">
-    <input type="hidden" id="usefulGeneResult_tr_length" value="$!{accuSeqα2.accuSeqα2Fill.usefulGeneResult.size()}">
+    <input type="hidden" id="usefulGeneResult_tr_length" value="$!{accuSeq.accuSeqα2Fill.usefulGeneResult.size()}">
     <table class="table table-green table-striped-green table-text-center">
       <thead>
           <tr>
@@ -72,12 +72,12 @@
           </tr>
       </thead>
       <tbody>
-        #if(!${accuSeqα2.usefulGeneResult})
+        #if(!${accuSeq.usefulGeneResult})
             <tr>
                 <td colspan="6">没有发现突变位点</td>
             </tr>
         #else
-            #foreach(${r} in ${accuSeqα2.usefulGeneResult})
+            #foreach(${r} in ${accuSeq.usefulGeneResult})
                 #if(${r.gene.contains('没有发现突变位点')})
                     <tr>
                         <td colspan="6">没有发现突变位点</td>
@@ -101,8 +101,8 @@
       </tbody>
       <tbody id="usefulGeneResult">
         #set($usefulGeneResultIndex=0)
-        #if(${accuSeqα2.accuSeqα2Fill.usefulGeneResult.size()}>0)
-            #foreach(${li} in ${accuSeqα2.accuSeqα2Fill.usefulGeneResult})
+        #if(${accuSeq.accuSeqα2Fill.usefulGeneResult.size()}>0)
+            #foreach(${li} in ${accuSeq.accuSeqα2Fill.usefulGeneResult})
                 #set($temp=${velocityCount} - 1)
                 <tr id="usefulGeneResult_tr${temp}" name="usefulGeneResult_tr">
                     <td><input type="text" name="usefulGeneResult[${temp}].gene" class="form-control" value="$!{li.gene}"></td>
@@ -116,7 +116,7 @@
                     </td>
                 </tr>
             #end
-            #set($usefulGeneResultIndex=${accuSeqα2.accuSeqα2Fill.resistanceSiteSum.size()})
+            #set($usefulGeneResultIndex=${accuSeq.accuSeqα2Fill.resistanceSiteSum.size()})
         #else
             <tr id="usefulGeneResult_tr0" name="usefulGeneResult_tr">
                 <td><input type="text" name="usefulGeneResult[0].gene" class="form-control"></td>
@@ -137,8 +137,8 @@
   </div>
   <h4>2、耐药信息汇总：</h4>
   <div id="secion2_info2" class="info">
-    <input type="hidden" id="drugTbody_3_tr_length" value="$!{accuSeqα2.accuSeqα2Fill.resistanceSiteSum.size()}">
-    <input type="hidden" id="drugTbody_4_tr_length" value="$!{accuSeqα2.accuSeqα2Fill.personalizedMedicine.size()}">
+    <input type="hidden" id="drugTbody_3_tr_length" value="$!{accuSeq.accuSeqα2Fill.resistanceSiteSum.size()}">
+    <input type="hidden" id="drugTbody_4_tr_length" value="$!{accuSeq.accuSeqα2Fill.personalizedMedicine.size()}">
     <table class="table table-striped-blue table-text-center" id="drugTable">
         <thead>
             <tr>
@@ -149,8 +149,8 @@
         </thead>
         <tbody id="drugTbody_3">
             #set($resistanceIndex=0)
-            #if(${accuSeqα2.accuSeqα2Fill.resistanceSiteSum.size()}>0)
-                #foreach(${li} in ${accuSeqα2.accuSeqα2Fill.resistanceSiteSum})
+            #if(${accuSeq.accuSeqα2Fill.resistanceSiteSum.size()}>0)
+                #foreach(${li} in ${accuSeq.accuSeqα2Fill.resistanceSiteSum})
                     #set($temp=${velocityCount} - 1)
                     <tr id="drugTbody_3_tr${temp}" name="drugTbody_3_tr">
                         <td><input type="text" name="resistanceSiteSum[${temp}].geneName" class="form-control" value="$!{li.geneName}"></td>
@@ -161,7 +161,7 @@
                         </td>
                     </tr>
                 #end
-                #set($resistanceIndex=${accuSeqα2.accuSeqα2Fill.resistanceSiteSum.size()})
+                #set($resistanceIndex=${accuSeq.accuSeqα2Fill.resistanceSiteSum.size()})
             #else
                 <tr id="drugTbody_3_tr0" name="drugTbody_3_tr">
                     <td><input type="text" name="resistanceSiteSum[0].geneName" class="form-control"></td>
@@ -188,8 +188,8 @@
     </thead>
     <tbody id="drugTbody_4">
         #set($personMedicineIndex=0)
-        #if(${accuSeqα2.accuSeqα2Fill.personalizedMedicine.size()}>0)
-            #foreach(${li} in ${accuSeqα2.accuSeqα2Fill.personalizedMedicine})
+        #if(${accuSeq.accuSeqα2Fill.personalizedMedicine.size()}>0)
+            #foreach(${li} in ${accuSeq.accuSeqα2Fill.personalizedMedicine})
                 #set($temp=${velocityCount} - 1)
                 <tr id="drugTbody_4_tr${temp}" name="drugTbody_4_tr">
                     <td><input type="text" name="personalizedMedicine[${temp}].geneName" class="form-control" value="$!{li.geneName}"></td>
@@ -200,7 +200,7 @@
                     </td>
                 </tr>
             #end
-            #set($personMedicineIndex=${accuSeqα2.accuSeqα2Fill.personalizedMedicine.size()} - 1)
+            #set($personMedicineIndex=${accuSeq.accuSeqα2Fill.personalizedMedicine.size()} - 1)
         #else
             <tr id="drugTbody_4_tr0" name="drugTbody_4_tr">
                 <td><input type="text" name="personalizedMedicine[0].geneName" class="form-control"></td>
@@ -218,7 +218,7 @@
   <p class="font10" style="width:100%;display:block">
         参考文献：<br>
     <textarea class="form-control" name="recommendDrug[0].drugDescrip" rows="15" cols="100">
-      $!{accuSeqα2.accuSeqα2Fill.reference}
+      $!{accuSeq.accuSeqα2Fill.reference}
     </textarea>
   </p>
 </section>
@@ -226,8 +226,8 @@
   <h3>三、治疗药物推荐</h3>
   <div id="drugDescipDiv">
     #set($recommendDrugIndex=0)
-    #if(${accuSeqα2.accuSeqα2Fill.recommendDrug.size()}>0)
-        #foreach(${li} in ${accuSeqα2.accuSeqα2Fill.recommendDrug})
+    #if(${accuSeq.accuSeqα2Fill.recommendDrug.size()}>0)
+        #foreach(${li} in ${accuSeq.accuSeqα2Fill.recommendDrug})
             #set($temp=${velocityCount} - 1)
             <div name="drugContent">
                 <div class="h2">
@@ -239,7 +239,7 @@
                 <br>
             </div>
         #end
-        #set($recommendDrugIndex=${accuSeqα2.accuSeqα2Fill.recommendDrug.size()} - 1)
+        #set($recommendDrugIndex=${accuSeq.accuSeqα2Fill.recommendDrug.size()} - 1)
     #else
         <div name="drugContent">
             <div class="h2">
@@ -279,10 +279,10 @@
               </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ABL1基因平均测序深度
-                    #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ABL1.avgCoverage})
+                    #if(!${accuSeq.dataBReport.geneDetectionDetail.ABL1.avgCoverage})
                         0
                     #else
-                        ${accuSeqα2.dataBReport.geneDetectionDetail.ABL1.avgCoverage}
+                        ${accuSeq.dataBReport.geneDetectionDetail.ABL1.avgCoverage}
                     #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -297,12 +297,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ABL1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.ABL1.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.ABL1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.ABL1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -351,10 +351,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;AKT1基因平均测序深度
-                    #if(!${accuSeqα2.dataBReport.geneDetectionDetail.AKT1.avgCoverage})
+                    #if(!${accuSeq.dataBReport.geneDetectionDetail.AKT1.avgCoverage})
                         0
                     #else
-                        ${accuSeqα2.dataBReport.geneDetectionDetail.AKT1.avgCoverage}
+                        ${accuSeq.dataBReport.geneDetectionDetail.AKT1.avgCoverage}
                     #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -369,10 +369,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.AKT1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.AKT1.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.AKT1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.AKT1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -421,10 +421,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ALK基因平均测序深度
-                    #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ALK.avgCoverage})
+                    #if(!${accuSeq.dataBReport.geneDetectionDetail.ALK.avgCoverage})
                         0
                     #else
-                        ${accuSeqα2.dataBReport.geneDetectionDetail.ALK.avgCoverage}
+                        ${accuSeq.dataBReport.geneDetectionDetail.ALK.avgCoverage}
                     #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -439,12 +439,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ALK.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.ALK.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.ALK.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.ALK.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -492,10 +492,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;APC基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.APC.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.APC.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.APC.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.APC.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -510,12 +510,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.APC.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.APC.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.APC.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.APC.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -564,10 +564,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ATM基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ATM.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.ATM.avgCoverage})
                             0
                         #else
-                            ${accuSeqα2.dataBReport.geneDetectionDetail.ATM.avgCoverage}
+                            ${accuSeq.dataBReport.geneDetectionDetail.ATM.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -582,10 +582,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ATM.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.ATM.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.ATM.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.ATM.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -634,10 +634,10 @@
               </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;BRAF基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.BRAF.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.BRAF.avgCoverage})
                             0
                         #else
-                            ${accuSeqα2.dataBReport.geneDetectionDetail.BRAF.avgCoverage}
+                            ${accuSeq.dataBReport.geneDetectionDetail.BRAF.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -652,10 +652,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.BRAF.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.BRAF.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.BRAF.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.BRAF.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -697,10 +697,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDH1基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.CDH1.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.CDH1.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.CDH1.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.CDH1.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -715,12 +715,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.CDH1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.CDH1.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.CDH1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.CDH1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -762,10 +762,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CDKN2A基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.CDKN2A.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.CDKN2A.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.CDKN2A.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.CDKN2A.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -780,10 +780,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.CDKN2A.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.CDKN2A.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.CDKN2A.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.CDKN2A.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -828,10 +828,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CSF1R基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.CSF1R.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.CSF1R.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.CSF1R.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.CSF1R.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -846,12 +846,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.CSF1R.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.CSF1R.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.CSF1R.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.CSF1R.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                         <tr>
                                             <td colspan="6">没有发现突变位点</td>
@@ -893,10 +893,10 @@
               </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;CTNNB1基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.CTNNB1.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.CTNNB1.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.CTNNB1.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.CTNNB1.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -911,12 +911,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.CTNNB1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.CTNNB1.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.CTNNB1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.CTNNB1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -967,10 +967,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EGFR基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.EGFR.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.EGFR.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.EGFR.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.EGFR.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -985,10 +985,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.EGFR.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.EGFR.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.EGFR.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.EGFR.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1031,10 +1031,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB2基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ERBB2.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.ERBB2.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.ERBB2.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.ERBB2.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1049,12 +1049,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ERBB2.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.ERBB2.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.ERBB2.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.ERBB2.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -1095,10 +1095,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;ERBB4基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ERBB4.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.ERBB4.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.ERBB4.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.ERBB4.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1113,10 +1113,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.ERBB4.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.ERBB4.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.ERBB4.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.ERBB4.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1155,10 +1155,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;EZH2基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.EZH2.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.EZH2.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.EZH2.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.EZH2.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1173,10 +1173,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.EZH2.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.EZH2.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.EZH2.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.EZH2.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1214,10 +1214,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FBXW7基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.FBXW7.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.FBXW7.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.FBXW7.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.FBXW7.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1232,10 +1232,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.FBXW7.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.FBXW7.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.FBXW7.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.FBXW7.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1273,10 +1273,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR1基因平均测序深度
-                        #if($!{accuSeqα2.dataBReport.geneDetectionDetail.FGFR1.avgCoverage})
+                        #if($!{accuSeq.dataBReport.geneDetectionDetail.FGFR1.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.FGFR1.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.FGFR1.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1291,12 +1291,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.FGFR1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.FGFR1.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.FGFR1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.FGFR1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -1336,10 +1336,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR2基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.FGFR2.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.FGFR2.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.FGFR2.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.FGFR2.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1354,10 +1354,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.FGFR2.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.FGFR2.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.FGFR2.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.FGFR2.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1393,10 +1393,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FGFR3基因平均测序深度
-                    #if(!${accuSeqα2.dataBReport.geneDetectionDetail.FGFR3.avgCoverage})
+                    #if(!${accuSeq.dataBReport.geneDetectionDetail.FGFR3.avgCoverage})
                         0
                     #else
-                        $!{accuSeqα2.dataBReport.geneDetectionDetail.FGFR3.avgCoverage}
+                        $!{accuSeq.dataBReport.geneDetectionDetail.FGFR3.avgCoverage}
                     #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1411,10 +1411,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.FGFR3.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.FGFR3.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.FGFR3.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.FGFR3.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1457,10 +1457,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;FLT3基因平均测序深度
-                    #if(!${accuSeqα2.dataBReport.geneDetectionDetail.FLT3.avgCoverage})
+                    #if(!${accuSeq.dataBReport.geneDetectionDetail.FLT3.avgCoverage})
                         0
                     #else
-                        $!{accuSeqα2.dataBReport.geneDetectionDetail.FLT3.avgCoverage}
+                        $!{accuSeq.dataBReport.geneDetectionDetail.FLT3.avgCoverage}
                     #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1475,10 +1475,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.FLT3.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.FLT3.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.FLT3.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.FLT3.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1516,10 +1516,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNA11基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.GNA11.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.GNA11.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.GNA11.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.GNA11.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1534,10 +1534,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.GNA11.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.GNA11.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.GNA11.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.GNA11.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1579,10 +1579,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAQ基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.GNAQ.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.GNAQ.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.GNAQ.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.GNAQ.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1597,10 +1597,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.GNAQ.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.GNAQ.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.GNAQ.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.GNAQ.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1638,10 +1638,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;GNAS基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.GNAS.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.GNAS.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.GNAS.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.GNAS.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1656,10 +1656,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.GNAS.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.GNAS.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.GNAS.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.GNAS.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1697,10 +1697,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HNF1A基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.HNF1A.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.HNF1A.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.HNF1A.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.HNF1A.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1715,10 +1715,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.HNF1A.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.HNF1A.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.HNF1A.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.HNF1A.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1756,10 +1756,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;HRAS基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.HRAS.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.HRAS.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.HRAS.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.HRAS.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1774,10 +1774,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.HRAS.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.HRAS.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.HRAS.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.HRAS.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1815,10 +1815,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH1基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.IDH1.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.IDH1.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.IDH1.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.IDH1.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1833,10 +1833,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.IDH1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.IDH1.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #ellse
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.IDH1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.IDH1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1879,10 +1879,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;IDH2基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.IDH2.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.IDH2.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.IDH2.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.IDH2.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1897,10 +1897,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.IDH2.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.IDH2.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.IDH2.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.IDH2.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1935,10 +1935,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK2基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.JAK2.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.JAK2.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.JAK2.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.JAK2.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -1953,10 +1953,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.JAK2.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.JAK2.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.JAK2.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.JAK2.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -1998,10 +1998,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;JAK3基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.JAK3.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.JAK3.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.JAK3.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.JAK3.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2016,10 +2016,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.JAK3.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.JAK3.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.JAK3.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.JAK3.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2067,10 +2067,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KDR基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.KDR.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.KDR.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.KDR.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.KDR.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2085,10 +2085,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.KDR.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.KDR.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.KDR.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.KDR.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2133,10 +2133,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KIT基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.KIT.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.KIT.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.KIT.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.KIT.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2152,10 +2152,10 @@
                     </thead>
                     <tbody>
                     <c:choose>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.KIT.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.KIT.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.KIT.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.KIT.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2197,10 +2197,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;KRAS基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.KRAS.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.KRAS.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.KRAS.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.KRAS.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2215,10 +2215,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.KRAS.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.KRAS.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.KRAS.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.KRAS.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2273,10 +2273,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MET基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.MET.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.MET.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.MET.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.MET.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2291,10 +2291,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.MET.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.MET.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.MET.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.MET.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2333,10 +2333,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MLH1基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.MLH1.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.MLH1.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.MLH1.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.MLH1.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2351,10 +2351,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.MLH1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.MLH1.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.MLH1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.MLH1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2393,10 +2393,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;MPL基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.MPL.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.MPL.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.MPL.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.MPL.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2411,10 +2411,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.MPL.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.MPL.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.MPL.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.MPL.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2453,10 +2453,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NOTCH1基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.NOTCH1.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.NOTCH1.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.NOTCH1.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.NOTCH1.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2471,10 +2471,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.NOTCH1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.NOTCH1.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.NOTCH1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.NOTCH1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2513,10 +2513,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NPM1基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.NPM1.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.NPM1.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.NPM1.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.NPM1.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2531,10 +2531,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.NPM1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.NPM1.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.NPM1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.NPM1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2572,10 +2572,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;NRAS基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.NRAS.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.NRAS.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.NRAS.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.NRAS.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2591,10 +2591,10 @@
                     </thead>
                     <tbody>
                     <c:choose>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.NRAS.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.NRAS.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.NRAS.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.NRAS.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2640,10 +2640,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PDGFRA基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.PDGFRA.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.PDGFRA.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.PDGFRA.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.PDGFRA.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2659,10 +2659,10 @@
                     </thead>
                     <tbody>
                     <c:choose>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.PDGFRA.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.PDGFRA.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.PDGFRA.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.PDGFRA.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2711,10 +2711,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PIK3CA基因平均测序深度
-                    #if(!${accuSeqα2.dataBReport.geneDetectionDetail.PIK3CA.avgCoverage})
+                    #if(!${accuSeq.dataBReport.geneDetectionDetail.PIK3CA.avgCoverage})
                         0
                     #else
-                        $!{accuSeqα2.dataBReport.geneDetectionDetail.PIK3CA.avgCoverage}
+                        $!{accuSeq.dataBReport.geneDetectionDetail.PIK3CA.avgCoverage}
                     #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2729,10 +2729,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.PIK3CA.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.PIK3CA.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.PIK3CA.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.PIK3CA.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2778,10 +2778,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTEN基因平均测序深度
-                    #if(!${accuSeqα2.dataBReport.geneDetectionDetail.PTEN.avgCoverage})
+                    #if(!${accuSeq.dataBReport.geneDetectionDetail.PTEN.avgCoverage})
                         0
                     #else
-                        $!{accuSeqα2.dataBReport.geneDetectionDetail.PTEN.avgCoverage}
+                        $!{accuSeq.dataBReport.geneDetectionDetail.PTEN.avgCoverage}
                     #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2796,10 +2796,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.PTEN.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.PTEN.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.PTEN.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.PTEN.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2838,10 +2838,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;PTPN11基因平均测序深度
-                    #if(!${accuSeqα2.dataBReport.geneDetectionDetail.PTPN11.avgCoverage})
+                    #if(!${accuSeq.dataBReport.geneDetectionDetail.PTPN11.avgCoverage})
                         0
                     #else
-                        $!{accuSeqα2.dataBReport.geneDetectionDetail.PTPN11.avgCoverage}
+                        $!{accuSeq.dataBReport.geneDetectionDetail.PTPN11.avgCoverage}
                     #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2856,10 +2856,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.PTPN11.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.PTPN11.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.PTPN11.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.PTPN11.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2898,10 +2898,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RB1基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.RB1.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.RB1.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.RB1.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.RB1.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2916,10 +2916,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.RB1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.RB1.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.RB1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.RB1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -2965,10 +2965,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;RET基因平均测序深度
-                    #if(!${accuSeqα2.dataBReport.geneDetectionDetail.RET.avgCoverage})
+                    #if(!${accuSeq.dataBReport.geneDetectionDetail.RET.avgCoverage})
                         0
                     #else
-                        $!{accuSeqα2.dataBReport.geneDetectionDetail.RET.avgCoverage}
+                        $!{accuSeq.dataBReport.geneDetectionDetail.RET.avgCoverage}
                     #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -2983,10 +2983,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.RET.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.RET.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.RET.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.RET.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -3025,10 +3025,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMAD4基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.SMAD4.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.SMAD4.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.SMAD4.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.SMAD4.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -3043,12 +3043,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.SMAD4.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.SMAD4.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.SMAD4.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.SMAD4.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -3089,10 +3089,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMARCB1基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.SMARCB1.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.SMARCB1.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.SMARCB1.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.SMARCB1.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -3107,10 +3107,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.SMARCB1.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.SMARCB1.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.SMARCB1.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.SMARCB1.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -3153,10 +3153,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SMO基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.SMO.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.SMO.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.SMO.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.SMO.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -3171,10 +3171,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.SMO.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.SMO.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.SMO.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.SMO.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -3219,10 +3219,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;SRC基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.SRC.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.SRC.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.SRC.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.SRC.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -3237,10 +3237,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.SRC.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.SRC.result})
                             <tr><td colspan="6">没有发现突变位点</td></tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.SRC.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.SRC.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -3281,10 +3281,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;STK11基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.STK11.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.STK11.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.STK11.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.STK11.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -3299,12 +3299,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.STK11.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.STK11.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.STK11.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.STK11.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -3345,10 +3345,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;TP53基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.TP53.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.TP53.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.TP53.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.TP53.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -3363,12 +3363,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.TP53.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.TP53.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.TP53.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.TP53.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr>
                                         <td colspan="6">没有发现突变位点</td>
@@ -3413,10 +3413,10 @@
                 </div>
                 <li>检测结果</li>
                 <p class="context">&nbsp;&nbsp;&nbsp;&nbsp;VHL基因平均测序深度
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.VHL.avgCoverage})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.VHL.avgCoverage})
                             0
                         #else
-                            $!{accuSeqα2.dataBReport.geneDetectionDetail.VHL.avgCoverage}
+                            $!{accuSeq.dataBReport.geneDetectionDetail.VHL.avgCoverage}
                         #end
                 </p>
                 <table class="table table-green table-striped-green table-text-center">
@@ -3431,12 +3431,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        #if(!${accuSeqα2.dataBReport.geneDetectionDetail.VHL.result})
+                        #if(!${accuSeq.dataBReport.geneDetectionDetail.VHL.result})
                             <tr>
                                 <td colspan="6">没有发现突变位点</td>
                             </tr>
                         #else
-                            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.VHL.result})
+                            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.VHL.result})
                                 #if(${r.gene.contains('没有发现突变位点')})
                                     <tr><td colspan="6">没有发现突变位点</td></tr>
                                 #else
@@ -3471,7 +3471,7 @@
           </tr>
         </thead>
         <tbody>
-            #foreach(${r} in ${accuSeqα2.dataBReport.geneDetectionDetail.all.result})
+            #foreach(${r} in ${accuSeq.dataBReport.geneDetectionDetail.all.result})
                 #if(!${r.gene.contains('没有发现突变位点')})
                     <tr>
                         <td>$!{r.gene}</td>
@@ -3500,7 +3500,7 @@
           </tr>
         </thead>
         <tbody>
-            #foreach(${r} in ${accuSeqα2.dataAReport.geneDetectionDetail.all.result})
+            #foreach(${r} in ${accuSeq.dataAReport.geneDetectionDetail.all.result})
                 #if(!${r.gene.contains('没有发现突变位点')})
                     <tr>
                         <td>$!{r.gene}</td>
@@ -4608,94 +4608,94 @@
         <tbody>
             <tr>
                 <td>文件名</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics1.Filename}</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics2.Filename}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics1.Filename}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics2.Filename}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics1.Filename}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics2.Filename}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics1.Filename}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics2.Filename}</td>
             </tr>
             <tr>
                 <td>文件类型</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics1.FileType}</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics2.FileType}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics1.FileType}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics2.FileType}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics1.FileType}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics2.FileType}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics1.FileType}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics2.FileType}</td>
             </tr>
             <tr>
                 <td>编码</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics1.Encoding}</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics2.Encoding}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics1.Encoding}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics2.Encoding}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics1.Encoding}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics2.Encoding}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics1.Encoding}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics2.Encoding}</td>
             </tr>
             <tr>
                 <td>总序列数</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics1.TotalSeq}</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics2.TotalSeq}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics1.TotalSeq}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics2.TotalSeq}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics1.TotalSeq}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics2.TotalSeq}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics1.TotalSeq}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics2.TotalSeq}</td>
             </tr>
             <tr>
                 <td>筛选序列</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics1.FilteredSeq}</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics2.FilteredSeq}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics1.FilteredSeq}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics2.FilteredSeq}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics1.FilteredSeq}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics2.FilteredSeq}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics1.FilteredSeq}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics2.FilteredSeq}</td>
             </tr>
             <tr>
                 <td>序列长度</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics1.SeqLength}</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics2.SeqLength}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics1.SeqLength}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics2.SeqLength}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics1.SeqLength}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics2.SeqLength}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics1.SeqLength}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics2.SeqLength}</td>
             </tr>
             <tr>
                 <td>平均GC含量</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics1.gc}</td>
-                <td>$!{accuSeqα2.dataAReport.basicStatistics2.gc}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics1.gc}</td>
-                <td>$!{accuSeqα2.dataBReport.basicStatistics2.gc}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics1.gc}</td>
+                <td>$!{accuSeq.dataAReport.basicStatistics2.gc}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics1.gc}</td>
+                <td>$!{accuSeq.dataBReport.basicStatistics2.gc}</td>
             </tr>
         </tbody>
     </table>
     <table style="width:100%;">
       <tr>
         <td style="width:50%;">
-            <img style="width:100%;" ng-if="accuSeqα2.dataAReport.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeqα2.userId}}/$!{accuSeqα2.appId}}/$!{accuSeqα2.dataKey}}$!{accuSeqα2.dataAReport.qualityPath1}}">
-            <img style="width:100%;" ng-if="accuSeqα2.dataAReport.qualityPath1.indexOf('Tools')>-1" src="$!{accuSeqα2.dataAReport.qualityPath1}}">
+            <img style="width:100%;" ng-if="accuSeq.dataAReport.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataAReport.qualityPath1}}">
+            <img style="width:100%;" ng-if="accuSeq.dataAReport.qualityPath1.indexOf('Tools')>-1" src="$!{accuSeq.dataAReport.qualityPath1}}">
         </td>
         <td>
-            <img style="width:100%;" ng-if="accuSeqα2.dataAReport.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeqα2.userId}}/$!{accuSeqα2.appId}}/$!{accuSeqα2.dataKey}}/$!{accuSeqα2.dataAReport.qualityPath2}}">
-            <img style="width:100%;"ng-if="accuSeqα2.dataAReport.qualityPath2.indexOf('Tools')>-1" src="$!{accuSeqα2.dataAReport.qualityPath2}}">
+            <img style="width:100%;" ng-if="accuSeq.dataAReport.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}/$!{accuSeq.dataAReport.qualityPath2}}">
+            <img style="width:100%;"ng-if="accuSeq.dataAReport.qualityPath2.indexOf('Tools')>-1" src="$!{accuSeq.dataAReport.qualityPath2}}">
         </td>
       </tr>
       <tr>
         <td>
-            <img style="width:100%;" alt="" ng-if="accuSeqα2.dataAReport.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeqα2.userId}}/$!{accuSeqα2.appId}}/$!{accuSeqα2.dataKey}}$!{accuSeqα2.dataAReport.seqContentPath1}}">
-            <img style="width:100%;" alt="" ng-if="accuSeqα2.dataAReport.seqContentPath1.indexOf('Tools')>-1" src="$!{accuSeqα2.dataAReport.seqContentPath1}}">
+            <img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataAReport.seqContentPath1}}">
+            <img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath1.indexOf('Tools')>-1" src="$!{accuSeq.dataAReport.seqContentPath1}}">
         </td>
         <td>
-            <img style="width:100%;" alt="" ng-if="accuSeqα2.dataAReport.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeqα2.userId}}/$!{accuSeqα2.appId}}/$!{accuSeqα2.dataKey}}$!{accuSeqα2.dataAReport.seqContentPath2}}">
-            <img style="width:100%;" alt="" ng-if="accuSeqα2.dataAReport.seqContentPath2.indexOf('Tools')>-1" src="$!{accuSeqα2.dataAReport.seqContentPath2}}">
+            <img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataAReport.seqContentPath2}}">
+            <img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath2.indexOf('Tools')>-1" src="$!{accuSeq.dataAReport.seqContentPath2}}">
         </td>
       </tr>
       <tr>
         <td style="width:50%;">
-            <img style="width:100%;" ng-if="accuSeqα2.dataBReport.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeqα2.userId}}/$!{accuSeqα2.appId}}/$!{accuSeqα2.dataKey}}$!{accuSeqα2.dataBReport.qualityPath1}}">
-            <img style="width:100%;" ng-if="accuSeqα2.dataBReport.qualityPath1.indexOf('Tools')>-1" src="$!{accuSeqα2.dataBReport.qualityPath1}}">
+            <img style="width:100%;" ng-if="accuSeq.dataBReport.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataBReport.qualityPath1}}">
+            <img style="width:100%;" ng-if="accuSeq.dataBReport.qualityPath1.indexOf('Tools')>-1" src="$!{accuSeq.dataBReport.qualityPath1}}">
         </td>
         <td>
-            <img style="width:100%;" ng-if="accuSeqα2.dataBReport.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeqα2.userId}}/$!{accuSeqα2.appId}}/$!{accuSeqα2.dataKey}}/$!{accuSeqα2.dataBReport.qualityPath2}}">
-            <img style="width:100%;"ng-if="accuSeqα2.dataBReport.qualityPath2.indexOf('Tools')>-1" src="$!{accuSeqα2.dataBReport.qualityPath2}}">
+            <img style="width:100%;" ng-if="accuSeq.dataBReport.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}/$!{accuSeq.dataBReport.qualityPath2}}">
+            <img style="width:100%;"ng-if="accuSeq.dataBReport.qualityPath2.indexOf('Tools')>-1" src="$!{accuSeq.dataBReport.qualityPath2}}">
         </td>
       </tr>
       <tr>
         <td>
-            <img style="width:100%;" alt="" ng-if="accuSeqα2.dataBReport.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeqα2.userId}}/$!{accuSeqα2.appId}}/$!{accuSeqα2.dataKey}}$!{accuSeqα2.dataBReport.seqContentPath1}}">
-            <img style="width:100%;" alt="" ng-if="accuSeqα2.dataBReport.seqContentPath1.indexOf('Tools')>-1" src="$!{accuSeqα2.dataBReport.seqContentPath1}}">
+            <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataBReport.seqContentPath1}}">
+            <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath1.indexOf('Tools')>-1" src="$!{accuSeq.dataBReport.seqContentPath1}}">
         </td>
         <td>
-            <img style="width:100%;" alt="" ng-if="accuSeqα2.dataBReport.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeqα2.userId}}/$!{accuSeqα2.appId}}/$!{accuSeqα2.dataKey}}$!{accuSeqα2.dataBReport.seqContentPath2}}">
-            <img style="width:100%;" alt="" ng-if="accuSeqα2.dataBReport.seqContentPath2.indexOf('Tools')>-1" src="$!{accuSeqα2.dataBReport.seqContentPath2}}">
+            <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataBReport.seqContentPath2}}">
+            <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath2.indexOf('Tools')>-1" src="$!{accuSeq.dataBReport.seqContentPath2}}">
         </td>
       </tr>
     </table>
