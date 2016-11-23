@@ -17,6 +17,26 @@ import org.apache.commons.lang.WordUtils;
  * @date 2016年1月19日 下午12:58:02
  */
 public class CustomStringUtils extends StringUtils {
+
+	/**
+	 * 将数组转成字符串，以逗号分隔
+	 * 
+	 * @param array
+	 * @return
+	 * @author lin
+	 * @date 2016年11月23日上午10:43:43
+	 */
+	public static String arrayToString(Object[] array) {
+		StringBuffer sb = new StringBuffer();
+		for (Object string : array) {
+			sb.append(string).append(",");
+		}
+		int length = sb.length();
+		if (length > 1) {
+			sb.deleteCharAt(length - 1);
+		}
+		return sb.toString();
+	}
     /**
      * The empty String <code>""</code>.
      * 

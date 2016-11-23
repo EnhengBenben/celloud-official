@@ -211,6 +211,14 @@ var user=(function(user){
 		}
 	}
 	self.sendEmail=function(){
+	   var secRole = "";
+    $("#emailForm").find(".resourceCheck:checked").each(function(){
+      if($(this).attr("_parentId")!=0){
+        secRole += $(this).val()+",";
+      }
+    });
+    secRole = secRole.substring(0,secRole.length-1);
+    $("#secRole").val(secRole);
 		$("#send").prop("disabled","disabled");
 		var isPass = true;
 		var checkbox = $("#emailForm").find("input[name=appIdArray]:checked");
@@ -233,6 +241,7 @@ var user=(function(user){
 				$(this).parent().parent().addClass("error");
 				if($.trim(email).length==0){
 					$(this).parent().parent().find(".help-inline").html("邮箱不能为空！");
+					return;
 				}else{
 					$(this).parent().parent().find(".help-inline").html("邮箱格式不正确！");
 				}
@@ -256,15 +265,13 @@ var user=(function(user){
 			data : params,
 			async : false,
 			success : function(data){
-				if(data.indexOf("1")>=0){
-					if(data==1){
-						$("#emailArray").parent().parent().addClass("error");
-						$("#emailArray").parent().parent().find(".help-inline").html("此邮箱已经添加！");
-						isPass = false;
-					}else{
-						$("#emailArray").parent().parent().removeClass("error");
-						$("#emailArray").parent().parent().find(".help-inline").html("");
-					}
+				if(data=="0"){
+					$("#emailArray").parent().parent().addClass("error");
+					$("#emailArray").parent().parent().find(".help-inline").html("此邮箱已经添加！");
+					isPass = false;
+				}else{
+					$("#emailArray").parent().parent().removeClass("error");
+					$("#emailArray").parent().parent().find(".help-inline").html("");
 				}
 			}
 		});

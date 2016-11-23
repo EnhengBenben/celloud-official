@@ -63,5 +63,9 @@ public class EmailType {
      * 注册成功
      */
     public static final String REGISTER_SUCCESS = "register_success";
+	/**
+	 * 追加权限
+	 */
+	public static final String ADD_PERMISION = "add_permision";
 
 }

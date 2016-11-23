@@ -1,6 +1,8 @@
 package com.celloud.manager.model;
 
-public class SecRole {
+import java.util.Date;
+
+public class SecRole extends Tree {
     private Integer id;
 
     private String code;
@@ -10,6 +12,14 @@ public class SecRole {
     private String description;
 
     private Boolean disabled;
+
+	private Date createDate;
+
+	private Integer parentId;
+
+	private String mutex;
+
+	private String attract;
 
     public Integer getId() {
         return id;
@@ -50,4 +60,37 @@ public class SecRole {
     public void setCode(String code) {
         this.code = code;
     }
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getMutex() {
+		return mutex;
+	}
+
+	public void setMutex(String mutex) {
+		this.mutex = mutex;
+	}
+
+	public String getAttract() {
+		return attract;
+	}
+
+	public void setAttract(String attract) {
+		this.attract = attract;
+	}
+
 }

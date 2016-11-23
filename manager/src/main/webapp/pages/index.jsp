@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="css/console.css">
 <link rel="stylesheet" href="css/pay.css">
 <link rel="stylesheet" href="plugins/jquery.alerts.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/plugins/treegrid/css/jquery.treegrid.css">
 <script src="plugins/bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="plugins/jquery.alerts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
@@ -319,6 +320,8 @@
     <!-- select2 -->
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/select2/js/select2.full.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/select2/js/zh-CN.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/treegrid/js/jquery.treegrid.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/plugins/treegrid/js/jquery.treegrid.bootstrap3.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
     <script src="js/metadata.js"></script>
