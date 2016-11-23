@@ -164,7 +164,7 @@
     })
     .when('/reportpro/AccuSeqα2/:appId/:dataKey/:projectId',{
       templateUrl: "pages/report/report_data_accuseqα2.jsp",
-      controller: "accuseqα2DataReportController"
+      controller: "accuseqa2DataReportController"
     })
     .when('/reportpro/CMP_199/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_cmp.jsp",
