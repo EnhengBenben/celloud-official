@@ -242,6 +242,10 @@
     <select id="isEmailInUse" resultType="int">
         select count(1) from tb_user where email=#{email} and user_id != #{userId}
     </select>
+    <select id="isEmailAuth" resultType="int">
+        select count(1) from tb_user where email=#{email} and (user_id = #{userId} or role = #{role})
+    </select>
+    
     <select id="isUsernameInUse" resultType="int">
         select count(1) from tb_user where username=#{username } and user_id != #{userId}
     </select>

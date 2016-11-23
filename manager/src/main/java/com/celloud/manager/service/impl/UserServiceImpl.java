@@ -23,6 +23,7 @@ import com.celloud.manager.constants.Constants;
 import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.constants.DataState;
 import com.celloud.manager.constants.RechargeType;
+import com.celloud.manager.constants.UserRole;
 import com.celloud.manager.mapper.UserMapper;
 import com.celloud.manager.mapper.UserRegisterMapper;
 import com.celloud.manager.model.User;
@@ -114,6 +115,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.isEmailInUse(email, userId == null ? 0 : userId) > 0;
     }
 
+	@Override
+	public boolean isEmailAuth(String email, Integer userId) {
+		return userMapper.isEmailAuth(email, userId, UserRole.ADMINISTRATOR) == 0;
+	}
+
     @Override
     public User getUserByName(String username) {
         return userMapper.getUserByName(username);
@@ -140,6 +146,11 @@ public class UserServiceImpl implements UserService {
         return userRegisterMapper.getValidate(email, md5) > 0;
     }
 
+	@Override
+	public UserRegister getUserRegisterInfo(String email, String md5) {
+		return userRegisterMapper.getUserRegisterInfo(email, md5);
+	}
+
     @Override
     public boolean isUsernameInUse(String username, Integer userId) {
         return userMapper.isUsernameInUse(username, userId == null ? 0 : userId) > 0;
@@ -147,6 +158,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUser(User user, String md5code, Integer appCompanyId) {
+		Integer userId = ConstantsData.getLoginUserId();
         user.setPassword(MD5Util.getMD5(user.getPassword()));
         user.setState(DataState.ACTIVE);
         int addNum = userMapper.addUser(user);
@@ -166,7 +178,7 @@ public class UserServiceImpl implements UserService {
             if (appCompanyId != null) {
                 userMapper.addUserCompanyRelat(user.getUserId(), appCompanyId);
             }
-            userRegisterMapper.deleteUserRegisterInfo(user.getEmail());
+			userRegisterMapper.deleteUserRegisterInfo(user.getEmail(), userId);
             // 发送注册成功邮件
             aliEmail.simpleSend(
                     AliEmail.template(EmailType.REGISTER_SUCCESS)
@@ -182,8 +194,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void sendRegisterEmail(String[] emailArray, Integer deptId, Integer companyId, Integer appCompanyId,
             Integer[] appIdArray, Integer[] roleIdArray, Integer role) {
+		Integer userId = ConstantsData.getLoginUserId();
         for (String email : emailArray) {
-            userRegisterMapper.deleteUserRegisterInfo(email);
+			userRegisterMapper.deleteUserRegisterInfo(email, userId);
             String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
             StringBuffer appIds = new StringBuffer();
             StringBuilder roleIds = new StringBuilder();
@@ -199,7 +212,7 @@ public class UserServiceImpl implements UserService {
                 }
                 roleIds.deleteCharAt(roleIds.length() - 1);
             }
-            userRegisterMapper.insertUserRegisterInfo(email, randomCode, appIds.toString(), roleIds.toString());
+			userRegisterMapper.insertUserRegisterInfo(email, randomCode, appIds.toString(), roleIds.toString(), userId);
             String param = Base64Util.encrypt(
                     email + "/" + randomCode + "/" + deptId + "/" + companyId + "/" + appCompanyId + "/" + role);
             aliEmail.simpleSend(AliEmail.template(EmailType.USER_REGISTER)
@@ -209,6 +222,21 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+	@Override
+	public void sendAddPermissionEmail(String email, String appIds, String roleIds) {
+		Integer userId = ConstantsData.getLoginUserId();
+		userRegisterMapper.deleteUserRegisterInfo(email, userId);
+		String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
+		userRegisterMapper.insertUserRegisterInfo(email, randomCode, appIds, roleIds, userId);
+		String param = Base64Util.encrypt(email + "/" + randomCode + "/" + userId);
+		aliEmail.simpleSend(
+				AliEmail.template(EmailType.ADD_PERMISION).substitutionVars(AliSubstitution.sub()
+						.set(EmailParams.ADD_PERMISION.url.name(),
+								ResetPwdUtils.permissionPath.replaceAll("path", param))
+						.set(EmailParams.ADD_PERMISION.authFrom.name(), ConstantsData.getLoginUserName())),
+				email);
+	}
 
     @Override
     public List<User> getAllUserList() {
@@ -246,5 +274,25 @@ public class UserServiceImpl implements UserService {
 		Integer expenseId = expensesService.saveExpenses(from, to, toUserName, amount);
 		Integer num = rechargeService.saveRecharge(amount, to, RechargeType.GRANT, expenseId);
 		return num == 1;
+	}
+
+	@Override
+	public int addUserAppRight(int userId, String[] appIds, int isAdded, Integer authFrom) {
+		return userMapper.addUserAppRight(userId, appIds, isAdded, authFrom);
+	}
+
+	@Override
+	public int addUserCompanyRelat(int userId, int companyId) {
+		return userMapper.addUserCompanyRelat(userId, companyId);
+	}
+
+	@Override
+	public void addUserRoleRight(Integer userId, String[] roleIds, Integer authFrom) {
+		userMapper.addUserRoleRight(userId, roleIds, authFrom);
+	}
+
+	@Override
+	public void deleteUserRegisterInfo(String email, Integer authFrom) {
+		userRegisterMapper.deleteUserRegisterInfo(email, authFrom);
 	}
 }

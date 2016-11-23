@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.manager.mapper.SecRoleMapper;
 import com.celloud.manager.model.SecRole;
 import com.celloud.manager.service.SecRoleService;
+import com.celloud.manager.utils.SortUtils;
 
 @Service("secRoleServiceImpl")
 public class SecRoleServiceImpl implements SecRoleService {
@@ -31,7 +32,7 @@ public class SecRoleServiceImpl implements SecRoleService {
 
     @Override
     public List<SecRole> findRoleListByUserId(Integer userId) {
-        return roleMapper.findRolesByUserId(userId);
+		return SortUtils.listToTree(roleMapper.findRolesByUserId(userId));
     }
 
     @Override

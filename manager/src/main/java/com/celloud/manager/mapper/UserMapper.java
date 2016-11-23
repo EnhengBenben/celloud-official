@@ -113,6 +113,8 @@ public interface UserMapper {
 
     public Integer isEmailInUse(@Param("email") String email, @Param("userId") int userId);
 
+	public Integer isEmailAuth(@Param("email") String email, @Param("userId") int userId, @Param("role") Integer role);
+
     public Integer isUsernameInUse(@Param("username") String username, @Param("userId") int userId);
 
     public User getUserByName(@Param("username") String username);

@@ -20,7 +20,7 @@ public interface UserRegisterMapper {
     int updateByPrimaryKey(UserRegister record);
 
     public void insertUserRegisterInfo(@Param("email") String email, @Param("randomCode") String randomCode,
-            @Param("appIds") String appIds, @Param("roleIds") String roleIds);
+			@Param("appIds") String appIds, @Param("roleIds") String roleIds, @Param("authFrom") Integer authFrom);
 
     /**
      * 删除验证码
@@ -29,7 +29,7 @@ public interface UserRegisterMapper {
      * @author han
      * @date 2016年1月28日 下午3:06:19
      */
-    public void deleteUserRegisterInfo(@Param("email") String email);
+	public void deleteUserRegisterInfo(@Param("email") String email, @Param("authFrom") Integer authFrom);
 
     /**
      * 根据邮箱和验证码来判断请求是否有效（用于注册）

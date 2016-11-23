@@ -7,9 +7,13 @@
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="description" property="description" jdbcType="VARCHAR" />
 		<result column="disabled" property="disabled" jdbcType="BIT" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    	<result column="mutex" property="mutex" jdbcType="VARCHAR" />
+    	<result column="attract" property="attract" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, code, name, description, disabled
+		id, code, description, disabled, name, create_date, parent_id, mutex, attract
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
@@ -18,16 +22,12 @@
 		where id = #{id,jdbcType=INTEGER}
 	</select>
 	<select id="findRolesByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-		select
-		<include refid="Base_Column_List" />
-		from tb_sec_role
-		where exists (
-		select id from tb_sec_user_role_relat
-		where
-		tb_sec_role.id=tb_sec_user_role_relat.role_id and
-		tb_sec_role.disabled = 0 and
-		tb_sec_user_role_relat.user_id=#{id,jdbcType=INTEGER}
-		)
+		select distinct parent.* from tb_sec_role parent, tb_sec_role child, tb_sec_user_role_relat ur
+		where 
+		(parent.id = child.parent_id or parent.id = child.id) 
+		and child.id = ur.role_id 
+		and ur.user_id = #{id,jdbcType=INTEGER} 
+		order by parent.id asc;
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from tb_sec_role

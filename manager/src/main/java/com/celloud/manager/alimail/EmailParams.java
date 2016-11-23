@@ -9,6 +9,16 @@ package com.celloud.manager.alimail;
 public class EmailParams {
 
 	/**
+	 * 权限追加
+	 * 
+	 * @author lin
+	 * @date 2016年11月23日 上午10:55:06
+	 */
+	public static enum ADD_PERMISION {
+		url, authFrom;
+	}
+
+	/**
 	 * 用户注册
 	 * 
 	 * @author lin

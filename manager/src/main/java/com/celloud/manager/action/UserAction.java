@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.manager.constants.AppIsAdd;
 import com.celloud.manager.constants.ConstantsData;
 import com.celloud.manager.model.App;
 import com.celloud.manager.model.Company;
 import com.celloud.manager.model.Dept;
 import com.celloud.manager.model.SecRole;
 import com.celloud.manager.model.User;
+import com.celloud.manager.model.UserRegister;
 import com.celloud.manager.page.Page;
 import com.celloud.manager.page.PageList;
 import com.celloud.manager.service.AppService;
@@ -32,6 +35,7 @@ import com.celloud.manager.service.DeptService;
 import com.celloud.manager.service.SecRoleService;
 import com.celloud.manager.service.UserService;
 import com.celloud.manager.utils.Base64Util;
+import com.celloud.manager.utils.CustomStringUtils;
 import com.celloud.manager.utils.MD5Util;
 import com.celloud.manager.utils.ResetPwdUtils;
 
@@ -188,21 +192,15 @@ public class UserAction {
     }
 
     /**
-     * 后台采用发邮件添加用户时检验邮箱是否已经添加
-     * 
-     * @return
-     */
+	 * 校验邮箱是否可用
+	 * 
+	 * @return
+	 */
     @ResponseBody
     @RequestMapping("user/checkEmail")
-    public String checkEmail(@RequestParam("emailArray") String[] emailArray) {
-        StringBuffer sb = new StringBuffer();
-        for (String email : emailArray) {
-            int result = userService.isEmailInUse(email, null) ? 1 : 0;
-            sb.append(result).append(",");
-        }
-        sb.delete(sb.length() - 1, sb.length());
-        String email = sb.toString();
-        return email;
+	public String checkEmail(@RequestParam("emailArray") String emailArray) {
+		Integer userId = ConstantsData.getLoginUserId();
+		return userService.isEmailAuth(emailArray, userId) ? "1" : "0";
     }
 
     /**
@@ -216,9 +214,17 @@ public class UserAction {
      */
     @ResponseBody
     @RequestMapping("user/checkRoleCompany")
-    public String checkRoleCompany(Integer companyId, Integer[] roleIdArray) {
+	public String checkRoleCompany(Integer companyId, String roleIdArray) {
+		if (StringUtils.isBlank(roleIdArray)) {
+			return "0";
+		}
         // 获取roidIdArray的role对象
-        List<SecRole> roles = secRoleService.findRoleListByIds(roleIdArray);
+		String[] secRole = roleIdArray.split(",");
+		Integer[] secs = new Integer[secRole.length];
+		for (int i = 0; i < secRole.length; i++) {
+			secs[i] = Integer.valueOf(secRole[i]);
+		}
+		List<SecRole> roles = secRoleService.findRoleListByIds(secs);
         for (SecRole role : roles) {
             // 勾选了医院管理员这个角色, 则需要根据这个角色校验当前的companyId是否已经存在用户
             if ("hospitalmanager".equals(role.getCode())) {
@@ -248,6 +254,11 @@ public class UserAction {
             @RequestParam("appIdArray") Integer[] appIdArray,
             @RequestParam(value = "roleIdArray", required = false) Integer[] roleIdArray,
             @RequestParam("role") Integer role) {
+		if (userService.isEmailInUse(emailArray[0], 0)) {
+			userService.sendAddPermissionEmail(emailArray[0], CustomStringUtils.arrayToString(appIdArray),
+					CustomStringUtils.arrayToString(roleIdArray));
+			return;
+		}
         // companyId和deptId是字符串代表新增的医院和部门
         Integer sendCompanyId = null;
         Integer sendDeptId = null;
@@ -303,6 +314,42 @@ public class UserAction {
         }
         return mv;
     }
+
+	@RequestMapping("addPermission/{email}")
+	public ModelAndView addPermission(@PathVariable String email) {
+		ModelAndView mv = new ModelAndView("user/user_add_permission");
+		mv.addObject("officialWebsite", ResetPwdUtils.officialWebsite);
+		String param = Base64Util.decrypt(email);
+		logger.info("权限追加邮件{}", param);
+		String p[] = param.split("/");
+		boolean isLegal = true;
+		if (p.length != 3) {
+			isLegal = false;
+		} else {
+			String userEmail = p[0];
+			String code = p[1];
+			isLegal = userService.getValidate(userEmail, code);
+			if (isLegal) {
+				UserRegister ur = userService.getUserRegisterInfo(userEmail, code);
+				String userId = p[2];
+				userService.deleteUserRegisterInfo(userEmail, Integer.valueOf(userId));
+				User user = userService.getUserByEmail(userEmail);
+				String appIdStr = ur != null ? ur.getAppIds() : null;
+				String roleIdStr = ur != null ? ur.getRoleIds() : null;
+				Integer authFrom = ur != null ? ur.getAuthFrom() : 0;
+				if (StringUtils.isNotBlank(appIdStr)) {
+					String[] appIds = appIdStr.split(",");
+					userService.addUserAppRight(user.getUserId(), appIds, AppIsAdd.NOT_ADDED, authFrom);
+				}
+				if (StringUtils.isNotBlank(roleIdStr)) {
+					String[] roleIds = roleIdStr.split(",");
+					userService.addUserRoleRight(user.getUserId(), roleIds, authFrom);
+				}
+			}
+		}
+		mv.addObject("flag", isLegal);
+		return mv;
+	}
 
     /**
      * 用户名验重

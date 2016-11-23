@@ -18,6 +18,7 @@ public class ResetPwdUtils {
     public static String userContent;
 
     public static String officialWebsite;
+	public static String permissionPath;
 
     public static Properties prop = null;
     static {
@@ -35,6 +36,7 @@ public class ResetPwdUtils {
             userContent = prop.getProperty("userContent");
 
             officialWebsite = prop.getProperty("officialWebsite");
+			permissionPath = prop.getProperty("permissionPath");
         } catch (IOException e) {
             logger.info("读取ResetPwd配置文件失败");
         }

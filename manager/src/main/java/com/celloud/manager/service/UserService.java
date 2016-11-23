@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.manager.model.User;
+import com.celloud.manager.model.UserRegister;
 import com.celloud.manager.model.UserSelect;
 import com.celloud.manager.page.Page;
 import com.celloud.manager.page.PageList;
@@ -124,6 +125,18 @@ public interface UserService {
      */
     public boolean isEmailInUse(String email, Integer userId);
 
+	/**
+	 * 校验邮箱是否可用：新增用户/补充授权<br>
+	 * 除了自身和管理员邮箱，皆可
+	 * 
+	 * @param email
+	 * @param userId
+	 * @return
+	 * @author lin
+	 * @date 2016年11月22日下午5:44:54
+	 */
+	public boolean isEmailAuth(String email, Integer userId);
+
     /**
      * 校验用户名是否存在
      *
@@ -174,6 +187,8 @@ public interface UserService {
      */
     public boolean getValidate(String email, String md5);
 
+	public UserRegister getUserRegisterInfo(String email, String md5);
+
     /**
      * 添加用户信息
      *
@@ -200,6 +215,8 @@ public interface UserService {
      */
     public void sendRegisterEmail(String[] emailArray, Integer deptId, Integer companyId, Integer appCompanyId,
             Integer[] appIdArray, Integer[] roleIdArray, Integer role);
+
+	public void sendAddPermissionEmail(String email, String appIds, String roleIds);
 
     /**
      * 获取所有用户列表
@@ -232,5 +249,32 @@ public interface UserService {
      * 授权普通用户模块角色
      */
     public void grantUserRole(Integer userId, String[] roleIds);
+
+	/**
+	 * 注册用户时授权app
+	 *
+	 * @param userId
+	 * @param appIds
+	 * @param isAdded
+	 * @return
+	 * @author han
+	 * @date 2016年1月29日 下午1:51:39
+	 */
+	public int addUserAppRight(int userId, String[] appIds, int isAdded, Integer authFrom);
+
+	/**
+	 * 注册用户增加用户和大客户关系
+	 *
+	 * @param userId
+	 * @param companyId
+	 * @return
+	 * @author han
+	 * @date 2016年1月29日 下午1:52:48
+	 */
+	public int addUserCompanyRelat(int userId, int companyId);
+
+	public void addUserRoleRight(Integer userId, String[] roleIds, Integer authFrom);
+
+	public void deleteUserRegisterInfo(String email, Integer authFrom);
 
 }
