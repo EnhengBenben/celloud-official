@@ -500,15 +500,11 @@
 		select f.file_name,f.file_id,f.batch,f.another_name,s.sample_name,t.*
 		from
 		(select * from tb_task where
-		(task_id in (select max(task_id) from
-		tb_task where state=#{state} and
-		user_id=#{userId} and
-		(app_id=#{appId}
-		or period!=2) group by
-		data_key))
-		or (data_key is null and
-		state=#{state} and user_id=#{userId} and
-		app_id=#{appId})
+		  (task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=#{appId} or period!=2) group by data_key))
+		  or (data_key is null and state=#{state} and user_id=#{userId} and app_id=#{appId})
+		  union all 
+          select t_t.* from tb_task t_t,tb_project_share s,tb_user u 
+          where t_t.project_id=s.project_id and t_t.state=#{state} and s.share_to = #{userId}
 		)t
 		left join
 		tb_file f

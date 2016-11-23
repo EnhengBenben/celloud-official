@@ -61,8 +61,9 @@ public class RunServiceImpl implements RunService {
 	private SampleService sampleService;
 
 	@Override
-	public Map<String, String> getDataListFile(Integer appId, List<DataFile> dataList) {
-		Map<String, String> dataFilePathMap = new HashMap<>();
+    public Map<String, Object> getDataListFile(Integer appId,
+            List<DataFile> dataList) {
+        Map<String, Object> dataFilePathMap = new HashMap<>();
 		if (AppDataListType.FASTQ_PATH.contains(appId)) {
 			dataFilePathMap = DataKeyListToFile.onlyFastqPath(dataList);
 		} else if (AppDataListType.ONLY_PATH.contains(appId)) {
@@ -167,12 +168,22 @@ public class RunServiceImpl implements RunService {
 	@Override
 	public String runSingle(Integer userId, Integer appId, List<DataFile> dataList) {
 		// 1. 创建 dataListFile
-		Map<String, String> dataFilePathMap = getDataListFile(appId, dataList);
-		String dataReportNum = dataFilePathMap.get(DataKeyListToFile.DATA_REPORT_NUM);
+        String result = null;
+        Map<String, Object> dataFilePathMap = getDataListFile(appId, dataList);
+        String dataReportNum = dataFilePathMap
+                .get(DataKeyListToFile.DATA_REPORT_NUM).toString();
 		dataFilePathMap.remove(DataKeyListToFile.DATA_REPORT_NUM);
+        if (dataFilePathMap.get("canRunDataList") != null) {
+            dataList = (List<DataFile>) dataFilePathMap.get("canRunDataList");
+            dataFilePathMap.remove("canRunDataList");
+        }
+        if (dataList == null || dataList.size() == 0) {
+            result = "所选数据未成功匹配";
+            logger.info("用户{}{}", userId, result);
+            return result;
+        }
 
 		// 2. 创建项目
-		String result = null;
 		Integer projectId = createProject(userId, dataList, Integer.valueOf(dataReportNum));
 		if (projectId == null) {
 			result = "项目创建失败";
@@ -197,9 +208,9 @@ public class RunServiceImpl implements RunService {
 		if (dataList.get(0).getOssPath() != null) {
 			appPath = UploadPathUtils.getObjectKeyByPath(UploadPathUtils.getOutPathInOSS(userId, appId));
 		}
-		for (Entry<String, String> entry : dataFilePathMap.entrySet()) {
+        for (Entry<String, Object> entry : dataFilePathMap.entrySet()) {
 			String dataKey = entry.getKey();
-			String dataListFile = entry.getValue();
+            String dataListFile = entry.getValue().toString();
 			String command = CommandKey.getCommand(dataListFile, appPath, projectId, app.getCommand());
 			Task task = taskService.findTaskByDataKeyAndApp(dataKey, appId);
 			if (task == null) {
