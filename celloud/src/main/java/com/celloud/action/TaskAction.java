@@ -128,7 +128,8 @@ public class TaskAction {
 		// 2. 利用 python将数据报告插入 mongodb
 		StringBuffer command = new StringBuffer();
 		command.append("python ").append(SparkPro.TASKOVERPY).append(" ")
-				.append(dataList.get(0).getOssPath() == null ? SparkPro.TASKOVERPY
+                .append(dataList.get(0).getOssPath() == null
+                        ? SparkPro.TOOLSPATH
 						: ConstantsData.getOfsPath() + "output")
 				.append(" ").append(userId).append(" ").append(appId).append(" ").append(dataNames).append(" ")
 				.append(projectId);
