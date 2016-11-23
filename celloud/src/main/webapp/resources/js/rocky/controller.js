@@ -153,18 +153,24 @@
 				$("#" + file.id + " .surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
 			});
 			uploader.bind("FilesAdded", function(uploader, files) {
-				$("#rocky-upload-list-table").removeClass("hide");
 				$.each(files, function(index, item) {
-					var $fileDom = $('<tr id="' + item.id + '"></tr>');
-					$fileDom.append($('<td class="filename">' + item.name + '</td>'));
-					$fileDom.append($('<td class="percent">等待上传</td>'));
-					$fileDom.append($('<td class="surplus">---</td>'));
-					$fileDom.append($('<td class="spead">---</td>'));
-					$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
-					$("#rocky-upload-list-tbody").append($fileDom);
+					if(item.size > 0){
+						var $fileDom = $('<tr id="' + item.id + '"></tr>');
+						$fileDom.append($('<td class="filename">' + item.name + '</td>'));
+						$fileDom.append($('<td class="percent">等待上传</td>'));
+						$fileDom.append($('<td class="surplus">---</td>'));
+						$fileDom.append($('<td class="spead">---</td>'));
+						$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
+						$("#rocky-upload-list-tbody").append($fileDom);
+					}else{
+						uploader.removeFile(item);
+					}
 				});
-				uploader.start();
-				$rootScope.rockyStep = 'two'; // 只有选择了文件才算真的在第二步
+				if(uploader.files.length > 0){
+					$("#rocky-upload-list-table").removeClass("hide");
+					uploader.start();
+					$rootScope.rockyStep = 'two'; // 只有选择了文件才算真的在第二步
+				}
 			});
 			uploader.bind("BeforeUpload", function(uploader, file) {
 				$("#" + file.id +" .percent").html("正在上传");

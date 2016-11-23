@@ -160,21 +160,21 @@
 		}
 		
 		var initUploader = function(){
-			$.get(CONTEXT_PATH+"/box/configs",function(configs){
-				for(var index in configs){
-					var config = configs[index];
-				    var port = config.port||80;
-				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
-				    config = "http://"+config.intranetAddress+":"+port+context;
-				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
-				    if(response && JSON.parse(response).success){
-				    	$scope.box=config;
-				    	break;
-				    }
-			    }
-				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
-				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
-//				var uploadUrl = "../uploadFile/uploadManyFile";
+//			$.get(CONTEXT_PATH+"/box/configs",function(configs){
+//				for(var index in configs){
+//					var config = configs[index];
+//				    var port = config.port||80;
+//				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
+//				    config = "http://"+config.intranetAddress+":"+port+context;
+//				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
+//				    if(response && JSON.parse(response).success){
+//				    	$scope.box=config;
+//				    	break;
+//				    }
+//			    }
+//				var uploadUrl = $scope.box==null?"../uploadFile/uploadManyFile":($scope.box+"/box/upload");
+//				console.log($scope.box==null?"没有找到盒子...":"成功找到了一个盒子，地址为："+$scope.box);
+				var uploadUrl = "../uploadFile/uploadManyFile";
 				var uploader = new plupload.Uploader({
 					runtimes : 'html5,flash,silverlight,html4',
 					browse_button : ['bsi-plupload-content','bsi-upload-more'],
@@ -226,7 +226,6 @@
 			    	handleStatus(uploader.total.percent);
 			    });
 			    uploader.bind("FilesAdded", function(uploader, files) {
-			    	$rootScope.$apply();
 			    	$.get("uploadFile/checkAdminSessionTimeOut",function(response){
 			    		if(response){//session超时则执行下两步
 			          
@@ -236,50 +235,55 @@
 			    		}
 			    	});
 			    	$.each(files, function(index, item) {
-				    	var $fileDom = $('<li class="plupload_delete" id="' + item.id + '">');
-				        $fileDom.append($('<div class="plupload-file-name"><span>' + item.name + '</span></div>'));
-				        $fileDom.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
-				        $fileDom.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
-				        $fileDom.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
-				        $("#upload-filelist").append($fileDom);
-				        var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
-				        $fileDom_uploading.append($('<div class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></div>'));
-				        $fileDom_uploading.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
-				        $fileDom_uploading.append($('<div class="plupload-file-surplus">_</div>'));
-				        $fileDom_uploading.append($('<div class="plupload-file-status">_</div>'));
-				        $fileDom_uploading.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
-				        $fileDom_uploading.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
-				        $("#uploading-filelist").append($fileDom_uploading);
-				        handleStatus(item);
-				        var params = {"size":item.size,"lastModifiedDate":item.lastModifiedDate,"name":item.name};
-						if($scope.box!=null){
-							$.get($scope.box+"/box/checkBreakpoints",params,function(data){
-								if(data.data){
-									item.loaded = data.data;
-									$("#uploading-" + item.id +" .plupload-file-status").html((item.loaded/item.size).toFixed(2)*100+"%");
-								}
-							});
-						}
-				        $('#' + item.id + '.plupload_delete a').click(function(e) {
-				        	$('#' + item.id).remove();
-				        	$('#uploading-' + item.id).remove();
-				        	uploader.removeFile(item);
-				        	e.preventDefault();
-				        	utils.stopBubble(e);
-				        	$scope.uploadTextType();
-				        });
-				        $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
-				        	$('#' + item.id).remove();
-				        	$('#uploading-' + item.id).remove();
-				        	uploader.removeFile(item);
-				        	e.preventDefault();
-				        	utils.stopBubble(e);
-				        });
+			    		if(item.size > 0){
+			    			var $fileDom = $('<li class="plupload_delete" id="' + item.id + '">');
+					        $fileDom.append($('<div class="plupload-file-name"><span>' + item.name + '</span></div>'));
+					        $fileDom.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
+					        $fileDom.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
+					        $fileDom.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
+					        $("#upload-filelist").append($fileDom);
+					        var $fileDom_uploading = $('<li id="uploading-' + item.id + '">');
+					        $fileDom_uploading.append($('<div class="plupload-file-name"><span title="' + item.name + '">' + item.name + '</span></div>'));
+					        $fileDom_uploading.append($('<div class="plupload-file-size">'+getSize(item.size)+'</div>'));
+					        $fileDom_uploading.append($('<div class="plupload-file-surplus">_</div>'));
+					        $fileDom_uploading.append($('<div class="plupload-file-status">_</div>'));
+					        $fileDom_uploading.append($('<div class="plupload-file-action"><a href="#" style="display: block;"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a></div>'));
+					        $fileDom_uploading.append($('<div class="plupload-clearer"></div>&nbsp;</li>'));
+					        $("#uploading-filelist").append($fileDom_uploading);
+					        handleStatus(item);
+					        var params = {"size":item.size,"lastModifiedDate":item.lastModifiedDate,"name":item.name};
+							if($scope.box!=null){
+								$.get($scope.box+"/box/checkBreakpoints",params,function(data){
+									if(data.data){
+										item.loaded = data.data;
+										$("#uploading-" + item.id +" .plupload-file-status").html((item.loaded/item.size).toFixed(2)*100+"%");
+									}
+								});
+							}
+					        $('#' + item.id + '.plupload_delete a').click(function(e) {
+					        	$('#' + item.id).remove();
+					        	$('#uploading-' + item.id).remove();
+					        	uploader.removeFile(item);
+					        	e.preventDefault();
+					        	utils.stopBubble(e);
+					        	$scope.uploadTextType();
+					        });
+					        $('#uploading-' + item.id + '.plupload_delete a').click(function(e) {
+					        	$('#' + item.id).remove();
+					        	$('#uploading-' + item.id).remove();
+					        	uploader.removeFile(item);
+					        	e.preventDefault();
+					        	utils.stopBubble(e);
+					        });
+			    		}else{
+			    			uploader.removeFile(item);
+			    		}
 			        });
 			    	if($rootScope.bsiStep == 'one'){
 			    		$rootScope.bsiStep = 'two';
 			    	}
 			        $scope.uploadTextType();
+			        $rootScope.$apply();
 			    });
 			    uploader.bind("FileUploaded", function(uploader, file, response) {
 			    	var res = response.response;
@@ -328,7 +332,7 @@
 			       }
 			    });
 			    $rootScope.bsiUploader = uploader;
-			});
+//			});
 		}
 		
 		window.onbeforeunload=function(){
