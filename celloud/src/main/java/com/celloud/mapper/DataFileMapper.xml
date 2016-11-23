@@ -603,7 +603,7 @@
 		LEFT JOIN tb_app a
 		ON r.app_id = a.app_id
 		WHERE project_id = #{projectId}
-		ORDER BY another_name DESC
+		ORDER BY f.another_name DESC, f.file_name DESC
 	</select>
 	<select id="countDataFileWeek" resultType="map">
 		select
@@ -747,7 +747,7 @@
        ON t.app_id = a.app_id
        WHERE project_id = #{projectId}
        AND period = 2
-       ORDER BY f.another_name DESC
+       ORDER BY f.another_name DESC, f.file_name DESC
 	</select>
 	<select id="getMd5FileIdMap" resultType="java.util.Map">
         SELECT

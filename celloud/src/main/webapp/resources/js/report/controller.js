@@ -952,11 +952,14 @@
 		  $scope.uploadPath = bsiInfo.uploadPath;
 
 		  $scope.tab = 'patient';
-		  var havestrain = "";
-		  for(var i=0;i<$scope.bsi.species_20.length;i++){
-		    havestrain += $scope.bsi.species_20[i].species_zh + ",";
+		  $scope.havestrain = "";
+		  
+		  if($scope.bsi && $scope.bsi.species_20){
+			  for(var i=0;i<$scope.bsi.species_20.length;i++){
+				  havestrain += $scope.bsi.species_20[i].species_zh + ",";
+			  }
+			  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		  }
-		  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		  $scope.getRowspan = function(val1, val2, val3){
 			  var val0 = 1;
 			  if(val1 != null){
