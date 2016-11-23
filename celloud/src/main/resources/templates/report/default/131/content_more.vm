@@ -5,18 +5,18 @@
     <h3>一、基本信息</h3>
     <h4>1、送检基本信息</h4>
     <ul class="info">
-        <li>姓名：<span><input type="text" id="patientName" name="patientName" value="$!{accuSeq.accuSeqα2Fill.patientName}"></span></li>
-        <li>收样日期：<span><input type="text" id="samplingDate" name="samplingDate" value="$!{accuSeq.accuSeqα2Fill.samplingDate}"></span></li>
-        <li>性别： <span id="_sex"><input type="radio" name="patientSex" value="男" #if(${accuSeq.accuSeqα2Fill.patientSex}!='女')checked="checked"#end>男<input type="radio" name="patientSex" value="女" #if(${accuSeq.accuSeqα2Fill.patientSex}=='女')checked="checked"#end>女</span></li>
-        <li>样本来源：<span><input type="text" id="sampleSource" name="sampleSource" value="$!{accuSeq.accuSeqα2Fill.sampleSource}"></span></li>
-        <li>年龄：<span><input type="text" id="patientAge" name="patientAge" value="$!{accuSeq.accuSeqα2Fill.patientAge}"></span>岁</li>
-        <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="clinicalDiagnosis" value="$!{accuSeq.accuSeqα2Fill.clinicalDiagnosis}"></span></li>
-        <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="pathologicDiagnosis" value="$!{accuSeq.accuSeqα2Fill.pathologicDiagnosis}"></span></li>
-        <li>分析日期：<span><input type="text" id="analysisDate" name="analysisDate" value="$!{accuSeq.accuSeqα2Fill.analysisDate}"></span></li>
-        <li>病理位置：<span><input type="text" id="pathologicalPosition" name="pathologicalPosition" value="$!{accuSeq.accuSeqα2Fill.pathologicalPosition}"></span></li>
-        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="molecularBioExperOper" value="$!{accuSeq.accuSeqα2Fill.molecularBioExperOper}"></span></li>
-        <li>病理类型：<span><input type="text" id="pathologicalType" name="pathologicalType" value="$!{accuSeq.accuSeqα2Fill.pathologicalType}"></span></li>
-        <li>基因分析：<span><input type="text" id="geneAnalysis" name="geneAnalysis" value="$!{accuSeq.accuSeqα2Fill.geneAnalysis}"></span></li>
+        <li>姓名：<span><input type="text" id="patientName" name="patientName" value="$!{accuSeq.accuSeqFill.patientName}"></span></li>
+        <li>收样日期：<span><input type="text" id="samplingDate" name="samplingDate" value="$!{accuSeq.accuSeqFill.samplingDate}"></span></li>
+        <li>性别： <span id="_sex"><input type="radio" name="patientSex" value="男" #if(${accuSeq.accuSeqFill.patientSex}!='女')checked="checked"#end>男<input type="radio" name="patientSex" value="女" #if(${accuSeq.accuSeqFill.patientSex}=='女')checked="checked"#end>女</span></li>
+        <li>样本来源：<span><input type="text" id="sampleSource" name="sampleSource" value="$!{accuSeq.accuSeqFill.sampleSource}"></span></li>
+        <li>年龄：<span><input type="text" id="patientAge" name="patientAge" value="$!{accuSeq.accuSeqFill.patientAge}"></span>岁</li>
+        <li>临床诊断：<span><input type="text" id="clinicalDiagnosis" name="clinicalDiagnosis" value="$!{accuSeq.accuSeqFill.clinicalDiagnosis}"></span></li>
+        <li>病理诊断：<span><input type="text" id="pathologicDiagnosis" name="pathologicDiagnosis" value="$!{accuSeq.accuSeqFill.pathologicDiagnosis}"></span></li>
+        <li>分析日期：<span><input type="text" id="analysisDate" name="analysisDate" value="$!{accuSeq.accuSeqFill.analysisDate}"></span></li>
+        <li>病理位置：<span><input type="text" id="pathologicalPosition" name="pathologicalPosition" value="$!{accuSeq.accuSeqFill.pathologicalPosition}"></span></li>
+        <li>分子生物实验操作：<span><input type="text" class="input100" id="molecularBioExperOper" name="molecularBioExperOper" value="$!{accuSeq.accuSeqFill.molecularBioExperOper}"></span></li>
+        <li>病理类型：<span><input type="text" id="pathologicalType" name="pathologicalType" value="$!{accuSeq.accuSeqFill.pathologicalType}"></span></li>
+        <li>基因分析：<span><input type="text" id="geneAnalysis" name="geneAnalysis" value="$!{accuSeq.accuSeqFill.geneAnalysis}"></span></li>
     </ul>
     <h4>2、送检要求</h4>
     <div class="info">
@@ -59,7 +59,7 @@
   <h3>二、基因检测结果简述</h3>
   <h4>1、检测有指导意义的阳性位点简述：</h4>
   <div id="secion2_info1" class="info">
-    <input type="hidden" id="usefulGeneResult_tr_length" value="$!{accuSeq.accuSeqα2Fill.usefulGeneResult.size()}">
+    <input type="hidden" id="usefulGeneResult_tr_length" value="$!{accuSeq.accuSeqFill.usefulGeneResult.size()}">
     <table class="table table-green table-striped-green table-text-center">
       <thead>
           <tr>
@@ -101,8 +101,8 @@
       </tbody>
       <tbody id="usefulGeneResult">
         #set($usefulGeneResultIndex=0)
-        #if(${accuSeq.accuSeqα2Fill.usefulGeneResult.size()}>0)
-            #foreach(${li} in ${accuSeq.accuSeqα2Fill.usefulGeneResult})
+        #if(${accuSeq.accuSeqFill.usefulGeneResult.size()}>0)
+            #foreach(${li} in ${accuSeq.accuSeqFill.usefulGeneResult})
                 #set($temp=${velocityCount} - 1)
                 <tr id="usefulGeneResult_tr${temp}" name="usefulGeneResult_tr">
                     <td><input type="text" name="usefulGeneResult[${temp}].gene" class="form-control" value="$!{li.gene}"></td>
@@ -116,7 +116,7 @@
                     </td>
                 </tr>
             #end
-            #set($usefulGeneResultIndex=${accuSeq.accuSeqα2Fill.resistanceSiteSum.size()})
+            #set($usefulGeneResultIndex=${accuSeq.accuSeqFill.resistanceSiteSum.size()})
         #else
             <tr id="usefulGeneResult_tr0" name="usefulGeneResult_tr">
                 <td><input type="text" name="usefulGeneResult[0].gene" class="form-control"></td>
@@ -137,8 +137,8 @@
   </div>
   <h4>2、耐药信息汇总：</h4>
   <div id="secion2_info2" class="info">
-    <input type="hidden" id="drugTbody_3_tr_length" value="$!{accuSeq.accuSeqα2Fill.resistanceSiteSum.size()}">
-    <input type="hidden" id="drugTbody_4_tr_length" value="$!{accuSeq.accuSeqα2Fill.personalizedMedicine.size()}">
+    <input type="hidden" id="drugTbody_3_tr_length" value="$!{accuSeq.accuSeqFill.resistanceSiteSum.size()}">
+    <input type="hidden" id="drugTbody_4_tr_length" value="$!{accuSeq.accuSeqFill.personalizedMedicine.size()}">
     <table class="table table-striped-blue table-text-center" id="drugTable">
         <thead>
             <tr>
@@ -149,8 +149,8 @@
         </thead>
         <tbody id="drugTbody_3">
             #set($resistanceIndex=0)
-            #if(${accuSeq.accuSeqα2Fill.resistanceSiteSum.size()}>0)
-                #foreach(${li} in ${accuSeq.accuSeqα2Fill.resistanceSiteSum})
+            #if(${accuSeq.accuSeqFill.resistanceSiteSum.size()}>0)
+                #foreach(${li} in ${accuSeq.accuSeqFill.resistanceSiteSum})
                     #set($temp=${velocityCount} - 1)
                     <tr id="drugTbody_3_tr${temp}" name="drugTbody_3_tr">
                         <td><input type="text" name="resistanceSiteSum[${temp}].geneName" class="form-control" value="$!{li.geneName}"></td>
@@ -161,7 +161,7 @@
                         </td>
                     </tr>
                 #end
-                #set($resistanceIndex=${accuSeq.accuSeqα2Fill.resistanceSiteSum.size()})
+                #set($resistanceIndex=${accuSeq.accuSeqFill.resistanceSiteSum.size()})
             #else
                 <tr id="drugTbody_3_tr0" name="drugTbody_3_tr">
                     <td><input type="text" name="resistanceSiteSum[0].geneName" class="form-control"></td>
@@ -188,8 +188,8 @@
     </thead>
     <tbody id="drugTbody_4">
         #set($personMedicineIndex=0)
-        #if(${accuSeq.accuSeqα2Fill.personalizedMedicine.size()}>0)
-            #foreach(${li} in ${accuSeq.accuSeqα2Fill.personalizedMedicine})
+        #if(${accuSeq.accuSeqFill.personalizedMedicine.size()}>0)
+            #foreach(${li} in ${accuSeq.accuSeqFill.personalizedMedicine})
                 #set($temp=${velocityCount} - 1)
                 <tr id="drugTbody_4_tr${temp}" name="drugTbody_4_tr">
                     <td><input type="text" name="personalizedMedicine[${temp}].geneName" class="form-control" value="$!{li.geneName}"></td>
@@ -200,7 +200,7 @@
                     </td>
                 </tr>
             #end
-            #set($personMedicineIndex=${accuSeq.accuSeqα2Fill.personalizedMedicine.size()} - 1)
+            #set($personMedicineIndex=${accuSeq.accuSeqFill.personalizedMedicine.size()} - 1)
         #else
             <tr id="drugTbody_4_tr0" name="drugTbody_4_tr">
                 <td><input type="text" name="personalizedMedicine[0].geneName" class="form-control"></td>
@@ -218,7 +218,7 @@
   <p class="font10" style="width:100%;display:block">
         参考文献：<br>
     <textarea class="form-control" name="recommendDrug[0].drugDescrip" rows="15" cols="100">
-      $!{accuSeq.accuSeqα2Fill.reference}
+      $!{accuSeq.accuSeqFill.reference}
     </textarea>
   </p>
 </section>
@@ -226,8 +226,8 @@
   <h3>三、治疗药物推荐</h3>
   <div id="drugDescipDiv">
     #set($recommendDrugIndex=0)
-    #if(${accuSeq.accuSeqα2Fill.recommendDrug.size()}>0)
-        #foreach(${li} in ${accuSeq.accuSeqα2Fill.recommendDrug})
+    #if(${accuSeq.accuSeqFill.recommendDrug.size()}>0)
+        #foreach(${li} in ${accuSeq.accuSeqFill.recommendDrug})
             #set($temp=${velocityCount} - 1)
             <div name="drugContent">
                 <div class="h2">
@@ -239,7 +239,7 @@
                 <br>
             </div>
         #end
-        #set($recommendDrugIndex=${accuSeq.accuSeqα2Fill.recommendDrug.size()} - 1)
+        #set($recommendDrugIndex=${accuSeq.accuSeqFill.recommendDrug.size()} - 1)
     #else
         <div name="drugContent">
             <div class="h2">

@@ -36,7 +36,7 @@ public class AccuSeqα2 extends Base {
     /**
      * 用户填写部分
      */
-    private AccuSeqα2Fill accuSeqα2Fill;
+    private AccuSeqα2Fill accuSeqFill;
 
     public List<DataFile> getData() {
         return data;
@@ -71,11 +71,12 @@ public class AccuSeqα2 extends Base {
         this.usefulGeneResult = usefulGeneResult;
     }
 
-    public AccuSeqα2Fill getAccuSeqα2Fill() {
-        return accuSeqα2Fill;
+    public AccuSeqα2Fill getAccuSeqFill() {
+        return accuSeqFill;
     }
 
-    public void setAccuSeqα2Fill(AccuSeqα2Fill accuSeqα2Fill) {
-        this.accuSeqα2Fill = accuSeqα2Fill;
+    public void setAccuSeqFill(AccuSeqα2Fill accuSeqFill) {
+        this.accuSeqFill = accuSeqFill;
     }
+
 }
