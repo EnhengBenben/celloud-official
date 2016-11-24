@@ -21,8 +21,7 @@ $(document).ready(function(){
       return false;
     }
     $("#getcaptcha").attr("readonly","true");
-    $.get("sendLoginCapcha.html",{"cellphone":$("#cellphone").val()},function(result){
-      
+    $.get("customer/sendCaptcha.html",{"cellphone":$("#cellphone").val()},function(result){
       if(result == "succuss"){
         time = 60;
         $("#getcaptcha").addClass("disabled");

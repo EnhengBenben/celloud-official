@@ -187,6 +187,16 @@ public interface ReportDao {
     public <T> void saveData(T t);
 
     /**
+     * 条件更新
+     * 
+     * @description
+     * @author miaoqi
+     * @date 2016年11月24日下午4:17:11
+     *
+     */
+    public <T> void update(Class<T> clazz, Map<String, Object> queryFilters, Map<String, Object> updateFilters);
+
+    /**
      * 根据获取全部信息列表
      * 
      * @param T

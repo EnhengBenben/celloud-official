@@ -5,7 +5,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.celloud.constants.ConstantsData;
-import com.celloud.model.LoginCaptcha;
+import com.celloud.model.mongo.UserCaptcha;
 
 /**
  * 阿里大于配置类
@@ -30,7 +30,7 @@ public class AlidayuConfig {
      * 验证码过期时间(min)
      */
     public static int captcha_expire_time = 5;
-    public static Map<String, LoginCaptcha> userCapchaMap;
+    public static Map<String, UserCaptcha> userCapchaMap;
 
     static {
         userCapchaMap = new ConcurrentHashMap<>();

@@ -269,6 +269,7 @@
 				/**/*.html = anon
 				/api/** = anon
 				/user/email/** = anon
+				/customer/sendCaptcha = anon
 				/login/** = anon
 				/logout/** = anon
 				/ = anon
