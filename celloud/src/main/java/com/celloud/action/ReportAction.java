@@ -45,6 +45,7 @@ import com.celloud.constants.ReportType;
 import com.celloud.constants.SparkPro;
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.AccuSeqα2;
+import com.celloud.model.mongo.AccuSeqα2Fill;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
@@ -337,6 +338,46 @@ public class ReportAction {
         returnToVelocity(path, context, projectId);
     }
 
+    @ActionLog(value = "打印报告时修改 AccuSeqα2流程用户填写信息", button = "修改数据报告")
+    @RequestMapping("updateAccuSeqFilling")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void updateAccuSeqFilling(AccuSeqα2Fill accuSeqFill, String cmpId) {
+        List<CmpGeneSnpResult> usefulList = accuSeqFill.getUsefulGeneResult();
+        List<DrugResistanceSite> rssList = accuSeqFill.getResistanceSiteSum();
+        List<DrugResistanceSite> pmList = accuSeqFill.getPersonalizedMedicine();
+        List<RecommendDrug> rdList = accuSeqFill.getRecommendDrug();
+        if (usefulList != null) {
+            filterFillUsefulList(usefulList);
+            accuSeqFill.setUsefulGeneResult(usefulList);
+        }
+        if (rssList != null) {
+            filterFillDrugResistanceSite(rssList);
+            accuSeqFill.setResistanceSiteSum(rssList);
+        }
+        if (pmList != null) {
+            filterFillDrugResistanceSite(pmList);
+            accuSeqFill.setPersonalizedMedicine(pmList);
+        }
+        if (rdList != null) {
+            CollectionUtils.filter(rdList, new Predicate() {
+                @Override
+                public boolean evaluate(Object obj) {
+                    RecommendDrug rd = (RecommendDrug) obj;
+                    if ((rd.getDrugName() == null
+                            || rd.getDrugName().trim().equals(""))
+                            && (rd.getDrugDescrip() == null
+                                    || rd.getDrugDescrip().trim().equals(""))) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            });
+            accuSeqFill.setRecommendDrug(rdList);
+        }
+        reportService.updateAccuSeqα2Fill(new ObjectId(cmpId), accuSeqFill);
+    }
+
 	/**
 	 * 
 	 * @author miaoqi
@@ -603,12 +644,43 @@ public class ReportAction {
 	}
 
 	/**
-	 * 过滤CMP用户填写药物信息为空的信息
-	 * 
-	 * @param list
-	 * @author leamo
-	 * @date 2016年2月3日 下午3:40:59
-	 */
+     * 过滤AccuSeq用户填写药物信息为空的信息
+     * 
+     * @param list
+     * @author leamo
+     * @date 2016年11月24日 下午1:40:59
+     */
+    private void filterFillUsefulList(List<CmpGeneSnpResult> usefulList) {
+        CollectionUtils.filter(usefulList, new Predicate() {
+            @Override
+            public boolean evaluate(Object obj) {
+                CmpGeneSnpResult cgs = (CmpGeneSnpResult) obj;
+                if ((cgs.getGene() == null || cgs.getGene().trim().equals(""))
+                        && (cgs.getRefBase() == null
+                                || cgs.getRefBase().trim().equals(""))
+                        && (cgs.getDepth() == null
+                                || cgs.getDepth().trim().equals(""))
+                        && (cgs.getMutBase() == null
+                                || cgs.getMutBase().trim().equals(""))
+                        && (cgs.getCdsMutSyntax() == null
+                                || cgs.getCdsMutSyntax().trim().equals(""))
+                        && (cgs.getAaMutSyntax() == null
+                                || cgs.getAaMutSyntax().trim().equals(""))) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        });
+    }
+
+    /**
+     * 过滤CMP用户填写药物信息为空的信息
+     * 
+     * @param list
+     * @author leamo
+     * @date 2016年2月3日 下午3:40:59
+     */
 	private void filterFillDrugResistanceSite(List<DrugResistanceSite> list) {
 		CollectionUtils.filter(list, new Predicate() {
 			@Override

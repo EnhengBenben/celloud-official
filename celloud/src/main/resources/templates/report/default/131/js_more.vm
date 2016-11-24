@@ -26,6 +26,10 @@ $(function(){
             });
             cmpDrug += "@";
         });
+        $("#secion2_info2 textarea").each(function(){
+            textareaVal = $(this).val();
+            $(this).parent().html("<p class='font10' name='textarea_p' style='width:100%;display:block'><input type='hidden' value='"+$(this).attr("name")+"'>"+textareaVal+"</p>");
+        });
         $("#section4 textarea").each(function(){
             textareaVal = $(this).val();
             $(this).parent().html("<p name='section4p'><input type='hidden' value='"+$(this).attr("name")+"'>"+textareaVal+"</p>");
@@ -55,6 +59,11 @@ $(function(){
             name = $(this).find("input").val();
             $(this).parent().html("<textarea name='"+name+"' class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
         });
+        $("body").find("p[name='textarea_p']").each(function(){
+            inputVal = $(this).text();
+            name = $(this).find("input").val();
+            $(this).parent().html("<textarea name='"+name+"' class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
+        });
         $("#_sex").html("<input type='radio' name='patientSex' value='男'>男<input type='radio' name='patientSex' value='女'>女");
         $("input[type='radio'][value="+sex+"]").prop("checked",true); 
         $("#noDrug").css("display","none");
@@ -75,7 +84,7 @@ $(function(){
     });
     
     $("#save").click(function(){
-        $.post(url + "updateYANDAFilling",$("#cmp-form").serialize(),function(){
+        $.post(url + "updateAccuSeqFilling",$("#cmp-form").serialize(),function(){
             $.lAlert("信息保存成功!");
         });
     });
@@ -175,7 +184,7 @@ function addUsefulGeneResult(tbody,index){
       usefulGeneResultIndex = index;
   }
   usefulGeneResultIndex++;
-  var tr = "<tr id=\""+tbody+"_tr"+usefulGeneResultIndex+"\" name="usefulGeneResult_tr">"
+  var tr = "<tr id=\""+tbody+"_tr"+usefulGeneResultIndex+"\" name=\"usefulGeneResult_tr\">"
         + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].gene\" class=\"form-control\"></td>"
         + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].refBase\" class=\"form-control\"></td>"
         + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].depth\" class=\"form-control\"></td>"
@@ -185,7 +194,7 @@ function addUsefulGeneResult(tbody,index){
         + "<input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].aaMutSyntax\" class=\"form-control\">"
         + "<a href=\"javascript:removeTr('"+tbody+"_tr"+usefulGeneResultIndex+"')\" title=\"删除整行\"/>"
         + "</td></tr>"
-  $("#"+tbody).append(v1);
+  $("#"+tbody).append(tr);
 }
 var drugResistanceIndex = 0;
 function addDrugResistance(tbody,index){
@@ -193,7 +202,13 @@ function addDrugResistance(tbody,index){
       drugResistanceIndex = index;
   }
   drugResistanceIndex++;
-  var v1="<tr id=\""+tbody+"_tr"+drugResistanceIndex+"\"><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].geneName\" class=\"form-control\"></td><td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].mutationSite\" class=\"form-control\"></td><td class=\"havedel\"><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].drug\" class=\"form-control\">"<a href=\"javascript:removeTr('"+tbody+"_tr"+drugResistanceIndex+"')\" title=\"删除整行\"/>"</td></tr>";
+  var v1="<tr id=\""+tbody+"_tr"+drugResistanceIndex+"\">"
+        +"<td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].geneName\" class=\"form-control\"></td>"
+        +"<td><input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].mutationSite\" class=\"form-control\"></td>"
+        +"<td class=\"havedel\">"
+        +"<input type=\"text\" name=\"resistanceSiteSum["+drugResistanceIndex+"].drug\" class=\"form-control\">"
+        +"<a href=\"javascript:removeTr(\""+tbody+"_tr"+drugResistanceIndex+"\")\" title=\"删除整行\"/>"
+        +"</td></tr>";
   $("#"+tbody).append(v1);
 }
 var personalizedMedicineIndex = 0;
@@ -202,9 +217,14 @@ function addPersonalizedMedicine(tbody,index){
     personalizedMedicineIndex = index;
   }
   personalizedMedicineIndex++;
-  var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+personalizedMedicineIndex+"\"><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].geneName\" class=\"form-control\"></td><td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].mutationSite\" class=\"form-control\"></td><td class=\"havedel\"><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].drug\" class=\"form-control\">"<a href=\"javascript:removeTr('"+tbody+"_tr"+personalizedMedicineIndex+"')\" title=\"删除整行\"/>"</td></tr>";
+  var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+personalizedMedicineIndex+"\">"
+        +"<td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].geneName\" class=\"form-control\"></td>"
+        +"<td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].mutationSite\" class=\"form-control\"></td>"
+        +"<td class=\"havedel\">"
+        +"<input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].drug\" class=\"form-control\">"
+        +"<a href=\"javascript:removeTr(\""+tbody+"_tr"+personalizedMedicineIndex+"\")\" title=\"删除整行\"/>"
+        +"</td></tr>";
   $("#"+tbody).append(v1);
-  $("#del_"+tbody).append("<tr id='"+tbody+"_deltr"+personalizedMedicineIndex+"'><td><a href='javascript:removeThisTr(\""+tbody+"\","+personalizedMedicineIndex+")' title='删除此行'/></td></tr>");
 }
 var recommendDrugIndex = 0
 function addDrugInput(div,index){
@@ -337,7 +357,7 @@ function printSection2Table(){
         $("#secion2_info1").find("table").remove();
         $("#secion2_info1").prepend(newTables);
     }else{
-        $("#secion2_info1").addclass("w3cbbs");
+        $("#secion2_info1").addClass("w3cbbs");
     }
 }
 

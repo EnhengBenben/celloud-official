@@ -181,6 +181,12 @@ public class HomeAction {
 		return "api";
 	}
 
+    // TODO测试
+    @RequestMapping("index.html")
+    public String indexHtml() {
+        return "home";
+    }
+
 	@RequestMapping("index")
 	public String index(HttpServletRequest request) {
 		// XXX 百菌探报证结束后删除
