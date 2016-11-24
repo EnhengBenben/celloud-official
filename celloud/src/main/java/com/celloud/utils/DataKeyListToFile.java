@@ -115,7 +115,7 @@ public class DataKeyListToFile {
 							.append("\t");
 					String dataListFile = getDataListFile(data_AR1.getOssPath() != null);
 					FileTools.appendWrite(dataListFile, dataFileInfo.toString());
-					dataListFileMap.put(data_AR1.getDataKey(), dataListFile);
+					dataListFileMap.put(data_AR1.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
 					dataReportNum++;
                     canRunDataList.add(data_AR1);
                     canRunDataList.add(data_AR2);
@@ -172,7 +172,7 @@ public class DataKeyListToFile {
                             data_R1.getOssPath() != null);
                     FileTools.appendWrite(dataListFile,
                             dataFileInfo.toString());
-                    dataListFileMap.put(data_R1.getDataKey(), dataListFile);
+                    dataListFileMap.put(data_R1.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
                     dataReportNum++;
                     canRunDataList.add(data_R1);
                     canRunDataList.add(data_R2);
