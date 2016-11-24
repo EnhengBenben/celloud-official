@@ -125,6 +125,7 @@
 			      waveLoading.setProgress(0);
 			      document.querySelector("#upload-progress").height = document.querySelector("#upload-progress").height;
 			    }
+			    $rootScope.bsiFinished = false;
 			}
 			$("#bsi-upload-modal").modal("show");
 		}
