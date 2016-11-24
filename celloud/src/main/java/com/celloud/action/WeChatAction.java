@@ -3,7 +3,10 @@ package com.celloud.action;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +45,52 @@ public class WeChatAction {
 	private UserService us;
 	@Resource
 	private WechatAutoReplyService autoReplyService;
-    @Resource
-    private WechatUtils wechatUtils;
+	@Resource
+	private WechatUtils wechatUtils;
+
+	//TODO 找回此方法，待校验通过删除
+	@RequestMapping(value = "getState", method = RequestMethod.GET)
+	public ModelAndView getState(String state, String code) {
+		ModelAndView mv = new ModelAndView();
+		String openId = wechatUtils.getOpenId(code);
+		String msg = null;
+		if ("out".equals(state)) {//关注后通过自动回复的链接进来，需要跳转登录页面
+			mv.setViewName("wechat/bind");
+			int isBind = us.checkWechatBind(openId, null);
+			if (isBind > 0) {
+				msg = "您的微信号已绑定平台账号，不可重复绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
+				mv.addObject("info", msg).addObject("isSuccess", "true");
+				return mv;
+			}
+			Session session = SecurityUtils.getSubject().getSession();
+			session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
+			PublicKey publicKey = generatePublicKey(session);
+			mv.addObject("publicKey", publicKey).addObject("isSuccess", "false");
+		} else {
+			//TODO
+		}
+		return mv;
+	}
+
+	//TODO 找回此方法，待校验通过删除
+	@RequestMapping(value = "toUnBind", method = RequestMethod.GET)
+	public ModelAndView toUnBind(String state, String code) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("wechat/unbind");
+		String openId = wechatUtils.getOpenId(code);
+		int isBind = us.checkWechatBind(openId, null);
+		if (isBind == 0) {
+			String msg = "您的微信号尚未绑定平台账号，不可解除绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
+			mv.addObject("info", msg).addObject("isSuccess", "true");
+			return mv;
+		}
+		User user = us.getUserByOpenId(openId);
+		Session session = SecurityUtils.getSubject().getSession();
+		session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
+		PublicKey publicKey = generatePublicKey(session);
+		mv.addObject("publicKey", publicKey).addObject("isSuccess", "false").addObject("username", user.getUsername());
+		return mv;
+	}
 
 	/**
 	 * 初始化自定义菜单
@@ -63,6 +110,29 @@ public class WeChatAction {
 		return wechatUtils.getTempQRUrl(300);
 	}
 
+	private void showParams(HttpServletRequest request) {
+		Map map = new HashMap();
+		Enumeration paramNames = request.getParameterNames();
+		while (paramNames.hasMoreElements()) {
+			String paramName = (String) paramNames.nextElement();
+
+			String[] paramValues = request.getParameterValues(paramName);
+			if (paramValues.length == 1) {
+				String paramValue = paramValues[0];
+				if (paramValue.length() != 0) {
+					map.put(paramName, paramValue);
+				}
+			}
+		}
+
+		Set<Map.Entry<String, String>> set = map.entrySet();
+		System.out.println("------------------------------");
+		for (Map.Entry entry : set) {
+			System.out.println(entry.getKey() + ":" + entry.getValue());
+		}
+		System.out.println("------------------------------");
+	}
+
 	/**
 	 * 微信事件接收方法
 	 * 
@@ -79,6 +149,11 @@ public class WeChatAction {
 	@ResponseBody
 	public String eventRecive(HttpServletRequest request, String signature, String nonce, String echostr,
 			String timestamp) {
+		showParams(request);
+		System.out.println("signature:" + signature);
+		System.out.println("nonce:" + nonce);
+		System.out.println("echostr:" + echostr);
+		System.out.println("timestamp:" + timestamp);
 		if (signature != null) {
 			boolean isTrue = wechatUtils.checkUrl(signature, timestamp, nonce);
 			if (isTrue) {
@@ -143,7 +218,8 @@ public class WeChatAction {
 
 	@RequestMapping(value = "toBind", method = RequestMethod.GET)
 	public ModelAndView toBind(String context) {
-        ModelAndView mv = new ModelAndView();
+		log.info("绑定账户，context=" + context);
+		ModelAndView mv = new ModelAndView();
 		Map<String, String> event = XmlUtil.readXMLToMap(context);
 		String openId = event.get(WechatEvent.url.FromUserName);
 		log.info("绑定账户，openId=" + openId);
@@ -159,29 +235,30 @@ public class WeChatAction {
 		session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
 		PublicKey publicKey = generatePublicKey(session);
 		mv.addObject("publicKey", publicKey).addObject("isSuccess", "false");
-        return mv;
-	}
-
-	@RequestMapping(value = "toUnBind", method = RequestMethod.GET)
-	public ModelAndView toUnBind(String context) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("wechat/unbind");
-		Map<String, String> event = XmlUtil.readXMLToMap(context);
-		String openId = event.get(WechatEvent.url.FromUserName);
-		log.info("解除绑定，openId=" + openId);
-		int isBind = us.checkWechatBind(openId, null);
-		if (isBind == 0) {
-			String msg = "您的微信号尚未绑定平台账号，不可解除绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
-			mv.addObject("info", msg).addObject("isSuccess", "true");
-			return mv;
-		}
-		User user = us.getUserByOpenId(openId);
-		Session session = SecurityUtils.getSubject().getSession();
-		session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
-		PublicKey publicKey = generatePublicKey(session);
-		mv.addObject("publicKey", publicKey).addObject("isSuccess", "false").addObject("username", user.getUsername());
 		return mv;
 	}
+	//TODO 注释此方法，待校验通过解开注释
+	//	@RequestMapping(value = "toUnBind", method = RequestMethod.GET)
+	//	public ModelAndView toUnBind(String context) {
+	//		log.info("解除绑定，context=" + context);
+	//		ModelAndView mv = new ModelAndView();
+	//		mv.setViewName("wechat/unbind");
+	//		Map<String, String> event = XmlUtil.readXMLToMap(context);
+	//		String openId = event.get(WechatEvent.url.FromUserName);
+	//		log.info("解除绑定，openId=" + openId);
+	//		int isBind = us.checkWechatBind(openId, null);
+	//		if (isBind == 0) {
+	//			String msg = "您的微信号尚未绑定平台账号，不可解除绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
+	//			mv.addObject("info", msg).addObject("isSuccess", "true");
+	//			return mv;
+	//		}
+	//		User user = us.getUserByOpenId(openId);
+	//		Session session = SecurityUtils.getSubject().getSession();
+	//		session.setAttribute(Constants.SESSION_WECHAT_OPENID, openId);
+	//		PublicKey publicKey = generatePublicKey(session);
+	//		mv.addObject("publicKey", publicKey).addObject("isSuccess", "false").addObject("username", user.getUsername());
+	//		return mv;
+	//	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public ModelAndView login(User user) {
@@ -190,7 +267,7 @@ public class WeChatAction {
 		PrivateKey privateKey = (PrivateKey) session.getAttribute(Constants.SESSION_RSA_PRIVATEKEY);
 		ModelAndView mv = new ModelAndView("wechat/bind").addObject("user", user);
 		String password = user.getPassword();
-        password = RSAUtil.decryptStringByJs(privateKey, password);
+		password = RSAUtil.decryptStringByJs(privateKey, password);
 		password = password == null ? "" : MD5Util.getMD5(password);
 		user.setPassword(password);
 		user = us.login(user);
@@ -209,14 +286,14 @@ public class WeChatAction {
 		}
 		String openId = openID.toString();
 		int isBind = us.checkWechatBind(openId, user.getUserId());
-        String msg = "";
+		String msg = "";
 		if (isBind == 0) {
-            us.insertUserWechatInfo(user.getUserId(), openId, null);
-            msg = "您的CelLoud账号与微信号绑定成功！";
-            log.info("用户({})登录成功！", user.getUsername());
-        } else {
+			us.insertUserWechatInfo(user.getUserId(), openId, null);
+			msg = "您的CelLoud账号与微信号绑定成功！";
+			log.info("用户({})登录成功！", user.getUsername());
+		} else {
 			msg = "您的平台账号已绑定微信号，不可重复绑定，如有疑问请登录平台后在“问题反馈”中联系我们。";
-        }
+		}
 		session.removeAttribute(Constants.SESSION_RSA_PRIVATEKEY);
 		session.removeAttribute(Constants.SESSION_WECHAT_OPENID);
 		mv.addObject("info", msg).addObject("isSuccess", "true");
