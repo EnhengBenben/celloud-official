@@ -78,24 +78,18 @@
             </tr>
         #else
             #foreach(${r} in ${accuSeq.usefulGeneResult})
-                #if(${r.gene.contains('没有发现突变位点')})
-                    <tr>
-                        <td colspan="6">没有发现突变位点</td>
-                    </tr>
-                #else
-                    <tr>
-                        <td>$!{r.gene}</td>
-                        <td>$!{r.refBase}</td>
-                        <td>$!{r.depth}</td>
-                        <td>$!{r.mutBase}</td>
-                        <td>
-                            #if(${r.cdsMutSyntax.length()}>14)${r.cdsMutSyntax.substring(0,14)}#else$!{r.cdsMutSyntax}#end
-                        </td>
-                        <td>
-                            #if(${r.aaMutSyntax.length()}>14)${r.aaMutSyntax.substring(0,14)}#else$!{r.aaMutSyntax}#end
-                        </td>
-                    </tr>
-                #end
+                <tr>
+                    <td>$!r.gene</td>
+                    <td>$!r.refBase</td>
+                    <td>$!r.depth</td>
+                    <td>$!r.mutBase</td>
+                    <td>
+                        #if(${r.cdsMutSyntax.length()}>14)${r.cdsMutSyntax.substring(0,14)}#else$!{r.cdsMutSyntax}#end
+                    </td>
+                    <td>
+                        #if(${r.aaMutSyntax.length()}>14)${r.aaMutSyntax.substring(0,14)}#else$!{r.aaMutSyntax}#end
+                    </td>
+                </tr>
             #end
         #end
       </tbody>
@@ -4660,42 +4654,34 @@
     <table style="width:100%;">
       <tr>
         <td style="width:50%;">
-            <img style="width:100%;" ng-if="accuSeq.dataAReport.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataAReport.qualityPath1}}">
-            <img style="width:100%;" ng-if="accuSeq.dataAReport.qualityPath1.indexOf('Tools')>-1" src="$!{accuSeq.dataAReport.qualityPath1}}">
+            <img style="width:100%;" src="$!{uploadPath}$!{accuSeq.userId}/$!{accuSeq.appId}/$!{accuSeq.dataKey}/A$!{accuSeq.dataAReport.qualityPath1}">
         </td>
         <td>
-            <img style="width:100%;" ng-if="accuSeq.dataAReport.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}/$!{accuSeq.dataAReport.qualityPath2}}">
-            <img style="width:100%;"ng-if="accuSeq.dataAReport.qualityPath2.indexOf('Tools')>-1" src="$!{accuSeq.dataAReport.qualityPath2}}">
+            <img style="width:100%;" src="$!{uploadPath}$!{accuSeq.userId}/$!{accuSeq.appId}/$!{accuSeq.dataKey}/A$!{accuSeq.dataAReport.qualityPath2}">
         </td>
       </tr>
       <tr>
         <td>
-            <img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataAReport.seqContentPath1}}">
-            <img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath1.indexOf('Tools')>-1" src="$!{accuSeq.dataAReport.seqContentPath1}}">
+            <img style="width:100%;" src="$!{uploadPath}$!{accuSeq.userId}/$!{accuSeq.appId}/$!{accuSeq.dataKey}/A$!{accuSeq.dataAReport.seqContentPath1}">
         </td>
         <td>
-            <img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataAReport.seqContentPath2}}">
-            <img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath2.indexOf('Tools')>-1" src="$!{accuSeq.dataAReport.seqContentPath2}}">
+            <img style="width:100%;" src="$!{uploadPath}$!{accuSeq.userId}/$!{accuSeq.appId}/$!{accuSeq.dataKey}/A$!{accuSeq.dataAReport.seqContentPath2}">
         </td>
       </tr>
       <tr>
         <td style="width:50%;">
-            <img style="width:100%;" ng-if="accuSeq.dataBReport.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataBReport.qualityPath1}}">
-            <img style="width:100%;" ng-if="accuSeq.dataBReport.qualityPath1.indexOf('Tools')>-1" src="$!{accuSeq.dataBReport.qualityPath1}}">
+            <img style="width:100%;" src="$!{uploadPath}$!{accuSeq.userId}/$!{accuSeq.appId}/$!{accuSeq.dataKey}/A$!{accuSeq.dataAReport.qualityPath1}">
         </td>
         <td>
-            <img style="width:100%;" ng-if="accuSeq.dataBReport.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}/$!{accuSeq.dataBReport.qualityPath2}}">
-            <img style="width:100%;"ng-if="accuSeq.dataBReport.qualityPath2.indexOf('Tools')>-1" src="$!{accuSeq.dataBReport.qualityPath2}}">
+            <img style="width:100%;" src="$!{uploadPath}$!{accuSeq.userId}/$!{accuSeq.appId}/$!{accuSeq.dataKey}/A$!{accuSeq.dataAReport.qualityPath2}">
         </td>
       </tr>
       <tr>
         <td>
-            <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataBReport.seqContentPath1}}">
-            <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath1.indexOf('Tools')>-1" src="$!{accuSeq.dataBReport.seqContentPath1}}">
+            <img style="width:100%;" src="$!{uploadPath}$!{accuSeq.userId}/$!{accuSeq.appId}/$!{accuSeq.dataKey}/A$!{accuSeq.dataAReport.seqContentPath1}">
         </td>
         <td>
-            <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}$!{accuSeq.userId}}/$!{accuSeq.appId}}/$!{accuSeq.dataKey}}$!{accuSeq.dataBReport.seqContentPath2}}">
-            <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath2.indexOf('Tools')>-1" src="$!{accuSeq.dataBReport.seqContentPath2}}">
+            <img style="width:100%;" src="$!{uploadPath}$!{accuSeq.userId}/$!{accuSeq.appId}/$!{accuSeq.dataKey}/A$!{accuSeq.dataAReport.seqContentPath2}">
         </td>
       </tr>
     </table>

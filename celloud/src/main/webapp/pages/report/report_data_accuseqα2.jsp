@@ -211,42 +211,34 @@
 				<table style="width:100%;">
 			      <tr>
 			    	<td style="width:50%;">
-			    		<img style="width:100%;" ng-if="accuSeq.dataAReport.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}{{accuSeq.dataAReport.qualityPath1}}">
-			    		<img style="width:100%;" ng-if="accuSeq.dataAReport.qualityPath1.indexOf('Tools')>-1" src="{{accuSeq.dataAReport.qualityPath1}}">
+			    		<img style="width:100%;" ng-src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/A{{accuSeq.dataAReport.qualityPath1}}">
 			    	</td>
 			    	<td>
-			    		<img style="width:100%;" ng-if="accuSeq.dataAReport.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/{{accuSeq.dataAReport.qualityPath2}}">
-			    		<img style="width:100%;"ng-if="accuSeq.dataAReport.qualityPath2.indexOf('Tools')>-1" src="{{accuSeq.dataAReport.qualityPath2}}">
+			    		<img style="width:100%;" ng-src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/A{{accuSeq.dataAReport.qualityPath2}}">
 			    	</td>
 			      </tr>
 			      <tr>
 			    	<td>
-			    		<img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}{{accuSeq.dataAReport.seqContentPath1}}">
-			    		<img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath1.indexOf('Tools')>-1" src="{{accuSeq.dataAReport.seqContentPath1}}">
+			    		<img style="width:100%;" ng-src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/A{{accuSeq.dataAReport.seqContentPath1}}">
 			    	</td>
 			    	<td>
-			    		<img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}{{accuSeq.dataAReport.seqContentPath2}}">
-			    		<img style="width:100%;" alt="" ng-if="accuSeq.dataAReport.seqContentPath2.indexOf('Tools')>-1" src="{{accuSeq.dataAReport.seqContentPath2}}">
+			    		<img style="width:100%;" ng-src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/A{{accuSeq.dataAReport.seqContentPath2}}">
 			    	</td>
 			      </tr>
 			      <tr>
                     <td style="width:50%;">
-                        <img style="width:100%;" ng-if="accuSeq.dataBReport.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}{{accuSeq.dataBReport.qualityPath1}}">
-                        <img style="width:100%;" ng-if="accuSeq.dataBReport.qualityPath1.indexOf('Tools')>-1" src="{{accuSeq.dataBReport.qualityPath1}}">
+                        <img style="width:100%;" ng-src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/B{{accuSeq.dataBReport.qualityPath1}}">
                     </td>
                     <td>
-                        <img style="width:100%;" ng-if="accuSeq.dataBReport.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/{{accuSeq.dataBReport.qualityPath2}}">
-                        <img style="width:100%;"ng-if="accuSeq.dataBReport.qualityPath2.indexOf('Tools')>-1" src="{{accuSeq.dataBReport.qualityPath2}}">
+                        <img style="width:100%;" ng-src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/B{{accuSeq.dataBReport.qualityPath2}}">
                     </td>
                   </tr>
                   <tr>
                     <td>
-                        <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}{{accuSeq.dataBReport.seqContentPath1}}">
-                        <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath1.indexOf('Tools')>-1" src="{{accuSeq.dataBReport.seqContentPath1}}">
+                        <img style="width:100%;" ng-src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/B{{accuSeq.dataBReport.seqContentPath1}}">
                     </td>
                     <td>
-                        <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}{{accuSeq.dataBReport.seqContentPath2}}">
-                        <img style="width:100%;" alt="" ng-if="accuSeq.dataBReport.seqContentPath2.indexOf('Tools')>-1" src="{{accuSeq.dataBReport.seqContentPath2}}">
+                        <img style="width:100%;" ng-src="{{uploadPath}}{{accuSeq.userId}}/{{accuSeq.appId}}/{{accuSeq.dataKey}}/B{{accuSeq.dataBReport.seqContentPath2}}">
                     </td>
                   </tr>
 			    </table>

@@ -32,7 +32,7 @@ public class AccuSeqα2 extends Base {
     /**
      * 有指导意义的阳性位点列表
      */
-    private List<GeneDetectionResult> usefulGeneResult;
+    private List<CmpGeneSnpResult> usefulGeneResult;
     /**
      * 用户填写部分
      */
@@ -62,12 +62,12 @@ public class AccuSeqα2 extends Base {
         this.dataBReport = dataBReport;
     }
 
-    public List<GeneDetectionResult> getUsefulGeneResult() {
+    public List<CmpGeneSnpResult> getUsefulGeneResult() {
         return usefulGeneResult;
     }
 
     public void setUsefulGeneResult(
-            List<GeneDetectionResult> usefulGeneResult) {
+            List<CmpGeneSnpResult> usefulGeneResult) {
         this.usefulGeneResult = usefulGeneResult;
     }
 
