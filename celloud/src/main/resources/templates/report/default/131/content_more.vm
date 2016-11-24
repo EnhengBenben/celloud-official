@@ -212,7 +212,7 @@
       <a href="javascript:addPersonalizedMedicine('drugTbody_4',${personMedicineIndex})">添加行</a>
       <p class="font10" style="width:100%;display:block">
             参考文献：<br>
-        <textarea class="form-control" name="recommendDrug[0].drugDescrip" rows="15" cols="100">
+        <textarea class="form-control" name="reference" rows="15" cols="100">
           $!{accuSeq.accuSeqFill.reference}
         </textarea>
       </p>
