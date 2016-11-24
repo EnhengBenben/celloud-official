@@ -175,7 +175,7 @@ function addUsefulGeneResult(tbody,index){
       usefulGeneResultIndex = index;
   }
   usefulGeneResultIndex++;
-  var tr = "<tr id=\""+tbody+"_tr"+usefulGeneResultIndex+"\" name="usefulGeneResult_tr">"
+  var tr = "<tr id=\""+tbody+"_tr"+usefulGeneResultIndex+"\" name=\"usefulGeneResult_tr\">"
         + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].gene\" class=\"form-control\"></td>"
         + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].refBase\" class=\"form-control\"></td>"
         + "<td><input type=\"text\" name=\"usefulGeneResult["+usefulGeneResultIndex+"].depth\" class=\"form-control\"></td>"

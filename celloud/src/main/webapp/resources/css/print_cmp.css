@@ -48,8 +48,8 @@ textarea.form-control { height: auto;}
 .font10{font-size:10px;line-height: 15px;}
 .section2 p{margin-bottom:10px;}
 .section3,.section4{position:relative;}
-.section3 a,.section4 a{float:right;color:#0033CC;padding-right:30px;}
-.section3 a:HOVER,.section4 a:HOVER{text-decoration:underline;}
+.section2 a,.section3 a,.section4 a{float:right;color:#0033CC;padding-right:30px;}
+.section2 a,.section3 a:HOVER,.section4 a:HOVER{text-decoration:underline;}
 .section3 tr td:first-child,.section4 tr td:first-child{width:115px;}
 .section3 p{text-indent:2em;margin-bottom: 8px;}
 .section4{line-height: 22px;}
@@ -166,8 +166,8 @@ table [class*=span],.row-fluid table [class*=span] { display: table-cell;  float
 }
 .havedel a{
 	position: absolute;
-	top: 20px;
-	right: -10px;
+    top: 15px;
+    right: -30px;
 	display: inline-block;
     width: 20px;
     height: 20px;
