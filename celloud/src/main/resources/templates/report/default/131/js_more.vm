@@ -26,6 +26,10 @@ $(function(){
             });
             cmpDrug += "@";
         });
+        $("#secion2_info2 textarea").each(function(){
+            textareaVal = $(this).val();
+            $(this).parent().html("<p class='font10' name='textarea_p' style='width:100%;display:block'><input type='hidden' value='"+$(this).attr("name")+"'>"+textareaVal+"</p>");
+        });
         $("#section4 textarea").each(function(){
             textareaVal = $(this).val();
             $(this).parent().html("<p name='section4p'><input type='hidden' value='"+$(this).attr("name")+"'>"+textareaVal+"</p>");
@@ -51,6 +55,11 @@ $(function(){
             $(this).parent().html("<input id='"+id+"' name='"+name+"' type='text' class='"+classname+"' value='"+inputVal+"'>");
         });
         $("body").find("p[name='section4p']").each(function(){
+            inputVal = $(this).text();
+            name = $(this).find("input").val();
+            $(this).parent().html("<textarea name='"+name+"' class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");
+        });
+        $("body").find("p[name='textarea_p']").each(function(){
             inputVal = $(this).text();
             name = $(this).find("input").val();
             $(this).parent().html("<textarea name='"+name+"' class='form-control' rows='15' cols='100'>"+inputVal+"</textarea>");

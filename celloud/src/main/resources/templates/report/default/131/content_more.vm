@@ -211,10 +211,10 @@
       <a href="javascript:removeTableTr('drugTbody_4')">删除行</a>&nbsp;&nbsp;
       <a href="javascript:addPersonalizedMedicine('drugTbody_4',${personMedicineIndex})">添加行</a>
       <p class="font10" style="width:100%;display:block">
-            参考文献：<br>
-        <textarea class="form-control" name="reference" rows="15" cols="100">
-          $!{accuSeq.accuSeqFill.reference}
-        </textarea>
+            参考文献：
+      </p>
+      <p class="font10" style="width:100%;display:block">
+        <textarea class="form-control" name="reference" rows="15" cols="100">$!{accuSeq.accuSeqFill.reference}</textarea>
       </p>
   </div>
 </section>
