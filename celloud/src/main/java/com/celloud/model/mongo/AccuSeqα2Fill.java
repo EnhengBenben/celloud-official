@@ -52,7 +52,7 @@ public class AccuSeqα2Fill extends PatientBasic {
     /**
      * 有指导意义的阳性位点列表
      */
-    private List<GeneDetectionResult> usefulGeneResult;
+    private List<CmpGeneSnpResult> usefulGeneResult;
     /**
      * 耐药位点汇总
      */
@@ -64,7 +64,7 @@ public class AccuSeqα2Fill extends PatientBasic {
     /**
      * 参考文献
      */
-    private List<String> reference;
+    private String reference;
     /**
      * 推荐用药
      */
@@ -150,12 +150,12 @@ public class AccuSeqα2Fill extends PatientBasic {
         this.geneAnalysis = geneAnalysis;
     }
 
-    public List<GeneDetectionResult> getUsefulGeneResult() {
+    public List<CmpGeneSnpResult> getUsefulGeneResult() {
         return usefulGeneResult;
     }
 
     public void setUsefulGeneResult(
-            List<GeneDetectionResult> usefulGeneResult) {
+            List<CmpGeneSnpResult> usefulGeneResult) {
         this.usefulGeneResult = usefulGeneResult;
     }
 
@@ -177,11 +177,11 @@ public class AccuSeqα2Fill extends PatientBasic {
         this.personalizedMedicine = personalizedMedicine;
     }
 
-    public List<String> getReference() {
+    public String getReference() {
         return reference;
     }
 
-    public void setReference(List<String> reference) {
+    public void setReference(String reference) {
         this.reference = reference;
     }
 

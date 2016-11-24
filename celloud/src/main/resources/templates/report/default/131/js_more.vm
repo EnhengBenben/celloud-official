@@ -75,7 +75,7 @@ $(function(){
     });
     
     $("#save").click(function(){
-        $.post(url + "updateYANDAFilling",$("#cmp-form").serialize(),function(){
+        $.post(url + "updateAccuSeqFilling",$("#cmp-form").serialize(),function(){
             $.lAlert("信息保存成功!");
         });
     });
