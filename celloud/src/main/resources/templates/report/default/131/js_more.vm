@@ -208,7 +208,7 @@ function addPersonalizedMedicine(tbody,index){
     personalizedMedicineIndex = index;
   }
   personalizedMedicineIndex++;
-  var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+personalizedMedicineIndex+"\">
+  var v1="<tr name=\""+tbody+"_tr\" id=\""+tbody+"_tr"+personalizedMedicineIndex+"\">"
         +"<td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].geneName\" class=\"form-control\"></td>"
         +"<td><input type=\"text\" name=\"personalizedMedicine["+personalizedMedicineIndex+"].mutationSite\" class=\"form-control\"></td>"
         +"<td class=\"havedel\">"

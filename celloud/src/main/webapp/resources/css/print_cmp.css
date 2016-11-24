@@ -169,6 +169,7 @@ table [class*=span],.row-fluid table [class*=span] { display: table-cell;  float
     top: 15px;
     right: -30px;
 	display: inline-block;
+	padding: 0;
     width: 20px;
     height: 20px;
     background-image: url("../images/icon/delete_green.png");
