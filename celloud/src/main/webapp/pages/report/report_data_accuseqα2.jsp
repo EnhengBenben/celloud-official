@@ -17,8 +17,7 @@
             {{data.fileName}}({{data.dataKey}})
         </p>
         <div class="btn-groups">
-        	<a style="padding:0 10px;" class="btn -low" target="_blank" ng-href="<%=request.getContextPath()%>/report/printMoreAccuSeqα2Report?projectId={{accuSeq.projectId}}&dataKey={{accuSeq.dataKey}}&appId={{accuSeq.appId}}"><i class="fa fa-print"></i>打印科研报告</a>
-			<a style="padding:0 10px;" class="btn -middle" target="_blank" ng-href="<%=request.getContextPath()%>/report/printLessAccuSeqα2Report?projectId={{accuSeq.projectId}}&dataKey={{accuSeq.dataKey}}&appId={{accuSeq.appId}}"><i class="fa fa-print"></i>打印临床报告</a>
+        	<a style="padding:0 10px;" class="btn -low" target="_blank" ng-href="<%=request.getContextPath()%>/report/printMoreAccuSeqα2Report?projectId={{accuSeq.projectId}}&dataKey={{accuSeq.dataKey}}&appId={{accuSeq.appId}}"><i class="fa fa-print"></i>打印报告</a>
         </div>
       </div>
       <div>
