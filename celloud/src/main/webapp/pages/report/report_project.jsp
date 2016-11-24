@@ -112,7 +112,7 @@
                </div>
             </td>
             <td class="hide">
-			    {{report.app_id}},{{report.english_name}},{{report.project_id}},{{report.user_id}}
+			    {{report.app_id}},{{report.code}},{{report.project_id}},{{report.user_id}}
 			</td>
             <td ng-if="report.context!=null&&report.context!=''" ng-bind-html="report.context | trustHtml" class="projectContext"></td>
             <td ng-if="report.context==null||report.context==''" class="projectContext" style="text-align: center;">
