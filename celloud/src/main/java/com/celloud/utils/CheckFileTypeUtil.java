@@ -27,7 +27,7 @@ public class CheckFileTypeUtil {
 		if (fileName.lastIndexOf(".") > 0) {
 			extName = fileName.substring(fileName.lastIndexOf("."));
 		}
-        String titleType = null;
+        String titleType = checkTitleType(fileName, dayPath);
         if (titleType.startsWith(FileTitleType.ABI)
 				&& (".ab1".equals(extName.toLowerCase()) || ".abi".equals(extName.toLowerCase()))) {
 			// 文件为峰图文件
@@ -144,7 +144,7 @@ public class CheckFileTypeUtil {
 		return isFastq;
 	}
 
-    public String checkTitleType(String type, String fileName, String dayPath) {
+    public String checkTitleType(String fileName, String dayPath) {
 		String path = dayPath + File.separator + fileName;
         return getTypeByStream(path);
 	}
