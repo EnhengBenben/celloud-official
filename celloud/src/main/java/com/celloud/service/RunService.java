@@ -17,7 +17,8 @@ public interface RunService {
 	 * @author lin
 	 * @date 2016年9月21日下午3:57:46
 	 */
-	public Map<String, String> getDataListFile(Integer appId, List<DataFile> dataList);
+    public Map<String, Object> getDataListFile(Integer appId,
+            List<DataFile> dataList);
 
 	/**
 	 * 数据分组

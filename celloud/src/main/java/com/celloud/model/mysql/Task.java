@@ -45,6 +45,7 @@ public class Task {
     private String sampleName;
     private String tagName;
     private String appName;
+    private String englishName;
 
     public Integer getTaskId() {
         return taskId;
@@ -237,5 +238,13 @@ public class Task {
 	public void setResult(String result) {
 		this.result = result;
 	}
+
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
 
 }

@@ -6,6 +6,7 @@
         <li>CelLoud</li>
         <li>我的产品</li>
         <li>百菌探</li>
+        <li>报告</li>
     </ol>
     <div class="content">
         <div class="page-layout page-main-content">
@@ -109,10 +110,22 @@
 				          <th width="140">
 				            <input id="sample-selector" type="text" placeholder="样本编号/病历号">
 				          </th>
-				          <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()"><i id="sort-batch-icon" class="fa fa-sort-amount-asc"></i></a></th>
-				          <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()"><i id="sort-name-icon" class="fa fa-sort-amount-asc"></i></a></th>
-				          <th>状态<a id="sort-period" href="javascript:void(0);" ng-click="sortPeriod()"><i id="sort-period-icon" class="fa fa-sort-amount-asc"></i></a></th>
-				          <th>更新时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()"><i id="sort-date-icon" class="fa fa-sort-amount-desc"></i></a></th>
+				          <th>批次/标签<a id="sort-batch" href="javascript:void(0);" ng-click="sortBatch()">
+				            <i ng-show="bsiReportParams.sort == 1" class="sort-batch-icon fa fa-sort-amount-asc"></i>
+				            <i ng-show="bsiReportParams.sort != 1" class="fa fa-sort"></i></a>
+				          </th>
+				          <th>文件名<a id="sort-name" href="javascript:void(0);" ng-click="sortName()">
+				            <i ng-show="bsiReportParams.sort == 2" class="sort-name-icon fa fa-sort-amount-asc"></i>
+				            <i ng-show="bsiReportParams.sort != 2" class="fa fa-sort"></i></a>
+				          </th>
+				          <th>状态<a id="sort-period" href="javascript:void(0);" ng-click="sortPeriod()">
+				            <i ng-show="bsiReportParams.sort == 3" class="sort-period-icon fa fa-sort-amount-asc"></i>
+				            <i ng-show="bsiReportParams.sort != 3" class="fa fa-sort"></i></a>
+				          </th>
+				          <th class="date-td">更新时间<a id="sort-date" href="javascript:void(0);" ng-click="sortDate()">
+				            <i ng-show="bsiReportParams.sort == 0" class="sort-date-icon fa fa-sort-amount-desc"></i>
+				            <i ng-show="bsiReportParams.sort != 0" class="fa fa-sort"></i></a>
+				          </th>
 				          <th>操作</th>
 				        </tr>
 				      </thead>
@@ -124,28 +137,28 @@
 				            <td>{{task.sampleName}}</td>
 				            <td>{{task.batch}}</td>
 				            <td title="{{task.fileName}}" name="data-name-td" >
-				                <a ng-if="task.period == 2" ng-href="javascript:$.report.detail.patient('{{task.dataKey}}',{{task.projectId}},{{task.appId}},{{$index + 1}},{{pageList.page.currentPage}})">
-				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
+				                <a ng-if="task.period == 2" ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/null/0">
+				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName != null ? '(' + task.anotherName + ')' : ''}}
 				                </a>
-				                <span ng-if="task.period != 2">
-				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName}}
-				                </span>
+				                <a ng-if="task.period != 2" ng-href="javascript:void(0)">
+				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName != null ? '(' + task.anotherName + ')' : ''}}
+				                </a>
 				            </td>
 				            <td>
 				              <a ng-if="task.period == 0" href="javascript:void(0)">等待运行</a>
 				              <a ng-if="task.period == 1" data-toggle="modal" data-target="#running-modal">正在分析</a>
-				              <a ng-if="task.period == 2" ng-href="javascript:$.report.detail.patient('{{task.dataKey}}',{{task.projectId}},{{task.appId}},{{$index + 1}},{{pageList.page.currentPage}})">完成</a>
+				              <a ng-if="task.period == 2" ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/null/0">完成</a>
 				              <a ng-if="task.period == 3" data-toggle="modal" data-target="#report-uploading-modal">数据不完整</a>
 				              <a ng-if="task.period == 4" data-toggle="modal" data-target="#running-error-modal">异常终止</a>
 				              <a ng-if="task.period == 5" href="javascript:void(0)">送样中</a>
 				              <a ng-if="task.period == 6" href="javascript:void(0)">实验中</a>
-				              <a ng-if="task.period == null" href="javascript:void(0)" ng-click="$.report.period.error('{{task.fileName}}')" class="wrong">运行异常</a>
+				              <a ng-if="task.period == null" href="javascript:void(0)" ng-click="periodError(task.fileName)" class="wrong">运行异常</a>
 				            </td>
 				            <td class="date-td">{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 				            <td>
-				              <a title="查看报告" ng-href="javascript:$.report.detail.patient('{{task.dataKey}}',{{task.projectId}},{{task.appId}},{{$index + 1}},{{pageList.page.currentPage}})" ng-if="task.period == 2"><i class="fa fa-eye"></i></a>
+				              <a title="查看报告" ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/null/0" ng-if="task.period == 2"><i class="fa fa-eye"></i></a>
 				              <a title="查看报告" class="disabled"  disabled="disabled" ng-if="task.period != 2"><i class="fa fa-eye"></i></a>
-				              <a title="打印患者报告" target="_blank" ng-href="${pageContext.request.contextPath }/report/printBSIReport?projectId={{task.projectId}}&dataKey={{task.dataKey}}&appId={{task.appId}}&templateType=print_patient"" ng-if="task.period == 2"><i class="fa fa-print"></i></a>
+				              <a title="打印患者报告" target="_blank" ng-href="${pageContext.request.contextPath }/report/printBSIReport?projectId={{task.projectId}}&dataKey={{task.dataKey}}&appId={{task.appId}}&templateType=print_patient" ng-if="task.period == 2"><i class="fa fa-print"></i></a>
 				              <a title="打印患者报告" class="disabled"  disabled="disabled" ng-if="task.period != 2"><i class="fa fa-print"></i></a>
 				              <a title="共享报告" href="javascript:void(0)"><i class="fa fa-share-square-o"></i></a>
 				              <a title="重新运行" ng-click="reRun(task.dataKey,task.appId,task.projectId)" ng-if="task.period==1 || task.period==2 || task.period==4 || task.period == null" ><i class="fa fa-refresh"></i></a>
@@ -182,31 +195,31 @@
 				        </ul>
 				        <ul id="pagination-task" class="pages pull-right">
 				          <!-- 显示prev -->
-				          <li><a id="prev-page-task" class="ends" href="javascript:void(0);" ng-click="paginationBtn(pageList.page.currentPage>1?pageList.page.currentPage-1:1)">&lt;&lt;</a></li>
+				          <li><a id="prev-page-task" class="ends" ng-click="paginationBtn(pageList.page.currentPage>1?pageList.page.currentPage-1:1)">&lt;&lt;</a></li>
 			              <li ng-if="pageList.page.totalPage<=7" ng-repeat="step in [1,2,3,4,5,6,7]" ng-class="{active: step == pageList.page.currentPage}">
-			                <a ng-if="step == pageList.page.currentPage && step <= pageList.page.totalPage" href="javascript:void(0)">{{step}}</a>
+			                <a ng-if="step == pageList.page.currentPage && step <= pageList.page.totalPage">{{step}}</a>
 			                <a ng-if="step != pageList.page.currentPage && step <= pageList.page.totalPage" name="pagination-task" ng-click="paginationBtn(step)">{{step}}</a>
 			              </li>
 			              
 			              <li ng-if="pageList.page.currentPage <= 4 && pageList.page.totalPage > 7" ng-repeat="step in [1,2,3,4,5]" ng-class="{active: step == pageList.page.currentPage}">
-                            <a ng-if="step == pageList.page.currentPage" href="javascript:void(0)">{{step}}</a>
-                            <a ng-if="step != pageList.page.currentPage" name="pagination-task" ng-href="javascript:void(0)" ng-click="paginationBtn(step)">{{step}}</a>
+                            <a ng-if="step == pageList.page.currentPage">{{step}}</a>
+                            <a ng-if="step != pageList.page.currentPage" name="pagination-task" ng-click="paginationBtn(step)">{{step}}</a>
                           </li>
-		                  <li ng-if="pageList.page.currentPage <= 4 && pageList.page.totalPage > 7"><a href="javascript:void(0)">…</a></li>
+		                  <li ng-if="pageList.page.currentPage <= 4 && pageList.page.totalPage > 7"><a>…</a></li>
 		                  <li ng-if="pageList.page.currentPage <= 4 && pageList.page.totalPage > 7"><a name="pagination-task" ng-click="paginationBtn(pageList.page.totalPage)">{{pageList.page.totalPage}}</a></li>
 				              
-			              <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(step)">1</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a href="javascript:void(0)">…</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(pageList.page.currentPage - 1)">{{pageList.page.currentPage - 1}}</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3" class="active"><a href="javascript:void(0)">{{pageList.page.currentPage}}</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(pageList.page.currentPage + 1)">{{pageList.page.currentPage + 1}}</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a href="javascript:void(0)">…</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(pageList.page.totalPage)">{{pageList.page.totalPage}}</a></li>
+			              <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" ng-click="paginationBtn(step)">1</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a>…</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" ng-click="paginationBtn(pageList.page.currentPage - 1)">{{pageList.page.currentPage - 1}}</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3" class="active"><a>{{pageList.page.currentPage}}</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" ng-click="paginationBtn(pageList.page.currentPage + 1)">{{pageList.page.currentPage + 1}}</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a>…</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>4 && pageList.page.currentPage<pageList.page.totalPage-3"><a name="pagination-task" ng-click="paginationBtn(pageList.page.totalPage)">{{pageList.page.totalPage}}</a></li>
 			              
-			              <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage >= pageList.page.totalPage-3"><a name="pagination-task" href="javascript:void(0)" ng-click="paginationBtn(1)">1</a></li>
-                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage >= pageList.page.totalPage-3"><a href="javascript:void(0)">…</a></li> 
+			              <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage >= pageList.page.totalPage-3"><a name="pagination-task" ng-click="paginationBtn(1)">1</a></li>
+                          <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage >= pageList.page.totalPage-3"><a>…</a></li> 
                           <li ng-if="pageList.page.totalPage > 7 && pageList.page.currentPage>=pageList.page.totalPage-3" ng-repeat="step in [1,2,3,4,5]" ng-class="{active: step == pageList.page.currentPage}">
-                            <a ng-if="dataList.page.currentPage == pageList.page.totalPage - 4 + $index" href="javascript:void(0)">{{pageList.page.totalPage - 4 + $index}}</a>
+                            <a ng-if="dataList.page.currentPage == pageList.page.totalPage - 4 + $index">{{pageList.page.totalPage - 4 + $index}}</a>
                             <a ng-if="dataList.page.currentPage != pageList.page.totalPage - 4 + $index" name="pagination-task" ng-click="paginationBtn(pageList.page.totalPage - 4 + $index)">{{pageList.page.totalPage - 4 + $index}}</a>
                           </li>
 				          <li><a id="next-page-task" class="ends" ng-click="paginationBtn(pageList.page.currentPage < pageList.page.totalPage?pageList.page.currentPage+1:pageList.page.totalPage)">&gt;&gt;</a></li>

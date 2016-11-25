@@ -85,10 +85,11 @@
   <script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/area/area.js?v=3.3.4"></script>
   
-  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.8.01"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.9.25"></script>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
 	  window.username = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUsername() %>';
+	  window.userId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUserId() %>';
   </script>
 </body>
 </html>

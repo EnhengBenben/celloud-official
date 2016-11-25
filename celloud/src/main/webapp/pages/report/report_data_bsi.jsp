@@ -19,11 +19,12 @@
 			  <div id="myTabContent" class="tab-content">
 			    <div role="tabpanel" class="tab-pane" ng-class="{active : tab == 'patient'}" id="patient-report" aria-labelledby="patient-tab">
 			      <h4>检测结果：</h4>
-			      <div class="test-info" ng-if="bsi.species_20 != null">
+			      <div class="test-info">
 			        <span ng-repeat="species20 in bsi.species_20">
 		              <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
 		              <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
 		            </span>
+		            <span ng-if="bsi.species_20 == null"></span>
 			      </div>
 			      <h4>检测范围(20种)：</h4>
 			      <table class="table table-main">
@@ -313,7 +314,7 @@
 			      <li>
 			        <label>原始数据：</label>
 		            <span>
-			            <p ng-repeat="data in bsi.data">{{data.fileName}&nbsp;&nbsp;</p>
+			            <p ng-repeat="data in bsi.data">{{data.fileName}}&nbsp;&nbsp;</p>
 			        </span>
 			        <a href="javascript:void(0)">（查看原始数据信息）</a>
 			      </li>

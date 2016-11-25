@@ -129,11 +129,13 @@
                                     <span class="title">医院报告统计</span>
                                 </a>
                             </li>
-                            <li id="company-bigcustomer-menu">
-                                <a href="javascript:companyCount.toBigCustomerCount();">
-                                    <span class="title">大客户统计</span>
-                                </a>
-                            </li>
+                            <c:if test="${loginUserInSession.role==2}">
+	                            <li id="company-bigcustomer-menu">
+	                                <a href="javascript:companyCount.toBigCustomerCount();">
+	                                    <span class="title">大客户统计</span>
+	                                </a>
+	                            </li>
+                            </c:if>
                         </ul>
                     </li>
                     <li id="company-menu">

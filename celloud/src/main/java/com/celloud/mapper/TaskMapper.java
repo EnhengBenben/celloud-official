@@ -134,6 +134,7 @@ public interface TaskMapper {
      * @param reportType
      * @return
      */
+    // XXX 此方法对应的XML中的 “union all”部分为临时解决 “样本采集”用户看报告的问题，做完上传数据与样本绑定之后立即删除
     List<Task> findTasksByUserCondition(Page page,
             @Param("userId") Integer userId,
             @Param("condition") String condition, @Param("sort") Integer sort,
@@ -178,6 +179,21 @@ public interface TaskMapper {
     Task findTaskByParamsAndPeriod(@Param("userId") Integer userId,
             @Param("state") Integer state, @Param("period") Integer period,
             @Param("params") String params);
+
+    /**
+     * 
+     * @description 按照运行状态, 参数, 批次查找任务
+     * @author miaoqi
+     * @date 2016年11月21日上午11:02:19
+     *
+     * @param userId
+     * @param state
+     * @param period
+     * @param params
+     * @return
+     */
+    Task findTaskByParamsAndPeriodAndBatch(@Param("userId") Integer userId, @Param("state") Integer state,
+            @Param("period") Integer period, @Param("params") String params, @Param("batch") String batch);
 
     /**
      * 根据数据编号获取任务信息
@@ -248,4 +264,8 @@ public interface TaskMapper {
     List<String> findDataKeys(@Param("userId") Integer userId,
             @Param("state") Integer state, @Param("appId") Integer appId,
             @Param("proId") Integer proId, @Param("params") String params);
+
+    List<Task> findAllByBatch(@Param("userId") Integer userId, @Param("appId") Integer appId,
+            @Param("period") Integer period, @Param("state") Integer state, @Param("batch") String batch);
+
 }

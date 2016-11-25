@@ -117,7 +117,7 @@
             <td>{{task.period | taskPeriodFilter}}</td>
             <td>
               <a ng-if="task.period == 1" ng-class="{disabled:task.period == 1}"><i class="fa fa-eye" aria-hidden="true"></i></a>
-              <a ng-if="task.period == 2" href="#/reportdata/{{task.appName == '华木兰' ? 'rocky' : task.appName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a ng-if="task.period == 2" href="#/reportdata/{{task.englishName == '华木兰' ? 'rocky' : task.englishName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
             </td>
           </tr>
         </tbody>

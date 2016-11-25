@@ -181,10 +181,16 @@ public class HomeAction {
 		return "api";
 	}
 
+    // TODO测试
+    @RequestMapping("index.html")
+    public String indexHtml() {
+        return "home";
+    }
+
 	@RequestMapping("index")
 	public String index(HttpServletRequest request) {
 		// XXX 百菌探报证结束后删除
-		if (ConstantsData.getLoginUserId() == 126) {
+        if (ConstantsData.getLoginUserId() == 126) {
 			return "bsi/baozheng/index";
 		}
 		// 获取防盗链信息

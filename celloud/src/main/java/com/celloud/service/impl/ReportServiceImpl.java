@@ -38,6 +38,7 @@ import com.celloud.mapper.ReportMapper;
 import com.celloud.mapper.TaskMapper;
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.AccuSeqα2;
+import com.celloud.model.mongo.AccuSeqα2Fill;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
@@ -810,6 +811,11 @@ public class ReportServiceImpl implements ReportService {
 	public void updateCmpFilling(ObjectId id, CmpFilling cmpFill) {
 		reportDao.editData(CmpReport.class, id, "cmpFilling", cmpFill);
 	}
+
+    @Override
+    public void updateAccuSeqα2Fill(ObjectId id, AccuSeqα2Fill accuSeqFill) {
+        reportDao.editData(AccuSeqα2.class, id, "accuSeqFill", accuSeqFill);
+    }
 
 	@Override
 	public List<GddDiseaseDict> getGddDiseaseDictNormal(String[] fields, Map<String, List<String>> conditionMap,

@@ -8,6 +8,7 @@ import org.mongodb.morphia.Key;
 
 import com.celloud.model.mongo.ABINJ;
 import com.celloud.model.mongo.AccuSeqα2;
+import com.celloud.model.mongo.AccuSeqα2Fill;
 import com.celloud.model.mongo.BRAF;
 import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.CmpFilling;
@@ -377,6 +378,16 @@ public interface ReportService {
 	 * @date 2016年2月1日 下午6:08:35
 	 */
 	public void updateCmpFilling(ObjectId id, CmpFilling cmpFill);
+
+    /**
+     * 修改AccuSeqα2用户填写信息
+     * 
+     * @param id
+     * @param accuSeqα2Fill
+     * @author leamo
+     * @date 2016年11月24日 下午1:32:25
+     */
+    public void updateAccuSeqα2Fill(ObjectId id, AccuSeqα2Fill accuSeqFill);
 
 	/**
 	 * 获取 BSI 报告
