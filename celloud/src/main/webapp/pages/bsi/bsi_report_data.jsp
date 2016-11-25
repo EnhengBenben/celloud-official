@@ -259,19 +259,19 @@
                            </div>
                          </td>
                        </tr>
-                       <tr ng-if="species20.seq2 != null">
+                       <tr ng-if="species20.seq2 != null && species20.seq2 != ''">
                          <td>{{species20.seq2_name}}</td>
                          <td>
                            <div class="seq">{{species20.seq2_no}}<br>{{species20.seq2}}</div>
                          </td>
                        </tr>
-                       <tr ng-if="species20.seq3 != null">
+                       <tr ng-if="species20.seq3 != null && species20.seq3 != ''">
                          <td>{{species20.seq3_name}}</td>
                          <td>
                            <div class="seq">{{species20.seq3_no}}<br>{{species20.seq3}}</div>
                          </td>
                        </tr>
-                       <tr ng-if="species20.seq4 != null">
+                       <tr ng-if="species20.seq4 != null && species20.seq4 != ''">
                          <td>{{species20.seq4_name}}</td>
                          <td>
                            <div class="seq">{{species20.seq4_no}}<br>{{species20.seq4}}</div>

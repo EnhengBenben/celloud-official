@@ -56,13 +56,13 @@
   celloudApp.filter("getBsiRowSpan",function(){
 	 return function(val1, val2, val3){
 		 var val0 = 1;
-  	     if(val1 != null){
+  	     if(val1 != null && val1 != ''){
   	  	   val0++;
   	     }
-  	     if(val2 != null){
+  	     if(val2 != null && val2 != ''){
   	  	   val0++;
   	     }
-  	     if(val3 != null){
+  	     if(val3 != null && val3 != ''){
   	  	   val0++;
   	     }
   	     return val0;
