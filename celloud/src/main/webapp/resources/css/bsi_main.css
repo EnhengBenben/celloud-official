@@ -635,18 +635,18 @@ a, a:link, a:hover, a:active, a:visited {
     font-size: 12px;
 }
 /*-----------------------*/
-.modal{
+.bsi .modal{
 	margin-top: 130px;
 }
-.modal .modal-dialog{
+.bsi .modal .modal-dialog{
     margin: 60px auto;
 }
-.modal .modal-content{
+.bsi .modal .modal-content{
 	width: 500px;
     border: none;
 	background-color: #f8f8f8;
 }
-.modal .modal-content .modal-header{
+.bsi .modal .modal-content .modal-header{
 	height: 40px;
 	background-color: #2c3e5c;
 	webkit-border-radius: 5px 5px 0px 0px;
@@ -656,30 +656,30 @@ a, a:link, a:hover, a:active, a:visited {
     color: #dcdcdc;
     padding: 15px 15px;
 }
-.modal .modal-content .modal-header h4{
+.bsi .modal .modal-content .modal-header h4{
     line-height: 0.5;
     font-size: 14px;
 }
-.modal-header .close{
+.bsi .modal-header .close{
 	margin-top: -10px;
     width:20px;
     height: 20px;
     color: #dcdcdc;
     opacity: 1;
 }
-.upload-modal .modal-content{
+.bsi .upload-modal .modal-content{
 	height: 348px;
 }
-.upload-modal .modal-body{
+.bsi .upload-modal .modal-body{
     text-align: center;
     padding: 20px 50px;
     width: 500px;
     margin: 0px;
 }
-.upload-modal .step-item{
+.bsi .upload-modal .step-item{
 	height: 42px;
 }
-.upload-modal .step-item>div{
+.bsi .upload-modal .step-item>div{
     display: inline-block;
     text-align: center;
     width: 42px;
@@ -696,22 +696,22 @@ a, a:link, a:hover, a:active, a:visited {
     background-color: #fff;
     border: 6px solid #dcdcdc;
 }
-.upload-modal .step-item>hr{
+.bsi .upload-modal .step-item>hr{
 	width: 135px;
 	float: left;
 	margin-top: 21px;
     border-top: 1px solid;
     border-color: #dcdcdc;
 }
-.upload-modal .step-item .active{
+.bsi .upload-modal .step-item .active{
 	color: #2c3e50;
 	border-color: rgb(29,210,175);
 }
-.upload-modal .step-one-content{
+.bsi .upload-modal .step-one-content{
 	margin-top: 60px;
 	width: 100%;
 }
-.upload-modal .step-one-content input{
+.bsi .upload-modal .step-one-content input{
     width: 100%;
     height: 30px;
     border: 1px solid #c8c8c8;
@@ -724,11 +724,11 @@ a, a:link, a:hover, a:active, a:visited {
     color: #969696;
     margin-bottom: 5px;
 }
-.upload-modal p{
+.bsi .upload-modal p{
 	text-align: left;
     margin-bottom: 0;
 }
-.upload-modal p span{
+.bsi .upload-modal p span{
     font-size:12px;
     color:#c8c8c8;
     -webkit-transform:scale(0.85);
@@ -738,30 +738,30 @@ a, a:link, a:hover, a:active, a:visited {
     display: block;
     margin: -3px -50px 0px -37px;
 }
-.upload-modal .step-one-content .btn{
+.bsi .upload-modal .step-one-content .btn{
 	margin-top: 60px;
 }
-.upload-modal .upload-container{
+.bsi .upload-modal .upload-container{
     margin: 10px 0px 5px 0px;
     background-color: #fff;
     height:120px;
     width: 100%;
     border: 1px solid #dcdcdc;
 }
-.upload-container .plupload-content {
+.bsi .upload-container .plupload-content {
     text-align: center;
     width: 100%;
     height: 120px;
     cursor: pointer;
 }
-.upload-container .plupload-content .upload-text{
+.bsi .upload-container .plupload-content .upload-text{
     color: #c8c8c8;
     font-size: 14px;
     position: absolute;
     top: 50px;
     left: 70px;
 }
-.upload-container .plupload-filelist {
+.bsi .upload-container .plupload-filelist {
 	border: none;
     height: 120px;
     margin: 0;
@@ -769,47 +769,47 @@ a, a:link, a:hover, a:active, a:visited {
     list-style: none;
     overflow-y: auto;
 }
-.upload-container .plupload-filelist li {
+.bsi .upload-container .plupload-filelist li {
 	font-size: 12px;
 	color: #323232;
 	height: 20px;
 	width: 100%;
 }
-.upload-container .plupload-filelist>li:nth-of-type(even) {
+.bsi .upload-container .plupload-filelist>li:nth-of-type(even) {
     background: rgb(248,248,248);
 }
-.upload-container .plupload-filelist>li:nth-of-type(odd) {
+.bsi .upload-container .plupload-filelist>li:nth-of-type(odd) {
     background: rgb(255,255,255);
 }
-.upload-container .plupload-filelist>li>div{
+.bsi .upload-container .plupload-filelist>li>div{
 	 float: left;
 	 text-align: left;
 	 padding-left: 5px;
 }
-.upload-container .plupload-filelist>li .plupload-file-name{
+.bsi .upload-container .plupload-filelist>li .plupload-file-name{
 	width: 190px;
     word-break:keep-all;/* 不换行 */
     white-space:nowrap;/* 不换行 */
     overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
     text-overflow:ellipsis;
 }
-.upload-container .plupload-filelist>li .plupload-file-surplus,
-.upload-container .plupload-filelist>li .plupload-file-size{
+.bsi .upload-container .plupload-filelist>li .plupload-file-surplus,
+.bsi .upload-container .plupload-filelist>li .plupload-file-size{
 	width: 60px;
 	text-align: center;
 }
-.upload-container .plupload-filelist>li .plupload-file-status{
+.bsi .upload-container .plupload-filelist>li .plupload-file-status{
 	width: 40px;
 	text-align: center;
 }
-.upload-container .plupload-filelist>li .plupload-file-action{
+.bsi .upload-container .plupload-filelist>li .plupload-file-action{
 	width: 30px;
 	float: right;
 	text-align: center;
 }
-.plupload-file-action a,
-.plupload-file-action a:hover,
-.plupload-file-action a:active{
+.bsi .plupload-file-action a,
+.bsi .plupload-file-action a:hover,
+.bsi .plupload-file-action a:active{
 	color: #323232;
 }
 .step-three-content .upload-container .plupload-filelist{
@@ -1199,6 +1199,7 @@ a, a:link, a:hover, a:active, a:visited {
 	font-weight: bold;
 }
 .rdata-content{
+	margin-top: 20px;
 	margin-right: 90px;
 }
 .content .data-content-footer ul>li>span{

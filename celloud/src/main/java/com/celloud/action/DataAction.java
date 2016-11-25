@@ -96,13 +96,13 @@ public class DataAction {
     @ActionLog(value = "从tb_task中根据project_id检索数据", button = "报告管理/查看数据报告")
     @RequestMapping("getDataFromTbTask")
     @ResponseBody
-    public List<DataFile> getDataFromTbTask(Integer projectId) {
+    public List<Map<String, Object>> getDataFromTbTask(Integer projectId) {
         logger.info("项目报告中加载右侧浮动窗 projectId = {}", projectId);
-        List<DataFile> dataList = null;
+        List<Map<String, Object>> dataList = null;
         // 从tb_task中加载数据
         dataList = this.dataService.getDataFileFromTbTask(projectId);
         if (null == dataList || dataList.isEmpty()) { // tb_task中查找不到数据代表是老数据采用老的方法加载数据
-            dataList = this.dataService.getDatasInProject(projectId);
+            dataList = this.dataService.getDatasMapInProject(projectId);
         }
         return dataList;
     }
@@ -196,22 +196,38 @@ public class DataAction {
 	 * @return
 	 */
 	@ActionLog(value = "条件检索bsi数据列表", button = "我的搜索/分页")
-    @RequestMapping("bsiDataList")
-    public ModelAndView bsiDataList(
+    @RequestMapping("bsi/dataPageQuery")
+    @ResponseBody
+    public Map<String, Object> bsiDataPageQuery(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "20") Integer size, String condition,
             @RequestParam(defaultValue = "0") Integer sort,
 			@RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
 			@RequestParam(defaultValue = "asc") String sortName) {
-		ModelAndView mv = new ModelAndView("bsi/data_list");
+        logger.info("用户 {} 根据条件检索数据列表", ConstantsData.getLoginUserId());
+        Map<String, Object> dataMap = new HashMap<String, Object>();
 		Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataListByAppId(pager,
                 ConstantsData.getLoginUserId(), IconConstants.APP_ID_BSI,
                 condition, sort, sortDate, sortName, sortBatch);
-		mv.addObject("pageList", dataList);
-		logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
-		return mv;
+        dataMap.put("pageList", dataList);
+        return dataMap;
 	}
+
+    @ActionLog(value = "条件检索bsi数据列表", button = "我的搜索/分页")
+    @RequestMapping("bsiDataList")
+    public ModelAndView bsiDataList(@RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "20") Integer size, String condition,
+            @RequestParam(defaultValue = "0") Integer sort, @RequestParam(defaultValue = "desc") String sortDate,
+            @RequestParam(defaultValue = "asc") String sortBatch, @RequestParam(defaultValue = "asc") String sortName) {
+        ModelAndView mv = new ModelAndView("bsi/data_list");
+        Page pager = new Page(page, size);
+        PageList<DataFile> dataList = dataService.dataListByAppId(pager, ConstantsData.getLoginUserId(),
+                IconConstants.APP_ID_BSI, condition, sort, sortDate, sortName, sortBatch);
+        mv.addObject("pageList", dataList);
+        logger.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
+        return mv;
+    }
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/bsiDataList")

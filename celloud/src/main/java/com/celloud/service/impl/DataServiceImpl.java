@@ -14,6 +14,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.BoxUploadState;
@@ -27,14 +29,20 @@ import com.celloud.model.mysql.DataFile;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
+import com.celloud.service.BoxApiService;
 import com.celloud.service.DataService;
 import com.celloud.service.ExpensesService;
 import com.celloud.service.ExperimentService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.RunService;
 import com.celloud.service.TaskService;
+import com.celloud.utils.CheckFileTypeUtil;
+import com.celloud.utils.DataUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.OSSUtils;
 import com.celloud.utils.PerlUtils;
+import com.celloud.utils.UploadPathUtils;
 
 /**
  * 数据管理服务实现类
@@ -44,10 +52,9 @@ import com.celloud.utils.PerlUtils;
  */
 @Service("dataService")
 public class DataServiceImpl implements DataService {
+	private static Logger logger = LoggerFactory.getLogger(DataServiceImpl.class);
 	@Resource
 	DataFileMapper dataFileMapper;
-	@Resource
-	private DataService dataService;
 	@Resource
 	private AppService appService;
 	@Resource
@@ -60,6 +67,10 @@ public class DataServiceImpl implements DataService {
 	ExpensesService expenseService;
 	@Resource
 	ExperimentService expService;
+	@Resource
+	private RunService runService;
+	@Resource
+	private BoxApiService boxApiService;
 
 	@Override
 	public Integer countData(Integer userId) {
@@ -118,9 +129,9 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public PageList<DataFile> dataLists(Page page, Integer userId, String condition, int sort, String sortDateType,
-            String sortNameType, String sortAnotherName, String sortRun) {
+			String sortNameType, String sortAnotherName, String sortRun) {
 		List<DataFile> lists = dataFileMapper.findDataLists(page, userId, condition, sort, sortDateType, sortNameType,
-                DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE, sortAnotherName, sortRun);
+				DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE, sortAnotherName, sortRun);
 		return new PageList<>(page, lists);
 	}
 
@@ -221,6 +232,11 @@ public class DataServiceImpl implements DataService {
 		return dataFileMapper.getDatasInProject(projectId);
 	}
 
+    @Override
+    public List<Map<String, Object>> getDatasMapInProject(Integer projectId) {
+        return dataFileMapper.getDatasMapInProject(projectId);
+    }
+
 	@Override
 	public List<Map<String, String>> countDataFile(Integer userId) {
 		return null;
@@ -312,6 +328,10 @@ public class DataServiceImpl implements DataService {
 			anotherName = m1.replaceAll("").trim();
 			new File(outPath).delete();
 		}
+		File file = new File(outPath);
+		if (file.exists()) {
+			file.delete();
+		}
 		return anotherName;
 	}
 
@@ -332,9 +352,9 @@ public class DataServiceImpl implements DataService {
 			data.setAnotherName(anotherName);
 		}
 		if (tagId == null) {
-			return dataService.updateDataInfoByFileId(data);
+			return updateDataInfoByFileId(data);
 		} else {
-			return dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+			return updateDataInfoByFileIdAndTagId(data, tagId);
 		}
 	}
 
@@ -344,7 +364,7 @@ public class DataServiceImpl implements DataService {
 		data.setFileId(fileId);
 		data.setOssPath(objectKey);
 		data.setUploadState(state);
-		dataService.updateByPrimaryKeySelective(data);
+		updateByPrimaryKeySelective(data);
 	}
 
 	@Override
@@ -358,11 +378,54 @@ public class DataServiceImpl implements DataService {
 		// replaceAll()将中文标号替换成英文标号
 		data.setFileName(m.replaceAll("").trim());
 		data.setState(DataState.DEELTED);
-		return dataService.addDataInfo(data);
+		return addDataInfo(data);
 	}
 
 	@Override
-	public List<DataFile> getDataFileFromTbTask(Integer projectId) {
+    public List<Map<String, Object>> getDataFileFromTbTask(Integer projectId) {
 		return this.dataFileMapper.getDataFileFromTbTask(projectId);
+	}
+
+	@Override
+	public Integer addAndRunFile(Integer userId, String objectKey) {
+		logger.info("创建web直传oss的文件({})：{}", userId, objectKey);
+		Map<String, String> metadata = OSSUtils.getMetadata(objectKey);
+		long size = Long.parseLong(metadata.get("size"));
+		int tagId = Integer.parseInt(metadata.get("tagid"));
+		String name = metadata.get("name");
+		int dataId = addFileInfo(userId, name);
+		String fileDataKey = DataUtil.getNewDataKey(dataId);
+		DataFile data = new DataFile();
+		data.setFileId(dataId);
+		data.setDataKey(fileDataKey);
+		data.setSize(size);
+		data.setBatch(metadata.get("batch"));
+		data.setMd5(metadata.get("etag").toLowerCase());
+		data.setFileName(name);
+		data.setState(DataState.ACTIVE);
+		data.setCreateDate(new Date());
+		data.setOssPath(objectKey);
+		data.setUserId(userId);
+		updateDataInfoByFileIdAndTagId(data, tagId);
+		String newObjectKey = UploadPathUtils.getObjectKey(userId, fileDataKey, FileTools.getExtName(name));
+		long time = System.currentTimeMillis();
+		OSSUtils.moveObject(objectKey, newObjectKey, metadata);
+		logger.info("移动oss文件用时：{}", System.currentTimeMillis() - time);
+		time = System.currentTimeMillis();
+		String path = ConstantsData.getOfsPath() + newObjectKey;
+		data.setAnotherName(getAnotherName("", path, ""));
+		logger.info("文件：name={},path={}", data.getFileName(), path);
+		logger.info("获取anotherName用时：{}", System.currentTimeMillis() - time);
+		time = System.currentTimeMillis();
+		int fileFormat = new CheckFileTypeUtil().checkFileType(new File(path).getName(),
+				new File(path).getParentFile().getAbsolutePath());
+		logger.info("获取文件类型用时：{}", System.currentTimeMillis() - time);
+		data.setFileFormat(fileFormat);
+		data.setOssPath(newObjectKey);
+		dataFileMapper.updateByPrimaryKeySelective(data);
+		data = dataFileMapper.selectByPrimaryKey(dataId);
+		// TODO 需要根据tagId判断是否rocky
+		runService.rockyCheckRun(123, data);
+		return dataId;
 	}
 }

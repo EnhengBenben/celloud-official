@@ -40,15 +40,16 @@ public class BoxController {
 	@Resource
 	private ApiService apiService;
 
-	@RequestMapping("alive")
+	@RequestMapping(value = "alive", method = RequestMethod.GET)
 	public Response alive() {
 		logger.info("checking alive...");
 		return Response.SUCCESS;
 	}
 
-	@RequestMapping("upload")
-	public Response upload(@RequestParam("file") MultipartFile file, Integer userId, Integer chunk, Integer chunks,
-			String name, Date lastModifiedDate, long size, Integer tagId, String batch, Integer needSplit) {
+	@RequestMapping(value = "upload", method = RequestMethod.POST)
+	public Response upload(@RequestParam(name = "file", value = "file", required = true) MultipartFile file,
+			Integer userId, Integer chunk, Integer chunks, String name, Date lastModifiedDate, long size, Integer tagId,
+			String batch, Integer needSplit) {
 		if (file == null || file.isEmpty()) {
 			return new Response("没有要上传的文件！");
 		}
@@ -82,7 +83,7 @@ public class BoxController {
 		return Response.SUCCESS;
 	}
 
-	@RequestMapping("checkBreakpoints")
+	@RequestMapping(value = "checkBreakpoints", method = RequestMethod.GET)
 	public Response checkBreakpoints(Integer userId, String name, Date lastModifiedDate, long size) {
 		String uniqueName = UploadPath.getUniqueName(userId, name, lastModifiedDate.getTime(), size);
 		return Response.SUCCESS.setData(getLoaded(userId, uniqueName));

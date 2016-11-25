@@ -364,7 +364,7 @@
     where a.app_id=#{appId} and ua.user_id=#{userId}
   </select>
   <select id="getMyAppList" resultMap="extraResultMap"  >
-    select a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date,GROUP_CONCAT(distinct c.classify_name) classifyNames,com.company_name 
+    select a.attribute, a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date,GROUP_CONCAT(distinct c.classify_name) classifyNames,com.company_name 
     from tb_user_app_right ua 
     left join tb_app a on ua.app_id=a.app_id 
     left join tb_app_classify_relat ac on a.app_id=ac.app_id 

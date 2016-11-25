@@ -162,6 +162,10 @@
     	templateUrl: "pages/report/report_data_cmp.jsp",
     	controller: "cmpDataReportController"
     })
+    .when('/reportpro/AccuSeqα2/:appId/:dataKey/:projectId',{
+      templateUrl: "pages/report/report_data_accuseqα2.jsp",
+      controller: "accuseqa2DataReportController"
+    })
     .when('/reportpro/CMP_199/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_cmp.jsp",
     	controller: "cmpDataReportController"
@@ -236,6 +240,18 @@
     .when('/product/rocky/report',{
       templateUrl: "pages/rocky/rocky_report.jsp",
       controller: "rockyReportController"
+    })
+    .when('/product/bsi/bsireport',{
+      templateUrl: "pages/bsi/bsi_report_list.jsp",
+      controller: "bsiReportController"
+    })
+    .when('/product/bsi/bsidata',{
+      templateUrl: "pages/bsi/bsi_data.jsp",
+      controller: "bsiDataController"
+    })
+    .when('/product/bsi/bsireportdata/:dataKey/:projectId/:appId/:batch/:dataIndex',{
+      templateUrl: "pages/bsi/bsi_report_data.jsp",
+      controller: "bsiReportDataController"
     })
     .when('/company/user',{
 	  templateUrl: "pages/company/company_user.jsp",

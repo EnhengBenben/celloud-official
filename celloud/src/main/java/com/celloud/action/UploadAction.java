@@ -60,151 +60,6 @@ public class UploadAction {
 		return tagService.findProductTags(ConstantsData.getLoginUserId());
 	}
 
-    // @RequestMapping("rocky")
-    // @ResponseBody
-    // public Map<String, String> uploadRockyFile(@RequestParam("file")
-    // CommonsMultipartFile file, Integer chunk,
-    // Integer chunks, String name, String uniqueName, Integer tagId, String
-    // batch, Integer needSplit,
-    // HttpServletRequest request) {
-    // // TODO 3.3.6后可以删除该方法
-    // Map<String, String> model = new HashMap<>();
-    // model.put("run", "false");
-    // int dataId = handleUpload(file, name, uniqueName, chunk, chunks, batch,
-    // request);
-    // if (dataId != 0) {
-    // DataFile data = dataService.getDataById(dataId);
-    // //TODO 写死的华木兰标签信息和APPID
-    // data.setTagId(2);
-    // data.setTagName("华木兰");
-    // dataService.updateDataAndTag(data);
-    // runService.rockyCheckRun(123, data);
-    // }
-    // return model;
-    // }
-
-	/**
-	 * 处理上传的文件
-	 * 
-	 * @param file
-	 * @param chunk
-	 * @param chunks
-	 * @param batch
-	 * @param request
-	 * @return 文件id，如果不是最后一个chunk，则为0
-	 */
-    // private int handleUpload(CommonsMultipartFile file, String name, String
-    // uniqueName, Integer chunk, Integer chunks,
-    // String batch, HttpServletRequest request) {
-    // File f = new File(PropertiesUtil.bigFilePath);
-    // if (!f.exists()) {
-    // boolean isTrue = f.mkdir();
-    // if (!isTrue) {
-    // logger.error("路径创建失败：{}", realPath);
-    // }
-    // }
-    // String fileName = realPath + File.separatorChar + uniqueName;
-    // File localFile = new File(fileName);
-    // this.copy(file, localFile);
-    // if (chunk.equals(chunks) || chunk.equals(chunks - 1)) {
-    // Integer userId = ConstantsData.getLoginUserId();
-    // Integer dataId = dataService.addFileInfo(userId, name);
-    // String fileDataKey = DataUtil.getNewDataKey(dataId);
-    // String newName = fileDataKey + FileTools.getExtName(name);
-    // String today = DateUtil.getDateToString("yyyyMMdd");
-    // String folderByDay = realPath + userId + File.separator + today;
-    // File pf = new File(folderByDay);
-    // if (!pf.exists()) {
-    // pf.mkdirs();
-    // }
-    // FileTools.mvFile(realPath, uniqueName, folderByDay, newName);
-    // int fileFormat = checkFileType.checkFileType(newName, folderByDay);
-    // String filePath = folderByDay + File.separator + newName;
-    // String md5 = MD5Util.getFileMD5(filePath);
-    // dataService.updateFileInfo(dataId, fileDataKey, filePath, batch,
-    // fileFormat, md5, null, null);
-    // return dataId;
-    // }
-    // return 0;
-    // }
-
-	/**
-	 * 
-	 * 数据上传
-	 * 
-	 * @return
-	 * @date 2015年12月28日 下午3:22:38
-	 */
-    // @ResponseBody
-    // @RequestMapping("uploadManyFile_bak")
-    // public String uploadManyFile_bak(String name, String onlyName, String
-    // md5, String originalName, Integer chunk,
-    // Integer chunks, HttpServletRequest request, Integer tagId, String batch,
-    // Integer needSplit) {
-    // // TODO 3.3.6后可以删除该方法
-    // File f = new File(realPath);
-    // if (!f.exists()) {
-    // boolean isTrue = f.mkdir();
-    // if (!isTrue) {
-    // logger.error("路径创建失败：{}", realPath);
-    // }
-    // }
-    // CommonsMultipartResolver multipartResolver = new
-    // CommonsMultipartResolver(
-    // request.getSession().getServletContext());
-    // Integer dataId = 0;
-    // if (multipartResolver.isMultipart(request)) {
-    // MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)
-    // request;
-    // Iterator<String> iter = multiRequest.getFileNames();
-    // while (iter.hasNext()) {
-    // MultipartFile file = multiRequest.getFile(iter.next());
-    // if (file != null) {
-    // String myFileName = file.getOriginalFilename();
-    // if (!"".equals(myFileName.trim())) {
-    // String fileName = realPath + File.separatorChar + name;
-    // File localFile = new File(fileName);
-    // try {
-    // this.copy(file, localFile);
-    // if (chunk.equals(chunks) || chunk.equals(chunks - 1)) {
-    // Integer userId = ConstantsData.getLoginUserId();
-    // dataId = dataService.addFileInfo(userId, originalName);
-    // String fileDataKey = DataUtil.getNewDataKey(dataId);
-    // String newName = fileDataKey + FileTools.getExtName(originalName);
-    // String today = DateUtil.getDateToString("yyyyMMdd");
-    // String folderByDay = realPath + userId + File.separator + today;
-    // File pf = new File(folderByDay);
-    // if (!pf.exists()) {
-    // pf.mkdirs();
-    // }
-    // FileTools.mvFile(realPath, name, folderByDay, newName);
-    // int fileFormat = checkFileType.checkFileType(newName, folderByDay);
-    // String filePath = folderByDay + File.separator + newName;
-    // String anotherName = null;
-    // if (fileFormat == FileFormat.BAM) {
-    // anotherName = dataService.getAnotherName(request, filePath, fileDataKey);
-    // }
-    // md5 = MD5Util.getFileMD5(filePath);
-    // dataService.updateFileInfo(dataId, fileDataKey, filePath, batch,
-    // fileFormat, md5,
-    // anotherName, tagId);
-    // // TODO 写死的百菌探自动运行
-    // if (tagId == 1) {
-    // logger.info("{}拥有百菌探权限", userId);
-    // runService.bsiCheckRun(batch, dataId, fileDataKey, needSplit,
-    // originalName, userId,
-    // fileFormat);
-    // }
-    // }
-    // } catch (Exception e) {
-    // logger.error(e.getMessage());
-    // }
-    // }
-    // }
-    // }
-    // }
-    // return "1";
-    // }
 
 	/**
 	 * 
@@ -228,6 +83,29 @@ public class UploadAction {
     public String uploadManyFile(String name, String originalName, Integer chunk,
             Integer chunks, MultipartFile file, HttpServletRequest request, Integer tagId, String batch,
             Integer needSplit, Long size, Date lastModifiedDate) {
+
+        // 如果是百菌探, 先检查同一批次下, 是否包含相同文件名的文件, 如果有 则直接返回
+        if (tagId.intValue() == 1) {
+            if (chunk.intValue() == 0) {
+                logger.info("用户 {} 上传文件, 检查批次 {} 下是否含有文件名 {} 相同的文件, 仅第一块文件检查", ConstantsData.getLoginUserId(), batch,
+                        originalName);
+            }
+            List<DataFile> dataFiles = dataService.getDataByBatchAndFileName(ConstantsData.getLoginUserId(), batch,
+                    originalName);
+            if (dataFiles.size() > 0) {
+                if (chunk.intValue() == 0) {
+                    logger.info("批次 {} 下包含文件名为 {} 的相同文件, 直接返回", batch, originalName);
+                }
+                if (chunk.intValue() == chunks.intValue() - 1) {
+                    logger.info("批次 {} 下文件名为 {} 的相同文件上传完毕", batch, originalName);
+                }
+                return "1";
+            } else {
+                if (chunk.intValue() == 0) {
+                    logger.info("批次 {} 下不包含文件名为 {} 的相同文件, 继续执行正常的上传功能", batch, originalName);
+                }
+            }
+        }
         /**
          * 在用户文件夹下为每一个上传的文件创建一个块的存储目录用来存储该文件的每一块,最后将该目录下的每个文件都写到用户真实的存储目录下
          */
@@ -307,53 +185,6 @@ public class UploadAction {
         }
         return "1";
     }
-
-    /**
-     * 
-     *
-     * @param file原始文件
-     * @param dst
-     *            目标文件
-     * @author han
-     * @date 2016年1月13日 上午10:04:06
-     */
-    // @ActionLog(value = "将缓存的数据读取到共享存储", button = "开始上传")
-    // private void copy(MultipartFile file, File dst) {
-    // InputStream in = null;
-    // OutputStream out = null;
-    // try {
-    // if (dst.exists()) {
-    // out = new BufferedOutputStream(new FileOutputStream(dst, true),
-    // BUFFER_SIZE);
-    // in = new BufferedInputStream(file.getInputStream(), BUFFER_SIZE);
-    // byte[] buffer = new byte[BUFFER_SIZE];
-    // int len = 0;
-    // while ((len = in.read(buffer)) > 0) {
-    // out.write(buffer, 0, len);
-    // }
-    // out.flush();
-    // } else {
-    // file.transferTo(dst);
-    // }
-    // } catch (Exception e) {
-    // logger.error("将文件写入磁盘出错！", e);
-    // } finally {
-    // if (null != in) {
-    // try {
-    // in.close();
-    // } catch (IOException e) {
-    // logger.error("上传文件关闭输入流异常！", e);
-    // }
-    // }
-    // if (null != out) {
-    // try {
-    // out.close();
-    // } catch (IOException e) {
-    // logger.error("上传文件关闭输出流异常！", e);
-    // }
-    // }
-    // }
-    // }
 
 	/**
 	 * 检查管理员页面是否超时

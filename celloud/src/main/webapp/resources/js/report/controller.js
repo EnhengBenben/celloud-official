@@ -97,7 +97,7 @@
 			appId = appInfo.appId;
 			userId = appInfo.userId;
 			dataKey = appInfo.dataKey;
-			if(appId == 110||appId == 111||appId == 112||appId == 113||appId == 126||appId == 127||appId == 128){
+			if(appId == 110||appId == 111||appId == 112||appId == 113||appId == 126||appId == 127||appId == 128||appId == 131){
 				$.each(fileList,function(index,item){
 				  if(!utils.isConfigure(item.fileName)){
 				    fileNames.push(item.fileName);
@@ -107,7 +107,8 @@
 				fileNames.sort();
 				var fileId_n = "fileId:";
 				var fileName_n=",fileName:'";
-				var dataKey_n=",dataKey:'"
+				var dataKey_n=",dataKey:'";
+				var code_n = ",code:'";
 				for(var i=0;i<fileNames.length;i++){
 					fileName_n+=fileNames[i]
 					if(i<fileNames.length-1){
@@ -118,9 +119,10 @@
 					if(fileNames[0] == item.fileName){
 						fileId_n+=item.fileId;
 						dataKey_n+=item.dataKey;
+						code_n += item.code; 
 					}
 				});
-				newList+=fileId_n+fileName_n+"'"+dataKey_n+"'}]";
+				newList+=fileId_n+fileName_n+"'"+dataKey_n+"'"+code_n+"'}]";
 				newList=eval(newList);
 			}else{
 				newList=fileList;
@@ -141,7 +143,7 @@
 				inner += "<a class='btn -low "+isActive+"' style='font-size:12px;width:100%;margin-top:1px;' id='fileA"+proId+item.fileId+"' title='"+item.fileName+"'>"+(item.fileName.length>15?(item.fileName.substring(0,15)+"..."):item.fileName)+"</button>";
 				$("#fileListUl").append(inner);
 				$("#fileA"+proId+item.fileId).bind("click", function() {
-					viewDataReport(userId,item.dataKey,item.fileName,appId,appInfo.appName,proId,projectName,$(this));
+					viewDataReport(userId,item.dataKey,item.fileName,appId,item.code,proId,projectName,$(this));
 					$.get("report/clickItemDataReport",{},function(state){});
 				});
 			});
@@ -170,6 +172,16 @@
 			});
 		});
 	}
+  celloudApp.controller("accuseqa2DataReportController", function($scope, $routeParams, dataReportService){
+    dataReportService.getDataReportInfo("report/getAccuSeqα2Info",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+    success(function(accuSeqα2Info){
+      $scope.accuSeq = accuSeqα2Info.accuSeqα2;
+      $scope.project = accuSeqα2Info.project;
+      $scope.uploadPath = accuSeqα2Info.uploadPath;
+      dataInPro($scope.accuSeq, $scope.project.projectId, $scope.project.projectName);
+    });
+  });
+  
   
   
   /**
@@ -952,11 +964,14 @@
 		  $scope.uploadPath = bsiInfo.uploadPath;
 
 		  $scope.tab = 'patient';
-		  var havestrain = "";
-		  for(var i=0;i<$scope.bsi.species_20.length;i++){
-		    havestrain += $scope.bsi.species_20[i].species_zh + ",";
+		  $scope.havestrain = "";
+		  
+		  if($scope.bsi && $scope.bsi.species_20){
+			  for(var i=0;i<$scope.bsi.species_20.length;i++){
+				  havestrain += $scope.bsi.species_20[i].species_zh + ",";
+			  }
+			  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		  }
-		  $scope.havestrain = havestrain.substr(0,havestrain.length - 1);
 		  $scope.getRowspan = function(val1, val2, val3){
 			  var val0 = 1;
 			  if(val1 != null){
@@ -1179,9 +1194,6 @@
 		  });
 	  });
   });
-  
-  
-  
   celloudApp.controller("projectReportController", function($scope,$rootScope,$routeParams,$location,projectReportService){
     $scope.companyId = companyId;
     
@@ -1496,11 +1508,11 @@
                 }
               }
             }
-            if(appId=="128"||appId=="127"||appId=="126"||appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+            if(appId=="131"||appId=="128"||appId=="127"||appId=="126"||appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
               if(j>0&&i==1){
                 $(this).addClass("sub");
                 var fileName = $(this).html();
-                if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"&&appId!="126"&&appId!="127"&&appId!="128"){
+                if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"&&appId!="126"&&appId!="127"&&appId!="128"&&appId!="131"){
                   fileName = fileName.substring(0,30) + "...";
                 }
                 if(appId!="114"&&appId!="118"){
@@ -1673,7 +1685,7 @@
         	minTdNum = fileCount + 1;
         }
         // 这几个app名称过长, 所以最小行数为4
-        if(appId=="128"||appId=="127"||appId=="126"||appId=="113"||appId=="112"||appId=="111"||appId=="110"){
+        if(appId=="131"||appId=="128"||appId=="127"||appId=="126"||appId=="113"||appId=="112"||appId=="111"||appId=="110"){
         	if(fileCount < 4){
         		minTdNum = 4;
         	}else{

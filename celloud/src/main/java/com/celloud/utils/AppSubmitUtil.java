@@ -44,7 +44,8 @@ public class AppSubmitUtil {
 		params.add(new BasicNameValuePair("exposePath", path));
 		params.add(new BasicNameValuePair("projectID", String.valueOf(projectId)));
 		logger.info("url={}?list={}&exposePath={}&projectID={}", url, list, path, projectId);
-		HttpURLUtils.httpPostRequest(url, params);
+		String result = HttpURLUtils.httpPostRequest(url, params);
+		logger.info("response={}", result);
 	}
 
 	/**

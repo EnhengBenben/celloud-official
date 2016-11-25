@@ -30,6 +30,7 @@
 		<result column="sample_name" property="sampleName" jdbcType="VARCHAR" />
 		<result column="tag_name" property="tagName" jdbcType="VARCHAR" />
 		<result column="app_name" property="appName" jdbcType="VARCHAR" />
+		<result column="english_name" property="englishName" jdbcType="VARCHAR"/>
 	</resultMap>
 	<sql id="Base_Column_List">
 		task_id, user_id, app_id, data_key, command, period,
@@ -335,13 +336,13 @@
 		and state=#{state}
 	</select>
 	<select id="findTaskInfoByProId" resultType="map" parameterType="java.lang.Integer">
-		select t.app_id appId,t.user_id userId,a.title,a.method,a.app_name
+		select t.app_id appId,t.user_id userId,t.params,a.title,a.method,a.app_name
 		appName,u.username,u.email
 		from tb_task t left join tb_app a on
 		t.app_id=a.app_id left join tb_user u
 		on t.user_id=u.user_id
 		where
-		project_id=#{projectId} group by project_id;
+		project_id=#{projectId} group by project_id
 	</select>
 	<update id="updatePeriodByProAndData">
 		update tb_task
@@ -474,19 +475,37 @@
 		order by
 		t.update_date desc
 	</select>
+	<select id="findAllByBatch" resultMap="ResultMapWithFileName">
+        select
+        f.file_name,f.file_id,f.batch,s.sample_name,t.* from
+        (select * from
+        tb_task where task_id in (select max(task_id) from tb_task
+        where
+        state=#{state}
+        and user_id=#{userId} and app_id=#{appId} group
+        by
+        data_key))t
+        left join tb_file f
+        on f.data_key=t.data_key
+        left join
+        tb_sample s
+        on s.sample_id=t.sample_id
+        where f.user_id=#{userId} and
+        f.state=#{state} and
+        f.batch=#{batch} and
+        t.period=#{period}
+        order by
+        t.update_date desc
+    </select>
 	<select id="findTasksByUserCondition" resultMap="ResultMapWithFileName" flushCache="true">
 		select f.file_name,f.file_id,f.batch,f.another_name,s.sample_name,t.*
 		from
 		(select * from tb_task where
-		(task_id in (select max(task_id) from
-		tb_task where state=#{state} and
-		user_id=#{userId} and
-		(app_id=#{appId}
-		or period!=2) group by
-		data_key))
-		or (data_key is null and
-		state=#{state} and user_id=#{userId} and
-		app_id=#{appId})
+		  (task_id in (select max(task_id) from tb_task where state=#{state} and user_id=#{userId} and (app_id=#{appId} or period!=2) group by data_key))
+		  or (data_key is null and state=#{state} and user_id=#{userId} and app_id=#{appId})
+		  union all 
+          select t_t.* from tb_task t_t,tb_project_share s
+          where t_t.project_id=s.project_id and t_t.state=#{state} and s.share_to = #{userId}
 		)t
 		left join
 		tb_file f
@@ -494,27 +513,28 @@
 		left join tb_sample s
 		on
 		s.sample_id=t.sample_id
-		where 1=1
-		<if test="condition != null">
-			and (file_name like '%${condition}%' or f.batch like
-			'%${condition}%' or
-			s.sample_name like '%${condition}%')
-		</if>
-		<if test="batch != null and batch != ''">
-			and f.batch in (${batch})
-		</if>
-		<if test="period != null and period != ''">
-			and t.period in (${period})
-		</if>
-		<if test="beginDate != null and beginDate != ''">
-			and t.update_date &gt;= '${beginDate} 00:00:00'
-		</if>
-		<if test="endDate != null and endDate != ''">
-			and t.update_date &lt;= '${endDate} 23:59:59'
-		</if>
-		<if test="sampleName != null and sampleName != ''">
-			and s.sample_name like '%${sampleName}%'
-		</if>
+		<where>
+            <if test="condition != null">
+	            and (file_name like '%${condition}%' or f.batch like
+	            '%${condition}%' or
+	            s.sample_name like '%${condition}%')
+	        </if>
+	        <if test="batch != null and batch != ''">
+	            and f.batch in (${batch})
+	        </if>
+	        <if test="period != null and period != ''">
+	            and t.period in (${period})
+	        </if>
+	        <if test="beginDate != null and beginDate != ''">
+	            and t.update_date &gt;= '${beginDate} 00:00:00'
+	        </if>
+	        <if test="endDate != null and endDate != ''">
+	            and t.update_date &lt;= '${endDate} 23:59:59'
+	        </if>
+	        <if test="sampleName != null and sampleName != ''">
+	            and s.sample_name like '%${sampleName}%'
+	        </if>
+        </where>
 		<if test="sort == 0">
 			order by t.update_date ${sortDate},f.batch
 			${sortBatch},f.file_name
@@ -542,6 +562,20 @@
 		from tb_task WHERE user_id=#{userId} and state=#{state} and period =
 		#{period} and params=#{params}
 	</select>
+	<select id="findTaskByParamsAndPeriodAndBatch" resultMap="BaseResultMap">
+        SELECT
+        t.task_id, t.user_id, t.app_id, t.data_key, t.command, t.period,
+        t.create_date, t.start_date, t.end_date, t.update_date, t.project_id,
+        t.delete_date, t.state, t.sample_id, t.datalist, t.result
+        FROM tb_task t
+        LEFT JOIN tb_file f
+        ON t.data_key = f.data_key
+        WHERE t.user_id = #{userId}
+        AND t.state=#{state}
+        AND t.period = #{period}
+        AND t.params=#{params}
+        AND f.batch = #{batch}
+    </select>
 	<select id="findTaskByDataKeyAndApp" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
@@ -572,7 +606,7 @@
 		group by t.period
 	</select>
 	<select id="findTaskAndDataInfo" resultMap="ResultMapWithFileName">
-	    select f.file_id,f.file_name,f.data_key,f.batch,s.sample_name,t.task_id,t.app_id,t.project_id,t.period,t.update_date,tag.tag_name,a.app_name
+	    select f.file_id,f.file_name,f.data_key,f.batch,s.sample_name,t.task_id,t.app_id,t.project_id,t.period,t.update_date,tag.tag_name,a.app_name, a.english_name
 		from tb_task t 
 		left join tb_file f on t.data_key=f.data_key
 		left join tb_sample s on t.sample_id = s.sample_id

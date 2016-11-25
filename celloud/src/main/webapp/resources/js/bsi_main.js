@@ -274,16 +274,6 @@ $.report = {
           $(selectorline).find(".checkbox").removeClass("hide");
           $(selectorline).find(".multisl-btns").removeClass("hide");
         });
-        $("#batch-multiselect").on("click",function(){
-          $("#batch-lists").addClass("show-more");
-          $("#batch-more span").html("收起");
-          $("#batch-more i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
-          $("#batch-lists .checkbox").removeClass("checkbox-ed").addClass("checkbox-un");
-          $("#report-multibatch-search").addClass("disabled");
-          $("#report-multibatch-search").attr("disabled",true);
-          $("#batch-more").addClass("disabled");
-          $("#batch-more").attr("disabled",true);
-        });
         $("#batch-lists .sl-val-content").on("click",function(){
           $(this).find(".checkbox").toggleClass("checkbox-un");
           $(this).find(".checkbox").toggleClass("checkbox-ed");

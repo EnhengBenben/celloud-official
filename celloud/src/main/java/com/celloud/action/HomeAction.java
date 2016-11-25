@@ -1,7 +1,6 @@
 package com.celloud.action;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,6 @@ import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
-import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Client;
 import com.celloud.model.mysql.User;
 import com.celloud.sendcloud.EmailParams;
@@ -178,37 +176,25 @@ public class HomeAction {
 		return "home";
 	}
 
+	@RequestMapping("api.html")
+	public String api() {
+		return "api";
+	}
+
+    // TODO测试
+    @RequestMapping("index.html")
+    public String indexHtml() {
+        return "home";
+    }
+
 	@RequestMapping("index")
 	public String index(HttpServletRequest request) {
 		// XXX 百菌探报证结束后删除
-		if (ConstantsData.getLoginUserId() == 126) {
+        if (ConstantsData.getLoginUserId() == 126) {
 			return "bsi/baozheng/index";
 		}
 		// 获取防盗链信息
 		String referer = request.getHeader("referer");
-		// 从登陆页面过来的
-		if (referer != null && referer.contains("login")) {
-			// 获取当前用户所有的app
-			List<App> appList = appService.getMyAppList(ConstantsData.getLoginUserId());
-			// 该用户appId不为空, 判断是否包含bsi与rocky
-			boolean bsi = false;
-			boolean rocky = false;
-			if (appList != null && appList.size() > 0) {
-				for (App app : appList) {
-					// 获取该app的appId
-					Integer appId = app.getAppId();
-					// bsi
-					if (appId == 118) {
-						bsi = true;
-					} else if (appId == 123) {
-						rocky = true;
-					}
-				}
-			}
-			if (bsi && !rocky) {
-				return "redirect:bsi";
-			}
-		}
 		if (referer != null && referer.contains("client")) {
 			return "redirect:clientindex";
 		}

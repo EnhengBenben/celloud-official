@@ -211,8 +211,28 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Integer addOrUpdateUploadTaskByParam(Task task, Boolean isUpdate) {
-        Task task1 = taskMapper.findTaskByParamsAndPeriod(task.getUserId(),
-                DataState.ACTIVE, task.getPeriod(), task.getParams());
+        Task task1 = taskMapper.findTaskByParamsAndPeriod(task.getUserId(), DataState.ACTIVE, task.getPeriod(),
+                task.getParams());
+        Integer result = 0;
+        if (task1 == null) {
+            task.setState(DataState.ACTIVE);
+            Date d = new Date();
+            task.setCreateDate(d);
+            task.setUpdateDate(d);
+            result = taskMapper.insert(task);
+        } else {
+            if (isUpdate) {
+                task1.setDataKey(task.getDataKey());
+                result = taskMapper.updateByPrimaryKeySelective(task1);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Integer addOrUpdateUploadTaskByParamAndBatch(Task task, Boolean isUpdate, String batch) {
+        Task task1 = taskMapper.findTaskByParamsAndPeriodAndBatch(task.getUserId(),
+                DataState.ACTIVE, task.getPeriod(), task.getParams(), batch);
         Integer result = 0;
         if (task1 == null) {
             task.setState(DataState.ACTIVE);
@@ -301,5 +321,11 @@ public class TaskServiceImpl implements TaskService {
                 endDate,
                 sord);
         return new PageList<>(pager, list);
+    }
+
+    @Override
+    public List<Task> findAllByBatch(String batch, Integer loginUserId, Integer appId) {
+        List<Task> list = taskMapper.findAllByBatch(loginUserId, appId, TaskPeriod.DONE, DataState.ACTIVE, batch);
+        return list;
     }
 }

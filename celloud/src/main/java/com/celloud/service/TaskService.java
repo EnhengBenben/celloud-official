@@ -160,7 +160,19 @@ public interface TaskService {
 	 * @author leamo
 	 * @date 2016年5月16日 下午3:33:18
 	 */
-	public Integer addOrUpdateUploadTaskByParam(Task task, Boolean isUpdate);
+    public Integer addOrUpdateUploadTaskByParam(Task task, Boolean isUpdate);
+
+    /**
+     * 新增或修改上传任务数据筛选标签
+     * 
+     * @param userId
+     * @param period
+     * @param params
+     * @return
+     * @author leamo
+     * @date 2016年5月16日 下午3:33:18
+     */
+    public Integer addOrUpdateUploadTaskByParamAndBatch(Task task, Boolean isUpdate, String batch);
 
 	/**
 	 * 根据数据编号获取任务信息
@@ -221,4 +233,18 @@ public interface TaskService {
     public PageList<Task> findAllTasks(Page pager, Integer userId,
             String condition, Integer tagId, String batch, Integer period,
             String beginDate, String endDate, String sord);
+
+    /**
+     * 
+     * @description 根据标签查询全部task
+     * @author miaoqi
+     * @date 2016年11月17日上午11:20:44
+     *
+     * @param batch
+     * @param loginUserId
+     * @param appId
+     * @return
+     */
+    public List<Task> findAllByBatch(String batch, Integer loginUserId, Integer appId);
+
 }

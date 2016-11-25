@@ -2,27 +2,27 @@
     <input type="hidden" name="id" value="${pgs.id}" id="pgsId" />
     <table class="contentTable">
         <tr>
-            <td style="width: 33%;"><div style="float:left;">姓名:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['name']" value="$!{pgs.baseInfo.name}" type="text"></div></td>
-            <td style="width: 33%;"><div style="float:left;">性别:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['gender']" value="$!{pgs.baseInfo.gender}" type="text"></div></td>
-            <td style="width: 33%;"><div style="float:left;">年龄:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['age']" value="$!{pgs.baseInfo.age}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">姓名:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['name']" value="$!{pgs.baseInfo.name}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">性别:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['gender']" value="$!{pgs.baseInfo.gender}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">年龄:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['age']" value="$!{pgs.baseInfo.age}" type="text"></div></td>
             <td></td>
         </tr>
         <tr>
-            <td style="width: 33%;"><div style="float:left;">门诊/ 住院号:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:60%;"><input style="width:100%;" name="baseInfo['inpatientNumber']" value="$!{pgs.baseInfo.inpatientNumber}" type="text"></div></td>
-            <td style="width: 33%;"><div style="float:left;">床号:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['bedNumber']" value="$!{pgs.baseInfo.bedNumber}" type="text"></div></td>
-            <td style="width: 33%;"><div style="float:left;">样品种类:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['sampleType']" value="$!{pgs.baseInfo.sampleType}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">门诊/ 住院号:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:60%;"><input style="width:100%;" name="baseInfo['inpatientNumber']" value="$!{pgs.baseInfo.inpatientNumber}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">床号:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['bedNumber']" value="$!{pgs.baseInfo.bedNumber}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">样品种类:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['sampleType']" value="$!{pgs.baseInfo.sampleType}" type="text"></div></td>
             <td></td>
         </tr>                                     
         <tr>                                      
-            <td style="width: 33%;"><div style="float:left;">家系编号:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['familyNumber']" value="$!{pgs.baseInfo.familyNumber}" type="text"></div></td>
-            <td style="width: 33%;"><div style="float:left;">样本编号:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['sampleNumber']" value="$!{pgs.baseInfo.sampleNumber}" type="text"></div></td>
-            <td style="width: 33%;"><div style="float:left;">Genome build name:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:50%;"><input style="width:100%;" name="baseInfo['genome']" value="$!{pgs.baseInfo.genome}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">家系编号:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['familyNumber']" value="$!{pgs.baseInfo.familyNumber}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">样本编号:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['sampleNumber']" value="$!{pgs.baseInfo.sampleNumber}" type="text"></div></td>
+            <td style="width: 33%;"><div style="float:left;">Genome build name:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:50%;"><input style="width:100%;" name="baseInfo['genome']" value="$!{pgs.baseInfo.genome}" type="text"></div></td>
             <td></td>
         </tr>
         <tr>
-            <td style="width: 25%;"><div style="float:left;">简要病史:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['briefHistory']" value="$!{pgs.baseInfo.briefHistory}" type="text"></div></td>
+            <td style="width: 25%;"><div style="float:left;">简要病史:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['briefHistory']" value="$!{pgs.baseInfo.briefHistory}" type="text"></div></td>
             <td></td>                  
-            <td style="width: 25%;"><div style="float:left;">联系电话:</div><div style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['cellphone']" value="$!{pgs.baseInfo.cellphone}" type="text"></div></td>
+            <td style="width: 25%;"><div style="float:left;">联系电话:</div><div class="baseInfo" style="float:left;word-wrap: break-word;word-break: break-all;width:70%;"><input style="width:100%;" name="baseInfo['cellphone']" value="$!{pgs.baseInfo.cellphone}" type="text"></div></td>
             <td></td>
         </tr>
         <tr class="focus hr">
