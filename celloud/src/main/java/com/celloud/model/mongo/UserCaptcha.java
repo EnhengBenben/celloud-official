@@ -13,7 +13,7 @@ public class UserCaptcha implements Serializable {
     private ObjectId id;
     private String captcha;
     private String cellphone;
-    private Date createdAt;
+    private Date createDate;
 
     public ObjectId getId() {
         return id;
@@ -39,18 +39,18 @@ public class UserCaptcha implements Serializable {
         this.cellphone = cellphone;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     @Override
     public String toString() {
-        return "LoginCaptcha [id=" + id + ", captcha=" + captcha + ", cellphone=" + cellphone + ", createdAt="
-                + createdAt + "]";
+        return "UserCaptcha [id=" + id + ", captcha=" + captcha + ", cellphone=" + cellphone + ", createDate="
+                + createDate + "]";
     }
 
 }

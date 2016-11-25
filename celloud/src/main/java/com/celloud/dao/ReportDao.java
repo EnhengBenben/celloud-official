@@ -194,7 +194,7 @@ public interface ReportDao {
      * @date 2016年11月24日下午4:17:11
      *
      */
-    public <T> void update(Class<T> clazz, Map<String, Object> queryFilters, Map<String, Object> updateFilters);
+    public <T> Integer update(Class<T> clazz, Map<String, Object> queryFilters, Map<String, Object> updateFilters);
 
     /**
      * 根据获取全部信息列表
@@ -268,5 +268,16 @@ public interface ReportDao {
      * @return
      */
     public <T> List<T> queryByFilters(Class<T> clazz, Map<String, Object> filters, String[] fields);
+
+    /**
+     * 
+     * @description 根据条件删除数据
+     * @author miaoqi
+     * @date 2016年11月25日下午3:07:13
+     *
+     * @param clazz
+     * @param queryFilters
+     */
+    public <T> void deleteByFilters(Class<T> clazz, Map<String, Object> queryFilters);
 
 }

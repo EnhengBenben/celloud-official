@@ -270,6 +270,7 @@
 				/api/** = anon
 				/user/email/** = anon
 				/customer/sendCaptcha = anon
+				/customer/login = anon
 				/login/** = anon
 				/logout/** = anon
 				/ = anon

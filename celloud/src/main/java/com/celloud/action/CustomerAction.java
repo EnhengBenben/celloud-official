@@ -1,31 +1,27 @@
 package com.celloud.action;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.alidayu.AlidayuConfig;
+import com.celloud.model.mongo.UserCaptcha;
 import com.celloud.model.mysql.User;
 import com.celloud.service.CustomerService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DataUtil;
-import com.celloud.utils.PropertiesUtil;
 
 @Controller
 @RequestMapping("customer")
@@ -43,14 +39,13 @@ public class CustomerAction {
     @ResponseBody
     public String sendCapcha(String cellphone) {
         LOGGER.info("手机号码 {} 的用户获取验证码", cellphone);
+        // 获取验证码
         String captcha = DataUtil.getCapchaRandom();
-        // String result = AliDayuUtils.sendCaptcha(cellphone, captcha);
-        String result = "success";
-        // 验证码已发送
-        if (!result.equals("error")) {
-            customerService.addOrUpdateUserCaptcha(cellphone, captcha);
+        // 新增或更新验证码
+        Boolean flag = customerService.addOrUpdateUserCaptcha(cellphone, captcha);
+        if (flag) {
             LOGGER.info("验证码 {} 发送成功", captcha);
-            return "succuss";
+            return "success";
         }
         LOGGER.info("验证码 {} 发送失败", captcha);
         return "error";
@@ -58,37 +53,43 @@ public class CustomerAction {
 
     @ActionLog(value = "C端用户登录", button = "登录")
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView clientLogin(String cellphone, String captcha, Model model) {
-        File f = new File(PropertiesUtil.outputPath + cellphone + "/" + captcha);
+    public ModelAndView login(String cellphone, String captcha) {
         ModelAndView mv = new ModelAndView("client");
-        if (f.exists() && new Date().getTime() - f.lastModified() < 1000 * 60 * 5) {
-            Integer result = userService.checkAddClientUser(cellphone);
-            if (result != 0) {
-                Subject subject = SecurityUtils.getSubject();
-                User user = userService.findByUsernameOrEmail("cel_" + cellphone.substring(3, cellphone.length()));
-                UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(), false);
-                try {
-                    subject.login(token);
-                } catch (IncorrectCredentialsException | UnknownAccountException e) {
-                    mv.addObject("info", "用户登录失败，用户名密码错误");
-                    LOGGER.info("用户登录失败，用户名密码错误：phone={},captcha={}", cellphone, captcha);
-                } catch (Exception e) {
-                    mv.addObject("info", "用户登录失败，未知异常");
-                    LOGGER.info("用户登录失败，未知异常：phone={},captcha={}", cellphone, captcha);
-                }
-                if (subject.isAuthenticated()) {
-                    mv.setViewName("loading");
+        // 1. 根据手机号从mongo中查询用户的验证码信息
+        UserCaptcha userCaptcha = customerService.getUserCaptchaByCellphone(cellphone);
+        if (userCaptcha != null) {
+            // 2. 获取创建时间
+            DateTime createDate = new DateTime(userCaptcha.getCreateDate());
+            // 3. 创建时间 + 1分钟 大于当前时间, 代表没有过期, 并且验证码相等
+            if (createDate.plusMinutes(AlidayuConfig.captcha_expire_time).isAfterNow()
+                    && userCaptcha.getCaptcha().equals(captcha)) {
+                // 4. 执行查询或插入操作
+                Integer result = userService.checkAddClientUser(cellphone);
+                // 5. 执行登录功能
+                if (result != 0) {
+                    Subject subject = SecurityUtils.getSubject();
+                    User user = userService.findByUsernameOrEmail("cel_" + cellphone.substring(3, cellphone.length()));
+                    UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(),
+                            false);
                     try {
-                        FileUtils.forceDelete(new File(PropertiesUtil.outputPath + cellphone));
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        subject.login(token);
+                    } catch (IncorrectCredentialsException | UnknownAccountException e) {
+                        mv.addObject("info", "用户登录失败，用户名密码错误");
+                        LOGGER.info("用户登录失败，用户名密码错误：phone={},captcha={}", cellphone, captcha);
+                    } catch (Exception e) {
+                        mv.addObject("info", "用户登录失败，未知异常");
+                        LOGGER.info("用户登录失败，未知异常：phone={},captcha={}", cellphone, captcha);
                     }
-                    return mv;
+                    if (subject.isAuthenticated()) {
+                        // 清除UserCaptcha信息
+                        customerService.removeUserCaptchaByCellphone(cellphone);
+                        mv.setViewName("loading");
+                        return mv;
+                    }
                 }
             }
-        } else {
-            mv.addObject("info", "验证码错误，请重新输入！");
         }
+        mv.addObject("info", "验证码错误，请重新输入！");
         return mv;
     }
 }

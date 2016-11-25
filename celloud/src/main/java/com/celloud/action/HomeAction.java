@@ -195,7 +195,7 @@ public class HomeAction {
 		}
 		// 获取防盗链信息
 		String referer = request.getHeader("referer");
-		if (referer != null && referer.contains("client")) {
+        if (referer != null && referer.contains("customer")) {
 			return "redirect:clientindex";
 		}
 		return "index";

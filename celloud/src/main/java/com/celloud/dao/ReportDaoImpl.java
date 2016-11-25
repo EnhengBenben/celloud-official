@@ -214,7 +214,7 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
-    public <T> void update(Class<T> clazz, Map<String, Object> queryFilters, Map<String, Object> updateFilters) {
+    public <T> Integer update(Class<T> clazz, Map<String, Object> queryFilters, Map<String, Object> updateFilters) {
         Query<T> query = dataStore.createQuery(clazz);
         if (null != queryFilters) {
             for (String key : queryFilters.keySet()) {
@@ -228,7 +228,18 @@ public class ReportDaoImpl implements ReportDao {
             }
         }
         UpdateResults result = dataStore.update(query, ops);
-        System.out.println(result);
+        return result.getUpdatedCount();
+    }
+
+    @Override
+    public <T> void deleteByFilters(Class<T> clazz, Map<String, Object> queryFilters) {
+        Query<T> query = dataStore.createQuery(clazz);
+        if (queryFilters != null) {
+            for (String key : queryFilters.keySet()) {
+                query.filter(key, queryFilters.get(key));
+            }
+        }
+        dataStore.delete(query);
     }
 
 }
