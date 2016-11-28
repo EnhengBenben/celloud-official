@@ -94,6 +94,10 @@ class PGS:
 					result['mosaic'] = mosaic
 				elif(x.endswith('.png') and ('report.txt' in x)):
 					result['report' + x.split('.')[-2].capitalize() + 'Png'] = x
+				elif(x.endswith('.png') and ('final.txt.test1' in x)):
+					result['finalTest1Png'] = x
+				elif(x.endswith('.png') and ('report.txt.test1' in x)):
+					result['reportTest1Png'] = x
 				elif(x.endswith('.png') and ('chr-point' in x)):
 					##此处处理VgDNA_1M下的图片
 					charKeys = x.split('.')[-2];
