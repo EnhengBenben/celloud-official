@@ -40,8 +40,8 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
 			}
 			// TODO 保险起见，这里还应该校验用户是否已经添加app
 			String checkRunresult = runService.bsiCheckRun(boxFile.getBatch(), boxFile.getFileId(),
-					boxFile.getDataKey(), boxFile.getNeedSplit(), boxFile.getFileName(), boxFile.getUserId(),
-					fileFormat);
+                    boxFile.getDataKey(), boxFile.getFileName(),
+                    boxFile.getUserId(), fileFormat);
 			logger.debug("bsi check run result: {}", checkRunresult);
 		}
 	}
