@@ -97,22 +97,22 @@ public interface RunService {
 	 */
 	public void runNext(Integer appId);
 
-	/**
-	 * 校验是否运行BSI
-	 * 
-	 * @param batch
-	 * @param dataId
-	 * @param dataKey
-	 * @param needSplit
-	 * @param originalName
-	 * @param userId
-	 * @param fileFormat
-	 * @return
-	 * @author lin
-	 * @date 2016年9月27日下午4:08:50
-	 */
-	public String bsiCheckRun(String batch, Integer dataId, String dataKey, Integer needSplit, String originalName,
-			Integer userId, Integer fileFormat);
+    /**
+     * 校验是否运行BSI
+     * 
+     * @param batch
+     * @param dataId
+     * @param dataKey
+     * @param needSplit
+     * @param originalName
+     * @param userId
+     * @param fileFormat
+     * @return
+     * @author leamo
+     * @date 2016年11月28日 下午3:24:38
+     */
+    public String bsiCheckRun(String batch, Integer dataId, String dataKey,
+            String originalName, Integer userId, Integer fileFormat);
 
 	/**
 	 * 校验是否运行rocky
