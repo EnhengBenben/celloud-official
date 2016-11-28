@@ -71,6 +71,7 @@
 			  utils.setDocSize();
 			});
 		}
+		window.CONTEXT_PATH = "${pageContext.request.contextPath}";
 	</script>
 </body>
 </html>
