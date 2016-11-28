@@ -2,13 +2,16 @@
     <br/><br/>
     <table class="footTable">
         <tr>
-            <td style="width:33%;">
+            <td style="width:25%;">
                                 主检人:<span><input name="baseInfo['mainInspector']" value="$!{pgs.baseInfo.mainInspector}" type="text" class="tdInput"></span>
             </td>
-            <td style="width:33%;">
+            <td style="width:25%;">
                                 审核人:<span><input name="baseInfo['audit']" value="$!{pgs.baseInfo.audit}" type="text" class="tdInput"></span>
             </td>
-            <td style="width:33%;">
+            <td style="width:25%;">
+                                审核人:<span><input name="baseInfo['consultant']" value="$!{pgs.baseInfo.consultant}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:25%;">
                                 报告日期:<span><input name="baseInfo['reportDate']" value="$!{pgs.baseInfo.reportDate}" type="text" class="tdInput"></span>
             </td>
         </tr>
