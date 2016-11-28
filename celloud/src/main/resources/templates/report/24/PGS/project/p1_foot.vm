@@ -2,13 +2,16 @@
     <br/><br/>
     <table class="footTable">
         <tr>
-            <td style="width:33%;">
+            <td style="width:25%;">
                                 主检人:<span><input name="projectInfo['mainInspector']" value="$!{pgs.projectInfo.mainInspector}" type="text" class="tdInput"></span>
             </td>
-            <td style="width:33%;">
+            <td style="width:25%;">
                                 审核人:<span><input name="projectInfo['audit']" value="$!{pgs.projectInfo.audit}" type="text" class="tdInput"></span>
             </td>
-            <td style="width:33%;">
+            <td style="width:25%;">
+                                咨询人:<span><input name="projectInfo['consultant']" value="$!{pgs.projectInfo.consultant}" type="text" class="tdInput"></span>
+            </td>
+            <td style="width:25%;">
                                 报告日期:<span><input name="projectInfo['reportDate']" value="$!{pgs.projectInfo.reportDate}" type="text" class="tdInput"></span>
             </td>
         </tr>
