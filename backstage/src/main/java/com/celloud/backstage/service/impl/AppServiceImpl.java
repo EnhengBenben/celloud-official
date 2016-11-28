@@ -215,6 +215,11 @@ public class AppServiceImpl implements AppService{
         return appMapper.getAllApp(AppOffline.ON);
     }
 
+	@Override
+	public List<App> getAppByUserId(Integer userId) {
+		return appMapper.getAppByUserId(AppOffline.ON, userId);
+	}
+
     @Override
     public Map<String, Object> getAppMapById(Integer appId) {
         return appMapper.getAppMapById(appId);

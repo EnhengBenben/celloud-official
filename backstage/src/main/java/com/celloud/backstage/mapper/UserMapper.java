@@ -84,7 +84,8 @@ public interface UserMapper {
      * @author han
      * @date 2016年1月29日 下午1:51:39
      */
-    public int addUserAppRight(@Param("userId")int userId,@Param("appIds")String[] appIds,@Param("isAdded")int isAdded);
+	public int addUserAppRight(@Param("userId") int userId, @Param("appIds") String[] appIds,
+			@Param("isAdded") int isAdded, @Param("authFrom") Integer authFrom);
     /**
      * 注册用户增加用户和大客户关系
      *

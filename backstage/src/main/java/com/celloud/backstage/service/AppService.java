@@ -74,5 +74,7 @@ public interface AppService {
 
     public List<App> getAllApp();
 
+	public List<App> getAppByUserId(Integer userId);
+
     public Map<String, Object> getAppMapById(Integer appId);
 }

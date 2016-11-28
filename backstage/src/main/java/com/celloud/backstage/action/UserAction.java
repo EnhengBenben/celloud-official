@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.backstage.constants.AppIsAdd;
 import com.celloud.backstage.constants.ConstantsData;
 import com.celloud.backstage.model.App;
 import com.celloud.backstage.model.Company;
@@ -64,6 +65,16 @@ public class UserAction {
          mv.addObject("keyword",keyword);
          return mv;
      }
+
+	@RequestMapping("user/userListRightAPP")
+	public ModelAndView getUserByPage(@RequestParam(defaultValue = "1") int currentPage,
+			@RequestParam(defaultValue = "10") int size) {
+		ModelAndView mv = new ModelAndView("user/user_app");
+		Page page = new Page(currentPage, size);
+		PageList<User> pageList = userService.getUserByPage(page, null, null);
+		mv.addObject("pageList", pageList);
+		return mv;
+	}
     @RequestMapping("user/toSendEmail")
     public ModelAndView toSendEmail(){
         ModelAndView mv=new ModelAndView("user/user_sendEmail");
@@ -77,6 +88,16 @@ public class UserAction {
 		mv.addObject("roleList", roleList);
         return mv;
     }
+
+	@RequestMapping("user/toRightAPP")
+	public ModelAndView toRightAPP(@RequestParam("userId") Integer userId) {
+		ModelAndView mv = new ModelAndView("user/user_app_right");
+		List<Company> companyAppList = companyService.getAllCompanyHaveApp();
+		List<App> appList = appService.getAppByUserId(userId);
+		mv.addObject("companyAppList", companyAppList);
+		mv.addObject("appList", appList);
+		return mv;
+	}
     
     @ResponseBody
     @RequestMapping("user/getAppList")
@@ -178,6 +199,14 @@ public class UserAction {
         logger.info("新增用户");
         return userService.addUser(user,md5code,appCompanyId);
     }
+
+	@ResponseBody
+	@RequestMapping("user/appRight")
+	public Integer appRight(Integer userId, String appIds) {
+		logger.info("用户补充授权APP");
+		Integer authFrom = ConstantsData.getLoginUserId();
+		return userService.addUserAppRight(userId, appIds.split(","), AppIsAdd.NOT_ADDED, authFrom);
+	}
     
     
     /**

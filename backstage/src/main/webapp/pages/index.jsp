@@ -63,6 +63,11 @@
                                     <span class="title">授权查看</span>
                                 </a>
                             </li>
+                            <li id="app-right">
+                                <a href="javascript:user.toUserAPP();">
+                                    <span class="title">APP 授权</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li id="company-manage">

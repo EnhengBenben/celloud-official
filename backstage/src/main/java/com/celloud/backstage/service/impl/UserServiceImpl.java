@@ -120,7 +120,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageList<User> getUserByPage(Page page,String searchField,String keyword) {
-        List<User> list=userMapper.getUserByPage(DataState.ACTIVE, page,searchField,keyword.trim());
+		List<User> list = userMapper.getUserByPage(DataState.ACTIVE, page, searchField,
+				keyword == null ? null : keyword.trim());
         return new PageList<User>(page,list);
     }
 
@@ -146,16 +147,16 @@ public class UserServiceImpl implements UserService {
             String appIdStr=ur!=null?ur.getAppIds():null;
             if(StringUtils.isNotBlank(appIdStr)){
                 String[]appIds=appIdStr.split(",");
-                userMapper.addUserAppRight(user.getUserId(), appIds, AppIsAdd.NOT_ADDED);
+				Integer authFrom = ConstantsData.getLoginUserId();
+				userMapper.addUserAppRight(user.getUserId(), appIds, AppIsAdd.NOT_ADDED, authFrom);
             }
             if(appCompanyId!=null){
                 userMapper.addUserCompanyRelat(user.getUserId(), appCompanyId);
             }
             userRegisterMapper.deleteUserRegisterInfo(user.getEmail());
             return true;
-        } else {
-            return false;
-        }
+		}
+		return false;
     }
 
     @Override
@@ -205,6 +206,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUserByAppId(Integer appId) {
 		return userMapper.getUserByAppId(DataState.ACTIVE, appId);
+	}
+
+	@Override
+	public int addUserAppRight(int userId, String[] appIds, int isAdded, Integer authFrom) {
+		return userMapper.addUserAppRight(userId, appIds, isAdded, authFrom);
 	}
 
 }

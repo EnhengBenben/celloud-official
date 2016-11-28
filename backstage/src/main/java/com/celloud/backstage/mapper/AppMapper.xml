@@ -444,4 +444,10 @@
     from tb_app
     where off_line = #{offLine,jdbcType=INTEGER}
   </select>
+  <select id="getAppByUserId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    a.*
+    from tb_app a,tb_user_app_right r
+    where a.off_line = #{onLine,jdbcType=INTEGER} and a.app_id = r.app_id and r.user_id = #{userId,jdbcType=INTEGER}
+  </select>
 </mapper>

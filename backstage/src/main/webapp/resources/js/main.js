@@ -436,12 +436,39 @@ var user=(function(user){
 			});
 		}
 	};
+	self.appRight=function(){
+	  var appId = new Array();
+	  $("input[name='appIdArray']:checked").each(function(i){
+	    appId[i] = $(this).val();
+	  });
+	  if(appId.length==0){
+	    alert("请选择APP");
+	    return;
+	  }
+	  var userId = $("input[name='userId']").val();
+    $.get("user/appRight",{"userId":userId,"appIds":appId.join(",")},function(flag){
+      if(flag=="1"){
+      }else{
+        alert("邮件发送成功");
+        $("#sendEmail").modal("hide");
+        $.get("user/sendEmail",params);
+        $("#user-sendEmailModal").modal("hide");
+      }
+    });
+	};
 	self.toUserMain=function(){
 		$.post("user/userList",{searchFiled:self.searchFiled,keyword:self.keyword},function(responseText){
 			$("#main-content").html(responseText);
 			$("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
 			$("#user-manage").addClass("active");
 		});
+	};
+	self.toUserAPP=function(){
+	  $.post("user/userListRightAPP",{searchFiled:self.searchFiled,keyword:self.keyword},function(responseText){
+	    $("#main-content").html(responseText);
+	    $("#main-menu li").removeClass("active").removeClass("opened").removeClass("expanded");
+	    $("#app-right").addClass("active");
+	  });
 	};
 	self.showChangePwd=function(){
 		$("#main-content").load("./pages/user/user_pwd_reset.jsp");
@@ -458,7 +485,13 @@ var user=(function(user){
 			$("#user-sendEmailModal .modal-content").html(responseText);
 			$("#user-sendEmailModal").modal("show");
 		});
-			
+	}
+	self.toRightAPP=function(userId){
+	  $.post("user/toRightAPP",{"userId":userId},function(responseText){
+	    $("#user-sendEmailModal .modal-content").html(responseText);
+	    $("#emailForm").find("input[name='userId']").val(userId);
+	    $("#user-sendEmailModal").modal("show");
+	  });
 	}
 	self.changeCompany=function(dom,eleId){
 		var companyId=$(dom).val();
@@ -476,11 +509,28 @@ var user=(function(user){
 		var companyId=$(dom).val();
 		$.post("user/getAppList",{companyId:companyId},function(data){
 			var checkboxs="";
-            for(var i in data){
-            	checkboxs+="<label class='checkbox-inline'><input name='appIdArray' type='checkbox' checked='checked' value='"+data[i].appId+"'>"+data[i].appName+"</label>";
-            }
-            $("#"+id).html(checkboxs).parent().removeClass("hide");
+      for(var i in data){
+        checkboxs+="<label class='checkbox-inline'><input name='appIdArray' type='checkbox' checked='checked' value='"+data[i].appId+"'>"+data[i].appName+"</label>";
+      }
+      $("#"+id).html(checkboxs).parent().removeClass("hide");
 		});
+	}
+	self.changeAppCompanyRemoveHave=function(dom,id){
+	  var companyId=$(dom).val();
+	  var iHave = new Array();
+	  $("input[name='have']").each(function(i){
+	    iHave[i] = $(this).val()*1;
+	  });
+	  $.post("user/getAppList",{companyId:companyId},function(data){
+	    var checkboxs="";
+	    for(var i in data){
+	      var appId = data[i].appId;
+	      if($.inArray(appId, iHave) == -1){
+	        checkboxs+="<label class='checkbox-inline'><input name='appIdArray' type='checkbox' checked='checked' value='"+appId+"'>"+data[i].appName+"</label>";
+	      }
+	    }
+	    $("#"+id).html(checkboxs).parent().removeClass("hide");
+	  });
 	}
 	return self;
 })(user);

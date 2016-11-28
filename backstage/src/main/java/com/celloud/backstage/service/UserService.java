@@ -211,4 +211,6 @@ public interface UserService {
     public List<User> getBigCustomers();
 
 	public List<User> getUserByAppId(Integer appId);
+
+	public int addUserAppRight(int userId, String[] appIds, int isAdded, Integer authFrom);
 }

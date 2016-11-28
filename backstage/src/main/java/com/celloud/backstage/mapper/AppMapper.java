@@ -73,5 +73,7 @@ public interface AppMapper {
 
     public List<App> getAllApp(@Param("offLine") Integer offLine);
 
+	public List<App> getAppByUserId(@Param("onLine") Integer onLine, @Param("userId") Integer userId);
+
     public Map<String, Object> getAppMapById(@Param("appId") Integer appId);
 }

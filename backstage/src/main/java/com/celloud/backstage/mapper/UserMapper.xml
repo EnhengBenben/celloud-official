@@ -364,10 +364,10 @@
 	    </selectKey>  
         insert into tb_user_app_right (
         user_id, app_id,
-        is_add)
+        is_add,auth_from)
         values
         <foreach collection="appIds" item="appId" index="index" separator="," >
-            (#{userId},${appId},#{isAdded})
+            (#{userId},${appId},#{isAdded},#{authFrom})
         </foreach>
     </insert>
     <insert id="addUserCompanyRelat">
