@@ -306,10 +306,4 @@
 		</pluginManagement>
 		<finalName>root</finalName>
 	</build>
-	<modules>
-		<module>celloud</module>
-		<module>backstage</module>
-		<module>manager</module>
-  </modules>
-
 </project>
