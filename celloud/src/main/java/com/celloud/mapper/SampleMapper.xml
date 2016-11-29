@@ -233,7 +233,9 @@
 	and ss.storage_name=#{storageName} and s.state=#{state,jdbcType=BIT}
   </select>
   <select id="getSampleByExperName" resultMap="BaseResultMap">
-    select s.* from tb_sample
+    select
+     <include refid="Base_Column_List" /> 
+    from tb_sample
     where state=#{state} and exper_sample_name=#{experSampleName}
   </select>
 </mapper>

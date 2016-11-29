@@ -440,6 +440,6 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Integer getSampleIdByDataKey(String dataKey) {
-        return dataFileMapper.getSampleIdByDataKey(dataKey);
+        return dataFileMapper.getSampleIdByDataKey(dataKey).intValue();
     }
 }

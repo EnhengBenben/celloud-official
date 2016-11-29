@@ -382,5 +382,5 @@ public interface DataFileMapper {
      * @author leamo
      * @date 2016年11月29日 上午10:43:44
      */
-    Integer getSampleIdByDataKey(@Param("dataKey") String dataKey);
+    Long getSampleIdByDataKey(@Param("dataKey") String dataKey);
 }
