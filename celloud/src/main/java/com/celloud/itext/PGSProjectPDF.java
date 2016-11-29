@@ -143,12 +143,12 @@ public class PGSProjectPDF {
                 Image img2 = null;
 				if (!result1.equals("") && StringUtils.isNotEmpty(png1)) {
 					img1 = Image.getInstance(result1 + png1);
-                    img1.scaleAbsolute(208, 172); // 设置图片大小
+                    img1.scaleAbsolute(448, 172); // 设置图片大小
 					img1.setAlignment(Image.ALIGN_LEFT);
 				}
                 if (!result1.equals("") && StringUtils.isNotEmpty(png2)) {
                     img2 = Image.getInstance(result1 + png2);
-                    img2.scaleAbsolute(208, 172); // 设置图片大小
+                    img2.scaleAbsolute(448, 172); // 设置图片大小
                     img2.setAlignment(Image.ALIGN_LEFT);
                 }
 				
@@ -160,17 +160,17 @@ public class PGSProjectPDF {
                 Image img4 = null;
                 if (!result2.equals("") && StringUtils.isNotEmpty(png3)) {
                     img3 = Image.getInstance(result2 + png3);
-                    img3.scaleAbsolute(208, 172); // 设置图片大小
+                    img3.scaleAbsolute(448, 172); // 设置图片大小
                     img3.setAlignment(Image.ALIGN_LEFT);
 				}
 
                 if (!result2.equals("") && StringUtils.isNotEmpty(png4)) {
                     img4 = Image.getInstance(result2 + png4);
-                    img4.scaleAbsolute(208, 172); // 设置图片大小
+                    img4.scaleAbsolute(448, 172); // 设置图片大小
                     img4.setAlignment(Image.ALIGN_LEFT);
                 }
 				
-				float widths[] = new float[] { 500f, 500f };
+                float widths[] = new float[] { 500f };
 				PdfPTable table = new PdfPTable(widths);// 建立一个pdf表格
                 PdfPCell cell = null;
 				if(img1!=null){
@@ -208,12 +208,12 @@ public class PGSProjectPDF {
 				if (!result1.equals("") && StringUtils.isNotEmpty(png1)) {
 					img1 = Image.getInstance(result1 + png1);
                     img2 = Image.getInstance(result1 + png2);
-                    img1.scaleAbsolute(208, 172); // 设置图片大小
-                    img2.scaleAbsolute(208, 172); // 设置图片大小
+                    img1.scaleAbsolute(448, 172); // 设置图片大小
+                    img2.scaleAbsolute(448, 172); // 设置图片大小
 					img1.setAlignment(Image.ALIGN_LEFT);
                     img2.setAlignment(Image.ALIGN_LEFT);
 				}
-                float widths[] = new float[] { 500f, 500f };
+                float widths[] = new float[] { 500f };
 				PdfPTable table = new PdfPTable(widths);// 建立一个pdf表格
 				PdfPCell cell = null;
 				if(img1!=null){
