@@ -108,7 +108,10 @@ public class DataServiceImpl implements DataService {
 		if (result == null || result.intValue() == 0) {
 			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
 		}
-		Sample sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data.getFileName(), ".")[0], DataState.ACTIVE);
+        DataFile data_s = dataFileMapper.selectByPrimaryKey(data.getFileId());
+        Sample sample = sampleMapper.getSampleByExperName(
+                StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0],
+                DataState.ACTIVE);
         if (sample != null) {
             dataFileMapper.addFileSampleRelat(data.getFileId(),
                     sample.getSampleId());
@@ -440,6 +443,7 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Integer getSampleIdByDataKey(String dataKey) {
-        return dataFileMapper.getSampleIdByDataKey(dataKey).intValue();
+        Long id = dataFileMapper.getSampleIdByDataKey(dataKey);
+        return id == null ? null : id.intValue();
     }
 }
