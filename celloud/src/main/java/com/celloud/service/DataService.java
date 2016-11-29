@@ -364,4 +364,14 @@ public interface DataService {
 	 * @return
 	 */
 	public Integer addAndRunFile(Integer userId, String objectKey);
+
+    /**
+     * 获取样本id
+     * 
+     * @param dataKey
+     * @return
+     * @author leamo
+     * @date 2016年11月29日 上午10:43:44
+     */
+    Integer getSampleIdByDataKey(String dataKey);
 }

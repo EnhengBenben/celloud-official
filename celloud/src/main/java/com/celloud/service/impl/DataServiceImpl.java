@@ -25,7 +25,9 @@ import com.celloud.constants.FileFormat;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.mapper.DataFileMapper;
+import com.celloud.mapper.SampleMapper;
 import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Sample;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
@@ -71,6 +73,8 @@ public class DataServiceImpl implements DataService {
 	private RunService runService;
 	@Resource
 	private BoxApiService boxApiService;
+    @Resource
+    private SampleMapper sampleMapper;
 
 	@Override
 	public Integer countData(Integer userId) {
@@ -104,6 +108,11 @@ public class DataServiceImpl implements DataService {
 		if (result == null || result.intValue() == 0) {
 			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
 		}
+		Sample sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data.getFileName(), ".")[0], DataState.ACTIVE);
+        if (sample != null) {
+            dataFileMapper.addFileSampleRelat(data.getFileId(),
+                    sample.getSampleId());
+        }
 		return dataFileMapper.updateDataInfoByFileId(data);
 	}
 
@@ -428,4 +437,9 @@ public class DataServiceImpl implements DataService {
 		runService.rockyCheckRun(123, data);
 		return dataId;
 	}
+
+    @Override
+    public Integer getSampleIdByDataKey(String dataKey) {
+        return dataFileMapper.getSampleIdByDataKey(dataKey);
+    }
 }

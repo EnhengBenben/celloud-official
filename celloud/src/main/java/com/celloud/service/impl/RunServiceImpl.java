@@ -230,6 +230,7 @@ public class RunServiceImpl implements RunService {
 			task.setCommand(command);
 			task.setDatalist(dataListFile);
 			task.setResult(appPath);
+            task.setSampleId(dataService.getSampleIdByDataKey(dataKey));
 			taskService.updateTask(task);
 			Integer taskId = task.getTaskId();
 			Boolean iswait = runCheckIsWait(app);
