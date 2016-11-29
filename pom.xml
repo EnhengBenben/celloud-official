@@ -306,4 +306,7 @@
 		</pluginManagement>
 		<finalName>root</finalName>
 	</build>
+	<modules>
+		<module>celloud</module>
+  </modules>
 </project>
