@@ -341,8 +341,10 @@ public class RunServiceImpl implements RunService {
                     StringBuffer slist = new StringBuffer();
                     for (Sample s : sampleList) {
                         slist.append(s.getExperSampleName()).append(":")
-                                .append(StringUtils.splitByWholeSeparator(
-                                        s.getSindex(), ":"))
+                                .append(s.getSindex().contains(":")
+                                        ? StringUtils.splitByWholeSeparator(
+                                                s.getSindex(), ":")[1]
+                                        : s.getSindex())
                                 .append("\n");
                     }
                     FileTools.appendWrite(path, slist.toString());

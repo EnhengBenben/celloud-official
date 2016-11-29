@@ -310,17 +310,7 @@ public class DataServiceImpl implements DataService {
 		StringBuffer command = new StringBuffer();
 		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);
 		PerlUtils.excutePerl(command.toString());
-		String anothername = FileTools.getFirstLine(outPath);
-		String anotherName = null;
-		if (anothername != null) {
-			anothername = anothername.replace(" ", "_").replace("\t", "_");
-			String regEx1 = "[^\\w+$]";
-			Pattern p1 = Pattern.compile(regEx1);
-			Matcher m1 = p1.matcher(anothername);
-			anotherName = m1.replaceAll("").trim();
-			new File(outPath).delete();
-		}
-		return anotherName;
+		return FileTools.getFirstLine(outPath);
 	}
 
 	@Override
@@ -331,20 +321,11 @@ public class DataServiceImpl implements DataService {
 		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);
 		PerlUtils.excutePerl(command.toString());
 		String anothername = FileTools.getFirstLine(outPath);
-		String anotherName = null;
-		if (anothername != null) {
-			anothername = anothername.replace(" ", "_").replace("\t", "_");
-			String regEx1 = "[^\\w+$]";
-			Pattern p1 = Pattern.compile(regEx1);
-			Matcher m1 = p1.matcher(anothername);
-			anotherName = m1.replaceAll("").trim();
-			new File(outPath).delete();
-		}
 		File file = new File(outPath);
 		if (file.exists()) {
 			file.delete();
 		}
-		return anotherName;
+		return anothername;
 	}
 
 	@Override
