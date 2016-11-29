@@ -1,5 +1,8 @@
 package com.celloud.action;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -12,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.celloud.constants.ConstantsData;
+import com.celloud.model.mongo.Rocky;
 import com.celloud.model.mysql.Auth;
 import com.celloud.service.ReportAPIService;
+import com.celloud.service.ReportService;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.ApiResponse;
@@ -25,6 +31,8 @@ public class ReportAPIAction {
 	Logger log = LoggerFactory.getLogger(AppAction.class);
 	@Resource
 	private ReportAPIService reportAPI;
+	@Resource
+	private ReportService reportService;
 
 	/**
 	 * 获取token
@@ -74,5 +82,19 @@ public class ReportAPIAction {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Auth(error));
 		}
 		return ResponseEntity.ok(auth);
+	}
+
+	@RequestMapping(value = "getRockyReport", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ApiOperation(value = "获取华木兰报告", httpMethod = "GET", notes = "获取华木兰报告")
+	@ResponseBody
+	public Map<String, Object> getRockyReport(
+			@ApiParam(required = true, name = "dataKey", value = "dataKey") @RequestParam("dataKey") String dataKey,
+			@ApiParam(required = true, name = "projectId", value = "projectId") @RequestParam("projectId") Integer projectId,
+			@ApiParam(required = true, name = "appId", value = "appId") @RequestParam("appId") Integer appId) {
+		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
+		Map<String, Object> context = new HashMap<String, Object>();
+		context.put("rocky", rocky);
+		context.put("significances", ConstantsData.significances());
+		return context;
 	}
 }
