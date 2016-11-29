@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.mongodb.morphia.annotations.Transient;
+
 import com.celloud.utils.AvatarUtil;
 
 public class User implements Serializable {
@@ -43,6 +45,7 @@ public class User implements Serializable {
 
     private String sign;
 
+    @Transient
     private BigDecimal balances;
 
     private String address;
