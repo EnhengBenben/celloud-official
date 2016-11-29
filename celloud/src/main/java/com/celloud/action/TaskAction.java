@@ -172,9 +172,10 @@ public class TaskAction {
 			fname = d_tmp.getFileName();
 			if (filename.endsWith(".txt") || filename.endsWith(".lis")) {
 				pubName = filename.substring(0, filename.lastIndexOf("."));
+            } else {
+                batch = d_tmp.getBatch();
+                tagId = d_tmp.getTagId();
 			}
-			batch = d_tmp.getBatch();
-			tagId = d_tmp.getTagId();
 		}
 		if (appId == 113) {
 			String inPath = reportPath + "result/split/";

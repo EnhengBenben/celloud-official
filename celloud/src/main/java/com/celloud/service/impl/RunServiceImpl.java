@@ -353,6 +353,7 @@ public class RunServiceImpl implements RunService {
                     dataService.updateByPrimaryKeySelective(data);
                     dataList.add(data);
                     runSingle(userId, appId, dataList);
+                    dataService.delete(String.valueOf(id));
                 }
             }
 		} else if (fileFormat == FileFormat.YASUO) {
