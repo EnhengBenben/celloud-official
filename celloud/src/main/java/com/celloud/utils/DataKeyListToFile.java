@@ -88,7 +88,7 @@ public class DataKeyListToFile {
 
 			String fname_AR1 = data_AR1.getFileName();
 			// 从A_R1数据开始向下查找数据
-            if (fname_AR1.contains("_A_R1")) {
+            if (fname_AR1.contains("A_R1")) {
 				int index_AR1 = fname_AR1.lastIndexOf("A_R1");
 				String commonPrefix = fname_AR1.substring(0, index_AR1);
 				// 满足条件：1. A_R1数据之后还有至少3个数据

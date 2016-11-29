@@ -34,8 +34,7 @@
             <td></td>
         </tr>
         <tr>
-            <td style="vertical-align: top;width: 100%;" colspan="2"><div style="float:left;width:17%;">临床诊断:</div><div style="float:left;width:10%;">女方:</div><div class="womanBaseClinicalTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:72%;"><textarea style="width:100%" rows="1" name="projectInfo['womanClinical']">$!{pgs.projectInfo.womanClinical}</textarea></div></td>
-            <td style="vertical-align: top;width: 25%;" colspan="2"><div style="float:left;width:10%;">男方:</div><div class="manBaseClinicalTextarea" style="float:left;word-wrap: break-word;word-break: break-all;width:89%;"><textarea style="width:100%" rows="1" name="projectInfo['manClinical']">$!{pgs.projectInfo.manClinical}</textarea></div></td>
+            <td style="vertical-align: top;width: 100%;" colspan="4"><div style="float:left;width:11%;">PGS/PGD指征:</div><div class="indications" style="float:left;word-wrap: break-word;word-break: break-all;width:89%;"><textarea style="width:100%" rows="1" name="projectInfo['indications']">$!{pgs.projectInfo.indications}</textarea></div></td>
         </tr>
         <tr class="focus">
             <td colspan="4" style="font-size:20px;"><br/>检测内容：</td>

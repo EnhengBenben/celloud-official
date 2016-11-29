@@ -8,7 +8,7 @@
         <div class="content-header clearfix">
           <img src="<%=request.getContextPath()%>/images/icon/sample_scan.jpg">
           <p>* 请持条码枪扫描样品管上的条码<br>
-              无条码样本请按以下方式操作：<br> 1. 在样本管上记录样品病历号<br> 2. 将病历号输入上面窗口后回车
+              无条码样本请按以下方式操作：<br> 1. 在样本管上记录样品病历号<br> 2. 将病历号填入右侧输入框后回车
           </p>
           <form name="samplingForm">
             <span class="input-alert" ng-show="samplingForm.$invalid">需要输入完整信息</span>

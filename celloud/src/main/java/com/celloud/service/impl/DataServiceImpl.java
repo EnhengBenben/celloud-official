@@ -25,7 +25,9 @@ import com.celloud.constants.FileFormat;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.mapper.DataFileMapper;
+import com.celloud.mapper.SampleMapper;
 import com.celloud.model.mysql.DataFile;
+import com.celloud.model.mysql.Sample;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
@@ -71,6 +73,8 @@ public class DataServiceImpl implements DataService {
 	private RunService runService;
 	@Resource
 	private BoxApiService boxApiService;
+    @Resource
+    private SampleMapper sampleMapper;
 
 	@Override
 	public Integer countData(Integer userId) {
@@ -104,6 +108,14 @@ public class DataServiceImpl implements DataService {
 		if (result == null || result.intValue() == 0) {
 			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
 		}
+        DataFile data_s = dataFileMapper.selectByPrimaryKey(data.getFileId());
+        Sample sample = sampleMapper.getSampleByExperName(
+                StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0],
+                DataState.ACTIVE);
+        if (sample != null) {
+            dataFileMapper.addFileSampleRelat(data.getFileId(),
+                    sample.getSampleId());
+        }
 		return dataFileMapper.updateDataInfoByFileId(data);
 	}
 
@@ -298,17 +310,7 @@ public class DataServiceImpl implements DataService {
 		StringBuffer command = new StringBuffer();
 		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);
 		PerlUtils.excutePerl(command.toString());
-		String anothername = FileTools.getFirstLine(outPath);
-		String anotherName = null;
-		if (anothername != null) {
-			anothername = anothername.replace(" ", "_").replace("\t", "_");
-			String regEx1 = "[^\\w+$]";
-			Pattern p1 = Pattern.compile(regEx1);
-			Matcher m1 = p1.matcher(anothername);
-			anotherName = m1.replaceAll("").trim();
-			new File(outPath).delete();
-		}
-		return anotherName;
+		return FileTools.getFirstLine(outPath);
 	}
 
 	@Override
@@ -319,20 +321,11 @@ public class DataServiceImpl implements DataService {
 		command.append("perl ").append(perlPath).append(" ").append(filePath).append(" ").append(outPath);
 		PerlUtils.excutePerl(command.toString());
 		String anothername = FileTools.getFirstLine(outPath);
-		String anotherName = null;
-		if (anothername != null) {
-			anothername = anothername.replace(" ", "_").replace("\t", "_");
-			String regEx1 = "[^\\w+$]";
-			Pattern p1 = Pattern.compile(regEx1);
-			Matcher m1 = p1.matcher(anothername);
-			anotherName = m1.replaceAll("").trim();
-			new File(outPath).delete();
-		}
 		File file = new File(outPath);
 		if (file.exists()) {
 			file.delete();
 		}
-		return anotherName;
+		return anothername;
 	}
 
 	@Override
@@ -428,4 +421,10 @@ public class DataServiceImpl implements DataService {
 		runService.rockyCheckRun(123, data);
 		return dataId;
 	}
+
+    @Override
+    public Integer getSampleIdByDataKey(String dataKey) {
+        Long id = dataFileMapper.getSampleIdByDataKey(dataKey);
+        return id == null ? null : id.intValue();
+    }
 }

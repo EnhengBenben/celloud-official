@@ -61,35 +61,41 @@ public class CustomerAction {
             // 2. 获取创建时间
             DateTime createDate = new DateTime(userCaptcha.getCreateDate());
             // 3. 创建时间 + 1分钟 大于当前时间, 代表没有过期, 并且验证码相等
-            if (createDate.plusMinutes(AlidayuConfig.captcha_expire_time).isAfterNow()
-                    && userCaptcha.getCaptcha().equals(captcha)) {
-                // 4. 执行查询或插入操作
-                Integer result = userService.checkAddClientUser(cellphone);
-                // 5. 执行登录功能
-                if (result != 0) {
-                    Subject subject = SecurityUtils.getSubject();
-                    User user = userService.findByUsernameOrEmail("cel_" + cellphone.substring(3, cellphone.length()));
-                    UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(),
-                            false);
-                    try {
-                        subject.login(token);
-                    } catch (IncorrectCredentialsException | UnknownAccountException e) {
-                        mv.addObject("info", "用户登录失败，用户名密码错误");
-                        LOGGER.info("用户登录失败，用户名密码错误：phone={},captcha={}", cellphone, captcha);
-                    } catch (Exception e) {
-                        mv.addObject("info", "用户登录失败，未知异常");
-                        LOGGER.info("用户登录失败，未知异常：phone={},captcha={}", cellphone, captcha);
-                    }
-                    if (subject.isAuthenticated()) {
-                        // 清除UserCaptcha信息
-                        customerService.removeUserCaptchaByCellphone(cellphone);
-                        mv.setViewName("loading");
-                        return mv;
+            if (createDate.plusMinutes(AlidayuConfig.captcha_expire_time).isAfterNow()) {
+                if (userCaptcha.getCaptcha().equals(captcha)) {
+                    // 4. 执行查询或插入操作
+                    Integer result = userService.checkAddClientUser(cellphone);
+                    // 5. 执行登录功能
+                    if (result != 0) {
+                        Subject subject = SecurityUtils.getSubject();
+                        User user = userService
+                                .findByUsernameOrEmail("cel_" + cellphone.substring(3, cellphone.length()));
+                        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword(),
+                                false);
+                        try {
+                            subject.login(token);
+                        } catch (IncorrectCredentialsException | UnknownAccountException e) {
+                            mv.addObject("info", "用户登录失败，用户名密码错误");
+                            LOGGER.info("用户登录失败，用户名密码错误：phone={},captcha={}", cellphone, captcha);
+                        } catch (Exception e) {
+                            mv.addObject("info", "用户登录失败，未知异常");
+                            LOGGER.info("用户登录失败，未知异常：phone={},captcha={}", cellphone, captcha);
+                        }
+                        if (subject.isAuthenticated()) {
+                            // 清除UserCaptcha信息
+                            customerService.removeUserCaptchaByCellphone(cellphone);
+                            mv.setViewName("loading");
+                            return mv;
+                        }
                     }
                 }
+                mv.addObject("info", "验证码错误！");
+                return mv;
             }
+            mv.addObject("info", "您尚未获取验证码或验证码已超时！");
+            return mv;
         }
-        mv.addObject("info", "验证码错误，请重新输入！");
+        mv.addObject("info", "您尚未获取验证码或验证码已超时！");
         return mv;
     }
 }
