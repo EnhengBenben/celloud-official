@@ -246,8 +246,9 @@
     
     $scope.addSample = function(){
       var sampleList = $scope.infos.pageList.datas;
-      if(sampleList.length>=12){
-        $.tips("每个文库最多12个样本！")
+      var samplelength = $scope.infos.sampleIndex.length;
+      if(sampleList.length>=samplelength){
+        $.tips("每个文库最多"+samplelength+"个样本！")
       }else if($scope.sampleName == '' || $scope.sampleName == undefined){
     	  $.alert("请输入实验样本编号");
       }else{
