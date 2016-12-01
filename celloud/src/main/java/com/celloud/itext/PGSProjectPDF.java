@@ -194,9 +194,7 @@ public class PGSProjectPDF {
                     table.addCell(cell);
                     doc.add(table);
                 }
-				if (i % 4 == 2) {
-					doc.newPage();
-				}
+                doc.newPage();
 			}
             if (isOdd) {
 				String detail1[] = imgString[imgs].split(",");
