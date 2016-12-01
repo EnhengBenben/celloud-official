@@ -6,7 +6,6 @@
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li>应用市场</li>
-      <li>首页</li>
     </ol>
 	<section class="content">
 		<div class="row">
