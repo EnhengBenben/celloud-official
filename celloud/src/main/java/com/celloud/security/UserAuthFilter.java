@@ -46,7 +46,7 @@ public class UserAuthFilter extends UserFilter {
         } else if (url.contains("client")) {
             WebUtils.issueRedirect(request, response, "/client.html");
         } else {
-            WebUtils.issueRedirect(request, response, "/login");
+			WebUtils.issueRedirect(request, response, "/sessionTimeOut.html");
         }
         return false;
 	}

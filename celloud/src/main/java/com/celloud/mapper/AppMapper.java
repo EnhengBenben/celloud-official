@@ -117,7 +117,7 @@ public interface AppMapper {
      */
     public App getAppById(@Param("appId") Integer appId,
             @Param("userId") Integer userId,
-            @Param("priceType") Byte priceType);
+			@Param("priceType") Byte priceType, @Param("attribute") Integer attribute);
 
     /**
      * 获取已添加的APP

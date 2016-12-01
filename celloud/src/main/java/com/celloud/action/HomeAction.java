@@ -254,6 +254,11 @@ public class HomeAction {
 		return "experiment_scan/sampling_order";
 	}
 
+	@RequestMapping("sessionTimeOut.html")
+	public String sessionTimeOut() {
+		return "user/user_timeout";
+	}
+
 	@RequestMapping("client.html")
 	public String client(String info, Model model) {
 		model.addAttribute("info", info);
