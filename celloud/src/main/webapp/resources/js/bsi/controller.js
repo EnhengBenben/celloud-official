@@ -337,11 +337,13 @@
 		}
 		
 		window.onbeforeunload=function(){
-			var qp=$rootScope.bsiUploader.total;
-			var percent=qp.percent;
-			if(qp.size>0&&percent<100&&percent>0){
-				return "数据正在上传，您确定要关闭页面吗?"
-			}
+		  if($rootScope.bsiUploader){
+		    var qp=$rootScope.bsiUploader.total;
+		    var percent=qp.percent;
+		    if(qp.size>0&&percent<100&&percent>0){
+		      return "数据正在上传，您确定要关闭页面吗?"
+		    }
+		  }
 		}
 		
 		$scope.beginBsiUpload = function(){

@@ -278,7 +278,7 @@
   <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.3"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.10.1"></script>
   <script src="<%=request.getContextPath()%>/js/bsi_main.js?version=3.1.15" type="text/javascript"></script>
   <script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=3.3.3"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>

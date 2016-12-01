@@ -361,7 +361,7 @@
     left join tb_classify cls on ac.classify_id=cls.classify_id 
     left join (select * from tb_price where item_type=#{priceType}) p on a.app_id=p.item_id
     left join tb_user_app_right ua on ua.app_id=a.app_id
-    where a.app_id=#{appId} and ua.user_id=#{userId}
+    where a.app_id=#{appId} and (ua.user_id=#{userId} or a.attribute = #{attribute})
   </select>
   <select id="getMyAppList" resultMap="extraResultMap"  >
     select a.attribute, a.app_id,a.app_name,a.picture_name,a.intro,a.description,a.create_date,GROUP_CONCAT(distinct c.classify_name) classifyNames,com.company_name 
