@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="table-opera clearfix">
-           <span class="tips">提示： 每个文库最多可添加12个样本。</span>
+           <span class="tips">提示： 每个文库最多可添加{{infos.sampleIndex.length}}个样本。</span>
         </div>
         <div ng-controller="editSampleController">
           <table class="table table-main">
