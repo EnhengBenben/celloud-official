@@ -78,7 +78,7 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public App getAppById(Integer id, Integer userId) {
-        return appMapper.getAppById(id, userId, PriceType.isApp);
+		return appMapper.getAppById(id, userId, PriceType.isApp, AppPermission.PUBLIC);
     }
 
     @Override
