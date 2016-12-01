@@ -22,7 +22,7 @@
    	       <div class="main_f clearfix">
 	            <span style="font-size:22px">对不起，您的登录信息已超时，请重新登录！</span>
                 <br/><br/>
-                <a href="" class="error_return" id="loginPath" style="margin-left: auto;">返回首页进行登录，<span id="toOfficialWeb">5</span>秒后自动跳转到首页</a>
+                <a href="" class="error_return" id="loginPath" style="margin-left: auto;">点击重新登录！<span id="toLoginWeb">5</span>秒后自动跳转到登录页面</a>
             </div>
         </div>
         <jsp:useBean id="_now" class="java.util.Date" />
@@ -37,23 +37,22 @@
 $.ajaxSetup ({
 	cache: false //关闭AJAX相应的缓存
 });
-function toOfficialWeb(){
-	var flag = "${flag}";
-	// 错误页面, 倒计时5秒跳转到官网
+function toLoginWeb(){
+	// 错误页面, 倒计时5秒跳转到登录页面
 	var time = 5;
 	var href = window.location.href;
 	href = href.replace('sessionTimeOut.html','login')
 	$("#loginPath").prop("href",href);
 	setInterval(function(){
 		if(--time>0){
-			$("#toOfficialWeb").text(time);
+			$("#toLoginWeb").text(time);
 		}else{
 			window.location.href = href;
 		}
 	},1000);
 }
 $(document).ready(function(){
-	toOfficialWeb();
+	toLoginWeb();
 });
 </script>
 </html>
