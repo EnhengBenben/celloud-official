@@ -150,6 +150,17 @@ public class SampleAction {
         return sampleService.samplingAddSample(userId, sampleName, type, tagId);
     }
 
+    @ActionLog(value = "样本实验状态列表", button = "样本追踪")
+    @RequestMapping("sampleTranking")
+    @ResponseBody
+    public PageList<Sample> sampleTranking(String sampleName,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return sampleService.getSamplesExperState(
+                new Page(page, size),
+                ConstantsData.getLoginUserId(), sampleName);
+    }
+
     @ActionLog(value = "编辑备注", button = "编辑备注")
     @RequestMapping("editRemark")
     @ResponseBody

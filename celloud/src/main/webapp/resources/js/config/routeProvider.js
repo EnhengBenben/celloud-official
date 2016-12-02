@@ -205,13 +205,17 @@
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
     })
-    .when('/sampling',{
+    .when('/sampling/collection',{
       templateUrl: "pages/experiment_scan/sampling.jsp",
       controller: "samplingController"
     })
     .when('/sampling/order/:orderId',{
       templateUrl: "pages/experiment_scan/order_detail.jsp",
       controller: "sampleOrderController"
+    })
+    .when('/sampling/tracking',{
+      templateUrl: "pages/experiment_scan/sample_tracking.jsp",
+      controller: "sampleTrackingController"
     })
     .when('/experiment/scanStorage',{
       templateUrl: "pages/experiment_scan/scan_storage.jsp",

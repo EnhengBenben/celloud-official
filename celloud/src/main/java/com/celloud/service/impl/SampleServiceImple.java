@@ -297,4 +297,12 @@ public class SampleServiceImple implements SampleService {
         return sampleMapper.getSamplesByStorageName(storageName,
                 DataState.ACTIVE);
     }
+
+    @Override
+    public PageList<Sample> getSamplesExperState(Page page, Integer userId,
+            String sampleName) {
+        List<Sample> list = sampleMapper.getSamplesExperState(page, userId,
+                sampleName, DataState.ACTIVE);
+        return new PageList<Sample>(page, list);
+    }
 }

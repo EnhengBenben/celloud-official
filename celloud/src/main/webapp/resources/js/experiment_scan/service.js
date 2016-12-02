@@ -31,6 +31,15 @@
       return $http({method:"POST",url:'sample/getSampleOrderInfo',params:{"orderId":orderId,"v":new Date()}});
     }
   });
+  celloudApp.service("sampleTrackingService", function($resource,$http){
+    var self = this;
+    self.sampleList = function(sampleName){
+      return $resource("sample/sampleTranking?v="+new Date()).get();
+    }
+    self.pageList = function(page,size,sampleName){
+      return $http.get("sample/sampleTranking?v="+new Date(),{params: {page:page,size:size,sampleName:sampleName}});
+    }
+  });
   celloudApp.service("scanStorageService", function($resource,$http){
     var self = this;
     self.sampleList = function(){

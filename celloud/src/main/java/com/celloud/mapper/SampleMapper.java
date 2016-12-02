@@ -62,4 +62,9 @@ public interface SampleMapper {
     Sample getSampleByExperName(
             @Param("experSampleName") String experSampleName,
             @Param("state") Integer state);
+
+    List<Sample> getSamplesExperState(Page page,
+            @Param("userId") Integer userId,
+            @Param("sampleName") String sampleName,
+            @Param("state") Integer state);
 }

@@ -119,4 +119,21 @@
       return "";
     }
   });
+  celloudApp.filter("experStateFilter",function(){
+    return function(experState){
+      if(experState == 0){
+        return "已采样";
+      }else if(experState == 1){
+        return "入库";
+      }else if(experState == 2){
+        return "提DNA";
+      }else if(experState == 3){
+        return "建库中";
+      }else if(experState == 4){
+        return "等待上机";
+      }else if(experState == 5){
+        return "上机完成";
+      }
+    }
+  })
 })();

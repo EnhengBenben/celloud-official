@@ -238,4 +238,17 @@ public interface SampleService {
      * @date 2016年10月25日 下午4:15:40
      */
     public List<Sample> getSamplesByStorageName(String storageName);
+
+    /**
+     * 获取样本的实验状态列表
+     * 
+     * @param page
+     * @param userId
+     * @param sampleName
+     * @return
+     * @author leamo
+     * @date 2016年12月1日 上午11:00:03
+     */
+    public PageList<Sample> getSamplesExperState(Page page, Integer userId,
+            String sampleName);
 }

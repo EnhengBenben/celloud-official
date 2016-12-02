@@ -14,7 +14,7 @@
         </shiro:hasPermission>
         <shiro:hasPermission name="sampling:menu">
             <li ng-class="{active: isActive('/sampling')}">
-              <a di-href="<%=request.getContextPath()%>/index#/sampling"><i class="sample-icon"></i><span>样本采集</span></a>
+              <a di-href="<%=request.getContextPath()%>/index#/sampling/collection"><i class="sample-icon"></i><span>样本采集</span></a>
             </li>
         </shiro:hasPermission>
         <shiro:hasPermission name="experiment:menu">
