@@ -255,6 +255,7 @@ public class SampleAction {
         map.put("libraryName", DateUtil.getDateToString()
                 + String.format("%02d", s.nextInt(99)));
 		map.put("metaList", SampleTypes.libraryIndex);
+        map.put("sampleIndex", SampleTypes.index);
         return map;
     }
 

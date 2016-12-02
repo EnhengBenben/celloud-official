@@ -46,6 +46,6 @@
 <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js?v=3.3.4"></script>
-<script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.6.07"></script>
+<script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.10.1"></script>
 </body>
 </html>

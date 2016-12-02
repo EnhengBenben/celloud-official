@@ -628,8 +628,9 @@ public class ReportServiceImpl implements ReportService {
 		FileTools.createFile(path);
 		FileTools.appendWrite(path,
 				"文件名\tI169T\tV173L\tL180M\tA181V/T\tT184A/G/S/I/L/F\tA194T\tS202G/I\tM204V\tN236T\tM250V/L/I\t序列\n");
+		StringBuffer line = new StringBuffer();
 		for (HBV hbv : hbvList) {
-			StringBuffer line = new StringBuffer(hbv.getFileName()).append("\t");
+			line.append(hbv.getFileName()).append("\t");
 			if (hbv.getSite() == null) {
 				line.append("由于分析流程的升级，2015年8月1日之前的分析结果无法提取到该信息，若需要请重新运行。");
 				for (int i = 0; i < 10; i++) {
@@ -649,8 +650,8 @@ public class ReportServiceImpl implements ReportService {
 				}
 			}
 			line.append(hbv.getSeq()).append("\n");
-			FileTools.appendWrite(path, line.toString());
 		}
+		FileTools.appendWrite(path, line.toString());
 		ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
 		return result;
 	}
@@ -739,8 +740,9 @@ public class ReportServiceImpl implements ReportService {
 		result.put("data", cmpList);
 		FileTools.createFile(path);
 		FileTools.appendWrite(path, "数据编号\t原始文件名1\t原始文件名2\t应用名称\t共获得有效片段\t可用片段\t平均测序深度\t基因检测结果\n");
+		StringBuffer line = new StringBuffer();
 		for (CmpReport cmp : cmpList) {
-			StringBuffer line = new StringBuffer(cmp.getDataKey()).append("\t");
+			line.append(cmp.getDataKey());
 			List<DataFile> dataList = cmp.getData();
 			if (dataList == null) {
 				continue;
@@ -761,8 +763,8 @@ public class ReportServiceImpl implements ReportService {
 				}
 			}
 			line.append("\n");
-			FileTools.appendWrite(path, line.toString());
 		}
+		FileTools.appendWrite(path, line.toString());
 		ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
 		return result;
 	}

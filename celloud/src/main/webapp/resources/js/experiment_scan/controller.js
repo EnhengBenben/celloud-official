@@ -56,6 +56,9 @@
       page : 1,
       pageSize : 20
     };
+    
+    $scope.checkedLength = 0;
+    
     $scope.pageQuery = function(page,pageSize){
       $scope.pages = {
         page : page,
@@ -74,7 +77,39 @@
     		}
     	}
     }
-    
+    $scope.checkAll = function(){
+    	var flag = $("input[name='checkAll']").prop("checked");
+    	if(flag){
+    		$scope.checkedLength = $("input[name='checkOne']").length;
+    	}else{
+    		$scope.checkedLength = 0;
+    	}
+    	$("input[name='checkOne']").each(function(){
+    		$(this).prop("checked", flag);
+    	})
+    }
+    $scope.checkOne = function(){
+    	// 获取选中的输入框的数量
+    	var length1 = $("input[name='checkOne']:checked").length;
+    	$scope.checkedLength = length1;
+    	// 获取全部的输入框的数量
+    	var length2 = $("input[name='checkOne']").length;
+    	if(length1 == length2){
+    		$("input[name='checkAll']").prop("checked",true);
+    	}else{
+    		$("input[name='checkAll']").prop("checked",false);
+    	}
+    }
+    $scope.printQRCode = function(){
+    	// 获取选中的checkbox, 封装数组进行打印
+    	var sampleNames = new Array();
+    	var dates = new Array();
+    	$("input[name='checkOne']:checked").each(function(){
+    		sampleNames.push($(this).parent().parent().parent().children(".experSampleName").html().trim());
+    		dates.push($(this).parent().parent().parent().children(".createDate").html().trim());
+    	});
+    	printQRCodeBatch(sampleNames, dates);
+    }
     $scope.scanStorage = function(){
       if($scope.orderNo == "" || $scope.orderNo == undefined){
         $.alert("请输入订单编号！");
@@ -89,7 +124,7 @@
           $.alert(data.error);
         }else{
           //打印二维码
-          printQRCode(data.experName,data.date);
+//          printQRCode(data.experName,data.date);
           $scope.sampleList = $scope.pageQuery($scope.page,$scope.pageSize);
         }
         $scope.sampleName = "";
@@ -115,6 +150,7 @@
         page : 1,
         pageSize : 20
       };
+      $scope.checkedLength = 0;
       $scope.pageQuery = function(page,pageSize){
         $scope.pages = {
           page : page,
@@ -143,11 +179,44 @@
             $.alert(data.error);
           }else{
             //打印二维码
-            printQRCode($scope.sampleName,data.date);
+//            printQRCode($scope.sampleName,data.date);
             $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
           }
           $scope.sampleName = "";
         });
+      }
+      $scope.checkAll = function(){
+      	var flag = $("input[name='checkAll']").prop("checked");
+      	if(flag){
+    		$scope.checkedLength = $("input[name='checkOne']").length;
+    	}else{
+    		$scope.checkedLength = 0;
+    	}
+      	$("input[name='checkOne']").each(function(){
+      		$(this).prop("checked", flag);
+      	})
+      }
+      $scope.checkOne = function(){
+      	// 获取选中的输入框的数量
+      	var length1 = $("input[name='checkOne']:checked").length;
+      	$scope.checkedLength = length1;
+      	// 获取全部的输入框的数量
+      	var length2 = $("input[name='checkOne']").length;
+      	if(length1 == length2){
+      		$("input[name='checkAll']").prop("checked",true);
+      	}else{
+      		$("input[name='checkAll']").prop("checked",false);
+      	}
+      }
+      $scope.printQRCode = function(){
+      	// 获取选中的checkbox, 封装数组进行打印
+      	var sampleNames = new Array();
+      	var dates = new Array();
+      	$("input[name='checkOne']:checked").each(function(){
+      		sampleNames.push($(this).parent().parent().parent().children(".experSampleName").html().trim());
+      		dates.push($(this).parent().parent().parent().children(".createDate").html().trim());
+      	});
+      	printQRCodeBatch(sampleNames, dates);
       }
       $scope.remove = function(id){
         scanStorageService.remove(id).success(function(data){
@@ -177,8 +246,9 @@
     
     $scope.addSample = function(){
       var sampleList = $scope.infos.pageList.datas;
-      if(sampleList.length>=12){
-        $.tips("每个文库最多12个样本！")
+      var samplelength = $scope.infos.sampleIndex.length;
+      if(sampleList.length>=samplelength){
+        $.tips("每个文库最多"+samplelength+"个样本！")
       }else if($scope.sampleName == '' || $scope.sampleName == undefined){
     	  $.alert("请输入实验样本编号");
       }else{

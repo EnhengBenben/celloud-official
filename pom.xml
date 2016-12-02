@@ -17,6 +17,7 @@
 		<kafka.version>0.10.0.0</kafka.version>
 		<jsoup.version>1.9.2</jsoup.version>
 		<swagger.version>0.9.5</swagger.version>
+		<joda.version>2.9.6</joda.version>
 	</properties>
 
 	<dependencyManagement>
@@ -280,6 +281,12 @@
 				<artifactId>swagger-springmvc</artifactId>
 				<version>${swagger.version}</version>
 			</dependency>
+			<!-- Joda-Time时间操作组件 -->
+			<dependency>
+			    <groupId>joda-time</groupId>
+			    <artifactId>joda-time</artifactId>
+			    <version>${joda.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -301,8 +308,5 @@
 	</build>
 	<modules>
 		<module>celloud</module>
-		<module>backstage</module>
-		<module>manager</module>
   </modules>
-
 </project>

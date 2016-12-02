@@ -227,57 +227,56 @@
                         <th width="380">序列 (5'-3')</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <%-- <c:set var="seqNum" scope="page" value="0"/> --%>
-                           <tr ng-if="bsi.species_20 != null" ng-init="srowspan = 1" ng-repeat="species20 in bsi.species_20">
-                             <td class="title" rowspan="getRowspan({{species20.seq2}},{{species20.seq3}},{{species20.seq4}})">
-                                <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
-                                <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
-                               <br>
-                               <svg width="200" height="20">
-                                 <g>
-                                   <rect x="0" y="0" width="50" height="20" fill="{{species20.site1 | getResultByCompare:'0,0':'#8c8c8c':'#fff'}}"
-                                     style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
-                                   <text x="8" y="15">V1-V2</text>
-                                   <rect x="50" y="0" width="50" height="20" fill="{{species20.site2 | getResultByCompare:'0,0':'#dcdcdc':'#fff'}}"
-                                     style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
-                                   <text x="58" y="15">V3-V4</text>
-                                   <rect x="100" y="0" width="50" height="20" fill="{{species20.site3 | getResultByCompare:'0,0':'#323232':'#fff'}}"
-                                     style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
-                                   <text x="108" y="15">V5-V6</text>
-                                   <rect x="150" y="0" width="50" height="20" fill="{{species20.site4 | getResultByCompare:'0,0':'#c8c8c8':'#fff'}}"
-                                     style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
-                                   <text x="158" y="15">V7-V8</text>
-                                 </g>
-                               </svg>
-                             </td>
-                             <td class="sub-title" rowspan="{{srowspan}}">{{species20.seq_proportion}}</td>
-                             <td>{{species20.seq1_name}}</td>
-                             <td>
-                               <div class="seq">
-                               {{species20.seq1_no}}<br>
-                               {{species20.seq1}}
-                               </div>
-                             </td>
-                           </tr>
-                           <tr ng-if="species20.seq2 != null">
-                             <td>{{species20.seq2_name}}</td>
-                             <td>
-                               <div class="seq">{{species20.seq2_no}}<br>{{species20.seq2}}</div>
-                             </td>
-                           </tr>
-                           <tr ng-if="species20.seq3 != null">
-                             <td>{{species20.seq3_name}}</td>
-                             <td>
-                               <div class="seq">{{species20.seq3_no}}<br>{{species20.seq3}}</div>
-                             </td>
-                           </tr>
-                           <tr ng-if="species20.seq4 != null">
-                             <td>{{species20.seq4_name}}</td>
-                             <td>
-                               <div class="seq">{{species20.seq4_no}}<br>{{species20.seq4}}</div>
-                             </td>
-                           </tr>
+                    <tbody ng-if="bsi.species_20 != null" ng-repeat="species20 in bsi.species_20">
+                       <tr ng-init="srowspan = 1">
+                         <td class="title" rowspan="{{species20.seq2 | getBsiRowSpan:species20.seq3:species20.seq4}}">
+                            <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
+                            <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
+                           <br>
+                           <svg width="200" height="20">
+                             <g>
+                               <rect x="0" y="0" width="50" height="20" fill="{{species20.site1 | getResultByCompare:'0,0':'#8c8c8c':'#fff'}}"
+                                 style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                               <text x="8" y="15">V1-V2</text>
+                               <rect x="50" y="0" width="50" height="20" fill="{{species20.site2 | getResultByCompare:'0,0':'#dcdcdc':'#fff'}}"
+                                 style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                               <text x="58" y="15">V3-V4</text>
+                               <rect x="100" y="0" width="50" height="20" fill="{{species20.site3 | getResultByCompare:'0,0':'#323232':'#fff'}}"
+                                 style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                               <text x="108" y="15">V5-V6</text>
+                               <rect x="150" y="0" width="50" height="20" fill="{{species20.site4 | getResultByCompare:'0,0':'#c8c8c8':'#fff'}}"
+                                 style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                               <text x="158" y="15">V7-V8</text>
+                             </g>
+                           </svg>
+                         </td>
+                         <td class="sub-title" rowspan="{{species20.seq2 | getBsiRowSpan:species20.seq3:species20.seq4}}">{{species20.seq_proportion}}</td>
+                         <td>{{species20.seq1_name}}</td>
+                         <td>
+                           <div class="seq">
+                           {{species20.seq1_no}}<br>
+                           {{species20.seq1}}
+                           </div>
+                         </td>
+                       </tr>
+                       <tr ng-if="species20.seq2 != null && species20.seq2 != ''">
+                         <td>{{species20.seq2_name}}</td>
+                         <td>
+                           <div class="seq">{{species20.seq2_no}}<br>{{species20.seq2}}</div>
+                         </td>
+                       </tr>
+                       <tr ng-if="species20.seq3 != null && species20.seq3 != ''">
+                         <td>{{species20.seq3_name}}</td>
+                         <td>
+                           <div class="seq">{{species20.seq3_no}}<br>{{species20.seq3}}</div>
+                         </td>
+                       </tr>
+                       <tr ng-if="species20.seq4 != null && species20.seq4 != ''">
+                         <td>{{species20.seq4_name}}</td>
+                         <td>
+                           <div class="seq">{{species20.seq4_no}}<br>{{species20.seq4}}</div>
+                         </td>
+                       </tr>
                     </tbody>
                   </table>
                   <p>序列比重：唯一识别序列数>10条时为检出<br>
@@ -336,12 +335,12 @@
                 <table class="table table-main">
 				  <thead>
 				    <tr>
-				      <th>相同标签报告</th>
+				      <th style="padding:0px;text-align: center;">相同标签报告</th>
 				    </tr>
 				  </thead>
 				  <tbody id="data-list-tbody" ng-if="batchPageList.datas.length > 0">
 			        <tr id="reportbatch{{task.dataKey}}" ng-class="{active: task.dataKey == bsi.dataKey }" ng-repeat="task in batchPageList.datas">
-			          <td title="{{task.fileName}}" name="data-name-td" >
+			          <td title="{{task.fileName}}" name="data-name-td" style="padding: 0px;text-align: center;" >
 		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/null/0" ng-if="task.period == 2">
 		                   {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName == null? '' : task.anotherName}}
 		                 </a>
@@ -352,32 +351,32 @@
 			        </tr>
 				  </tbody>
 				</table>
-				<div class="pagination text-center" ng-if="batchPageList.datas.length > 0">
-				    <input id="batch-current-page-hide" value="{{batchPageList.page.currentPage}}" type="hidden" >
-				    <input id="batch-total-page-hide" value="{{batchPageList.page.totalPage}}" type="hidden" >
-				    <ul id="pagination-data-report" class="pages">
-				        <li><a id="prev-page-task" class="ends pull-left" ng-click="batchPageQueryBtn(batchPageList.page.currentPage>1?batchPageList.page.currentPage-1:1)">&lt;&lt;</a></li>
-				        <!-- 显示第一页 -->
-			            <li ng-if="batchPageList.page.totalPage <= 3 && step <= batchPageList.page.totalPage" ng-class="{active: step == batchPageList.page.currentPage}" ng-repeat="step in [1,2,3]">
-			             <a ng-if="step == batchPageList.page.currentPage" name="pagination-task" >{{step}}</a>
-			             <a ng-if="step != batchPageList.page.currentPage" name="pagination-task" ng-click="batchPageQueryBtn(step)">{{step}}</a>
-			            </li>
-			            
-			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == 1" class="active"><a name="pagination-task">1</a></li>
-			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == 1"><a name="pagination-task" ng-click="batchPageQueryBtn(2)">2</a></li>
-			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == 1"><a name="pagination-task" ng-click="batchPageQueryBtn(3)">3</a></li>
-				            
-			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-2)">{{batchPageList.page.currentPage-2}}</a></li>
-			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-1)">{{batchPageList.page.currentPage-1}}</a></li>
-			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage" class="active"><a name="pagination-task">{{batchPageList.page.currentPage}}</a></li>
-				            
-			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-1)">{{batchPageList.page.currentPage-1}}</a></li>
-			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage" class="active"><a name="pagination-task">{{batchPageList.page.currentPage}}</a></li>
-			            <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage+1)">{{batchPageList.page.currentPage+1}}</a></li>
-				      
-				        <li><a id="next-page-task" class="ends pull-right" ng-click="batchPageQueryBtn(batchPageList.page.currentPage < batchPageList.page.totalPage ? batchPageList.page.currentPage + 1 : batchPageList.page.totalPage)">&gt;&gt;</a></li>
-				    </ul>
-				</div>
+				<div class="pagination text-center" ng-if="batchPageList.datas.length > 0" style="height: 21px;">
+                    <input id="batch-current-page-hide" value="{{batchPageList.page.currentPage}}" type="hidden" >
+                    <input id="batch-total-page-hide" value="{{batchPageList.page.totalPage}}" type="hidden" >
+                    <ul id="pagination-data-report" class="pages">
+                        <li><a id="prev-page-task" class="ends pull-left" ng-click="batchPageQueryBtn(batchPageList.page.currentPage>1?batchPageList.page.currentPage-1:1)">&lt;&lt;</a></li>
+                        <!-- 显示第一页 -->
+                        <li ng-if="batchPageList.page.totalPage <= 3 && step <= batchPageList.page.totalPage" ng-class="{active: step == batchPageList.page.currentPage}" ng-repeat="step in [1,2,3]">
+                         <a ng-if="step == batchPageList.page.currentPage" name="pagination-task" >{{step}}</a>
+                         <a ng-if="step != batchPageList.page.currentPage" name="pagination-task" ng-click="batchPageQueryBtn(step)">{{step}}</a>
+                        </li>
+                        
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == 1" class="active"><a name="pagination-task">1</a></li>
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == 1"><a name="pagination-task" ng-click="batchPageQueryBtn(2)">2</a></li>
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == 1"><a name="pagination-task" ng-click="batchPageQueryBtn(3)">3</a></li>
+                            
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-2)">{{batchPageList.page.currentPage-2}}</a></li>
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-1)">{{batchPageList.page.currentPage-1}}</a></li>
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage" class="active"><a name="pagination-task">{{batchPageList.page.currentPage}}</a></li>
+                            
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-1)">{{batchPageList.page.currentPage-1}}</a></li>
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage" class="active"><a name="pagination-task">{{batchPageList.page.currentPage}}</a></li>
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage+1)">{{batchPageList.page.currentPage+1}}</a></li>
+                      
+                        <li><a id="next-page-task" class="ends pull-right" ng-click="batchPageQueryBtn(batchPageList.page.currentPage < batchPageList.page.totalPage ? batchPageList.page.currentPage + 1 : batchPageList.page.totalPage)">&gt;&gt;</a></li>
+                    </ul>
+                  </div>
             </div>
             <div class="report-btn-group pull-right">
                <a class="btn" ng-class="{hide : tab == 'analy'}" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>

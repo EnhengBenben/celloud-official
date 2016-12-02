@@ -11,7 +11,7 @@
     <div style="top: 30%; left: 40%; position: absolute;"><font color="#ccc">页面加载中。。。</font></div>
     <script type="text/javascript">
         setTimeout(function() {
-           window.location.href = "index${route}";
+           window.location.href = "${pageContext.request.contextPath }/index${route}";
         }, 0);
     </script>
 </body>

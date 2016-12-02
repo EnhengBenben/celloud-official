@@ -762,4 +762,14 @@
             AND period = 3
         )
 	</select>
+	<insert id="addFileSampleRelat">
+	   INSERT INTO tb_file_sample_relat(file_id, sample_id)
+        VALUES(#{fileId},#{sampleId})
+	</insert>
+	<select id="getSampleIdByDataKey" resultType="java.lang.Long">
+        SELECT
+        fs.sample_id
+        FROM tb_file_sample_relat fs,tb_file f
+        WHERE fs.file_id=f.file_id and f.data_key=#{dataKey}
+    </select>
 </mapper>

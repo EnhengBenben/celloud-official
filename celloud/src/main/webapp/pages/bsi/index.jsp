@@ -96,7 +96,7 @@
 								<br>
 								<p>
 									<span>
-										为每次上传数据按输入加入标签，提升后续报告查询、数据管理、分类汇总提供快捷服务。
+										添加数据标签，便于使用报告查询、数据管理、分类汇总等平台功能。
 										<span>
 								</p>
 								<p>
@@ -278,7 +278,7 @@
   <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.3"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.10.1"></script>
   <script src="<%=request.getContextPath()%>/js/bsi_main.js?version=3.1.15" type="text/javascript"></script>
   <script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=3.3.3"></script>
   <script src="<%=request.getContextPath()%>/js/charts.js"></script>

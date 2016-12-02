@@ -12,12 +12,15 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.AppDataListType;
 import com.celloud.constants.CommandKey;
+import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
 import com.celloud.constants.IconConstants;
 import com.celloud.constants.SparkPro;
@@ -26,6 +29,7 @@ import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.Task;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
@@ -37,7 +41,10 @@ import com.celloud.service.SampleService;
 import com.celloud.service.TaskService;
 import com.celloud.utils.AppSubmitUtil;
 import com.celloud.utils.DataKeyListToFile;
+import com.celloud.utils.DataUtil;
+import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.Response;
 import com.celloud.utils.UploadPathUtils;
 
@@ -223,6 +230,7 @@ public class RunServiceImpl implements RunService {
 			task.setCommand(command);
 			task.setDatalist(dataListFile);
 			task.setResult(appPath);
+            task.setSampleId(dataService.getSampleIdByDataKey(dataKey));
 			taskService.updateTask(task);
 			Integer taskId = task.getTaskId();
 			Boolean iswait = runCheckIsWait(app);
@@ -256,93 +264,25 @@ public class RunServiceImpl implements RunService {
 		}
 	}
 
-	@Override
-	public String bsiCheckRun(String batch, Integer dataId, String dataKey, Integer needSplit, String originalName,
-			Integer userId, Integer fileFormat) {
-		logger.info("判断是否数据{}上传完即刻运行", originalName);
-		Integer appId;
-		if (needSplit == null) {
-			appId = 118;
-		} else {
-			appId = 113;
-		}
-		String pubName = "";
-
-		if (fileFormat == FileFormat.FQ || originalName.contains(".txt") || originalName.contains(".lis")) {
-			Boolean isR1 = false;
-			if (originalName.contains("R1")) {
-				pubName = originalName.substring(0, originalName.lastIndexOf("R1"));
-				isR1 = true;
-			} else if (originalName.contains("R2")) {
-				pubName = originalName.substring(0, originalName.lastIndexOf("R2"));
-			} else if (originalName.contains(".txt") || originalName.contains(".lis")) {
-				pubName = originalName.substring(0, originalName.lastIndexOf("."));
-			}
-			Pattern p = Pattern.compile("\\_|\\%");
-			Matcher m = p.matcher(pubName);
-			StringBuffer sb = new StringBuffer();
-			while (m.find()) {
-				String rep = "\\\\" + m.group(0);
-				m.appendReplacement(sb, rep);
-			}
-			m.appendTail(sb);
-			List<DataFile> dataList = dataService.getDataByBatchAndFileName(userId, batch, sb.toString());
-			boolean hasR1 = false;
-			boolean hasR2 = false;
-			boolean hasIndex = false;
-			for (DataFile d : dataList) {
-				if (d.getPath() == null) {
-					continue;
-				}
-				File f = new File(d.getPath());
-				if (!f.exists() || f.length() != d.getSize().longValue()) {
-					continue;
-				}
-				String name_tmp = d.getFileName();
-				if (name_tmp.contains("R1")) {
-					hasR1 = true;
-				} else if (name_tmp.contains("R2")) {
-					hasR2 = true;
-				} else if (name_tmp.contains(".txt") || name_tmp.contains(".lis")) {
-					hasIndex = true;
-				}
-			}
-			Task task = new Task();
-			task.setUserId(userId);
-			task.setDataKey(dataKey);
-			task.setPeriod(TaskPeriod.UPLOADING);
-			task.setParams(pubName);
-			task.setAppId(appId);
-            taskService.addOrUpdateUploadTaskByParamAndBatch(task, isR1, batch);
-			if (needSplit == null && hasR1 && hasR2) {
-				runSingle(userId, appId, dataList);
-			} else if (needSplit != null && hasR1 && hasR2 && hasIndex) {
-				runSingle(userId, appId, dataList);
-			}
-		} else if (fileFormat == FileFormat.YASUO && needSplit == null) {
-			List<DataFile> dataList = new ArrayList<>();
-			DataFile data = dataService.getDataById(dataId);
-			dataList.add(data);
-			runSingle(userId, appId, dataList);
-		}
-		return "1";
-
-	}
-
-	// XXX百菌探上传数据与实验数据绑定方法
+    @Override
 	public String bsiCheckRun(String batch, Integer dataId, String dataKey, String originalName, Integer userId,
 			Integer fileFormat) {
 		logger.info("判断是否数据{}上传完即刻运行", originalName);
 		Integer appId;
 		String pubName = "";
+        String storageName = null;
 		if (fileFormat == FileFormat.FQ) {
 			appId = IconConstants.APP_ID_SPLIT;
 			Boolean isR1 = false;
 			if (originalName.contains("R1")) {
 				pubName = originalName.substring(0, originalName.lastIndexOf("R1"));
+                storageName = StringUtils.splitByWholeSeparator(originalName,
+                        "_")[0];
 				isR1 = true;
 			} else if (originalName.contains("R2")) {
 				pubName = originalName.substring(0, originalName.lastIndexOf("R2"));
+                storageName = StringUtils.splitByWholeSeparator(originalName,
+                        "_")[0];
 			}
 			Pattern p = Pattern.compile("\\_|\\%");
 			Matcher m = p.matcher(pubName);
@@ -378,10 +318,44 @@ public class RunServiceImpl implements RunService {
 			task.setAppId(appId);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
-				runSingle(userId, appId, dataList);
-			} else if (hasR1 && hasR2) {
-				runSingle(userId, appId, dataList);
-			}
+                List<Sample> sampleList = sampleService
+                        .getSamplesByStorageName(storageName);
+                if (sampleList != null && sampleList.size() > 0) {
+                    DataFile data = new DataFile();
+                    data.setFileName(pubName + ".txt");
+                    data.setUserId(userId);
+                    data.setCreateDate(new Date());
+                    data.setFileFormat(FileFormat.NONE);
+                    data.setState(DataState.ACTIVE);
+                    data.setBatch(batch);
+                    Integer id = dataService.addDataInfo(data);
+                    String index_dataKey = DataUtil.getNewDataKey(id);
+                    data.setFileId(id);
+                    data.setDataKey(index_dataKey);
+                    String path = new StringBuffer()
+                            .append(PropertiesUtil.bigFilePath)
+                            .append(userId).append("/")
+                            .append(DateUtil.getDateToString("yyyyMMdd"))
+                            .append("/").append(index_dataKey + ".txt")
+                            .toString();
+                    StringBuffer slist = new StringBuffer();
+                    for (Sample s : sampleList) {
+                        slist.append(s.getExperSampleName()).append(":")
+                                .append(s.getSindex().contains(":")
+                                        ? StringUtils.splitByWholeSeparator(
+                                                s.getSindex(), ":")[1]
+                                        : s.getSindex())
+                                .append("\n");
+                    }
+                    FileTools.appendWrite(path, slist.toString());
+                    data.setPath(path);
+                    data.setSize(FileUtils.sizeOf(new File(path)));
+                    dataService.updateByPrimaryKeySelective(data);
+                    dataList.add(data);
+                    runSingle(userId, appId, dataList);
+                    dataService.delete(String.valueOf(id));
+                }
+            }
 		} else if (fileFormat == FileFormat.YASUO) {
 			appId = IconConstants.APP_ID_BSI;
 			List<DataFile> dataList = new ArrayList<>();

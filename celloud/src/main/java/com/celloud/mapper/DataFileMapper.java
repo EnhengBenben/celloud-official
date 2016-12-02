@@ -362,4 +362,25 @@ public interface DataFileMapper {
 	@MapKey("fileId")
 	Map<Integer, Map<String, String>> getMd5FileIdMap(@Param("userId") Integer userId, @Param("appId") Integer appId);
 
+    /**
+     * 插入数据、样本关系
+     * 
+     * @param fileId
+     * @param sampleId
+     * @return
+     * @author leamo
+     * @date 2016年11月29日 上午10:18:39
+     */
+    Integer addFileSampleRelat(@Param("fileId") Integer fileId,
+            @Param("sampleId") Integer sampleId);
+
+    /**
+     * 获取样本id
+     * 
+     * @param dataKey
+     * @return
+     * @author leamo
+     * @date 2016年11月29日 上午10:43:44
+     */
+    Long getSampleIdByDataKey(@Param("dataKey") String dataKey);
 }

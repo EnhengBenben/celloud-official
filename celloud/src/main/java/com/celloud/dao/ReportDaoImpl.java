@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
 
@@ -210,6 +211,35 @@ public class ReportDaoImpl implements ReportDao {
             query.retrievedFields(true, fields);
         }
         return query.order("-createDate").asList();
+    }
+
+    @Override
+    public <T> Integer update(Class<T> clazz, Map<String, Object> queryFilters, Map<String, Object> updateFilters) {
+        Query<T> query = dataStore.createQuery(clazz);
+        if (null != queryFilters) {
+            for (String key : queryFilters.keySet()) {
+                query.filter(key, queryFilters.get(key));
+            }
+        }
+        UpdateOperations<T> ops = dataStore.createUpdateOperations(clazz);
+        if (null != updateFilters) {
+            for (String key : updateFilters.keySet()) {
+                ops.set(key, updateFilters.get(key));
+            }
+        }
+        UpdateResults result = dataStore.update(query, ops);
+        return result.getUpdatedCount();
+    }
+
+    @Override
+    public <T> void deleteByFilters(Class<T> clazz, Map<String, Object> queryFilters) {
+        Query<T> query = dataStore.createQuery(clazz);
+        if (queryFilters != null) {
+            for (String key : queryFilters.keySet()) {
+                query.filter(key, queryFilters.get(key));
+            }
+        }
+        dataStore.delete(query);
     }
 
 }

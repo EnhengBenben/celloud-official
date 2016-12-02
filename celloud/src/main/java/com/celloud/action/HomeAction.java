@@ -195,7 +195,7 @@ public class HomeAction {
 		}
 		// 获取防盗链信息
 		String referer = request.getHeader("referer");
-		if (referer != null && referer.contains("client")) {
+        if (referer != null && referer.contains("customer")) {
 			return "redirect:clientindex";
 		}
 		return "index";
@@ -252,6 +252,11 @@ public class HomeAction {
 	@RequestMapping("sample_order.html")
 	public String sampleOrder() {
 		return "experiment_scan/sampling_order";
+	}
+
+	@RequestMapping("sessionTimeOut.html")
+	public String sessionTimeOut() {
+		return "user/user_timeout";
 	}
 
 	@RequestMapping("client.html")

@@ -31,7 +31,6 @@
         </div>
         <hr class="-right">
     </header>
-    
     <div id="report-uploading-modal" class="modal running-modal">
         <div class="modal-dialog">
             <div class="modal-content">

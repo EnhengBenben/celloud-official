@@ -41,7 +41,6 @@ import com.celloud.utils.UploadUtil;
 @RequestMapping("uploadFile")
 public class UploadAction {
 	Logger logger = LoggerFactory.getLogger(UploadAction.class);
-	private static final int BUFFER_SIZE = 2 * 1024;
 	@Resource
 	private DataService dataService;
 	@Resource
@@ -164,7 +163,8 @@ public class UploadAction {
                         // TODO 写死的百菌探自动运行
                         if (tagId == 1) {
                             logger.info("{}拥有百菌探权限", userId);
-                            runService.bsiCheckRun(batch, dataId, fileDataKey, needSplit, originalName, userId,
+                            runService.bsiCheckRun(batch, dataId, fileDataKey,
+                                    originalName, userId,
                                     fileFormat);
                         } else if (tagId == 2) {
                             logger.info("{}拥有华木兰权限", userId);

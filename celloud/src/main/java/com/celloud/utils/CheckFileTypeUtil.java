@@ -27,24 +27,25 @@ public class CheckFileTypeUtil {
 		if (fileName.lastIndexOf(".") > 0) {
 			extName = fileName.substring(fileName.lastIndexOf("."));
 		}
-		if (fileName.toLowerCase().indexOf(".fastq") != -1 || fileName.toLowerCase().indexOf(".fq") != -1) {
-			fileType = FileFormat.FQ;
-		} else if (checkTileType(FileTitleType.ABI, fileName, dayPath)
+        String titleType = checkTitleType(fileName, dayPath);
+        if (titleType.startsWith(FileTitleType.ABI)
 				&& (".ab1".equals(extName.toLowerCase()) || ".abi".equals(extName.toLowerCase()))) {
 			// 文件为峰图文件
 			fileType = FileFormat.FENGTU;
 		} else if (fileName.toLowerCase().indexOf(".fastq") == -1 && fileName.toLowerCase().indexOf(".fq") == -1
-				&& ((".zip".equals(extName.toLowerCase()) && (checkTileType(FileTitleType.ZIP, fileName, dayPath)))
+                && ((".zip".equals(extName.toLowerCase()) && (titleType.startsWith(FileTitleType.ZIP)))
 						|| (".gz".equals(extName.toLowerCase())
-								&& (checkTileType(FileTitleType.GZ, fileName, dayPath))))) {
+                                && (titleType.startsWith(FileTitleType.GZ))))) {
 			// 文件为压缩文件
 			fileType = FileFormat.YASUO;
-		} else if (checkTileType(FileTitleType.BAM, fileName, dayPath) && extName.equals(".bam")) {
+        } else if (titleType.startsWith(FileTitleType.BAM) && extName.equals(".bam")) {
 			// bam格式文件
 			fileType = FileFormat.BAM;
-		} else if (checkTileType(FileTitleType.FASTA, fileName, dayPath) && (checkFasta(fileName, dayPath)
+        } else if (titleType.startsWith(FileTitleType.FASTA) && (checkFasta(fileName, dayPath)
 				|| ".fa".equals(extName.toLowerCase()) || ".fasta".equals(extName.toLowerCase()))) {
 			fileType = FileFormat.FA;
+		} else if (fileName.toLowerCase().indexOf(".fastq") != -1 || fileName.toLowerCase().indexOf(".fq") != -1) {
+			fileType = FileFormat.FQ;
 		} else if (extName.equals(".tsv")) {
 			fileType = FileFormat.TSV;
 		}
@@ -143,13 +144,9 @@ public class CheckFileTypeUtil {
 		return isFastq;
 	}
 
-	public Boolean checkTileType(String type, String fileName, String dayPath) {
-		Boolean isTure = false;
+    public String checkTitleType(String fileName, String dayPath) {
 		String path = dayPath + File.separator + fileName;
-		if (getTypeByStream(path).startsWith(type)) {
-			isTure = true;
-		}
-		return isTure;
+        return getTypeByStream(path);
 	}
 
 	/**

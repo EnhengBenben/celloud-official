@@ -142,3 +142,24 @@ function printQRCode(sampleName,date){
   LODOP.SET_PRINT_PAGESIZE(1, 90, 380, "");
   LODOP.PRINT();
 }
+
+function printQRCodeBatch(sampleNames,dates){
+	var LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
+	LODOP.PRINT_INIT("打印提取DNA二维码takenDNAS");
+	for(i in sampleNames){
+		LODOP.NEWPAGE();
+	    LODOP.ADD_PRINT_BARCODE(8, 5, 20, 20, 'QRCode', sampleNames[i]);
+	    LODOP.NEWPAGE();
+	    LODOP.ADD_PRINT_BARCODE(2, 5, 20, 20, 'QRCode', sampleNames[i]);
+	    LODOP.ADD_PRINT_TEXTA('sname',25,27,180,8,sampleNames[i]);
+	    LODOP.SET_PRINT_STYLEA('sname', 'FontSize', 6);
+	    LODOP.SET_PRINT_STYLEA('sname', 'Angle', -90);
+	    LODOP.ADD_PRINT_TEXTA('uname',25,18,180,8,window.username);
+	    LODOP.SET_PRINT_STYLEA('uname', 'FontSize', 6);
+	    LODOP.SET_PRINT_STYLEA('uname', 'Angle', -90);
+	    LODOP.ADD_PRINT_TEXTA('date',25,11,180,8,dates[i]);
+	    LODOP.SET_PRINT_STYLEA('date', 'FontSize', 6);
+	    LODOP.SET_PRINT_STYLEA('date', 'Angle', -90);
+	}
+    LODOP.PRINT();
+}

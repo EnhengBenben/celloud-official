@@ -10,7 +10,7 @@
         <div class="content-header clearfix">
           <img src="<%=request.getContextPath()%>/images/icon/sample_scan.jpg">
           <p>* 请持条码枪扫描样品管上的条码<br>
-              无条码样品请按以下方式操作：<br> 1. 在样品管上记录样品病历号<br> 2. 将病历号输入上面窗口后回车
+              无条码样品请按以下方式操作：<br> 1. 在样品管上记录样品病历号<br> 2. 将病历号填入右侧输入框后回车
           <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
 		    <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
 		  </object>
@@ -18,6 +18,7 @@
           <span class="input-alert" ng-show="sampleName.$dirty && sampleName.$error.required">请输入实验样本编号！</span>
           <div class="info-btn-group">
             <input class="field" type="text" ng-trim="true" ng-keypress="doOnKeyPress($event)" ng-model="sampleName" required placeholder="扫码或者输入实验样本编号"/>
+            <button ng-disabled="checkedLength == 0" class="btn" style="position:absolute;top:-50px;right:0px;min-width:87px;" ng-click="printQRCode()">打印</button>
             <a class="action" ng-click="tokenDNA()">扫码提DNA</a>
           </div>
         </div>
@@ -25,6 +26,12 @@
           <table class="table table-main">
             <thead>
                 <tr>
+                    <th class="th-checkoutbox">
+                      <label class="checkbox-lable">
+                        <input class="checkbox" type="checkbox" name="checkAll" ng-click="checkAll()" >
+                        <span class="info"></span>
+                      </label>
+                    </th>
                     <th>实验样本编号</th>
                     <th>样本类型</th>
                     <th>采样时间</th>
@@ -35,9 +42,15 @@
             </thead>
             <tbody>
                 <tr ng-repeat="sample in sampleList.datas">
-                    <td>{{sample.experSampleName }}</td>
+                    <td>
+                      <label class="checkbox-lable">
+                        <input class="checkbox" type="checkbox" name="checkOne" ng-click="checkOne()" value="{{sample.experSampleName}}">
+                        <span class="info"></span>
+                      </label>
+                    </td>
+                    <td class="experSampleName">{{sample.experSampleName }}</td>
                     <td>{{sample.type }}</td>
-                    <td>{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                    <td class="createDate">{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
                     <td>提DNA</td>
                     <td>{{sample.remark }}</td>
                     <td>

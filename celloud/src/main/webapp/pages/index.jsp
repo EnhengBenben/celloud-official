@@ -64,12 +64,11 @@
   </script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/photoClip/iscroll-zoom.js?v=3.3.4"></script>
+  <script src="<%=request.getContextPath()%>/plugins/ /iscroll-zoom.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/photoClip/hammer.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/photoClip/lrz.all.bundle.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/photoClip/jquery.photoClip.js?v=3.3.4"></script>
   <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
-  <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
   <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js"></script>
   <script src="//cdn.bootcss.com/select2/4.0.3/js/i18n/zh-CN.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
@@ -85,7 +84,7 @@
   <script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/area/area.js?v=3.3.4"></script>
   
-  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.9.25"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.10.1"></script>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
 	  window.username = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUsername() %>';

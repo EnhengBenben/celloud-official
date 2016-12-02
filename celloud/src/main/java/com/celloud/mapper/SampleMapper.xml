@@ -191,6 +191,7 @@
     left join tb_sample_log sl on s.sample_id=sl.sample_id
     left join tb_sample_order so on s.order_id=so.id
 	where sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and sl.state=#{state}
+	order by create_date desc
   </select>
   <select id="getByNameExperState" resultMap="ResultMapWithlogDate">
     select s.*,sl.create_date log_date from 
@@ -230,5 +231,11 @@
 	tb_sample s,tb_sample_storage ss,tb_sample_storage_relat ssr
 	where s.sample_id=ssr.sample_id and ss.id=ssr.storage_id
 	and ss.storage_name=#{storageName} and s.state=#{state,jdbcType=BIT}
+  </select>
+  <select id="getSampleByExperName" resultMap="BaseResultMap">
+    select
+     <include refid="Base_Column_List" /> 
+    from tb_sample
+    where state=#{state} and exper_sample_name=#{experSampleName}
   </select>
 </mapper>

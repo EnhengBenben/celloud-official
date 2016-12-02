@@ -27,7 +27,7 @@
 			</a>
 		</div>
 		<div class="logo-name">生物信息云平台</div>
-		<form action="clientLogin.html" method="post" id="clientLoginForm">
+		<form action="${pageContext.request.contextPath }/customer/login" method="post" id="clientLoginForm">
 			<div class="login-main clearfix">
 			    <input type="hidden" name="info" id="info" value="${requestScope.info }" />
 			    <div class="error">&nbsp;</div>
@@ -71,6 +71,7 @@
 			  utils.setDocSize();
 			});
 		}
+		window.CONTEXT_PATH = "${pageContext.request.contextPath}";
 	</script>
 </body>
 </html>

@@ -94,7 +94,7 @@
   <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.3"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.10.1"></script>
 	<script src="<%=request.getContextPath()%>/js/base.js?v=3.2.4" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/rocky_main.js?v=3.2.4" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/rocky_upload.js?v=3.3.3"></script>
