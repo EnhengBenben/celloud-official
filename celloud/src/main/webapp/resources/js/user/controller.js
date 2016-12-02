@@ -5,18 +5,50 @@
 			$scope.user = data;
 			$scope.user_bak = angular.copy(data);
 		});
-		$scope.updateUserInfo = function(){
-			userService.updateUserInfo($scope.user).
-			success(function(data){
+		$scope.sendCaptcha = function(){
+			userService.sendCaptcha($scope.user.cellphone).
+			success(function(data, status){
+				if(status == 200){
+					// 倒计时60秒
+			        time = 60;
+			        $("#captchaButton").prop("disabled",true);
+			        $("#captchaButton").html("重新发送(<span id='times'>60</span>)");
+			        var setinterval = setInterval(function(){
+			            time--;    
+			            if(time==0){
+			                $("#captchaButton").prop("disabled",false);
+			                clearInterval(setinterval);
+			                $("#captchaButton").html("重新发送");
+			            } else {
+			                $("#times").html(time);
+			            }
+			        }, 1000);
+				}
+			}).
+			error(function(data, status){
+				if(status == 400){
+					// 参数错误
+					$.alert("手机号格式有误!");
+				}
+				if(status == 500){
+					// 请勿频繁发送
+					$.alert("请勿频繁获取验证码");
+				}
+			})
+		};
+		$scope.authenticationCellphone = function(){
+			userService.authenticationCellphone($scope.user.cellphone, $scope.captcha).
+			success(function(data, status){
 				$.alert(data.message);
 			}).
-			error(function(data){
+			error(function(data, status){
 				$.alert(data.message);
 			});
 		};
 		$scope.reset = function(){
 			$scope.user = angular.copy($scope.user_bak);
-		}
+			$scope.captcha = undefined;
+		};
 	});
 	celloudApp.controller("updatePassword",function($scope,userService){
 		$scope.reset = function() {

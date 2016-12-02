@@ -271,6 +271,19 @@ public interface ReportDao {
 
     /**
      * 
+     * @description 查询mysql对象
+     * @author miaoqi
+     * @date 2016年11月29日下午2:06:42
+     *
+     * @param clazz
+     * @param filters
+     * @param fields
+     * @return
+     */
+    public <T> List<T> queryPojoByFilters(Class<T> clazz, Map<String, Object> filters, String[] fields);
+
+    /**
+     * 
      * @description 根据条件删除数据
      * @author miaoqi
      * @date 2016年11月25日下午3:07:13

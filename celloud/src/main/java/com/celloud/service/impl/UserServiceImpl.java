@@ -2,11 +2,14 @@ package com.celloud.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.mongodb.morphia.Key;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.UserRole;
+import com.celloud.dao.ReportDao;
 import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.UserMapper;
 import com.celloud.mapper.UserRegisterMapper;
@@ -44,6 +48,8 @@ public class UserServiceImpl implements UserService {
     private AliEmailUtils aliEmail;
     @Autowired
     private AppMapper appMapper;
+    @Autowired
+    private ReportDao reportDao;
 
     @Override
     public User login(User user) {
@@ -273,5 +279,35 @@ public class UserServiceImpl implements UserService {
 
     public Boolean updateBySelective(User updateUser) {
         return userMapper.updateByPrimaryKeySelective(updateUser) == 1;
+    }
+
+    @Override
+    public User queryFromMongo(Integer userId) {
+        Map<String, Object> filters = new HashMap<String, Object>();
+        filters.put("userId", userId);
+        List<User> users = reportDao.queryPojoByFilters(User.class, filters, null);
+        if (users != null && users.size() > 0) {
+            return users.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean saveToMongo(User user) {
+        Key<User> key = reportDao.saveObj(user);
+        if (key != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean updateToMongo(User user) {
+        Map<String, Object> queryFilters = new HashMap<String, Object>();
+        Map<String, Object> updateFilters = new HashMap<String, Object>();
+        queryFilters.put("userId", user.getUserId());
+        updateFilters.put("cellphone", user.getCellphone());
+        reportDao.update(User.class, queryFilters, updateFilters);
+        return true;
     }
 }

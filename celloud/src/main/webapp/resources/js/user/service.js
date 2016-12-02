@@ -3,10 +3,6 @@
 		this.getUserInfo = function(){
 			return $http({method:"POST",url:'user/info',params:{}});
 		}
-		this.updateUserInfo = function(user){
-			// 假同步一
-			return $http({method:"POST",url:'user/updateInfo',params:{"cellphone":user.cellphone}});
-		}
 		this.updatePassword = function(oldPassword,newPassword){
 			// 假同步二
 			return $http({method:"POST",url:'user/updatePassword',params:{"oldPassword":oldPassword,"newPassword":newPassword}});
@@ -23,6 +19,12 @@
 		}
 		this.setUserCompanyIcon = function(companyIcon){
 			return $http({method:"POST",url:'user/setCompanyIcon',data:$.param({companyIcon:companyIcon}),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+		}
+		this.sendCaptcha = function(cellphone){
+			return $http({method:"POST",url:'user/sendCaptcha',data:$.param({cellphone:cellphone}),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+		}
+		this.authenticationCellphone = function(cellphone, captcha){
+			return $http({method:"POST",url:'user/authenticationCellphone',data:$.param({cellphone:cellphone,captcha:captcha}),headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
 		}
 	});
 })();
