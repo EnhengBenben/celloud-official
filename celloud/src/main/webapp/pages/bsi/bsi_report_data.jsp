@@ -350,7 +350,8 @@
 			          </td>
 			        </tr>
 				  </tbody>
-				  <div class="pagination text-center" ng-if="batchPageList.datas.length > 0" style="height: 21px;border: 0px;">
+				</table>
+				<div class="pagination text-center" ng-if="batchPageList.datas.length > 0" style="height: 21px;">
                     <input id="batch-current-page-hide" value="{{batchPageList.page.currentPage}}" type="hidden" >
                     <input id="batch-total-page-hide" value="{{batchPageList.page.totalPage}}" type="hidden" >
                     <ul id="pagination-data-report" class="pages">
@@ -376,7 +377,6 @@
                         <li><a id="next-page-task" class="ends pull-right" ng-click="batchPageQueryBtn(batchPageList.page.currentPage < batchPageList.page.totalPage ? batchPageList.page.currentPage + 1 : batchPageList.page.totalPage)">&gt;&gt;</a></li>
                     </ul>
                   </div>
-				</table>
             </div>
             <div class="report-btn-group pull-right">
                <a class="btn" ng-class="{hide : tab == 'analy'}" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
