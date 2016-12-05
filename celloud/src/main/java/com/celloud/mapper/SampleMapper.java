@@ -67,4 +67,5 @@ public interface SampleMapper {
             @Param("userId") Integer userId,
             @Param("sampleName") String sampleName,
             @Param("state") Integer state);
+
 }

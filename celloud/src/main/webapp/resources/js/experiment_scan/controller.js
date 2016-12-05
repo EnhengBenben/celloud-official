@@ -346,12 +346,12 @@
     storagesService.sampleList().success(function(data){
       $scope.sampleList = data;
     });
-    var pages = {
+    $scope.pages = {
         page : 1,
         pageSize : 10
       };
       $scope.pageQuery = function(page,pageSize){
-        pages = {
+        $scope.pages = {
           page : page,
           pageSize : pageSize
         };
@@ -369,6 +369,17 @@
           $.alert("下载Excel文件成功！");
         }
       });
+    }
+    
+    $scope.updateInMachine = function(id){
+      storagesService.changeInMachine(id).success(function(flag){
+        if(flag>0){
+          $.alert("修改上机状态成功");
+          $scope.storages = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
+        }else{
+          $.alert("修改上机状态失败");
+        }
+      })
     }
   });
   

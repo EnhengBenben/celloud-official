@@ -16,6 +16,8 @@ public interface SampleStorageMapper {
     int addSampleStorageRelat(@Param("ssid") Integer ssid,
             @Param("sampleIds") List<Integer> sampleIds);
 
+    int updateByPrimaryKeySelective(SampleStorage record);
+
     List<SampleStorage> findAll(Page page, @Param("userId") Integer userId,
             @Param("state") Integer state);
 

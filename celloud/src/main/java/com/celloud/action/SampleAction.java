@@ -362,4 +362,11 @@ public class SampleAction {
         return sampleService.getSamples(new Page(page, size),
                 ConstantsData.getLoginUserId(), experState);
     }
+
+    @ActionLog(value = "修改文库上机状态", button = "修改上机状态")
+    @RequestMapping("changeInMachine")
+    @ResponseBody
+    public Integer changeInMachine(int sampleStorageId) {
+        return sampleService.updateSampleInMechine(sampleStorageId);
+    }
 }

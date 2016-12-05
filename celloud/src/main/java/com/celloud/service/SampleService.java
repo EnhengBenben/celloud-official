@@ -251,4 +251,15 @@ public interface SampleService {
      */
     public PageList<Sample> getSamplesExperState(Page page, Integer userId,
             String sampleName);
+
+    /**
+     * 修改文库上机状态
+     * 
+     * @param inMechine
+     * @param sampleStorageId
+     * @return
+     * @author leamo
+     * @date 2016年12月2日 下午1:45:56
+     */
+    public Integer updateSampleInMechine(Integer sampleStorageId);
 }

@@ -9,12 +9,13 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="sample_num" property="sampleNum" jdbcType="INTEGER" />
     <result column="state" jdbcType="BIT" property="state" />
+    <result column="in_machines" property="inMachines" jdbcType="INTEGER" />
   </resultMap>
   <insert id="insert" parameterType="com.celloud.model.mysql.SampleStorage" >
     insert into tb_sample_storage (id,user_id, storage_name, sindex, 
-      create_date, sample_num,state)
+      create_date, sample_num,state,in_machines)
     values (#{id,jdbcType=INTEGER},#{userId,jdbcType=INTEGER}, #{storageName,jdbcType=VARCHAR}, #{sindex,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{sampleNum,jdbcType=INTEGER},#{state,jdbcType=BIT})
+      #{createDate,jdbcType=TIMESTAMP}, #{sampleNum,jdbcType=INTEGER},#{state,jdbcType=BIT}, #{inMachines,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.SampleStorage" useGeneratedKeys="true" keyProperty="id">
     insert into tb_sample_storage
@@ -40,6 +41,9 @@
       <if test="state != null" >
         state,
       </if>
+      <if test="in_machines != null" >
+        in_machines,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -63,6 +67,9 @@
       <if test="state != null" >
         #{state,jdbcType=BIT},
       </if>
+      <if test="inMachines != null" >
+        #{inMachines,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <insert id="addSampleStorageRelat" parameterType="com.celloud.model.mysql.SampleStorage" >
@@ -74,6 +81,33 @@
         #{ssid,jdbcType=INTEGER})
     </foreach>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.SampleStorage" >
+    update tb_sample_storage
+    <set >
+      <if test="storageName != null" >
+        storage_name = #{storageName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="sindex != null" >
+        sindex = #{sindex,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sampleNum != null" >
+        sample_num = #{sampleNum,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="inMachines != null" >
+        in_machines = #{inMachines,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
   <select id="findAll" resultMap="BaseResultMap">
     select * from tb_sample_storage where user_id=#{userId} and state=#{state}
   </select>

@@ -106,5 +106,8 @@
     self.sampleList = function(){
       return $http.get("sample/sampleListInStorage?v="+new Date(),{params: {ssId:$routeParams.ssId}});
     }
+    self.changeInMachine = function(id){
+      return $http({method:"POST",url:'sample/changeInMachine',params:{"sampleStorageId":id}});
+    }
   });
 })()

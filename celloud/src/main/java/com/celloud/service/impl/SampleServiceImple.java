@@ -305,4 +305,12 @@ public class SampleServiceImple implements SampleService {
                 sampleName, DataState.ACTIVE);
         return new PageList<Sample>(page, list);
     }
+
+    @Override
+    public Integer updateSampleInMechine(Integer sampleStorageId) {
+        SampleStorage sampleStorage = new SampleStorage();
+        sampleStorage.setId(sampleStorageId);
+        sampleStorage.setInMachine(SampleTypes.SS_IN_MACHINE);
+        return sampleStorageMapper.updateByPrimaryKeySelective(sampleStorage);
+    }
 }
