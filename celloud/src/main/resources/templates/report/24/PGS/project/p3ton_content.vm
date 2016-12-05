@@ -26,8 +26,13 @@
                             <td><div style="float:left;width:9%;">遗传咨询:</div><div class="explainGeneticCounseling" style="float:left;width:90%;word-wrap: break-word;word-break: break-all;"><textarea style="width:100%" rows="4" name="projectInfo['explainGeneticCounseling']">$!{pgs.projectInfo.explainGeneticCounseling.get($index)}</textarea></div></td>
                         </tr>
 				    </table>
-				    <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.miniPng}" style="width:100%;">
-				    <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.splitPng}" style="width:100%;">
+				    #if(${p.userId} != 77)
+                        <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.miniPng}" style="width:100%;">
+                        <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.splitPng}" style="width:100%;">
+                    #elseif(${p.report.indexOf('+X')} > -1 || ${p.report.indexOf('+Y')} > -1 || ${p.report.indexOf('-X')} > -1 || ${p.report.indexOf('-Y')} > -1)
+                        <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.miniPng}" style="width:100%;">
+                        <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.splitPng}" style="width:100%;">
+                    #end
 				#else
 				        <tr>
                             <td><div style="float:left;width:9%;">检测结果:</div><div class="explainResult" style="float:left;width:90%;word-wrap: break-word;word-break: break-all;"><textarea style="width:100%" rows="4" name="projectInfo['explainResult']">#if(${pgs.projectInfo.explainResult.get($index)})$!{pgs.projectInfo.explainResult.get($index)}#else测序量不足，无法分析，建议重测。#end</textarea></div></td>
@@ -64,8 +69,13 @@
                         <td><div style="float:left;width:9%;">遗传咨询:</div><div class="explainGeneticCounseling" style="float:left;width:90%;word-wrap: break-word;word-break: break-all;"><textarea style="width:100%" rows="4" name="projectInfo['explainGeneticCounseling']">$!{pgs.projectInfo.explainGeneticCounseling}</textarea></div></td>
                     </tr>
 			    </table>
-			    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).miniPng}" style="width:100%;">
-			    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).splitPng}" style="width:100%;">
+			    #if(${pgsList.get(0).userId} != 77)
+                    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).miniPng}" style="width:100%;">
+                    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).splitPng}" style="width:100%;">
+                #elseif(${pgsList.get(0).report.indexOf('+X')} > -1 || ${pgsList.get(0).report.indexOf('+Y')} > -1 || ${pgsList.get(0).report.indexOf('-X')} > -1 || ${pgsList.get(0).report.indexOf('-Y')} > -1)
+                    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).miniPng}" style="width:100%;">
+                    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).splitPng}" style="width:100%;">
+			    #end
 	        #else
 		        	<tr>
                         <td><div style="float:left;width:9%;">检测结果:</div><div class="explainResult" style="float:left;width:90%;word-wrap: break-word;word-break: break-all;"><textarea style="width:100%" rows="4" name="projectInfo['explainResult']">#if(${pgs.projectInfo.explainResult})$!{pgs.projectInfo.explainResult}#else$!{pgsList.get(0).report}#end</textarea></div></td>
