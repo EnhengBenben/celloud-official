@@ -2069,6 +2069,23 @@ public class ReportAction {
 		returnToVelocity(path, context, projectId);
 	}
 
+    /**
+     * 
+     * @description 获取已保存的用户签名
+     * @author miaoqi
+     * @date 2016年12月5日下午3:07:26
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "signature", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> signature(String file) throws IOException {
+        String path = IconConstants.getSignaturePath(file);
+        File targetFile = new File(path);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
+
 	/**
 	 * 打印TBRifampicin
 	 * 
