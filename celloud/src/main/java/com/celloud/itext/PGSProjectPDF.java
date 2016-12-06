@@ -38,8 +38,8 @@ public class PGSProjectPDF {
      */
     public static void createPDF(String path, String appName, int posX, int posY, String keys, String projectId)
             throws Exception {
-        path = path.endsWith("\\") ? path : path + "\\";
-        Integer userId = Integer.parseInt(StringUtils.split(path, "\\")[StringUtils.split(path, "\\").length - 2]);
+        path = path.endsWith("/") ? path : path + "/";
+        Integer userId = Integer.parseInt(StringUtils.split(path, "/")[StringUtils.split(path, "/").length - 2]);
         // 定义中文
         BaseFont bfChinese = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
         // 定义Title字体样式
