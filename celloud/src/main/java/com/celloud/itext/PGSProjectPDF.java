@@ -40,16 +40,16 @@ public class PGSProjectPDF {
 			throws Exception {
         path = path.endsWith("/") ? path : path + "/";
         Integer userId = Integer.parseInt(StringUtils.split(path, "/")[StringUtils.split(path, "/").length - 2]);
-               // 定义中文
-               BaseFont bfChinese = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
-               // 定义Title字体样式
-               Font titleFont = new Font(bfChinese, 16, Font.BOLD, BaseColor.BLACK);
-        
-               // 定义正文字体样式（英语）
-               BaseFont context = BaseFont.createFont();
-               Font contextFont = new Font(context, 12, Font.NORMAL);
-         
-               // 定义正文字体样式（汉语）
+        // 定义中文
+        BaseFont bfChinese = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
+        // 定义Title字体样式
+        Font titleFont = new Font(bfChinese, 16, Font.BOLD, BaseColor.BLACK);
+
+        // 定义正文字体样式（英语）
+        BaseFont context = BaseFont.createFont();
+        Font contextFont = new Font(context, 12, Font.NORMAL);
+
+        // 定义正文字体样式（汉语）
         BaseFont contextC = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
         Font contextFontC = new Font(contextC, 12, Font.NORMAL);
 
