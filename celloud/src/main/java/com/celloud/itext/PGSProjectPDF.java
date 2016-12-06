@@ -25,21 +25,21 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PGSProjectPDF {
 
-	/**
-	 * @param path
-	 *            ：目录到 app
-	 * @param appName
-	 *            ：appName
-	 * @param posX
-	 *            ：水印位置，X轴
-	 * @param posY
-	 *            ：水印位置，Y轴
-	 * @throws Exception
-	 */
-	public static void createPDF(String path, String appName, int posX, int posY, String keys, String projectId)
-			throws Exception {
-        path = path.endsWith("/") ? path : path + "/";
-        Integer userId = Integer.parseInt(StringUtils.split(path, "/")[StringUtils.split(path, "/").length - 2]);
+    /**
+     * @param path
+     *            ：目录到 app
+     * @param appName
+     *            ：appName
+     * @param posX
+     *            ：水印位置，X轴
+     * @param posY
+     *            ：水印位置，Y轴
+     * @throws Exception
+     */
+    public static void createPDF(String path, String appName, int posX, int posY, String keys, String projectId)
+            throws Exception {
+        path = path.endsWith("\\") ? path : path + "\\";
+        Integer userId = Integer.parseInt(StringUtils.split(path, "\\")[StringUtils.split(path, "\\").length - 2]);
         // 定义中文
         BaseFont bfChinese = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
         // 定义Title字体样式
@@ -143,13 +143,7 @@ public class PGSProjectPDF {
 
                 title = new Paragraph("Data:", contextFont);
                 doc.add(title);
-                float widths[] = null;// 设置表格的列宽和列数
-                if ("SurePlex".equals(appName) || "MDA_HR".equals(appName) || "gDNA_HR".equals(appName)
-                        || "MalBac".equals(appName)) {
-                    widths = new float[] { 100f, 100f, 100f, 100f, 100f };
-                } else {
-                    widths = new float[] { 120f, 120f, 135f, 120f, 130f, 60f };
-                }
+                float widths[] = { 120f, 120f, 135f, 120f, 130f, 60f };
                 PdfPTable table = new PdfPTable(widths);// 建立一个pdf表格
                 table.getDefaultCell().setBorder(1);
                 PdfPCell cell = null;
@@ -171,14 +165,8 @@ public class PGSProjectPDF {
         if (StringUtils.isNotEmpty(sb.toString())) {
             doc.newPage();
             String[] imgString = sb.toString().split(";");
-            int imgs = imgString.length;
-            boolean isOld = false;
-            if (imgs % 2 == 1) {
-                isOld = true;
-                imgs = imgs - 1;
-            }
             Pattern p_str = Pattern.compile("[\\u4e00-\\u9fa5]+");
-            for (int i = 0; i < imgs; i = i + 2) {
+            for (int i = 0; i < imgString.length; i++) {
                 String detail1[] = imgString[i].split(",");
                 String result1 = detail1[0];
                 String png1 = FileTools.getArray(detail1, 1);
@@ -195,80 +183,23 @@ public class PGSProjectPDF {
                 if (!result1.equals("") && StringUtils.isNotEmpty(png1)) {
                     img1 = Image.getInstance(result1 + png1);
                     if (isBigPic1.equals("true")) {
-                        img1.scaleAbsolute(208, 272); // 设置图片大小
+                        if (userId == 25) {
+                            img1.scaleAbsolute(410, 150); // 设置图片大小
+                        } else {
+                            img1.scaleAbsolute(208, 272); // 设置图片大小
+                        }
                     } else {
-                        img1.scaleAbsolute(500f, 104f); // 设置图片大小
+                        if (userId == 25) {
+                            img1.scaleAbsolute(750f, 200f); // 设置图片大小
+                        } else {
+                            img1.scaleAbsolute(500f, 104f); // 设置图片大小
+                        }
                     }
-                    img1.setAlignment(Image.ALIGN_LEFT);
-                }
-                String detail2[] = imgString[i + 1].split(",");
-                String result2 = FileTools.getArray(detail2, 0);
-                String png2 = FileTools.getArray(detail2, 1);
-                String sm2 = FileTools.getArray(detail2, 2);
-                String isBigPic2 = FileTools.getArray(detail2, 3);
-                Matcher m2 = p_str.matcher(sm2);
-                Paragraph title2 = null;
-                Image img2 = null;
-                if (m2.find()) {
-                    title2 = new Paragraph("s a m p l e_n a m e :    " + sm2, contextFontC);
-                } else {
-                    title2 = new Paragraph("sample_name:    " + sm2, contextFont);
-                }
-                if (!result2.equals("") && StringUtils.isNotEmpty(png2)) {
-                    img2 = Image.getInstance(result2 + png2);
-                    if (isBigPic2.equals("true")) {
-                        img2.scaleAbsolute(208, 272); // 设置图片大小
+                    if (userId == 25) {
+                        img1.setAlignment(Image.ALIGN_LEFT);
                     } else {
-                        img2.scaleAbsolute(500f, 104f); // 设置图片大小
+                        img1.setAlignment(Image.ALIGN_CENTER);
                     }
-                    img2.setAlignment(Image.ALIGN_LEFT);
-                }
-                float widths[] = new float[] { 500f, 500f };
-                PdfPTable table = new PdfPTable(widths);// 建立一个pdf表格
-                PdfPCell cell = null;
-                cell = new PdfPCell(title1);
-                cell.setBorderWidth(0);
-                table.addCell(cell);
-                cell = new PdfPCell(title2);
-                cell.setBorderWidth(0);
-                table.addCell(cell);
-                if (img1 != null) {
-                    cell = new PdfPCell(img1);
-                    cell.setBorderWidth(0);
-                    table.addCell(cell);
-                }
-                if (img2 != null) {
-                    cell = new PdfPCell(img2);
-                    cell.setBorderWidth(0);
-                    table.addCell(cell);
-                    doc.add(table);
-                }
-                if (i % 4 == 2) {
-                    doc.newPage();
-                }
-            }
-            if (isOld) {
-                String detail1[] = imgString[imgs].split(",");
-                String result1 = FileTools.getArray(detail1, 0);
-                String png1 = FileTools.getArray(detail1, 1);
-                String sm1 = FileTools.getArray(detail1, 2);
-                String isBigPic1 = FileTools.getArray(detail1, 3);
-                Matcher m1 = p_str.matcher(sm1);
-                Paragraph title1 = null;
-                Image img1 = null;
-                if (m1.find()) {
-                    title1 = new Paragraph("s a m p l e_n a m e :    " + sm1, contextFontC);
-                } else {
-                    title1 = new Paragraph("sample_name:    " + sm1, contextFont);
-                }
-                if (!result1.equals("") && StringUtils.isNotEmpty(png1)) {
-                    img1 = Image.getInstance(result1 + png1);
-                    if (isBigPic1.equals("true")) {
-                        img1.scaleAbsolute(208, 272); // 设置图片大小
-                    } else {
-                        img1.scaleAbsolute(500f, 104f); // 设置图片大小
-                    }
-                    img1.setAlignment(Image.ALIGN_LEFT);
                 }
                 float widths[] = new float[] { 500f };
                 PdfPTable table = new PdfPTable(widths);// 建立一个pdf表格
@@ -280,20 +211,25 @@ public class PGSProjectPDF {
                     cell = new PdfPCell(img1);
                     cell.setBorderWidth(0);
                     table.addCell(cell);
-                       }
-                       doc.add(table);
-                   }
-               }
-               doc.close();
-               if (new File(path + projectId + "/temp.pdf").exists()) {
-                   WatermarkUtil.addMark(path + projectId + "/temp.pdf", path + projectId + "/" + projectId + ".pdf",
-                           PropertiesUtil.img, 1, posX, posY);
-               }
-	}
+                    doc.add(table);
+                }
+                if (userId == 25 && (i + 1) % 4 == 0) {
+                    doc.newPage();
+                } else if (userId != 25 && (i + 1) % 2 == 0) {
+                    doc.newPage();
+                }
+            }
+        }
+        doc.close();
+        if (new File(path + projectId + "/temp.pdf").exists()) {
+            WatermarkUtil.addMark(path + projectId + "/temp.pdf", path + projectId + "/" + projectId + ".pdf",
+                    PropertiesUtil.img, 1, posX, posY);
+        }
+    }
 
-	public static void main(String[] args) throws Exception {
-		PGSProjectPDF pdf = new PGSProjectPDF();
-        pdf.createPDF("G:\\15\\129", "ApmLibrary", 100, 200,
+    public static void main(String[] args) throws Exception {
+        PGSProjectPDF pdf = new PGSProjectPDF();
+        pdf.createPDF("G:\\25\\129", "ApmLibrary", 100, 200,
                 "16102500215030,test_t,aaa;16102600215162,test_t,bbb;16102600215268,test_t,ccc;", "1937");
-	}
+    }
 }
