@@ -15,7 +15,7 @@ class Rocky:
     path = None
     instance = None
     locker = threading.Lock()
-    # 初始化 
+    # 初始化
     def __init__(self):
         pass
 
