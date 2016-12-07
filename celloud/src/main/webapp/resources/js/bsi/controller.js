@@ -519,7 +519,7 @@
 		success(function(dataMap){
 			$scope.bsi = dataMap.bsi;
 			$scope.data = dataMap.data;
-			$scope.tab = 'patient';
+			$rootScope.bsiTab = $rootScope.bsiTab==null?'patient':$rootScope.bsiTab;
 		    $scope.havestrain = "";
 		    
 		    if($scope.bsi){
