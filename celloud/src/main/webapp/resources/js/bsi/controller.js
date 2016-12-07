@@ -519,8 +519,12 @@
 		success(function(dataMap){
 			$scope.bsi = dataMap.bsi;
 			$scope.data = dataMap.data;
-			$rootScope.bsiTab = $rootScope.bsiTab==null?'patient':$rootScope.bsiTab;
+			$rootScope.tab = $rootScope.tab == undefined?'patient':$rootScope.tab;
 		    $scope.havestrain = "";
+		    
+		    $scope.changeTab = function(tab){
+		    	$rootScope.tab = tab;
+		    }
 		    
 		    if($scope.bsi){
 		    	$scope.batchParams = {

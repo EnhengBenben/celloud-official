@@ -16,8 +16,8 @@
         <div class="row rdata-content">
           <div class="col-sm-10">
               <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                <li role="presentation" ng-class="{active:bsiTab == 'patient'}"><a href="javascript:void(0);" ng-click="bsiTab = 'patient'" id="patient-tab" aria-controls="patient-report" role="tab" data-toggle="tab">患者报告</a></li>
-                <li role="presentation" ng-class="{active:bsiTab == 'analy'}"><a href="javascript:void(0);" ng-click="bsiTab = 'analy'" id="analy-tab" aria-controls="analy-report" role="tab" data-toggle="tab">分析报告</a></li>
+                <li role="presentation" ng-class="{active:tab == 'patient'}"><a href="javascript:void(0);" ng-click="changeTab('patient')" id="patient-tab" aria-controls="patient-report" role="tab" data-toggle="tab">患者报告</a></li>
+                <li role="presentation" ng-class="{active:tab == 'analy'}"><a href="javascript:void(0);" ng-click="changeTab('analy')" id="analy-tab" aria-controls="analy-report" role="tab" data-toggle="tab">分析报告</a></li>
               </ul>
               <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane" ng-class="{active : tab == 'patient'}" id="patient-report" aria-labelledby="patient-tab">
