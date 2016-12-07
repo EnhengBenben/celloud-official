@@ -3673,6 +3673,7 @@ public class ReportAction {
 		try {
 			Project project = projectService.selectByPrimaryKey(projectId);
 			context.put("uploadPath", "/upload/");
+            context.put("rockyResult", "/rockyResult/");
 			context.put("project", project);
 			HttpServletResponse response = ConstantsData.getResponse();
 			response.setContentType("text/html;charset=UTF-8");

@@ -189,7 +189,10 @@
 									<td style="width: 170px;">
 										<i>$record.gene</i>:&nbsp;$record.acids<br>${significances.get($!record.significance)}
 									</td>
-									<td>$record.description</td>
+									<td>
+									   $record.description<br/>
+									   <img src="$!{rockyResult}$!{rocky.userId}/$!{rocky.appId}/$!{rocky.dataKey}/$!{record.peakPic}">
+									</td>
 								</tr>
 								#end
 							</tbody>
