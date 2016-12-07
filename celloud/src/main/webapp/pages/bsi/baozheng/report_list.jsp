@@ -5,9 +5,9 @@
 <table class="table table-main">
   <thead>
     <tr>
-      <th width="40">
-        <div data-click="report-check-all" class="celicon checkbox checkbox-un"></div>
-      </th>
+<!--       <th width="40"> -->
+<!--         <div data-click="report-check-all" class="celicon checkbox checkbox-un"></div> -->
+<!--       </th> -->
       <th width="140">
         <input id="sample-selector" type="text" placeholder="样本编号/病历号">
       </th>
@@ -22,9 +22,9 @@
     <c:if test="${pageList.datas.size()>0 }">
       <c:forEach var="task" items="${pageList.datas }" varStatus="size">
 	    <tr id="report${task.dataKey}${task.projectId}${task.appId}">
-	      <td>
-	        <div class="celicon checkbox checkbox-un"></div>
-	      </td>
+<!-- 	      <td> -->
+<!-- 	        <div class="celicon checkbox checkbox-un"></div> -->
+<!-- 	      </td> -->
 	      <td>${task.sampleName }</td>
 	      <td>${task.batch }</td>
 	      <td title="${task.fileName }" name="data-name-td" >
@@ -92,17 +92,17 @@
   <c:if test="${pageList.datas.size()>0}">
     <input id="current-page-hide" value="${pageList.page.currentPage }" type="hidden" >
     <input id="total-page-hide" value="${pageList.page.totalPage }" type="hidden" >
-    <ul class="pagination-check pull-left">
-      <li class="checkbox-li"><div data-click="report-check-all" class="celicon checkbox checkbox-un"></div></li>
-      <li>全选</li>
-      <li>
-        <select>
-          <option value="0">批量下载</option>
-          <option value="1">批量归档</option>
-          <option value="2">批量分发</option>
-        </select>
-      </li>
-    </ul>
+<!--     <ul class="pagination-check pull-left"> -->
+<!--       <li class="checkbox-li"><div data-click="report-check-all" class="celicon checkbox checkbox-un"></div></li> -->
+<!--       <li>全选</li> -->
+<!--       <li> -->
+<!--         <select> -->
+<!--           <option value="0">批量下载</option> -->
+<!--           <option value="1">批量归档</option> -->
+<!--           <option value="2">批量分发</option> -->
+<!--         </select> -->
+<!--       </li> -->
+<!--     </ul> -->
     <ul class="pagination-data pull-right">
       <li><span>共&nbsp;&nbsp;${pageList.page.rowCount }&nbsp;&nbsp;条</span></li>
       <li>每页

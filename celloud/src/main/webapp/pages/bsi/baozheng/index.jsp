@@ -36,9 +36,9 @@
                 <i class="celicon user-icon"></i>
               </a>
               <ul class="dropdown-menu">
-                <li>
-                  <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>设置</a>
-                </li>
+<!--                 <li> -->
+<!--                   <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>设置</a> -->
+<!--                 </li> -->
                 <li>
                   <a href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i>退出</a>
                 </li>
@@ -56,7 +56,7 @@
             <div class="bio-name">
               <div>百菌探</div>
               <div>Bactive</div>
-              <a href="javascript:void(0)">详情>>></a>
+<!--               <a href="javascript:void(0)">详情>>></a> -->
             </div>
           </div>
           <hr>
