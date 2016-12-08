@@ -284,6 +284,7 @@ public class RunServiceImpl implements RunService {
                 storageName = StringUtils.splitByWholeSeparator(originalName,
                         "_")[0];
 			}
+            logger.info("文库编号为{}", storageName);
 			Pattern p = Pattern.compile("\\_|\\%");
 			Matcher m = p.matcher(pubName);
 			StringBuffer sb = new StringBuffer();
@@ -318,8 +319,10 @@ public class RunServiceImpl implements RunService {
 			task.setAppId(appId);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
+                logger.info("完全上传BSI所需的配对文件");
                 List<Sample> sampleList = sampleService
                         .getSamplesByStorageName(storageName);
+                logger.info("文库{}下样本列表长度{}", storageName, sampleList.size());
                 if (sampleList != null && sampleList.size() > 0) {
                     DataFile data = new DataFile();
                     data.setFileName(pubName + ".txt");
@@ -353,6 +356,7 @@ public class RunServiceImpl implements RunService {
                     dataService.updateByPrimaryKeySelective(data);
                     dataList.add(data);
                     runSingle(userId, appId, dataList);
+                    logger.info("判断BSI运行成功");
                     dataService.delete(String.valueOf(id));
                 }
             }
@@ -417,4 +421,10 @@ public class RunServiceImpl implements RunService {
 		}
 	}
 
+    public static void main(String[] args) {
+        String originalName = "16102862_ffffff_R1.fastq";
+        String storageName = StringUtils.splitByWholeSeparator(originalName,
+                "_")[0];
+        System.out.println(storageName);
+    }
 }
