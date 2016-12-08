@@ -38,6 +38,34 @@
     }
   });
   
+  celloudApp.controller("sampleTrackingController", function($scope, $routeParams, sampleTrackingService){
+    $scope.pages = {
+        page : 1,
+        pageSize : 20
+    };
+    $scope.pageQuery = function(page,pageSize){
+      $scope.pages = {
+        page : page,
+        pageSize : pageSize
+      };
+      sampleTrackingService.pageList($scope.pages.page,$scope.pages.pageSize,$scope.sampleName).success(function(data){
+        $scope.sampleList = data;
+      });
+    }
+    $scope.sampleNameQuery = function(){
+      $scope.pageQuery(1,$scope.pages.pageSize);
+    }
+    $scope.doOnKeyPress= function($event){
+      if($event.keyCode == 13){
+        if($scope.sampleName==''||$scope.sampleName==undefined){
+        }else{
+          $scope.sampleNameQuery();
+        }
+      }
+    }
+    $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
+  });
+  
   celloudApp.controller("sampleOrderController", function($scope, $routeParams, sampleOrderService){
     sampleOrderService.sampleOrderInfo($routeParams.orderId).success(function(data){
       if(data != null){
@@ -318,19 +346,19 @@
     storagesService.sampleList().success(function(data){
       $scope.sampleList = data;
     });
-    var pages = {
-        page : 1,
-        pageSize : 10
+    $scope.pages = {
+      page : 1,
+      pageSize : 20
+    };
+    $scope.pageQuery = function(page,pageSize){
+      $scope.pages = {
+        page : page,
+        pageSize : pageSize
       };
-      $scope.pageQuery = function(page,pageSize){
-        pages = {
-          page : page,
-          pageSize : pageSize
-        };
-        storagesService.pageList(page,pageSize).success(function(data){
-          $scope.storages = data;
-        });
-      }
+      storagesService.pageList($scope.pages.page,$scope.pages.pageSize).success(function(data){
+        $scope.storages = data;
+      });
+    }
     $scope.download = function(id,storageName){
       buidLibraryService.downloadExcel(id,storageName).success(function(flag){
         if(flag==1){
@@ -341,6 +369,17 @@
           $.alert("下载Excel文件成功！");
         }
       });
+    }
+    
+    $scope.updateInMachine = function(id){
+      storagesService.changeInMachine(id).success(function(flag){
+        if(flag>0){
+          $.alert("修改上机状态成功");
+          $scope.storages = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
+        }else{
+          $.alert("修改上机状态失败");
+        }
+      })
     }
   });
   

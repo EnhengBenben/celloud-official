@@ -4,8 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="content-header">
   <ol class="breadcrumb">
-    <li>主页</li>
-    <li>应用</li>
     <li>百菌探</li>
     <li><a data-click="report-list" href="javascript:void(0)">报告</a></li>
     <li>
@@ -494,10 +492,10 @@
     <div class="report-btn-group pull-right">
        <a class="btn" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
        <a class="btn hide" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId=${bsi.projectId }&dataKey=${bsi.dataKey }&appId=${bsi.appId }&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
-       <a class="btn" href="javascript:void(0)"><i class="fa fa-cloud-download"></i>导出</a>
-       <a class="btn" href="javascript:void(0)"><i class="fa fa-group"></i>发布</a>
-       <a class="btn" href="javascript:void(0)"><i class="fa fa-share-square-o"></i>分享</a>
-       <a class="btn" href="javascript:void(0)"><i class="fa fa-inbox"></i>存档</a>
+<!--        <a class="btn" href="javascript:void(0)"><i class="fa fa-cloud-download"></i>导出</a> -->
+<!--        <a class="btn" href="javascript:void(0)"><i class="fa fa-group"></i>发布</a> -->
+<!--        <a class="btn" href="javascript:void(0)"><i class="fa fa-share-square-o"></i>分享</a> -->
+<!--        <a class="btn" href="javascript:void(0)"><i class="fa fa-inbox"></i>存档</a> -->
      </div>
   </div>
   <input id="appid-hide" type="hidden" value="${bsi.appId }">

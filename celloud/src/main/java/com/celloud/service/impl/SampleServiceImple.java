@@ -149,7 +149,7 @@ public class SampleServiceImple implements SampleService {
     @Override
     public String updateExperState(Integer userId, Integer experState,
             Integer sampleId) {
-        sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED, userId);
+        sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED);
         SampleLog slog = new SampleLog();
         slog.setUserId(userId);
         slog.setSampleId(sampleId);
@@ -188,7 +188,7 @@ public class SampleServiceImple implements SampleService {
         s.setSindex(indexList.get(0));
         sampleMapper.updateByPrimaryKeySelective(s);
 
-        sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED, userId);
+        sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED);
 
         SampleLog slog = new SampleLog();
         slog.setUserId(userId);
@@ -286,9 +286,9 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Sample getByExperNameExperState(Integer userId,
-            String experSampleName, Integer experState) {
-        return sampleMapper.getByExperNameExperState(userId, experSampleName,
+    public Sample getByExperNameExperState(String experSampleName,
+            Integer experState) {
+        return sampleMapper.getByExperNameExperState(experSampleName,
                 experState, DataState.ACTIVE, SampleTypes.ISADD);
     }
 
@@ -296,5 +296,21 @@ public class SampleServiceImple implements SampleService {
     public List<Sample> getSamplesByStorageName(String storageName) {
         return sampleMapper.getSamplesByStorageName(storageName,
                 DataState.ACTIVE);
+    }
+
+    @Override
+    public PageList<Sample> getSamplesExperState(Page page, Integer userId,
+            String sampleName) {
+        List<Sample> list = sampleMapper.getSamplesExperState(page, userId,
+                sampleName, DataState.ACTIVE);
+        return new PageList<Sample>(page, list);
+    }
+
+    @Override
+    public Integer updateSampleInMechine(Integer sampleStorageId) {
+        SampleStorage sampleStorage = new SampleStorage();
+        sampleStorage.setId(sampleStorageId);
+        sampleStorage.setInMachine(SampleTypes.SS_IN_MACHINE);
+        return sampleStorageMapper.updateByPrimaryKeySelective(sampleStorage);
     }
 }

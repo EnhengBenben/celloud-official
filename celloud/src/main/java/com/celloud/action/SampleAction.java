@@ -150,6 +150,17 @@ public class SampleAction {
         return sampleService.samplingAddSample(userId, sampleName, type, tagId);
     }
 
+    @ActionLog(value = "样本实验状态列表", button = "样本追踪")
+    @RequestMapping("sampleTranking")
+    @ResponseBody
+    public PageList<Sample> sampleTranking(String sampleName,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return sampleService.getSamplesExperState(
+                new Page(page, size),
+                ConstantsData.getLoginUserId(), sampleName);
+    }
+
     @ActionLog(value = "编辑备注", button = "编辑备注")
     @RequestMapping("editRemark")
     @ResponseBody
@@ -222,15 +233,14 @@ public class SampleAction {
     public Map<String, String> toTokenDNA(String experSampleName) {
         Map<String, String> map = new HashMap<>();
         // 判断样本是否已入库
-        Integer userId = ConstantsData.getLoginUserId();
-        Sample scanStorage = sampleService.getByExperNameExperState(userId,
+        Sample scanStorage = sampleService.getByExperNameExperState(
                 experSampleName, SampleTypes.SCAN_STORAGE);
         if (scanStorage == null) {
             map.put("error", "此样本未入库");
             return map;
         }
         // 判断样本是否已提取DNA
-        Sample tokenDNA = sampleService.getByExperNameExperState(userId,
+        Sample tokenDNA = sampleService.getByExperNameExperState(
                 experSampleName, SampleTypes.TOKEN_DNA);
         if (tokenDNA != null) {
             map.put("error", "此样品信息已经收集过，请核查或者采集下一管样品信息！");
@@ -274,11 +284,11 @@ public class SampleAction {
     public Integer addSampleToLibrary(String experSampleName,
             String[] sindexs) {
         Integer userId = ConstantsData.getLoginUserId();
-        Sample prevSamp = sampleService.getByExperNameExperState(userId,
+        Sample prevSamp = sampleService.getByExperNameExperState(
                 experSampleName, SampleTypes.TOKEN_DNA);
         if (prevSamp == null)
             return 0;
-        Sample currentSamp = sampleService.getByExperNameExperState(userId,
+        Sample currentSamp = sampleService.getByExperNameExperState(
                 experSampleName, SampleTypes.BUID_LIBRARY);
         if (currentSamp != null)
             return -1;
@@ -350,5 +360,12 @@ public class SampleAction {
     private PageList<Sample> getSamples(int page, int size, int experState) {
         return sampleService.getSamples(new Page(page, size),
                 ConstantsData.getLoginUserId(), experState);
+    }
+
+    @ActionLog(value = "修改文库上机状态", button = "修改上机状态")
+    @RequestMapping("changeInMachine")
+    @ResponseBody
+    public Integer changeInMachine(int sampleStorageId) {
+        return sampleService.updateSampleInMechine(sampleStorageId);
     }
 }

@@ -27,11 +27,17 @@ public class Sample {
 
     private String remark;
 
+    // 显示字段：
     private Integer tagId;
+    /** 产品标签 */
     private String tagName;
     private Integer sampleLogId;
+    /** 实验过程更新时间 */
     private Date logDate;
+    /** 订单编号 */
     private String orderNo;
+    /** 实验状态 */
+    private Integer experState;
 
     public Integer getSampleId() {
         return sampleId;
@@ -166,5 +172,13 @@ public class Sample {
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public Integer getExperState() {
+        return experState;
+    }
+
+    public void setExperState(Integer experState) {
+        this.experState = experState;
     }
 }

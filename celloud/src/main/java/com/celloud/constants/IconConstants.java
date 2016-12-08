@@ -25,6 +25,7 @@ public class IconConstants {
 	private static String deptPath;
 	private static String companyPath;
 	private static String tempPath;
+    private static String signaturePath;
 	/**
 	 * 配置文件的地址
 	 */
@@ -52,6 +53,7 @@ public class IconConstants {
 			deptPath = properties.getProperty("dept");
 			companyPath = properties.getProperty("company");
 			tempPath = properties.getProperty("temp");
+            signaturePath = properties.getProperty("signature");
 		} catch (IOException e) {
 			logger.error("加载配置文件失败：{}", PROPERTIES_PATH, e);
 		}
@@ -142,6 +144,31 @@ public class IconConstants {
 	public static String getCompanyPath(String name) {
 		return companyPath + File.separator + name;
 	}
+
+    /**
+     * 
+     * @description 获取签名文件夹
+     * @author miaoqi
+     * @date 2016年12月5日上午10:44:02
+     *
+     * @return
+     */
+    public static String getSignaturePath() {
+        return signaturePath;
+    }
+
+    /**
+     * 
+     * @description 获取签名图片的路径
+     * @author miaoqi
+     * @date 2016年12月5日上午10:44:13
+     *
+     * @param name
+     * @return
+     */
+    public static String getSignaturePath(String name) {
+        return signaturePath + File.separator + name;
+    }
 
 	/**
 	 * 获取临时存储文件夹

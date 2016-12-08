@@ -42,4 +42,8 @@ public class SampleTypes {
     public static final int BUID_LIBRARY = 3;
     /** 建库完成 */
     public static final int IN_LIBRARY = 4;
+    /** 上机完成 */
+    public static final int IN_MACHINE = 5;
+    /** 文库上机完成 */
+    public static final int SS_IN_MACHINE = 1;
 }

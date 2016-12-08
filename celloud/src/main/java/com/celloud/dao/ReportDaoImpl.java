@@ -214,6 +214,18 @@ public class ReportDaoImpl implements ReportDao {
     }
 
     @Override
+    public <T> List<T> queryPojoByFilters(Class<T> clazz, Map<String, Object> filters, String[] fields) {
+        Query<T> query = dataStore.createQuery(clazz);
+        for (String key : filters.keySet()) {
+            query.filter(key, filters.get(key));
+        }
+        if (null != fields) {
+            query.retrievedFields(true, fields);
+        }
+        return query.asList();
+    }
+
+    @Override
     public <T> Integer update(Class<T> clazz, Map<String, Object> queryFilters, Map<String, Object> updateFilters) {
         Query<T> query = dataStore.createQuery(clazz);
         if (null != queryFilters) {

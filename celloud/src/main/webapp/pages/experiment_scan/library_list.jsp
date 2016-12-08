@@ -25,6 +25,9 @@
                         <a class="btn-link">上传</a>
                         |
                         <a class="btn-link" ng-click="download(storage.id,storage.storageName)">下载</a>
+                        |{{storage.inMachine}}
+                        <a ng-if="storage.inMachine == 0" class="btn-link" ng-click="updateInMachine(storage.id)">等待上机</a>
+                        <a ng-if="storage.inMachine > 0" class="btn-link">已上机</a>
                     </td>
                 </tr>
             </tbody>

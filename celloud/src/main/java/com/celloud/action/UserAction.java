@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +18,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.alidayu.AlidayuConfig;
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
@@ -39,6 +44,7 @@ import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
+import com.celloud.model.mongo.UserCaptcha;
 import com.celloud.model.mysql.ActionLog;
 import com.celloud.model.mysql.Company;
 import com.celloud.model.mysql.User;
@@ -48,7 +54,9 @@ import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.CompanyService;
+import com.celloud.service.CustomerService;
 import com.celloud.service.UserService;
+import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
@@ -79,11 +87,110 @@ public class UserAction {
 	private MessageCategoryUtils mcu;
 	@Resource
 	private CompanyService companyService;
+    @Autowired
+    private CustomerService customerService;
 	private static final Response EMAIL_IN_USE = new Response("202", "邮箱已存在");
 	private static final Response UPDATE_BASEINFO_FAIL = new Response("修改用户信息失败");
 	private static final Response UPDATE_PASSWORD_FAIL = new Response("修改用户密码失败");
 	private static final Response WRONG_PASSWORD = new Response("203", "原始密码错误");
 	private Logger logger = LoggerFactory.getLogger(UserAction.class);
+
+
+    /**
+     * 
+     * @description 平台用户认证手机发送验证码
+     * @author miaoqi
+     * @date 2016年11月29日上午10:54:40
+     *
+     * @param cellphone
+     * @return
+     */
+    @RequestMapping(value = "sendCaptcha", method = RequestMethod.POST)
+    public ResponseEntity<Void> sendCapcha(String cellphone) {
+        logger.info("用户 {} 申请验证手机号码 {}", ConstantsData.getLoginUserId(), cellphone);
+        if (StringUtils.isEmpty(cellphone)) {
+            logger.info("手机号码 {} 格式有误", cellphone);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        // 校验手机号
+        String regex = "^\\d{11}$";
+        Pattern patter = Pattern.compile(regex);
+        Matcher matcher = patter.matcher(cellphone);
+        if (!matcher.find()) {
+            // 手机号错误
+            logger.info("手机号码 {} 格式有误", cellphone);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        // 获取验证码
+        String captcha = DataUtil.getCapchaRandom();
+        // 新增或更新验证码
+        Boolean flag = customerService.addOrUpdateUserCaptcha(cellphone, captcha);
+        if (flag) {
+            logger.info("验证码 {} 发送成功", captcha);
+            // 200 发送成功
+            return ResponseEntity.ok().build();
+        }
+        logger.info("验证码 {} 发送失败", captcha);
+        // 500 发送失败
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    /**
+     * 
+     * @description 认证手机号码
+     * @author miaoqi
+     * @date 2016年11月29日下午12:54:50
+     *
+     * @param captcha
+     * @return
+     */
+    @RequestMapping(value = "authenticationCellphone", method = RequestMethod.POST)
+    public ResponseEntity<Response> authenticationCellphone(String cellphone, String captcha) {
+        // 参数校验
+        logger.info("用户 {} 进行手机号认证, 手机号 = {}, 验证码 = {}", ConstantsData.getLoginUserId(), cellphone, captcha);
+        if (StringUtils.isEmpty(cellphone)) {
+            logger.info("手机号码格式有误");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("400", "手机号码格式有误"));
+        }
+        if (StringUtils.isEmpty(captcha)) {
+            logger.info("验证码格式有误");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("400", "验证码格式有误"));
+        }
+        // 1. 根据手机号从mongo中查询用户的验证码信息
+        UserCaptcha userCaptcha = customerService.getUserCaptchaByCellphone(cellphone);
+        if (userCaptcha != null) {
+            // 2. 获取创建时间
+            DateTime createDate = new DateTime(userCaptcha.getCreateDate());
+            // 3. 创建时间 + 1分钟 大于当前时间, 代表没有过期, 并且验证码相等
+            if (createDate.plusMinutes(AlidayuConfig.captcha_expire_time).isAfterNow()) {
+                if (userCaptcha.getCaptcha().equals(captcha)) {
+                    // 4. 根据当前用户id查询
+                    User mongoUser = userService.queryFromMongo(ConstantsData.getLoginUserId());
+                    User sqlUser = ConstantsData.getLoginUser();
+                    if (mongoUser != null) { // 更新该用户
+                        mongoUser.setCellphone(cellphone);
+                        userService.updateToMongo(mongoUser);
+                    } else { // 插入该用户
+                        sqlUser.setCellphone(cellphone);
+                        userService.saveToMongo(sqlUser);
+                    }
+                    // 5. 更新mysql数据库
+                    sqlUser = new User();
+                    sqlUser.setUserId(ConstantsData.getLoginUserId());
+                    sqlUser.setCellphone(cellphone);
+                    userService.updateBySelective(sqlUser);
+                    customerService.removeUserCaptchaByCellphone(cellphone);
+                    logger.info("用户 {} 更新手机号成功", ConstantsData.getLoginUserId());
+                    return ResponseEntity.ok(new Response("200", "更新成功"));
+                } else {
+                    logger.info("用户 {} 验证码有误", ConstantsData.getLoginUserId());
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("500", "验证码错误"));
+                }
+            }
+        }
+        logger.info("用户 {} 尚未获取验证码或验证码已超时", ConstantsData.getLoginUserId());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("500", "您尚未获取验证码或验证码已超时"));
+    }
 
 	/**
 	 * 

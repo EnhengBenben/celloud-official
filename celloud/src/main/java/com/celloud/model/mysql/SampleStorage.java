@@ -17,6 +17,8 @@ public class SampleStorage {
 
     private Boolean state;
 
+    private Integer inMachine;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class SampleStorage {
 
     public void setState(Boolean state) {
         this.state = state;
+    }
+
+    public Integer getInMachine() {
+        return inMachine;
+    }
+
+    public void setInMachine(Integer inMachine) {
+        this.inMachine = inMachine;
     }
 }

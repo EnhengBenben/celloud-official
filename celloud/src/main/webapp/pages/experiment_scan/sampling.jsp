@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<ng-include src="'pages/partial/_partial_sample_sidebar.jsp'"></ng-include>
 <div class="pro-body">
     <ol class="breadcrumb">
       <li>CelLoud</li>
+      <li>样本管理</li>
       <li>样本采集</li>
     </ol>
     <div class="content sample">

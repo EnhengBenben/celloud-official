@@ -289,4 +289,36 @@ public interface UserService {
      * @return
      */
     Boolean updateBySelective(User updateUser);
+
+    /**
+     * 
+     * @description 从mongo中查询用户对象
+     * @author miaoqi
+     * @date 2016年11月29日下午1:12:57
+     *
+     * @return
+     */
+    User queryFromMongo(Integer userId);
+
+    /**
+     * 
+     * @description 向mongo中插入用户对象
+     * @author miaoqi
+     * @date 2016年11月29日下午1:20:31
+     *
+     * @param user
+     * @return
+     */
+    Boolean saveToMongo(User user);
+
+    /**
+     * 
+     * @description 更新mongo中的用户对象
+     * @author miaoqi
+     * @date 2016年11月29日下午1:30:14
+     *
+     * @param user
+     * @return
+     */
+    Boolean updateToMongo(User user);
 }

@@ -16,8 +16,8 @@
         <div class="row rdata-content">
           <div class="col-sm-10">
               <ul id="myTabs" class="nav nav-tabs" role="tablist">
-                <li role="presentation" ng-class="{active:tab == 'patient'}"><a href="javascript:void(0);" ng-click="tab = 'patient'" id="patient-tab" aria-controls="patient-report" role="tab" data-toggle="tab">患者报告</a></li>
-                <li role="presentation" ng-class="{active:tab == 'analy'}"><a href="javascript:void(0);" ng-click="tab = 'analy'" id="analy-tab" aria-controls="analy-report" role="tab" data-toggle="tab">分析报告</a></li>
+                <li role="presentation" ng-class="{active:tab == 'patient'}"><a ng-click="changeTab('patient')" id="patient-tab" aria-controls="patient-report" role="tab" data-toggle="tab">患者报告</a></li>
+                <li role="presentation" ng-class="{active:tab == 'analy'}"><a ng-click="changeTab('analy')" id="analy-tab" aria-controls="analy-report" role="tab" data-toggle="tab">分析报告</a></li>
               </ul>
               <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane" ng-class="{active : tab == 'patient'}" id="patient-report" aria-labelledby="patient-tab">
@@ -221,10 +221,10 @@
                   <table id="test-seq-table" class="table seq-table">
                     <thead>
                       <tr>
-                        <th style="max-width: 119px;">菌名</th>
-                        <th width="85">序列比重</th>
-                        <th width="85">检出区域</th>
-                        <th width="380">序列 (5'-3')</th>
+                        <th style="width: 119px;">菌名</th>
+                        <th style="width: 80px;">序列比重</th>
+                        <th style="width: 80px;">检出区域</th>
+                        <th style="width: 380px;">序列 (5'-3')</th>
                       </tr>
                     </thead>
                     <tbody ng-if="bsi.species_20 != null" ng-repeat="species20 in bsi.species_20">
@@ -233,7 +233,7 @@
                             <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
                             <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
                            <br>
-                           <svg width="200" height="20">
+                           <svg width="200" height="20" style="-ms-transform: scale(0.8);">
                              <g>
                                <rect x="0" y="0" width="50" height="20" fill="{{species20.site1 | getResultByCompare:'0,0':'#8c8c8c':'#fff'}}"
                                  style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
@@ -253,7 +253,7 @@
                          <td class="sub-title" rowspan="{{species20.seq2 | getBsiRowSpan:species20.seq3:species20.seq4}}">{{species20.seq_proportion}}</td>
                          <td>{{species20.seq1_name}}</td>
                          <td>
-                           <div class="seq">
+                           <div class="seq" style="-ms-transform: scale(0.6);">
                            {{species20.seq1_no}}<br>
                            {{species20.seq1}}
                            </div>
@@ -262,19 +262,19 @@
                        <tr ng-if="species20.seq2 != null && species20.seq2 != ''">
                          <td>{{species20.seq2_name}}</td>
                          <td>
-                           <div class="seq">{{species20.seq2_no}}<br>{{species20.seq2}}</div>
+                           <div class="seq" style="-ms-transform: scale(0.6);">{{species20.seq2_no}}<br>{{species20.seq2}}</div>
                          </td>
                        </tr>
                        <tr ng-if="species20.seq3 != null && species20.seq3 != ''">
                          <td>{{species20.seq3_name}}</td>
                          <td>
-                           <div class="seq">{{species20.seq3_no}}<br>{{species20.seq3}}</div>
+                           <div class="seq" style="-ms-transform: scale(0.6);">{{species20.seq3_no}}<br>{{species20.seq3}}</div>
                          </td>
                        </tr>
                        <tr ng-if="species20.seq4 != null && species20.seq4 != ''">
                          <td>{{species20.seq4_name}}</td>
                          <td>
-                           <div class="seq">{{species20.seq4_no}}<br>{{species20.seq4}}</div>
+                           <div class="seq" style="-ms-transform: scale(0.6);">{{species20.seq4_no}}<br>{{species20.seq4}}</div>
                          </td>
                        </tr>
                     </tbody>

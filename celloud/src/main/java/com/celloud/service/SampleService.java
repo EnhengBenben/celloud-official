@@ -219,14 +219,13 @@ public interface SampleService {
     /**
      * 根据实验样本编号及实验状态获取样本信息
      * 
-     * @param userId
      * @param experSampleName
      * @param experState
      * @return
      * @author leamo
      * @date 2016年10月24日 下午4:54:25
      */
-    public Sample getByExperNameExperState(Integer userId,
+    public Sample getByExperNameExperState(
             String experSampleName, Integer experState);
 
     /**
@@ -238,4 +237,28 @@ public interface SampleService {
      * @date 2016年10月25日 下午4:15:40
      */
     public List<Sample> getSamplesByStorageName(String storageName);
+
+    /**
+     * 获取样本的实验状态列表
+     * 
+     * @param page
+     * @param userId
+     * @param sampleName
+     * @return
+     * @author leamo
+     * @date 2016年12月1日 上午11:00:03
+     */
+    public PageList<Sample> getSamplesExperState(Page page, Integer userId,
+            String sampleName);
+
+    /**
+     * 修改文库上机状态
+     * 
+     * @param inMechine
+     * @param sampleStorageId
+     * @return
+     * @author leamo
+     * @date 2016年12月2日 下午1:45:56
+     */
+    public Integer updateSampleInMechine(Integer sampleStorageId);
 }
