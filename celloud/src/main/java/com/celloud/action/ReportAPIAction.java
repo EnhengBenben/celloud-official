@@ -28,7 +28,8 @@ import com.wordnik.swagger.annotations.ApiResponses;
 
 @Controller
 @RequestMapping("api/report")
-@CrossOrigin(origins = { "http://127.0.0.1:8020" })
+@CrossOrigin(origins = { "http://127.0.0.1:8020" }, methods = { RequestMethod.GET,
+        RequestMethod.POST }, allowedHeaders = { "*" })
 public class ReportAPIAction {
 	Logger log = LoggerFactory.getLogger(AppAction.class);
 	@Resource
