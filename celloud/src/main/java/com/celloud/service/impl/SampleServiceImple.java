@@ -286,8 +286,8 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Sample getByExperNameExperState(
-            String experSampleName, Integer experState) {
+    public Sample getByExperNameExperState(String experSampleName,
+            Integer experState) {
         return sampleMapper.getByExperNameExperState(experSampleName,
                 experState, DataState.ACTIVE, SampleTypes.ISADD);
     }
