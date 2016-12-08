@@ -347,18 +347,18 @@
       $scope.sampleList = data;
     });
     $scope.pages = {
-        page : 1,
-        pageSize : 10
+      page : 1,
+      pageSize : 20
+    };
+    $scope.pageQuery = function(page,pageSize){
+      $scope.pages = {
+        page : page,
+        pageSize : pageSize
       };
-      $scope.pageQuery = function(page,pageSize){
-        $scope.pages = {
-          page : page,
-          pageSize : pageSize
-        };
-        storagesService.pageList(page,pageSize).success(function(data){
-          $scope.storages = data;
-        });
-      }
+      storagesService.pageList($scope.pages.page,$scope.pages.pageSize).success(function(data){
+        $scope.storages = data;
+      });
+    }
     $scope.download = function(id,storageName){
       buidLibraryService.downloadExcel(id,storageName).success(function(flag){
         if(flag==1){

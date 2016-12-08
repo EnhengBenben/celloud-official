@@ -1,5 +1,5 @@
 (function(){
-	celloudApp.controller("updateBaseInfo",function($scope,userService){
+	celloudApp.controller("updateBaseInfo",function($route, $scope,userService){
 		userService.getUserInfo().
 		success(function(data){
 			$scope.user = data;
@@ -39,6 +39,7 @@
 		$scope.authenticationCellphone = function(){
 			userService.authenticationCellphone($scope.user.cellphone, $scope.captcha).
 			success(function(data, status){
+				$route.reload();
 				$.alert(data.message);
 			}).
 			error(function(data, status){
