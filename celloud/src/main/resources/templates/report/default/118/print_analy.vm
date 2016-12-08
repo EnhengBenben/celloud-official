@@ -272,14 +272,14 @@
                        </svg>
                      </td>
                      <td class="sub-title" rowspan="$!srowspan">$!species_20.seq_proportion </td>
-                     <td style="text-align: center;">$!species_20.seq1_name </td>
+                     <td style="text-align: center;vertical-align: middle;">$!species_20.seq1_name </td>
                      <td>
                        <div class="seq">$!species_20.seq1_no <br>$!species_20.seq1 </div>
                      </td>
                    </tr>
                    #if(!$species_20.seq2|| !$species_20.seq2.trim().equals(""))
                    <tr>
-                     <td style="text-align: center;">$!species_20.seq2_name </td>
+                     <td style="text-align: center;vertical-align: middle;">$!species_20.seq2_name </td>
                      <td>
                         <div class="seq">$!species_20.seq2_no <br>$!species_20.seq2 </div>
                      </td>
@@ -287,7 +287,7 @@
                    #end
                    #if(!$species_20.seq3|| !$species_20.seq3.trim().equals(""))
                    <tr>
-                     <td style="text-align: center;">$!species_20.seq3_name </td>
+                     <td style="text-align: center;vertical-align: middle;">$!species_20.seq3_name </td>
                      <td>
                         <div class="seq">$!species_20.seq3_no <br>$!species_20.seq3 </div>
                      </td>
@@ -295,7 +295,7 @@
                    #end
                    #if(!$species_20.seq4|| !$species_20.seq4.trim().equals(""))
                    <tr>
-                     <td style="text-align: center;">$!species_20.seq4_name </td>
+                     <td style="text-align: center;vertical-align: middle;">$!species_20.seq4_name </td>
                      <td>
                         <div class="seq">$!species_20.seq4_no <br>$!species_20.seq4 </div>
                      </td>
