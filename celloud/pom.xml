@@ -270,10 +270,6 @@
             <artifactId>aliyun-java-sdk-sms</artifactId>
             <version>3.0.0-rc1</version>
         </dependency>
-		<dependency>
-            <groupId>com.mangofactory</groupId>
-			<artifactId>swagger-springmvc</artifactId>
-        </dependency>
 	</dependencies>
 	<profiles>
 		<profile>

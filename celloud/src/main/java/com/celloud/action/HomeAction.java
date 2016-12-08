@@ -176,11 +176,6 @@ public class HomeAction {
 		return "home";
 	}
 
-	@RequestMapping("api.html")
-	public String api() {
-		return "api";
-	}
-
     // TODO测试
     @RequestMapping("index.html")
     public String indexHtml() {
