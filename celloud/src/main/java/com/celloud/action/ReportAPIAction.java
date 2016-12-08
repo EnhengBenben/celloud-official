@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,8 +27,6 @@ import com.wordnik.swagger.annotations.ApiResponses;
 
 @Controller
 @RequestMapping("api/report")
-@CrossOrigin(origins = { "http://127.0.0.1:8020" }, methods = { RequestMethod.GET,
-        RequestMethod.POST }, allowedHeaders = { "*" })
 public class ReportAPIAction {
 	Logger log = LoggerFactory.getLogger(AppAction.class);
 	@Resource
