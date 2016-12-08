@@ -30,6 +30,9 @@
                         <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.miniPng}" style="width:100%;">
                         <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.splitPng}" style="width:100%;">
                     #elseif(${p.report.indexOf('+X')} > -1 || ${p.report.indexOf('+Y')} > -1 || ${p.report.indexOf('-X')} > -1 || ${p.report.indexOf('-Y')} > -1)
+                        <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.reportMiniPng}" style="width:100%;">
+                        <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.reportSplitPng}" style="width:100%;">
+                    #else
                         <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.miniPng}" style="width:100%;">
                         <img src="${uploadPath}/${p.userId}/${p.appId}/${p.dataKey}/${p.splitPng}" style="width:100%;">
                     #end
@@ -73,6 +76,9 @@
                     <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).miniPng}" style="width:100%;">
                     <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).splitPng}" style="width:100%;">
                 #elseif(${pgsList.get(0).report.indexOf('+X')} > -1 || ${pgsList.get(0).report.indexOf('+Y')} > -1 || ${pgsList.get(0).report.indexOf('-X')} > -1 || ${pgsList.get(0).report.indexOf('-Y')} > -1)
+                    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).reportMiniPng}" style="width:100%;">
+                    <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).reportSplitPng}" style="width:100%;">
+                #else
                     <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).miniPng}" style="width:100%;">
                     <img src="${uploadPath}/${pgsList.get(0).userId}/${pgsList.get(0).appId}/${pgsList.get(0).dataKey}/${pgsList.get(0).splitPng}" style="width:100%;">
 			    #end
