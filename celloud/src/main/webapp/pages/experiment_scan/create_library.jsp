@@ -15,7 +15,7 @@
             <a class="action" ng-click="addSample()">扫码入库</a>
           </div>
           <div class="library-btns pull-right">
-            <select class="form-control" ng-model="sindex" ng-options="(meta.name+':'+meta.seq) for meta in infos.metaList">
+            <select class="form-control" ng-model="sindex" ng-options="(meta.name+':'+meta.seq) for meta in infos.metaList" style="padding-top:3px;" >
             	<option value="">文库index</option>
 	        </select>
             <button ng-click="addLibrary()" class="btn -low pull-right" ng-disabled="infos.pageList.datas.length <= 0 || sindex=='' || sindex==undefined">建库</button>
