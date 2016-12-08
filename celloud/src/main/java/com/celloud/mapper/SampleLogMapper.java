@@ -18,7 +18,7 @@ public interface SampleLogMapper {
     int updateByPrimaryKey(SampleLog record);
 
     int deleteBySampleId(@Param("sampleId") Integer sampleId,
-            @Param("state") Integer state, @Param("userId") Integer userId);
+            @Param("state") Integer state);
 
     int updateStateBySampleId(@Param("sampleId") Integer sampleId,
             @Param("state") Integer state, @Param("userId") Integer userId,

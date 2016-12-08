@@ -109,6 +109,6 @@
   </update>
   <update id="deleteBySampleId">
     update tb_sample_log set state = #{state,jdbcType=BIT}
-    where sample_id = #{sampleId,jdbcType=INTEGER} and user_id=#{userId,jdbcType=INTEGER}
+    where sample_id = #{sampleId,jdbcType=INTEGER}
   </update>
 </mapper>
