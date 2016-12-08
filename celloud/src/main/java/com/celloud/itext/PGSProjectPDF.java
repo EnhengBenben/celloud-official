@@ -80,8 +80,10 @@ public class PGSProjectPDF {
                 }
                 boolean isBigPic = true;
                 String finalPng = null;
+                String finalPng2 = null;
                 if (userId.intValue() == 25) { // xiongbo
                     finalPng = FileTools.fileExist(result, "final.txt.test1.png", "endsWith");
+                    finalPng2 = FileTools.fileExist(result, "report.txt.test1.png", "endsWith");
                 } else {
                     // 判断report.txt
                     if (StringUtils.isNotEmpty(report)) {
@@ -137,8 +139,14 @@ public class PGSProjectPDF {
                 } else {
                     title = new Paragraph("sample_name:    " + an, contextFont);
                 }
-                sb.append(result).append(",").append(finalPng).append(",").append(an).append(",").append(isBigPic)
-                        .append(";");
+                if (userId == 25) {
+                    sb.append(result).append(",").append(finalPng).append(",").append(finalPng2).append(",").append(an)
+                            .append(",").append(isBigPic)
+                            .append(";");
+                } else {
+                    sb.append(result).append(",").append(finalPng).append(",").append(an).append(",").append(isBigPic)
+                            .append(";");
+                }
                 doc.add(title);
 
                 title = new Paragraph("Data:", contextFont);
@@ -170,11 +178,21 @@ public class PGSProjectPDF {
                 String detail1[] = imgString[i].split(",");
                 String result1 = detail1[0];
                 String png1 = FileTools.getArray(detail1, 1);
-                String sm1 = FileTools.getArray(detail1, 2);
-                String isBigPic1 = FileTools.getArray(detail1, 3);
+                String png2 = null;
+                String sm1 = null;
+                String isBigPic1 = null;
+                if (userId.intValue() == 25) {
+                    png2 = FileTools.getArray(detail1, 2);
+                    sm1 = FileTools.getArray(detail1, 3);
+                    isBigPic1 = FileTools.getArray(detail1, 4);
+                } else {
+                    sm1 = FileTools.getArray(detail1, 2);
+                    isBigPic1 = FileTools.getArray(detail1, 3);
+                }
                 Matcher m1 = p_str.matcher(sm1);
                 Paragraph title1 = null;
                 Image img1 = null;
+                Image img2 = null;
                 if (m1.find()) {
                     title1 = new Paragraph("s a m p l e_n a m e :    " + sm1, contextFontC);
                 } else {
@@ -182,21 +200,33 @@ public class PGSProjectPDF {
                 }
                 if (!result1.equals("") && StringUtils.isNotEmpty(png1)) {
                     img1 = Image.getInstance(result1 + png1);
+                    if (userId == 25) {
+                        img2 = Image.getInstance(result1 + png2);
+                    }
                     if (isBigPic1.equals("true")) {
                         if (userId == 25) {
                             img1.scaleAbsolute(410, 150); // 设置图片大小
+                            if (img2 != null) {
+                                img2.scaleAbsolute(410, 150); // 设置图片大小
+                            }
                         } else {
                             img1.scaleAbsolute(208, 272); // 设置图片大小
                         }
                     } else {
                         if (userId == 25) {
                             img1.scaleAbsolute(750f, 200f); // 设置图片大小
+                            if (img2 != null) {
+                                img2.scaleAbsolute(750f, 200f);
+                            }
                         } else {
                             img1.scaleAbsolute(500f, 104f); // 设置图片大小
                         }
                     }
                     if (userId == 25) {
                         img1.setAlignment(Image.ALIGN_LEFT);
+                        if (img2 != null) {
+                            img2.setAlignment(Image.ALIGN_LEFT);
+                        }
                     } else {
                         img1.setAlignment(Image.ALIGN_CENTER);
                     }
@@ -211,9 +241,17 @@ public class PGSProjectPDF {
                     cell = new PdfPCell(img1);
                     cell.setBorderWidth(0);
                     table.addCell(cell);
+                    if (img2 == null) {
+                        doc.add(table);
+                    }
+                }
+                if (img2 != null) {
+                    cell = new PdfPCell(img2);
+                    cell.setBorderWidth(0);
+                    table.addCell(cell);
                     doc.add(table);
                 }
-                if (userId == 25 && (i + 1) % 4 == 0) {
+                if (userId == 25 && (i + 1) % 2 == 0) {
                     doc.newPage();
                 } else if (userId != 25 && (i + 1) % 2 == 0) {
                     doc.newPage();
@@ -229,7 +267,7 @@ public class PGSProjectPDF {
 
     public static void main(String[] args) throws Exception {
         PGSProjectPDF pdf = new PGSProjectPDF();
-        pdf.createPDF("G:\\25\\129", "ApmLibrary", 100, 200,
+        pdf.createPDF("G:\\15\\129", "ApmLibrary", 100, 200,
                 "16102500215030,test_t,aaa;16102600215162,test_t,bbb;16102600215268,test_t,ccc;", "1937");
     }
 }
