@@ -207,9 +207,9 @@
             <thead>
               <tr>
                 <th style="width: 119px;">菌名</th>
-                <th>序列比重</th>
-                <th>检出区域</th>
-                <th>序列 (5'-3')</th>
+                <th style="width: 80px;">序列比重</th>
+                <th style="width: 80px;">检出区域</th>
+                <th style="width: 380px;">序列 (5'-3')</th>
               </tr>
             </thead>
             <tbody>
