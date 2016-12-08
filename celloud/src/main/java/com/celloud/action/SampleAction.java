@@ -233,7 +233,6 @@ public class SampleAction {
     public Map<String, String> toTokenDNA(String experSampleName) {
         Map<String, String> map = new HashMap<>();
         // 判断样本是否已入库
-        Integer userId = ConstantsData.getLoginUserId();
         Sample scanStorage = sampleService.getByExperNameExperState(
                 experSampleName, SampleTypes.SCAN_STORAGE);
         if (scanStorage == null) {

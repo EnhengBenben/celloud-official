@@ -9,7 +9,7 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="sample_num" property="sampleNum" jdbcType="INTEGER" />
     <result column="state" jdbcType="BIT" property="state" />
-    <result column="in_machines" property="inMachines" jdbcType="INTEGER" />
+    <result column="in_machine" property="inMachine" jdbcType="INTEGER" />
   </resultMap>
   <insert id="insert" parameterType="com.celloud.model.mysql.SampleStorage" >
     insert into tb_sample_storage (id,user_id, storage_name, sindex, 
@@ -102,8 +102,8 @@
       <if test="state != null" >
         state = #{state,jdbcType=BIT},
       </if>
-      <if test="inMachines != null" >
-        in_machines = #{inMachines,jdbcType=BIT},
+      <if test="inMachine != null" >
+        in_machine = #{inMachine,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
