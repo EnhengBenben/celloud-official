@@ -4,8 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="content-header">
   <ol class="breadcrumb">
-    <li>主页</li>
-    <li>应用</li>
     <li>百菌探</li>
     <li><a data-click="report-list" href="javascript:void(0)">报告</a></li>
     <li id="to-my-report">报告列表</li>
@@ -93,15 +91,15 @@
       <button data-click="report-date-search" class="sl-btn" href="javascript:void(0)">确定</button>
     </div>
   </div>
-  <div class="selector-line">
-    <div class="sl-key">是否分发：</div>
-    <div class="sl-val">
-      <a data-click="report-distributed-search" class="sl-judge" href="javascript:void(0)">
-        <span class="sl-judge-yes">是</span>
-        <span class="sl-judge-no hide">否</span>
-      </a>
-    </div>
-  </div>
+<!--   <div class="selector-line"> -->
+<!--     <div class="sl-key">是否分发：</div> -->
+<!--     <div class="sl-val"> -->
+<!--       <a data-click="report-distributed-search" class="sl-judge" href="javascript:void(0)"> -->
+<!--         <span class="sl-judge-yes">是</span> -->
+<!--         <span class="sl-judge-no hide">否</span> -->
+<!--       </a> -->
+<!--     </div> -->
+<!--   </div> -->
 </div>
 <div id="report-list">
 </div>

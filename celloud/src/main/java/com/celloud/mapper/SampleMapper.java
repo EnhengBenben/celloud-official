@@ -50,7 +50,7 @@ public interface SampleMapper {
             @Param("orderNo") String orderNo,
             @Param("state") Integer state);
 
-    Sample getByExperNameExperState(@Param("userId") Integer userId,
+    Sample getByExperNameExperState(
             @Param("experSampleName") String experSampleName,
             @Param("experState") Integer experState,
             @Param("state") Integer state, @Param("isAdd") Integer isAdd);

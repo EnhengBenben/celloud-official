@@ -166,7 +166,7 @@
 					var config = configs[index];
 				    var port = config.port||80;
 				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
-				    config = "http://"+config.intranetAddress+":"+port+context;
+				    config = "https://"+config.intranetAddress+":"+port+context;
 				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
 				    if(response && JSON.parse(response).success){
 				    	$scope.box=config;
@@ -519,8 +519,12 @@
 		success(function(dataMap){
 			$scope.bsi = dataMap.bsi;
 			$scope.data = dataMap.data;
-			$scope.tab = 'patient';
+			$rootScope.tab = $rootScope.tab == undefined?'patient':$rootScope.tab;
 		    $scope.havestrain = "";
+		    
+		    $scope.changeTab = function(tab){
+		    	$rootScope.tab = tab;
+		    }
 		    
 		    if($scope.bsi){
 		    	$scope.batchParams = {

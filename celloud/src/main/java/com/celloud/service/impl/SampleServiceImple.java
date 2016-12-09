@@ -149,7 +149,7 @@ public class SampleServiceImple implements SampleService {
     @Override
     public String updateExperState(Integer userId, Integer experState,
             Integer sampleId) {
-        sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED, userId);
+        sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED);
         SampleLog slog = new SampleLog();
         slog.setUserId(userId);
         slog.setSampleId(sampleId);
@@ -188,7 +188,7 @@ public class SampleServiceImple implements SampleService {
         s.setSindex(indexList.get(0));
         sampleMapper.updateByPrimaryKeySelective(s);
 
-        sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED, userId);
+        sampleLogMapper.deleteBySampleId(sampleId, DataState.DEELTED);
 
         SampleLog slog = new SampleLog();
         slog.setUserId(userId);
@@ -286,9 +286,9 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Sample getByExperNameExperState(Integer userId,
-            String experSampleName, Integer experState) {
-        return sampleMapper.getByExperNameExperState(userId, experSampleName,
+    public Sample getByExperNameExperState(String experSampleName,
+            Integer experState) {
+        return sampleMapper.getByExperNameExperState(experSampleName,
                 experState, DataState.ACTIVE, SampleTypes.ISADD);
     }
 

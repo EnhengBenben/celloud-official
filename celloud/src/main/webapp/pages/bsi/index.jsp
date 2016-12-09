@@ -17,7 +17,7 @@
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.3" rel="stylesheet">
   <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
-  <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
+  <link href="<%=request.getContextPath()%>/css/bsi_main.css?v=0.1" rel="stylesheet" type="text/css" />
   <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
   <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
   <!-- [if It IE 9]>
