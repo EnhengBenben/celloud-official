@@ -49,7 +49,7 @@ class Rocky:
                 chromosome = st[1]
                 significance = st[4]
                 nucleotides = st[3]
-				peakPic = st[6]
+                peakPic = st[6]
                 description = '目前暂无描述说明。我们将保持关注，根据最新科研成果及时更新该状态。'
                 if gene+'-'+variationId in descriptions.keys():
                     description = descriptions[gene+'-'+variationId]
@@ -63,7 +63,7 @@ class Rocky:
                     "chromosome":chromosome,
                     "significance":significance,
                     "nucleotides":nucleotides,
-					"peakPic":peakPic
+                    "peakPic":peakPic
                 }
                 if description == '-':
                     rockyRecord['description'] = "There is no description at this moment."
