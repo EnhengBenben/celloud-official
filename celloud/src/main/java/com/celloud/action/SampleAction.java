@@ -3,6 +3,7 @@ package com.celloud.action;
 import java.io.File;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -260,6 +261,7 @@ public class SampleAction {
 	public Map<String, Object> getBuidLibrarySamples() {
         Map<String,Object> map = new HashMap<>();
         PageList<Sample> pageList = getSamples(1, 12, SampleTypes.BUID_LIBRARY);
+        Collections.reverse(pageList.getDatas());
         map.put("pageList", pageList);
         SecureRandom s = new SecureRandom();
         map.put("libraryName", DateUtil.getDateToString()

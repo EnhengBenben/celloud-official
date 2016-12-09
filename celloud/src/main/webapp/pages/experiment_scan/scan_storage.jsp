@@ -52,7 +52,7 @@
                     <td>{{sample.sampleName }}</td>
                     <td class="experSampleName">{{sample.experSampleName }}</td>
                     <td>{{sample.type }}</td>
-                    <td class="createDate">{{sample.createDate  | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td class="createDate">{{sample.updateDate  | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>入库</td>
                     <td>{{sample.remark }}</td>
                     <td>

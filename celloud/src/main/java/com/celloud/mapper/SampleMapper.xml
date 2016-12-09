@@ -27,6 +27,7 @@
       extends="BaseResultMap">
       <result column="sampleLogId" property="sampleLogId" jdbcType="INTEGER" />
       <result column="orderNo" property="orderNo" jdbcType="VARCHAR" />
+      <result column="updateDate" property="updateDate" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultWithAll" type="com.celloud.model.mysql.Sample" extends="BaseResultMap">
       <result column="tag_id" property="tagId" jdbcType="INTEGER" />
@@ -194,12 +195,12 @@
     </foreach>)
   </delete>
   <select id="getSamples" resultMap="ResultWithOrder">
-    select s.*,sl.id sampleLogId,so.order_no orderNo from 
+    select s.*,sl.id sampleLogId,so.order_no orderNo, sl.create_date updateDate from 
     tb_sample s
     left join tb_sample_log sl on s.sample_id=sl.sample_id
     left join tb_sample_order so on s.order_id=so.id
 	where sl.exper_state=#{experState} and sl.user_id=#{userId} and s.state=#{state} and sl.state=#{state}
-	order by create_date desc
+	order by updateDate desc
   </select>
   <select id="getByNameExperState" resultMap="ResultMapWithlogDate">
     select s.*,sl.create_date log_date from 
