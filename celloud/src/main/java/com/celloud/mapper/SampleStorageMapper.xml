@@ -41,7 +41,7 @@
       <if test="state != null" >
         state,
       </if>
-      <if test="in_machine != null" >
+      <if test="inMachine != null" >
         in_machine,
       </if>
     </trim>
