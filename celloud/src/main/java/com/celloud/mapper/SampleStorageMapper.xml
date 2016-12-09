@@ -13,9 +13,9 @@
   </resultMap>
   <insert id="insert" parameterType="com.celloud.model.mysql.SampleStorage" >
     insert into tb_sample_storage (id,user_id, storage_name, sindex, 
-      create_date, sample_num,state,in_machines)
+      create_date, sample_num,state,in_machine)
     values (#{id,jdbcType=INTEGER},#{userId,jdbcType=INTEGER}, #{storageName,jdbcType=VARCHAR}, #{sindex,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{sampleNum,jdbcType=INTEGER},#{state,jdbcType=BIT}, #{inMachines,jdbcType=INTEGER})
+      #{createDate,jdbcType=TIMESTAMP}, #{sampleNum,jdbcType=INTEGER},#{state,jdbcType=BIT}, #{inMachine,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.SampleStorage" useGeneratedKeys="true" keyProperty="id">
     insert into tb_sample_storage
@@ -41,8 +41,8 @@
       <if test="state != null" >
         state,
       </if>
-      <if test="in_machines != null" >
-        in_machines,
+      <if test="inMachine != null" >
+        in_machine,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -67,8 +67,8 @@
       <if test="state != null" >
         #{state,jdbcType=BIT},
       </if>
-      <if test="inMachines != null" >
-        #{inMachines,jdbcType=INTEGER},
+      <if test="inMachine != null" >
+        #{inMachine,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
