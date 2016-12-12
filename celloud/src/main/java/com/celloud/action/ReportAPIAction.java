@@ -80,6 +80,7 @@ public class ReportAPIAction {
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put("rocky", rocky);
+        context.put("rockyResult", "/rockyResult/");
 		context.put("significances", ConstantsData.significances());
 		return context;
 	}
