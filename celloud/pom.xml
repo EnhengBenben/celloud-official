@@ -316,6 +316,7 @@
 					<exclude>dev/*</exclude>
 					<exclude>prod/*</exclude>
 					<exclude>test/*</exclude>
+					<exclude>qa/*</exclude>
 				</excludes>
 			</resource>
 			<resource>

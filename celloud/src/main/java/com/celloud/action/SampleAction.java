@@ -197,14 +197,15 @@ public class SampleAction {
             return map;
         }
         // 判断样本是否已采集
-        Sample sampling = sampleService.getByNameExperState(sampleName,
+        Sample sampling = sampleService.getByNameExperState(orderNo, sampleName,
                 SampleTypes.SAMPLING);
         if (sampling == null){
             map.put("error", "系统中无此样本信息，请确认是已采样样本！");
             return map;
         }
         // 判断样本是否已入库
-        Sample scanStorage = sampleService.getByNameExperState(sampleName,
+        Sample scanStorage = sampleService.getByNameExperState(orderNo,
+                sampleName,
                 SampleTypes.SCAN_STORAGE);
         if (scanStorage != null){
             map.put("error", "此样品信息已经收集过，请核查或者采集下一管样品信息！");

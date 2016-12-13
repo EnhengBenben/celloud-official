@@ -140,9 +140,9 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Sample getByNameExperState(String sampleName,
+    public Sample getByNameExperState(String orderNo, String sampleName,
             Integer experState) {
-        return sampleMapper.getByNameExperState(sampleName, experState,
+        return sampleMapper.getByNameExperState(orderNo, sampleName, experState,
                 DataState.ACTIVE, SampleTypes.ISADD);
     }
 
@@ -220,7 +220,7 @@ public class SampleServiceImple implements SampleService {
         SampleLog sl = sampleLogMapper.selectByPrimaryKey(sampleLogId);
         Integer experState = sl.getExperState() - 1;
         sampleLogMapper.updateStateBySampleId(sl.getSampleId(),
-                DataState.ACTIVE, sl.getUserId(), experState);
+                DataState.ACTIVE, experState);
         return sampleLogMapper.deleteByPrimaryKey(sampleLogId);
     }
 
