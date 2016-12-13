@@ -32,7 +32,7 @@
                    <td>{{sample.sampleName }}</td>
                    <td>{{sample.tagName }}</td>
                    <td>{{sample.type }}</td>
-                   <td class="createDate">{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                   <td class="createDate">{{sample.updateDate | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
                    <td>{{sample.experState | experStateFilter}}</td>
                </tr>
            </tbody>
