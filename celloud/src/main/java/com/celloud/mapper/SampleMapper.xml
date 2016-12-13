@@ -204,9 +204,12 @@
   </select>
   <select id="getByNameExperState" resultMap="ResultMapWithlogDate">
     select s.*,sl.create_date log_date from 
-    tb_sample s,tb_sample_log sl
-    where s.sample_id=sl.sample_id and sl.exper_state=#{experState} and s.state=#{state} and s.sample_name=#{sampleName,jdbcType=VARCHAR}
+    tb_sample s,tb_sample_log sl,tb_sample_order o
+    where s.sample_id=sl.sample_id and s.order_id=o.id 
+    and sl.exper_state=#{experState}
+    and s.state=#{state} and s.sample_name=#{sampleName,jdbcType=VARCHAR}
     and s.is_add = #{isAdd,jdbcType=BIT}
+    and o.order_no=#{orderNo} 
     order by create_date desc
   </select>
   <select id="getByExperNameExperState" resultMap="ResultMapWithlogDate">
