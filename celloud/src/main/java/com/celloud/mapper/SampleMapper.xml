@@ -36,6 +36,7 @@
       <result column="sampleLogId" property="sampleLogId" jdbcType="INTEGER" />
       <result column="exper_state" property="experState" jdbcType="INTEGER" />
       <result column="orderNo" property="orderNo" jdbcType="VARCHAR" />
+      <result column="updateDate" property="updateDate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
     sample_id, user_id, order_id, sample_name,exper_sample_name, is_add, type, sindex, create_date, update_date, state, remark
@@ -252,7 +253,7 @@
   </select>
   <select id="getSamplesExperState" resultMap="ResultWithAll">
    select s.sample_id, s.user_id, s.order_id, s.sample_name,s.exper_sample_name, s.is_add, s.type, s.sindex, s.create_date, s.update_date,
-     s.state, s.remark,t.tag_id,t.tag_name,sl.create_date as log_date, sl.id sampleLogId,sl.exper_state,sr.order_no orderNo
+     s.state, s.remark,t.tag_id,t.tag_name,sl.create_date as log_date, sl.create_date updateDate, sl.id sampleLogId,sl.exper_state,sr.order_no orderNo
     from tb_sample s
     left join tb_sample_log sl on s.sample_id=sl.sample_id 
     left join tb_sample_tag_relat st on s.sample_id=st.sample_id
