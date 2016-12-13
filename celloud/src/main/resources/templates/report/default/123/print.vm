@@ -193,7 +193,7 @@
 									   $record.description
 									   #if($!{rocky.companyId} == 33)
     									   <br/>
-    									   <img src="$!{rockyResult}$!{rocky.userId}/$!{rocky.appId}/$!{rocky.dataKey}/$!{record.peakPic}">
+    									   <img width="100%" src="$!{rockyResult}$!{rocky.userId}/$!{rocky.appId}/$!{rocky.dataKey}/$!{record.peakPic}">
 									   #end
 									</td>
 								</tr>
