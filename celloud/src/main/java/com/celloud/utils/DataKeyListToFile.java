@@ -194,8 +194,7 @@ public class DataKeyListToFile {
 		String dataKey = "";
 		boolean inOSS = false;
 		for (DataFile data : dataList) {
-			String path = data.getOssPath() == null ? data.getPath() : data.getOssPath();
-			inOSS = data.getOssPath() != null;
+			String path = data.getPath();
 			if (path.endsWith(".lis") || path.endsWith(".txt")) {
 				endPath = path;
 			} else {
