@@ -1,0 +1,122 @@
+$(document).ready(function() {
+	var _swiper = new Swiper(".swiper-container", {
+			direction: 'horizontal'
+		})
+		//控制rem
+	document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+	window.addEventListener('resize', function() {
+		document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+	})
+
+//	var webService = "http://192.168.22.253:8080/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
+	var webService = "api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
+
+	$.ajax({
+		type: "get",
+		url: webService,
+		async: true,
+		dataType: 'json',
+		jsonpCallback: "callback",
+		success: function(data) {
+			console.log(data)
+			var report = data
+			var name = report.rocky.baseInfo.examineeName;
+			var sampleType = report.rocky.baseInfo.sampleType;
+			var sampleDeliveryTime = report.rocky.baseInfo.sampleDeliveryTime;
+			var createTime = report.rocky.baseInfo.createTime;
+			var ct = '<span>样本类型：' + sampleType + '</span>' +
+				'<span>样本编号：</span>' +
+				'<span>送检日期：' + sampleDeliveryTime + '</span>' +
+				'<span>报告日期：</span>'
+			$('.type').html(ct)
+			var record = report.rocky.records
+			console.log(record)
+			var tab = '';
+			var res = '';
+			var res1 = '';
+			var tab1 = '';
+			var tab2 = '';
+			var p1 = '';
+			//判断有无数据
+			if (!record) {
+				res = '<p class="reslut1">' +
+					'本次<span id="BCRA">BRCA<span>基因没有检测到突变' +
+					'</p>';
+				$('.rep').hide();
+				$('.p7').html(res)
+			}
+
+			//添加检测数据
+			for (var i in record) {
+				tab = '<tr class="tab_body_p2">' +
+					'<td>' + (parseInt(i) + 1) + '</td>' +
+					'<td><span id="BCRA">' + record[i].gene + '</span></td>' +
+					'<td>' + record[i].acids + '</td>' +
+					'<td>' + record[i].nucleotides + '</td>' +
+					'<td>' + record[i].significance + '</td>' +
+					'</tr>';
+				$('.p2_tbody').append(tab);
+				if (report.rocky.pathogenic) {
+					res = '<p class="reslut1">' +
+						'本次BRCA基因共检测到<u>' + record.length + '</u>个突变，其中致病相关突变' +
+						'为<u>' + report.rocky.pathogenicNum + '</u>个。' +
+						'</p>';
+					$('.result').html(res);
+				} else {
+					res = '<p class="reslut2">' +
+						'本次检测在您的乳腺癌关键基因<span id="BCRA">' + 'BRCA1</span>和<span id="BCRA">BRCA2</span>上未发现致病变异，因而该因素没有提高您的乳腺癌风险。</p>'
+					$('.result').html(res);
+				}
+
+				res1 = '本次检测，在您的<span id="BCRA">' + 'BRCA1/2</span>基因中共发现了<u>' + record.length + '</u>个突变。它们是：'
+				$('.countIn').html(res1);
+			}
+			for (var i in record) {
+				tab1 = '<tr class="tab_body">' +
+					'<td>' + (parseInt(i) + 1) + '</td>' +
+					'<td><span id="BCRA">' + record[i].gene + '</span></td>' +
+					'<td>' + record[i].acids + 'T</td>' +
+					'<td>' + record[i].nucleotides + '</td>' +
+					'<td>' + record[i].significance + '</td>' +
+					'</tr>'
+				$('.tab_body_p6').append(tab1);
+			}
+			for (var i in record) {
+
+				if (report.rocky.companyId == 33) {
+					tab2 = '<tr class="p2_tab_body">' +
+						'<td>' + (parseInt(i) + 1) + '</td>' +
+						'<td><span id="BCRA">' + record[i].gene + '</span>:<br>' + record[i].acids + '<br>临床意义:<br>' + record[i].significance + '</td>' +
+						'<td>' + record.description + '</td>' +
+						'</tr>' +
+						'<tr class="p2_tab_body_fengtu">' +
+						'<td colspan="3">' +
+						'<img class="fengtu"' + 'src="' + report.rockyResult + report.rocky.userId + '/' + report.rocky.appId + '/' + report.rocky.dataKey + '/' + record[i].peakPic + '"/>' +
+						'</td>' +
+						'</tr>';
+					p1 = '<div class="report_title">' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 1.png"/>' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 2.png" alt="" title="" />' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 3" alt="" title="" />' +
+						'</div>';
+					$('.h_lastpage_hide').hide()
+				} else {
+					tab2 = '<tr class="p2_tab_body">' +
+						'<td>' + (parseInt(i) + 1) + '</td>' +
+						'<td><span id="BCRA">' + record[i].gene + '</span>:<br> ' + record[i].acids + '<br>临床意义:<br>' + record[i].significance + '</td>' +
+						'<td>' + record.description + '</td>' +
+						'</tr>';
+					p1 = '<div class="report_title">' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 1.png"/>' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 2.png" alt="" title="" />' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01-myPage3.png"/>' +
+						'</div>';
+
+				}
+				$('.tab_significance').append(tab2)
+				$('.p1').html(p1)
+			}
+
+		}
+	});
+})
