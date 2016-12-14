@@ -259,4 +259,9 @@ public class HomeAction {
 		model.addAttribute("info", info);
 		return "client";
 	}
+
+    @RequestMapping("wechat_rocky.html")
+    public String wechatRocky(String info) {
+        return "wechat/rocky_report";
+    }
 }
