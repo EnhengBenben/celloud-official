@@ -210,15 +210,15 @@
                         <table class="p10_tab" border="0" cellspacing="cellspacing" cellpadding="cellpadding">
                             <tr class="p10_tab_body">
                                 <td>高风险基因</td>
+                                <td>BRCA1，BRCA2，TP53，PTEN，STK11，CDH1</td>
+                            </tr>
+                            <tr class="p10_tab_body">
+                                <td>中风险基因</td>
                                 <td>CHEK2，ATM，PALB2，BRIP1，MRE11A，RAD50，RAD51C，NBN</td>
                             </tr>
                             <tr class="p10_tab_body">
-                                <td>高风险基因</td>
-                                <td>CHEK2，ATM，PALB2，BRIP1，MRE11A，RAD50，RAD51C，NBN</td>
-                            </tr>
-                            <tr class="p10_tab_body">
-                                <td>高风险基因</td>
-                                <td>CHEK2，ATM，PALB2，BRIP1，MRE11A，RAD50，RAD51C，NBN</td>
+                                <td>低风险基因</td>
+                                <td>CASP8，FGFR2，MAP3K，TOX3，LSP1</td>
                             </tr>
                         </table>
                         <p id="p10_artical2">遗传性乳腺癌占全部乳腺癌的5%~10%。<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>基因是最重要的两个遗传性乳腺癌易感基因，它们引起的乳腺癌占遗传性乳腺癌的40%~45%</p>
