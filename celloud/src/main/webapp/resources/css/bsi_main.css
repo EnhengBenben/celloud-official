@@ -1087,6 +1087,9 @@ a, a:link, a:hover, a:active, a:visited {
     cursor: pointer;
     text-align: left;
 }
+.tab-content .seq-table> tbody + tbody{
+    border-top: none;
+}
 .tab-content .seq-table .no{
 	width: 10px;
 	
