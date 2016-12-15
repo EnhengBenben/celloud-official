@@ -261,7 +261,8 @@ public class SampleAction {
     @ResponseBody
 	public Map<String, Object> getBuidLibrarySamples() {
         Map<String,Object> map = new HashMap<>();
-        PageList<Sample> pageList = getSamples(1, 12, SampleTypes.BUID_LIBRARY);
+        PageList<Sample> pageList = getSamples(1, SampleTypes.index.size(),
+                SampleTypes.BUID_LIBRARY);
         Collections.reverse(pageList.getDatas());
         map.put("pageList", pageList);
         SecureRandom s = new SecureRandom();
