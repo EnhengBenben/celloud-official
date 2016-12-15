@@ -998,11 +998,12 @@ a, a:link, a:hover, a:active, a:visited {
 	margin: 0px auto;
 }
 .tab-content .test-info{
-	width: 700px;
+/* 	width: 700px; */
 	border: 1px solid rgb(29,210,175);
 	padding: 15px 20px;
 	line-height: 30px;
 	margin-top:10px;
+	font-size: 14px;
 }
 .tab-content h4{
 	color: #323232;
@@ -1028,7 +1029,7 @@ a, a:link, a:hover, a:active, a:visited {
     margin-top:10px;
 }
 .tab-content table{
-	width: 700px;
+/* 	width: 700px; */
 	margin-bottom: 0px;
 	margin-top:10px;
 	border: none;
@@ -1073,6 +1074,7 @@ a, a:link, a:hover, a:active, a:visited {
     vertical-align: middle;
     padding: 4px 4px;
     word-break: break-all;
+    text-align: center;
 }
 .tab-content .seq-table .seq{
     margin-left: -120px;
@@ -1083,6 +1085,7 @@ a, a:link, a:hover, a:active, a:visited {
     -moz-transform:scale(0.6);
     -o-transform:scale(0.6);
     cursor: pointer;
+    text-align: left;
 }
 .tab-content .seq-table .no{
 	width: 10px;
@@ -1138,6 +1141,9 @@ a, a:link, a:hover, a:active, a:visited {
 .tab-content .analy-tab .table-20species{
     color: #979797;
 }
+.tab-content .table-20species>tbody>tr>td{
+    font-size: 12px;
+}
 .tab-content .table-20species .hasit{
     color: #323232;
 }
@@ -1146,6 +1152,7 @@ a, a:link, a:hover, a:active, a:visited {
     vertical-align: middle;
     text-align: center;
     color: #323232;
+    font-size: 14px;
 }
 .tab-content .analy-tab .sub-title{
     border-right: 1px solid rgb(29,210,175);
