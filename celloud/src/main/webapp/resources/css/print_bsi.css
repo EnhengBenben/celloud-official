@@ -128,7 +128,7 @@ section h2,
 .tests-info{
     border: 1px solid #c8c8c8;
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 30px;
     margin: 10px 0px;
 }
@@ -172,6 +172,12 @@ section h2,
 .tests-content .table-20species .hasit{
     color: #323232;
 }
+.tests-content .table-20species>tr>td{
+	font-size: 12px;
+}
+.tests-content .table-20species .title{
+    font-size: 14px; 
+}
 .tests-content .seq-table{
     margin-top: 10px;
 }
@@ -180,6 +186,7 @@ section h2,
 }
 .tests-content .seq-table>tr>td{
     height: 70px;
+    font-size: 12px;
 }
 .tests-content .seq-table svg{
     margin: 0px -15px;
@@ -212,7 +219,7 @@ section h2,
     text-align: center;
 }
 .tests-content p{
-    font-size: 12px;
+    font-size: 14px;
     word-break: break-all;
     padding-left: 5px;
     margin-top:10px;
