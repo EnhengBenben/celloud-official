@@ -4,8 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="content-header">
   <ol class="breadcrumb">
-    <li>主页</li>
-    <li>应用</li>
     <li>百菌探</li>
     <li>数据</li>
     <li id="to-my-data">数据列表</li>
