@@ -3,6 +3,7 @@ package com.celloud.action;
 import java.io.File;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -196,14 +197,15 @@ public class SampleAction {
             return map;
         }
         // 判断样本是否已采集
-        Sample sampling = sampleService.getByNameExperState(sampleName,
+        Sample sampling = sampleService.getByNameExperState(orderNo, sampleName,
                 SampleTypes.SAMPLING);
         if (sampling == null){
             map.put("error", "系统中无此样本信息，请确认是已采样样本！");
             return map;
         }
         // 判断样本是否已入库
-        Sample scanStorage = sampleService.getByNameExperState(sampleName,
+        Sample scanStorage = sampleService.getByNameExperState(orderNo,
+                sampleName,
                 SampleTypes.SCAN_STORAGE);
         if (scanStorage != null){
             map.put("error", "此样品信息已经收集过，请核查或者采集下一管样品信息！");
@@ -259,7 +261,9 @@ public class SampleAction {
     @ResponseBody
 	public Map<String, Object> getBuidLibrarySamples() {
         Map<String,Object> map = new HashMap<>();
-        PageList<Sample> pageList = getSamples(1, 12, SampleTypes.BUID_LIBRARY);
+        PageList<Sample> pageList = getSamples(1, SampleTypes.index.size(),
+                SampleTypes.BUID_LIBRARY);
+        Collections.reverse(pageList.getDatas());
         map.put("pageList", pageList);
         SecureRandom s = new SecureRandom();
         map.put("libraryName", DateUtil.getDateToString()

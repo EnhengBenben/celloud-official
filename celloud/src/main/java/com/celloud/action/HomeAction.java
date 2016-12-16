@@ -176,11 +176,6 @@ public class HomeAction {
 		return "home";
 	}
 
-	@RequestMapping("api.html")
-	public String api() {
-		return "api";
-	}
-
     // TODO测试
     @RequestMapping("index.html")
     public String indexHtml() {
@@ -264,4 +259,9 @@ public class HomeAction {
 		model.addAttribute("info", info);
 		return "client";
 	}
+
+    @RequestMapping("wechat_rocky.html")
+    public String wechatRocky(String info) {
+        return "wechat/rocky_report";
+    }
 }

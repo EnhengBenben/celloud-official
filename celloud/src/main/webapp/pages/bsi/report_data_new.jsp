@@ -422,7 +422,9 @@
 	        </tbody>
 	      </table>
 	      <p>序列比重：唯一识别序列数>10条时为检出<br>
-	                        快速序列验证及比对(NCBI Blast): <a target="_blank" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome">http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome</a></p>
+	                        快速序列验证及比对(NCBI Blast):  <br>
+	            <a target="_blank" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome">http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome</a>
+	      </p>
 	      <h4>2. 统计信息</h4>
 	      <table class="table table-count">
 	        <tr>

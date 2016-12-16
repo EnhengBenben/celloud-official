@@ -40,10 +40,10 @@
             </thead>
             <tbody>
                 <tr ng-repeat="sample in infos.pageList.datas">
-                    <td ng-bind="infos.pageList.datas.length - $index">1</td>
+                    <td ng-bind="$index + 1"></td>
                     <td>{{sample.experSampleName }}</td>
                     <td>{{sample.type }}</td>
-                    <td>{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{sample.updateDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                     <td>{{sample.sindex }}</td>
                     <td>建库</td>
                     <td>

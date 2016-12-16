@@ -133,8 +133,8 @@
     	var sampleNames = new Array();
     	var dates = new Array();
     	$("input[name='checkOne']:checked").each(function(){
-    		sampleNames.push($(this).parent().parent().parent().children(".experSampleName").html().trim());
-    		dates.push($(this).parent().parent().parent().children(".createDate").html().trim());
+    		sampleNames.unshift($(this).parent().parent().parent().children(".experSampleName").html().trim());
+    		dates.unshift($(this).parent().parent().parent().children(".createDate").html().trim());
     	});
     	printQRCodeBatch(sampleNames, dates);
     }
@@ -241,8 +241,8 @@
       	var sampleNames = new Array();
       	var dates = new Array();
       	$("input[name='checkOne']:checked").each(function(){
-      		sampleNames.push($(this).parent().parent().parent().children(".experSampleName").html().trim());
-      		dates.push($(this).parent().parent().parent().children(".createDate").html().trim());
+      		sampleNames.unshift($(this).parent().parent().parent().children(".experSampleName").html().trim());
+      		dates.unshift($(this).parent().parent().parent().children(".createDate").html().trim());
       	});
       	printQRCodeBatch(sampleNames, dates);
       }

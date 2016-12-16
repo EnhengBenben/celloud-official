@@ -33,6 +33,10 @@ public class RockyRecord {
 	 * 说明
 	 */
 	private String description;
+    /**
+     * 峰图
+     */
+    private String peakPic;
 
 	public String getGene() {
 		return gene;
@@ -97,5 +101,13 @@ public class RockyRecord {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+    public String getPeakPic() {
+        return peakPic;
+    }
+
+    public void setPeakPic(String peakPic) {
+        this.peakPic = peakPic;
+    }
 
 }
