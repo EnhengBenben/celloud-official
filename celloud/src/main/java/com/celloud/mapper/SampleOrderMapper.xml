@@ -25,7 +25,7 @@
     insert into tb_sample_order (id, user_id, order_no, 
       create_date,is_print)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP},#{isPrint,jdbcType=TIMESTAMP})
+      now(),#{isPrint,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.SampleOrder" useGeneratedKeys="true" keyProperty="id" >
     insert into tb_sample_order
@@ -57,7 +57,7 @@
         #{orderNo,jdbcType=VARCHAR},
       </if>
       <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="isPrint != null" >
         #{isPrint,jdbcType=INTEGER},,
