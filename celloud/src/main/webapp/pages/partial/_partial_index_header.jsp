@@ -18,7 +18,7 @@
               <a ng-if="userProduct.app123==123" href="${pageContext.request.contextPath }/index#/product/rocky/upload"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
             </div>
           </li>
-          <shiro:hasPermission name="upload:menu">
+          <shiro:hasPermission name="data:upload">
 	          <li data-step="1" data-position="right" data-intro="" data-img="upload.png" ng-show="!userProduct.onlyBSI">
 	            <a ng-click="getProTags()"><i class="upload-icon"></i></a>
 	          </li>

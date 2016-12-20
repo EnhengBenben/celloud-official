@@ -63,6 +63,9 @@ public class UserRealm extends AuthorizingRealm {
         Set<String> permissions = (Set<String>) session.getAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS);
         if (permissions == null) {
             permissions = userService.findPermissions(user.getUserId());
+			for (String string : permissions) {
+				System.out.println(string);
+			}
             permissions = permissions == null ? new HashSet<String>() : permissions;
             logger.info("初始化用户{}的权限信息：共{}个权限", user.getUsername(), permissions.size());
             session.setAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS, permissions);
