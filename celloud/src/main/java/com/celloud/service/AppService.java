@@ -98,7 +98,7 @@ public interface AppService {
 	 * @author lin
 	 * @date 2016年12月20日下午4:03:41
 	 */
-	public List<App> getRightAppList(Integer userId);
+	public List<App> getRightAppList(Integer authFrom, Integer userId);
 
     /**
      * 用户添加APP到可运行列表
@@ -191,4 +191,8 @@ public interface AppService {
      * @date 2016年7月28日 下午4:27:24
      */
     public Boolean checkPriceToRun(List<Integer> appIds, Integer userId);
+
+	public int addUserAppRight(Integer userId, Integer[] appIds, Integer authFrom);
+
+	public boolean appDeleteByAuthFrom(Integer userId, Integer[] appIds);
 }

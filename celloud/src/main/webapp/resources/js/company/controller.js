@@ -58,6 +58,110 @@
 				}
 			});
 		}
+		
+		
+		$scope.toAddApp = function(userId){
+		  $scope.userId = userId;
+		  companyService.toAddApp(userId)
+      .success(function(data){
+        $scope.appList = data;
+      });
+		}
+		$scope.addApp = function(){
+		  var apps = new Array();
+		  $("#appAddForm").find("input[name='app']:checked").each(function(){
+		    apps.push($(this).val());
+		  });
+		  $("#submit").prop("disabled",true);
+		  companyService.addApp($scope.userId,apps).
+		  success(function(data, status){
+		    if(status == 200){
+		      $("#company-addApp-modal").modal("hide");
+		      $.alert("追加成功!");
+		    }
+		  }).
+		  error(function(data, status){
+		    $("#company-addApp-modal").modal("hide");
+		    $.alert("追加失败!");
+		  });
+		}
+		
+		$scope.toRemoveApp = function(userId){
+		  $scope.userId = userId;
+		  companyService.toRemoveApp(userId)
+		  .success(function(data){
+		    $scope.appList = data;
+		  });
+		}
+		$scope.removeApp = function(){
+		  var apps = new Array();
+		  $("#removeAppForm").find("input[name='app']:checked").each(function(){
+		    apps.push($(this).val());
+		  });
+		  $("#submit").prop("disabled",true);
+		  companyService.removeApp($scope.userId,apps).
+		  success(function(data, status){
+		    if(status == 200){
+		      $("#company-removeApp-modal").modal("hide");
+		      $.alert("删除成功!");
+		    }
+		  }).
+		  error(function(data, status){
+		    $("#company-removeApp-modal").modal("hide");
+        $.alert("删除失败!");
+		  });
+		}
+		
+		$scope.toAddRole = function(userId){
+		  $scope.userId = userId;
+		  companyService.toAddRole(userId)
+		  .success(function(data){
+		    $scope.roleList = data;
+		  });
+		}
+		$scope.addRole = function(){
+		  var roles = new Array();
+		  $("#roleAddForm").find("input[name='role']:checked").each(function(){
+		    roles.push($(this).val());
+		  });
+		  $("#submit").prop("disabled",true);
+		  companyService.addRole($scope.userId,roles).
+		  success(function(data, status){
+		    if(status == 200){
+		      $("#company-addRole-modal").modal("hide");
+		      $.alert("追加成功!");
+		    }
+		  }).
+		  error(function(data, status){
+		    $("#company-addRole-modal").modal("hide");
+        $.alert("追加失败!");
+		  });
+		}
+		$scope.toRemoveRole = function(userId){
+		  $scope.userId = userId;
+		  companyService.toRemoveRole(userId)
+		  .success(function(data){
+		    $scope.roleList = data;
+		  });
+		}
+		$scope.removeRole = function(){
+		  var roles = new Array();
+		  $("#roleRemoveForm").find("input[name='role']:checked").each(function(){
+		    roles.push($(this).val());
+		  });
+		  $("#submit").prop("disabled",true);
+		  companyService.removeRole($scope.userId,roles).
+		  success(function(data, status){
+		    if(status == 200){
+		      $("#company-removeRole-modal").modal("hide");
+          $.alert("删除成功!");
+		    }
+		  }).
+		  error(function(data, status){
+		    $("#company-removeRole-modal").modal("hide");
+        $.alert("删除失败!");
+		  });
+		}
 		$scope.clearState = function(){
 			$scope.emailError = null;
 			$scope.kaptchaError = null;

@@ -375,7 +375,10 @@
     select a.app_id,a.app_name
     from tb_user_app_right ua 
     left join tb_app a on ua.app_id=a.app_id 
-    where ua.user_id=#{userId } and a.off_line=#{offLine } 
+    where ua.user_id=#{userId } and a.off_line=#{offLine }
+    <if test="authFrom!=null">
+    	and ua.auth_from = #{authFrom}
+    </if>
 	group by a.app_id
 	order by create_date desc
   </select>
@@ -407,4 +410,19 @@
     FROM tb_user_app_right
     WHERE user_id = #{userId}
   </select>
+      <insert id="addUserAppRight"  useGeneratedKeys="true">
+        insert into tb_user_app_right (
+        user_id, app_id,
+        is_add,auth_from)
+        values
+        <foreach collection="appIds" item="appId" index="index" separator="," >
+            (#{userId},${appId},#{isAdded},#{authFrom})
+        </foreach>
+    </insert>
+  <delete id="deleteByAuthFrom">
+  	delete from tb_user_app_right where user_id=#{userId} and auth_from = #{authFrom} and app_id in
+  		<foreach item="appId" index="index" collection="appIds" open="(" separator="," close=")">
+        	#{appId}
+  		</foreach>
+  </delete>
 </mapper>

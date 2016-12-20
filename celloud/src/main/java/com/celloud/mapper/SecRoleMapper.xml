@@ -101,4 +101,20 @@
 		disabled = #{disabled,jdbcType=BIT}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	
+	<insert id="insertUserRoles">
+        insert into tb_sec_user_role_relat(user_id,role_id,auth_from)
+        values
+        <foreach collection="roleIds" separator="," item="roleId">
+            (${userId},${roleId},${authFrom})
+        </foreach>
+    </insert>
+    
+     <delete id="deleteByAuthFrom">
+	  	delete from tb_sec_user_role_relat 
+	  	where auth_from = #{authFrom} and role_id in
+		<foreach item="roleId" index="index" collection="roleIds" open="(" separator="," close=")">
+	     	#{roleId}
+		</foreach>
+	  </delete>
 </mapper>

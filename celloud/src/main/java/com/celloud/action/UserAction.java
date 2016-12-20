@@ -57,6 +57,7 @@ import com.celloud.sendcloud.EmailType;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.CompanyService;
 import com.celloud.service.CustomerService;
+import com.celloud.service.SecRoleService;
 import com.celloud.service.UserService;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
@@ -80,6 +81,8 @@ public class UserAction {
 	@Resource
 	private UserService userService;
 	@Resource
+	private SecRoleService secRoleService;
+	@Resource
 	private ActionLogService logService;
 	@Resource
 	private AliEmailUtils emailUtils;
@@ -97,6 +100,35 @@ public class UserAction {
 	private static final Response WRONG_PASSWORD = new Response("203", "原始密码错误");
 	private Logger logger = LoggerFactory.getLogger(UserAction.class);
 
+	@RequestMapping(value = "toAddRole", method = RequestMethod.GET)
+	@ResponseBody
+	public List<SecRole> toAddRole(Integer userId) {
+		Integer authFrom = ConstantsData.getLoginUserId();
+		List<SecRole> all = userService.getRolesByUserId(authFrom);
+		List<SecRole> have = userService.getRolesByUserId(userId);
+		all.removeAll(have);
+		return all;
+	}
+
+	@RequestMapping(value = "addRole", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Response> addRole(Integer userId, Integer[] roles) {
+		secRoleService.insertUserRoles(userId, roles, ConstantsData.getLoginUserId());
+		return ResponseEntity.ok(new Response("200", "追加成功"));
+	}
+
+	@RequestMapping(value = "toRemoveRole", method = RequestMethod.GET)
+	@ResponseBody
+	public List<SecRole> toRemoveRole(Integer userId) {
+		return userService.getRolesByUserId(userId);
+	}
+
+	@RequestMapping(value = "removeRole", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Response> removeRole(Integer userId, Integer[] roles) {
+		secRoleService.deleteByAuthFrom(userId, roles, ConstantsData.getLoginUserId());
+		return ResponseEntity.ok(new Response("200", "删除成功"));
+	}
 
     /**
      * 

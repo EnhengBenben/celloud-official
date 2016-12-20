@@ -130,7 +130,8 @@ public interface AppMapper {
     public List<App> getMyAppList(@Param("userId") Integer userId,
             @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
 
-	public List<App> getRightAppList(@Param("userId") Integer userId, @Param("offLine") Integer offLine);
+	public List<App> getRightAppList(@Param("authFrom") Integer authFrom, @Param("userId") Integer userId,
+			@Param("offLine") Integer offLine);
 
     /**
      * 用户添加或取消APP到可运行列表
@@ -194,4 +195,10 @@ public interface AppMapper {
      * @return
      */
     public List<Integer> findAppIdsByUserId(@Param("userId") Integer loginUserId);
+
+	public int addUserAppRight(@Param("userId") Integer userId, @Param("appIds") Integer[] appIds,
+			@Param("isAdded") int isAdded, @Param("authFrom") Integer authFrom);
+
+	public Integer deleteByAuthFrom(@Param("userId") Integer userId, @Param("authFrom") Integer authFrom,
+			@Param("appIds") Integer[] appIds);
 }

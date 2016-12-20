@@ -51,4 +51,14 @@ public class SecRoleServiceImpl implements SecRoleService {
 		return roles;
 	}
 
+	@Override
+	public int insertUserRoles(Integer userId, Integer[] roleIds, Integer authFrom) {
+		return roleMapper.insertUserRoles(userId, roleIds, authFrom);
+	}
+
+	@Override
+	public int deleteByAuthFrom(Integer userId, Integer[] roleIds, Integer authFrom) {
+		return roleMapper.deleteByAuthFrom(userId, roleIds, authFrom);
+	}
+
 }

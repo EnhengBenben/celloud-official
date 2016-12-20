@@ -35,6 +35,7 @@ import com.celloud.service.AppService;
 import com.celloud.service.ClassifyService;
 import com.celloud.service.ScreenService;
 import com.celloud.utils.ActionLog;
+import com.celloud.utils.Response;
 
 /**
  * 应用市场
@@ -53,11 +54,40 @@ public class AppAction {
     @Resource
     private ScreenService screenService;
 
-	@ActionLog(value = "获取用户被授权的所有APP", button = "医院管理员新增")
+	@ResponseBody
+	@RequestMapping("toAddApp")
+	public List<App> toAddApp(Integer userId) {
+		Integer loginId = ConstantsData.getLoginUserId();
+		List<App> all = appService.getRightAppList(null, loginId);
+		List<App> have = appService.getRightAppList(loginId, userId);
+		all.removeAll(have);
+		return all;
+	}
+	@ResponseBody
+	@RequestMapping("grantApp")
+	public ResponseEntity<Response> grantApp(Integer userId, Integer[] apps) {
+		appService.addUserAppRight(userId, apps, ConstantsData.getLoginUserId());
+		return ResponseEntity.ok(new Response("200", "追加成功"));
+	}
+
+	@ResponseBody
+	@RequestMapping("toRemoveApp")
+	public List<App> toRemoveApp(Integer userId) {
+		Integer authFrom = ConstantsData.getLoginUserId();
+		return appService.getRightAppList(authFrom, userId);
+	}
+
+	@ResponseBody
+	@RequestMapping("deleteApp")
+	public ResponseEntity<Response> deleteApp(Integer userId, Integer[] apps) {
+		appService.appDeleteByAuthFrom(userId, apps);
+		return ResponseEntity.ok(new Response("200", "删除成功"));
+	}
+
 	@ResponseBody
 	@RequestMapping("getRightAppList")
 	public List<App> getRightAppList() {
-		return appService.getRightAppList(ConstantsData.getLoginUserId());
+		return appService.getRightAppList(null, ConstantsData.getLoginUserId());
 	}
 
     @ActionLog(value = "获取用户已经运行过数据的APP列表（项目报告页面检索框用）", button = "报告管理")

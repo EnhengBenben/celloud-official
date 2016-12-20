@@ -16,4 +16,7 @@ public interface SecRoleService {
 
 	List<SecRole> getRolesByUserId(Integer userId);
 
+	int insertUserRoles(Integer userId, Integer[] roleIds, Integer authFrom);
+
+	int deleteByAuthFrom(Integer userId, Integer[] roleIds, Integer authFrom);
 }

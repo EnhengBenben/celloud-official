@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.constants.AppIsAdd;
 import com.celloud.constants.AppOffline;
 import com.celloud.constants.AppPermission;
+import com.celloud.constants.ConstantsData;
 import com.celloud.constants.PriceType;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
@@ -88,8 +89,8 @@ public class AppServiceImpl implements AppService {
     }
 
 	@Override
-	public List<App> getRightAppList(Integer userId) {
-		return appMapper.getRightAppList(userId, AppOffline.ON);
+	public List<App> getRightAppList(Integer authFrom, Integer userId) {
+		return appMapper.getRightAppList(authFrom, userId, AppOffline.ON);
 	}
 
     @Override
@@ -149,5 +150,16 @@ public class AppServiceImpl implements AppService {
         BigDecimal balances = user.getBalances();
         return balances.compareTo(appPrice) >= 0;
     }
+
+	@Override
+	public int addUserAppRight(Integer userId, Integer[] appIds, Integer authFrom) {
+		return appMapper.addUserAppRight(userId, appIds, AppIsAdd.NOT_ADDED, authFrom);
+	}
+
+	@Override
+	public boolean appDeleteByAuthFrom(Integer userId, Integer[] appIds) {
+		Integer authFrom = ConstantsData.getLoginUserId();
+		return appMapper.deleteByAuthFrom(userId, authFrom, appIds) > 0;
+	}
 
 }

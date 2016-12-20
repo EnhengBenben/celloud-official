@@ -22,5 +22,30 @@
 		this.getRoleList = function(){
 		  return $http({method:"GET", url:"user/findRoles"});
 		}
+		
+		this.toAddApp = function(userId){
+      return $http({method:"GET", url:"app/toAddApp", params:{"userId":userId}});
+    }
+		this.addApp = function(userId,apps){
+      return $http({method:"POST", url:"app/grantApp", params:{"userId":userId,"apps":apps}});
+    };
+    this.toRemoveApp = function(userId){
+      return $http({method:"GET", url:"app/toRemoveApp", params:{"userId":userId}});
+    }
+    this.removeApp = function(userId,apps){
+      return $http({method:"POST", url:"app/deleteApp", params:{"userId":userId,"apps":apps}});
+    };
+    this.toAddRole = function(userId){
+      return $http({method:"GET", url:"user/toAddRole", params:{"userId":userId}});
+    }
+    this.addRole = function(userId,roles){
+      return $http({method:"POST", url:"user/addRole", params:{"userId":userId,"roles":roles}});
+    };
+    this.toRemoveRole = function(userId){
+      return $http({method:"GET", url:"user/toRemoveRole", params:{"userId":userId}});
+    }
+    this.removeRole = function(userId,roles){
+      return $http({method:"POST", url:"user/removeRole", params:{"userId":userId,"roles":roles}});
+    };
 	});
 }());
