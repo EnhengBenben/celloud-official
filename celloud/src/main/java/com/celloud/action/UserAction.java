@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,6 +48,7 @@ import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mongo.UserCaptcha;
 import com.celloud.model.mysql.ActionLog;
 import com.celloud.model.mysql.Company;
+import com.celloud.model.mysql.SecRole;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -224,6 +226,20 @@ public class UserAction {
 			company.setCompanyIcon("");
 		}
 		return company;
+	}
+
+	/**
+	 * 查询用户的所有角色
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年12月20日下午4:21:06
+	 */
+	@RequestMapping("findRoles")
+	@ResponseBody
+	public List<SecRole> findRoles() {
+		Integer userId = ConstantsData.getLoginUserId();
+		return userService.getRolesByUserId(userId);
 	}
 
     /**
@@ -415,7 +431,8 @@ public class UserAction {
      * @param emailArray
      */
     @RequestMapping("/sendRegistEmail")
-    public ResponseEntity<Map<String, String>> sendEmail(String email, String kaptcha) {
+	public ResponseEntity<Map<String, String>> sendEmail(String email, String kaptcha, Integer[] apps,
+			Integer[] roles) {
         logger.info("医院管理员 {} 发送注册邮件 email = {}, kaptchat = {}", ConstantsData.getLoginUserId(), email, kaptcha);
         Boolean flag = true;
         Map<String, String> errorMap = new HashMap<String, String>();
@@ -435,7 +452,7 @@ public class UserAction {
         }
         // 邮箱和验证码均合法
         if (flag) {
-            flag = userService.sendRegisterEmail(email);
+			flag = userService.sendRegisterEmail(email, apps, roles);
             if (flag) {
                 logger.info("注册邮件发送成功 email = {}", email);
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);

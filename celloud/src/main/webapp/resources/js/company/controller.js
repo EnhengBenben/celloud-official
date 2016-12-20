@@ -32,8 +32,16 @@
 			})
 		}
 		$scope.sendEmail = function(){
+		  var apps = new Array();
+		  $("#userAddForm").find("input[name='app']:checked").each(function(){
+		    apps.push($(this).val());
+		  });
+		  var roles = new Array();
+		  $("#userAddForm").find("input[name='role']:checked").each(function(){
+		    roles.push($(this).val());
+		  });
 			$("#submit").prop("disabled",true);
-			companyService.sendRegisterEmail($scope.email,$scope.kaptcha).
+			companyService.sendRegisterEmail($scope.email,$scope.kaptcha,apps,roles).
 			success(function(data, status){
 				 if(status == 204){
 					$("#company-addUser-modal").modal("hide");
@@ -55,7 +63,14 @@
 			$scope.kaptchaError = null;
 		}
 		$scope.showAddUserForm = function(){
-			$scope.userAddForm.$setPristine();
+		  companyService.getAppList()
+		  .success(function(data){
+		    $scope.appList = data;
+		  });
+		  companyService.getRoleList()
+		  .success(function(data){
+		    $scope.roleList = data;
+		  });
 			$scope.userAddForm.$setPristine();
 			$scope.email = '';
 			$scope.kaptcha = '';

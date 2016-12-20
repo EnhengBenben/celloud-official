@@ -130,6 +130,8 @@ public interface AppMapper {
     public List<App> getMyAppList(@Param("userId") Integer userId,
             @Param("offLine") Integer offLine, @Param("isAdd") Integer isAdd);
 
+	public List<App> getRightAppList(@Param("userId") Integer userId, @Param("offLine") Integer offLine);
+
     /**
      * 用户添加或取消APP到可运行列表
      * 

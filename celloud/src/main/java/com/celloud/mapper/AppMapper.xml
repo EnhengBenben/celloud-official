@@ -371,6 +371,14 @@
     left join tb_classify c on c.classify_id=ac.classify_id 
     left join tb_company com on a.company_id=com.company_id where ua.user_id=#{userId } and a.off_line=#{offLine } and ua.is_add=#{isAdd } group by a.app_id order by create_date desc
   </select>
+  <select id="getRightAppList" resultMap="extraResultMap"  >
+    select a.app_id,a.app_name
+    from tb_user_app_right ua 
+    left join tb_app a on ua.app_id=a.app_id 
+    where ua.user_id=#{userId } and a.off_line=#{offLine } 
+	group by a.app_id
+	order by create_date desc
+  </select>
   <update id="userUpdateApp" >
     update tb_user_app_right set is_add=#{isAdd } where user_id=#{userId } and app_id=#{appId }
   </update>

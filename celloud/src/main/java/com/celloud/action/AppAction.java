@@ -53,6 +53,13 @@ public class AppAction {
     @Resource
     private ScreenService screenService;
 
+	@ActionLog(value = "获取用户被授权的所有APP", button = "医院管理员新增")
+	@ResponseBody
+	@RequestMapping("getRightAppList")
+	public List<App> getRightAppList() {
+		return appService.getRightAppList(ConstantsData.getLoginUserId());
+	}
+
     @ActionLog(value = "获取用户已经运行过数据的APP列表（项目报告页面检索框用）", button = "报告管理")
     @ResponseBody
     @RequestMapping("getRanAPP")

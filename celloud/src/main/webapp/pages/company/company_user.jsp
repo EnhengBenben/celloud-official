@@ -57,16 +57,36 @@
 	    <div class="modal-body form-modal">
 	      <form class="form-horizontal info-form" name="userAddForm" id="userAddForm">
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">邮箱地址：</div>
-	            <div class="col-xs-9">
+	            <div class="control-label form-label col-xs-2">APP：</div>
+	            <div class="col-xs-10">
+		            <div class="form-group">
+		             	<div ng-repeat="app in appList" class="col-xs-6">
+		            		<input type="checkbox" name="app" value="{{app.appId}}"> {{app.appName}}
+		            	</div>
+		            </div>
+	           	</div>
+	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2">角色：</div>
+	            <div class="col-xs-10">
+	            	<div class="form-group">
+			            <div ng-repeat="role in roleList" class="col-xs-6">
+			            	<input type="checkbox" name="role" value="{{role.id}}"> {{role.name}}
+			            </div>
+	            	</div>
+	            </div>
+	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2">邮箱：</div>
+	            <div class="col-xs-10">
 	                <input type="text" ng-change="clearState()" name="email" placeholder="邮箱地址" ng-model="email" required="true" ng-pattern="/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/">
 	                <span class="input-alert" ng-show="userAddForm.email.$dirty && userAddForm.email.$invalid">邮箱格式不正确!</span>
 	                <span class="input-alert" ng-show="emailError != null">{{emailError}}</span>
 	            </div>
 	          </div>
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">验证码：</div>
-	            <div class="col-xs-6">
+	            <div class="control-label form-label col-xs-2">验证码：</div>
+	            <div class="col-xs-7">
                     <input type="text" ng-change="clearState()" name="kaptcha" placeholder="验证码" ng-model="kaptcha" required="true" />
 	                <span class="input-alert" ng-show="kaptchaError != null">{{kaptchaError}}</span>
 	            </div>

@@ -87,6 +87,11 @@ public class AppServiceImpl implements AppService {
                 AppIsAdd.ALREADY_ADDED);
     }
 
+	@Override
+	public List<App> getRightAppList(Integer userId) {
+		return appMapper.getRightAppList(userId, AppOffline.ON);
+	}
+
     @Override
     public Integer userAddApp(Integer userId, Integer appId) {
         return appMapper.userUpdateApp(userId, appId, AppIsAdd.ALREADY_ADDED);
