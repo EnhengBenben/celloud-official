@@ -4,7 +4,7 @@
     <form id="print-form">
     <div>
         #parse("templates/report/default/${hbv.appId}/title_detail.vm")
-        #parse("templates/report/default/${hbv.appId}/content_detail.vm")
+        #parse("templates/report/948/${hbv.appId}/content_detail.vm")
         #parse("templates/report/default/${hbv.appId}/foot_detail.vm")
     </div>
     </form>
