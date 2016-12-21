@@ -57,7 +57,6 @@ public class SampleServiceImple implements SampleService {
 	public Integer saveSample(String sampleName, Integer userId) {
 		Sample s = new Sample();
 		s.setSampleName(sampleName);
-		s.setCreateDate(new Date());
 		s.setUserId(userId);
 		return sampleMapper.insertSelective(s);
 	}
@@ -69,7 +68,6 @@ public class SampleServiceImple implements SampleService {
         // 添加样本寄送订单
         SampleOrder so = new SampleOrder();
         so.setUserId(userId);
-        so.setCreateDate(new Date());
         // 样本编号规则：yyMMdd+ 4位userId不够补0
         String orderNo = DateUtil.getDateToString()
                 + String.format("%04d", userId);
@@ -77,7 +75,7 @@ public class SampleServiceImple implements SampleService {
         sampleOrderMapper.insert(so);
         // 修改sample状态为已添加，并添加订单编号
         Integer result = sampleMapper.updateAddTypeById(sampleIds,
-                SampleTypes.ISADD, so.getId(), new Date());
+                SampleTypes.ISADD, so.getId());
         for (Integer sampleId : sampleIds) {
             Task task = new Task();
             task.setAppId(appId);
@@ -100,13 +98,12 @@ public class SampleServiceImple implements SampleService {
         // 添加样本寄送订单
         SampleOrder so = new SampleOrder();
         so.setUserId(userId);
-        so.setCreateDate(new Date());
         sampleOrderMapper.insertSelective(so);
         so.setOrderNo(DataUtil.getSampleOrderNo(so.getId()));
         sampleOrderMapper.updateByPrimaryKeySelective(so);
         // 修改sample状态为已添加，并添加订单编号
         sampleMapper.updateAddTypeById(sampleIds, SampleTypes.ISADD,
-                so.getId(), new Date());
+                so.getId());
         return so.getId();
     }
 
@@ -153,7 +150,6 @@ public class SampleServiceImple implements SampleService {
         SampleLog slog = new SampleLog();
         slog.setUserId(userId);
         slog.setSampleId(sampleId);
-        slog.setCreateDate(new Date());
         slog.setExperState(experState);
         sampleLogMapper.insertSelective(slog);
         if (experState == SampleTypes.SCAN_STORAGE) {
@@ -193,7 +189,6 @@ public class SampleServiceImple implements SampleService {
         SampleLog slog = new SampleLog();
         slog.setUserId(userId);
         slog.setSampleId(sampleId);
-        slog.setCreateDate(new Date());
         slog.setExperState(experState);
         return sampleLogMapper.insertSelective(slog);
     }
@@ -203,7 +198,6 @@ public class SampleServiceImple implements SampleService {
             String type, Integer tagId) {
         Sample s = new Sample();
         s.setSampleName(sampleName);
-        s.setCreateDate(new Date());
         s.setType(type);
         s.setUserId(userId);
         sampleMapper.insertSelective(s);
@@ -211,7 +205,6 @@ public class SampleServiceImple implements SampleService {
         SampleLog slog = new SampleLog();
         slog.setUserId(userId);
         slog.setSampleId(s.getSampleId());
-        slog.setCreateDate(new Date());
         return sampleLogMapper.insertSelective(slog);
     }
 
@@ -239,7 +232,6 @@ public class SampleServiceImple implements SampleService {
         ss.setStorageName(name);
         ss.setSindex(sindex);
         ss.setSampleNum(sampleIds.size());
-        ss.setCreateDate(new Date());
         ss.setUserId(userId);
         sampleStorageMapper.insertSelective(ss);
 

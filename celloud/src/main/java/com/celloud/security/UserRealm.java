@@ -40,7 +40,6 @@ public class UserRealm extends AuthorizingRealm {
         User user = ConstantsData.getLoginUser();
         if (user == null) {
             if (SecurityUtils.getSubject().isRemembered()) {
-                System.out.println(username);
                 user = userService.findByUsernameOrEmail(username);
                 SecurityUtils.getSubject().getSession().setAttribute(Constants.SESSION_LOGIN_USER, user);
             } else {
