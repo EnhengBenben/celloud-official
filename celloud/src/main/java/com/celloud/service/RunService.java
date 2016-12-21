@@ -124,5 +124,4 @@ public interface RunService {
 	 */
 	public void rockyCheckRun(Integer appId, DataFile data);
 
-	void test();
 }

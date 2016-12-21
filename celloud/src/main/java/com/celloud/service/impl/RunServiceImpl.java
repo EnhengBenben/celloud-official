@@ -16,7 +16,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.AppDataListType;
@@ -427,15 +426,6 @@ public class RunServiceImpl implements RunService {
 		} else {
 			logger.info("数据{}上传完不可以运行", originalName);
 		}
-	}
-	@Override
-	@Scheduled(fixedRate = 3000)
-	public void test() {
-		logger.info("投递任务。。。。。。。");
-		Map<String, String> datas = new HashMap<>();
-		datas.put("r1", "111222333");
-		datas.put("r2", "333222111");
-		AppSubmitUtil.mq("rocky", 1, datas);
 	}
 
 	public static void main(String[] args) {
