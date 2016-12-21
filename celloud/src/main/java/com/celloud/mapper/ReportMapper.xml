@@ -433,4 +433,19 @@
   	WHERE r.project_id = #{projectId}
   	AND r.flag = #{flag}
   </select>
+  <select id="getLastDataReport" resultMap="BaseResultMap">
+  	select
+  	r.report_id,r.user_id,r.app_id,r.file_id,project_id,period,r.flag,r.create_date,r.state,context
+  	from tb_report r,tb_file f
+  	where 
+  	r.file_id = f.file_id and f.data_key = #{dataKey}
+  	<if test="appId != null">
+  	and r.app_id = #{appId}
+  	</if>
+  	<if test="userId != null">
+  	and r.user_id = #{userId}
+  	</if>
+  	and r.state = #{state}
+  	and flag = #{flag}
+  </select>
 </mapper>

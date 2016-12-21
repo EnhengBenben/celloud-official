@@ -1188,4 +1188,9 @@ public class ReportServiceImpl implements ReportService {
         return resultList;
     }
 
+	@Override
+	public Report getLastDataReport(String dataKey, Integer userId, Integer appId) {
+		return reportMapper.getLastDataReport(dataKey, DataState.ACTIVE, ReportType.DATA, userId, appId);
+	}
+
 }

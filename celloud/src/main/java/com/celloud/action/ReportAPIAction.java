@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.constants.ConstantsData;
+import com.celloud.model.mongo.BSI;
 import com.celloud.model.mongo.Rocky;
 import com.celloud.model.mysql.Auth;
+import com.celloud.model.mysql.Report;
+import com.celloud.service.AppService;
+import com.celloud.service.AuthService;
 import com.celloud.service.ReportAPIService;
 import com.celloud.service.ReportService;
 
@@ -29,6 +33,10 @@ public class ReportAPIAction {
 	private ReportAPIService reportAPI;
 	@Resource
 	private ReportService reportService;
+	@Resource
+	private AuthService authService;
+	@Resource
+	private AppService appService;
 
 	/**
 	 * 获取token
@@ -82,6 +90,27 @@ public class ReportAPIAction {
 		context.put("rocky", rocky);
         context.put("rockyResult", "/rockyResult/");
 		context.put("significances", ConstantsData.significances());
+		return context;
+	}
+
+	@RequestMapping(value = "getBSIReport", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> getBSIReport(@RequestParam("token") String token,
+			@RequestParam("dataKey") String dataKey) {
+		Map<String, Object> context = new HashMap<String, Object>();
+		Auth auth = authService.getByToken(token);
+		if (auth == null) {
+			context.put("error", "无效的token");
+			return context;
+		}
+		Integer userId = auth.getUserId();
+		Report report = reportService.getLastDataReport(dataKey, userId, 118);
+		if (report == null) {
+			context.put("error", "没有此报告");
+			return context;
+		}
+		BSI bsi = reportService.getBSIReport(dataKey, report.getProjectId(), report.getAppId());
+		context.put("bsi", bsi);
 		return context;
 	}
 }
