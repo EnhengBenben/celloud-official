@@ -1,6 +1,11 @@
 $(document).ready(function() {
 	var _swiper = new Swiper(".swiper-container", {
-			direction: 'horizontal'
+			direction: 'vertical',
+			// 如果需要分页器
+    		pagination: '.swiper-pagination',
+    		paginationType : 'fraction',
+   			 autoHeight: true
+
 		})
 		//控制rem
 	document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
@@ -8,8 +13,7 @@ $(document).ready(function() {
 		document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 	})
 
-//	var webService = "http://192.168.22.253:8080/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
-	var webService = "api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
+	var webService = "http://192.168.22.253:8080/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
 
 	$.ajax({
 		type: "get",
@@ -95,9 +99,9 @@ $(document).ready(function() {
 						'</td>' +
 						'</tr>';
 					p1 = '<div class="report_title">' +
-						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 1.png"/>' +
-						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 2.png" alt="" title="" />' +
-						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 3" alt="" title="" />' +
+						'<img src="img/logo 3.png"/>' +
+						'<img src="img/logo 3-1.png" alt="" title="" />' +
+						'<img style="display:block;width:3.3rem;" src="img/01.Page 3" alt="" title="" />' +
 						'</div>';
 					$('.h_lastpage_hide').hide()
 				} else {
@@ -107,9 +111,9 @@ $(document).ready(function() {
 						'<td>' + record.description + '</td>' +
 						'</tr>';
 					p1 = '<div class="report_title">' +
-						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 1.png"/>' +
-						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 2.png" alt="" title="" />' +
-						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01-myPage3.png"/>' +
+						'<img src="img/logo 3.png"/>' +
+						'<img src="img/logo 3-1.png" alt="" title="" />' +
+						'<img src="img/logo 4.png"/>' +
 						'</div>';
 
 				}
