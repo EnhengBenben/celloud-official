@@ -10,6 +10,7 @@
   <resultMap id="BaseResultMap" type="com.celloud.model.mysql.App" extends="miniBaseMap" >
     <result column="english_name" property="englishName" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="picture_name" property="pictureName" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="intro" property="intro" jdbcType="VARCHAR" />
@@ -39,7 +40,7 @@
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
     company_id, attribute, run_type, flag, run_data, data_num, param, off_line, command, 
-    title, method, max_task
+    title, method, max_task,code
   </sql>
   <sql id="Blob_Column_List" >
     app_doc

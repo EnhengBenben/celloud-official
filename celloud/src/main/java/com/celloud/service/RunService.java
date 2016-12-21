@@ -123,4 +123,6 @@ public interface RunService {
 	 * @date 2016年9月27日下午4:09:02
 	 */
 	public void rockyCheckRun(Integer appId, DataFile data);
+
+	void test();
 }
