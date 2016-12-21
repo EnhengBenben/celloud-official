@@ -9,7 +9,7 @@
       <div class="table-opera">
         <div class="table-opera-content">
           <div class="opera-info">
-            <shiro:hasPermission name="run:button">
+            <shiro:hasPermission name="data:run">
 	          <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
             </shiro:hasPermission>
             <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>

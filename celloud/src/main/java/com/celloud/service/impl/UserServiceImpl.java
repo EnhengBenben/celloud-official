@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.mongodb.morphia.Key;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,9 @@ import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.UserRole;
 import com.celloud.dao.ReportDao;
-import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.UserMapper;
 import com.celloud.mapper.UserRegisterMapper;
+import com.celloud.model.mysql.SecRole;
 import com.celloud.model.mysql.User;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
@@ -46,8 +47,6 @@ public class UserServiceImpl implements UserService {
     private UserRegisterMapper userRegisterMapper;
     @Autowired
     private AliEmailUtils aliEmail;
-    @Autowired
-    private AppMapper appMapper;
     @Autowired
     private ReportDao reportDao;
 
@@ -218,34 +217,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean sendRegisterEmail(String email) {
+	public Boolean sendRegisterEmail(String email, Integer[] appIds, Integer[] roles) {
         userRegisterMapper.deleteUserRegisterInfo(email);
         String randomCode = MD5Util.getMD5(String.valueOf(new Date().getTime()));
-        StringBuffer appIds = new StringBuffer();
-        StringBuilder roleIds = new StringBuilder();
         // 获取登录用户
         User loginUser = ConstantsData.getLoginUser();
         Integer loginUserId = loginUser.getUserId();
-        List<Integer> appIdList = appMapper.findAppIdsByUserId(loginUserId);
-        List<Integer> roleIdList = userMapper.findRoleIdsByUserId(loginUserId);
         Integer appCompanyId = userMapper.getCompanyIdByUserId(loginUserId);
-        if (appIdList != null && !appIdList.isEmpty()) {
-            for (Integer appId : appIdList) {
-                appIds.append(appId + ",");
-            }
-            appIds.deleteCharAt(appIds.length() - 1);
-        }
-        if (roleIdList != null && !roleIdList.isEmpty()) {
-            for (Integer roleId : roleIdList) {
-                // 排除医院管理员权限
-                if (roleId.intValue() != 6) {
-                    roleIds.append(roleId + ",");
-                }
-            }
-            roleIds.deleteCharAt(roleIds.length() - 1);
-        }
-        Integer count = userRegisterMapper.insertUserRegisterInfo(email, randomCode, appIds.toString(),
-                roleIds.toString());
+		Integer count = userRegisterMapper.insertUserRegisterInfo(email, randomCode, StringUtils.join(appIds, ","),
+				StringUtils.join(roles, ","), loginUserId);
         String param = Base64Util.encrypt(email + "/" + randomCode + "/" + loginUser.getDeptId() + "/"
                 + loginUser.getCompanyId() + "/" + appCompanyId + "/" + 0);
         aliEmail.simpleSend(
@@ -310,4 +290,9 @@ public class UserServiceImpl implements UserService {
         reportDao.update(User.class, queryFilters, updateFilters);
         return true;
     }
+
+	@Override
+	public List<SecRole> getRolesByUserId(Integer userId) {
+		return roleService.getRolesByUserId(userId);
+	}
 }

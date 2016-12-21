@@ -56,6 +56,14 @@ public class App {
     private BigDecimal price;
 	private String tagName;
 
+	public boolean equals(Object o) {
+		if (o instanceof App) {
+			App a = (App) o;
+			return a.getAppId().equals(this.appId);
+		}
+		return false;
+	}
+
     public Integer getAppId() {
         return appId;
     }

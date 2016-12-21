@@ -45,8 +45,9 @@ public class WechatUtils {
 	 * @date 2016年10月19日下午4:11:58
 	 */
 	public String initMenu() {
-		String menu = "{'button':[{'name':'我要','sub_button':[{'type':'view','name':'绑定账户','url':'https://www.celloud.cn/api/wechat/toBind'},{'type':'view','name':'解除绑定','url':'https://www.celloud.cn/api/wechat/toUnBind'}]},{'type':'view','name':'意见反馈','url':'https://www.celloud.cn/feedback_for_phone'},{'type':'view','name':'进入官网','url':'https://www.celloud.cn'}]}";
+		String menu = "{'button':[{'name':'我要','sub_button':[{'type':'view','name':'绑定账户','url':'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc9447d96940b620c&redirect_uri=https://www.celloud.cn/api/wechat/toBind/&response_type=code&scope=snsapi_userinfo&state=out#wechat_redirect'},{'type':'view','name':'解除绑定','url':'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc9447d96940b620c&redirect_uri=https://www.celloud.cn/api/wechat/toUnBind/&response_type=code&scope=snsapi_userinfo&state=out#wechat_redirect'}]},{'type':'view','name':'意见反馈','url':'https://www.celloud.cn/feedback_for_phone.html'},{'type':'view','name':'进入官网','url':'https://www.celloud.cn'}]}";
 		String url = createMenu + getToken();
+		logger.info("init wechat menu:" + url);
 		JSONObject json = new JSONObject(menu);
 		return HttpURLUtils.httpPostRequest(url, json.toString());
 

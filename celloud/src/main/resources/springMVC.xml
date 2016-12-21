@@ -213,6 +213,7 @@
 		<property name="oAuth2TokenUrl" value="${wechat.oAuth2TokenUrl}" />
 		<property name="tokenUrl" value="${wechat.tokenUrl}" />
 		<property name="templateUrl" value="${wechat.templateUrl}" />
+		<property name="createMenu" value="${wechat.createMenu}" />
 		<property name="qrcodeCreate" value="${wechat.qrcodeCreate}" />
 		<property name="qrcodeShow" value="${wechat.qrcodeShow}" />
 	</bean>
