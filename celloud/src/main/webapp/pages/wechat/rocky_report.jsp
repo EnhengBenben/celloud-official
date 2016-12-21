@@ -116,7 +116,7 @@
 				<div class="main swiper-slide">
 					 <img class="backImg6" src="<%=request.getContextPath()%>/images/wechat/rocky_report/06.Page 1.png" />
 					<div class="p6_content_top">
-						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/06.Page 2.png" />
+						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/page2_new.png" />
 					</div>
 					<div class="p6_content_bottom">
 						<p><span style="font-style: italic;font-family: 'times new roman';">BRCA1/BRCA2</span>基因是抑癌基因，它们表达的蛋白在细胞DNA精密修复所需的酶促通路中起作用，调节细胞复制、DNA损伤修复、细胞正常生长，保护细胞不会生长失控和癌变。一些危害突变会导致这些基因或它们所表达的蛋白失去正常功能，无法修复DNA损伤，使得DNA中的异常不断累积，最终导致癌症的形成。</p>
@@ -171,7 +171,7 @@
 						<div>
 							根据遗传学“中心法则”，遗传信息由DNA开始最终传向蛋白质，蛋白分子共同协作使我们的身体正常运转。发生有害突变的DNA产生异常的蛋白（蛋白分子大小或分子结构发生变化），不能行使其正常功能，最终可能导致机体发生病变。
 						</div>
-						<div><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/08.Page 2.png" /></div>
+						<div class="p8_img"><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/08.Page 2.png" /></div>
 						<div class="p8_m">参考国际癌症研究机构（International Agency for Research on Cancer,IARC）的分类标准，基因变异的临床意义分类及标准为：</div>
 						<div class="p8_text"><b>·</b><i>致病相关变异：已证实能使癌症风险显著提高的突变。这种变异往往是移码突变，导致蛋白质不能正常表达。</i></div>
 						<div class="p8_text"><b>·</b><i>可能致病变异：没有明确证据，当前认为该变异有害。</i></div>
@@ -220,14 +220,14 @@
 							</tr>
 						</table>
 						<p id="p10_artical2">遗传性乳腺癌占全部乳腺癌的5%~10%。<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>基因是最重要的两个遗传性乳腺癌易感基因，它们引起的乳腺癌占遗传性乳腺癌的40%~45%</p>
-						<div><img id="p10_img" src="<%=request.getContextPath()%>/images/wechat/rocky_report/10.Page 2.png" /></div>
+						<div><img id="p10_img" src="<%=request.getContextPath()%>/images/wechat/rocky_report/page4_new.png" /></div>
 						<p id="p10_artical3">平均来看，普通人在50岁之前患乳腺癌的风险为1.9%，70岁之前患乳腺癌的风险为7.3%。（注:患病风险数据来源于欧美人群,仅供亚洲人群参考。）</p>
 						<p id="p10_artical4">本次检测在您的乳腺癌关键基因<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>上未发现致病变异，因而该因素没有提高您的乳腺癌患病风险。建议您结合本检测结果，保持良好心态，基于家族史及自身身体状况，积极管理自身健康。</p>
 					</div>
 				</div>
 				<!--------page11--------->
 				<div class="main swiper-slide">
-					 <img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 1.png" />
+					 <img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/page 5.png" />
 					<div class="p11-content">
 						<div>人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。<span style="font-style: italic;font-family: 'times new roman';">BRCA1/BRCA2</span>突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</div>
 						<div><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 2.png" /></div>
@@ -309,7 +309,7 @@
 				<!---------华点云page1------->
 				<div class="main swiper-slide h_lastpage_hide">
 					<div class="h_lastpage">
-						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/01-2.Page 1.png">
+						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/logo 1.png">
 
 					</div>
 				</div>

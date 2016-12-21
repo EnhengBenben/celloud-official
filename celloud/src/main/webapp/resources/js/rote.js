@@ -13,7 +13,7 @@ $(document).ready(function() {
 		document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 	})
 
-	var webService = "http://192.168.22.253:8080/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
+	var webService = "https://www.celloud.cc/CelLoudAPI/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
 
 	$.ajax({
 		type: "get",
@@ -111,9 +111,9 @@ $(document).ready(function() {
 						'<td>' + record.description + '</td>' +
 						'</tr>';
 					p1 = '<div class="report_title">' +
-						'<img src="img/logo 3.png"/>' +
-						'<img src="img/logo 3-1.png" alt="" title="" />' +
-						'<img src="img/logo 4.png"/>' +
+						'<img src="../report/wechat/rocky_report/logo 3.png"/>' +
+						'<img src="../report/wechat/rocky_report/logo 3-1.png" alt="" title="" />' +
+						'<img src="../report/wechat/rocky_report/1－@4x.png"/>' +
 						'</div>';
 
 				}
