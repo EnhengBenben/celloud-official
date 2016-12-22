@@ -39,9 +39,7 @@
       <if test="orderNo != null" >
         order_no,
       </if>
-      <if test="createDate != null" >
         create_date,
-      </if>
       <if test="isPrint != null" >
         is_print,
       </if>
@@ -56,9 +54,7 @@
       <if test="orderNo != null" >
         #{orderNo,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null" >
         now(),
-      </if>
       <if test="isPrint != null" >
         #{isPrint,jdbcType=INTEGER},,
       </if>
