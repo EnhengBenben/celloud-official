@@ -45,9 +45,7 @@
       <if test="experState != null" >
         exper_state,
       </if>
-      <if test="createDate != null" >
         create_date,
-      </if>
       <if test="state != null" >
         state,
       </if>
@@ -65,9 +63,7 @@
       <if test="experState != null" >
         #{experState,jdbcType=INTEGER},
       </if>
-      <if test="createDate != null" >
         now(),
-      </if>
       <if test="state != null" >
         #{state,jdbcType=BIT},
       </if>
