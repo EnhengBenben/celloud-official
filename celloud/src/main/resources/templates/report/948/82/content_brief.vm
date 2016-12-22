@@ -14,7 +14,7 @@
     <div class="wrapper">
         <ul class="info mt5">
             <li>姓名：<span><input name="briefBaseInfo['name']" value="$!{hbv.briefBaseInfo.name}" type="text"></span></li>
-            <li>病人类别：<span><input name="briefBaseInfo['id']" value="$!{hbv.briefBaseInfo.id}" type="text"></span></li>
+            <li>病人来源：<span><input name="briefBaseInfo['id']" value="$!{hbv.briefBaseInfo.id}" type="text"></span></li>
             <li>样本编号：<span><input name="briefBaseInfo['sampleNumber']" value="$!{hbv.briefBaseInfo.sampleNumber}" type="text"></span></li>
             <li>样本种类：<span><input name="briefBaseInfo['sampleType']" value="$!{hbv.briefBaseInfo.sampleType}" type="text"></span></li>
             <li>性别：<span id="_sex"><input type="radio" name="briefBaseInfo['sex']" value="男" #if(${hbv.briefBaseInfo.sex}!='女')checked="checked"#end onclick="radioClick(0)" id="men">男<input type="radio" name="briefBaseInfo['sex']" #if(${hbv.briefBaseInfo.sex}=='女')checked="checked"#end value="女" onclick="radioClick(1)" id="women">女</span></li>
@@ -40,8 +40,12 @@ ${hbv.briefBaseInfo.clinical}
         #else
         ${hbv.clinical}
         #end
-        <p class="annotation">注：实心五星 <i class="fa fa-star" aria-hidden="true"></i> 表示发生了耐药突变<br>
-            空心五星 <i class="fa fa-star-o" aria-hidden="true"></i> 表示发生了突变，但是暂无文献支持其和耐药相关<br>
-             红色字体表示在样本中未找到该位点
-        </p>
-    </div>
+        <p class="annotation">注：实心五星 <i class="fa fa-star" aria-hidden="true"></i> 表示发生了耐药突变，空心五星 <i class="fa fa-star-o" aria-hidden="true"></i> 表示发生了突变，但是暂无文献支持其和耐药相关。</p>
+		<ul class="info mt5">
+            <li>检验日期：<span><input name="briefBaseInfo['checkerdate']" value="$!{hbv.briefBaseInfo.checkerdate}" type="text"></span></li>
+            <li>报告日期：<span><input name="briefBaseInfo['reportdate']" value="$!{hbv.briefBaseInfo.reportdate}" type="text"></span></li>
+            <li>检验员：<span><input name="briefBaseInfo['checker']" value="$!{hbv.briefBaseInfo.checker}" type="text"></span></li>
+            <li>复核员：<span><input name="briefBaseInfo['check']" value="$!{hbv.briefBaseInfo.check}" type="text"></span></li>
+        </ul>
+        <p>实验室申明，此报告仅对本份标本负责，供医生参考，如有疑义请在48小时内联系复核。</p>
+</div>

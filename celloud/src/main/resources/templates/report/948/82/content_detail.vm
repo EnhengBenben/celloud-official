@@ -13,7 +13,7 @@
     <div class="wrapper">
         <ul class="info mt5">
             <li>姓名：<span><input name="detailBaseInfo['name']" value="$!{hbv.detailBaseInfo.name}" type="text"></span></li>
-            <li>病人类别：<span><input name="detailBaseInfo['id']" value="$!{hbv.detailBaseInfo.id}" type="text"></span></li>
+            <li>病人来源：<span><input name="detailBaseInfo['id']" value="$!{hbv.detailBaseInfo.id}" type="text"></span></li>
             <li>样本编号：<span><input name="detailBaseInfo['sampleNumber']" value="$!{hbv.detailBaseInfo.sampleNumber}" type="text"></span></li>
             <li>样本种类：<span><input name="detailBaseInfo['sampleType']" value="$!{hbv.detailBaseInfo.sampleType}" type="text"></span></li>
             <li>性别：<span id="_sex"><input type="radio" name="detailBaseInfo['sex']" value="男" #if(${hbv.detailBaseInfo.sex}!='女')checked="checked"#end onclick="radioClick(0)" id="men">男<input type="radio" name="detailBaseInfo['sex']" #if(${hbv.detailBaseInfo.sex}=='女')checked="checked"#end value="女" onclick="radioClick(1)" id="women">女</span></li>
