@@ -100,13 +100,13 @@ public class ReportAPIAction {
 		Map<String, Object> context = new HashMap<String, Object>();
 		Auth auth = authService.getByToken(token);
 		if (auth == null) {
-			context.put("error", "无效的token");
+			context.put("message", "无效的token");
 			return context;
 		}
 		Integer userId = auth.getUserId();
 		Report report = reportService.getLastDataReport(dataKey, userId, 118);
 		if (report == null) {
-			context.put("error", "没有此报告");
+			context.put("message", "没有此报告");
 			return context;
 		}
 		BSI bsi = reportService.getBSIReport(dataKey, report.getProjectId(), report.getAppId());
