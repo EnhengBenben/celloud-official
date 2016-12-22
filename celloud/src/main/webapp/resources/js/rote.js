@@ -1,39 +1,42 @@
 $(document).ready(function() {
-	var _swiper = new Swiper(".swiper-container", {
+	var swiper = new Swiper(".swiper-container", {
 			direction: 'vertical',
 			// 如果需要分页器
-    		pagination: '.swiper-pagination',
-    		paginationType : 'fraction',
-   			autoHeight: true
+			pagination: '.swiper-pagination',
+			paginationType: 'fraction',
+			autoHeight: true,
+			
+			observer: true, //修改swiper自己或子元素时，自动初始化swiper
+			observeParents: true //修改swiper的父元素时，自动初始化swiper
 		})
 	//控制页面滚动
 	var startScroll, touchStart, touchCurrent;
-		swiper.slides.on('touchstart', function (e) {
-		    startScroll = this.scrollTop;
-		    touchStart = e.targetTouches[0].pageY;
-		}, true);
-		swiper.slides.on('touchmove', function (e) {
-		    touchCurrent = e.targetTouches[0].pageY;
-		    var touchesDiff = touchCurrent - touchStart;
-		    var slide = this;
-		    var onlyScrolling = 
-		            ( slide.scrollHeight > slide.offsetHeight ) && //allow only when slide is scrollable
-		            (
-		                ( touchesDiff < 0 && startScroll === 0 ) || //start from top edge to scroll bottom
-		                ( touchesDiff > 0 && startScroll === ( slide.scrollHeight - slide.offsetHeight ) ) || //start from bottom edge to scroll top
-		                ( startScroll > 0 && startScroll < ( slide.scrollHeight - slide.offsetHeight ) ) //start from the middle
-		            );
-		    if (onlyScrolling) {
-		        e.stopPropagation();
-		    }
+	swiper.slides.on('touchstart', function(e) {
+		startScroll = this.scrollTop;
+		touchStart = e.targetTouches[0].pageY;
 	}, true);
-		//控制rem
+	swiper.slides.on('touchmove', function(e) {
+		touchCurrent = e.targetTouches[0].pageY;
+		var touchesDiff = touchCurrent - touchStart;
+		var slide = this;
+		var onlyScrolling =
+			(slide.scrollHeight > slide.offsetHeight) && //allow only when slide is scrollable
+			(
+				(touchesDiff < 0 && startScroll === 0) || //start from top edge to scroll bottom
+				(touchesDiff > 0 && startScroll === (slide.scrollHeight - slide.offsetHeight)) || //start from bottom edge to scroll top
+				(startScroll > 0 && startScroll < (slide.scrollHeight - slide.offsetHeight)) //start from the middle
+			);
+		if (onlyScrolling) {
+			e.stopPropagation();
+		}
+	}, true);
+	//控制rem
 	document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 	window.addEventListener('resize', function() {
 		document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 	})
 
-	var webService = "https://www.celloud.cc/CelLoudAPI/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
+	var webService = 'https://www.celloud.cc/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123'
 
 	$.ajax({
 		type: "get",
@@ -88,11 +91,11 @@ $(document).ready(function() {
 					$('.result').html(res);
 				} else {
 					res = '<p class="reslut2">' +
-						'本次检测在您的乳腺癌关键基因<span id="BCRA">' + 'BRCA1</span>和<span id="BCRA">BRCA2</span>上未发现致病变异，因而该因素没有提高您的乳腺癌风险。</p>'
+						'本次检测在您的乳腺癌关键基因<span id="BCRA">' + 'BRCA1</span>和<span 						id="BCRA">BRCA2</span>上未发现致病变异，因而该因素没有提高您的乳腺癌风险。</p>'
 					$('.result').html(res);
 				}
 
-				res1 = '本次检测，在您的<span id="BCRA">' + 'BRCA1/2</span>基因中共发现了<u>' + record.length + '</u>个突变。它们是：'
+				res1 = '本次检测，在您的<span id="BCRA">' + 'BRCA1/2</span>基因中共发现了<u>' + record.length + 						'</u>个突变。它们是：'
 				$('.countIn').html(res1);
 			}
 			for (var i in record) {
@@ -106,7 +109,6 @@ $(document).ready(function() {
 				$('.tab_body_p6').append(tab1);
 			}
 			for (var i in record) {
-
 				if (report.rocky.companyId == 33) {
 					tab2 = '<tr class="p2_tab_body">' +
 						'<td>' + (parseInt(i) + 1) + '</td>' +
@@ -119,9 +121,9 @@ $(document).ready(function() {
 						'</td>' +
 						'</tr>';
 					p1 = '<div class="report_title">' +
-						'<img src="img/logo 3.png"/>' +
-						'<img src="img/logo 3-1.png" alt="" title="" />' +
-						'<img style="display:block;width:3.3rem;" src="img/01.Page 3" alt="" title="" />' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3.png"/>' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3-1.png" alt="" title="" />' +
+						'<img style="display:block;width:3.3rem;" src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 3" alt="" title="" />' +
 						'</div>';
 					$('.h_lastpage_hide').hide()
 				} else {
@@ -131,9 +133,9 @@ $(document).ready(function() {
 						'<td>' + record.description + '</td>' +
 						'</tr>';
 					p1 = '<div class="report_title">' +
-						'<img src="../report/wechat/rocky_report/logo 3.png"/>' +
-						'<img src="../report/wechat/rocky_report/logo 3-1.png" alt="" title="" />' +
-						'<img src="../report/wechat/rocky_report/1－@4x.png"/>' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3.png"/>' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3-1.png" alt="" title="" />' +
+						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/1－@4x.png"/>' +
 						'</div>';
 
 				}
