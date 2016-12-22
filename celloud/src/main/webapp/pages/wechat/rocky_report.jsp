@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
         <title>CelLoud华木兰报告</title>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=1.2" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=1.3" />
     </head>
 
     <body>
@@ -44,6 +44,11 @@
 
 					</div>
 					<!--------type结束------------->
+					
+					<!--------result开始------------->
+					<div class="p2_main result">
+					</div>
+					<!--------resul结束------------->
 
 					<!-------report开始------------->
 					<div class=" rep">
@@ -65,11 +70,6 @@
 						</div>
 					</div>
 					<!--------report结束------------->
-
-					<!--------result开始------------->
-					<div class="p2_main result">
-					</div>
-					<!--------resul结束------------->
 
 					<!--------date开始------------->
 					<div class="p2_main  date">
@@ -116,7 +116,7 @@
 				<div class="main swiper-slide">
 					 <img class="backImg6" src="<%=request.getContextPath()%>/images/wechat/rocky_report/06.Page 1.png" />
 					<div class="p6_content_top">
-						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/page2_new.png" />
+						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_06.png" />
 					</div>
 					<div class="p6_content_bottom">
 						<p><span style="font-style: italic;font-family: 'times new roman';">BRCA1/BRCA2</span>基因是抑癌基因，它们表达的蛋白在细胞DNA精密修复所需的酶促通路中起作用，调节细胞复制、DNA损伤修复、细胞正常生长，保护细胞不会生长失控和癌变。一些危害突变会导致这些基因或它们所表达的蛋白失去正常功能，无法修复DNA损伤，使得DNA中的异常不断累积，最终导致癌症的形成。</p>
@@ -171,7 +171,7 @@
 						<div>
 							根据遗传学“中心法则”，遗传信息由DNA开始最终传向蛋白质，蛋白分子共同协作使我们的身体正常运转。发生有害突变的DNA产生异常的蛋白（蛋白分子大小或分子结构发生变化），不能行使其正常功能，最终可能导致机体发生病变。
 						</div>
-						<div class="p8_img"><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/08.Page 2.png" /></div>
+						<div class="p8_img"><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_16.png" /></div>
 						<div class="p8_m">参考国际癌症研究机构（International Agency for Research on Cancer,IARC）的分类标准，基因变异的临床意义分类及标准为：</div>
 						<div class="p8_text"><b>·</b><i>致病相关变异：已证实能使癌症风险显著提高的突变。这种变异往往是移码突变，导致蛋白质不能正常表达。</i></div>
 						<div class="p8_text"><b>·</b><i>可能致病变异：没有明确证据，当前认为该变异有害。</i></div>
@@ -212,7 +212,7 @@
 							</tr>
 							<tr class="p10_tab_body">
 								<td>中风险基因</td>
-								<td>CHEK2,ATM,PALB2,BRIP1,MRE11A,RAD50,RAD51C,NBN</td>
+								<td>CHEK2,ATM,PALB2,BRIP1,MRE11A,RAD50, RAD51C,NBN</td>
 							</tr>
 							<tr class="p10_tab_body">
 								<td>低风险基因</td>
@@ -220,7 +220,7 @@
 							</tr>
 						</table>
 						<p id="p10_artical2">遗传性乳腺癌占全部乳腺癌的5%~10%。<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>基因是最重要的两个遗传性乳腺癌易感基因，它们引起的乳腺癌占遗传性乳腺癌的40%~45%</p>
-						<div><img id="p10_img" src="<%=request.getContextPath()%>/images/wechat/rocky_report/page4_new.png" /></div>
+						<div><img id="p10_img" src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_22.png" /></div>
 						<p id="p10_artical3">平均来看，普通人在50岁之前患乳腺癌的风险为1.9%，70岁之前患乳腺癌的风险为7.3%。（注:患病风险数据来源于欧美人群,仅供亚洲人群参考。）</p>
 						<p id="p10_artical4">本次检测在您的乳腺癌关键基因<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>上未发现致病变异，因而该因素没有提高您的乳腺癌患病风险。建议您结合本检测结果，保持良好心态，基于家族史及自身身体状况，积极管理自身健康。</p>
 					</div>
@@ -230,7 +230,7 @@
 					 <img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 1.png" />
 					<div class="p11-content">
 						<div>人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。<span style="font-style: italic;font-family: 'times new roman';">BRCA1/BRCA2</span>突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</div>
-						<div><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/page 5.png" /></div>
+						<div><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_26.png" /></div>
 						<div>本次检测在您的乳腺癌关键基因<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>中未检测到致病突变，在大多数情况下，您的亲属不需要进行这两个基因的突变筛查。在有乳腺癌家族史的情况下，为了分析家族遗传风险信息，建议确诊为乳腺癌患者的直系亲属接受此基因的突变检测。</div>
 					</div>
 				</div>
@@ -242,7 +242,7 @@
 						<div>女性和年龄增长是发生乳腺癌的主要危险因素。女性一生都有发生乳腺癌的风险，风险大约是男性的100倍。70岁女性患乳腺癌的短期风险大约是30岁女性的10倍。</div>
 						<span>乳腺癌家族史</span>
 						<div class="p12_img">
-							<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/12.Page 2.png" />
+							<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_03.png" />
 						</div>
 						
 						<div>确凿证据表明，有乳腺癌家族史的女性，尤其是一级亲属患乳腺癌的女性，发生乳腺癌的风险升高。如果只有一名一级亲属患病，则风险翻倍；如果有两名一级亲属诊断患病，则风险增加4倍。</div>
@@ -257,7 +257,10 @@
 						<span>乳腺密度</span>
 						<div>乳腺密度大的女性发生乳腺癌的风险增加。这通常是一种固有的特征，但在一定程度上可因生育、药物和酒精而改变。</div>
 						<span>其他可能的危险因素</span>
-						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/13.Page 2.png" />
+						<div class="p13-content-img">
+							img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_20.png" />
+						</div>
+						<
 					</div>
 				</div>
 				<!--------page14--------->
@@ -289,8 +292,8 @@
 						<p><b>【7】</b><i>Easton DF. How many more breast cancer predisposition genes are there? Breast Cancer Research 1999; 1(1):14–17.  [PubMed Abstract]</i></p>
 						<p><b>【8】</b><i>Pal T, Permuth-Wey J, Betts JA, et al. BRCA1 and BRCA2 mutations account for a large proportion of ovarian carcinoma cases. Cancer 2005; 104(12):2807–16.</i></p>
 						<p><b>【9】</b><i>Howlader N, Noone AM, Krapcho M, et al. (eds). SEER Cancer Statistics Review, 1975-2011, National Cancer Institute. Bethesda, MD, http://seer.cancer.gov/csr/1975_2011/, based on November 2013 SEER data submission, posted to the SEER web site, April 2014.</i></p>
-						<p><b>【10】</b><i>Antoniou A, Pharoah PD, Narod S, et al. Average risks of breast and ovarian cancer associated with BRCA1 or BRCA2 mutations detected in case series unselected for family history: A combined analysis of 22 studies. American Journal of Human Genetics2003; 72(5):1117–1130.</i></p>
-						<p><b>【11】</b><i>Chen S, Parmigiani G. Meta-analysis of BRCA1 and BRCA2 penetrance. Journal of Clinical Oncology 2007; 25(11):1329–1333.</i></p>
+						<p><b>【11】</b><i>Antoniou A, Pharoah PD, Narod S, et al. Average risks of breast and ovarian cancer associated with BRCA1 or BRCA2 mutations detected in case series unselected for family history: A combined analysis of 22 studies. American Journal of Human Genetics2003; 72(5):1117–1130.</i></p>
+						<p><b>【12】</b><i>Chen S, Parmigiani G. Meta-analysis of BRCA1 and BRCA2 penetrance. Journal of Clinical Oncology 2007; 25(11):1329–1333.</i></p>
 					</div>
 				</div>
 				<!--------page16--------->
@@ -307,7 +310,7 @@
 				<!---------华点云page1------->
 				<div class="main swiper-slide h_lastpage_hide">
 					<div class="h_lastpage">
-						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/logo 1.png">
+						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_12.png">
 
 					</div>
 				</div>
@@ -320,6 +323,6 @@
         <script type="text/javascript">
 		     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 		</script>
-        <script src="<%=request.getContextPath()%>/js/rote.js?v=1.2" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/rote.js?v=1.3" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>

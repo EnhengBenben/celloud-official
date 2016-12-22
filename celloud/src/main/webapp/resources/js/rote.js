@@ -90,7 +90,11 @@ $(document).ready(function() {
 						'</p>';
 					$('.result').html(res);
 				} else {
-					res = '<p class="reslut2">' +
+					res = '<p class="reslut1">' +
+						'本次BRCA基因共检测到<u>' + record.length + '</u>个突变，其中致病相关突变' +
+						'为<u>' + report.rocky.pathogenicNum + '</u>个。' +
+						'</p>'+
+					'<p class="reslut2">' +
 						'本次检测在您的乳腺癌关键基因<span id="BCRA">' + 'BRCA1</span>和<span 						id="BCRA">BRCA2</span>上未发现致病变异，因而该因素没有提高您的乳腺癌风险。</p>'
 					$('.result').html(res);
 				}
