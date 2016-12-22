@@ -128,19 +128,19 @@
 					<div class="p7-content">
 						<div>
 							<p>
-								<b>·</b>&nbsp;&nbsp;Class 5 – Pathogenic 致病相关的变异
+								<b>·</b>&nbsp;&nbsp;Class 5 – 致病相关的变异   Pathogenic 
 							</p>
 							<p>
-								<b>·</b>&nbsp;&nbsp;Class 4 – Likely pathogenic 可能致病的变异
+								<b>·</b>&nbsp;&nbsp;Class 4 – 可能致病的变异   Likely pathogenic
 							</p>
 							<p>
-								<b>·</b>&nbsp;&nbsp;Class 3 – Uncertain Significance 意义不明确的变异
+								<b>·</b>&nbsp;&nbsp;Class 3 – 意义不明确的变异   Uncertain Significance
 							</p>
 							<p>
-								<b>·</b>&nbsp;&nbsp;Class 2 – Likely benign 可能良性的变异
+								<b>·</b>&nbsp;&nbsp;Class 2 – 可能良性的变异   Likely benign
 							</p>
 							<p>
-								<b>·</b>&nbsp;&nbsp;Class 1 – Benign 良性的变异
+								<b>·</b>&nbsp;&nbsp;Class 1 – 良性的变异   Benign
 							</p>
 						</div>
 						<div class="p7">
@@ -208,15 +208,15 @@
 						<table class="p10_tab" border="0" cellspacing="cellspacing" cellpadding="cellpadding">
 							<tr class="p10_tab_body">
 								<td>高风险基因</td>
-								<td>BRCA1，BRCA2，TP53，PTEN，STK11，CDH1</td>
+								<td>BRCA1,BRCA2,TP53,PTEN,STK11,CDH1</td>
 							</tr>
 							<tr class="p10_tab_body">
 								<td>中风险基因</td>
-								<td>CHEK2，ATM，PALB2，BRIP1，MRE11A，RAD50，RAD51C，NBN</td>
+								<td>CHEK2,ATM,PALB2,BRIP1,MRE11A,RAD50,RAD51C,NBN</td>
 							</tr>
 							<tr class="p10_tab_body">
 								<td>低风险基因</td>
-								<td>CASP8，FGFR2，MAP3K，TOX3，LSP1</td>
+								<td>CASP8,FGFR2,MAP3K,TOX3,LSP1</td>
 							</tr>
 						</table>
 						<p id="p10_artical2">遗传性乳腺癌占全部乳腺癌的5%~10%。<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>基因是最重要的两个遗传性乳腺癌易感基因，它们引起的乳腺癌占遗传性乳腺癌的40%~45%</p>
@@ -227,10 +227,10 @@
 				</div>
 				<!--------page11--------->
 				<div class="main swiper-slide">
-					 <img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/page 5.png" />
+					 <img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 1.png" />
 					<div class="p11-content">
 						<div>人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。<span style="font-style: italic;font-family: 'times new roman';">BRCA1/BRCA2</span>突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</div>
-						<div><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 2.png" /></div>
+						<div><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/page 5.png" /></div>
 						<div>本次检测在您的乳腺癌关键基因<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>中未检测到致病突变，在大多数情况下，您的亲属不需要进行这两个基因的突变筛查。在有乳腺癌家族史的情况下，为了分析家族遗传风险信息，建议确诊为乳腺癌患者的直系亲属接受此基因的突变检测。</div>
 					</div>
 				</div>
@@ -270,7 +270,7 @@
                         <div>目前认为，膳食中的碳水化合物、脂肪会增加乳腺癌的发生风险,而水果蔬菜、叶酸、维生素D和膳食纤维能降低乳腺癌的发生风险。因此，平时应多吃一些蔬菜水果等含有维生素、膳食纤维的食品，预防乳腺癌的发生。</div>
                         <span><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/14.exercise.png">积极参加体育锻炼，保持合适的体重</span>
                         <div>高体重是绝经后乳腺癌的危险因素，此时体内多余的脂肪会转变为雌激素，成为雌激素的主要来源，促进乳腺癌细胞的生长。要坚持体育锻炼，保持适当的体重，避免肥胖导致的乳腺癌风险增加。</div>
-                        <span><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/14.inspect.png">保持心情舒畅，避免压力过大</span>
+                        <span><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/14.Smile.png	">保持心情舒畅，避免压力过大</span>
                         <div>长期心情不畅的女性是乳腺癌的高危人群，建议大家在日常生活中保持情绪稳定,避免精神刺激,适当给自己减压,保持心情舒畅及乐观的生活态度,避免和减少精神、心理紧张因素,可以减少乳腺癌的发生。</div>
 						<span><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/14.inspect.png">定期去正规医疗机构进行体检</span>
 						<div>建议长期饮酒、心情不畅及乳腺增生、有乳腺癌家族史、携带相关基因有害突变的人群定期进行乳腺自检，同时去正规体检机构进行相关的检查，包括 X 线检查、糖类抗原 CA153、CEA、乳腺B超等，早监测、早发现，早诊断、早治疗。</div>
@@ -280,19 +280,17 @@
 				<div class="main swiper-slide">
 					 <img class="backImg15" src="<%=request.getContextPath()%>/images/wechat/rocky_report/15.Page 1.png" />
 					<div class="p15-content">
-						<p><b>【1】</b><i>Holly Yan (2013-05-14). "What's the gene that led to Angelina Jolie's double mastectomy?". Health. CNN.</i></p>
-						<p><b>【2】</b><i>"BRCA1 and BRCA2: Cancer Risk and Genetic Testing". National Cancer Institute. 29 May 2009.</i></p>
-						<p><b>【3】</b><i>effrey N. Weitzel, Veronica I. Lagos, Carey A. Cullinane, Patricia J. Gambol, Julie O. Culver, Kathleen R. Blazer, Melanie R. Palomares, Katrina J. Lowstuter, Deborah J. MacDonald (2007). "Limited Family Structure and BRCA Gene Mutation Statusin Single Cases of Breast Cancer". Journal of the American Medical Association 297 (23): 2587–2595. doi:10.1001/jama.297.23.2587</i></p>
-						<p><b>【4】</b><i>Cui, J; Antoniou, AC; Dite, GS; Southey, MC; Venter, DJ; Easton, DF; Giles, GG; McCredie, MR; Hopper, JL (Feb 2001)."After BRCA1 and BRCA2 -what next? Multifactorial segregation analyses of three-generation, population-based Australian families affected by female breast cancer". Am J Hum Genet 68 (2): 420–31. doi:10.1086/318187.PMC 1235275. PMID 11133358</i></p>
-						<p><b>【5】</b><i>Morris, Joi L.; Gordon, Ora K. (2010). Positive Results: Making the Best Decisions When You're at High Risk for Breast or Ovarian Cancer. Amherst, N.Y.: Prometheus Books. ISBN 978-1-59102-776-8.</i></p>
-						<p><b>【6】</b><i>Campeau PM, Foulkes WD, Tischkowitz MD. Hereditary breast cancer: New genetic developments, new therapeutic avenues. Human Genetics 2008; 124(1):31–42.</i></p>
-						<p><b>【7】</b><i>Easton DF. How many more breast cancer predisposition genes are there? Breast Cancer Research 1999; 1(1):14–17.  [PubMed Abstract]</i></p>
-						<p><b>【8】</b><i>Pal T, Permuth-Wey J, Betts JA, et al. BRCA1 and BRCA2 mutations account for a large proportion of ovarian carcinoma cases. Cancer 2005; 104(12):2807–16.</i></p>
-						<p><b>【9】</b><i>Howlader N, Noone AM, Krapcho M, et al. (eds). SEER Cancer Statistics Review, 1975-2011, National Cancer Institute. Bethesda, MD, http://seer.cancer.gov/csr/1975_2011/, based on November 2013 SEER data submission, posted to the SEER web site,
-							April 2014.</i></p>
-						<p><b>【10】</b><i>Antoniou A, Pharoah PD, Narod S, et al. Average risks of breast and ovarian cancer associated with BRCA1 or BRCA2 mutations detected in case series unselected for family history: A combined analysis of 22 studies. American Journal of Human Genetics2003;
-							72(5):1117–1130.</i></p>
-						<p><b>【11】</b><i>Chen S, Parmigiani G. Meta-analysis of BRCA1 and BRCA2 penetrance. Journal of Clinical Oncology 2007; 25(11):1329–1333.</i></p>
+						<p><b>【1】</b><i>Holly Yan (2013-05-14). "What's the gene that led to Angelina Jolie's double mastectomy?". Health. CNN.</i></p>
+						<p><b>【2】</b><i> "BRCA1 and BRCA2: Cancer Risk and Genetic Testing". National Cancer Institute. 29 May 2009.</i></p>
+						<p><b>【3】</b><i>effrey N. Weitzel, Veronica I. Lagos, Carey A. Cullinane, Patricia J. Gambol, Julie O. Culver, Kathleen R. Blazer, Melanie R. Palomares, Katrina J. Lowstuter, Deborah J. MacDonald (2007). "Limited Family Structure and BRCA Gene Mutation Status in Single Cases of Breast Cancer". Journal of the American Medical Association 297 (23): 2587–2595. doi:10.1001/jama.297.23.2587</i></p>
+						<p><b>【4】</b><i>Cui, J; Antoniou, AC; Dite, GS; Southey, MC; Venter, DJ; Easton, DF; Giles, GG; McCredie, MR; Hopper, JL (Feb 2001)."After BRCA1 and BRCA2-what next? Multifactorial segregation analyses of three-generation, population-based Australian families affected by female breast cancer". Am J Hum Genet 68 (2): 420–31. doi:10.1086/318187.PMC 1235275. PMID 11133358</i></p>
+						<p><b>【5】</b><i>Morris, Joi L.; Gordon, Ora K. (2010). Positive Results: Making the Best Decisions When You're at High Risk for Breast or Ovarian Cancer. Amherst, N.Y.: Prometheus Books. ISBN 978-1-59102-776-8.</i></p>
+						<p><b>【6】</b><i>Campeau PM, Foulkes WD, Tischkowitz MD. Hereditary breast cancer: New genetic developments, new therapeutic avenues. Human Genetics 2008; 124(1):31–42.</i></p>
+						<p><b>【7】</b><i>Easton DF. How many more breast cancer predisposition genes are there? Breast Cancer Research 1999; 1(1):14–17.  [PubMed Abstract]</i></p>
+						<p><b>【8】</b><i>Pal T, Permuth-Wey J, Betts JA, et al. BRCA1 and BRCA2 mutations account for a large proportion of ovarian carcinoma cases. Cancer 2005; 104(12):2807–16.</i></p>
+						<p><b>【9】</b><i>Howlader N, Noone AM, Krapcho M, et al. (eds). SEER Cancer Statistics Review, 1975-2011, National Cancer Institute. Bethesda, MD, http://seer.cancer.gov/csr/1975_2011/, based on November 2013 SEER data submission, posted to the SEER web site, April 2014.</i></p>
+						<p><b>【10】</b><i>Antoniou A, Pharoah PD, Narod S, et al. Average risks of breast and ovarian cancer associated with BRCA1 or BRCA2 mutations detected in case series unselected for family history: A combined analysis of 22 studies. American Journal of Human Genetics2003; 72(5):1117–1130.</i></p>
+						<p><b>【11】</b><i>Chen S, Parmigiani G. Meta-analysis of BRCA1 and BRCA2 penetrance. Journal of Clinical Oncology 2007; 25(11):1329–1333.</i></p>
 					</div>
 				</div>
 				<!--------page16--------->

@@ -218,7 +218,7 @@ html {
 
 .type span {
 	display: inline-block;
-	width: 3.23rem;
+	width: 3.29rem;
 	height: 0.24rem;
 }
 
@@ -319,7 +319,7 @@ html {
 .p7-content {
 	width: 6.9rem;
     height: auto;
-    margin: 0.4rem 0 0.4rem 0.25rem;
+    margin: 0.4rem 0 0.61rem  0.25rem;
     /* overflow-x: visible; */
 }
 
@@ -448,7 +448,7 @@ html {
 .date {
 	
 	width: 6.9rem;
-	padding: 0.4rem 0;
+	padding: 0.4rem 0  0.61rem  0;
 	display: -webkit-flex;
 	flex-flow: wrap;
 	border-bottom: none;
@@ -675,13 +675,13 @@ html {
 .p8_last{    display: block;
     /* padding-top: 1.8rem; */
     float: left;
-    margin: 0.4rem 0;
+    margin: 0.4rem 0 0.61rem 0;
     }
 
 .p11-content {
 	width: 6.9rem;
 	height: auto;
-	margin: 1.85rem 0 0.4rem 0.3rem;
+	margin: 1.85rem 0 0.61rem 0.3rem;
 	text-align: justify;	
 }
 
@@ -703,7 +703,7 @@ html {
 
 .p12-content {
 	width: 6.9rem;
-	margin: 1.55rem 0.3rem 0.4rem 0.3rem;
+	margin: 1.55rem 0.3rem 0.61rem 0.3rem;
 }
 
 .p12-content div {
@@ -736,7 +736,7 @@ html {
 
 .p13-content {
 	width: 6.9rem;
-	margin: 1.86rem 0 0.4rem 0.3rem;
+	margin: 1.86rem 0 0.61rem 0.3rem;
 }
 
 .p13-content div {
@@ -764,7 +764,7 @@ html {
 
 .p14-content {
 	width: 6.9rem;
-	margin: 1.86rem 0 0.4rem 0.3rem;
+	margin: 1.86rem 0 0.61rem 0.3rem;
 	height: 100%;
 }
 
@@ -809,7 +809,9 @@ html {
     margin-bottom: 0.48rem;
     text-align: justify;
     float: left;
+    font-family: helvetica;
 }
+.p15-content p:nth-child(11){margin-bottom: 0.61rem;}
 .p16-content {
 	width: 6.9rem;
 	margin: 1.65rem 0 0.4rem 0.3rem;
@@ -844,7 +846,7 @@ html {
 .p9-content {
 	width: 7rem;
 	height: auto;
-	margin: 0.4rem 0 0.4rem 0.25rem;
+	margin: 0.4rem 0 0.61rem 0.25rem;
 }
 
 .p9_decription {
@@ -904,7 +906,7 @@ html {
 .p10-content {
 	width: 6.9rem;
 	height: auto;
-	margin: 1.86rem 0 0.4rem 0.3rem;
+	margin: 1.86rem 0 0.61rem 0.3rem;
 }
 
 .p10-content p {
