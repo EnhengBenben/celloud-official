@@ -18,4 +18,6 @@ public interface AuthService {
 
 	Auth selectByRefreshToken(String refreshToken);
 
+	Auth getByToken(String token);
+
 }

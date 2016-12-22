@@ -38,7 +38,13 @@
             <td>{{user.email}}</td>
             <td>{{user.cellphone}}</td>
             <td>{{user.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td><a class="btn-link" data-toggle="modal" ng-click="updateUserState(user.userId,user.state)"><span ng-if="user.state == 1">启用</span><span ng-if="user.state == 0">禁用</span></a></td>
+            <td>
+            	<a class="btn-link" data-toggle="modal" data-target="#company-addApp-modal" ng-click="toAddApp(user.userId)">追加APP</a>
+            	<a class="btn-link" data-toggle="modal" data-target="#company-removeApp-modal" ng-click="toRemoveApp(user.userId)">删除APP</a>
+            	<a class="btn-link" data-toggle="modal" data-target="#company-addRole-modal" ng-click="toAddRole(user.userId)">追加权限</a>
+            	<a class="btn-link" data-toggle="modal" data-target="#company-removeRole-modal" ng-click="toRemoveRole(user.userId)">删除权限</a>
+            	<a class="btn-link" data-toggle="modal" ng-click="updateUserState(user.userId,user.state)"><span ng-if="user.state == 1">启用</span><span ng-if="user.state == 0">禁用</span></a>
+            </td>
           </tr>
           <tr ng-show="user.datas.length == 0">
           	<td colspan="9">暂无数据</td>
@@ -57,16 +63,36 @@
 	    <div class="modal-body form-modal">
 	      <form class="form-horizontal info-form" name="userAddForm" id="userAddForm">
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">邮箱地址：</div>
-	            <div class="col-xs-9">
+	            <div class="control-label form-label col-xs-2">APP：</div>
+	            <div class="col-xs-10">
+		            <div class="form-group">
+		             	<div ng-repeat="app in appList" class="col-xs-6">
+		            		<input type="checkbox" name="app" value="{{app.appId}}"> {{app.appName}}
+		            	</div>
+		            </div>
+	           	</div>
+	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2">角色：</div>
+	            <div class="col-xs-10">
+	            	<div class="form-group">
+			            <div ng-repeat="role in roleList" class="col-xs-6">
+			            	<input type="checkbox" name="role" value="{{role.id}}"> {{role.name}}
+			            </div>
+	            	</div>
+	            </div>
+	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2">邮箱：</div>
+	            <div class="col-xs-10">
 	                <input type="text" ng-change="clearState()" name="email" placeholder="邮箱地址" ng-model="email" required="true" ng-pattern="/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/">
 	                <span class="input-alert" ng-show="userAddForm.email.$dirty && userAddForm.email.$invalid">邮箱格式不正确!</span>
 	                <span class="input-alert" ng-show="emailError != null">{{emailError}}</span>
 	            </div>
 	          </div>
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">验证码：</div>
-	            <div class="col-xs-6">
+	            <div class="control-label form-label col-xs-2">验证码：</div>
+	            <div class="col-xs-7">
                     <input type="text" ng-change="clearState()" name="kaptcha" placeholder="验证码" ng-model="kaptcha" required="true" />
 	                <span class="input-alert" ng-show="kaptchaError != null">{{kaptchaError}}</span>
 	            </div>
@@ -83,6 +109,126 @@
 	      <div class="text-center">
               <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
               <button type="submit" class="btn" ng-disabled="userAddForm.$invalid" ng-click="sendEmail()" id="submit">提交</button>
+          </div>
+	    </div>
+	  </div>
+	</div>
+  </div>
+  <div id="company-addApp-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	      <h4 class="modal-title">追加APP</h4>
+	    </div>
+	    <div class="modal-body form-modal">
+	      <form class="form-horizontal info-form" name="appAddForm" id="appAddForm">
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2">APP：</div>
+	            <div class="col-xs-10">
+		            <div class="form-group">
+		             	<div ng-repeat="app in appList" class="col-xs-6">
+		            		<input type="checkbox" name="app" value="{{app.appId}}"> {{app.appName}}
+		            	</div>
+		            </div>
+	           	</div>
+	          </div>
+	      </form>
+	    </div>
+	    <div class="modal-footer">
+	      <div class="text-center">
+              <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
+              <button type="submit" class="btn" ng-disabled="appAddForm.$invalid" ng-click="addApp()">提交</button>
+          </div>
+	    </div>
+	  </div>
+	</div>
+  </div>
+  <div id="company-removeApp-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	      <h4 class="modal-title">删除APP</h4>
+	    </div>
+	    <div class="modal-body form-modal">
+	      <form class="form-horizontal info-form" name="removeAppForm" id="removeAppForm">
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2">APP：</div>
+	            <div class="col-xs-10">
+		            <div class="form-group">
+		             	<div ng-repeat="app in appList" class="col-xs-6">
+		            		<input type="checkbox" name="app" value="{{app.appId}}"> {{app.appName}}
+		            	</div>
+		            </div>
+	           	</div>
+	          </div>
+	      </form>
+	    </div>
+	    <div class="modal-footer">
+	      <div class="text-center">
+              <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
+              <button type="submit" class="btn" ng-disabled="removeAppForm.$invalid" ng-click="removeApp()" id="submit">提交</button>
+          </div>
+	    </div>
+	  </div>
+	</div>
+  </div>
+  <div id="company-addRole-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	      <h4 class="modal-title">追加角色</h4>
+	    </div>
+	    <div class="modal-body form-modal">
+	      <form class="form-horizontal info-form" name="roleAddForm" id="roleAddForm">
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2">APP：</div>
+	            <div class="col-xs-10">
+		            <div class="form-group">
+		             	<div ng-repeat="role in roleList" class="col-xs-6">
+		            		<input type="checkbox" name="role" value="{{role.id}}"> {{role.name}}
+		            	</div>
+		            </div>
+	           	</div>
+	          </div>
+	      </form>
+	    </div>
+	    <div class="modal-footer">
+	      <div class="text-center">
+              <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
+              <button type="submit" class="btn" ng-disabled="roleAddForm.$invalid" ng-click="addRole()">提交</button>
+          </div>
+	    </div>
+	  </div>
+	</div>
+  </div>
+  <div id="company-removeRole-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+	      <h4 class="modal-title">删除角色</h4>
+	    </div>
+	    <div class="modal-body form-modal">
+	      <form class="form-horizontal info-form" name="roleRemoveForm" id="roleRemoveForm">
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2">APP：</div>
+	            <div class="col-xs-10">
+		            <div class="form-group">
+		             	<div ng-repeat="role in roleList" class="col-xs-6">
+		            		<input type="checkbox" name="role" value="{{role.id}}"> {{role.name}}
+		            	</div>
+		            </div>
+	           	</div>
+	          </div>
+	      </form>
+	    </div>
+	    <div class="modal-footer">
+	      <div class="text-center">
+              <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
+              <button type="submit" class="btn" ng-disabled="roleRemoveForm.$invalid" ng-click="removeRole()">提交</button>
           </div>
 	    </div>
 	  </div>

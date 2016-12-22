@@ -770,4 +770,15 @@ public interface ReportService {
      */
     public List<Map.Entry<String, Map<String, String>>> getHBVOtherSiteByUserId(Integer userId, Integer appId);
 
+	/**
+	 * 检索最新的数据报告
+	 * 
+	 * @param dataKey:required
+	 * @param userId:optional
+	 * @param appId:optional
+	 * @return
+	 * @author lin
+	 * @date 2016年12月21日下午2:11:14
+	 */
+	public Report getLastDataReport(String dataKey, Integer userId, Integer appId);
 }

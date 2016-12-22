@@ -226,4 +226,19 @@ public interface ReportMapper {
      *
      */
     public Integer selectPeriodByFlag(@Param("projectId") Integer projectId, @Param("flag") Integer flag);
+
+	/**
+	 * 根据datakey检索最新的数据报告
+	 * 
+	 * @param dataKey
+	 * @param state
+	 * @param flag
+	 * @param userId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2016年12月21日下午3:08:11
+	 */
+	public Report getLastDataReport(@Param("dataKey") String dataKey, @Param("state") Integer state,
+			@Param("flag") Integer flag, @Param("userId") Integer userId, @Param("appId") Integer appId);
 }

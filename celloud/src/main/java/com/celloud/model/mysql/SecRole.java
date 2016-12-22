@@ -11,6 +11,14 @@ public class SecRole {
 
     private Boolean disabled;
 
+	public boolean equals(Object o) {
+		if (o instanceof SecRole) {
+			SecRole sr = (SecRole) o;
+			return sr.id.equals(this.id);
+		}
+		return false;
+	}
+
     public Integer getId() {
         return id;
     }
