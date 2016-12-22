@@ -41,11 +41,4 @@ ${hbv.briefBaseInfo.clinical}
         ${hbv.clinical}
         #end
         <p class="annotation">注：实心五星 <i class="fa fa-star" aria-hidden="true"></i> 表示发生了耐药突变，空心五星 <i class="fa fa-star-o" aria-hidden="true"></i> 表示发生了突变，但是暂无文献支持其和耐药相关。</p>
-		<ul class="info mt5">
-            <li>检验日期：<span><input name="briefBaseInfo['checkerdate']" value="$!{hbv.briefBaseInfo.checkerdate}" type="text"></span></li>
-            <li>报告日期：<span><input name="briefBaseInfo['reportdate']" value="$!{hbv.briefBaseInfo.reportdate}" type="text"></span></li>
-            <li>检验员：<span><input name="briefBaseInfo['checker']" value="$!{hbv.briefBaseInfo.checker}" type="text"></span></li>
-            <li>复核员：<span><input name="briefBaseInfo['check']" value="$!{hbv.briefBaseInfo.check}" type="text"></span></li>
-        </ul>
-        <p>实验室申明，此报告仅对本份标本负责，供医生参考，如有疑义请在48小时内联系复核。</p>
 </div>
