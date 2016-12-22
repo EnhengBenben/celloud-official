@@ -21,7 +21,7 @@
 				</div>
 				<!--------page2--------->
 				<div class="main  swiper-slide">
-						<h2 class="test_title">BRCA基因检测结果报告</h2>
+					<h2 class="test_title">BRCA基因检测结果报告</h2>
 					<span class="test_title_en">BRCA Genetic Testing Report</span>
 					<div class="p2">
 					<!--------name开始------------->
