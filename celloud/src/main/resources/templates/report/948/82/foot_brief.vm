@@ -4,4 +4,4 @@
         <li style="width: 30%;margin-left: 2em">检验员：<span><input name="briefBaseInfo['checker']" value="$!{hbv.briefBaseInfo.checker}" type="text"></span></li>
         <li style="width: 30%;margin-left: 2em">复核员：<span><input name="briefBaseInfo['check']" value="$!{hbv.briefBaseInfo.check}" type="text"></span></li>
     </ul>
-    <p style="margin-left: 2em">实验室申明，此报告仅对本份标本负责，供医生参考，如有疑义请在48小时内联系复核。</p>
+    <p style="margin-left: 2em">实验室申明：此报告仅对本份标本负责，供医生参考，如有疑义请在48小时内联系复核。</p>
