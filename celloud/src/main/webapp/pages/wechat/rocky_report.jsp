@@ -75,8 +75,8 @@
 					<div class="p2_main  date">
 						<span>检测人：</span>
 						<span>复核人：</span>
-						<span>日期：</span>
-						<span>日期：</span>
+						<span>日&nbsp;&nbsp;&nbsp;期：</span>
+						<span>日&nbsp;&nbsp;&nbsp;期：</span>
 					</div>
 					<!--------date结束------------->
 					</div>
@@ -208,11 +208,11 @@
 						<table class="p10_tab" border="0" cellspacing="cellspacing" cellpadding="cellpadding">
 							<tr class="p10_tab_body">
 								<td>高风险基因</td>
-								<td>BRCA1,BRCA2,TP53,PTEN,STK11,CDH1</td>
+								<td class="borNone">BRCA1,BRCA2,TP53,PTEN,STK11,CDH1</td>
 							</tr>
-							<tr class="p10_tab_body">
+							<tr class="p10_tab_body ">
 								<td>中风险基因</td>
-								<td>CHEK2,ATM,PALB2,BRIP1,MRE11A,RAD50, RAD51C,NBN</td>
+								<td class="borNone">CHEK2,ATM,PALB2,BRIP1,MRE11A,<br>RAD50, RAD51C,NBN</td>
 							</tr>
 							<tr class="p10_tab_body">
 								<td>低风险基因</td>
@@ -258,9 +258,9 @@
 						<div>乳腺密度大的女性发生乳腺癌的风险增加。这通常是一种固有的特征，但在一定程度上可因生育、药物和酒精而改变。</div>
 						<span>其他可能的危险因素</span>
 						<div class="p13-content-img">
-							img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_20.png" />
+							<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_20.png" />
 						</div>
-						<
+						
 					</div>
 				</div>
 				<!--------page14--------->
