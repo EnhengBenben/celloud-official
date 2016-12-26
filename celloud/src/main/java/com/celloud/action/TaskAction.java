@@ -250,6 +250,13 @@ public class TaskAction {
 				.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
 				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
 				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
+		if (appId.equals(123)) {//华木兰要追加跳转页面
+			String url = ConstantsData.getContextUrl() + "wechat_rocky.html?projectId=" + projectId + "&dataKey="
+					+ dataKey + "&appId=" + appId;
+			String remark = "<a href='" + url + "'>点击查看报告</a>";
+			logger.info("华木兰微信提醒Remark：" + remark);
+			params.set(WechatParams.RUN_OVER.remark.name(), remark, "#222222");
+		}
 		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
 		return "run over";
 	}
