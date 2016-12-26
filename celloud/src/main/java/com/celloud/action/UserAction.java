@@ -43,6 +43,7 @@ import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
+import com.celloud.constants.UserSecRole;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mongo.UserCaptcha;
@@ -105,6 +106,11 @@ public class UserAction {
 	public List<SecRole> toAddRole(Integer userId) {
 		Integer authFrom = ConstantsData.getLoginUserId();
 		List<SecRole> all = userService.getRolesByUserId(authFrom);
+		for (int i = 0; i < all.size(); i++) {
+			if (all.get(i).getId().equals(UserSecRole.PLATFORM)) {
+				all.remove(i);
+			}
+		}
 		List<SecRole> have = userService.getRolesByUserId(userId);
 		all.removeAll(have);
 		return all;
@@ -120,7 +126,13 @@ public class UserAction {
 	@RequestMapping(value = "toRemoveRole", method = RequestMethod.GET)
 	@ResponseBody
 	public List<SecRole> toRemoveRole(Integer userId) {
-		return userService.getRolesByUserId(userId);
+		List<SecRole> secList = userService.getRolesByUserId(userId);
+		for (int i = 0; i < secList.size(); i++) {
+			if (secList.get(i).getId().equals(UserSecRole.PLATFORM)) {
+				secList.remove(i);
+			}
+		}
+		return secList;
 	}
 
 	@RequestMapping(value = "removeRole", method = RequestMethod.POST)
