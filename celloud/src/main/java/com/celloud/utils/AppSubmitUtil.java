@@ -77,11 +77,12 @@ public class AppSubmitUtil {
 	 * @param taskId
 	 * @param datas
 	 */
-	public static void mq(String appCode, Integer taskId, Map<String, String> datas) {
+	public static void mq(String appCode, Integer taskId, Integer userId, Map<String, String> datas) {
 		ProducerUtil utils = (ProducerUtil) SpringTool.getBean("producerUtil");
 		TaskMessage message = new TaskMessage();
 		message.setAppCode(appCode);
 		message.setTaskId(taskId);
+		message.setUserId(userId);
 		message.setDatas(datas);
 		utils.deliveryTask(message);
 	}
