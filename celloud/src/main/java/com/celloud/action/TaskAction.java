@@ -247,12 +247,12 @@ public class TaskAction {
 		// 构造微信消息
 		Param params = ParamFormat.param()
 				.set(WechatParams.RUN_OVER.first.name(), "您好，您的数据" + tipsName + " 运行结束", "#222222")
-				.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
-				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
+				.set(WechatParams.RUN_OVER.keyword1.name(), appName, "#222222")
+				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, "#222222")
 				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
 		String wechatUrl = null;
 		if (appId.equals(123)) {//华木兰要追加跳转页面
-			params.set(WechatParams.RUN_OVER.remark.name(), "点击下方详情查看报告", null);
+			params.set(WechatParams.RUN_OVER.remark.name(), "点击下方详情查看报告", "#222222");
 			wechatUrl = ConstantsData.getContextUrl() + "wechat_rocky.html?projectId=" + projectId + "&dataKey="
 					+ dataKey + "&appId=" + appId;
 			logger.info("华木兰微信提醒wechatUrl：" + wechatUrl);
