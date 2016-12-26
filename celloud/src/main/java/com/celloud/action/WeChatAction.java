@@ -120,7 +120,13 @@ public class WeChatAction {
 	 */
 	@RequestMapping(value = "eventRecive", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
-	public String eventRecive(HttpServletRequest request) {
+	public String eventRecive(HttpServletRequest request, String signature, String nonce, String echostr,
+			String timestamp) {
+		boolean isTrue = wechatUtils.checkUrl(signature, timestamp, nonce);
+		if (isTrue) {
+			System.out.println("测试通过，需要返回：" + echostr);
+			return echostr;
+		}
 		//TODO 事件的处理
 		Map<String, String> map = XmlUtil.readXMLToMap(request);
 		for (Entry<String, String> set : map.entrySet()) {
