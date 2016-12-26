@@ -402,7 +402,7 @@ public class UserAction {
 				.set(WechatParams.PWD_UPDATE.first.name(), "您好，" + user.getUsername() + "：", "#222222")
 				.set(WechatParams.PWD_UPDATE.productName.name(), "平台账号", null)
 				.set(WechatParams.PWD_UPDATE.time.name(), DateUtil.getDateToString(DateUtil.YMDHMS), null);
-		mcu.sendMessage(user.getUserId(), MessageCategoryCode.UPDATEPWD, null, params, null);
+		mcu.sendMessage(user.getUserId(), MessageCategoryCode.UPDATEPWD, null, params, null, null);
 		return result > 0 ? Response.SUCCESS_SAVE() : UPDATE_PASSWORD_FAIL;
 	}
 

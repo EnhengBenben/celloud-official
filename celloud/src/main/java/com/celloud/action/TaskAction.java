@@ -250,14 +250,14 @@ public class TaskAction {
 				.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
 				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
 				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
+		String wechatUrl = null;
 		if (appId.equals(123)) {//华木兰要追加跳转页面
-			String url = ConstantsData.getContextUrl() + "wechat_rocky.html?projectId=" + projectId + "&dataKey="
+			params.set(WechatParams.RUN_OVER.remark.name(), "点击下方详情查看报告", null);
+			wechatUrl = ConstantsData.getContextUrl() + "wechat_rocky.html?projectId=" + projectId + "&dataKey="
 					+ dataKey + "&appId=" + appId;
-			String remark = "<a href='" + url + "'>点击查看报告</a>";
-			logger.info("华木兰微信提醒Remark：" + remark);
-			params.set(WechatParams.RUN_OVER.remark.name(), remark, "#222222");
+			logger.info("华木兰微信提醒wechatUrl：" + wechatUrl);
 		}
-		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
+		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu, wechatUrl);
 		return "run over";
 	}
 
@@ -404,7 +404,7 @@ public class TaskAction {
 				.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
 				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
 				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
-		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
+		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu, null);
 		return "run over";
 	}
 
