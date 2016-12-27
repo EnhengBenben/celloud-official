@@ -332,9 +332,9 @@
 	</build>
 	<repositories>
 		<repository>
-			<id>mybatis-snapshot</id>
-			<name>MyBatis Snapshot Repository</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<id>nexus</id>
+			<name>maven-central</name>
+			<url>http://119.254.97.211:8081/repository/maven-public/</url>
 		</repository>
 		<repository>
 			<id>jitpack.io</id>
