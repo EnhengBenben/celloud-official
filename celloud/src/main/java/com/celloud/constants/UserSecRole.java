@@ -8,5 +8,5 @@ public class UserSecRole {
 	/**
 	 * 平台使用者
 	 */
-	public static final int PLATFORM = 1;
+	public static final Integer PLATFORM = 1;
 }
