@@ -64,7 +64,7 @@
   </script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/ /iscroll-zoom.js?v=3.3.4"></script>
+  <script src="<%=request.getContextPath()%>/plugins/photoClip/iscroll-zoom.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/photoClip/hammer.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/photoClip/lrz.all.bundle.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/photoClip/jquery.photoClip.js?v=3.3.4"></script>
