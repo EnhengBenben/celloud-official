@@ -14,7 +14,8 @@ public class AppDataListType {
 	/**
 	 * spark
 	 */
-	public static final List<Integer> SPARK = Arrays.asList(86, 92, 93, 99, 100, 101, 118);
+    public static final List<Integer> SPARK = Arrays.asList(86, 92, 93, 99, 100,
+            101, 118, 133, 134, 135, 136, 137);
 
 	/**
 	 * fastq
