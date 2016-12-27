@@ -51,9 +51,17 @@ $(document).ready(function() {
       }   
       return args[strParame];   
   }
+	 var protocol = window.location.protocol;
+	 var hostname = window.location.hostname;
+	 var port = window.location.port ? ":" + window.location.port : "";
+	 if(hostname=='127.0.0.1'||hostname=='localhost'){
+		 hostname='192.168.22.253';
+		 port=':8080';
+	 }
+	 var webService=protocol+"//"+hostname+port+"celloud/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');
 /*getRockyReport?projectId='+request('projectId')+"&dataKey="+request('dataKey')+"&appId="+request('appId');*/
 /*	var webService = 'https://www.celloud.cc/api/report/getRockyReport?projectId='+request('projectId')+"&dataKey="+request('dataKey')+"&appId="+request('appId');*/
-	var webService = "http://192.168.22.253:8080/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
+	//var webService = "http://192.168.22.253:8080/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
 
 	$.ajax({
 		type: "get",
