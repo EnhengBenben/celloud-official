@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
         <title>CelLoud华木兰报告</title>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=1.6" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=1.7" />
     </head>
 
     <body>
@@ -84,8 +84,7 @@
 				<!--------page3--------->
 				<div class="main p3_pos swiper-slide">
 					<div class="p3">
-						<span>幸福十分之九是建立在健康基础上的，健康就是一切 </span><br>
-						<span>— 亚瑟·叔本华 </span>
+						<img class="backImg1" src="<%=request.getContextPath()%>/images/wechat/rocky_report/1－@3x.png" />
 					</div>
 				</div>
 				<!--------page4--------->
@@ -325,6 +324,6 @@
         <script type="text/javascript">
 		     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 		</script>
-        <script src="<%=request.getContextPath()%>/js/rote.js?v=1.6" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/rote.js?v=1.7" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>
