@@ -967,7 +967,8 @@ public class ReportAction {
             @RequestParam(defaultValue = "0") int totalPage, @RequestParam(defaultValue = "0") int sort,
             @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
             @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
-            Boolean isPrev, String batch, String period, String beginDate, String endDate, String sampleName) {
+            Boolean isPrev, String batch, String period, String beginDate,
+            String endDate, String sampleName, Integer appId) {
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
         StringBuffer con_sb = new StringBuffer();
@@ -979,7 +980,7 @@ public class ReportAction {
         Page pager = new Page(page, 1);
         PageList<Task> pageList = taskService.findNextOrPrevTasks(pager, ConstantsData.getLoginUserId(), condition,
                 sort, sortDate, sortBatch, sortName, sortPeriod, isPrev, totalPage, batch, period, beginDate, endDate,
-                118, sampleName);
+                appId, sampleName);
         if (pageList != null) {
             List<Task> list = pageList.getDatas();
             if (list != null) {
@@ -2919,7 +2920,8 @@ public class ReportAction {
             @RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
             @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
             @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
-            String batch, String period, String beginDate, String endDate, String sampleName) {
+            String batch, String period, String beginDate, String endDate,
+            String sampleName, Integer appId) {
         log.info("用户 {} 根据条件检索数据列表", ConstantsData.getLoginUserName());
         Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
         Matcher m = p.matcher(condition);
@@ -2932,7 +2934,8 @@ public class ReportAction {
         Integer userId = ConstantsData.getLoginUserId();
         // 封装结果map
         Map<String, Object> map = new HashMap<String, Object>();
-        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(appId,
+                userId);
         List<String> batchList = dataService.getBatchList(userId);
         periodMap.put("uploaded", batchList.size());
         map.put("periodMap", periodMap);
@@ -2940,7 +2943,8 @@ public class ReportAction {
         map.put("nowDate", new Date());
         Page pager = new Page(page, size);
         PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
-                sort, sortDate, sortBatch, sortName, sortPeriod, batch, period, beginDate, endDate, 118, sampleName);
+                sort, sortDate, sortBatch, sortName, sortPeriod, batch, period,
+                beginDate, endDate, appId, sampleName);
         map.put("pageList", pageList);
         return map;
     }
