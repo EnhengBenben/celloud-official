@@ -421,7 +421,7 @@ html {
 .reslut1 {
 	width: 6.88rem;
 	display: block;
-	text-indent: 0.24rem;
+	text-indent: 0.48rem;
 	line-height: 0.39rem;
 	margin: 0.4rem 0 0.4rem
 }
@@ -433,7 +433,7 @@ html {
 .reslut2 {
 	width: 6.7rem;
 	display: block;
-	text-indent: 0.24rem;
+	text-indent: 0.48rem;
 	line-height: 0.38rem;
 	margin: 0.4rem 0 0.4rem;
 }
@@ -623,7 +623,7 @@ html {
 
 #p5_bot{    width: 6.9rem;
    /* padding-top: 3rem;*/
-    text-indent: 0.37rem;
+    text-indent: 0.48rem;
     display: block;}
 
 
@@ -682,7 +682,7 @@ html {
 	margin:0.4rem 0  0.48rem 0;
 	text-indent: 0.48rem;
 }
-.p8_text{width: 5.9rem;min-height: 0.24rem;display: block;margin: 0.3rem auto;}
+.p8_text{width: 6.1rem;min-height: 0.24rem;display: block;margin: 0.3rem auto;}
 .p8_text b{margin-right: 0.2rem;float: left;}
 .p8_text i{display: block;width: 5.56rem;float: left;} 
 .p8_last{    display: block;
@@ -769,7 +769,7 @@ html {
 }
 .p13-content .p13-content-img{
 	margin-right: 0.6rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.61rem;
 }
 .p13-content span {
 	margin: 0.4rem 0rem 0.2rem 0;
@@ -876,7 +876,7 @@ html {
     color: #FFFFFF;
     text-align: center;
     line-height: 0.8rem;
-    font-weight: 100;
+    font-weight: 400;
     border: 0;
     border-right: 1px solid #9f7ab0;
     /* border-bottom: 1px solid #9f7ab0; */

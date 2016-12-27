@@ -73,10 +73,24 @@ $(document).ready(function() {
 			var sampleType = report.rocky.baseInfo.sampleType;
 			var sampleDeliveryTime = report.rocky.baseInfo.sampleDeliveryTime;
 			var createTime = report.rocky.baseInfo.createTime;
-			var ct = '<span>样本类型：' + sampleType + '</span>' +
+			if(sampleType==undefined ){
+				var ct = '<span>样本类型：</span>' +
 				'<span>样本编号：</span>' +
 				'<span>送检日期：' + sampleDeliveryTime + '</span>' +
 				'<span>报告日期：</span>'
+			}
+			if(sampleDeliveryTime==undefined){
+				var ct = '<span>样本类型： '+sampleType+'</span>' +
+				'<span>样本编号：</span>' +
+				'<span>送检日期：</span>' +
+				'<span>报告日期：</span>'
+			}
+			if(sampleType==undefined && sampleDeliveryTime==undefined ){
+				var ct = '<span>样本类型:</span>' +
+				'<span>样本编号：</span>' +
+				'<span>送检日期：</span>' +
+				'<span>报告日期：</span>'
+			}
 			$('.type').html(ct)
 			var record = report.rocky.records
 			console.log(record)
