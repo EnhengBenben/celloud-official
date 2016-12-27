@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.celloud.constants.AppPermission;
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.ClassifyFloor;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
@@ -260,22 +260,24 @@ public class AppAction {
 		Integer userId = ConstantsData.getLoginUserId();
 		Map<String, Object> map = new HashMap<>();
 		List<App> appList = appService.getMyAppList(userId);
-        Boolean hasPrivate = false;
+        int appNum = 0;
 		for (App app : appList) {
-			if (app.getAppId().equals(118)) {
+            if (AppConstants.BACTIVE_GROUP.contains(app.getAppId())) {
 				map.put("app" + app.getAppId(), app.getAppId());
-                map.put("onlyBSI", true);
+                appNum++;
             } else if (app.getAppId().equals(123)) {
 				map.put("app" + app.getAppId(), app.getAppId());
-                hasPrivate = true;
+                appNum++;
             } else {
-                if (app.getAttribute() == AppPermission.PRIVATE) {
-                    hasPrivate = true;
+                if (app.getAttribute() == AppConstants.PRIVATE) {
+                    appNum++;
                 }
 			}
 		}
-        if (hasPrivate) {
+        if (appNum > 1) {
             map.put("onlyBSI", false);
+        } else {
+            map.put("onlyBSI", true);
         }
 		return map;
 	}

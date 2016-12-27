@@ -9,9 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.celloud.constants.AppIsAdd;
-import com.celloud.constants.AppOffline;
-import com.celloud.constants.AppPermission;
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.PriceType;
 import com.celloud.constants.ReportPeriod;
@@ -44,14 +42,14 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public Integer countMyApp(Integer userId) {
-        return appMapper.countMyApp(userId, AppOffline.ON,
-                AppIsAdd.ALREADY_ADDED);
+        return appMapper.countMyApp(userId, AppConstants.ON,
+                AppConstants.ALREADY_ADDED);
     }
 
     @Override
     public List<Map<String, String>> countMyApp(Integer userId, String time) {
-        return appMapper.countMyAppRanNumByTime(userId, time, AppOffline.ON,
-                AppIsAdd.ALREADY_ADDED, ReportType.PROJECT,
+        return appMapper.countMyAppRanNumByTime(userId, time, AppConstants.ON,
+                AppConstants.ALREADY_ADDED, ReportType.PROJECT,
                 ReportPeriod.COMPLETE);
     }
 
@@ -62,8 +60,8 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public List<App> getAppByClassify(Integer classifyId, Integer userId) {
-        return appMapper.getAppByClassify(classifyId, userId, AppOffline.ON,
-                AppPermission.PRIVATE, AppPermission.PUBLIC);
+        return appMapper.getAppByClassify(classifyId, userId, AppConstants.ON,
+                AppConstants.PRIVATE, AppConstants.PUBLIC);
     }
 
     @Override
@@ -71,42 +69,43 @@ public class AppServiceImpl implements AppService {
             Integer classifyPId, Integer userId, String sortField,
             String sortType, Page page) {
         List<App> list = appMapper.getAppPageListByClassify(classifyId,
-                classifyPId, userId, sortField, sortType, AppOffline.ON,
-                PriceType.isApp, AppPermission.PRIVATE, AppPermission.PUBLIC,
+                classifyPId, userId, sortField, sortType, AppConstants.ON,
+                PriceType.isApp, AppConstants.PRIVATE, AppConstants.PUBLIC,
                 page);
         return new PageList<>(page, list);
     }
 
     @Override
     public App getAppById(Integer id, Integer userId) {
-		return appMapper.getAppById(id, userId, PriceType.isApp, AppPermission.PUBLIC);
+		return appMapper.getAppById(id, userId, PriceType.isApp, AppConstants.PUBLIC);
     }
 
     @Override
     public List<App> getMyAppList(Integer userId) {
-        return appMapper.getMyAppList(userId, AppOffline.ON,
-                AppIsAdd.ALREADY_ADDED);
+        return appMapper.getMyAppList(userId, AppConstants.ON,
+                AppConstants.ALREADY_ADDED);
     }
 
 	@Override
 	public List<App> getRightAppList(Integer authFrom, Integer userId) {
-		return appMapper.getRightAppList(authFrom, userId, AppOffline.ON);
+        return appMapper.getRightAppList(authFrom, userId, AppConstants.ON);
 	}
 
     @Override
     public Integer userAddApp(Integer userId, Integer appId) {
-        return appMapper.userUpdateApp(userId, appId, AppIsAdd.ALREADY_ADDED);
+        return appMapper.userUpdateApp(userId, appId,
+                AppConstants.ALREADY_ADDED);
     }
 
     @Override
     public Integer userRemoveApp(Integer userId, Integer appId) {
-        return appMapper.userUpdateApp(userId, appId, AppIsAdd.NOT_ADDED);
+        return appMapper.userUpdateApp(userId, appId, AppConstants.NOT_ADDED);
     }
 
     @Override
     public List<App> findAppsByFormat(Integer userId, Integer formatId) {
-        return appMapper.findAppsByFormat(userId, formatId, AppOffline.ON,
-                AppIsAdd.ALREADY_ADDED);
+        return appMapper.findAppsByFormat(userId, formatId, AppConstants.ON,
+                AppConstants.ALREADY_ADDED);
     }
 
     @Override
@@ -153,7 +152,8 @@ public class AppServiceImpl implements AppService {
 
 	@Override
 	public int addUserAppRight(Integer userId, Integer[] appIds, Integer authFrom) {
-		return appMapper.addUserAppRight(userId, appIds, AppIsAdd.NOT_ADDED, authFrom);
+        return appMapper.addUserAppRight(userId, appIds, AppConstants.NOT_ADDED,
+                authFrom);
 	}
 
 	@Override
