@@ -42,6 +42,9 @@ public class SecRoleServiceImpl implements SecRoleService {
 			if (UserSecRole.HOSPITALMANAGER.equals(secRole.getId())) {
 				continue;
 			}
+			if (UserSecRole.PLATFORM.equals(secRole.getId())) {
+				continue;
+			}
 			map.put(secRole.getCode(), secRole);
 		}
 		roles = new ArrayList<>();
