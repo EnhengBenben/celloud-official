@@ -578,7 +578,9 @@ html {
 	line-height: 0.39rem;
 	color: #333;
 }
-
+.myZhu {
+    float: right;
+}
 .p4_content p:nth-child(2),
 .p4_content p:nth-child(3) {
 	text-indent: 0.48rem;
@@ -614,7 +616,7 @@ html {
 
 
 #p5_bot{    width: 6.9rem;
-    padding-top: 3rem;
+   /* padding-top: 3rem;*/
     text-indent: 0.37rem;
     display: block;}
 
@@ -673,9 +675,9 @@ html {
 	margin:0.4rem 0  0.48rem 0;
 	text-indent: 0.48rem;
 }
-.p8_text{width: 6.9rem;min-height: 0.24rem;display: block;margin: 0.3rem 0;}
+.p8_text{width: 5.9rem;min-height: 0.24rem;display: block;margin: 0.3rem autos;}
 .p8_text b{margin-right: 0.2rem;float: left;}
-.p8_text i{display: block;width: 6.56rem;float: left;} 
+.p8_text i{display: block;width: 5.56rem;float: left;} 
 .p8_last{    display: block;
     /* padding-top: 1.8rem; */
     float: left;
@@ -751,14 +753,16 @@ html {
 }
 
 .p13-content .p13-content-img img {
-	display: block;
-	width: 5.62rem;
-/* 	height: 5.6rem; */
-	margin: 0.4rem auto;
-	margin-top: 0.2rem;
-	float: none;
+    display: block;
+    width: 5.62rem;
+    /* height: 5.6rem; */
+    /* margin: 0.4rem auto; */
+    margin-top: 0.2rem;
+    /* float: none; */
 }
-
+.p13-content .p13-content-img{
+	margin-right: 0.6rem;
+}
 .p13-content span {
 	margin: 0.4rem 0rem 0.2rem 0;
 	float: right;
@@ -958,7 +962,7 @@ html {
 	display: flex;
 	/*justify-content: space-between;
 	flex-flow: row nowrap;*/
-	border-bottom: 1px solid #9d7bae;
+	/*border-bottom: 1px solid #9d7bae;*/
 }
 
 .p10_tab_body td {
