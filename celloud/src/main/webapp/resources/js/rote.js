@@ -54,11 +54,13 @@ $(document).ready(function() {
 	 var protocol = window.location.protocol;
 	 var hostname = window.location.hostname;
 	 var port = window.location.port ? ":" + window.location.port : "";
+	 var context = window.CONTEXT_PATH;
 	 if(hostname=='127.0.0.1'||hostname=='localhost'){
 		 hostname='192.168.22.253';
 		 port=':8080';
+		 context = '/celloud';
 	 }
-	 var webService=protocol+"//"+hostname+port+window.CONTEXT_PATH+"/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');
+	 var webService=protocol+"//"+hostname+port+context+"/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');
 	$.ajax({
 		type: "get",
 		url: webService,
