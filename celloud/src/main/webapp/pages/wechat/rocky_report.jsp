@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
         <title>CelLoud华木兰报告</title>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=1.5" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=1.8" />
     </head>
 
     <body>
@@ -84,8 +84,7 @@
 				<!--------page3--------->
 				<div class="main p3_pos swiper-slide">
 					<div class="p3">
-						<span>幸福十分之九是建立在健康基础上的，健康就是一切 </span><br>
-						<span>— 亚瑟·叔本华 </span>
+						<img  src="<%=request.getContextPath()%>/images/wechat/rocky_report/1－@3x.png" />
 					</div>
 				</div>
 				<!--------page4--------->
@@ -95,10 +94,12 @@
 						<p>我们向您致敬！</p>
 						<p>在健康管理上态度积极并作出明智选择，不仅是勇气，更是责任。我们愿陪您一起迈出健康管理的第一步。</p>
 						<p>作为您个人健康管理的重要参考，BRCA基因检测报告能协助您评估自身罹患遗传性乳腺癌的风险。报告基于您提供的检测样品，经过精密的基因测序和专业的数据分析，同时结合最新的科学研究成果，专业、客观地解释您的基因与已知遗传性乳腺癌突变之间的关系，用以协助您与您的健康管理顾问作出准确的健康评估和管理规划。</p>
+						<p id="p5_bot">送检样本的处理及数据分析、出具报告的整个过程，都有专业的监管与流程记录，以确保您的个人隐私与相应数据的安全。我们遵从相应的服务协议，在未获得本人授权情况下，数据不作他用。同时也请您妥善保管报告以及相应的数据信息，以免泄漏。</p>
+						<p class="myZhu">祝，健康！</p>
 					</div>
 				</div>
 				<!--------page5--------->
-				<div class="main swiper-slide">
+				<!--<div class="main swiper-slide">
 					 <img class="backImg1" src="<%=request.getContextPath()%>/images/wechat/rocky_report/04.Page 1.png" />
 					<div class="p5_content">
 						<p>风险提示：</p>
@@ -111,7 +112,7 @@
 						<p id="p5_bot">送检样本的处理及数据分析、出具报告的整个过程，都有专业的监管与流程记录，以确保您的个人隐私与相应数据的安全。我们遵从相应的服务协议，在未获得本人授权情况下，数据不作他用。同时也请您妥善保管报告以及相应的数据信息，以免泄漏。</p>
 						<p>祝，健康！</p>
 					</div>
-				</div>
+				</div>-->
 				<!--------page6--------->
 				<div class="main swiper-slide">
 					 <img class="backImg6" src="<%=request.getContextPath()%>/images/wechat/rocky_report/06.Page 1.png" />
@@ -310,7 +311,7 @@
 				<!---------华点云page1------->
 				<div class="main swiper-slide h_lastpage_hide">
 					<div class="h_lastpage">
-						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_12.png">
+						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/last.png">
 
 					</div>
 				</div>
@@ -323,6 +324,6 @@
         <script type="text/javascript">
 		     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 		</script>
-        <script src="<%=request.getContextPath()%>/js/rote.js?v=1.5" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/rote.js?v=1.9" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>

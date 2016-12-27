@@ -51,10 +51,15 @@ $(document).ready(function() {
       }   
       return args[strParame];   
   }
-/*getRockyReport?projectId='+request('projectId')+"&dataKey="+request('dataKey')+"&appId="+request('appId');*/
-/*	var webService = 'https://www.celloud.cc/api/report/getRockyReport?projectId='+request('projectId')+"&dataKey="+request('dataKey')+"&appId="+request('appId');*/
-	var webService = "http://192.168.22.253:8080/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
-
+	 var protocol = window.location.protocol;
+	 var hostname = window.location.hostname;
+	 var port = window.location.port ? ":" + window.location.port : "";
+	 if(hostname=='127.0.0.1'||hostname=='localhost'){
+		 hostname='192.168.22.253';
+		 port=':8080';
+	 }
+	 /*var webService=protocol+"//"+hostname+port+"/celloud/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');*/
+	 var webService='https://www.celloud.cc/wechat_rocky.html?projectId=18560&dataKey=16122605441381&appId=123';
 	$.ajax({
 		type: "get",
 		url: webService,
@@ -151,7 +156,7 @@ $(document).ready(function() {
 					tab2 = '<tr class="p2_tab_body">' +
 						'<td>' + (parseInt(i) + 1) + '</td>' +
 						'<td><span id="BCRA">' + record[i].gene + '</span>:<br> ' + record[i].acids + '<br>临床意义:<br>' + record[i].significance + '</td>' +
-						'<td>' + record.description + '</td>' +
+						'<td>' + record[i].description + '</td>' +
 						'</tr>';
 					p1 = '<div class="report_title">' +
 						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3.png"/>' +
