@@ -35,8 +35,24 @@ $(document).ready(function() {
 	window.addEventListener('resize', function() {
 		document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 	})
-
-	var webService = 'https://www.celloud.cc/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123'
+ //获取url参数
+  function request(strParame) {   
+      var args = new Object( );   
+      var query = location.search.substring(1);   
+        
+      var pairs = query.split("&"); // Break at ampersand   
+      for(var i = 0; i < pairs.length; i++) {   
+      var pos = pairs[i].indexOf('=');   
+      if (pos == -1) continue;   
+      var argname = pairs[i].substring(0,pos);   
+      var value = pairs[i].substring(pos+1);   
+      value = decodeURIComponent(value);   
+      args[argname] = value;   
+      }   
+      return args[strParame];   
+  }
+/*getRockyReport?projectId='+request('projectId')+"&dataKey="+request('dataKey')+"&appId="+request('appId');*/
+	var webService = 'https://www.celloud.cc/api/report/getRockyReport?projectId='+request('projectId')+"&dataKey="+request('dataKey')+"&appId="+request('appId');
 
 	$.ajax({
 		type: "get",
