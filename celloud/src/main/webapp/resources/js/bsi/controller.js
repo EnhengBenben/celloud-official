@@ -559,7 +559,7 @@
 		    $scope.reportPrev = function(currentPage){
 				if(currentPage > 0){
 					var options = $scope.params;
-					window.location.href = "index#/product/bsi/bsireportdata/" + $scope.params.dataKey + "/" + $scope.params.projectId + "/" + $scope.params.appId + "/" + $scope.data.batch + "/" + currentPage;
+					window.location.href = "index#/product/bactive/rdata/" + $scope.params.dataKey + "/" + $scope.params.projectId + "/" + $scope.params.appId + "/" + $scope.data.batch + "/" + currentPage;
 				}
 			}
 			$scope.reportNext = function(currentPage){
@@ -567,13 +567,14 @@
 				currentPage = parseInt(currentPage);
 				if(currentPage <= rowCount){
 					var options = $scope.params;
-					window.location.href = "index#/product/bsi/bsireportdata/" + $scope.params.dataKey + "/" + $scope.params.projectId + "/" + $scope.params.appId + "/" + $scope.data.batch + "/" + currentPage;
+					window.location.href = "index#/product/bactive/rdata/" + $scope.params.dataKey + "/" + $scope.params.projectId + "/" + $scope.params.appId + "/" + $scope.data.batch + "/" + currentPage;
 				}
 			}
 		});
 	});
 	
-	celloudApp.controller("bsiReportController", function($scope, $rootScope, bsiService) {
+	celloudApp.controller("bsiReportController", function($scope, $rootScope, $routeParams, bsiService) {
+	  $rootScope.appId = $routeParams.appId;
 		$scope.bsiReportParams = {
 			page: 1,
 		    size: 20,
@@ -589,7 +590,8 @@
 		    beginDate: null,
 		    endDate: null,
 		    distributed: null, //0:是   1： 否
-		    sampleName: null
+		    sampleName: null,
+		    appId: $rootScope.bactiveApp
 		}
 		$scope.pageQuery = function(){
 			bsiService.reportPageQuery($scope.bsiReportParams).
@@ -881,21 +883,23 @@
 		}
 		$scope.pageQuery();
 	});
-	celloudApp.controller("bsiDataController", function($scope, $rootScope, bsiService) {
+	celloudApp.controller("bsiDataController", function($scope, $rootScope, $routeParams, bsiService) {
+	  $rootScope.appId = $routeParams.appId;
 		$scope.params = {
 			page: 1,
 			size: $("#page-size-sel").val(),
-	        condition: null,
-	        sort: 0,
-	        sortBatch: "asc",
-	        sortName: "asc",
-	        sortDate: "desc"
-	    }
-	    $scope.pageQuery = function(){
-			bsiService.dataPageQuery($scope.params).
-			success(function(dataMap){
-				$scope.pageList = dataMap.pageList;
-			})
+      condition: null,
+      sort: 0,
+      sortBatch: "asc",
+      sortName: "asc",
+      sortDate: "desc",
+      appId: $routeParams.appId
+    }
+    $scope.pageQuery = function(){
+  		bsiService.dataPageQuery($scope.params).
+  		success(function(dataMap){
+  			$scope.pageList = dataMap.pageList;
+  		})
 		}
 		$scope.conditionFind = function(){
 			$scope.params.condition = $("#condition-input").val();

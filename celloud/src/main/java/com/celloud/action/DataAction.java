@@ -203,12 +203,13 @@ public class DataAction {
             @RequestParam(defaultValue = "20") Integer size, String condition,
             @RequestParam(defaultValue = "0") Integer sort,
 			@RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
-			@RequestParam(defaultValue = "asc") String sortName) {
+            @RequestParam(defaultValue = "asc") String sortName,
+            Integer appId) {
         logger.info("用户 {} 根据条件检索数据列表", ConstantsData.getLoginUserId());
         Map<String, Object> dataMap = new HashMap<String, Object>();
 		Page pager = new Page(page, size);
         PageList<DataFile> dataList = dataService.dataListByAppId(pager,
-                ConstantsData.getLoginUserId(), IconConstants.APP_ID_BSI,
+                ConstantsData.getLoginUserId(), appId,
                 condition, sort, sortDate, sortName, sortBatch);
         dataMap.put("pageList", dataList);
         return dataMap;

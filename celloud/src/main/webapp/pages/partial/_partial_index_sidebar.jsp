@@ -37,11 +37,11 @@
 	            <a di-href="<%=request.getContextPath()%>/index#/reportdata/1/20/0/all/all/all/all/all/all"  ng-show="!userProduct.onlyBSI"><i class="report-icon"></i><span>报告管理</span></a>
 	        </li>
         </shiro:hasPermission>
-        <shiro:hasPermission name="application:center">
+        <%-- <shiro:hasPermission name="application:center"> --%>
 	        <li ng-class="{active: isActive('/app')}">
 	          <a di-href="<%=request.getContextPath()%>/index#/app"><i class="app-icon"></i><span>应用市场</span></a>
 	        </li>
-        </shiro:hasPermission>
+        <%-- </shiro:hasPermission> --%>
         <shiro:hasPermission name="statistics">
             <li ng-class="{active: isActive('/count')}">
               <a di-href="<%=request.getContextPath()%>/index#/count"><i class="statistics-icon"></i><span>统计</span></a>
