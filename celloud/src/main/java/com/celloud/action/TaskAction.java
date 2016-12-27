@@ -215,12 +215,37 @@ public class TaskAction {
 							data.setMd5(MD5Util.getFileMD5(filePath));
 							dataService.updateDataInfoByFileIdAndTagId(data, tagId);
 							// TODO 需要去掉写死的自动运行
-							if (tagId == 1) {
+                            if (tagId == 1) {
 								logger.info("bsi自动运行split分数据");
 								List<DataFile> bsiList = new ArrayList<>();
 								bsiList.add(data);
 								runService.runSingle(userId, 118, bsiList);
-							}
+                            } else if (tagId == 40) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 133, bsiList);
+                            } else if (tagId == 41) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 134, bsiList);
+                            } else if (tagId == 42) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 135, bsiList);
+                            } else if (tagId == 43) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 136, bsiList);
+                            } else if (tagId == 44) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 137, bsiList);
+                            }
 						}
 					}
 				}
