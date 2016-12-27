@@ -52,7 +52,8 @@ $(document).ready(function() {
       return args[strParame];   
   }
 /*getRockyReport?projectId='+request('projectId')+"&dataKey="+request('dataKey')+"&appId="+request('appId');*/
-	var webService = 'https://www.celloud.cc/api/report/getRockyReport?projectId='+request('projectId')+"&dataKey="+request('dataKey')+"&appId="+request('appId');
+/*	var webService = 'https://www.celloud.cc/api/report/getRockyReport?projectId='+request('projectId')+"&dataKey="+request('dataKey')+"&appId="+request('appId');*/
+	var webService = "http://192.168.22.253:8080/celloud/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123";
 
 	$.ajax({
 		type: "get",
