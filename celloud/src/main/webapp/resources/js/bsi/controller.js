@@ -591,7 +591,7 @@
 		    endDate: null,
 		    distributed: null, //0:是   1： 否
 		    sampleName: null,
-		    appId: $rootScope.bactiveApp
+		    appId: $rootScope.appId
 		}
 		$scope.pageQuery = function(){
 			bsiService.reportPageQuery($scope.bsiReportParams).
