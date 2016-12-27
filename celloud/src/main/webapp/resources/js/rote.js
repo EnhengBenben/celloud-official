@@ -58,7 +58,7 @@ $(document).ready(function() {
 		 hostname='192.168.22.253';
 		 port=':8080';
 	 }
-	 /*var webService=protocol+"//"+hostname+port+"/celloud/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');*/
+	 var webService=protocol+"//"+hostname+port+"/celloud/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');
 	 var webService='https://www.celloud.cc/wechat_rocky.html?projectId=18560&dataKey=16122605441381&appId=123';
 	$.ajax({
 		type: "get",
