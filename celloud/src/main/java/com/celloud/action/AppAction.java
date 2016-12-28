@@ -261,23 +261,19 @@ public class AppAction {
 		Map<String, Object> map = new HashMap<>();
 		List<App> appList = appService.getMyAppList(userId);
         int appNum = 0;
+		int bsiNum = 0;
 		for (App app : appList) {
             if (AppConstants.BACTIVE_GROUP.contains(app.getAppId())) {
 				map.put("app" + app.getAppId(), app.getAppId());
-                appNum++;
-            } else if (app.getAppId().equals(123)) {
-				map.put("app" + app.getAppId(), app.getAppId());
-                appNum++;
-            } else {
-                if (app.getAttribute() == AppConstants.PRIVATE) {
-                    appNum++;
-                }
+				bsiNum++;
+			} else if (app.getAttribute() == AppConstants.PRIVATE) {
+				appNum++;
 			}
 		}
-        if (appNum > 1) {
+		if (appNum == 0 && bsiNum == 1) {
+			map.put("onlyBSI", true);
+		} else {
             map.put("onlyBSI", false);
-        } else {
-            map.put("onlyBSI", true);
         }
 		return map;
 	}
