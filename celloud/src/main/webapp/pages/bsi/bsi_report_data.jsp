@@ -8,7 +8,7 @@
         <li>CelLoud</li>
         <li>我的产品</li>
         <li>百菌探</li>
-        <li><a style="color: #969696;" href="${pageContext.request.contextPath }/index#/product/bsi/bsireport">报告</a></li>
+        <li><a style="color: #969696;" href="${pageContext.request.contextPath }/index#/product/bactive/report/{{appId}}">报告</a></li>
         <li>查看报告</li>
     </ol>
     <div class="content">
@@ -341,7 +341,7 @@
 				  <tbody id="data-list-tbody" ng-if="batchPageList.datas.length > 0">
 			        <tr id="reportbatch{{task.dataKey}}" ng-class="{active: task.dataKey == bsi.dataKey }" ng-repeat="task in batchPageList.datas">
 			          <td title="{{task.fileName}}" name="data-name-td" style="padding: 0px;text-align: center;" >
-		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bsi/bsireportdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/null/0" ng-if="task.period == 2">
+		                 <a ng-href="${pageContext.request.contextPath }/index#/product/bactive/rdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/null/0" ng-if="task.period == 2">
 		                   {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName == null? '' : task.anotherName}}
 		                 </a>
 		                 <a href="javascript:void(0)" ng-if="task.period != 2">

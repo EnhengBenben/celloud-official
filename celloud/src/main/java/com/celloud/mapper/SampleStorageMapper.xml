@@ -15,7 +15,7 @@
     insert into tb_sample_storage (id,user_id, storage_name, sindex, 
       create_date, sample_num,state,in_machine)
     values (#{id,jdbcType=INTEGER},#{userId,jdbcType=INTEGER}, #{storageName,jdbcType=VARCHAR}, #{sindex,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{sampleNum,jdbcType=INTEGER},#{state,jdbcType=BIT}, #{inMachine,jdbcType=INTEGER})
+      now(), #{sampleNum,jdbcType=INTEGER},#{state,jdbcType=BIT}, #{inMachine,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.SampleStorage" useGeneratedKeys="true" keyProperty="id">
     insert into tb_sample_storage
@@ -32,9 +32,7 @@
       <if test="sindex != null" >
         sindex,
       </if>
-      <if test="createDate != null" >
         create_date,
-      </if>
       <if test="sampleNum != null" >
         sample_num,
       </if>
@@ -58,9 +56,7 @@
       <if test="sindex != null" >
         #{sindex,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
+        now(),
       <if test="sampleNum != null" >
         #{sampleNum,jdbcType=INTEGER},
       </if>

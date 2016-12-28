@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,11 +43,13 @@ import com.celloud.alimail.AliSubstitution;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
+import com.celloud.constants.UserSecRole;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.mongo.UserCaptcha;
 import com.celloud.model.mysql.ActionLog;
 import com.celloud.model.mysql.Company;
+import com.celloud.model.mysql.SecRole;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
@@ -55,6 +58,7 @@ import com.celloud.sendcloud.EmailType;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.CompanyService;
 import com.celloud.service.CustomerService;
+import com.celloud.service.SecRoleService;
 import com.celloud.service.UserService;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
@@ -78,6 +82,8 @@ public class UserAction {
 	@Resource
 	private UserService userService;
 	@Resource
+	private SecRoleService secRoleService;
+	@Resource
 	private ActionLogService logService;
 	@Resource
 	private AliEmailUtils emailUtils;
@@ -95,6 +101,46 @@ public class UserAction {
 	private static final Response WRONG_PASSWORD = new Response("203", "原始密码错误");
 	private Logger logger = LoggerFactory.getLogger(UserAction.class);
 
+	@RequestMapping(value = "toAddRole", method = RequestMethod.GET)
+	@ResponseBody
+	public List<SecRole> toAddRole(Integer userId) {
+		Integer authFrom = ConstantsData.getLoginUserId();
+		List<SecRole> all = userService.getRolesByUserId(authFrom);
+		for (int i = 0; i < all.size(); i++) {
+			if (all.get(i).getId().equals(UserSecRole.PLATFORM)) {
+				all.remove(i);
+			}
+		}
+		List<SecRole> have = userService.getRolesByUserId(userId);
+		all.removeAll(have);
+		return all;
+	}
+
+	@RequestMapping(value = "addRole", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Response> addRole(Integer userId, Integer[] roles) {
+		secRoleService.insertUserRoles(userId, roles, ConstantsData.getLoginUserId());
+		return ResponseEntity.ok(new Response("200", "追加成功"));
+	}
+
+	@RequestMapping(value = "toRemoveRole", method = RequestMethod.GET)
+	@ResponseBody
+	public List<SecRole> toRemoveRole(Integer userId) {
+		List<SecRole> secList = userService.getRolesByUserId(userId);
+		for (int i = 0; i < secList.size(); i++) {
+			if (secList.get(i).getId().equals(UserSecRole.PLATFORM)) {
+				secList.remove(i);
+			}
+		}
+		return secList;
+	}
+
+	@RequestMapping(value = "removeRole", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Response> removeRole(Integer userId, Integer[] roles) {
+		secRoleService.deleteByAuthFrom(userId, roles, ConstantsData.getLoginUserId());
+		return ResponseEntity.ok(new Response("200", "删除成功"));
+	}
 
     /**
      * 
@@ -226,6 +272,20 @@ public class UserAction {
 		return company;
 	}
 
+	/**
+	 * 查询用户的所有角色
+	 * 
+	 * @return
+	 * @author lin
+	 * @date 2016年12月20日下午4:21:06
+	 */
+	@RequestMapping("findRoles")
+	@ResponseBody
+	public List<SecRole> findRoles() {
+		Integer userId = ConstantsData.getLoginUserId();
+		return userService.getRolesByUserId(userId);
+	}
+
     /**
      * 
      * @author MQ
@@ -342,7 +402,7 @@ public class UserAction {
 				.set(WechatParams.PWD_UPDATE.first.name(), "您好，" + user.getUsername() + "：", "#222222")
 				.set(WechatParams.PWD_UPDATE.productName.name(), "平台账号", null)
 				.set(WechatParams.PWD_UPDATE.time.name(), DateUtil.getDateToString(DateUtil.YMDHMS), null);
-		mcu.sendMessage(user.getUserId(), MessageCategoryCode.UPDATEPWD, null, params, null);
+		mcu.sendMessage(user.getUserId(), MessageCategoryCode.UPDATEPWD, null, params, null, null);
 		return result > 0 ? Response.SUCCESS_SAVE() : UPDATE_PASSWORD_FAIL;
 	}
 
@@ -415,7 +475,8 @@ public class UserAction {
      * @param emailArray
      */
     @RequestMapping("/sendRegistEmail")
-    public ResponseEntity<Map<String, String>> sendEmail(String email, String kaptcha) {
+	public ResponseEntity<Map<String, String>> sendEmail(String email, String kaptcha, Integer[] apps,
+			Integer[] roles) {
         logger.info("医院管理员 {} 发送注册邮件 email = {}, kaptchat = {}", ConstantsData.getLoginUserId(), email, kaptcha);
         Boolean flag = true;
         Map<String, String> errorMap = new HashMap<String, String>();
@@ -435,7 +496,7 @@ public class UserAction {
         }
         // 邮箱和验证码均合法
         if (flag) {
-            flag = userService.sendRegisterEmail(email);
+			flag = userService.sendRegisterEmail(email, apps, roles);
             if (flag) {
                 logger.info("注册邮件发送成功 email = {}", email);
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);

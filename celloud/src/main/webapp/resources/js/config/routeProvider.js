@@ -245,15 +245,15 @@
       templateUrl: "pages/rocky/rocky_report.jsp",
       controller: "rockyReportController"
     })
-    .when('/product/bsi/bsireport',{
+    .when('/product/bactive/report/:appId',{
       templateUrl: "pages/bsi/bsi_report_list.jsp",
       controller: "bsiReportController"
     })
-    .when('/product/bsi/bsidata',{
+    .when('/product/bactive/data/:appId',{
       templateUrl: "pages/bsi/bsi_data.jsp",
       controller: "bsiDataController"
     })
-    .when('/product/bsi/bsireportdata/:dataKey/:projectId/:appId/:batch/:dataIndex',{
+    .when('/product/bactive/rdata/:dataKey/:projectId/:appId/:batch/:dataIndex',{
       templateUrl: "pages/bsi/bsi_report_data.jsp",
       controller: "bsiReportDataController"
     })

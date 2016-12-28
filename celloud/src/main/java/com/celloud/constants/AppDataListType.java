@@ -14,7 +14,8 @@ public class AppDataListType {
 	/**
 	 * spark
 	 */
-	public static final List<Integer> SPARK = Arrays.asList(86, 92, 93, 99, 100, 101, 118);
+    public static final List<Integer> SPARK = Arrays.asList(86, 92, 93, 99, 100,
+            101, 118, 133, 134, 135, 136, 137);
 
 	/**
 	 * fastq
@@ -36,7 +37,7 @@ public class AppDataListType {
 	 * path
 	 */
     public static final List<Integer> ONLY_PATH = Arrays.asList(1, 73, 82, 84,
-            89, 90, 105, 106, 107, 108, 117, 118);
+            89, 90, 105, 106, 107, 108, 117, 118, 133, 134, 135, 136, 137);
 
 	/**
 	 * path and name

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.celloud.model.mysql.SecRole;
 import com.celloud.model.mysql.User;
 
 /**
@@ -162,6 +163,16 @@ public interface UserService {
      */
     public Set<String> findRoles(Integer userId);
 
+	/**
+	 * 查询用户所有的角色
+	 * 
+	 * @param userId
+	 * @return
+	 * @author lin
+	 * @date 2016年12月20日下午5:03:11
+	 */
+	public List<SecRole> getRolesByUserId(Integer userId);
+
     /**
      * 查询用户所有的权限
      * 
@@ -257,7 +268,7 @@ public interface UserService {
      * @param loginUserId
      *            登录用户id
      */
-    public Boolean sendRegisterEmail(String email);
+	public Boolean sendRegisterEmail(String email, Integer[] appIds, Integer[] roles);
 
     /**
      * 新增C端用户

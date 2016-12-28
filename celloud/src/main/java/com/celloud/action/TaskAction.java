@@ -215,12 +215,37 @@ public class TaskAction {
 							data.setMd5(MD5Util.getFileMD5(filePath));
 							dataService.updateDataInfoByFileIdAndTagId(data, tagId);
 							// TODO 需要去掉写死的自动运行
-							if (tagId == 1) {
+                            if (tagId == 1) {
 								logger.info("bsi自动运行split分数据");
 								List<DataFile> bsiList = new ArrayList<>();
 								bsiList.add(data);
 								runService.runSingle(userId, 118, bsiList);
-							}
+                            } else if (tagId == 40) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 133, bsiList);
+                            } else if (tagId == 41) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 134, bsiList);
+                            } else if (tagId == 42) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 135, bsiList);
+                            } else if (tagId == 43) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 136, bsiList);
+                            } else if (tagId == 44) {
+                                logger.info("bsi自动运行split分数据");
+                                List<DataFile> bsiList = new ArrayList<>();
+                                bsiList.add(data);
+                                runService.runSingle(userId, 137, bsiList);
+                            }
 						}
 					}
 				}
@@ -247,10 +272,17 @@ public class TaskAction {
 		// 构造微信消息
 		Param params = ParamFormat.param()
 				.set(WechatParams.RUN_OVER.first.name(), "您好，您的数据" + tipsName + " 运行结束", "#222222")
-				.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
-				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
+				.set(WechatParams.RUN_OVER.keyword1.name(), appName, "#222222")
+				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, "#222222")
 				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
-		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
+		String wechatUrl = null;
+		if (appId.equals(123)) {//华木兰要追加跳转页面
+			params.set(WechatParams.RUN_OVER.remark.name(), "点击下方详情查看报告", "#222222");
+			wechatUrl = ConstantsData.getContextUrl() + "wechat_rocky.html?projectId=" + projectId + "&dataKey="
+					+ dataKey + "&appId=" + appId;
+			logger.info("华木兰微信提醒wechatUrl：" + wechatUrl);
+		}
+		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu, wechatUrl);
 		return "run over";
 	}
 
@@ -397,7 +429,7 @@ public class TaskAction {
 				.set(WechatParams.RUN_OVER.keyword1.name(), appName, null)
 				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, null)
 				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
-		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu);
+		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu, null);
 		return "run over";
 	}
 

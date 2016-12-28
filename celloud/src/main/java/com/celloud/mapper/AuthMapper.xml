@@ -132,4 +132,10 @@
     from tb_auth
     where refresh_token = #{refreshToken,jdbcType=VARCHAR} and refresh_token_expire_date &gt; now()
   </select>
+  <select id="getByToken" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_auth
+    where token = #{token,jdbcType=VARCHAR} and token_expire_date &gt; now()
+  </select>
 </mapper>

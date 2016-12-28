@@ -1,6 +1,5 @@
 package com.celloud.mapper;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -19,8 +18,7 @@ public interface SampleMapper {
 
     int updateAddTypeById(@Param("sampleIds") List<Integer> sampleIds,
             @Param("isAdd") Integer isAdd,
-            @Param("orderId") Integer orderId,
-            @Param("updateDate") Date updateDate);
+            @Param("orderId") Integer orderId);
 
     List<Sample> selectAllByUser(@Param("userId") Integer userId,
             @Param("isAdd") Integer isAdd, @Param("state") Integer state,

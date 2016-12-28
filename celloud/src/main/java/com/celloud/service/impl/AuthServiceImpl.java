@@ -29,4 +29,9 @@ public class AuthServiceImpl implements AuthService {
 		return authMapper.selectByRefreshToken(refreshToken);
 	}
 
+	@Override
+	public Auth getByToken(String token) {
+		return authMapper.getByToken(token);
+	}
+
 }

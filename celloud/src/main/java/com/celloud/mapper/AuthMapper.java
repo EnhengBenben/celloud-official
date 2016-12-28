@@ -18,4 +18,6 @@ public interface AuthMapper {
     int updateByPrimaryKey(Auth record);
 
 	Auth selectByRefreshToken(@Param("refreshToken") String refreshToken);
+
+	Auth getByToken(@Param("token") String token);
 }

@@ -325,4 +325,23 @@ select user_id, GROUP_CONCAT(role_id order by role_id) roles from tb_sec_user_ro
 /*删除重复数据*/
 delete from tb_sec_user_role_relat where id not in (select minid from (select min(id) minid from tb_sec_user_role_relat group by user_id) b);
 
+/*医院管理员独立*/
+INSERT INTO `tb_sec_role` VALUES ('19', 'hospitalmanager', '医院管理员', '0', '医院管理员', '2016-12-12 10:50:18', '1', null, null);
+INSERT INTO `tb_sec_permission` VALUES ('525', '19', '17');
+INSERT INTO `tb_sec_permission` VALUES ('526', '19', '18');
+INSERT INTO `tb_sec_permission` VALUES ('527', '19', '19');
+
+insert into tb_sec_user_role_relat (user_id,role_id,auth_from) select user_id,6,auth_from from tb_sec_user_role_relat where role_id = 13;
+insert into tb_sec_user_role_relat (user_id,role_id,auth_from) select user_id,19,auth_from from tb_sec_user_role_relat where role_id = 13;
+delete from tb_sec_user_role_relat where role_id = 13;
+
+insert into tb_sec_user_role_relat (user_id,role_id,auth_from) select user_id,10,auth_from from tb_sec_user_role_relat where role_id = 14;
+insert into tb_sec_user_role_relat (user_id,role_id,auth_from) select user_id,19,auth_from from tb_sec_user_role_relat where role_id = 14;
+delete from tb_sec_user_role_relat where role_id = 14;
+
+insert into tb_sec_user_role_relat (user_id,role_id,auth_from) select user_id,17,auth_from from tb_sec_user_role_relat where role_id = 16;
+insert into tb_sec_user_role_relat (user_id,role_id,auth_from) select user_id,19,auth_from from tb_sec_user_role_relat where role_id = 16;
+delete from tb_sec_user_role_relat where role_id = 16;
+
+delete from tb_sec_role where id >11 and id <17;
 
