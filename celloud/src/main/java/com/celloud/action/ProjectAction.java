@@ -149,7 +149,7 @@ public class ProjectAction {
 						.set(WechatParams.SHARE.keyword1.name(), projectName, null)
 						.set(WechatParams.SHARE.keyword2.name(), projectID, null)
 						.set(WechatParams.SHARE.remark.name(), "您可以登录平台查看项目报告", "#222222");
-				mcu.sendMessage(shareTo.getUserId(), MessageCategoryCode.SHARE, aliEmail, params, mu);
+				mcu.sendMessage(shareTo.getUserId(), MessageCategoryCode.SHARE, aliEmail, params, mu, null);
 			}
 		}
 		return Response.SUCCESS();

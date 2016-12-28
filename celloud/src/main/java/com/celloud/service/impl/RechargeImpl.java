@@ -67,7 +67,7 @@ public class RechargeImpl implements RechargeService {
 				.set(WechatParams.BALANCE_CHANGE.date.name(), stringDate, null)
 				.set(WechatParams.BALANCE_CHANGE.adCharge.name(), amount.toString(), null)
 				.set(WechatParams.BALANCE_CHANGE.cashBalance.name(), balances.toString(), "#222222");
-		mcu.sendMessage(userId, MessageCategoryCode.BALANCES, aliEmail, wechat, null);
+		mcu.sendMessage(userId, MessageCategoryCode.BALANCES, aliEmail, wechat, null, null);
         return rechargeMapper.insertSelective(recharge);
     }
 

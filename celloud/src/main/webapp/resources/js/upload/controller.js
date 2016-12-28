@@ -9,7 +9,7 @@
 				}else{
 					window.location.href = "#/product/rocky/upload";
 				}
-			}else if($location.path().indexOf('/product/bsi') > -1){
+			}else if($location.path().indexOf('/product/bactive') > -1){
 				
 			}else{
 				if($scope.step == 'one'){

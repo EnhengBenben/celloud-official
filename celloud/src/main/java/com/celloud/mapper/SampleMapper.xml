@@ -80,12 +80,8 @@
       <if test="sindex != null" >
         sindex,
       </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
+      create_date,
+      update_date,
       <if test="state != null" >
         state,
       </if>
@@ -112,12 +108,8 @@
       <if test="sindex != null" >
         #{sindex,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null" >
-        now(),
-      </if>
-      <if test="updateDate != null" >
-        now(),
-      </if>
+      now(),
+      now(),
       <if test="state != null" >
         #{state,jdbcType=BIT},
       </if>

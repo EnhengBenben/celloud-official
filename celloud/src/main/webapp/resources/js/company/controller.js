@@ -61,6 +61,7 @@
 		
 		
 		$scope.toAddApp = function(userId){
+		  $scope.addApp.isShow = false;
 		  $scope.userId = userId;
 		  companyService.toAddApp(userId)
       .success(function(data){
@@ -72,6 +73,11 @@
 		  $("#appAddForm").find("input[name='app']:checked").each(function(){
 		    apps.push($(this).val());
 		  });
+		  if(apps.length==0){
+		    $scope.addApp.isShow = true;
+		    return;
+		  }
+		  $scope.addApp.isShow = false;
 		  $("#submit").prop("disabled",true);
 		  companyService.addApp($scope.userId,apps).
 		  success(function(data, status){
@@ -87,6 +93,7 @@
 		}
 		
 		$scope.toRemoveApp = function(userId){
+		  $scope.removeApp.isShow = false;
 		  $scope.userId = userId;
 		  companyService.toRemoveApp(userId)
 		  .success(function(data){
@@ -98,6 +105,11 @@
 		  $("#removeAppForm").find("input[name='app']:checked").each(function(){
 		    apps.push($(this).val());
 		  });
+		  if(apps.length==0){
+        $scope.removeApp.isShow = true;
+        return;
+      }
+      $scope.removeApp.isShow = false;
 		  $("#submit").prop("disabled",true);
 		  companyService.removeApp($scope.userId,apps).
 		  success(function(data, status){
@@ -113,6 +125,7 @@
 		}
 		
 		$scope.toAddRole = function(userId){
+		  $scope.addRole.isShow = false;
 		  $scope.userId = userId;
 		  companyService.toAddRole(userId)
 		  .success(function(data){
@@ -124,6 +137,11 @@
 		  $("#roleAddForm").find("input[name='role']:checked").each(function(){
 		    roles.push($(this).val());
 		  });
+		  if(roles.length==0){
+        $scope.addRole.isShow = true;
+        return;
+      }
+      $scope.addRole.isShow = false;
 		  $("#submit").prop("disabled",true);
 		  companyService.addRole($scope.userId,roles).
 		  success(function(data, status){
@@ -138,6 +156,7 @@
 		  });
 		}
 		$scope.toRemoveRole = function(userId){
+		  $scope.removeRole.isShow = false;
 		  $scope.userId = userId;
 		  companyService.toRemoveRole(userId)
 		  .success(function(data){
@@ -149,6 +168,11 @@
 		  $("#roleRemoveForm").find("input[name='role']:checked").each(function(){
 		    roles.push($(this).val());
 		  });
+		  if(roles.length==0){
+        $scope.removeRole.isShow = true;
+        return;
+      }
+      $scope.removeRole.isShow = false;
 		  $("#submit").prop("disabled",true);
 		  companyService.removeRole($scope.userId,roles).
 		  success(function(data, status){

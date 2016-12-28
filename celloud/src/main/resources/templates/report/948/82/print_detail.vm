@@ -3,10 +3,22 @@
 <div id="printMain">
     <form id="print-form">
     <div>
-        #parse("templates/report/default/${hbv.appId}/title_detail.vm")
+        #parse("templates/report/948/${hbv.appId}/title_detail.vm")
         #parse("templates/report/948/${hbv.appId}/content_detail.vm")
-        #parse("templates/report/default/${hbv.appId}/foot_detail.vm")
+        #parse("templates/report/948/${hbv.appId}/foot_detail.vm")
     </div>
     </form>
 </div>  
 #parse("templates/report/default/${hbv.appId}/js.vm")
+<script type="text/javascript">
+$(function(){
+	var date = $("#reportDate").val();
+	if(!date){
+		var myDate = new Date();
+		var year = myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+		var month = myDate.getMonth()+1;       //获取当前月份(0-11,0代表1月)
+		var day = myDate.getDate();        //获取当前日(1-31)
+		$("#reportDate").val(year+"-"+month+"-"+day);
+	}
+});
+</script>

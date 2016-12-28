@@ -133,6 +133,12 @@
 		            </div>
 	           	</div>
 	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2"></div>
+	            <div class="col-xs-10">
+		        	<span class="input-alert" ng-show="addApp.isShow">请选择APP!</span>
+	           	</div>
+	          </div>
 	      </form>
 	    </div>
 	    <div class="modal-footer">
@@ -163,6 +169,12 @@
 		            </div>
 	           	</div>
 	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2"></div>
+	            <div class="col-xs-10">
+		        	<span class="input-alert" ng-show="removeApp.isShow">请选择APP!</span>
+	           	</div>
+	          </div>
 	      </form>
 	    </div>
 	    <div class="modal-footer">
@@ -184,13 +196,19 @@
 	    <div class="modal-body form-modal">
 	      <form class="form-horizontal info-form" name="roleAddForm" id="roleAddForm">
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-2">APP：</div>
+	            <div class="control-label form-label col-xs-2">角色：</div>
 	            <div class="col-xs-10">
 		            <div class="form-group">
 		             	<div ng-repeat="role in roleList" class="col-xs-6">
 		            		<input type="checkbox" name="role" value="{{role.id}}"> {{role.name}}
 		            	</div>
 		            </div>
+	           	</div>
+	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2"></div>
+	            <div class="col-xs-10">
+		        	<span class="input-alert" ng-show="addRole.isShow">请选择角色!</span>
 	           	</div>
 	          </div>
 	      </form>
@@ -214,13 +232,19 @@
 	    <div class="modal-body form-modal">
 	      <form class="form-horizontal info-form" name="roleRemoveForm" id="roleRemoveForm">
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-2">APP：</div>
+	            <div class="control-label form-label col-xs-2">角色：</div>
 	            <div class="col-xs-10">
 		            <div class="form-group">
 		             	<div ng-repeat="role in roleList" class="col-xs-6">
 		            		<input type="checkbox" name="role" value="{{role.id}}"> {{role.name}}
 		            	</div>
 		            </div>
+	           	</div>
+	          </div>
+	          <div class="form-group">
+	            <div class="control-label form-label col-xs-2"></div>
+	            <div class="col-xs-10">
+		        	<span class="input-alert" ng-show="removeRole.isShow">请选择角色!</span>
 	           	</div>
 	          </div>
 	      </form>
