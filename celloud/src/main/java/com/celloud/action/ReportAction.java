@@ -3027,7 +3027,8 @@ public class ReportAction {
             // 首先根据dataIndex算出分页列表下方的当前页
             Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex / 10;
             Page pager = new Page(currentPage, 10);
-            PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
+            PageList<Task> batchPageList = taskService.findTasksByBatchNoUserId(pager, ConstantsData.getLoginUserId(),
+                    appId,
                     batch);
             dataMap.put("batchPageList", batchPageList);
             dataMap.put("dataIndex", dataIndex);
