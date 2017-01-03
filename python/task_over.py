@@ -58,8 +58,8 @@ if myDB:
             base['sample'] = sample_dict
         path = os.path.join(path, userId, appId)
         result = None
-        if appId == 123:
-            result = appFun.getResult(path, appId, dataKey,user_dict.companyId)
+        if appId == '123':
+            result = appFun.getResult(path, appId, dataKey,user_dict['companyId'])
         else:
             result = appFun.getResult(path, appId, dataKey)
         result = dict(result, **base)
