@@ -143,6 +143,18 @@ public class ReportAction {
 		return 1;
 	}
 
+    @ActionLog(value = "下载", button = "下载")
+    @RequestMapping("downRockyPdf")
+    @ResponseBody
+    public Integer downRockyPdf(String path) {
+        String filePath = SparkPro.OSSPATH + path;
+        if (new File(filePath).exists()) {
+            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+            return 0;
+        }
+        return 1;
+    }
+
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")
 	@ResponseStatus(value = HttpStatus.OK)
