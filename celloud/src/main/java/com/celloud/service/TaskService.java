@@ -247,4 +247,6 @@ public interface TaskService {
      */
     public List<Task> findAllByBatch(String batch, Integer loginUserId, Integer appId);
 
+    PageList<Task> findTasksByBatchNoUserId(Page page, Integer userId, Integer appId, String batch);
+
 }

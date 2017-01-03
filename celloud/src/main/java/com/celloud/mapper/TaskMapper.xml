@@ -475,6 +475,28 @@
 		order by
 		t.update_date desc
 	</select>
+	<select id="findTasksByBatchNoUserId" resultMap="ResultMapWithFileName">
+        select
+        f.file_name,f.file_id,f.batch,s.sample_name,t.* from
+        (select * from
+        tb_task where task_id in (select max(task_id) from tb_task
+        where
+        state=#{state}
+        and user_id=#{userId} and app_id=#{appId} group
+        by
+        data_key))t
+        left join tb_file f
+        on f.data_key=t.data_key
+        left join
+        tb_sample s
+        on s.sample_id=t.sample_id
+        where
+        f.state=#{state} and
+        f.batch=#{batch} and
+        t.period=#{period}
+        order by
+        t.update_date desc
+    </select>
 	<select id="findAllByBatch" resultMap="ResultMapWithFileName">
         select
         f.file_name,f.file_id,f.batch,s.sample_name,t.* from
@@ -490,7 +512,7 @@
         left join
         tb_sample s
         on s.sample_id=t.sample_id
-        where f.user_id=#{userId} and
+        where
         f.state=#{state} and
         f.batch=#{batch} and
         t.period=#{period}

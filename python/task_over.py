@@ -39,6 +39,7 @@ proId = sys.argv[5]
 user_info_sql = "select c.company_id companyId,c.company_name companyName,c.english_name companyEngName,c.company_icon companyIcon,c.address companyAddr,c.address_en companyEnAddr,c.zip_code zipCode,c.tel companyTel,d.dept_name deptName,d.english_name deptEngName,d.dept_icon deptIcon,d.tel deptTel,u.user_id userId,u.username,u.email from tb_user u left join tb_dept d on u.dept_id=d.dept_id left join tb_company c on u.company_id=c.company_id where u.user_id="+userId
 app_info_sql = "select app_id appId,app_name appName,title from tb_app where app_id="+appId
 data_info_sql = "select file_id fileId,user_id userId,data_key dataKey,file_name fileName,another_name anotherName,strain,sample,data_tags dataTags,size,create_date createDate from tb_file where data_key in ("+dataKeys+")"
+sample_info_sql = "select sample_id,user_id,order_id,sample_name,exper_sample_name,is_add,type,sindex,create_date,update_date,state,remark from tb_sample where sample_id = (select sample_id from tb_task where project_id = " + proId + ")"
 myDB = mysql.getInstance()
 print 1
 if myDB:
@@ -52,6 +53,9 @@ if myDB:
         base['dataKey'] = dataKey
         base['projectId'] = int(proId)
         base['createDate'] = datetime.datetime.now()
+        if appId == 118:
+            sample_dict = myDB.query(sample_info_sql)[0]
+            base['sample'] = sample_dict
         path = os.path.join(path, userId, appId)
         result = appFun.getResult(path, appId, dataKey)
         result = dict(result, **base)
