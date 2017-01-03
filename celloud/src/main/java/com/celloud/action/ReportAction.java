@@ -144,17 +144,17 @@ public class ReportAction {
 		return 1;
 	}
 
-    @ActionLog(value = "下载", button = "下载")
-    @RequestMapping("downRockyPdf")
-    @ResponseBody
-    public Integer downRockyPdf(Integer userId, String dataKey) {
-        String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
-        if (new File(filePath).exists()) {
-            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-            return 0;
-        }
-        return 1;
-    }
+//    @ActionLog(value = "下载", button = "下载")
+//    @RequestMapping("downRockyPdf")
+//    @ResponseBody
+//    public Integer downRockyPdf(Integer userId, String dataKey) {
+//        String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
+//        if (new File(filePath).exists()) {
+//            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+//            return 0;
+//        }
+//        return 1;
+//    }
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")
@@ -2822,6 +2822,7 @@ public class ReportAction {
 		ModelAndView mv = new ModelAndView("rocky/report/report_data_main");
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		mv.addObject("rocky", rocky);
+        mv.addObject("rockyPdfPath", PropertiesUtil.rockyPdfPath);
 		mv.addObject("significances", ConstantsData.significances());
 		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return mv;
