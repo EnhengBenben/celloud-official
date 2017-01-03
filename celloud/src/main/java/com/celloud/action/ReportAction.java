@@ -89,6 +89,7 @@ import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
 
 import net.sf.cglib.core.CollectionUtils;
@@ -146,8 +147,8 @@ public class ReportAction {
     @ActionLog(value = "下载", button = "下载")
     @RequestMapping("downRockyPdf")
     @ResponseBody
-    public Integer downRockyPdf(String path) {
-        String filePath = SparkPro.OSSPATH + path;
+    public Integer downRockyPdf(Integer userId, String dataKey) {
+        String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
         if (new File(filePath).exists()) {
             FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
             return 0;

@@ -33,8 +33,7 @@ $(function() {
 	});
 	function downloadPdf(userId,appId,dataKey){
 		var url = CONTEXT_PATH + "/report/downRockyPdf";
-		var path = userId + "/" + appId + "/" + dataKey;
-		$.get(url,{"path":path},function(data){
+		$.get(url,{"userId":userId, "dataKey":dataKey},function(data){
 			if(data == 1){
 				alert("没有可以下载的pdf!");
 			}
