@@ -32,7 +32,7 @@ class Rocky:
             Rocky.locker.release()
 
     # 执行
-    def getResult(self, path, appId, dataKey):
+    def getResult(self, path, appId, dataKey, companyId):
         result = {}
         rockyRecords = [];
         descriptions = self.getDescription()
@@ -69,8 +69,8 @@ class Rocky:
                 if description == '-':
                     rockyRecord['description'] = "There is no description at this moment."
                 rockyRecords.append(rockyRecord)
-                RockyPdf = RockyPdf.getInstance()
-                RockyPdf.createPDF(path,dataKey,33)
+            RockyPdf = RockyPdf.getInstance()
+            RockyPdf.createPDF(path,dataKey,companyId)
             f.close()
         result["records"] = rockyRecords
         result["pathogenic"] = pathogenic
