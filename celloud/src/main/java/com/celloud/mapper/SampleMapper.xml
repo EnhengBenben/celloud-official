@@ -56,7 +56,7 @@
       is_add, create_date, update_date, 
       state)
     values (#{sampleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{sampleName,jdbcType=VARCHAR}, 
-      #{isAdd,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{isAdd,jdbcType=BIT}, now(), now(), 
       #{state,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.Sample" useGeneratedKeys="true" keyProperty="sampleId">
@@ -80,12 +80,8 @@
       <if test="sindex != null" >
         sindex,
       </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
-      <if test="updateDate != null" >
-        update_date,
-      </if>
+      create_date,
+      update_date,
       <if test="state != null" >
         state,
       </if>
@@ -112,12 +108,8 @@
       <if test="sindex != null" >
         #{sindex,jdbcType=VARCHAR},
       </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateDate != null" >
-        #{updateDate,jdbcType=TIMESTAMP},
-      </if>
+      now(),
+      now(),
       <if test="state != null" >
         #{state,jdbcType=BIT},
       </if>
@@ -167,7 +159,7 @@
   </update>
   <update id="updateAddTypeById">
     update tb_sample
-    set is_add = #{isAdd,jdbcType=BIT},order_id = #{orderId,jdbcType=INTEGER}, update_date=#{updateDate, jdbcType=TIMESTAMP}
+    set is_add = #{isAdd,jdbcType=BIT},order_id = #{orderId,jdbcType=INTEGER}, update_date=now()
     where sample_id in(
     <foreach item="sampleId" collection="sampleIds" separator=",">
 	     #{sampleId,jdbcType=INTEGER}

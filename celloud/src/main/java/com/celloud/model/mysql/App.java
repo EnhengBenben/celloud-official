@@ -57,6 +57,14 @@ public class App {
 	private String tagName;
 	private String code;
 
+	public boolean equals(Object o) {
+		if (o instanceof App) {
+			App a = (App) o;
+			return a.getAppId().equals(this.appId);
+		}
+		return false;
+	}
+
 	public Integer getAppId() {
 		return appId;
 	}

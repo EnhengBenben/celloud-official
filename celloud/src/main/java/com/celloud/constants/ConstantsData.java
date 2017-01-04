@@ -219,7 +219,7 @@ public class ConstantsData {
 		systemProperties = loadProperties(Constants.SYSTEM_PROPERTIES_FILE);
 	}
 
-	public static Object getContextUrl() {
+	public static String getContextUrl() {
 		if (systemProperties == null) {
 			loadSystemProperties();
 		}

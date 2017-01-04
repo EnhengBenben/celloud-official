@@ -27,7 +27,7 @@
       exper_state, create_date, state
       )
     values (#{id,jdbcType=INTEGER}, #{sampleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{experState,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{state,jdbcType=BIT}
+      #{experState,jdbcType=INTEGER}, now(), #{state,jdbcType=BIT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.SampleLog" >
@@ -45,9 +45,7 @@
       <if test="experState != null" >
         exper_state,
       </if>
-      <if test="createDate != null" >
         create_date,
-      </if>
       <if test="state != null" >
         state,
       </if>
@@ -65,9 +63,7 @@
       <if test="experState != null" >
         #{experState,jdbcType=INTEGER},
       </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
+        now(),
       <if test="state != null" >
         #{state,jdbcType=BIT},
       </if>

@@ -61,18 +61,18 @@
             <div class="celicon on_check checkbox checkbox-un hide"></div>
             <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="3"><span>数据上传中</span></a>
           </div>
-          <div class="sl-val-content">
-            <div class="celicon on_check checkbox checkbox-un hide"></div>
-            <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="4"><span>异常终止</span></a>
-          </div>
-          <div class="sl-val-content">
-            <div class="celicon on_check checkbox checkbox-un hide"></div>
-            <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验中</span></a>
-          </div>
-          <div class="sl-val-content">
-            <div class="celicon on_check checkbox checkbox-un hide"></div>
-            <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a>
-          </div>
+<!--           <div class="sl-val-content"> -->
+<!--             <div class="celicon on_check checkbox checkbox-un hide"></div> -->
+<!--             <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="4"><span>异常终止</span></a> -->
+<!--           </div> -->
+<!--           <div class="sl-val-content"> -->
+<!--             <div class="celicon on_check checkbox checkbox-un hide"></div> -->
+<!--             <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="6"><span>实验中</span></a> -->
+<!--           </div> -->
+<!--           <div class="sl-val-content"> -->
+<!--             <div class="celicon on_check checkbox checkbox-un hide"></div> -->
+<!--             <a data-click="report-period-search" href="javascript:void(0)"><input type="hidden" value="5"><span>送样中</span></a> -->
+<!--           </div> -->
           <div class="multisl-btns hide">
             <button id="report-multiperiod-search" name="sl-confirm" class="sl-btn disabled" href="javascript:void(0)" disabled="disabled">确定</button>
             <button data-click="reset-multiselect" class="sl-btn" href="javascript:void(0)">取消</button>

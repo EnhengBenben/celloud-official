@@ -31,4 +31,13 @@ $(function() {
 	$("#resetBtn").click(function(){
 		$("#rockyBaseInfoForm")[0].reset();
 	});
+	function downloadPdf(userId,appId,dataKey){
+		var url = CONTEXT_PATH + "/report/downRockyPdf";
+		var path = userId + "/" + appId + "/" + dataKey;
+		$.get(url,{"path":path},function(data){
+			if(data == 1){
+				alert("没有可以下载的pdf!");
+			}
+		});
+	}
 });

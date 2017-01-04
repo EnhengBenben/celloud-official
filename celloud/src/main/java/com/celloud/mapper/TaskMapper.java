@@ -166,6 +166,22 @@ public interface TaskMapper {
             @Param("state") Integer state, @Param("batch") String batch);
 
     /**
+     * 检索某批次下的运行完的任务列表没有userId限制
+     * 
+     * @param page
+     * @param userId
+     * @param condition
+     * @param sort
+     * @param sortDateType
+     * @param sortNameType
+     * @param state
+     * @param reportType
+     * @return
+     */
+    List<Task> findTasksByBatchNoUserId(Page page, @Param("userId") Integer userId, @Param("appId") Integer appId,
+            @Param("period") Integer period, @Param("state") Integer state, @Param("batch") String batch);
+
+    /**
      * 按照运行状态和参数查找任务
      * 
      * @param userId

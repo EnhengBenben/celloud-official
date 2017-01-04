@@ -170,7 +170,7 @@ public class LoginAction {
 		Param params = ParamFormat.param().set(WechatParams.LOGIN.first.name(), first, "#222222")
 				.set(WechatParams.LOGIN.time.name(), now, null).set(WechatParams.LOGIN.ip.name(), ip, null)
 				.set(WechatParams.LOGIN.reason.name(), reason, "#222222");
-		mcu.sendMessage(userId, MessageCategoryCode.LOGIN, null, params, null);
+		mcu.sendMessage(userId, MessageCategoryCode.LOGIN, null, params, null, null);
 		// 获取当前用户所有的app
 		List<App> appList = appService.getMyAppList(userId);
 		// 该用户appId不为空, 判断是否包含bsi与rocky

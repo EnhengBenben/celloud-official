@@ -10,6 +10,7 @@ from mongo.mongoOperate import mongo
 from utils.StringUtils import *
 from utils.FileUtils import *
 from app.MIB import MIB
+from Rocky_PDF import *
 
 class Rocky:
     path = None
@@ -31,7 +32,7 @@ class Rocky:
             Rocky.locker.release()
 
     # 执行
-    def getResult(self, path, appId, dataKey):
+    def getResult(self, path, appId, dataKey, companyId):
         result = {}
         rockyRecords = [];
         descriptions = self.getDescription()
@@ -39,6 +40,7 @@ class Rocky:
         print result_path
         mo = mongo.getInstance()
         pathogenic = 'false'
+        rockyPdf = RockyPdf.getInstance()
         if os.path.exists(result_path):
             f = open(result_path, "r")
             for line in f.readlines():
@@ -68,6 +70,7 @@ class Rocky:
                 if description == '-':
                     rockyRecord['description'] = "There is no description at this moment."
                 rockyRecords.append(rockyRecord)
+            rockyPdf.createPDF(path,dataKey,companyId)
             f.close()
         result["records"] = rockyRecords
         result["pathogenic"] = pathogenic

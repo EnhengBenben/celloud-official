@@ -26,6 +26,21 @@
   <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]  -->
+<!-- Start of KF5 supportbox script -->
+<script src="//assets.kf5.com/supportbox/main.js" id="kf5-provide-supportBox" kf5-domain="celloud.kf5.com"></script>
+<script type="text/javascript">
+	window.KF5SupportBoxAPI.ready(function(){
+	  $.get("user/getLoginUser",function(user){
+        // 传递用户信息给组件使用
+        window.KF5SupportBoxAPI.identify({
+	        "name" : user.username ,
+	        "email" : user.email ,
+	        "phone" : user.cellphone
+        });
+	  });
+	});
+</script>
+<!-- End of KF5 supportbox script -->
 </head>
 <body ng-app="celloudApp" ng-controller="sidebarController">
   <div class="container">
@@ -64,7 +79,7 @@
   </script>
   <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/ /iscroll-zoom.js?v=3.3.4"></script>
+  <script src="<%=request.getContextPath()%>/plugins/photoClip/iscroll-zoom.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/photoClip/hammer.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/photoClip/lrz.all.bundle.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath()%>/plugins/photoClip/jquery.photoClip.js?v=3.3.4"></script>

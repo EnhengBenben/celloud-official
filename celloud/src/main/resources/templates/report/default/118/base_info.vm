@@ -57,7 +57,7 @@
     </li>
     <li><lable>样本编号：</lable>
         <span class="print"></span>
-        <input class="width-120" type="text" name='baseInfo["sampleNo"]' placeholder="88484">
+        <input class="width-120" type="text" value="$!{bsi.sample.sample_name}" name='baseInfo["sampleNo"]' placeholder="88484">
     </li>
     <li><lable>送检医生：</lable>
         <span class="print"></span>

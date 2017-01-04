@@ -161,7 +161,8 @@ public class UploadAction {
                         dataService.updateFileInfo(dataId, fileDataKey, filePath, batch, fileFormat, md5, anotherName,
                                 tagId);
                         // TODO 写死的百菌探自动运行
-                        if (tagId == 1) {
+                        if (tagId == 1 || tagId == 40 || tagId == 41
+                                || tagId == 42 || tagId == 43 || tagId == 44) {
                             logger.info("{}拥有百菌探权限", userId);
                             runService.bsiCheckRun(batch, dataId, fileDataKey,
                                     originalName, userId,

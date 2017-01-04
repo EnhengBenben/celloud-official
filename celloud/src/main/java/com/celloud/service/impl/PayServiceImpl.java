@@ -199,7 +199,7 @@ public class PayServiceImpl implements PayService {
                     // 构造桌面消息
                     MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
                             .send(NoticeConstants.createMessage("recharge", "充值成功", alipay.getDescription()));
-                    mcu.sendMessage(userId, MessageCategoryCode.BALANCES, null, null, mu);
+					mcu.sendMessage(userId, MessageCategoryCode.BALANCES, null, null, mu, null);
 				} else {
 					alipay = rechargeAlipayMapper.selectByTradeNo(out_trade_no);
 				}

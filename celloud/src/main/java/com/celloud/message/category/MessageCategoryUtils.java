@@ -22,8 +22,8 @@ import com.celloud.service.MessageCategoryService;
 import com.celloud.service.UserService;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
-import com.celloud.wechat.constant.WechatType;
 import com.celloud.wechat.WechatUtils;
+import com.celloud.wechat.constant.WechatType;
 
 @Service
 public class MessageCategoryUtils {
@@ -63,7 +63,7 @@ public class MessageCategoryUtils {
 	 * @author lin
 	 * @date 2016年7月13日下午4:56:18
 	 */
-	public void sendMessage(String code, AliEmail email, Param wechat, MessageUtils window) {
+	public void sendMessage(String code, AliEmail email, Param wechat, MessageUtils window, String wechatUrl) {
 		Session session = ConstantsData.getShioSession();
 		Object obj = session.getAttribute(Constants.MESSAGE_CATEGORY);
 		@SuppressWarnings("unchecked")
@@ -80,11 +80,11 @@ public class MessageCategoryUtils {
 			String openId = wechatOpenId == null ? null : wechatOpenId.toString();
 			if (StringUtils.isNotEmpty(openId)) {
 				if (MessageCategoryCode.LOGIN.equals(code)) {
-					wechatUtils.pushMessage(ParamFormat.paramAll().template(WechatType.LOGIN).openId(openId).url(null)
-							.data(wechat).get());
+					wechatUtils.pushMessage(ParamFormat.paramAll().template(WechatType.LOGIN).openId(openId)
+							.url(wechatUrl).data(wechat).get());
 				} else if (MessageCategoryCode.UPDATEPWD.equals(code)) {
 					wechatUtils.pushMessage(ParamFormat.paramAll().template(WechatType.PWD_UPDATE).openId(openId)
-							.url(null).data(wechat).get());
+							.url(wechatUrl).data(wechat).get());
 				}
 			}
 		}
@@ -106,7 +106,8 @@ public class MessageCategoryUtils {
 	 * @date 2016年7月18日上午10:10:06
 	 */
 	@Async
-	public void sendMessage(Integer userId, String code, AliEmail email, Param wechat, MessageUtils window) {
+	public void sendMessage(Integer userId, String code, AliEmail email, Param wechat, MessageUtils window,
+			String wechatUrl) {
 		Map<String, MessageCategory> map = initSetting(userId);
 		User user = userService.selectUserByIdNotIcon(userId);
 		if (map.get(code).getEmail().equals(MessageCategoryState.SEND) && email != null) {
@@ -118,21 +119,22 @@ public class MessageCategoryUtils {
 			if (StringUtils.isNotEmpty(openId)) {
 				if (MessageCategoryCode.REPORT.equals(code)) {
 					wechatUtils.pushMessage(ParamFormat.paramAll().template(WechatType.RUN_OVER).openId(openId)
-							.url(null).data(wechat).get());
+							.url(wechatUrl).data(wechat).get());
 				} else if (MessageCategoryCode.LOGIN.equals(code)) {
-					wechatUtils.pushMessage(ParamFormat.paramAll().template(WechatType.LOGIN).openId(openId).url(null)
+					wechatUtils
+							.pushMessage(ParamFormat.paramAll().template(WechatType.LOGIN).openId(openId).url(wechatUrl)
 							.data(wechat).get());
 				} else if (MessageCategoryCode.UPDATEPWD.equals(code)) {
 					wechatUtils.pushMessage(ParamFormat.paramAll().template(WechatType.PWD_UPDATE).openId(openId)
-							.url(null).data(wechat).get());
+							.url(wechatUrl).data(wechat).get());
 				} else if (MessageCategoryCode.SHARE.equals(code)) {
 					//TODO need template
 					System.out.println("共享报告微信提醒还需要做");
-					//wechatUtils.pushMessage(ParamFormat.paramAll().template(WechatType.SHARE).openId(openId).url(null)
+					//wechatUtils.pushMessage(ParamFormat.paramAll().template(WechatType.SHARE).openId(openId).url(wechatUrl)
 					//	.data(wechat).get());
 				} else if (MessageCategoryCode.BALANCES.equals(code)) {
 					wechatUtils.pushMessage(ParamFormat.paramAll().template(WechatType.BALANCE_CHANGE).openId(openId)
-							.url(null).data(wechat).get());
+							.url(wechatUrl).data(wechat).get());
 				}
 			}
 		}
