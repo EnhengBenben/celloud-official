@@ -14,9 +14,9 @@
       <div class="content-body">
         <form class="info-form" name="userForm" novalidate="novalidate" ng-submit="authenticationCellphone()">
           <div class="info-form-group">
-            <label>用户名称:</label>
+            <label>用户邮箱:</label>
             <div>
-                <span style="font-size: 14px;">{{user.username}}</span>
+                <span style="font-size: 14px;">{{user.email}}</span>
             </div>
           </div>
           <div class="info-form-group">
