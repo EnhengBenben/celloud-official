@@ -113,6 +113,7 @@
 	            </div>
 	          </div>
 	        </li>
+	       <shiro:hasPermission name="cost:center">
 	        <li>
 	          <div class="inner expense">
 	            <i class="money-icon-lg"></i>
@@ -123,6 +124,7 @@
 	            </div>
 	          </div>
 	        </li>
+	       </shiro:hasPermission>
 	      </ul>
 	    </div>
 	    <div class="o-count-detail row">
