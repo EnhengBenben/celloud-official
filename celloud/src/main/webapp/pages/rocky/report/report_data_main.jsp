@@ -13,7 +13,7 @@
 					<i class="fa fa-print"></i> 打印报告
 				</a> --%>
 				<a class="btn btn-success" style="line-height: 28px;" target="_blank"
-                    href="${rockyPdfPath }/${rocky.userId }/${rocky.dataKey }/${rocky.dataKey}.pdf">
+                    href="/rocky/${rocky.userId }/${rocky.dataKey }/${rocky.dataKey}.pdf">
                     <i class="fa fa-print"></i> 打印报告
                 </a>
 <%-- 				<a class="btn btn-success" style="line-height: 28px;" target="_blank"
