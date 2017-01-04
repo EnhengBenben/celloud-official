@@ -59,8 +59,10 @@ if myDB:
         path = os.path.join(path, userId, appId)
         result = None
         if appId == '123':
-            result = appFun.getResult(path, appId, dataKey,user_dict['companyId'])
+            print "aaaaaaa"
+            result = appFun.getResult(path, dataKey,user_dict['userId'], user_dict['companyId'])
         else:
+            print "bbbbbbbbb"
             result = appFun.getResult(path, appId, dataKey)
         result = dict(result, **base)
         moDB = mongo.getInstance()

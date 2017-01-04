@@ -36,7 +36,7 @@ class Rocky:
         result = {}
         rockyRecords = [];
         descriptions = self.getDescription()
-        result_path = os.path.join(path,dataKey, 'result','all.snp')
+        result_path = os.path.join(path,str(dataKey),'result','all.snp')
         print result_path
         mo = mongo.getInstance()
         pathogenic = 'false'
