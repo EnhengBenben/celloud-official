@@ -680,7 +680,7 @@ class RockyPdf:
         tbps.fontName = 'pf1'
         tbps.fontSize = 12
         tbps.firstLineIndent = 0
-
+        print os.path.join(PDFPro.rockyPdfPath,userId,dataKey,dataKey+'.pdf')
         c = canvas.Canvas(os.path.join(PDFPro.rockyPdfPath,userId,dataKey,dataKey+'.pdf'),pagesize=A4)
         c.setFont('pf1',14)
         # 第一页
