@@ -139,7 +139,7 @@
 			});
 		});
 		$timeout(function () {
-		  if(window.navigation==1){
+		  if(window.navigation==1 && !$rootScope.userProduct.onlyBSI){
 	      intro = introJs();
 	      intro.setOption('tooltipPosition', 'bottom');
 	      intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
