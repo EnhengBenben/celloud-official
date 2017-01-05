@@ -525,7 +525,7 @@
         (select * from tb_task where
           task_id in 
             (select max(task_id) from tb_task where state=#{state} and 
-            ((user_id=#{userId} and (app_id=#{appId} or period!=2)) or (sample_id  in (select sample_id from tb_sample where user_id=#{userId} and state=#{state})))
+            ((user_id=#{userId} and (app_id=#{appId} or (app_id=113 and period!=2))) or (app_id=#{appId} and sample_id  in (select sample_id from tb_sample where user_id=#{userId} and state=#{state})))
              group by data_key)
         )t
 		left join tb_file f on f.data_key=t.data_key
