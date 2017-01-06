@@ -247,6 +247,11 @@ public class RunServiceImpl implements RunService {
 			task.setSampleId(dataService.getSampleIdByDataKey(dataKey));
 			taskService.updateTask(task);
 			Integer taskId = task.getTaskId();
+			Integer[] dataIds = new Integer[dataList.size()];
+			for (int i = 0; i < dataIds.length; i++) {
+				dataIds[i] = dataList.get(i).getFileId();
+			}
+			taskService.saveTaskDataRelat(taskId, dataIds);
 			if (AppDataListType.MQ_RUN.contains(appId)) {
 				AppSubmitUtil.mq(app.getCode(), taskId, userId, datas);
 			} else if (runCheckIsWait(app)) {
