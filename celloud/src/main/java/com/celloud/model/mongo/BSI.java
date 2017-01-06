@@ -28,6 +28,8 @@ public class BSI extends MIB {
      * seq4_name——序列4名称，seq4_no——序列4编号，seq4——代表序列4， cross_species——覆盖区域交叉菌
      */
     private List<Map<String, String>> species_20;
+
+    private Map<String, Object> sample;
     /**
      * 20种菌之外的其他菌检测结果。包括：species——菌株名，species_zh——菌株中文名，
      * site1——突变位点1信息，site2——突变位点2信息，site3——突变位点3信息，site4——突变位点4信息，
@@ -39,6 +41,7 @@ public class BSI extends MIB {
     private String human_reads;
     /** 16S序列数 */
     private String reads_16s;
+
     public List<Map<String, String>> getSpecies_20() {
         return species_20;
     }
@@ -70,4 +73,13 @@ public class BSI extends MIB {
     public void setReads_16s(String reads_16s) {
         this.reads_16s = reads_16s;
     }
+
+    public Map<String, Object> getSample() {
+        return sample;
+    }
+
+    public void setSample(Map<String, Object> sample) {
+        this.sample = sample;
+    }
+
 }

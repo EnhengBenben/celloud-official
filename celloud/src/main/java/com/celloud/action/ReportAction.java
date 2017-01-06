@@ -89,6 +89,7 @@ import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
 
 import net.sf.cglib.core.CollectionUtils;
@@ -142,6 +143,18 @@ public class ReportAction {
 		}
 		return 1;
 	}
+
+//    @ActionLog(value = "下载", button = "下载")
+//    @RequestMapping("downRockyPdf")
+//    @ResponseBody
+//    public Integer downRockyPdf(Integer userId, String dataKey) {
+//        String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
+//        if (new File(filePath).exists()) {
+//            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+//            return 0;
+//        }
+//        return 1;
+//    }
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")
@@ -2809,6 +2822,7 @@ public class ReportAction {
 		ModelAndView mv = new ModelAndView("rocky/report/report_data_main");
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		mv.addObject("rocky", rocky);
+        mv.addObject("rockyPdfPath", PropertiesUtil.rockyPdfPath);
 		mv.addObject("significances", ConstantsData.significances());
 		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return mv;
@@ -3027,7 +3041,8 @@ public class ReportAction {
             // 首先根据dataIndex算出分页列表下方的当前页
             Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex / 10;
             Page pager = new Page(currentPage, 10);
-            PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
+            PageList<Task> batchPageList = taskService.findTasksByBatchNoUserId(pager, ConstantsData.getLoginUserId(),
+                    appId,
                     batch);
             dataMap.put("batchPageList", batchPageList);
             dataMap.put("dataIndex", dataIndex);

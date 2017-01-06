@@ -581,4 +581,10 @@ public class UserAction {
         }
         return true;
     }
+
+	@RequestMapping(value = "getLoginUser", method = RequestMethod.GET)
+	@ResponseBody
+	public User getLoginUser() {
+		return ConstantsData.getLoginUser();
+	}
 }

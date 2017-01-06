@@ -11,7 +11,12 @@
       return $resource("metadata/sampleType").query();
     }
     self.sampling = function(sampleName,tagId,type){
-      return $http({method:"POST",url:'sample/sampling',params:{"sampleName":sampleName,"tagId":tagId,"type":type}});
+      return $http({
+                method:"POST",
+                url:'sample/sampling',
+                headers: {'x-requested-with':null},
+                params:{"sampleName":sampleName,"tagId":tagId,"type":type}
+              });
     }
     self.deleteSample = function(id){
       return $http({method:"POST",url:'sample/bsi/deleteOne',params:{"sampleId":id}});

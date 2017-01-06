@@ -9,7 +9,7 @@
 				$("#upload-nav-step-two").addClass("not-reached");
 				$("#upload-step-one").removeClass("hide");
 				$(".step-line").addClass("not-reached")
-				$(".tips").addClass('hide');
+				$(".uploadtips .tips").addClass('hide');
 				$("#batch-info-input").val('');
 				$("#upload-tip-one").removeClass("hide");
 				$rootScope.rockyBatch = "";
@@ -19,7 +19,7 @@
 				$("#upload-nav-step-two").addClass("not-reached");
 				$("#upload-step-one").removeClass("hide");
 				$(".step-line").addClass("not-reached")
-				$(".tips").addClass('hide');
+				$(".uploadtips .tips").addClass('hide');
 				$("#batch-info-input").val('');
 				$("#upload-tip-one").removeClass("hide");
 				$rootScope.rockyBatch = "";
@@ -40,7 +40,7 @@
 			$("#upload-nav-step-two").removeClass("not-reached");
 			$("#upload-nav-step-three").addClass("not-reached");
 			$("#upload-step-two").removeClass("hide");
-			$(".tips").addClass('hide');
+			$(".uploadtips .tips").addClass('hide');
 			$("#upload-tip-two").removeClass("hide");
 		},
 		$scope.stepThree = function(){
@@ -50,7 +50,7 @@
 			$("#upload-nav-line-two").removeClass("not-reached");
 			$("#upload-nav-step-three").removeClass("not-reached");
 			$("#upload-nav-step-two").removeClass("not-reached");
-			$(".tips").addClass('hide');
+			$(".uploadtips .tips").addClass('hide');
 			$("#upload-tip-three").removeClass("hide");
 		}
 		if($rootScope.rockyUploader && $rootScope.rockyStep == 'two'){
