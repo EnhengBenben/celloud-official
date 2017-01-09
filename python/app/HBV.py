@@ -120,7 +120,7 @@ class HBV:
 			for line in lowQcFile.readlines():
 				lowQcArray.append(line)
 			# 去重
-			result['lowQc'] = set(lowQcArray)
+			result['lowQc'] = list(set(lowQcArray))
 		#pdf
 		createPDF(path,appName,fileName)
 		pdf = os.path.join(path,'HBV_SNP.pdf')
