@@ -112,6 +112,15 @@ class HBV:
 				sb = sb.replace(d,str(x))
 			result['clinical'] = sb
 			result['site'] = site
+		#low.qc
+		lowQc = os.path.join(path,'low.qc')
+		if(os.path.exists(lowQc)):
+			lowQcFile = open(lowQc,'r')
+			lowQcArray = []
+			for line in lowQcFile.readlines():
+				lowQcArray.append(line)
+			# 去重
+			result['lowQc'] = set(lowQcArray)
 		#pdf
 		createPDF(path,appName,fileName)
 		pdf = os.path.join(path,'HBV_SNP.pdf')
