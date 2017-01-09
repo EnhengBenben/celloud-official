@@ -28,6 +28,18 @@
 		tb_sec_user_role_relat.user_id=#{id,jdbcType=INTEGER}
 		)
 	</select>
+	<select id="findRoles" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from tb_sec_role
+		where exists (
+		select id from tb_sec_user_role_relat
+		where
+		tb_sec_role.id=tb_sec_user_role_relat.role_id and
+		tb_sec_user_role_relat.user_id=#{userId,jdbcType=INTEGER} and
+		tb_sec_user_role_relat.auth_from=#{authFrom,jdbcType=INTEGER}
+		)
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from tb_sec_role
 		where id = #{id,jdbcType=INTEGER}

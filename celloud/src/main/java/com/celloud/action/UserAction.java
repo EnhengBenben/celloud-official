@@ -126,13 +126,8 @@ public class UserAction {
 	@RequestMapping(value = "toRemoveRole", method = RequestMethod.GET)
 	@ResponseBody
 	public List<SecRole> toRemoveRole(Integer userId) {
-		List<SecRole> secList = userService.getRolesByUserId(userId);
-		for (int i = 0; i < secList.size(); i++) {
-			if (secList.get(i).getId().equals(UserSecRole.PLATFORM)) {
-				secList.remove(i);
-			}
-		}
-		return secList;
+		Integer authFrom = ConstantsData.getLoginUserId();
+		return userService.getRoles(userId, authFrom);
 	}
 
 	@RequestMapping(value = "removeRole", method = RequestMethod.POST)
