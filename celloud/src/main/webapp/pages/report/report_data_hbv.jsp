@@ -83,6 +83,7 @@
 						<div ng-if="hbv.lowQc.contains('194')">
                                              该位点测序质量低，结果仅供参考
                         </div>
+                        {{hbv}}
                         {{hbv.lowQc}}
                         {{hbv.lowQc.contains('206')}}
                         {{hbv.lowQc.contains('206\n')}}
