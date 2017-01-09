@@ -1,6 +1,7 @@
 package com.celloud.model.mongo;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +38,7 @@ public class HBV extends Base {
     private String fileName;// 文件名
     private Map<String, String> briefBaseInfo;
     private Map<String, String> detailBaseInfo;
+    private List<String> lowQc;
 
     public String getClinical() {
         return clinical;
@@ -180,6 +182,14 @@ public class HBV extends Base {
 
     public void setFileId(Integer fileId) {
         this.fileId = fileId;
+    }
+
+    public List<String> getLowQc() {
+        return lowQc;
+    }
+
+    public void setLowQc(List<String> lowQc) {
+        this.lowQc = lowQc;
     }
 
 }
