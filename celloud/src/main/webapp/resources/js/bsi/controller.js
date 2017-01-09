@@ -9,9 +9,9 @@
 		}
 		$("#bsi-upload-modal").on("hidden.bs.modal",function(e){
 			$("#to-upload-a").removeClass("active");
-			if($location.path().indexOf("bsidata") > -1){
+			if($location.path().indexOf("data") > -1){
 				$("#to-data-a").addClass("active");
-			}else if($location.path().indexOf("bsireport") > -1){
+			}else if($location.path().indexOf("report") > -1){
 				$("#to-report-a").addClass("active");
 			}
 		});
