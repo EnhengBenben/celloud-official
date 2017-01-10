@@ -554,6 +554,7 @@
 		  $scope.uploadPath = hbvInfo.uploadPath;
 		  $scope.hbvOtherSiteList = hbvInfo.hbvOtherSiteList;
 		  $scope.siteKeys = new Array();
+		  $scope.lowQcStr = $scope.hbv.lowQc.join(",");
 		  for(i in $scope.hbvOtherSiteList){
 			  for(j in $scope.hbvOtherSiteList[i]){
 				  $scope.siteKeys.push(j);
