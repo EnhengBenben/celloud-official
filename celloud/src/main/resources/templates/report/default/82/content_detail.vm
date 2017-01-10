@@ -54,7 +54,20 @@ ${hbv.detailBaseInfo.clinical}
             </h2>
             <div class="m-boxCon">
                 #if(${hbv.known.containsKey('194_png')})
-                    <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['194_png']}" height="170px;" width="150px;">
+                    <div style="display: inline-block;vertical-align: top;color: #333333;">
+                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['194_png']}" height="170px;" width="150px;">
+                        #if(${hbv.lowQc.contains('206')})
+                            aaa
+                        #end
+                        #if(${hbv.lowQc.contains('206\n')})
+                            bbb
+                        #end
+                        #if(${hbv.lowQc.contains('194')})
+                            <div style="width:120px;margin-left:30px;">
+                                                       该位点测序质量低，结果仅供参考
+                            </div>
+                        #end
+                    </div>
                 #else
                     <div class="imgmiss">
                         194位点测序失败，建议重测。
