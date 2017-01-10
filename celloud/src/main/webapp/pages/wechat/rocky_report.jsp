@@ -75,8 +75,8 @@
 					<div class="p2_main  date">
 						<span>检测人：</span>
 						<span>复核人：</span>
-						<span>日&nbsp;&nbsp;期：</span>
-						<span>日&nbsp;&nbsp;期：</span>
+						<span>日&emsp;期：</span>
+						<span>日&emsp;期：</span>
 					</div>
 					<!--------date结束------------->
 					</div>

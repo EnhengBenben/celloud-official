@@ -317,9 +317,10 @@ html {
 }
 
 .p7-content {
-	width: 6.9rem;
+    width: 6.9rem;
     height: auto;
-    margin: 0.4rem 0 0.61rem  0.25rem;
+    margin: 0.4rem auto;
+    margin-bottom: 0.61rem;
     /* overflow-x: visible; */
 }
 
@@ -862,8 +863,9 @@ html {
 
 .p9-content {
 	width: 7rem;
-	height: auto;
-	margin: 0.4rem 0 0.61rem 0.25rem;
+    height: auto;
+    margin: 0.4rem auto;
+    margin-bottom: 0.61rem;
 }
 
 .p9_decription {
@@ -897,6 +899,7 @@ html {
 	border:0;
 	border-right: 1px solid #9f7ab0;
     border-bottom: 1px solid #9f7ab0;	
+	text-indent: 0.48rem;
 }
 .p2_tab_body td:nth-child(1) {
 	width: 0.8rem;
@@ -912,7 +915,6 @@ html {
 
 .p2_tab_body td:nth-child(3) {
 	width: 4.8rem;
-	text-indent: 0.72rem;
 	padding: 0.2rem;
 }
 
@@ -968,6 +970,7 @@ html {
 	width: 6.9rem;
 	height: auto;
 	display: flex;
+	display: table;
 	/*justify-content: space-between;
 	flex-flow: row nowrap;*/
 	/*border-bottom: 1px solid #9d7bae;*/
