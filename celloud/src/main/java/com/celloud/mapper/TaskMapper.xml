@@ -484,7 +484,7 @@
         state=#{state}
         and ((user_id=#{userId} and app_id=#{appId})
         or (app_id=#{appId} and sample_id  in (select sample_id from tb_sample where user_id=#{userId} and state=#{state})))
-        by data_key))t
+        group by data_key))t
         left join tb_file f
         on f.data_key=t.data_key
         left join
