@@ -190,6 +190,6 @@ public class HBV extends Base {
 
     public void setLowQc(List<String> lowQc) {
         this.lowQc = lowQc;
-    }
+	}
 
 }

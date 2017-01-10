@@ -20,6 +20,7 @@ var imgRemove = (function(imgRemove) {
         $(obj).parent().append(divObj)
     };
     self.remove = function() {
+    		$("img[class='wait_remove']").next().remove();
         $("img[class='wait_remove']").remove();
         $("._img_remove").remove()
     };
