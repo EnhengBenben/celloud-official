@@ -78,11 +78,8 @@
 				 	</h2>
 				    <div class="m-boxCon">
 				    	<a ng-if="hbv.known['194_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['194_10_png']);" >
-							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['194_png']}}" height="170px;" width="150px;">
+							<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['194_png']}}" height="170px;" width="150px;">
 						</a>
-						{{lowQcStr}}
-						{{lowQcStr.indexOf('206') > -1}}
-						{{lowQcStr.indexOf('206\n') > -1}}
 						<div ng-if="lowQcStr.indexOf('194') > -1">
                                              该位点测序质量低，结果仅供参考
                         </div>
@@ -276,8 +273,7 @@
 				    <div class="m-boxCon" id="otherPng">
 			    		<a ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img.replace('png','10.png')}});" >
 							<img class="imgtop" title="{{img}}" name="imgSrc" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img}}" height="170px;" width="150px;">
-							{{img.split('_')[0]}}
-							<div ng-if="lowQcStr.indexOf({{img.split('_')[0]}}) > -1">
+							<div ng-if="lowQcStr.indexOf('{{img.split('_')[0]}}') > -1">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
