@@ -80,7 +80,7 @@
 				    	<a ng-if="hbv.known['194_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['194_10_png']);" >
 							<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['194_png']}}" height="170px;" width="150px;">
 						</a>
-						<div ng-if="lowQcStr.indexOf('194') > -1">
+						<div style="width:120px;margin-left:30px;" ng-if="hbv.known['194_png'] != null && lowQcStr.indexOf('194') > -1">
                                              该位点测序质量低，结果仅供参考
                         </div>
 						<div ng-if="hbv.known['194_png'] == null" class="imgmiss">
@@ -148,19 +148,25 @@
 						</div>
 						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
 							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
+							<div ng-if="lowQcStr.indexOf('206') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
-						<div ng-if="lowQcStr.indexOf('180') > -1">
+						<!-- <div ng-if="lowQcStr.indexOf('180') > -1">
                                                     该位点测序质量低，结果仅供参考
-                        </div>
+                        </div> -->
 						<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
 							180位点测序失败，建议重测。
 						</div>
 				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 							<img style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
+							<div ng-if="lowQcStr.indexOf('206') > -1">
+                                                            该位点测序质量低，结果仅供参考
+                            </div>
 						</a>
-						<div ng-if="lowQcStr.indexOf('204') > -1">
+						<!-- <div ng-if="lowQcStr.indexOf('204') > -1">
                                                     该位点测序质量低，结果仅供参考
-                        </div>
+                        </div> -->
 						<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
 							204位点测序失败，建议重测。
 						</div>
@@ -273,7 +279,9 @@
 				    <div class="m-boxCon" id="otherPng">
 			    		<a ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img.replace('png','10.png')}});" >
 							<img class="imgtop" title="{{img}}" name="imgSrc" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img}}" height="170px;" width="150px;">
-							<div ng-if="lowQcStr.indexOf('{{img.split('_')[0]}}') > -1">
+							<div ng-if="lowQcStr.indexOf(img.split('_')[0]) > -1">aa</div>
+							<div ng-if="lowQcStr.indexOf('img.split('_')[0]') > -1">bb</div>
+							<div ng-if="lowQcStr.indexOf(img.split('_')[0]) > -1">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
