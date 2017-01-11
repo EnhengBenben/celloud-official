@@ -107,7 +107,9 @@ $(function(){
             $("#des1").html(inputVal);
         }
         $(".imgmiss").addClass("imgmissprint");
+        $(".lowTips").css("width","110px");
         window.print();
+        $(".lowTips").css("width","120px");
         
         $(".imgmiss").removeClass("imgmissprint");
         inputVal = $("#des").html();
