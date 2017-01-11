@@ -356,6 +356,7 @@ ${hbv.detailBaseInfo.clinical}
     2. Wild Type: GCT;表示该位点的野生型为GCT
     3. 峰图中的*号，表示该位置发生了突变#end</textarea>
     </div>
+    <div id="sevenW3c" class="w3cbbs" style="display: none;"></div>
     <h2 class="mt10"><input name="detailBaseInfo['result4']" type="text" class="super_long_input" value="#if($hbv.detailBaseInfo.result4)$!{hbv.detailBaseInfo.result4}#else四、参考结论（根据已发表文献得出以下参考结论）：#end"></h2>
     <div class="m-box_1" id="des">
         <textarea name="detailBaseInfo['des']" rows="6">#if($hbv.detailBaseInfo.des)$!hbv.detailBaseInfo.des#else${hbv.reporttxt.split('Other:')[0]}#end</textarea>

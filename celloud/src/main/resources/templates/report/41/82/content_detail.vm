@@ -346,6 +346,7 @@ ${hbv.detailBaseInfo.clinical}
         <p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
             2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
         </p>
+        <div id="sevenW3c" class="w3cbbs" style="display: none;"></div>
         <h2 class="mt10">三、参考结论（根据已发表文献得出以下参考结论）：</h2>
         <div class="m-box_1" id="des">
             <textarea rows="6" name="detailBaseInfo['des']">#if($hbv.detailBaseInfo.des)$!hbv.detailBaseInfo.des#else${hbv.reporttxt.split('Other:')[0]}#end</textarea>

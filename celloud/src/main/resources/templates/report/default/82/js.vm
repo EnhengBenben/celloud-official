@@ -57,6 +57,13 @@ $(function(){
         if(companyId==57){
             imgRemove.hideRemove();
         }
+        var num = 0;
+        $("#otherPng").find("img").each(function(){
+            num++;
+        });
+        if(num > 25){
+            $("#sevenW3c").css("display","block");
+        }
         var inputVal;
         $("#printMain").find("input[type='text']").each(function(){
             inputVal = $(this).val();
@@ -128,6 +135,7 @@ $(function(){
             $(".w3cbbs").css("display","none");
             $(".container").css("display","none");
         }
+        $("#sevenW3c").css("display","none");
         $(".buttons").show();
         $("a[name='change']").show();
         $("hr[name='change']").show();
