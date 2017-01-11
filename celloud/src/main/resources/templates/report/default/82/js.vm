@@ -95,6 +95,7 @@ $(function(){
         if(companyId!=57){
             $(".w3cbbs").css("display","");
             $(".container").css("display","");
+            $("#sevenW3c").css("display","none");
         }
         var _flag = $("#_flag").html();
         if(_flag==1){
@@ -135,7 +136,6 @@ $(function(){
             $(".w3cbbs").css("display","none");
             $(".container").css("display","none");
         }
-        $("#sevenW3c").css("display","none");
         $(".buttons").show();
         $("a[name='change']").show();
         $("hr[name='change']").show();
