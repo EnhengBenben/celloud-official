@@ -88,6 +88,14 @@ $(function(){
         if(companyId!=57){
             $(".w3cbbs").css("display","");
             $(".container").css("display","");
+            $("#sevenW3c").css("display","none");
+        }
+        var num = 0;
+        $("#otherPng").find("img").each(function(){
+            num++;
+        });
+        if(num > 25){
+            $("#sevenW3c").css("display","block");
         }
         var _flag = $("#_flag").html();
         if(_flag==1){
@@ -107,7 +115,9 @@ $(function(){
             $("#des1").html(inputVal);
         }
         $(".imgmiss").addClass("imgmissprint");
+        $(".lowTips").css("width","110px");
         window.print();
+        $(".lowTips").css("width","120px");
         
         $(".imgmiss").removeClass("imgmissprint");
         inputVal = $("#des").html();
