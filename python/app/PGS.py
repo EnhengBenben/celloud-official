@@ -92,6 +92,10 @@ class PGS:
 				elif(x == 'report.mosaic.txt'):
 					mosaic = readAll(os.path.join(path,"report.mosaic.txt"))
 					result['mosaic'] = mosaic
+				elif(x.endswith('.HR.split.png')):
+					result['HRSplitPng'] = x
+				elif(x.endswith('.HR.report.txt.split.png')):
+					result['HRReportPng'] = x
 				elif(x.endswith('.png') and ('report.txt' in x)):
 					result['report' + x.split('.')[-2].capitalize() + 'Png'] = x
 				elif(x.endswith('.png') and ('final.txt.test1' in x)):
