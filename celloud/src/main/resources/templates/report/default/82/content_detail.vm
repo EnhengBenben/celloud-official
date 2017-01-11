@@ -57,7 +57,7 @@ ${hbv.detailBaseInfo.clinical}
                     <div style="display: inline-block;vertical-align: top;color: #333333;">
                         <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['194_png']}" height="170px;" width="150px;">
                         #if(${hbv.lowQc.toString().indexOf('194')} > -1)
-                            <div style="width:100px;font-size:12px;">
+                            <div class="lowTips" style="width:100px;font-size:12px;">
                                                        该位点测序质量低，结果仅供参考
                             </div>
                         #end
@@ -78,7 +78,7 @@ ${hbv.detailBaseInfo.clinical}
                     <div style="display: inline-block;vertical-align: top;color: #333333;">
                         <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
                         #if(${hbv.lowQc.toString().indexOf('204')} > -1)
-                            <div style="width:120px;font-size:12px;">
+                            <div class="lowTips" style="width:120px;font-size:12px;">
                                                        该位点测序质量低，结果仅供参考
                             </div>
                         #end
