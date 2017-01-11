@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>celLoud邮件</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<style type="text/css">
+			.dear{margin: 50px 0 25px 0 ;display: block;}
+			.essay{margin-bottom: 15px;text-indent: 40px;}
+		</style>
+	</head>
+	<body>
+		<div class="main">
+			<div class="email_login">
+			<a  href='${home}'>登录</a>
+			</div>
+			<div class="content">
+				<h2>系统邮件</h2>
+				<span class="dear">尊敬的用户您好：</span>
+				<p class="essay">您收到这封电子邮件是因为您（也可能是某人冒充您的名义）申请修改 CelLoud 的邮箱。假如这不是您本人所操作，请不用理会这封电子邮件，但是如果您持续收到这类的信件骚扰，请您尽快联络管理员（Email:service@celloud.cn）。</p>
+				<p class="essay">如果确定激活邮箱，请点击以下链接进行：</p>
+				<p class="essay"><a class="link" href="${url}">激活新邮箱</a></p>
+				<p class="essay">如果以上链接无法点击，请将下面的地址复制到你的浏览器的地址栏进入：</p>
+				<p class="essay">${url}</p>
+				<p class="essay">注意：该链接在24小时内有效，24小时后需要重新申请。</p>
+			</div>
+		</div>
+	</body>
+</html>

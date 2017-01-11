@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>celLoud邮件</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<style type="text/css">
+			.dear{margin: 50px 0 25px 0 ;display: block;}
+			.essay{margin-bottom: 15px;text-indent: 40px;}
+		</style>
+	</head>
+	<body>
+		<div class="main">
+			<div class="email_login">
+			<a  href='${home}'>登录</a>
+			</div>
+			<div class="content">
+				<h2>问题反馈</h2>
+				<p class="essay">标题：$ {feedbackTitle}</p>
+				<p class="essay">提问时间： $ {} feedbackCreateDate</p>
+				<p class="essay">用户： $ {} feedbackUsername（ $ {} feedbackEmail ）</p>
+				<p class="essay">$ {feedbackContent}${url}</p>
+				<p class="essay">回复（$ {replyUserName}）：</p>
+				<p class="essay">$ {replyContent}</p>
+			</div>
+		</div>
+	</body>
+</html>
