@@ -257,4 +257,10 @@
     </if>
     order by s.create_date desc
   </select>
+  <select id="getSamplesByStorageId" resultMap="BaseResultMap">
+    select s.* from 
+    tb_sample s,tb_sample_storage ss,tb_sample_storage_relat ssr
+    where s.sample_id=ssr.sample_id and ss.id=ssr.storage_id
+    and ss.id=#{ssid} and s.state=#{state,jdbcType=BIT}
+  </select>
 </mapper>

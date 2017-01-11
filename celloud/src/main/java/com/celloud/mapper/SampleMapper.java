@@ -67,4 +67,5 @@ public interface SampleMapper {
             @Param("sampleName") String sampleName,
             @Param("state") Integer state);
 
+    List<Sample> getSamplesByStorageId(@Param("ssid") Integer storageId, @Param("state") Integer state);
 }
