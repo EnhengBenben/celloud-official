@@ -245,7 +245,7 @@
 						</div>
 				    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
-							<div ng-if="lowQcStr.indexOf('204') > -1">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('204') > -1">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
