@@ -2,13 +2,27 @@
 #if($flag==0)
 	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;">
 #elseif($flag==1)
-	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;">
+	#if($pgs.userId==41)
+		if(${pgs.HRSplitPng})
+			<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.HRSplitPng}" style="width:100%;">
+		#else
+			<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;">
+		#end
+	#else
+		<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;">
+	#end
 #elseif($flag==2)
 	#if(${pgs.reportMiniPng})
 		<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportMiniPng}" style="width:100%;">
 	#end
 #elseif($flag==3)
-	#if(${pgs.reportSplitPng})
+	#if($pgs.userId==41)
+		if(${pgs.HRReportPng})
+			<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.HRReportPng}" style="width:100%;">
+		#else
+			<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportSplitPng}" style="width:100%;">
+		#end
+	#elseif(${pgs.reportSplitPng})
 		<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportSplitPng}" style="width:100%;">
 	#end
 #end

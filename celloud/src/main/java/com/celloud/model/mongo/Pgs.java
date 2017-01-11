@@ -45,6 +45,8 @@ public class Pgs extends Base {
     private String reportMiniPng;
     private String reportTestPng;
     private String reportFinalPng;
+	private String HRSplitPng;
+	private String HRReportPng;
 	private String HRPng;
     private String note;
     private List<List<String>> detail;
@@ -348,5 +350,21 @@ public class Pgs extends Base {
     public void setReportFinalPng(String reportFinalPng) {
         this.reportFinalPng = reportFinalPng;
     }
+
+	public String getHRSplitPng() {
+		return HRSplitPng;
+	}
+
+	public void setHRSplitPng(String hRSplitPng) {
+		HRSplitPng = hRSplitPng;
+	}
+
+	public String getHRReportPng() {
+		return HRReportPng;
+	}
+
+	public void setHRReportPng(String hRReportPng) {
+		HRReportPng = hRReportPng;
+	}
 
 }
