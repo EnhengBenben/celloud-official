@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -71,6 +72,7 @@ import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Medicine;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.Tag;
 import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
@@ -83,6 +85,7 @@ import com.celloud.service.ExperimentService;
 import com.celloud.service.MedicineService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.SampleService;
 import com.celloud.service.TagService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
@@ -124,6 +127,8 @@ public class ReportAction {
 	private MedicineService medicineService;
 	@Resource
 	private TagService tagService;
+	@Autowired
+	private SampleService sampleservice;
 
 	@RequestMapping("checkPgsProject")
 	@ResponseBody
@@ -887,10 +892,13 @@ public class ReportAction {
         // dataMap.put("bsi", bsi);
         // dataMap.put("data", df);
         // } else {
-            BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
-            DataFile df = dataService.getDataByKey(dataKey);
-            dataMap.put("bsi", bsi);
-            dataMap.put("data", df);
+		Task task = taskService.findTaskByProjectid(projectId);
+		Sample sample = sampleservice.findByPrimaryKey(task.getSampleId());
+		BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+		DataFile df = dataService.getDataByKey(dataKey);
+		dataMap.put("bsi", bsi);
+		dataMap.put("data", df);
+		dataMap.put("sample", sample);
         // }
         return dataMap;
     }

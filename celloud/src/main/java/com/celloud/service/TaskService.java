@@ -18,6 +18,17 @@ import com.celloud.page.PageList;
 public interface TaskService {
 
 	/**
+	 * 
+	 * @author miaoqi
+	 * @description 根据项目id获取task
+	 * @date 2017年1月12日
+	 *
+	 * @param projectId
+	 * @return
+	 */
+	Task findTaskByProjectid(Integer projectId);
+
+	/**
 	 * 获取等待运行APP时间最长的任务
 	 * 
 	 * @param appId

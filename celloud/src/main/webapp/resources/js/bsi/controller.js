@@ -519,6 +519,7 @@
 		success(function(dataMap){
 			$scope.bsi = dataMap.bsi;
 			$scope.data = dataMap.data;
+			$scope.sample = dataMap.sample;
 			$rootScope.tab = $rootScope.tab == undefined?'patient':$rootScope.tab;
 		    $scope.havestrain = "";
 		    

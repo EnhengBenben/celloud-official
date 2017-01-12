@@ -305,4 +305,9 @@ public class SampleServiceImple implements SampleService {
         sampleStorage.setInMachine(SampleTypes.SS_IN_MACHINE);
         return sampleStorageMapper.updateByPrimaryKeySelective(sampleStorage);
     }
+
+	@Override
+	public Sample findByPrimaryKey(Integer id) {
+		return sampleMapper.selectByPrimaryKey(id);
+	}
 }

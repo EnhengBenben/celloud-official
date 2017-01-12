@@ -314,6 +314,12 @@
                     </span>
                   </li>
                   <li>
+                    <label>样本编号：</label>
+                    <span>
+                        {{sample.sampleName}}
+                    </span>
+                  </li>
+                  <li>
                     <label>原始数据：</label>
                     <span>
                         <p ng-repeat="data in bsi.data">{{data.fileName}}&nbsp;&nbsp;</p>
