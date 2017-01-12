@@ -295,6 +295,11 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
+	public List<String> getBsiBatchList(Integer userId, Integer appId) {
+		return dataFileMapper.getBsiBatchList(userId, DataState.ACTIVE, appId);
+	}
+
+	@Override
 	public PageList<DataFile> filterRockyList(Page page, String sample, String condition, String sidx, String sord) {
 		List<DataFile> lists = dataFileMapper.filterRockyList(page, ConstantsData.getLoginUserId(), DataState.ACTIVE,
 				ReportType.DATA, ReportPeriod.COMPLETE, sample, condition, sidx, sord);
@@ -427,4 +432,5 @@ public class DataServiceImpl implements DataService {
         Long id = dataFileMapper.getSampleIdByDataKey(dataKey);
         return id == null ? null : id.intValue();
     }
+
 }

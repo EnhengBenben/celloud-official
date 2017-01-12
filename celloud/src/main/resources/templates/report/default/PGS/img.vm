@@ -3,7 +3,7 @@
 	<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.miniPng}" style="width:100%;">
 #elseif($flag==1)
 	#if($pgs.userId==41)
-		if(${pgs.HRSplitPng})
+		#if(${pgs.HRSplitPng})
 			<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.HRSplitPng}" style="width:100%;">
 		#else
 			<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.splitPng}" style="width:100%;">
@@ -17,7 +17,7 @@
 	#end
 #elseif($flag==3)
 	#if($pgs.userId==41)
-		if(${pgs.HRReportPng})
+		#if(${pgs.HRReportPng})
 			<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.HRReportPng}" style="width:100%;">
 		#else
 			<img src="${uploadPath}/${pgs.userId}/${pgs.appId}/${pgs.dataKey}/${pgs.reportSplitPng}" style="width:100%;">
