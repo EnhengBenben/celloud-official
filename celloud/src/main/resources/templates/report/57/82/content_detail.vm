@@ -63,7 +63,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('194_png')})
 	                   <div style="display: inline-block;vertical-align: top;color: #333333;">
     	                       <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['194_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('194')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('194')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -85,7 +85,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('204_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('204')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('204')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -107,7 +107,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('181_png')})
 	                   <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['181_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('181')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('181')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -121,7 +121,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('236_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['236_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('236')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('236')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -143,7 +143,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('173_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('173')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('173')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -157,7 +157,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('180_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('180')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('180')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -171,7 +171,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('204_png')})
 	                   <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('204')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('204')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -193,7 +193,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('173_png')})
 	                   <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('173')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('173')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -207,7 +207,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('180_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('180')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('180')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -221,7 +221,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('204_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('204')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('204')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -243,7 +243,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('169_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['169_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('169')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('169')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -257,7 +257,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('180_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('180')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('180')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -271,7 +271,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('184_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['184_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('184')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('184')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -285,7 +285,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('202_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['202_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('202')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('202')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -299,7 +299,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('204_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('204')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('204')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -313,7 +313,7 @@ ${hbv.detailBaseInfo.clinical}
 	                #if(${hbv.known.containsKey('250_png')})
 	                    <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                    <img onmouseover="imgRemove.setOptions({left:120}).show(this)" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['250_png']}" height="170px;" width="150px;">
-                            #if(${hbv.lowQc.toString().indexOf('250')} > -1)
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('250')} > -1)
                                 <div class="lowTips" style="width:120px;font-size:12px;">
                                                            该位点测序质量低，结果仅供参考
                                 </div>
@@ -339,7 +339,7 @@ ${hbv.detailBaseInfo.clinical}
 	                    #foreach($img in $imgs)
 	                        <div style="display: inline-block;vertical-align: top;color: #333333;">
         	                        <img onmouseover="imgRemove.setOptions({left:120}).show(this)" title="${img}" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${img}" height="170px;" width="150px;">
-                                #if(${hbv.lowQc.toString().indexOf(${img.split('_')[0]})} > -1)
+                                #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf(${img.split('_')[0]})} > -1)
                                     <div class="lowTips" style="width:120px;font-size:12px;">
                                                                该位点测序质量低，结果仅供参考
                                     </div>
