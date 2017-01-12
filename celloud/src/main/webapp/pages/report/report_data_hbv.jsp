@@ -28,9 +28,9 @@
 	    <section id="cfda">
 		    <div class="m-box w500">
 				<h2>位点突变</h2>
-				<h5 id="snpType">{{hbv.type.replace('Type','基因型')}}</h5>
+				<h5 id="snpType" style="margin-left: 15px;">{{hbv.type.replace('Type','基因型')}}</h5>
 				<div class="m-boxCon">
-					<img ng-if="hbv.known['204_png'] != null" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="476px" width="420px"/>
+					<img ng-if="hbv.known['204_png'] != null" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="476px" width="420px" style="margin-left: 25px;"/>
 					<div ng-if="hbv.known != undefined && hbv.known['204_png'] == null" class="imgmiss">
 						204位点测序失败，建议重测。
 					</div>
