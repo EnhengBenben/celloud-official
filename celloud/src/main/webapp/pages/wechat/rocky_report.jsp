@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
         <title>CelLoud华木兰报告</title>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=2.2" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=2.4" />
     </head>
 
     <body>
@@ -245,7 +245,6 @@
 						<div class="p12_img">
 							<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_03.png" />
 						</div>
-						
 						<div>确凿证据表明，有乳腺癌家族史的女性，尤其是一级亲属患乳腺癌的女性，发生乳腺癌的风险升高。如果只有一名一级亲属患病，则风险翻倍；如果有两名一级亲属诊断患病，则风险增加4倍。</div>
 					</div>
 				</div>
@@ -261,7 +260,6 @@
 						<div class="p13-content-img">
 							<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_20.png" />
 						</div>
-						
 					</div>
 				</div>
 				<!--------page14--------->
@@ -324,6 +322,6 @@
         <script type="text/javascript">
 		     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 		</script>
-        <script src="<%=request.getContextPath()%>/js/rote.js?v=2.2" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/rote.js?v=2.4" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>
