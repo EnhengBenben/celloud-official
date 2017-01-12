@@ -46,12 +46,12 @@ em,
 i,
 li {
 	font-style: normal;
-	list-style: none
+	list-style: none;
 }
 
 img {
 	border: 0;
-	vertical-align: middle
+	vertical-align: middle;
 }
 
 table {
@@ -725,6 +725,7 @@ html {
 	line-height: 0.39rem;
 	float: right;
 	text-align: justify;
+	margin-bottom: 0.61rem;
 }
 
 .p12-content .p12_img {
@@ -850,11 +851,12 @@ html {
 	color: #9d7bb0;
 }
 
-.fengtu {
+#fengtu {
+	border: 0;
 	display: block;
 	width: 7rem;
 	height: 1.54rem;
-	border: none;
+	
 }
 
 .p9-tab {
@@ -871,9 +873,9 @@ html {
 .p9_decription {
 	margin-bottom: 0.4rem;
 }
-
+.p2_tab_header{border-left:1px solid #9f7ab0;}
 .p2_tab_header th {
-	    height: 0.8rem;
+	height: 0.8rem;
     background: #9f7ab0;
     color: #FFFFFF;
     text-align: center;
@@ -922,6 +924,10 @@ html {
 .p2_tab_body_fengtu td {
 	width: 7rem;
 	height: 1.54rem;
+	border: 0;
+	border-right: 1px solid #9f7ab0;
+	border-bottom: 1px solid #9f7ab0;
+	border-left: 1px solid #9f7ab0;
 }
 
 #p10-img {
