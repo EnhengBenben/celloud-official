@@ -255,7 +255,7 @@
     <if test="sampleName != null and sampleName != ''">
         and s.sample_name like '%${sampleName}%'
     </if>
-    order by s.create_date desc,s.smaple_name desc
+    order by s.create_date desc,s.sample_name desc
   </select>
   <select id="getSamplesByStorageId" resultMap="BaseResultMap">
     select s.* from 
