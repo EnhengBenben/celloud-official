@@ -18,6 +18,7 @@
 		<result column="sample_id" property="sampleId" jdbcType="INTEGER" />
 		<result column="datalist" property="datalist" jdbcType="VARCHAR" />
 		<result column="result" property="result" jdbcType="VARCHAR" />
+		<result column="read" property="read" jdbcType="INTEGER" />
 	</resultMap>
 	<resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.Task" extends="BaseResultMap">
 		<result column="params" property="params" jdbcType="LONGVARCHAR" />
@@ -38,7 +39,7 @@
 		end_date, update_date,
 		project_id, delete_date,
 		state, sample_id,
-		datalist,result
+		datalist,result,read
 	</sql>
 	<sql id="Blob_Column_List">
 		params

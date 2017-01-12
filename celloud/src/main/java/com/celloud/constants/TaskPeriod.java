@@ -22,4 +22,9 @@ public class TaskPeriod {
     public static final int SAMPLING = 5;
     /** 实验中 */
     public static final int INEXPERIMENT = 6;
+
+    /** 报告未读 */
+    public static final int NO_READ = 0;
+    /** 报告已读 */
+    public static final int READED = 1;
 }

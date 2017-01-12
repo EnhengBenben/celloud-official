@@ -64,6 +64,7 @@
                     font-size: 16px;
                 }
             }
+            
             >a.disabled {
                 color: @light-gray;
             }
@@ -71,6 +72,10 @@
                 font-size: 12px;
                 text-decoration: underline;
             }
+        }
+        >tr.read>td,
+        >tr.read>td>a {
+            color: @dark-gray;
         }
     }
     > .checkbox{
@@ -216,7 +221,10 @@
 }
 .table-main:not(.no-hover)>tbody>tr:hover>td,
 .table-main:not(.no-hover)>tbody>tr:hover>td>a,
-.table-main:not(.no-hover)>tbody>tr:hover>td>a>i{
+.table-main:not(.no-hover)>tbody>tr:hover>td>a>i,
+.table-main:not(.no-hover)>tbody>tr.this-report>td,
+.table-main:not(.no-hover)>tbody>tr:this-report>td>a,
+.table-main:not(.no-hover)>tbody>tr:this-report>td>a>i{
     background-color: @content-green;
     color: #fff;
 }
