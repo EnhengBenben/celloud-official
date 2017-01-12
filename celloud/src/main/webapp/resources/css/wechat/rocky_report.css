@@ -725,6 +725,7 @@ html {
 	line-height: 0.39rem;
 	float: right;
 	text-align: justify;
+	margin-bottom: 0.61rem;
 }
 
 .p12-content .p12_img {
@@ -871,9 +872,9 @@ html {
 .p9_decription {
 	margin-bottom: 0.4rem;
 }
-
+.p2_tab_header{border-left:1px solid #9f7ab0;}
 .p2_tab_header th {
-	    height: 0.8rem;
+	height: 0.8rem;
     background: #9f7ab0;
     color: #FFFFFF;
     text-align: center;
