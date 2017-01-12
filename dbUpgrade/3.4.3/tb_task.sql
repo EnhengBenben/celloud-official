@@ -1,3 +1,2 @@
 /*!40101 SET NAMES utf8 */;
-ALTER TABLE `tb_task`
-	ADD COLUMN `readed` `readed` TINYINT(1) NULL DEFAULT '0' COMMENT '是否已读  0-未读  1-已读' AFTER `sample_id`;
+ALTER TABLE `tb_task` ADD COLUMN `readed` TINYINT(1) NULL DEFAULT '0' AFTER `sample_id`;
