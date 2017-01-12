@@ -183,7 +183,7 @@ $(document).ready(function() {
 						'</tr>' +
 						'<tr class="p2_tab_body_fengtu">' +
 						'<td colspan="3">' +
-						'<img id="fengtu"' + 'src="' fengtuBase+ report.rockyResult + report.rocky.userId + '/' + report.rocky.appId + '/' + report.rocky.dataKey + '/' + record[i].peakPic + '"/>' +
+						'<img id="fengtu"' + 'src="'+ fengtuBase+ report.rockyResult + report.rocky.userId + '/' + report.rocky.appId + '/' + report.rocky.dataKey + '/' + record[i].peakPic + '"/>' +
 						'</td>' +
 						'</tr>';
 					p1 = '<div class="report_title">' +
