@@ -37,7 +37,7 @@ public class Task {
 
 	private String result;
 
-    private Integer read;
+    private Integer readed;
 
     // 显示的字段
     private String fileName;
@@ -249,12 +249,12 @@ public class Task {
         this.englishName = englishName;
     }
 
-    public Integer getRead() {
-        return read;
+    public Integer getReaded() {
+        return readed;
     }
 
-    public void setRead(Integer read) {
-        this.read = read;
+    public void setReaded(Integer readed) {
+        this.readed = readed;
     }
 
 }
