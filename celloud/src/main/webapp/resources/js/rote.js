@@ -205,8 +205,8 @@ $(document).ready(function() {
 						'</div>';
 
 				}
-				$('.tab_significance').append(tab2)
-				$('.p1').html(p1)
+				$('.tab_significance').append(tab2);
+				$('.p1').html(p1);
 			}
 
 		}
