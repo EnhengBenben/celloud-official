@@ -684,6 +684,23 @@
 		where user_id=#{userId} and state=#{state} and batch is not null and batch !=''
 		group by batch
 	</select>
+	<select id="getBsiBatchList" resultType="java.lang.String">
+        select distinct f.batch from
+        (select * from
+        tb_task where task_id in (select max(task_id) from tb_task
+        where
+        state=#{state}
+        and ((user_id=#{userId} and app_id=#{appId})
+        or (app_id=#{appId} and sample_id  in (select sample_id from tb_sample where user_id=#{userId} and state=#{state})))
+        group by data_key))t
+        left join tb_file f
+        on f.data_key=t.data_key
+        left join
+        tb_sample s
+        on s.sample_id=t.sample_id
+        where
+        f.state=#{state}
+    </select>
 	<select id="filterRockyList" resultMap="ResultMapWithRunState"
 		parameterType="java.lang.Integer">
 		select
