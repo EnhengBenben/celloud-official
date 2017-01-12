@@ -173,7 +173,7 @@
      left join tb_tag t on st.tag_id=t.tag_id
     where sl.exper_state = #{experState}
     and s.user_id = #{userId} and is_add = #{isAdd,jdbcType=BIT} and s.state =#{state,jdbcType=BIT}
-    order by s.create_date desc
+    order by s.create_date desc,s.sample_name desc
   </select>
   <select id="selectByName" resultMap="BaseResultMap">
     select *
@@ -255,7 +255,7 @@
     <if test="sampleName != null and sampleName != ''">
         and s.sample_name like '%${sampleName}%'
     </if>
-    order by s.create_date desc
+    order by s.create_date desc,s.smaple_name desc
   </select>
   <select id="getSamplesByStorageId" resultMap="BaseResultMap">
     select s.* from 
