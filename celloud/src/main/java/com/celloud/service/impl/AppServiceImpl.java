@@ -14,6 +14,7 @@ import com.celloud.constants.ConstantsData;
 import com.celloud.constants.PriceType;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
+import com.celloud.constants.UserRole;
 import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.UserMapper;
@@ -93,8 +94,14 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public Integer userAddApp(Integer userId, Integer appId) {
-        return appMapper.userUpdateApp(userId, appId,
-                AppConstants.ALREADY_ADDED);
+		Integer num = appMapper.userUpdateApp(userId, appId, AppConstants.ALREADY_ADDED);
+		if (num.equals(0)) {
+			App app = appMapper.selectByPrimaryKey(appId);
+			if (app.getAttribute().equals(AppConstants.PUBLIC)) {
+				num = appMapper.insertUserAppRight(userId, appId, UserRole.ADMINISTRATOR, AppConstants.ALREADY_ADDED);
+			}
+		}
+		return num;
     }
 
     @Override
