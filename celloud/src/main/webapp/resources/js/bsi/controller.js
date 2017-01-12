@@ -496,7 +496,7 @@
 			"batch":$routeParams.batch == 'null' ? null : $routeParams.batch,
 			"dataIndex":$routeParams.dataIndex
 		};
-		
+		$rootScope.thisReport = $routeParams.dataKey;
 		$scope.batchPageQuery = function(params){
 			bsiService.getBatchPageList(params).
 	    	success(function(dataMap){
