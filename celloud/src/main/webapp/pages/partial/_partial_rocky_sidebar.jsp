@@ -7,6 +7,9 @@
       <li ng-class="{active: isActive('/product/rocky/upload')}">
         <a di-href="#/product/rocky/upload"><span>上传</span></a>
       </li>
+      <li ng-class="{active: isActive('/product/rocky/data')}">
+        <a di-href="#/product/rocky/data"><span>数据</span></a>
+      </li>
       <li ng-class="{active: isActive('/product/rocky/report')}">
         <a di-href="#/product/rocky/report"><span>报告</span></a>
       </li>

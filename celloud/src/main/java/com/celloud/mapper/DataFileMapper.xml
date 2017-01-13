@@ -701,15 +701,19 @@
         where
         f.state=#{state}
     </select>
-	<select id="filterRockyList" resultMap="ResultMapWithRunState"
-		parameterType="java.lang.Integer">
+	<select id="filterRockyList" resultType="java.util.Map" >
 		select
-		<include refid="Base_Column_List" />
+		f.file_id fileId, f.user_id userId, f.data_key dataKey, f.file_name fileName, f.strain strain, f.size size,
+        f.create_date createDate, f.update_date updateDate,
+        f.path path,
+        f.state state, f.file_format fileFormat, f.sample sample,
+        f.another_name anotherName, f.md5 md5, f.batch batch,f.oss_path ossPath,f.upload_state uploadState
 		,
-		<include refid="Blob_Column_List" />
+		data_tags dataTags
 		,
-		(select count(*) reportNum from tb_report r where r.period = #{period
-		} and
+		s.sample_name sampleName,
+		(select count(*) reportNum from tb_report r where r.period = #{period}
+		and
 		r.flag = #{reportType } and r.state = #{state } and
 		r.file_id=f.file_id) reportNum,
 		(select count(*) isRunning from
@@ -717,38 +721,38 @@
 		r.flag = #{reportType }
 		and r.state = #{state } and
 		r.file_id=f.file_id) isRunning
-		from tb_file f
+		from tb_file f left join tb_file_sample_relat fsr on f.file_id = fsr.file_id left join tb_sample s on fsr.sample_id = s.sample_id
 		<where>
-			user_id = #{userId } and state = #{state }
+			f.user_id = #{userId } and f.state = #{state }
 			<choose>
 				<when test="condition != null">
-					and (file_name like concat('%',#{condition},'%')
-					or sample like concat('%',#{condition},'%')
-					or batch like concat('%',#{condition},'%'))
+					and (f.file_name like concat('%',#{condition},'%')
+					or f.sample like concat('%',#{condition},'%')
+					or f.batch like concat('%',#{condition},'%'))
 				</when>
 				<when test="sample != null">
-					and sample like concat('%',#{sample},'%')
+					and f.sample like concat('%',#{sample},'%')
 				</when>
 			</choose>
 		</where>
 		<choose>
 			<when test="sidx == 'createDate'">
-				order by create_date ${sord}
+				order by f.create_date ${sord}
 			</when>
 			<when test="sidx == 'batch'">
-				order by batch ${sord}
+				order by f.batch ${sord}
 			</when>
 			<when test="sidx == 'filename'">
-				order by file_name ${sord}
+				order by f.file_name ${sord}
 			</when>
 			<when test="sidx == 'filesize'">
-				order by size ${sord}
+				order by f.size ${sord}
 			</when>
 			<when test="sidx == 'sample'">
-				order by sample ${sord}
+				order by f.sample ${sord}
 			</when>
 			<otherwise>
-				order by create_date ${sord}
+				order by f.create_date ${sord}
 			</otherwise>
 		</choose>
 	</select>

@@ -337,7 +337,8 @@ public interface DataService {
 	 * @param sord
 	 * @return
 	 */
-	public PageList<DataFile> filterRockyList(Page pager, String sample, String condition, String sidx, String sord);
+	public PageList<Map<String, Object>> filterRockyList(Page pager, String sample, String condition, String sidx,
+	        String sord);
 
 	public String getAnotherName(HttpServletRequest request, String filePath, String fileDataKey);
 

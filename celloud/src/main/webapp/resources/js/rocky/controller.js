@@ -246,6 +246,59 @@
 			}
 		}
 	});
+	
+	celloudApp.controller("rockyDataController", function($scope, $rootScope, rockyDataService) {
+		$scope.params = {
+		  page: 1,
+		  size: 20,
+		  sample: null,
+	      condition: null,
+	      sortField: "createDate",
+	      sortType: "desc"
+	    }
+	    $scope.pageQuery = function(){
+			rockyDataService.pageQuery($scope.params).
+	  		success(function(dataMap){
+	  			$scope.dataList = dataMap.dataList;
+	  			$scope.periodMap = dataMap.periodMap;
+	  		})
+		}
+		$scope.conditionFind = function(){
+			$scope.params.condition = $("#condition-input").val();
+			$scope.params.page = 1;
+			$scope.pageQuery();
+		}
+		$scope.conditionSearch = function($event){
+			if($event.keyCode == 13){
+		    		$scope.conditionFind();
+		    	}
+		}
+		// 分页按钮
+		$scope.paginationBtn = function(currentPage){
+			$scope.params.page = currentPage;
+			$scope.pageQuery();
+		}
+		/**
+		 * 改变分页大小
+		 */
+		$scope.changePageSize = function(){
+			$scope.params.size = $("#rocky_report_page #page-size-sel").val();
+			$scope.params.page = 1;
+			$scope.pageQuery();
+		};
+		$scope.sortQuery = function(sortField){
+			if(sortField == $scope.params.sortField){
+				$scope.params.sortType = $scope.params.sortType == "asc" ? "desc" : "asc";
+			}else{
+				$scope.params.sortField = sortField;
+				$scope.params.sortType = "desc";
+			}
+			$scope.pageQuery();
+		}
+		$scope.curDate = new Date();
+		$scope.pageQuery();
+	});
+	
 	celloudApp.controller("rockyReportController", function($scope, rockyReportService) {
 		
 		$scope.showReport = function(dataKey,projectId,appId) {
