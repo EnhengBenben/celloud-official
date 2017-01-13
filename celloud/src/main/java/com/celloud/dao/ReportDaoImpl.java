@@ -102,8 +102,10 @@ public class ReportDaoImpl implements ReportDao {
     @Override
     public <T> T getDataReport(Class<T> T, String dataKey, Integer projectId, Integer appId) {
         Task task = taskMapper.findTaskByProData(projectId, dataKey);
-        task.setReaded(TaskPeriod.READED);
-        taskMapper.updateByPrimaryKeySelective(task);
+        if (task != null) {
+            task.setReaded(TaskPeriod.READED);
+            taskMapper.updateByPrimaryKeySelective(task);
+        }
         return dataStore.createQuery(T).filter("dataKey", dataKey).filter("projectId", projectId).filter("appId", appId)
                 .get();
     }
