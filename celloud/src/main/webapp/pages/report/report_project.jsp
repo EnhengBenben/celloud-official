@@ -77,7 +77,7 @@
                     	<a title="编辑" ng-if="report.userName=='no_one'" ng-click="toChangePname(report.project_id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                    	</span>
                    	<span ng-if="report.userName=='no_one'" id="changePname{{report.project_id}}" class="hide">
-	                    <input style="width: 120px;" type="text" value="{{report.project_name}}" ng-blur="changePname(report.project_id)" id="updatePname{{report.project_id }}" class="changeInput"/>
+	                    <input style="width: 120px;color: black;" type="text" value="{{report.project_name}}" ng-blur="changePname(report.project_id)" id="updatePname{{report.project_id }}" class="changeInput"/>
                     	<a style="float: right;" title="确定" ng-if="report.userName=='no_one'" ng-click="changePname(report.project_id)"><i class="fa fa-check" aria-hidden="true"></i></a>
                    	</span>
                </div>
