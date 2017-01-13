@@ -38,6 +38,8 @@
                     #end
                   #end
               #end
+            #elseif
+                             未检测到病原菌
             #end
           </p>
         </div>
@@ -96,12 +98,12 @@
                #end
                               溶血性葡萄球菌
                </td>
-               #if($havestrain.contains('金黄色酿脓葡萄球菌'))
+               #if($havestrain.contains('金黄色葡萄球菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
-                               金黄色酿脓葡萄球菌
+                               金黄色葡萄球菌
                </td>
              </tr>
              <tr>
@@ -203,18 +205,18 @@
              </tr>
             </tbody>
           </table>
-          <table id="test-seq-table" class="table seq-table">
-            <thead>
-              <tr>
-                <th style="width: 119px;">菌名</th>
-                <th style="width: 80px;">序列比重</th>
-                <th style="width: 80px;">检出区域</th>
-                <th style="width: 380px;">序列 (5'-3')</th>
-              </tr>
-            </thead>
-            <tbody>
-              #set ($seqNum=0)
-              #if($bsi.species_20)
+          #if($bsi.species_20)
+              <table id="test-seq-table" class="table seq-table">
+                <thead>
+                  <tr>
+                    <th style="width: 119px;">菌名</th>
+                    <th style="width: 80px;">序列比重</th>
+                    <th style="width: 80px;">检出区域</th>
+                    <th style="width: 380px;">序列 (5'-3')</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  #set ($seqNum=0)
                   #foreach($species_20 in $!bsi.species_20) 
                      #set($srowspan = 1)
                      #if($species_20.seq2 && !$!species_20.seq2.equals(""))
@@ -302,9 +304,9 @@
                    </tr>
                    #end
                  #end
-               #end    
-            </tbody>
-          </table>
+                </tbody>
+              </table>
+          #end
           <p>序列比重：唯一识别序列数>10条时为检出<br>
                             快速序列验证及比对(NCBI Blast):  <br>
              <a href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome" target="_blank">http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome</a>
