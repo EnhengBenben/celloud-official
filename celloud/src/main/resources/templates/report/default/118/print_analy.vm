@@ -98,12 +98,12 @@
                #end
                               溶血性葡萄球菌
                </td>
-               #if($havestrain.contains('金黄色酿脓葡萄球菌'))
+               #if($havestrain.contains('金黄色葡萄球菌'))
                    <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
                #else
                    <td><i class="fa fa-circle-o" aria-hidden="true"></i>
                #end
-                               金黄色酿脓葡萄球菌
+                               金黄色葡萄球菌
                </td>
              </tr>
              <tr>
