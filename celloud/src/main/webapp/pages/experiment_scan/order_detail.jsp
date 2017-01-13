@@ -19,6 +19,7 @@
 	        <tr>
 	            <th>序号</th>
 	            <th>样本编号</th>
+	            <th>实验样本编号</th>
 	            <th>检测项目</th>
 	            <th>样本类型</th>
 	            <th>更新时间</th>
@@ -28,6 +29,7 @@
 	        <tr ng-repeat="sample in sampleOrderInfo.samples">
 	            <td ng-bind="sampleOrderInfo.samples.length - $index">1</td>
 	            <td>{{sample.sampleName }}</td>
+	            <td>{{sample.experSampleName }}</td>
 	            <td>{{sample.tagName }}</td>
 	            <td>{{sample.type }}</td>
 	            <td>{{sample.createDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>

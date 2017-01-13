@@ -266,4 +266,7 @@ public interface TaskMapper {
 			@Param("period") Integer period, @Param("state") Integer state, @Param("batch") String batch);
 
 	public int saveTaskDataRelat(@Param("taskId") Integer taskId, @Param("dataIds") Integer... dataIds);
+
+	Task selectByProjectId(@Param("projectId") Integer projectId);
+
 }

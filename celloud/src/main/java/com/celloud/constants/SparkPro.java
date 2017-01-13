@@ -19,11 +19,6 @@ public class SparkPro {
     public static final int START = 4040;
 
     /**
-     * OSS路径
-     */
-    public static final String OSSPATH = "/ossfs/output/";
-
-    /**
      * 配置 Tools 路径
      */
     public static final String TOOLSPATH = "/share/data/webapps/Tools/upload/";

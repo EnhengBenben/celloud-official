@@ -13,6 +13,7 @@ public class PropertiesUtil {
     public static String outputPath;
     public static String experimentExcelPath;
     public static String testAccountIds;
+    public static String rockyPdfPath;
     /**
      * pdf 的 logo
      */
@@ -29,6 +30,7 @@ public class PropertiesUtil {
             img = prop.getProperty("img");
             testAccountIds = prop.getProperty("testAccountIds");
             experimentExcelPath = prop.getProperty("experimentExcelPath");
+            rockyPdfPath = prop.getProperty("rockyPdfPath");
 		} catch (IOException e) {
 			logger.info("读取jdbc配置文件失败");
 		}

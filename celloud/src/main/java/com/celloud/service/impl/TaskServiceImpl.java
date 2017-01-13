@@ -296,13 +296,18 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
+	public int saveTaskDataRelat(Integer taskId, Integer... dataIds) {
+		return taskMapper.saveTaskDataRelat(taskId, dataIds);
+	}
+
+	@Override
 	public List<Task> findAllByBatch(String batch, Integer loginUserId, Integer appId) {
 		List<Task> list = taskMapper.findAllByBatch(loginUserId, appId, TaskPeriod.DONE, DataState.ACTIVE, batch);
 		return list;
 	}
 
 	@Override
-	public int saveTaskDataRelat(Integer taskId, Integer... dataIds) {
-		return taskMapper.saveTaskDataRelat(taskId, dataIds);
+	public Task findTaskByProjectid(Integer projectId) {
+		return taskMapper.selectByProjectId(projectId);
 	}
 }

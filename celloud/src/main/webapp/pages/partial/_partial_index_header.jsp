@@ -33,6 +33,7 @@
               <img alt="扫码关注" src="<%=request.getContextPath()%>/images/icon/qrcode.jpg">
             </div>
           </li>
+         <shiro:hasPermission name="cost:center">
           <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
               <i class="money-icon">&nbsp;</i>
@@ -43,6 +44,7 @@
               <a class="btn-link" href="<%=request.getContextPath()%>/index#/expense/consume">查看消费记录</a>
             </div>
           </li>
+         </shiro:hasPermission>
           <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
               <i class="bell-icon">&nbsp;</i>

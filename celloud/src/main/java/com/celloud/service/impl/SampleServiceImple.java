@@ -101,9 +101,14 @@ public class SampleServiceImple implements SampleService {
         sampleOrderMapper.insertSelective(so);
         so.setOrderNo(DataUtil.getSampleOrderNo(so.getId()));
         sampleOrderMapper.updateByPrimaryKeySelective(so);
-        // 修改sample状态为已添加，并添加订单编号
-        sampleMapper.updateAddTypeById(sampleIds, SampleTypes.ISADD,
-                so.getId());
+		// 修改sample状态为已添加，并添加订单编号, 实验样本编号
+        List<Sample> samples = sampleMapper.selectByIds(sampleIds);
+        for(Sample sample : samples){
+			sample.setIsAdd(1 == SampleTypes.ISADD);
+			sample.setOrderId(so.getId());
+			sample.setExperSampleName(DataUtil.getExperSampleNo(sample.getType(), sample.getSampleId()));
+			sampleMapper.updateByPrimaryKeySelective(sample);
+        }
         return so.getId();
     }
 
@@ -152,13 +157,6 @@ public class SampleServiceImple implements SampleService {
         slog.setSampleId(sampleId);
         slog.setExperState(experState);
         sampleLogMapper.insertSelective(slog);
-        if (experState == SampleTypes.SCAN_STORAGE) {
-            Sample s = sampleMapper.selectByPrimaryKey(sampleId);
-            s.setExperSampleName(
-                    DataUtil.getExperSampleNo(s.getType(), sampleId));
-            sampleMapper.updateByPrimaryKeySelective(s);
-            return s.getExperSampleName();
-        }
         return "success";
     }
 
@@ -305,4 +303,9 @@ public class SampleServiceImple implements SampleService {
         sampleStorage.setInMachine(SampleTypes.SS_IN_MACHINE);
         return sampleStorageMapper.updateByPrimaryKeySelective(sampleStorage);
     }
+
+	@Override
+	public Sample findByPrimaryKey(Integer id) {
+		return sampleMapper.selectByPrimaryKey(id);
+	}
 }

@@ -360,8 +360,6 @@
 				<button class="btn btn-success" id="resetBtn">重置</button>
 				<br>
 				<button class="btn btn-success" id="printBtn">打印</button>
-				<br>
-				<button class="btn btn-success" onclick="downloadPdf($!{rocky.userId},$!{rocky.appId},$!{rocky.dataKey})" id="downloadBtn">下载</button>
 			</div>
 			<div class="affix" style="text-align: left; bottom: 100px;">
 				<ul class="nav">

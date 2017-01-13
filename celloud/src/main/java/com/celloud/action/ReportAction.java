@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -71,6 +72,7 @@ import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Medicine;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.Tag;
 import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
@@ -83,12 +85,14 @@ import com.celloud.service.ExperimentService;
 import com.celloud.service.MedicineService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.SampleService;
 import com.celloud.service.TagService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
 
 import net.sf.cglib.core.CollectionUtils;
@@ -123,6 +127,8 @@ public class ReportAction {
 	private MedicineService medicineService;
 	@Resource
 	private TagService tagService;
+	@Autowired
+	private SampleService sampleservice;
 
 	@RequestMapping("checkPgsProject")
 	@ResponseBody
@@ -143,17 +149,17 @@ public class ReportAction {
 		return 1;
 	}
 
-    @ActionLog(value = "下载", button = "下载")
-    @RequestMapping("downRockyPdf")
-    @ResponseBody
-    public Integer downRockyPdf(String path) {
-        String filePath = SparkPro.OSSPATH + path;
-        if (new File(filePath).exists()) {
-            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-            return 0;
-        }
-        return 1;
-    }
+//    @ActionLog(value = "下载", button = "下载")
+//    @RequestMapping("downRockyPdf")
+//    @ResponseBody
+//    public Integer downRockyPdf(Integer userId, String dataKey) {
+//        String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
+//        if (new File(filePath).exists()) {
+//            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+//            return 0;
+//        }
+//        return 1;
+//    }
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")
@@ -886,10 +892,13 @@ public class ReportAction {
         // dataMap.put("bsi", bsi);
         // dataMap.put("data", df);
         // } else {
-            BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
-            DataFile df = dataService.getDataByKey(dataKey);
-            dataMap.put("bsi", bsi);
-            dataMap.put("data", df);
+		Task task = taskService.findTaskByProjectid(projectId);
+		Sample sample = sampleservice.findByPrimaryKey(task.getSampleId());
+		BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+		DataFile df = dataService.getDataByKey(dataKey);
+		dataMap.put("bsi", bsi);
+		dataMap.put("data", df);
+		dataMap.put("sample", sample);
         // }
         return dataMap;
     }
@@ -2821,6 +2830,7 @@ public class ReportAction {
 		ModelAndView mv = new ModelAndView("rocky/report/report_data_main");
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		mv.addObject("rocky", rocky);
+        mv.addObject("rockyPdfPath", PropertiesUtil.rockyPdfPath);
 		mv.addObject("significances", ConstantsData.significances());
 		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return mv;

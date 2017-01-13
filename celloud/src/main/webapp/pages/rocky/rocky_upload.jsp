@@ -81,25 +81,27 @@
 				</div>
 			</div>
 		</div>
-		<div class="tips" id="upload-tip-one" style="margin-top: 20px;">
-			<p>温馨提示：</p>
-			<p>1、输入数据标签可以更方便的检索数据哦</p>
-		</div>
-		<div class="tips hide" id="upload-tip-two" style="margin-top: 20px;">
-			<p>温馨提示：</p>
-			<p>1、拖拽或者选择文件都可以实现文件上传</p>
-			<p>
-				2、选择的文件格式应该是类似于test.<font color="#de4c95">R1</font>.fq.gz、test.<font
-					color="#de4c95">R2</font>.fq.gz
-			</p>
-			<p>
-				3、程序自动识别含<font color="#de4c95">R1</font>、<font color="#de4c95">R2</font>的成对文件并自动运行
-			</p>
-		</div>
-		<div class="tips hide" id="upload-tip-three" style="margin-top: 20px;">
-			<p>温馨提示：</p>
-			<p>1、上传完成，如需继续添加，请点击继续添加按钮，继续添加的文件和已完成上传的文件数据标签一样</p>
-			<p>2、上传完成，如需新上传文件，请点击新上传按钮，此处需要重新输入新的数据标签</p>
+		<div class="uploadtips">
+			<div class="tips" id="upload-tip-one" style="margin-top: 20px;">
+				<p>温馨提示：</p>
+				<p>1、输入数据标签可以更方便的检索数据哦</p>
+			</div>
+			<div class="tips hide" id="upload-tip-two" style="margin-top: 20px;">
+				<p>温馨提示：</p>
+				<p>1、拖拽或者选择文件都可以实现文件上传</p>
+				<p>
+					2、选择的文件格式应该是类似于test.<font color="#de4c95">R1</font>.fq.gz、test.<font
+						color="#de4c95">R2</font>.fq.gz
+				</p>
+				<p>
+					3、程序自动识别含<font color="#de4c95">R1</font>、<font color="#de4c95">R2</font>的成对文件并自动运行
+				</p>
+			</div>
+			<div class="tips hide" id="upload-tip-three" style="margin-top: 20px;">
+				<p>温馨提示：</p>
+				<p>1、上传完成，如需继续添加，请点击继续添加按钮，继续添加的文件和已完成上传的文件数据标签一样</p>
+				<p>2、上传完成，如需新上传文件，请点击新上传按钮，此处需要重新输入新的数据标签</p>
+			</div>
 		</div>
 	</div>
 </div>

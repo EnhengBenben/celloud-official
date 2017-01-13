@@ -53,13 +53,13 @@ if myDB:
         base['dataKey'] = dataKey
         base['projectId'] = int(proId)
         base['createDate'] = datetime.datetime.now()
-        if appId == 118:
+        if appId == '118':
             sample_dict = myDB.query(sample_info_sql)[0]
             base['sample'] = sample_dict
         path = os.path.join(path, userId, appId)
         result = None
         if appId == '123':
-            result = appFun.getResult(path, appId, dataKey,user_dict['companyId'])
+            result = appFun.getResult(path, appId, dataKey, user_dict['userId'], user_dict['companyId'])
         else:
             result = appFun.getResult(path, appId, dataKey)
         result = dict(result, **base)

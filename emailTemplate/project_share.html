@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>celLoud邮件</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+	</head>
+	<body>
+		<div class="main">
+			<div class="email_login">
+			<a  href='${home}'>登录</a>
+			</div>
+			<div class="content">
+				<h2>系统邮件</h2>
+				<span class="dear">尊敬的用户${userName}您好：</span>
+				<p class="essay">用户${shareUserName}共享给您一份项目报告，您可以进入 CelLoud 查看结果。</p>
+				<p class="essay">项目报告名称: ${dataName}</p>
+				<p class="essay">项目报告编号: ${dataKey}</p>
+				<span class="tips">本邮件来自 CelLoud 系统，请勿回复。</span>
+			</div>
+		</div>
+	</body>
+</html>

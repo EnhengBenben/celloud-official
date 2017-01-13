@@ -1,0 +1,73 @@
+* {
+	padding: 0;
+	margin: 0;
+	font-family: "微软雅黑";
+	font-size: 0.24rem;
+	/*box-sizing: border-box;*/
+}
+input{outline: none;}
+body,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+tr,
+td,
+dl,
+dd,
+form,
+i,
+span,
+fieldset,
+legend,
+input,
+textarea,
+select {
+	margin: 0;
+	padding: 0
+}
+
+a {
+	color: #172c45;
+	text-decoration: none
+}
+
+a:hover {
+	color: #cd0200;
+	text-decoration: underline
+}
+
+em,
+i,
+li {
+	font-style: normal;
+	list-style: none
+}
+
+img {
+	border: 0;
+	vertical-align: middle
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0
+}
+
+p {
+	word-wrap: break-word
+}
+
+body,
+html {
+	width: 100%;
+	min-height: 100%;
+	
+	
+}

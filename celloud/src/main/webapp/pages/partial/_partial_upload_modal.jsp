@@ -117,20 +117,11 @@
 	                        </div>
 	                    </div>
 	                    <p>
-	                        <span>
-	                            <input id="need-split" type="checkbox" value="1" checked="checked">
-	                            需要数据拆分 (run: Split)
-	                        </span>
-	                    </p>
-	                    <p>
-	                        <span>&gt;目前支持 .tar.gz; .zip; 压缩过的fasta 格式的序列文件及index 文件</span>
-	                    </p>
-	                    <p>
-	                        <span>&gt;文件命名规则请点击查看 "百菌探_下机文件命名规则"</span>
-	                    </p>
-	                    <p>
-	                        <span>&gt;数据拆分(Split) 选中时系统先按index文件对数据拆分并重命名.</span>
-	                    </p>
+                            <span>&gt;目前支持 .tar.gz; .zip; 压缩过的fasta 格式的配对序列文件</span>
+                        </p>
+                        <p>
+                            <span>&gt;文件命名规则为  (实验样本编号.tar.gz) 或 (文库编码_R1.tar.gz & 文库编码_R2.tar.gz )</span>
+                        </p>
 	                    <input id="tag-info" type="hidden" value="1" />
 	                    <button ng-click="beginBsiUpload()" class="btn" ng-disabled="bsiUploader == null || bsiUploader.files.length < 1">开始上传</button>
 	                </div>

@@ -405,7 +405,8 @@
 		app_id=#{appId})
 		)t
 		left join tb_file f on f.data_key=t.data_key
-		left join tb_sample s on s.sample_id=t.sample_id
+		left join tb_sample s on
+		s.sample_id=t.sample_id
 		<where>
 			<choose>
 				<when test="condition != null">
@@ -505,7 +506,8 @@
 		tb_task where task_id in (select max(task_id) from tb_task
 		where
 		state=#{state}
-		and user_id=#{userId} and app_id=#{appId} group
+		and
+		user_id=#{userId} and app_id=#{appId} group
 		by
 		data_key))t
 		left join tb_file f
@@ -526,10 +528,9 @@
 		(select * from tb_task where
 		task_id in
 		(select max(task_id) from tb_task where state=#{state} and
-		((user_id=#{userId} and (app_id=#{appId} or period!=2)) or (sample_id in (select sample_id from tb_sample where user_id=#{userId} and state=#{state})))
+		((user_id=#{userId} and (app_id=#{appId} or (app_id=113 and period!=2))) or (app_id=#{appId} and sample_id in (select sample_id from tb_sample where user_id=#{userId} and state=#{state})))
 		group by data_key)
-		)t
-		left join tb_file f on f.data_key=t.data_key
+		)t left join tb_file f on f.data_key=t.data_key
 		left join tb_sample s on s.sample_id=t.sample_id
 		where f.state=0
 		<if test="condition != null">
@@ -582,14 +583,16 @@
 	<select id="findTaskByParamsAndPeriodAndBatch" resultMap="BaseResultMap">
 		SELECT
 		t.task_id, t.user_id, t.app_id, t.data_key, t.command, t.period,
-		t.create_date, t.start_date, t.end_date, t.update_date, t.project_id,
+		t.create_date, t.start_date, t.end_date, t.update_date,
+		t.project_id,
 		t.delete_date, t.state, t.sample_id, t.datalist, t.result
 		FROM tb_task t
 		LEFT JOIN tb_file f
 		ON t.data_key = f.data_key
 		WHERE t.user_id = #{userId}
 		AND t.state=#{state}
-		AND t.period = #{period}
+		AND t.period =
+		#{period}
 		AND t.params=#{params}
 		AND f.batch = #{batch}
 	</select>
@@ -632,11 +635,13 @@
 		(user_id=#{userId} or (sample_id in (select sample_id from tb_sample where user_id=#{userId} and state=#{state})))
 		group by data_key)
 		)t
-		left join tb_file f on t.data_key=f.data_key
+		left
+		join tb_file f on t.data_key=f.data_key
 		left join tb_sample s on t.sample_id = s.sample_id
 		left join tb_file_tag_relat ftr on ftr.file_id=f.file_id
 		left join tb_tag tag on tag.tag_id = ftr.tag_id
-		left join tb_app a on t.app_id = a.app_id
+		left
+		join tb_app a on t.app_id = a.app_id
 		where f.state=#{state}
 		<if test="condition != null and condition!=''">
 			and (f.file_name like concat('%',#{condition},'%')
@@ -665,4 +670,12 @@
 			(#{taskId},#{data})
 		</foreach>
 	</insert>
+	<select id="selectByProjectId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		FROM tb_task
+		WHERE project_id = #{projectId}
+	</select>
 </mapper>

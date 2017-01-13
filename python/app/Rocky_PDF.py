@@ -169,7 +169,7 @@ class RockyPdf:
         return lastWidth
     def drawOneTable(self,c,ps,page,resultPath,count,aHeight,topHeight,tableHeight,bottomHeight,onePage):
         c.setStrokeColorRGB(0.62,0.48,0.68)
-        dotted = Image(os.path.join(PDFPro.rockyPath,"pic/"+"dotted.png"),51,841)
+        dotted = Image(os.path.join(PDFPro.rockyPicPath,"dotted.png"),51,841)
         if page % 2 == 0:
             dotted.drawOn(c,494,0)
         else:
@@ -261,14 +261,14 @@ class RockyPdf:
                     self.drawPara('复核人：',ps,c,64,14,410,line4 - 35 - 14 - 10)
                     self.drawPara('日&nbsp;&nbsp;&nbsp;期：',ps,c,64,14,270,line4 - 35 - 14 - 25 - 14 - 10)
                     self.drawPara('日&nbsp;&nbsp;&nbsp;期：',ps,c,64,14,410,line4 - 35 - 14 - 25 - 14 - 10)
-                    celloud_qrcode = Image(os.path.join(PDFPro.rockyPath,"pic/"+"celloud_qrcode.png"),50,56)
+                    celloud_qrcode = Image(os.path.join(PDFPro.rockyPicPath,"celloud_qrcode.png"),50,56)
                     celloud_qrcode.drawOn(c,117,line4 - 35 - 14 - 25 - 14 -7)
                 else:
                     self.drawPara('检测人：',ps,c,64,14,220,line4 - 35 - 14 - 10)
                     self.drawPara('复核人：',ps,c,64,14,360,line4 - 35 - 14 - 10)
                     self.drawPara('日&nbsp;&nbsp;&nbsp;期：',ps,c,64,14,220,line4 - 35 - 14 - 25 - 14 - 10)
                     self.drawPara('日&nbsp;&nbsp;&nbsp;期：',ps,c,64,14,360,line4 - 35 - 14 - 25 - 14 - 10)
-                    celloud_qrcode = Image(os.path.join(PDFPro.rockyPath,"pic/"+"celloud_qrcode.png"),50,56)
+                    celloud_qrcode = Image(os.path.join(PDFPro.rockyPicPath,"celloud_qrcode.png"),50,56)
                     celloud_qrcode.drawOn(c,67,line4 - 35 - 14 - 25 - 14 -7)
                 c.showPage()
                 #if(page % 2 == 0):
@@ -364,7 +364,7 @@ class RockyPdf:
                 if(page % 2 != 0):
                     page += 1
                     self.drawPage(c,page)
-                    space1 = Image(os.path.join(PDFPro.rockyPath,"pic/"+"space1.png"),595,556)
+                    space1 = Image(os.path.join(PDFPro.rockyPicPath,"space1.png"),595,556)
                     space1.drawOn(c,0,285)
                     c.showPage()
                 return page
@@ -599,7 +599,7 @@ class RockyPdf:
                 if(page % 2 != 0):
                     page += 1
                     self.drawPage(c,page)
-                    space2 = Image(os.path.join(PDFPro.rockyPath,"pic/"+"space2.png"),595,476)
+                    space2 = Image(os.path.join(PDFPro.rockyPicPath,"space2.png"),595,476)
                     space2.drawOn(c,0,365)
                     c.showPage()
                 return page
@@ -618,37 +618,37 @@ class RockyPdf:
     # create pdf
     def createPDF(self,path,dataKey,userId,companyId):
         peakPath = os.path.join(path,dataKey+"/")
-        px = os.path.join(PDFPro.rockyPicPath,"pic/"+"px.png")
-        end = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"end.png"),5,4)
-        end2 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"end2.png"),11,12)
-        page1_logo = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page1_logo.png"),347,52)
-        page1_celloud = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page1_celloud.png"),181,14)
-        page1_yanda = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page1_yanda.png"),122,29)
-        page2_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page2_title.png"),238,38)
-        page2_icon1 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page2_icon1.png"),13,12)
-        page2_icon2 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page2_icon2.png"),12,12)
-        page3 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page3.png"),595,802)
-        page4_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page4_title.png"),120,40)
-        page6_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page6_title.png"),104,40)
-        page6_content = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page6_content.png"),208,220)
-        page8_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page8_title.png"),150,53)
-        page8_content = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page8_content.png"),400,79)
-        page9_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page9_title.png"),146,55)
-        page9_content2 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page9_content2.png"),337,149)
-        page10_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page10_title.png"),132,53)
-        page10_content = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page10_content.png"),318,261)
-        page11_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page11_title.png"),226,53)
-        page11_content = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page11_content.png"),250,252)
-        page12_content = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page12_content.png"),300,300)
-        page13_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page13_title.png"),225,52)
-        page13_icon1 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page13_icon1.png"),13,15)
-        page13_icon2 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page13_icon2.png"),14,14)
-        page13_icon3 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page13_icon3.png"),13,15)
-        page13_icon4 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page13_icon4.png"),14,13)
-        page14_icon1 = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page14_icon1.png"),12,14)
-        page15_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page15_title.png"),97,40)
-        page16_title = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"page16_title.png"),116,40)
-        celloud = Image(os.path.join(PDFPro.rockyPicPath,"pic/"+"celloud.png"),222,82)
+        px = os.path.join(PDFPro.rockyPicPath,"px.png")
+        end = Image(os.path.join(PDFPro.rockyPicPath,"end.png"),5,4)
+        end2 = Image(os.path.join(PDFPro.rockyPicPath,"end2.png"),11,12)
+        page1_logo = Image(os.path.join(PDFPro.rockyPicPath,"page1_logo.png"),347,52)
+        page1_celloud = Image(os.path.join(PDFPro.rockyPicPath,"page1_celloud.png"),181,14)
+        page1_yanda = Image(os.path.join(PDFPro.rockyPicPath,"page1_yanda.png"),122,29)
+        page2_title = Image(os.path.join(PDFPro.rockyPicPath,"page2_title.png"),238,38)
+        page2_icon1 = Image(os.path.join(PDFPro.rockyPicPath,"page2_icon1.png"),13,12)
+        page2_icon2 = Image(os.path.join(PDFPro.rockyPicPath,"page2_icon2.png"),12,12)
+        page3 = Image(os.path.join(PDFPro.rockyPicPath,"page3.png"),595,802)
+        page4_title = Image(os.path.join(PDFPro.rockyPicPath,"page4_title.png"),120,40)
+        page6_title = Image(os.path.join(PDFPro.rockyPicPath,"page6_title.png"),104,40)
+        page6_content = Image(os.path.join(PDFPro.rockyPicPath,"page6_content.png"),208,220)
+        page8_title = Image(os.path.join(PDFPro.rockyPicPath,"page8_title.png"),150,53)
+        page8_content = Image(os.path.join(PDFPro.rockyPicPath,"page8_content.png"),400,79)
+        page9_title = Image(os.path.join(PDFPro.rockyPicPath,"page9_title.png"),146,55)
+        page9_content2 = Image(os.path.join(PDFPro.rockyPicPath,"page9_content2.png"),337,149)
+        page10_title = Image(os.path.join(PDFPro.rockyPicPath,"page10_title.png"),132,53)
+        page10_content = Image(os.path.join(PDFPro.rockyPicPath,"page10_content.png"),318,261)
+        page11_title = Image(os.path.join(PDFPro.rockyPicPath,"page11_title.png"),226,53)
+        page11_content = Image(os.path.join(PDFPro.rockyPicPath,"page11_content.png"),250,252)
+        page12_content = Image(os.path.join(PDFPro.rockyPicPath,"page12_content.png"),300,300)
+        page13_title = Image(os.path.join(PDFPro.rockyPicPath,"page13_title.png"),225,52)
+        page13_icon1 = Image(os.path.join(PDFPro.rockyPicPath,"page13_icon1.png"),13,15)
+        page13_icon2 = Image(os.path.join(PDFPro.rockyPicPath,"page13_icon2.png"),14,14)
+        page13_icon3 = Image(os.path.join(PDFPro.rockyPicPath,"page13_icon3.png"),13,15)
+        page13_icon4 = Image(os.path.join(PDFPro.rockyPicPath,"page13_icon4.png"),14,13)
+        page14_icon1 = Image(os.path.join(PDFPro.rockyPicPath,"page14_icon1.png"),12,14)
+        page15_title = Image(os.path.join(PDFPro.rockyPicPath,"page15_title.png"),97,40)
+        page16_title = Image(os.path.join(PDFPro.rockyPicPath,"page16_title.png"),116,40)
+        celloud = Image(os.path.join(PDFPro.rockyPicPath,"celloud.png"),222,82)
         # 读取结果文件
         resultPath = os.path.join(path,dataKey,'result','all.snp')
 
@@ -680,8 +680,9 @@ class RockyPdf:
         tbps.fontName = 'pf1'
         tbps.fontSize = 12
         tbps.firstLineIndent = 0
-
-        c = canvas.Canvas(os.path.join(PDFPro.rockyPdfPath,userId,dataKey,dataKey+'.pdf'),pagesize=A4)
+        if not os.path.exists(os.path.join(PDFPro.rockyPdfPath,str(userId),str(dataKey))):
+            os.makedirs(os.path.join(PDFPro.rockyPdfPath,str(userId),str(dataKey)))
+        c = canvas.Canvas(os.path.join(PDFPro.rockyPdfPath,str(userId),str(dataKey),str(dataKey)+'.pdf'),pagesize=A4)
         c.setFont('pf1',14)
         # 第一页
         page1_logo.drawOn(c,124,450)
