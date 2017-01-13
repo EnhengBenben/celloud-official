@@ -78,4 +78,5 @@ public interface SampleMapper {
 	 */
 	List<Sample> selectByIds(@Param("ids") List<Integer> ids);
 
+    List<Sample> getSamplesByStorageId(@Param("ssid") Integer storageId, @Param("state") Integer state);
 }

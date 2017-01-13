@@ -210,8 +210,7 @@ public interface SampleService {
      * @author leamo
      * @date 2016年9月7日 下午3:44:42
      */
-    public List<Map<String, Object>> sampleListInStorage(Integer userId,
-            Integer ssId);
+    public List<Map<String, Object>> sampleListInStorage(Integer userId, Integer ssId);
 
     /**
      * 获取样品订单信息
@@ -271,5 +270,5 @@ public interface SampleService {
      * @author leamo
      * @date 2016年12月2日 下午1:45:56
      */
-    public Integer updateSampleInMechine(Integer sampleStorageId);
+    public Integer updateSampleInMechine(Integer userId, Integer sampleStorageId);
 }

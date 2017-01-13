@@ -221,7 +221,7 @@ a, a:link, a:hover, a:active, a:visited {
     background-color: #f8f8f8;
 }
 .common-menu > .common-menu-logo {
-    width: 170px;
+    width: 178px;
     padding: 10px 0px;
     float: left;
 }
@@ -873,6 +873,7 @@ a, a:link, a:hover, a:active, a:visited {
 }
 .nav-tabs{
 	border: none;
+	margin-bottom: -2px;
 }
 .nav-tabs>li{
 	width: 120px;

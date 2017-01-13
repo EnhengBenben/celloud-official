@@ -72,6 +72,11 @@
       #{offLine,jdbcType=INTEGER}, #{command,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{method,jdbcType=VARCHAR}, #{appDoc,jdbcType=LONGVARCHAR})
   </insert>
+  <insert id="insertUserAppRight" parameterType="java.lang.Integer">
+    insert into tb_user_app_right (user_id, app_id, is_add, auth_from)
+    values 
+    (#{userId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{isAdd,jdbcType=INTEGER}, #{authFrom,jdbcType=INTEGER})
+  </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.App" >
     insert into tb_app
     <trim prefix="(" suffix=")" suffixOverrides="," >

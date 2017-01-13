@@ -102,7 +102,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="task in reportList.datas">
+          <tr ng-repeat="task in reportList.datas" class="{{task.read | reportReadFilter}} {{task.dataKey==thisReport | thisReportFilter}}">
             <td>
               <label class="checkbox-lable">
                 <input class="checkbox" type="checkbox" name="demo-checkbox1" ng-disabled="file.isRunning==1||file.tagName==null">

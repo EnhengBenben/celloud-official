@@ -28,9 +28,9 @@
 	    <section id="cfda">
 		    <div class="m-box w500">
 				<h2>位点突变</h2>
-				<h5 id="snpType">{{hbv.type.replace('Type','基因型')}}</h5>
+				<h5 id="snpType" style="margin-left: 15px;">{{hbv.type.replace('Type','基因型')}}</h5>
 				<div class="m-boxCon">
-					<img ng-if="hbv.known['204_png'] != null" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="476px" width="420px"/>
+					<img ng-if="hbv.known['204_png'] != null" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="476px" width="420px" style="margin-left: 25px;"/>
 					<div ng-if="hbv.known != undefined && hbv.known['204_png'] == null" class="imgmiss">
 						204位点测序失败，建议重测。
 					</div>
@@ -74,12 +74,17 @@
 				<div class="m-box">
 				 	<h2>
 				 		1.替诺福韦酯TDF突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-				    	<a ng-if="hbv.known['194_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['194_10_png']);" >
-							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['194_png']}}" height="170px;" width="150px;">
-						</a>
+				    	<span ng-if="hbv.known['194_png'] != null">
+					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['194_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['194_10_png']);" >
+								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['194_png']}}" height="170px;" width="150px;">
+								<div style="width:120px;margin-left:30px;" ng-if="hbv.known['194_png'] != null && lowQcStr.indexOf('194') > -1">
+		                                                   该位点测序质量低，结果仅供参考
+		                        </div>
+							</a>
+						</span>
 						<div ng-if="hbv.known['194_png'] == null" class="imgmiss">
 							194位点测序失败，建议重测。
 						</div>
@@ -88,12 +93,17 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>2.替比夫定 LDT 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
-							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
-						</a>
+				    	<span ng-if="hbv.known['204_png'] != null">
+					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
+								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
+								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('204') > -1">
+		                                                    该位点测序质量低，结果仅供参考
+		                        </div>
+							</a>
+						</span>
 						<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
 							204位点测序失败，建议重测。
 						</div>
@@ -102,18 +112,28 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>3.阿德福韦 ADV 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,3)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,3)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-				    	<a ng-if="hbv.known['181_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['181_10_png']);" >
-							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['181_png']}}" height="170px;" width="150px;">
-						</a>
+				    	<span ng-if="hbv.known['181_png'] != null">
+					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['181_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['181_10_png']);" >
+								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['181_png']}}" height="170px;" width="150px;">
+								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('181') > -1">
+		                                                    该位点测序质量低，结果仅供参考
+		                        </div>
+							</a>
+						</span>
 						<div ng-if="hbv.known['181_png'] == null" class="imgmiss">
 							181位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['236_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['236_10_png']);" >
-							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['236_png']}}" height="170px;" width="150px;">
-						</a>
+						<span ng-if="hbv.known['236_png'] != null">
+							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['236_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['236_10_png']);" >
+								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['236_png']}}" height="170px;" width="150px;">
+								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('236') > -1">
+		                                                    该位点测序质量低，结果仅供参考
+		                        </div>
+							</a>
+						</span>
 						<div ng-if="hbv.known['236_png'] == null" class="imgmiss">
 							236位点测序失败，建议重测。
 						</div>
@@ -122,24 +142,39 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>4.拉米夫定 LAM 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,4)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,4)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-						<a ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
-							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_png']}}" height="170px;" width="150px;">
-						</a>
+					    <span ng-if="hbv.known['173_png'] != null">
+							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
+								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_png']}}" height="170px;" width="150px;">
+								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('173') > -1">
+		                                                    该位点测序质量低，结果仅供参考
+		                        </div>
+							</a>
+						</span>
 						<div ng-if="hbv.known['173_png'] == null" class="imgmiss">
 							173位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
-							<img style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
-						</a>
+						<span ng-if="hbv.known['180_png'] != null">
+							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
+								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
+								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('180') > -1">
+		                                                    该位点测序质量低，结果仅供参考
+		                        </div>
+							</a>
+						</span>
 						<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
 							180位点测序失败，建议重测。
 						</div>
-				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
-							<img style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
+						<span ng-if="hbv.known['204_png'] != null">
+				    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
+							<img style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('204') > -1">
+                                                            该位点测序质量低，结果仅供参考
+                            </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
 							204位点测序失败，建议重测。
 						</div>
@@ -148,24 +183,39 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>5.恩曲他滨 FTC 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,5)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,5)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-						<a ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
-							<img style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_png']}}" height="170px;" width="150px;">
+				    	<span ng-if="hbv.known['173_png'] != null">
+						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
+							<img style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_png']}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('173') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['173_png'] == null" class="imgmiss">
 							173位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
-							<img style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
+						<span ng-if="hbv.known['180_png'] != null">
+						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
+							<img style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('180') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
 							180位点测序失败，建议重测。
 						</div>
-				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
-							<img style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
+						<span ng-if="hbv.known['204_png'] != null">
+				    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
+							<img style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('204') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
 							204位点测序失败，建议重测。
 						</div>
@@ -174,42 +224,72 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>6.恩替卡韦 ETV 突变检测
-				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,6)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+				 		<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,6)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				 	</h2>
 				    <div class="m-boxCon">
-						<a ng-if="hbv.known['169_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['169_10_png']);" >
-							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['169_png']}}" height="170px;" width="150px;">
+				    	<span ng-if="hbv.known['169_png'] != null">
+						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['169_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['169_10_png']);" >
+							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['169_png']}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('169') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['169_png'] == null" class="imgmiss">
 							169位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
-							<img class="imgtop" style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
+						<span ng-if="hbv.known['180_png'] != null">
+						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
+							<img class="imgtop" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
+	                        <div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('180') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
-							180位点测序失败，建议重测。
-						</div>
-						<a ng-if="hbv.known['184_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['184_10_png']);" >
-							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['184_png']}}" height="170px;" width="150px;">
+                            180位点测序失败，建议重测。
+                        </div>
+                        <span ng-if="hbv.known['184_png'] != null">
+						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['184_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['184_10_png']);" >
+							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['184_png']}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('184') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['184_png'] == null" class="imgmiss">
 							184位点测序失败，建议重测。
 						</div>
-						<a ng-if="hbv.known['202_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['202_10_png']);" >
-							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['202_png']}}" height="170px;" width="150px;">
+						<span ng-if="hbv.known['202_png'] != null">
+						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['202_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['202_10_png']);" >
+							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['202_png']}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('202') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['202_png'] == null" class="imgmiss">
 							202位点测序失败，建议重测。
 						</div>
-				    	<a ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
-							<img class="imgtop" style="padding-left: 30px;" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
+						<span ng-if="hbv.known['204_png'] != null">
+				    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
+							<img class="imgtop" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('204') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
 							204位点测序失败，建议重测。
 						</div>
-				    	<a ng-if="hbv.known['250_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['250_10_png']);" >
-							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['250_png']}}" height="170px;" width="150px;">
+						<span ng-if="hbv.known['250_png'] != null">
+				    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['250_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['250_10_png']);" >
+							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['250_png']}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('250') > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
+						</span>
 						<div ng-if="hbv.known['250_png'] == null" class="imgmiss">
 							250位点测序失败，建议重测。
 						</div>
@@ -220,11 +300,14 @@
 				<!--位点突变-->
 				<div class="m-box">
 				 	<h2>7.其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）
-				 	  	<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+				 	  	<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				 	</h2>
 				    <div class="m-boxCon" id="otherPng">
-			    		<a ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img.replace('png','10.png')}});" >
+			    		<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img.replace('png','10.png')}}")>
 							<img class="imgtop" title="{{img}}" name="imgSrc" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img}}" height="170px;" width="150px;">
+							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf(img.split('_')[0]) > -1">
+	                                                    该位点测序质量低，结果仅供参考
+	                        </div>
 						</a>
 				    </div>
 				</div>
@@ -232,7 +315,7 @@
 			<!--结论-->
 			<div class="m-box">
 			 	  <h2>参考结论（根据已发表文献得出以下参考结论）
-			 	  <span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+			 	  <span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',2)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 			 	  </h2>
 			    <div ng-bind-html="hbv.reporttxt.split('Other')[0]" class="m-boxCon result" id="resultDiv">
 			    </div>
@@ -249,30 +332,31 @@
 			<!--染色体序列点图-->
 			<div class="m-box" id="printDiv3">
 				<h2><i class="i-dna"></i>原始峰图
-					<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+					<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				</h2>
 			    <div ng-if="hbv.original['1_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['1_all_png']}},'listAll1Img');" >
+					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['1_all_png']}}","listAll1Img")>
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['1_all_png']}}" id="listAll1Img">
 					</a>
 			    </div>
 			    <div ng-if="hbv.original['2_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['2_all_png']}},'listAll2Img');" >
+					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['2_all_png']}}","listAll2Img")>
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['2_all_png']}}" id="listAll2Img">
 					</a>
 			    </div>
 			    <div ng-if="hbv.original['3_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['3_all_png']}},'listAll3Img');" >
+					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['3_all_png']}}","listAll3Img")>
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['3_all_png']}}" id="listAll3Img">
 					</a>
 			    </div>
 			     <div ng-if="hbv.original['4_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['4_all_png']}},'listAll4Img');" >
+					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['4_all_png']}}","listAll4Img")>
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['4_all_png']}}" id="listAll4Img">
 					</a>
 			    </div>
 			    <div ng-if="hbv.original['5_all_png'] != null" class="m-boxCon result">
-					<a ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['5_all_png']}},'listAll5Img');" >
+<!-- 					<a ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['5_all_png']}},'listAll5Img');" > -->
+					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['5_all_png']}}","listAll5Img")>
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['5_all_png']}}" id="listAll5Img">
 					</a>
 			    </div>

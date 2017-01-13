@@ -325,6 +325,8 @@ public interface DataService {
 	 */
 	public List<String> getBatchList(Integer userId);
 
+	public List<String> getBsiBatchList(Integer userId, Integer appId);
+
 	/**
 	 * 查询乳腺癌产品的数据列表
 	 * 

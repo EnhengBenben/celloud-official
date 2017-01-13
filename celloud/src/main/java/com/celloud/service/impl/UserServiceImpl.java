@@ -1,10 +1,12 @@
 package com.celloud.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -21,6 +23,7 @@ import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.UserRole;
+import com.celloud.constants.UserSecRole;
 import com.celloud.dao.ReportDao;
 import com.celloud.mapper.UserMapper;
 import com.celloud.mapper.UserRegisterMapper;
@@ -294,5 +297,25 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<SecRole> getRolesByUserId(Integer userId) {
 		return roleService.getRolesByUserId(userId);
+	}
+
+	@Override
+	public List<SecRole> getRoles(Integer userId, Integer authFrom) {
+		List<SecRole> roles = roleService.getRoles(userId, authFrom);
+		Map<String, SecRole> map = new HashMap<>();
+		for (SecRole secRole : roles) {
+			if (UserSecRole.HOSPITALMANAGER.equals(secRole.getId())) {
+				continue;
+			}
+			if (UserSecRole.PLATFORM.equals(secRole.getId())) {
+				continue;
+			}
+			map.put(secRole.getCode(), secRole);
+		}
+		roles = new ArrayList<>();
+		for (Entry<String, SecRole> role : map.entrySet()) {
+			roles.add(role.getValue());
+		}
+		return roles;
 	}
 }

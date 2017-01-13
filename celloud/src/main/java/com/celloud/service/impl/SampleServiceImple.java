@@ -249,8 +249,7 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public List<Map<String, Object>> sampleListInStorage(Integer userId,
-            Integer ssId) {
+    public List<Map<String, Object>> sampleListInStorage(Integer userId, Integer ssId) {
         return sampleStorageMapper.sampleListInStorage(userId, DataState.ACTIVE,
                 ssId);
     }
@@ -297,10 +296,21 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public Integer updateSampleInMechine(Integer sampleStorageId) {
+    public Integer updateSampleInMechine(Integer userId, Integer sampleStorageId) {
         SampleStorage sampleStorage = new SampleStorage();
         sampleStorage.setId(sampleStorageId);
         sampleStorage.setInMachine(SampleTypes.SS_IN_MACHINE);
+
+        List<Sample> list = sampleMapper.getSamplesByStorageId(sampleStorageId, DataState.ACTIVE);
+        for (Sample s : list) {
+            sampleLogMapper.deleteBySampleId(s.getSampleId(), DataState.DEELTED);
+
+            SampleLog slog = new SampleLog();
+            slog.setUserId(userId);
+            slog.setSampleId(s.getSampleId());
+            slog.setExperState(SampleTypes.IN_MACHINE);
+            sampleLogMapper.insertSelective(slog);
+        }
         return sampleStorageMapper.updateByPrimaryKeySelective(sampleStorage);
     }
 

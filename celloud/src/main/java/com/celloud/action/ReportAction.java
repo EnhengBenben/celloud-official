@@ -2958,7 +2958,19 @@ public class ReportAction {
         Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> periodMap = taskService.findTaskPeriodNum(appId,
                 userId);
-        List<String> batchList = dataService.getBatchList(userId);
+		List<String> batchList1 = dataService.getBsiBatchList(userId, appId);
+		List<String> batchList2 = dataService.getBatchList(userId);
+		List<String> batchList = new ArrayList<>();
+		for (String temp : batchList1) {
+			if (!batchList.contains(temp)) {
+				batchList.add(temp);
+			}
+		}
+		for (String temp : batchList2) {
+			if (!batchList.contains(temp)) {
+				batchList.add(temp);
+			}
+		}
         periodMap.put("uploaded", batchList.size());
         map.put("periodMap", periodMap);
         map.put("batchList", batchList);

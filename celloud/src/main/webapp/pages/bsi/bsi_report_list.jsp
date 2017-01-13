@@ -130,7 +130,7 @@
 				        </tr>
 				      </thead>
 				      <tbody id="data-list-tbody" ng-if="pageList.datas.length > 0">
-				          <tr id="report{{task.dataKey}}{{task.projectId}}{{task.appId}}" ng-repeat="task in pageList.datas">
+				          <tr id="report{{task.dataKey}}{{task.projectId}}{{task.appId}}" ng-repeat="task in pageList.datas" class="{{task.readed | reportReadFilter}} {{task.dataKey==thisReport | thisReportFilter}}">
 				            <td>
 				              <div class="celicon checkbox checkbox-un"></div>
 				            </td>

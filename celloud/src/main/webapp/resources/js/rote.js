@@ -5,10 +5,13 @@ $(document).ready(function() {
 			pagination: '.swiper-pagination',
 			paginationType: 'fraction',
 			autoHeight: true,
-			
 			observer: true, //修改swiper自己或子元素时，自动初始化swiper
 			observeParents: true //修改swiper的父元素时，自动初始化swiper
 		})
+	//返回顶部
+	$('.pages').bind('touchend',function(){
+		swiper.slideTo(0, 1000, false);//切换到第一个slide，速度为1秒
+	})
 	//控制页面滚动
 	var startScroll, touchStart, touchCurrent;
 	swiper.slides.on('touchstart', function(e) {
@@ -60,7 +63,8 @@ $(document).ready(function() {
 		 port=':8080';
 		 context = '/celloud';
 	 }
-
+	//峰图服务器地址base
+	var fengtuBase = 'https://www.celloud.cn';
 	 var webService=protocol+"//"+hostname+port+"/celloud/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');
 
 	$.ajax({
@@ -114,6 +118,25 @@ $(document).ready(function() {
 
 			//添加检测数据
 			for (var i in record) {
+				switch(record[i].significance){
+					case 'Pathogenic':
+					record[i].significance='致病相关的变异'
+					break;
+					case 'Likely pathogenic':
+					record[i].significance='可能致病的变异'
+					break;
+					case 'Uncertain Significance':
+					record[i].significance='意义不明确的变异'
+					break;
+					case 'Likely benign':
+					record[i].significance='可能良性的变异'
+					break;
+					case 'Benign':
+					record[i].significance='良性的变异'
+					break;
+					default:
+					break;
+				}
 				tab = '<tr class="tab_body_p2">' +
 					'<td>' + (parseInt(i) + 1) + '</td>' +
 					'<td><span id="BCRA">' + record[i].gene + '</span></td>' +
@@ -156,17 +179,17 @@ $(document).ready(function() {
 					tab2 = '<tr class="p2_tab_body">' +
 						'<td>' + (parseInt(i) + 1) + '</td>' +
 						'<td><span id="BCRA">' + record[i].gene + '</span>:<br>' + record[i].acids + '<br>临床意义:<br>' + record[i].significance + '</td>' +
-						'<td>' + record.description + '</td>' +
+						'<td>' + record[i].description + '</td>' +
 						'</tr>' +
 						'<tr class="p2_tab_body_fengtu">' +
 						'<td colspan="3">' +
-						'<img class="fengtu"' + 'src="' + report.rockyResult + report.rocky.userId + '/' + report.rocky.appId + '/' + report.rocky.dataKey + '/' + record[i].peakPic + '"/>' +
+						'<img id="fengtu"' + 'src="'+ fengtuBase+ '/output/' + report.rocky.userId + '/' + report.rocky.appId + '/' + report.rocky.dataKey + '/' + record[i].peakPic + '"/>' +
 						'</td>' +
 						'</tr>';
 					p1 = '<div class="report_title">' +
 						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3.png"/>' +
 						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3-1.png" alt="" title="" />' +
-						'<img style="display:block;width:3.3rem;" src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/01.Page 3" alt="" title="" />' +
+						'<img style="display:block;width:3.3rem;" src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 2.png" alt="" title="" />' +
 						'</div>';
 					$('.h_lastpage_hide').hide()
 				} else {
@@ -182,8 +205,8 @@ $(document).ready(function() {
 						'</div>';
 
 				}
-				$('.tab_significance').append(tab2)
-				$('.p1').html(p1)
+				$('.tab_significance').append(tab2);
+				$('.p1').html(p1);
 			}
 
 		}

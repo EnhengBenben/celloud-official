@@ -14,7 +14,10 @@ import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 import org.springframework.stereotype.Service;
 
+import com.celloud.constants.TaskPeriod;
+import com.celloud.mapper.TaskMapper;
 import com.celloud.model.mongo.TBINH;
+import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.mongodb.AggregationOutput;
@@ -32,12 +35,13 @@ import com.mongodb.DBObject;
 public class ReportDaoImpl implements ReportDao {
     @Resource
     private Datastore dataStore;
+    @Resource
+    private TaskMapper taskMapper;
     
     @Override
     public <T> List<T> getDataByProjectId(Class<T> clazz, Integer projectId) {
         return dataStore.createQuery(clazz).filter("projectId", projectId).field("flag").doesNotExist().asList();
     }
-
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -97,6 +101,11 @@ public class ReportDaoImpl implements ReportDao {
 
     @Override
     public <T> T getDataReport(Class<T> T, String dataKey, Integer projectId, Integer appId) {
+        Task task = taskMapper.findTaskByProData(projectId, dataKey);
+        if (task != null) {
+            task.setReaded(TaskPeriod.READED);
+            taskMapper.updateByPrimaryKeySelective(task);
+        }
         return dataStore.createQuery(T).filter("dataKey", dataKey).filter("projectId", projectId).filter("appId", appId)
                 .get();
     }
