@@ -38,6 +38,8 @@
                     #end
                   #end
               #end
+            #elseif
+                             未检测到病原菌
             #end
           </p>
         </div>

@@ -27,7 +27,7 @@
                       <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
                       <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
                     </span>
-                    <span ng-if="bsi.species_20 == null"></span>
+                    <span ng-if="bsi.species_20 == null">未检测到病原菌</span>
                   </div>
                   <h4>检测范围(20种)：</h4>
                   <table class="table table-main">
@@ -70,11 +70,12 @@
                 </div>
                 <div role="tabpanel" class="tab-pane analy-tab"  ng-class="{active : tab == 'analy'}" id="analy-report" aria-labelledby="analy-tab">
                   <h4>1. 检测结果：</h4>
-                  <div class="test-info" ng-if="bsi.species_20 != null">
+                  <div class="test-info">
                     <span ng-repeat="species20 in bsi.species_20">
                       <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
                       <span ng-if="species20.species_zh != '未知' && species20.species_zh != null">{{species20.species_zh}}<br></span>
                     </span>
+                    <span ng-if="bsi.species_20 == null">未检测到病原菌</span>
                   </div>
                   <table class="table table-20species">
                     <tbody>
@@ -218,7 +219,7 @@
                      </tr>
                     </tbody>
                   </table>
-                  <table id="test-seq-table" class="table seq-table">
+                  <table id="test-seq-table" class="table seq-table" ng-if="bsi.species_20 != null">
                     <thead>
                       <tr>
                         <th style="width: 119px;">菌名</th>
@@ -227,7 +228,7 @@
                         <th style="width: 380px;">序列 (5'-3')</th>
                       </tr>
                     </thead>
-                    <tbody ng-if="bsi.species_20 != null" ng-repeat="species20 in bsi.species_20">
+                    <tbody ng-repeat="species20 in bsi.species_20">
                        <tr ng-init="srowspan = 1">
                          <td class="title" rowspan="{{species20.seq2 | getBsiRowSpan:species20.seq3:species20.seq4}}">
                             <span ng-if="species20.species_zh == '未知' || species20.species_zh == null">{{species20.species}}<br></span>
