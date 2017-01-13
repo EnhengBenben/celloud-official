@@ -18,6 +18,7 @@
 		<result column="sample_id" property="sampleId" jdbcType="INTEGER" />
 		<result column="datalist" property="datalist" jdbcType="VARCHAR" />
 		<result column="result" property="result" jdbcType="VARCHAR" />
+		<result column="readed" property="readed" jdbcType="INTEGER" />
 	</resultMap>
 	<resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.Task" extends="BaseResultMap">
 		<result column="params" property="params" jdbcType="LONGVARCHAR" />
@@ -38,7 +39,7 @@
 		end_date, update_date,
 		project_id, delete_date,
 		state, sample_id,
-		datalist,result
+		datalist,result,readed
 	</sql>
 	<sql id="Blob_Column_List">
 		params
@@ -239,6 +240,9 @@
 			<if test="result != null">
 				result = #{result,jdbcType=VARCHAR},
 			</if>
+			<if test="readed != null">
+                readed = #{readed,jdbcType=INTEGER},
+            </if>
 		</set>
 		where task_id = #{taskId,jdbcType=INTEGER}
 	</update>
@@ -269,7 +273,9 @@
 		params =
 		#{params,jdbcType=LONGVARCHAR},
 		sample_id =
-		#{sampleId,jdbcType=INTEGER}
+		#{sampleId,jdbcType=INTEGER},
+		readed = 
+		#{readed,jdbcType=INTEGER}
 		where task_id = #{taskId,jdbcType=INTEGER}
 	</update>
 	<update id="deleteTask" parameterType="com.celloud.model.mysql.Task">
@@ -482,9 +488,9 @@
         tb_task where task_id in (select max(task_id) from tb_task
         where
         state=#{state}
-        and user_id=#{userId} and app_id=#{appId} group
-        by
-        data_key))t
+        and ((user_id=#{userId} and app_id=#{appId})
+        or (app_id=#{appId} and sample_id  in (select sample_id from tb_sample where user_id=#{userId} and state=#{state})))
+        group by data_key))t
         left join tb_file f
         on f.data_key=t.data_key
         left join
@@ -504,9 +510,9 @@
         tb_task where task_id in (select max(task_id) from tb_task
         where
         state=#{state}
-        and user_id=#{userId} and app_id=#{appId} group
-        by
-        data_key))t
+        and ((user_id=#{userId} and app_id=#{appId})
+        or (app_id=#{appId} and sample_id  in (select sample_id from tb_sample where user_id=#{userId} and state=#{state})))
+        group by data_key))t
         left join tb_file f
         on f.data_key=t.data_key
         left join

@@ -90,7 +90,7 @@ public class UserRealm extends AuthorizingRealm {
         session.setAttribute(Constants.SESSION_LOGIN_USER, user);
         session.removeAttribute(Constants.SESSION_LOGIN_USER_ROLES);
         session.removeAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS);
-        return new SimpleAuthenticationInfo(user.getUsername(), password, getName());
+		return new SimpleAuthenticationInfo(username, password, getName());
     }
 
 }

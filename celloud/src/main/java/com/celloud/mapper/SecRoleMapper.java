@@ -21,6 +21,8 @@ public interface SecRoleMapper {
 
     List<SecRole> findRolesByUserId(Integer userId);
 
+	List<SecRole> findRoles(@Param("userId") Integer userId, @Param("authFrom") Integer authFrom);
+
 	int insertUserRoles(@Param("userId") Integer userId, @Param("roleIds") Integer[] roleIds,
 			@Param("authFrom") Integer authFrom);
 

@@ -370,6 +370,6 @@ public class SampleAction {
     @RequestMapping("changeInMachine")
     @ResponseBody
     public Integer changeInMachine(int sampleStorageId) {
-        return sampleService.updateSampleInMechine(sampleStorageId);
+        return sampleService.updateSampleInMechine(ConstantsData.getLoginUserId(), sampleStorageId);
     }
 }

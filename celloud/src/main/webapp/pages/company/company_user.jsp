@@ -66,8 +66,12 @@
 	            <div class="control-label form-label col-xs-2">APP：</div>
 	            <div class="col-xs-10">
 		            <div class="form-group">
-		             	<div ng-repeat="app in appList" class="col-xs-6">
-		            		<input type="checkbox" name="app" value="{{app.appId}}"> {{app.appName}}
+		             	<div ng-repeat="app in appList" class="col-xs-6 role">
+		             		<label class="checkbox-lable">
+				            	<input type="checkbox" name="app" class="checkbox"  value="{{app.appId}}">
+				            	<span class="info"></span>
+				            </label>
+		            		{{app.appName}}
 		            	</div>
 		            </div>
 	           	</div>
@@ -76,8 +80,12 @@
 	            <div class="control-label form-label col-xs-2">角色：</div>
 	            <div class="col-xs-10">
 	            	<div class="form-group">
-			            <div ng-repeat="role in roleList" class="col-xs-6">
-			            	<input type="checkbox" name="role" value="{{role.id}}"> {{role.name}}
+			            <div ng-repeat="role in roleList" class="col-xs-6 role">
+			           		<label class="checkbox-lable">
+				            	<input type="checkbox" name="role" class="checkbox"  value="{{role.id}}">
+				            	<span class="info"></span>
+				            </label>
+			            	{{role.name}}
 			            </div>
 	            	</div>
 	            </div>
@@ -127,8 +135,12 @@
 	            <div class="control-label form-label col-xs-2">APP：</div>
 	            <div class="col-xs-10">
 		            <div class="form-group">
-		             	<div ng-repeat="app in appList" class="col-xs-6">
-		            		<input type="checkbox" name="app" value="{{app.appId}}"> {{app.appName}}
+		             	<div ng-repeat="app in appList" class="col-xs-6 role">
+		             		<label class="checkbox-lable">
+				            	<input type="checkbox" name="app" class="checkbox"  value="{{app.appId}}">
+				            	<span class="info"></span>
+				            </label>
+		            		{{app.appName}}
 		            	</div>
 		            </div>
 	           	</div>
@@ -163,8 +175,12 @@
 	            <div class="control-label form-label col-xs-2">APP：</div>
 	            <div class="col-xs-10">
 		            <div class="form-group">
-		             	<div ng-repeat="app in appList" class="col-xs-6">
-		            		<input type="checkbox" name="app" value="{{app.appId}}"> {{app.appName}}
+		             	<div ng-repeat="app in appList" class="col-xs-6 role">
+		             		<label class="checkbox-lable">
+				            	<input type="checkbox" name="app" class="checkbox"  value="{{app.appId}}">
+				            	<span class="info"></span>
+				            </label>
+		            		{{app.appName}}
 		            	</div>
 		            </div>
 	           	</div>
@@ -199,8 +215,12 @@
 	            <div class="control-label form-label col-xs-2">角色：</div>
 	            <div class="col-xs-10">
 		            <div class="form-group">
-		             	<div ng-repeat="role in roleList" class="col-xs-6">
-		            		<input type="checkbox" name="role" value="{{role.id}}"> {{role.name}}
+		             	<div ng-repeat="role in roleList" class="col-xs-6 role">
+		             		<label class="checkbox-lable">
+				            	<input type="checkbox" name="role" class="checkbox"  value="{{role.id}}">
+				            	<span class="info"></span>
+				            </label>
+		            		{{role.name}}
 		            	</div>
 		            </div>
 	           	</div>
@@ -235,8 +255,12 @@
 	            <div class="control-label form-label col-xs-2">角色：</div>
 	            <div class="col-xs-10">
 		            <div class="form-group">
-		             	<div ng-repeat="role in roleList" class="col-xs-6">
-		            		<input type="checkbox" name="role" value="{{role.id}}"> {{role.name}}
+		             	<div ng-repeat="role in roleList" class="col-xs-6 role">
+		             		<label class="checkbox-lable">
+				            	<input type="checkbox" name="role" class="checkbox"  value="{{role.id}}">
+				            	<span class="info"></span>
+				            </label>
+		            		{{role.name}}
 		            	</div>
 		            </div>
 	           	</div>

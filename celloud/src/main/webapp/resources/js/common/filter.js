@@ -135,5 +135,17 @@
         return "上机完成";
       }
     }
-  })
+  });
+  //报告已读样式过滤器
+  celloudApp.filter("reportReadFilter",function(){
+    return function(read){
+       return read == 1? "read" : "";
+    }
+  });
+  //查看的报告样式
+  celloudApp.filter("thisReportFilter",function(){
+    return function(thisReport){
+      return thisReport ? "this-report" : "";
+    }
+  });
 })();
