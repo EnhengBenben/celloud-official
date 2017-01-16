@@ -50,9 +50,6 @@
                             </a>
 			            </th>
 			            <th>
-                            状态
-                        </th>
-			            <th>
 			                上传时间
 		                    <a id="dataSortBtn-createDate-desc" href="javascript:void(0);" ng-click="sortQuery('createDate')">
 		                        <i ng-show="params.sortField=='createDate'&&params.sortType=='asc'" class="fa fa-sort-amount-asc"></i>
@@ -74,7 +71,6 @@
 		                <td style="text-align: left;" title="{{data.fileName}}" name="data-name-td">{{data.fileName}}</td>
 		                <td>{{data.batch}}</td>
 		                <td>{{data.size | fileSizeFormat}}</td>
-                        <td>0</td>
 		                <td>{{data.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 		            </tr>
 	            </tbody>
