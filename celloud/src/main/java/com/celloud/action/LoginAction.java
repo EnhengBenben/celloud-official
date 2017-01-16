@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.message.category.MessageCategoryCode;
@@ -174,24 +175,26 @@ public class LoginAction {
 		// 获取当前用户所有的app
 		List<App> appList = appService.getMyAppList(userId);
 		// 该用户appId不为空, 判断是否包含bsi与rocky
-		boolean bsi = false;
 		boolean rocky = false;
+		Integer bsiId = null;
+		Integer bsiNum = 0;
 		if (appList != null && appList.size() > 0) {
 			for (App app : appList) {
 				// 获取该app的appId
 				Integer appId = app.getAppId();
 				// bsi
-				if (appId == 118) {
-					bsi = true;
+				if (AppConstants.BACTIVE_GROUP.contains(appId)) {
+					bsiNum++;
+					bsiId = app.getAppId();
 				} else if (appId == 123) {
 					rocky = true;
 				}
 			}
 		}
-		if (!bsi && rocky) {
+		if (bsiNum.intValue() == 0 && rocky) {
 			mv.addObject("route", "#/product/rocky/upload");
-        } else if (bsi && !rocky) {
-            mv.addObject("route", "#/product/bsi/bsireport");
+        } else if (bsiNum.intValue() == 1 && !rocky) {
+			mv.addObject("route", "#/product/bactive/report/" + bsiId);
 		}
 		return mv;
 	}
