@@ -5,6 +5,22 @@
 		<title>celLoud邮件</title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="css/common.css"/>
+		<style type="text/css">
+			.dear{margin: 50px 0 25px 0 ;display: block;}
+			.essay{margin-bottom: 15px;text-indent: 40px;}
+			
+*{font-family: "微软雅黑";font-size: 16px;}
+body,html{background: #fffffb;}
+.main{width:900px ;height: 1000px;background: url('../img/bg.gif') no-repeat ;margin: 0 auto;overflow: hidden;}
+.email_login{margin: 54px 0 82px 834px;}
+.email_login a{color: #969696;font-size: 14px;}
+.content{width: 650px;height: 351px;margin-left: 106px;}
+.content h2{text-align: center;font-size: 18px;color: #323232;font-weight: bold;}
+.dear{margin: 50px 0;display: block;}
+.essay{margin-bottom: 30px;text-indent: 40px;}
+.tips{margin-top: 50px;font-size: 14px;color: #969696;}
+.link{text-decoration: underline;color:#008FB2;}
+		</style>
 	</head>
 	<body>
 		<div class="main">
@@ -17,7 +33,7 @@
 				<p class="essay">您的CelLoud平台账号被${authFrom}追加权限，若同意请点击下方链接，否则请不用理会。</p>
 				<p class="essay"><a class="link" href=" ${url}">追加权限</a></p>
 				<p class="essay">如果以上链接无法点击，请将下面的地址复制到你的浏览器的地址栏进入：</p>
-				<p class="essay">${url}</p>
+				<p class="essay" style="text-indent: 0;">${url}</p>
 			</div>
 		</div>
 	</body>
