@@ -10,6 +10,12 @@
         <li>华木兰</li>
         <li>数据</li>
     </ol>
+	<div class="search-form" style="float: right;z-index: 99">
+	    <input style="border-radius: 20px;margin-bottom: 5px;margin-right: 21px;" id="data-condition-input" class="field" ng-keypress="conditionQuery($event)" ng-model="condition" type="text" placeholder="搜索" />
+	    <a id="data-condition-find" class="action">
+	        <i class="fa fa-search"></i>
+	    </a>
+	</div>
     <div id="common-container" class="common-container" style="width:98%">
 		<div id="rocky-data-list">
 	        <table class="table table-main">
