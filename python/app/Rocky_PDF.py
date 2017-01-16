@@ -22,8 +22,10 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Image, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 from reportlab.pdfgen import canvas
 from reportlab.pdfgen.canvas import Canvas
-from mongo.mongoOperate import mongo
 from PDFPro import PDFPro
+from bson.objectid import ObjectId
+sys.path.append("..")
+from mongo.mongoOperate import mongo
 
 significances = {
     'Pathogenic':'致病相关变异',
@@ -620,8 +622,11 @@ class RockyPdf:
     #def createPDF(self,path,dataKey,userId,companyId):
     def createPDF(self, objId):
         mo = mongo.getInstance()
-        dataReport = mo.get({"_id" : ObjectId(objId)})
-        print dataReport
+        dataReport = mo.get({'_id':ObjectId(objId)},"Rocky")
+        path = dataReport.path
+        dataKey = dataReport.dataKey
+        userId = dataReport.userId
+        companyId = dataReport.companyId
         peakPath = os.path.join(path,dataKey+"/")
         px = os.path.join(PDFPro.rockyPicPath,"px.png")
         end = Image(os.path.join(PDFPro.rockyPicPath,"end.png"),5,4)
