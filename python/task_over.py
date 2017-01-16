@@ -54,8 +54,9 @@ if myDB:
         base['projectId'] = int(proId)
         base['createDate'] = datetime.datetime.now()
         if appId == '118':
-            sample_dict = myDB.query(sample_info_sql)[0]
-            base['sample'] = sample_dict
+            if(len(myDB.query(sample_info_sql)) > 0):
+                sample_dict = myDB.query(sample_info_sql)[0]
+                base['sample'] = sample_dict
         path = os.path.join(path, userId, appId)
         result = None
         if appId == '123':

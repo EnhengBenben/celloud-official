@@ -149,17 +149,17 @@ public class ReportAction {
 		return 1;
 	}
 
-//    @ActionLog(value = "下载", button = "下载")
-//    @RequestMapping("downRockyPdf")
-//    @ResponseBody
-//    public Integer downRockyPdf(Integer userId, String dataKey) {
-//        String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
-//        if (new File(filePath).exists()) {
-//            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-//            return 0;
-//        }
-//        return 1;
-//    }
+	@ActionLog(value = "下载", button = "下载")
+	@RequestMapping("downRockyPdf")
+	@ResponseBody
+	public Integer downRockyPdf(Integer userId, String dataKey) {
+		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
+		if (new File(filePath).exists()) {
+			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+			return 0;
+		}
+		return 1;
+	}
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")
