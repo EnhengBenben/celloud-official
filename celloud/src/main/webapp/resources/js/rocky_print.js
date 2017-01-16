@@ -31,4 +31,10 @@ $(function() {
 	$("#resetBtn").click(function(){
 		$("#rockyBaseInfoForm")[0].reset();
 	});
+	$("#downloadBtn").click(function(){
+		var url = "downRockyPdf";
+		$.get(url,{},function(data){
+			
+		});
+	});
 });

@@ -22,6 +22,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Image, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 from reportlab.pdfgen import canvas
 from reportlab.pdfgen.canvas import Canvas
+from mongo.mongoOperate import mongo
 from PDFPro import PDFPro
 
 significances = {
@@ -616,7 +617,11 @@ class RockyPdf:
         f.close()
         return data
     # create pdf
-    def createPDF(self,path,dataKey,userId,companyId):
+    #def createPDF(self,path,dataKey,userId,companyId):
+    def createPDF(self, objId):
+        mo = mongo.getInstance()
+        dataReport = mo.get({"_id" : ObjectId(objId)})
+        print dataReport
         peakPath = os.path.join(path,dataKey+"/")
         px = os.path.join(PDFPro.rockyPicPath,"px.png")
         end = Image(os.path.join(PDFPro.rockyPicPath,"end.png"),5,4)
