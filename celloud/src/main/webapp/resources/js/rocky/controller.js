@@ -295,6 +295,12 @@
 			}
 			$scope.pageQuery();
 		}
+		$scope.sampleQuery = function($event){
+			if($event.keyCode == 13){
+				$scope.params.sample = $scope.sample;
+				$scope.pageQuery();
+			}
+		}
 		$scope.curDate = new Date();
 		$scope.pageQuery();
 	});

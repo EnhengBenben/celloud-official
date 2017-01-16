@@ -17,7 +17,7 @@
 			        <tr>
 			            <th class="th-checkoutbox"></th>
 			            <th width="140">
-			                <input id="data-sample-filter" type="text" placeholder="样本编号/病历号" value="${sampleFilter}">
+			                <input id="data-sample-filter" type="text" placeholder="样本编号/病历号" ng-model="sample" ng-keypress="sampleQuery($event)" >
 			            </th>
 			            <th>
 			                文件名
@@ -38,9 +38,9 @@
 			            <th>
 			                文件大小
                             <a id="dataSortBtn-batch-desc" href="javascript:void(0);" ng-click="sortQuery('filesize')">
-                                <i ng-show="params.sortField=='fileSize'&&params.sortType=='asc'" class="fa fa-sort-amount-asc"></i>
-                                <i ng-show="params.sortField=='fileSize'&&params.sortType=='desc'" class="fa fa-sort-amount-desc"></i>
-                                <i ng-show="params.sortField!='fileSize'" class="fa fa-sort" aria-hidden="true"></i>
+                                <i ng-show="params.sortField=='filesize'&&params.sortType=='asc'" class="fa fa-sort-amount-asc"></i>
+                                <i ng-show="params.sortField=='filesize'&&params.sortType=='desc'" class="fa fa-sort-amount-desc"></i>
+                                <i ng-show="params.sortField!='filesize'" class="fa fa-sort" aria-hidden="true"></i>
                             </a>
 			            </th>
 			            <th>

@@ -253,7 +253,7 @@
       templateUrl: "pages/bsi/bsi_report_list.jsp",
       controller: "bsiReportController"
     })
-    .when('/product/bactive/data/:appId',{
+    .when('/product/bactive/d/:appId',{
       templateUrl: "pages/bsi/bsi_data.jsp",
       controller: "bsiDataController"
     })
