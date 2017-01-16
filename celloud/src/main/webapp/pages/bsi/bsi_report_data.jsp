@@ -322,7 +322,7 @@
                   </li>
                   <li>
                     <label>原始数据：</label>
-                    <span>
+                    <span style="width: 150px;max-width: 150px;">
                         <p ng-repeat="data in bsi.data">{{data.fileName}}&nbsp;&nbsp;</p>
                     </span>
                     <a href="javascript:void(0)">（查看原始数据信息）</a>
