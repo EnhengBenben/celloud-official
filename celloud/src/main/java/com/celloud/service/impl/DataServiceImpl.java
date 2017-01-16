@@ -300,8 +300,10 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public PageList<DataFile> filterRockyList(Page page, String sample, String condition, String sidx, String sord) {
-		List<DataFile> lists = dataFileMapper.filterRockyList(page, ConstantsData.getLoginUserId(), DataState.ACTIVE,
+	public PageList<Map<String, Object>> filterRockyList(Page page, String sample, String condition, String sidx,
+	        String sord) {
+		List<Map<String, Object>> lists = dataFileMapper.filterRockyList(page, ConstantsData.getLoginUserId(),
+		        DataState.ACTIVE,
 				ReportType.DATA, ReportPeriod.COMPLETE, sample, condition, sidx, sord);
 		return new PageList<>(page, lists);
 	}
