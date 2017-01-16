@@ -185,10 +185,10 @@ public class LoginAction {
 				// 获取该app的appId
 				Integer appId = app.getAppId();
 				// bsi
-				if (AppConstants.BACTIVE_GROUP.contains(appId)) {
+				if (AppConstants.BACTIVE_GROUP.contains(appId) && appId.intValue() != 123) {
 					bsiNum++;
 					bsiId = app.getAppId();
-				} else if (appId == 123) {
+				} else if (appId.intValue() == 123) {
 					rocky = true;
 				}
 			}
