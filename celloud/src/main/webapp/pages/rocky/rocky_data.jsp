@@ -10,6 +10,12 @@
         <li>华木兰</li>
         <li>数据</li>
     </ol>
+	<div class="search-form" style="float: right;z-index: 99">
+	    <input style="border-radius: 20px;margin-bottom: 5px;margin-right: 21px;" id="data-condition-input" class="field" ng-keypress="conditionQuery($event)" ng-model="condition" type="text" placeholder="搜索" />
+	    <a id="data-condition-find" class="action">
+	        <i class="fa fa-search"></i>
+	    </a>
+	</div>
     <div id="common-container" class="common-container" style="width:98%">
 		<div id="rocky-data-list">
 	        <table class="table table-main">
@@ -44,9 +50,6 @@
                             </a>
 			            </th>
 			            <th>
-                            状态
-                        </th>
-			            <th>
 			                上传时间
 		                    <a id="dataSortBtn-createDate-desc" href="javascript:void(0);" ng-click="sortQuery('createDate')">
 		                        <i ng-show="params.sortField=='createDate'&&params.sortType=='asc'" class="fa fa-sort-amount-asc"></i>
@@ -68,7 +71,6 @@
 		                <td style="text-align: left;" title="{{data.fileName}}" name="data-name-td">{{data.fileName}}</td>
 		                <td>{{data.batch}}</td>
 		                <td>{{data.size | fileSizeFormat}}</td>
-                        <td>0</td>
 		                <td>{{data.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 		            </tr>
 	            </tbody>
