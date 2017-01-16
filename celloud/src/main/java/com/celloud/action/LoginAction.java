@@ -5,6 +5,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.celloud.constants.AppConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.UserResource;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.PrivateKey;
@@ -192,8 +194,13 @@ public class LoginAction {
 			}
 		}
 		if (bsiNum.intValue() == 0 && rocky) {
-			mv.addObject("route", "#/product/rocky/upload");
-        } else if (bsiNum.intValue() == 1 && !rocky) {
+			Set<String> permissions = userService.findPermissions(loginUser.getUserId());
+			if (permissions.contains(UserResource.ROCKYUPLOAD)) {
+				mv.addObject("route", "#/product/rocky/upload");
+			} else {
+				mv.addObject("route", "#/product/rocky/report");
+			}
+		} else if (bsiNum.intValue() == 1 && !rocky) {
 			mv.addObject("route", "#/product/bactive/report/" + bsiId);
 		}
 		return mv;
