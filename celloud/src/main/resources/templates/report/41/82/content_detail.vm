@@ -60,7 +60,14 @@ ${hbv.detailBaseInfo.clinical}
                 </h2>
                 <div class="m-boxCon">
                     #if(${hbv.known.containsKey('194_png')})
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
                         <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['194_png']}" height="170px;" width="150px;">
+                        #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('194')} > -1)
+                            <div class="lowTips" style="width:120px;font-size:12px;">
+                                                       该位点测序质量低，结果仅供参考
+                            </div>
+                        #end
+                    </div>
                     #else
                         <div class="imgmiss">
                             194位点测序失败，建议重测。
@@ -74,7 +81,14 @@ ${hbv.detailBaseInfo.clinical}
                 </h2>
                 <div class="m-boxCon">
                     #if(${hbv.known.containsKey('204_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('204')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             204位点测序失败，建议重测。
@@ -88,14 +102,28 @@ ${hbv.detailBaseInfo.clinical}
                 </h2>
                 <div class="m-boxCon">
                     #if(${hbv.known.containsKey('181_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['181_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['181_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('181')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             181位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('236_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['236_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['236_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('236')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             236位点测序失败，建议重测。
@@ -109,21 +137,42 @@ ${hbv.detailBaseInfo.clinical}
                 </h2>
                 <div class="m-boxCon">
                     #if(${hbv.known.containsKey('173_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('173')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             173位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('180_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('180')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             180位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('204_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('204')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             204位点测序失败，建议重测。
@@ -137,21 +186,42 @@ ${hbv.detailBaseInfo.clinical}
                 </h2>
                 <div class="m-boxCon">
                     #if(${hbv.known.containsKey('173_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['173_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('173')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             173位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('180_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('180')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             180位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('204_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('204')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             204位点测序失败，建议重测。
@@ -165,42 +235,84 @@ ${hbv.detailBaseInfo.clinical}
                 </h2>
                 <div class="m-boxCon">
                     #if(${hbv.known.containsKey('169_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['169_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['169_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('169')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             169位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('180_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['180_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('180')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             180位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('184_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['184_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['184_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('184')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             184位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('202_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['202_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['202_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('202')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             202位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('204_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['204_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('204')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             204位点测序失败，建议重测。
                         </div>
                     #end
                     #if(${hbv.known.containsKey('250_png')})
-                        <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['250_png']}" height="170px;" width="150px;">
+                        <div style="display: inline-block;vertical-align: top;color: #333333;">
+                            <img src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${hbv.known['250_png']}" height="170px;" width="150px;">
+                            #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf('250')} > -1)
+                                <div class="lowTips" style="width:120px;font-size:12px;">
+                                                           该位点测序质量低，结果仅供参考
+                                </div>
+                            #end
+                        </div>
                     #else
                         <div class="imgmiss">
                             250位点测序失败，建议重测。
@@ -218,7 +330,14 @@ ${hbv.detailBaseInfo.clinical}
                     #if(${hbv.imgString}!='')
                         #set($imgs=${hbv.imgString.split(',')})
                         #foreach($img in $imgs)
-                            <img title="${img}" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${img}" height="170px;" width="150px;">
+                            <div style="display: inline-block;vertical-align: top;color: #333333;">
+                                <img title="${img}" src="${uploadPath}${hbv.userId}/${hbv.appId}/${hbv.dataKey}/SVG/${img}" height="170px;" width="150px;">
+                                #if(${hbv.lowQc} && ${hbv.lowQc.toString().indexOf(${img.split('_')[0]})} > -1)
+                                    <div class="lowTips" style="width:120px;font-size:12px;">
+                                                               该位点测序质量低，结果仅供参考
+                                    </div>
+                                #end
+                            </div>
                         #end
                     #end
                 </div>
@@ -227,6 +346,7 @@ ${hbv.detailBaseInfo.clinical}
         <p class="annotation m-box_1">注：1. 突变结果解释：M 204 M|V {A-G}，第一个字母M，野生型编码氨基酸为Ｍ， 204为氨基酸位置，M|V：氨基酸由M变为V，{A-G}：碱基由A变为G<br>
             2. Wild Type: GCT;表示该位点的野生型为GCT<br>3. 峰图中的*号，表示该位置发生了突变
         </p>
+        <div id="sevenW3c" class="w3cbbs" style="display: none;"></div>
         <h2 class="mt10">三、参考结论（根据已发表文献得出以下参考结论）：</h2>
         <div class="m-box_1" id="des">
             <textarea rows="6" name="detailBaseInfo['des']">#if($hbv.detailBaseInfo.des)$!hbv.detailBaseInfo.des#else${hbv.reporttxt.split('Other:')[0]}#end</textarea>

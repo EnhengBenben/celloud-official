@@ -40,7 +40,7 @@ class Rocky:
         print result_path
         mo = mongo.getInstance()
         pathogenic = 'false'
-        rockyPdf = RockyPdf.getInstance()
+        #rockyPdf = RockyPdf.getInstance()
         if os.path.exists(result_path):
             f = open(result_path, "r")
             for line in f.readlines():
@@ -70,8 +70,9 @@ class Rocky:
                 if description == '-':
                     rockyRecord['description'] = "There is no description at this moment."
                 rockyRecords.append(rockyRecord)
-            rockyPdf.createPDF(path, dataKey, userId, companyId)
+            #rockyPdf.createPDF(path, dataKey, userId, companyId)
             f.close()
+        result["path"] = path
         result["records"] = rockyRecords
         result["pathogenic"] = pathogenic
         return result

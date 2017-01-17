@@ -131,7 +131,6 @@ public interface TaskMapper {
 	 * @param reportType
 	 * @return
 	 */
-	// XXX 此方法对应的XML中的 “union all”部分为临时解决 “样本采集”用户看报告的问题，做完上传数据与样本绑定之后立即删除
 	List<Task> findTasksByUserCondition(Page page, @Param("userId") Integer userId,
 			@Param("condition") String condition, @Param("sort") Integer sort, @Param("sortDate") String sortDate,
 			@Param("sortBatch") String sortBatch, @Param("sortName") String sortName,

@@ -9,6 +9,9 @@
             width: 1000px;
             margin: auto;
         }
+        .navbar-nav>.open>a{
+            background: #f0f0f0!important;
+        }
     }
     ul{
         margin: 0;   
@@ -16,11 +19,14 @@
     ul > li{
         float: left;
         text-align: center;
-        a{
+        > a{
             display: inline-block;
             height: 50px;
             line-height: 50px;
             padding: 0px 20px;
+            &:hover,&:active{
+                background: #f0f0f0!important;
+            }
         }
         .label{
             position: absolute;

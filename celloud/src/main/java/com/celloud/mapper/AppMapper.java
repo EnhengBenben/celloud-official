@@ -23,6 +23,9 @@ public interface AppMapper {
 
     int updateByPrimaryKey(App record);
 
+	int insertUserAppRight(@Param("userId") Integer userId, @Param("appId") Integer appId,
+			@Param("authFrom") Integer authFrom, @Param("isAdd") Integer isAdd);
+
     /**
      * 获取已添加的APP数量
      * 

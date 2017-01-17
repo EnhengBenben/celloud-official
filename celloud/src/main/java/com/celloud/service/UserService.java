@@ -173,6 +173,17 @@ public interface UserService {
 	 */
 	public List<SecRole> getRolesByUserId(Integer userId);
 
+	/**
+	 * 查询authFrom授予userId的所有权限
+	 * 
+	 * @param userId
+	 * @param authFrom
+	 * @return
+	 * @author lin
+	 * @date 2017年1月9日上午10:59:39
+	 */
+	public List<SecRole> getRoles(Integer userId, Integer authFrom);
+
     /**
      * 查询用户所有的权限
      * 

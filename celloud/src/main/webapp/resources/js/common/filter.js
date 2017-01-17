@@ -101,22 +101,46 @@
   
   celloudApp.filter("taskPeriodFilter",function(){
     return function(period){
-      if(period == 0){
-        return "等待分析";
-      }else if(period == 1){
-        return "分析中";
-      }else if(period == 2){
-        return "完成";
-      }else if(period == 3){
-        return "数据不完整";
-      }else if(period == 4){
-        return "异常终止";
-      }else if(period == 5){
-        return "送样中";
-      }else if(period == 6){
-        return "实验中";
+      if(typeof period == "string" && period.indexOf(",")>=0){
+        var p = period.split(",");
+        var result = "";
+        for(var i=0; i<p.length; i++){
+          period=p[i];
+          if(period == 0){
+            result += "等待分析    ";
+          }else if(period == 1){
+            result += "分析中    ";
+          }else if(period == 2){
+            result += "完成    ";
+          }else if(period == 3){
+            result += "数据不完整    ";
+          }else if(period == 4){
+            result += "异常终止    ";
+          }else if(period == 5){
+            result += "送样中    ";
+          }else if(period == 6){
+            result += "实验中    ";
+          }
+        }
+        return result; 
+      }else{
+        if(period == 0){
+          return "等待分析";
+        }else if(period == 1){
+          return "分析中";
+        }else if(period == 2){
+          return "完成";
+        }else if(period == 3){
+          return "数据不完整";
+        }else if(period == 4){
+          return "异常终止";
+        }else if(period == 5){
+          return "送样中";
+        }else if(period == 6){
+          return "实验中";
+        }
+        return ""; 
       }
-      return "";
     }
   });
   celloudApp.filter("experStateFilter",function(){
@@ -135,5 +159,17 @@
         return "上机完成";
       }
     }
-  })
+  });
+  //报告已读样式过滤器
+  celloudApp.filter("reportReadFilter",function(){
+    return function(read){
+       return read == 1? "read" : "";
+    }
+  });
+  //查看的报告样式
+  celloudApp.filter("thisReportFilter",function(){
+    return function(thisReport){
+      return thisReport ? "this-report" : "";
+    }
+  });
 })();
