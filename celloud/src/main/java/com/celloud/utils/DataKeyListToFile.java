@@ -171,6 +171,15 @@ public class DataKeyListToFile {
 					canRunDataList.add(data_R1);
 					canRunDataList.add(data_R2);
 				}
+            } else if (fname_R1.contains(".tar.gz")) {
+                dataFileInfo = new StringBuffer();
+                dataFileInfo.append(data_R1.getOssPath() == null ? data_R1.getPath() : data_R1.getOssPath())
+                        .append("\t");
+                String dataListFile = getDataListFile(data_R1.getOssPath() != null);
+                FileTools.appendWrite(dataListFile, dataFileInfo.toString());
+                dataListFileMap.put(data_R1.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
+                dataReportNum++;
+                canRunDataList.add(data_R1);
 			}
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, dataReportNum.toString());
