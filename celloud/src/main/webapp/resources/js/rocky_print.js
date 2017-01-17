@@ -35,7 +35,7 @@ $(function() {
 		var url = $("#downloadPdfUrl").val();
 		var objId = $("#objId").val();
 		var datakey = $("#dataKey").val();
-		$.get(url,{"objId":objId,"dataKey":dataKey},function(data){
+		$.get(url,{"objId":objId,"datakey":datakey},function(data){
 			if(data == 1){
 				alert("下载失败,请联系管理员!");
 			}

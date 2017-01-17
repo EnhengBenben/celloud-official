@@ -155,7 +155,7 @@ public class ReportAction {
 	@ResponseBody
 	public Integer downRockyPdf(String dataKey, String objId) {
 		// 调用python生成pdf
-		String command = SparkPro.ROCKYPDF + " objId";
+		String command = SparkPro.ROCKYPDF + " " + objId;
 		String flag = PerlUtils.excutePerl(command);
 		if ("success".equals(flag)) {
 			// 进行下载
