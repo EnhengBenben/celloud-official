@@ -730,13 +730,13 @@ class RockyPdf:
         self.drawPara(birthday,ps,c,84,14,415,669)
         c.line(95,668,550,668)
         self.drawPara('样本类型：',ps,c,70,14,95,614)
-        self.drawPara(sampleType,ps,c,70,14,167,614)
+        self.drawPara(sampleType,ps,c,84,14,167,614)
         self.drawPara('样本编号：',ps,c,70,14,323,614)
-        self.drawPara(sampleId,ps,c,70,14,395,614)
+        self.drawPara(sampleId,ps,c,84,14,395,614)
         self.drawPara('送检日期：',ps,c,70,14,95,580)
-        self.drawPara(detectionDate,ps,c,70,14,167,580)
+        self.drawPara(detectionDate,ps,c,84,14,167,580)
         self.drawPara('报告日期：',ps,c,70,14,323,580)
-        self.drawPara(reportDate,ps,c,70,14,395,580)
+        self.drawPara(reportDate,ps,c,84,14,395,580)
         c.line(95,559,550,559)
         ps.firstLineIndent = 24
         ps.fontSize = 12
