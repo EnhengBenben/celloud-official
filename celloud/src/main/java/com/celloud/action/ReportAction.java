@@ -92,6 +92,7 @@ import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
 
@@ -152,11 +153,18 @@ public class ReportAction {
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downRockyPdf")
 	@ResponseBody
-	public Integer downRockyPdf(Integer userId, String dataKey) {
-		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
-		if (new File(filePath).exists()) {
-			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-			return 0;
+	public Integer downRockyPdf(String dataKey, String objId) {
+		// 调用python生成pdf
+		String command = SparkPro.ROCKYPDF + " objId";
+		String flag = PerlUtils.excutePerl(command);
+		if ("success".equals(flag)) {
+			// 进行下载
+			Integer userId = ConstantsData.getLoginUserId();
+			String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
+			if (new File(filePath).exists()) {
+				FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+				return 0;
+			}
 		}
 		return 1;
 	}

@@ -28,7 +28,9 @@
 				<section id="nav-baseinfo">
 					<form id="rockyBaseInfoForm" action="$base/report/updateRockyFilling">
 						<table class="table table-main baseinfo">
-							<input type="hidden" name="id" value="$!rocky.id">
+							<input id="objId" type="hidden" name="id" value="$!rocky.id">
+							<input id="downloadPdfUrl" type="hidden" name="downloadPdfUrl" value="$base/report/downRockyPdf">
+							<input id="dataKey" type="hidden" name="dataKey" value="$!{rocky.dataKey}">
 							<thead>
 								<tr>
 									<th>样本信息</th>
