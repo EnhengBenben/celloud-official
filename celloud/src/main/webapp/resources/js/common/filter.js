@@ -101,7 +101,7 @@
   
   celloudApp.filter("taskPeriodFilter",function(){
     return function(period){
-      if(period.indexOf(",")>=0){
+      if(typeof period == "string" && period.indexOf(",")>=0){
         var p = period.split(",");
         var result = "";
         for(var i=0; i<p.length; i++){

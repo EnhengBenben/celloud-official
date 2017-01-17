@@ -241,7 +241,7 @@
       templateUrl: "pages/rocky/rocky_upload.jsp",
       controller: "rockyUploadController"
     })
-    .when('/product/rocky/data',{
+    .when('/product/rocky/d',{
     	templateUrl: "pages/rocky/rocky_data.jsp",
     	controller: "rockyDataController"
     })

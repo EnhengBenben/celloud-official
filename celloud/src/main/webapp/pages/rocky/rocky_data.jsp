@@ -11,8 +11,8 @@
         <li>数据</li>
     </ol>
 	<div class="search-form" style="float: right;z-index: 99">
-	    <input style="border-radius: 20px;margin-bottom: 5px;margin-right: 21px;" id="data-condition-input" class="field" ng-keypress="conditionQuery($event)" ng-model="condition" type="text" placeholder="搜索" />
-	    <a id="data-condition-find" class="action">
+	    <input style="border-radius: 20px;margin-bottom: 5px;margin-right: 21px;height: 30px;width: 180px;font-size: 14px;padding-left: 35px;" id="data-condition-input" class="field" ng-keypress="conditionQuery($event)" ng-model="condition" type="text" placeholder="搜索" />
+	    <a id="data-condition-find" class="action" style="background: #2C3E50;font-size: 14px;height: 28px;width: 28px;">
 	        <i class="fa fa-search"></i>
 	    </a>
 	</div>

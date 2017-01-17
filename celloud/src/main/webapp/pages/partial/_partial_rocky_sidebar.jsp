@@ -10,8 +10,8 @@
 	      </li>
       </shiro:hasPermission>
       <shiro:hasPermission name="rocky:data">
-	      <li ng-class="{active: isActive('/product/rocky/data')}">
-	        <a di-href="#/product/rocky/data"><span>数据</span></a>
+	      <li ng-class="{active: isActive('/product/rocky/d')}">
+	        <a di-href="#/product/rocky/d"><span>数据</span></a>
 	      </li>
       </shiro:hasPermission>
       <shiro:hasPermission name="rocky:report">
