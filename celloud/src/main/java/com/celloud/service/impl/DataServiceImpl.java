@@ -73,8 +73,8 @@ public class DataServiceImpl implements DataService {
 	private RunService runService;
 	@Resource
 	private BoxApiService boxApiService;
-    @Resource
-    private SampleMapper sampleMapper;
+	@Resource
+	private SampleMapper sampleMapper;
 
 	@Override
 	public Integer countData(Integer userId) {
@@ -108,19 +108,18 @@ public class DataServiceImpl implements DataService {
 		if (result == null || result.intValue() == 0) {
 			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
 		}
-        DataFile data_s = dataFileMapper.selectByPrimaryKey(data.getFileId());
+		DataFile data_s = dataFileMapper.selectByPrimaryKey(data.getFileId());
 		Sample sample = null;
 		if (tagId.intValue() == 2) {
 			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), "_")[0],
-			        DataState.ACTIVE);
+					DataState.ACTIVE);
 		} else {
 			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0],
-			        DataState.ACTIVE);
+					DataState.ACTIVE);
 		}
-        if (sample != null) {
-            dataFileMapper.addFileSampleRelat(data.getFileId(),
-                    sample.getSampleId());
-        }
+		if (sample != null) {
+			dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
+		}
 		return dataFileMapper.updateDataInfoByFileId(data);
 	}
 
@@ -249,10 +248,10 @@ public class DataServiceImpl implements DataService {
 		return dataFileMapper.getDatasInProject(projectId);
 	}
 
-    @Override
-    public List<Map<String, Object>> getDatasMapInProject(Integer projectId) {
-        return dataFileMapper.getDatasMapInProject(projectId);
-    }
+	@Override
+	public List<Map<String, Object>> getDatasMapInProject(Integer projectId) {
+		return dataFileMapper.getDatasMapInProject(projectId);
+	}
 
 	@Override
 	public List<Map<String, String>> countDataFile(Integer userId) {
@@ -306,10 +305,9 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public PageList<Map<String, Object>> filterRockyList(Page page, String sample, String condition, String sidx,
-	        String sord) {
+			String sord) {
 		List<Map<String, Object>> lists = dataFileMapper.filterRockyList(page, ConstantsData.getLoginUserId(),
-		        DataState.ACTIVE,
-				ReportType.DATA, ReportPeriod.COMPLETE, sample, condition, sidx, sord);
+				DataState.ACTIVE, ReportType.DATA, ReportPeriod.COMPLETE, sample, condition, sidx, sord);
 		return new PageList<>(page, lists);
 	}
 
@@ -387,7 +385,7 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-    public List<Map<String, Object>> getDataFileFromTbTask(Integer projectId) {
+	public List<Map<String, Object>> getDataFileFromTbTask(Integer projectId) {
 		return this.dataFileMapper.getDataFileFromTbTask(projectId);
 	}
 
@@ -416,15 +414,17 @@ public class DataServiceImpl implements DataService {
 		long time = System.currentTimeMillis();
 		OSSUtils.moveObject(objectKey, newObjectKey, metadata);
 		logger.info("移动oss文件用时：{}", System.currentTimeMillis() - time);
-		time = System.currentTimeMillis();
 		String path = ConstantsData.getOfsPath() + newObjectKey;
-		data.setAnotherName(getAnotherName("", path, ""));
 		logger.info("文件：name={},path={}", data.getFileName(), path);
-		logger.info("获取anotherName用时：{}", System.currentTimeMillis() - time);
 		time = System.currentTimeMillis();
 		int fileFormat = new CheckFileTypeUtil().checkFileType(new File(path).getName(),
 				new File(path).getParentFile().getAbsolutePath());
 		logger.info("获取文件类型用时：{}", System.currentTimeMillis() - time);
+		if (fileFormat == FileFormat.BAM) {
+			time = System.currentTimeMillis();
+			data.setAnotherName(getAnotherName("", path, ""));
+			logger.info("获取anotherName用时：{}", System.currentTimeMillis() - time);
+		}
 		data.setFileFormat(fileFormat);
 		data.setOssPath(newObjectKey);
 		dataFileMapper.updateByPrimaryKeySelective(data);
@@ -435,10 +435,10 @@ public class DataServiceImpl implements DataService {
 		return dataId;
 	}
 
-    @Override
-    public Integer getSampleIdByDataKey(String dataKey) {
-        Long id = dataFileMapper.getSampleIdByDataKey(dataKey);
-        return id == null ? null : id.intValue();
-    }
+	@Override
+	public Integer getSampleIdByDataKey(String dataKey) {
+		Long id = dataFileMapper.getSampleIdByDataKey(dataKey);
+		return id == null ? null : id.intValue();
+	}
 
 }
