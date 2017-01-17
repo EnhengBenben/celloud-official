@@ -32,9 +32,13 @@ $(function() {
 		$("#rockyBaseInfoForm")[0].reset();
 	});
 	$("#downloadBtn").click(function(){
-		var url = "downRockyPdf";
-		$.get(url,{},function(data){
-			
+		var url = $("#downloadPdfUrl").val();
+		var objId = $("#objId").val();
+		var datakey = $("#dataKey").val();
+		$.get(url,{"objId":objId,"dataKey":dataKey},function(data){
+			if(data == 1){
+				alert("下载失败,请联系管理员!");
+			}
 		});
 	});
 });
