@@ -59,7 +59,7 @@
 			          <img src="${pageContext.request.contextPath }/app/image?file=rocky.png" alt="华木兰" title="华木兰">
 			        </div>
 			      </a>
-			      <a href="${pageContext.request.contextPath }/index#/product/rocky/report" ng-if="userProduct.rockyupload==false">
+			      <a href="${pageContext.request.contextPath }/index#/product/rocky/report" ng-if="userProduct.rockyreport==true">
 			        <div class="inner">
 			          <img src="${pageContext.request.contextPath }/app/image?file=rocky.png" alt="华木兰" title="华木兰">
 			        </div>

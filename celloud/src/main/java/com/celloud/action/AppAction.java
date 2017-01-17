@@ -277,6 +277,7 @@ public class AppAction {
             map.put("onlyBSI", false);
         }
 		map.put("rockyupload", ConstantsData.hasResource(UserResource.ROCKYUPLOAD));
+		map.put("rockyreport", ConstantsData.hasResource(UserResource.ROCKYREPORT));
 		return map;
 	}
 
