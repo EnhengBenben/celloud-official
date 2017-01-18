@@ -13,7 +13,7 @@ from app.MIB import MIB
 from app.BSI import BSI
 from app.Rocky import Rocky
 from app.AccuSeqa2 import AccuSeqa2
-from app.RockyPdf import RockyPdf
+from app.Rocky_PDF import RockyPdf
 
 # command: python *.py basePath userId appId dataKey projectId
 # eg : python task_over.py '/share/data/webapps/Tools/upload/' 88 110 20151119290394,20151119898677 proID
