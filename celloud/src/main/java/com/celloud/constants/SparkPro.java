@@ -51,6 +51,6 @@ public class SparkPro {
 	/**
 	 * rocky生成pdf路径
 	 */
-	public static final String ROCKYPDF = "python /share/biosoft/perl/PGS_MG/python/app/Rocky_PDF.py";
+	public static final String ROCKYPDF = "python /share/biosoft/perl/PGS_MG/python/rockypdf.py";
 
 }
