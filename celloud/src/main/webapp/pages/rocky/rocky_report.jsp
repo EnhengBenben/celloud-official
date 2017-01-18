@@ -22,8 +22,8 @@
 		        </div>
 		        <div id="to-sl-batch">
 		            <div id="batch-lists" class="sl-val">
-                        <div ng-repeat="batch in batchList" class="sl-val-content" ng-click="batchLists('batchId' + $index)">
-                            <div class="celicon on_check checkbox checkbox-un hide" id="batchId{{$index}}"></div>
+                        <div ng-repeat="batch in batchList" class="sl-val-content">
+                            <div class="celicon on_check checkbox checkbox-un hide" id="batchId{{$index}}" ng-click="batchLists('batchId' + $index)"></div>
                             <a data-click="report-batch-search" ng-click="reportBatchSearch('batchId' + $index)" href="javascript:void(0)">
                                 <span>{{batch}}</span>
                             </a>
