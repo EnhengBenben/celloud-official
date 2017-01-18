@@ -266,6 +266,7 @@ public class TaskAction {
 		String endDate = DateUtil.getDateToString(task.getEndDate(), DateUtil.YMDHMS);
 		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.RUN_OVER.userName.name(), username)
+						.set(EmailParams.RUN_OVER.home.name(), ConstantsData.getContextUrl())
 						.set(EmailParams.RUN_OVER.projectName.name(), tipsName)
 						.set(EmailParams.RUN_OVER.app.name(), appName).set(EmailParams.RUN_OVER.start.name(), startDate)
 						.set(EmailParams.RUN_OVER.end.name(), endDate));
@@ -420,6 +421,7 @@ public class TaskAction {
 		String endDate = report.getEndDate() == null ? null
 				: DateUtil.getDateToString(report.getEndDate(), DateUtil.YMDHMS);
 		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER).substitutionVars(AliSubstitution.sub()
+				.set(EmailParams.RUN_OVER.home.name(), ConstantsData.getContextUrl())
 				.set(EmailParams.RUN_OVER.userName.name(), username).set(EmailParams.RUN_OVER.data.name(), dataKey)
 				.set(EmailParams.RUN_OVER.projectName.name(), projectName).set(EmailParams.RUN_OVER.app.name(), appName)
 				.set(EmailParams.RUN_OVER.start.name(), startDate).set(EmailParams.RUN_OVER.end.name(), endDate));

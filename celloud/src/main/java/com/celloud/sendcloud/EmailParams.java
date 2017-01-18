@@ -15,7 +15,7 @@ public class EmailParams {
 	 * @date 2016年6月16日 下午6:03:32
 	 */
 	public static enum USER_REGISTER {
-		url;
+		home, url;
 	}
 
 	/**
@@ -25,22 +25,23 @@ public class EmailParams {
 	 * @date 2016年6月16日 下午6:03:41
 	 */
 	public static enum PWD_FIND {
-		url;
+		home, url;
 	}
 
 	public static enum CONFIRM_OLD_EMAIL {
-		url;
+		home, url;
 	}
 
 	public static enum CONFIRM_NEW_EMAIL {
-		url;
+		home, url;
 	}
 
 	public static enum RECHARGE {
-		date, adCharge, cashBalance;
+		home, date, adCharge, cashBalance;
 	}
 
 	public static enum PROJECT_SHARE {
+		home,
 		/**
 		 * 被共享人
 		 */
@@ -60,7 +61,7 @@ public class EmailParams {
 	}
 
 	public static enum RUN_OVER {
-		userName, projectName, data, app,
+		home, userName, projectName, data, app,
 		/**
 		 * 开始时间
 		 */
@@ -72,14 +73,15 @@ public class EmailParams {
 	}
 
 	public static enum UPLOAD_OVER {
-		userName, dataName;
+		home, userName, dataName;
 	}
 
 	public static enum EXCEPTION {
-		context;
+		home, context;
 	}
 
 	public static enum FEADBACK {
+		home,
 		/**
 		 * 标题
 		 */
@@ -106,6 +108,7 @@ public class EmailParams {
      * 用户申请发票
      */
     public static enum INVOICE {
+		home,
         /**
          * 用户名
          */

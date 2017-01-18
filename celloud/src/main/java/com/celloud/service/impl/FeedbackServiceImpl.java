@@ -102,6 +102,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.FEADBACK.title.name(), feedback.getTitle())
 						.set(EmailParams.FEADBACK.start.name(),
 								DateUtil.getDateToString(feedback.getCreateDate(), DateUtil.YMDHMS))
+						.set(EmailParams.FEADBACK.home.name(), ConstantsData.getContextUrl())
 						.set(EmailParams.FEADBACK.userName.name(), feedback.getUsername())
 						.set(EmailParams.FEADBACK.email.name(), feedback.getEmail())
 						.set(EmailParams.FEADBACK.context.name(), feedback.getContent())
