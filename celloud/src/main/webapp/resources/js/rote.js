@@ -9,9 +9,9 @@ $(document).ready(function() {
 			observeParents: true //修改swiper的父元素时，自动初始化swiper
 		})
 	//返回顶部
-	$('.pages').bind('touchend',function(){
+	/*$('.pages').bind('touchend',function(){
 		swiper.slideTo(0, 1000, false);//切换到第一个slide，速度为1秒
-	})
+	})*/
 	//控制页面滚动
 	var startScroll, touchStart, touchCurrent;
 	swiper.slides.on('touchstart', function(e) {
@@ -189,7 +189,7 @@ $(document).ready(function() {
 					p1 = '<div class="report_title">' +
 						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3.png"/>' +
 						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3-1.png" alt="" title="" />' +
-						'<img style="display:block;width:3.3rem;" src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 2.png" alt="" title="" />' +
+						'<img style="display:block;width:3.3rem;margin-bottom:0.61rem;" src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 2.png" alt="" title="" />' +
 						'</div>';
 					$('.h_lastpage_hide').hide()
 				} else {
