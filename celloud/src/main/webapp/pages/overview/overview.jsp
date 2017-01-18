@@ -19,35 +19,35 @@
 			      </a>
 			    </li>
 			    <li ng-if="userProduct.app133==133">
-                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/133/ / / / / / / / / / / /">
+                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/133/1/20/all/all/all/all/all/0/asc/asc/asc/desc">
                     <div class="inner">
                       <img src="${pageContext.request.contextPath }/app/image?file=bsi.png" alt="百菌探" title="百菌探">
                     </div>
                   </a>
                 </li>
                 <li ng-if="userProduct.app134==134">
-                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/134/ / / / / / / / / / / /">
+                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/134/1/20/all/all/all/all/all/0/asc/asc/asc/desc">
                     <div class="inner">
                       <img src="${pageContext.request.contextPath }/app/image?file=bsi.png" alt="百菌探" title="百菌探">
                     </div>
                   </a>
                 </li>
                 <li ng-if="userProduct.app135==135">
-                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/135/ / / / / / / / / / / /">
+                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/135/1/20/all/all/all/all/all/0/asc/asc/asc/desc">
                     <div class="inner">
                       <img src="${pageContext.request.contextPath }/app/image?file=bsi.png" alt="百菌探" title="百菌探">
                     </div>
                   </a>
                 </li>
                 <li ng-if="userProduct.app136==136">
-                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/136/ / / / / / / / / / / /">
+                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/136/1/20/all/all/all/all/all/0/asc/asc/asc/desc">
                     <div class="inner">
                       <img src="${pageContext.request.contextPath }/app/image?file=bsi.png" alt="百菌探" title="百菌探">
                     </div>
                   </a>
                 </li>
                 <li ng-if="userProduct.app137==137">
-                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/137/ / / / / / / / / / / /">
+                  <a href="${pageContext.request.contextPath }/index#/product/bactive/report/137/1/20/all/all/all/all/all/0/asc/asc/asc/desc">
                     <div class="inner">
                       <img src="${pageContext.request.contextPath }/app/image?file=bsi.png" alt="百菌探" title="百菌探">
                     </div>
