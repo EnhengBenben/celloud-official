@@ -13,6 +13,7 @@ from app.MIB import MIB
 from app.BSI import BSI
 from app.Rocky import Rocky
 from app.AccuSeqa2 import AccuSeqa2
+from app.Rocky_PDF import RockyPdf
 
 # command: python *.py basePath userId appId dataKey projectId
 # eg : python task_over.py '/share/data/webapps/Tools/upload/' 88 110 20151119290394,20151119898677 proID
@@ -66,5 +67,8 @@ if myDB:
         result = dict(result, **base)
         moDB = mongo.getInstance()
         objId = moDB.put(result, collection_dic[int(appId)])
+        if appId == '123':
+            RockyPdf = RockyPdf.getInstance()
+            RockyPdf.createPDF(objId)
         print objId
 

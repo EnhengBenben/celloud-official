@@ -29,7 +29,7 @@
 					<form id="rockyBaseInfoForm" action="$base/report/updateRockyFilling">
 						<table class="table table-main baseinfo">
 							<input id="objId" type="hidden" name="id" value="$!rocky.id">
-							<input id="downloadPdfUrl" type="hidden" name="downloadPdfUrl" value="$base/report/downRockyPdf">
+							<input id="checkPdf" type="hidden" name="checkPdf" value="$base/report/checkPdf">
 							<input id="dataKey" type="hidden" name="dataKey" value="$!{rocky.dataKey}">
 							<thead>
 								<tr>
@@ -381,7 +381,7 @@
 				<br>
 				<button class="btn btn-success" id="printBtn">打印</button>
 				<br>
-                <button class="btn btn-success" id="downloadBtn">下载</button>
+                <a onclick="return checkPdf();" href="javascript:void(0)" class="btn btn-success" style="padding-top:5px;" id="downloadBtn">下载</a>
 			</div>
 			<div class="affix" style="text-align: left; bottom: 100px;">
 				<ul class="nav">
@@ -417,4 +417,29 @@
 		</div>
 	</div>
 </div>
+<script>
+function checkPdf(){
+    var url = $("#checkPdf").val();
+    var dataKey = $("#dataKey").val();
+    var data = {"dataKey":dataKey};
+    $.ajax({
+        url:url,
+        type:"GET",
+        async:false,
+        data:data,
+        success:function(data){
+            if(data == 0){
+                $("#downloadBtn").prop("href","javascript:void(0)");
+                alert("您的pdf正在生成中,请稍后再试!")
+                return false;
+            }else{
+                $("#downloadBtn").prop("href","$base/report/downRockyPdf?objId=$!rocky.id&dataKey=$!rocky.dataKey");
+                return true;
+            }
+        },
+        error:function(data){
+        }
+    });
+}
+</script>
 #end #extends("templates/report/default/123/layout.vm")

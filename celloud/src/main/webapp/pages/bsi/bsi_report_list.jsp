@@ -21,8 +21,8 @@
 				        </div>
 					    <div id="to-sl-batch" ng-if="bsiReportParams.batch == null">
 					        <div id="batch-lists" class="sl-val">
-				                <div class="sl-val-content" ng-repeat="batch in batchList" ng-click="batchLists('batchId' + $index)">
-                                    <div class="celicon checkbox checkbox-un hide" id="batchId{{$index}}"></div>
+				                <div class="sl-val-content" ng-repeat="batch in batchList">
+                                    <div class="celicon checkbox checkbox-un hide" id="batchId{{$index}}" ng-click="batchLists('batchId' + $index)"></div>
                                     <a ng-click="reportBatchSearch('batchId' + $index)" href="javascript:void(0)"><span>{{batch}}</span></a>
                                 </div>
 						        <div class="multisl-btns hide">

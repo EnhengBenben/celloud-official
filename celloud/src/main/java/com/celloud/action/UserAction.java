@@ -437,7 +437,9 @@ public class UserAction {
 				.replaceAll("resetcode", randomCode);
 
 		AliEmail aliEmail = AliEmail.template(EmailType.CONFIRM_OLD_EMAIL)
-				.substitutionVars(AliSubstitution.sub().set(EmailParams.CONFIRM_OLD_EMAIL.url.name(), url));
+				.substitutionVars(AliSubstitution.sub()
+						.set(EmailParams.CONFIRM_OLD_EMAIL.home.name(), ConstantsData.getContextUrl())
+						.set(EmailParams.CONFIRM_OLD_EMAIL.url.name(), url));
 		emailUtils.simpleSend(aliEmail, email);
 		return 0;
 	}
@@ -538,7 +540,9 @@ public class UserAction {
 		String url = ResetPwdUtils.toActiveEmailPath.replaceAll("username", user.getUsername())
 				.replaceAll("resetcode", randomCode).replaceAll("newemail", email);
 		AliEmail aliEmail = AliEmail.template(EmailType.CONFIRM_NEW_EMAIL)
-				.substitutionVars(AliSubstitution.sub().set(EmailParams.CONFIRM_NEW_EMAIL.url.name(), url));
+				.substitutionVars(AliSubstitution.sub()
+						.set(EmailParams.CONFIRM_NEW_EMAIL.home.name(), ConstantsData.getContextUrl())
+						.set(EmailParams.CONFIRM_NEW_EMAIL.url.name(), url));
 		emailUtils.simpleSend(aliEmail, email);
 		return 0;
 	}
