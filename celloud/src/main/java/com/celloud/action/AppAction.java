@@ -276,7 +276,11 @@ public class AppAction {
 		} else {
             map.put("onlyBSI", false);
         }
-		map.put("rockyupload", ConstantsData.hasResource(UserResource.ROCKYUPLOAD));
+		boolean hasUpload = ConstantsData.hasResource(UserResource.ROCKYUPLOAD);
+		map.put("rockyupload", hasUpload);
+		if (!hasUpload) {
+			map.put("rockyreport", ConstantsData.hasResource(UserResource.ROCKYREPORT));
+		}
 		return map;
 	}
 

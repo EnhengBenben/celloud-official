@@ -197,7 +197,7 @@ public class LoginAction {
 			Set<String> permissions = userService.findPermissions(loginUser.getUserId());
 			if (permissions.contains(UserResource.ROCKYUPLOAD)) {
 				mv.addObject("route", "#/product/rocky/upload");
-			} else {
+			} else if (permissions.contains(UserResource.ROCKYREPORT)) {
 				mv.addObject("route", "#/product/rocky/report");
 			}
 		} else if (bsiNum.intValue() == 1 && !rocky) {

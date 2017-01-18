@@ -11,4 +11,8 @@ public class UserResource {
 	 * 华木兰上传
 	 */
 	public static final String ROCKYUPLOAD = "rocky:upload";
+	/**
+	 * 华木兰报告
+	 */
+	public static final String ROCKYREPORT = "rocky:report";
 }

@@ -8,7 +8,7 @@
         <li>CelLoud</li>
         <li>我的产品</li>
         <li>百菌探</li>
-        <li><a style="color: #969696;" href="${pageContext.request.contextPath }/index#/product/bactive/report/{{appId}}">报告</a></li>
+        <li><a style="color: #969696;" ng-click="goReportList()">报告</a></li>
         <li>查看报告</li>
     </ol>
     <div class="content">
@@ -322,7 +322,7 @@
                   </li>
                   <li>
                     <label>原始数据：</label>
-                    <span>
+                    <span style="width: 150px;max-width: 150px;">
                         <p ng-repeat="data in bsi.data">{{data.fileName}}&nbsp;&nbsp;</p>
                     </span>
                     <a href="javascript:void(0)">（查看原始数据信息）</a>
