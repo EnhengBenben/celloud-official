@@ -23,4 +23,6 @@ public interface SampleLogMapper {
     int updateStateBySampleId(@Param("sampleId") Integer sampleId,
             @Param("state") Integer state,
             @Param("experState") Integer experState);
+
+    int deleteBySampling(Integer sampleId);
 }
