@@ -63,7 +63,6 @@ $(document).ready(function() {
 		 port=':8080';
 		 context = '/celloud';
 	 }
-	 
 	//峰图服务器地址base
 	var fengtuBase = 'https://www.celloud.cc';
 	 var webService=protocol+"//"+hostname+port+"/celloud/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');
@@ -190,7 +189,7 @@ $(document).ready(function() {
 					p1 = '<div class="report_title">' +
 						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3.png"/>' +
 						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3-1.png" alt="" title="" />' +
-						'<img style="display:block;width:3.3rem;margin-bottom:0.61rem;" src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 2.png" alt="" title="" />' +
+						'<img style="display:block;width:3.3rem;" src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 2.png" alt="" title="" />' +
 						'</div>';
 					$('.h_lastpage_hide').hide()
 				} else {
