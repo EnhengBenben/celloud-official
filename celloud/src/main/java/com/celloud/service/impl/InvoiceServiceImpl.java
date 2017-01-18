@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
+import com.celloud.constants.ConstantsData;
 import com.celloud.mail.EmailUtils;
 import com.celloud.mapper.InvoiceMapper;
 import com.celloud.mapper.RechargeMapper;
@@ -51,7 +52,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         rechargeMapper.updateRechargeInvoiceId(invoice.getId(), ids);
         // 向celloud发送邮件
 		AliEmail aliEmail = AliEmail.template(EmailType.INVOICE)
-				.substitutionVars(AliSubstitution.sub().set(EmailParams.INVOICE.username.name(), username));
+				.substitutionVars(AliSubstitution.sub().set(EmailParams.INVOICE.username.name(), username)
+						.set(EmailParams.INVOICE.home.name(), ConstantsData.getContextUrl()));
 		aliEmailUtils.simpleSend(aliEmail, emailUtils.getFeedbackMailTo());
         return num;
     }

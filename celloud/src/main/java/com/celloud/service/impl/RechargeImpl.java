@@ -59,6 +59,7 @@ public class RechargeImpl implements RechargeService {
 		//构造邮件内容
 		AliEmail aliEmail = AliEmail.template(EmailType.RECHARGE)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.RECHARGE.date.name(), stringDate)
+						.set(EmailParams.RECHARGE.home.name(), ConstantsData.getContextUrl())
 						.set(EmailParams.RECHARGE.adCharge.name(), amount.toString())
 						.set(EmailParams.RECHARGE.cashBalance.name(), balances.toString()));
 		//构造微信发送消息
