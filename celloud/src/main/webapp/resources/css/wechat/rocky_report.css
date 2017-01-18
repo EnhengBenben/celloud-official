@@ -860,7 +860,15 @@ html {
 }
 
 .p9-tab {
-	border:0;
+	border: 0;
+	width: 7rem;
+	margin-left: -0.25rem;
+	width: 100%;
+	text-align: center;
+	border-collapse: collapse;
+	border-spacing: 1;
+	border-spacing: 0;
+	margin: 0 auto;
 }
 
 .p9-content {
@@ -967,10 +975,18 @@ html {
 }
 
 .p10_tab {
-    width: 6.9rem;
-    height: auto;
-    border: 0;
-    border-top: 1px solid #9f7bad;
+	border: 0;
+	width: 100%;
+	height: auto;
+	border-top: 1px solid #9f7bad;
+	width: 7rem;
+	margin-left: -0.25rem;
+	width: 100%;
+	text-align: center;
+	border-collapse: collapse;
+	border-spacing: 1;
+	border-spacing: 0;
+	margin: 0 auto;
 }
 
 .p10_tab_body {
