@@ -13,6 +13,7 @@ document.ready=function(){
 		swiper.slideTo(0, 1000, false);//切换到第一个slide，速度为1秒
 	})*/
 	//控制页面滚动
+	var swiper;
 	var startScroll, touchStart, touchCurrent;
 	swiper.slides.on('touchstart', function(e) {
 		startScroll = this.scrollTop;
@@ -211,7 +212,7 @@ document.ready=function(){
 				$('.p1').html(p1);
 			}
 		//初始化是wiper
-		var swiper = new Swiper(".swiper-container", {
+		 swiper = new Swiper(".swiper-container", {
 			direction: 'vertical',
 			// 如果需要分页器
 			pagination: '.swiper-pagination',

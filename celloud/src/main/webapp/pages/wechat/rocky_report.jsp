@@ -322,6 +322,6 @@
         <script type="text/javascript">
 		     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 		</script>
-        <script src="<%=request.getContextPath()%>/js/rote.js?v=3.4" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/rote.js?v=3.5" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>
