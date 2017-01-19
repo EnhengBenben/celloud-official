@@ -1,5 +1,5 @@
 document.ready=function(){
-/*	var swiper = new Swiper(".swiper-container", {
+	var swiper = new Swiper(".swiper-container", {
 			direction: 'vertical',
 			// 如果需要分页器
 			pagination: '.swiper-pagination',
@@ -7,13 +7,12 @@ document.ready=function(){
 			autoHeight: true,
 			observer: true, //修改swiper自己或子元素时，自动初始化swiper
 			observeParents: true //修改swiper的父元素时，自动初始化swiper
-		})*/
+		})
 	//返回顶部
 	/*$('.pages').bind('touchend',function(){
 		swiper.slideTo(0, 1000, false);//切换到第一个slide，速度为1秒
 	})*/
 	//控制页面滚动
-	var swiper;
 	var startScroll, touchStart, touchCurrent;
 	swiper.slides.on('touchstart', function(e) {
 		startScroll = this.scrollTop;
@@ -211,16 +210,9 @@ document.ready=function(){
 				$('.tab_significance').append(tab2);
 				$('.p1').html(p1);
 			}
-		//初始化是wiper
-		 swiper = new Swiper(".swiper-container", {
-			direction: 'vertical',
-			// 如果需要分页器
-			pagination: '.swiper-pagination',
-			paginationType: 'fraction',
-			autoHeight: true,
-			observer: true, //修改swiper自己或子元素时，自动初始化swiper
-			observeParents: true //修改swiper的父元素时，自动初始化swiper
-		})
+
 		}
+		
+		//---------------
 	});
 }
