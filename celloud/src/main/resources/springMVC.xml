@@ -310,7 +310,7 @@
 		<property name="config" ref="producerConfig"></property>
 	</bean>
 	<bean id="producerUtil" class="com.celloud.common.mq.ProducerUtil">
-		<property name="producer" ref="messageProducer"></property>
+		<property name="producer" ref="messageProducer" />
 		<property name="topics">
 			<bean class="com.celloud.common.mq.entity.Topics">
 				<property name="userNotice" value="user-message" />
