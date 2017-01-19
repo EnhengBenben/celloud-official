@@ -254,6 +254,7 @@ public class RunServiceImpl implements RunService {
 			taskService.saveTaskDataRelat(taskId, dataIds);
 			if (AppDataListType.MQ_RUN.contains(appId)) {
 				AppSubmitUtil.mq(app.getCode(), taskId, userId, datas);
+				taskService.updateToRunning(taskId);
 			} else if (runCheckIsWait(app)) {
 				if (AppDataListType.API_RUN.contains(appId)) {
 					AppSubmitUtil.http(appId, dataListFile, appPath, projectId);
