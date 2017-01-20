@@ -9,9 +9,9 @@ document.ready=function(){
 			observeParents: true //修改swiper的父元素时，自动初始化swiper
 		})
 	//返回顶部
-	$('.pages').bind('touchend',function(){
+	/*$('.pages').bind('touchend',function(){
 		swiper.slideTo(0, 1000, false);//切换到第一个slide，速度为1秒
-	})
+	})*/
 	//控制页面滚动
 	var startScroll, touchStart, touchCurrent;
 	swiper.slides.on('touchstart', function(e) {
