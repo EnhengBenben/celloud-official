@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
         <title>CelLoud华木兰报告</title>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=3.2" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=3.3" />
     </head>
 
     <body>
@@ -89,8 +89,8 @@
 				</div>
 				<!--------page4--------->
 				<div class="main swiper-slide p4 ">
+					<img class="backImg1" src="<%=request.getContextPath()%>/images/wechat/rocky_report/04.Page 1.png" />
 					<div class="p4_content">
-						<img class="backImg1" src="<%=request.getContextPath()%>/images/wechat/rocky_report/04.Page 1.png" />
 						<p>我们向您致敬！</p>
 						<p>在健康管理上态度积极并作出明智选择，不仅是勇气，更是责任。我们愿陪您一起迈出健康管理的第一步。</p>
 						<p>作为您个人健康管理的重要参考，BRCA基因检测报告能协助您评估自身罹患遗传性乳腺癌的风险。报告基于您提供的检测样品，经过精密的基因测序和专业的数据分析，同时结合最新的科学研究成果，专业、客观地解释您的基因与已知遗传性乳腺癌突变之间的关系，用以协助您与您的健康管理顾问作出准确的健康评估和管理规划。</p>
@@ -115,8 +115,8 @@
 				</div>-->
 				<!--------page6--------->
 				<div class="main swiper-slide">
-					<div class="p6_content_top">
 					 <img class="backImg6" src="<%=request.getContextPath()%>/images/wechat/rocky_report/06.Page 1.png" />
+					<div class="p6_content_top">
 						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_06.png" />
 					</div>
 					<div class="p6_content_bottom">
@@ -167,8 +167,8 @@
 				</div>
 				<!--------page8--------->
 				<div class="main swiper-slide">
-					<div class="p8_content">
 					 <img class="backImg8" src="<%=request.getContextPath()%>/images/wechat/rocky_report/08.Page 1.png" />
+					<div class="p8_content">
 						<div>
 							根据遗传学“中心法则”，遗传信息由DNA开始最终传向蛋白质，蛋白分子共同协作使我们的身体正常运转。发生有害突变的DNA产生异常的蛋白（蛋白分子大小或分子结构发生变化），不能行使其正常功能，最终可能导致机体发生病变。
 						</div>
@@ -228,8 +228,8 @@
 				</div>
 				<!--------page11--------->
 				<div class="main swiper-slide">
+					 <img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 1.png" />
 					<div class="p11-content">
-     					<img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 1.png" />
 						<div>人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。<span style="font-style: italic;font-family: 'times new roman';">BRCA1/BRCA2</span>突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</div>
 						<div><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_26.png" /></div>
 						<div>本次检测在您的乳腺癌关键基因<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>中未检测到致病突变，在大多数情况下，您的亲属不需要进行这两个基因的突变筛查。在有乳腺癌家族史的情况下，为了分析家族遗传风险信息，建议确诊为乳腺癌患者的直系亲属接受此基因的突变检测。</div>
@@ -237,8 +237,8 @@
 				</div>
 				<!--------page12--------->
 				<div class="main swiper-slide">
+					  <img class="backImg12" src="<%=request.getContextPath()%>/images/wechat/rocky_report/12.Page 1.png" />
 					<div class="p12-content">
-					    <img class="backImg12" src="<%=request.getContextPath()%>/images/wechat/rocky_report/12.Page 1.png" />
 						<span>性别和年龄</span>
 						<div>女性和年龄增长是发生乳腺癌的主要危险因素。女性一生都有发生乳腺癌的风险，风险大约是男性的100倍。70岁女性患乳腺癌的短期风险大约是30岁女性的10倍。</div>
 						<span>乳腺癌家族史</span>
@@ -250,8 +250,8 @@
 				</div>
 				<!--------page13--------->
 				<div class="main swiper-slide">
+					  <img class="backImg13" src="<%=request.getContextPath()%>/images/wechat/rocky_report/12.Page 1.png" />
 					<div class="p13-content">
-					    <img class="backImg13" src="<%=request.getContextPath()%>/images/wechat/rocky_report/12.Page 1.png" />
 						<span>主要遗传易感性</span>
 						<div>确凿证据表明，有乳腺癌相关遗传基因突变的女性患病风险升高，取决于基因突变、家族史和其他影响基因表达的危险因素。</div>
 						<span>乳腺密度</span>
@@ -264,8 +264,8 @@
 				</div>
 				<!--------page14--------->
 				 <div class="main swiper-slide">
-                    <div class="p14-content">
                     <img class="backImg14" src="<%=request.getContextPath()%>/images/wechat/rocky_report/14.Page 1.png" />
+                    <div class="p14-content">
                         <span><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/14.wine.png">避免饮酒</span>
                         <div>饮酒女性患乳腺癌的风险较很少饮酒者高，这种风险在绝经前女性中最为显著。目前认为，酒精可刺激体内雌激素水平上升，与乳腺癌发生有关。因此,女性尤其是绝经前的女性，应戒酒或少饮酒。</div>
                         <span><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/14.food.png">合理膳食</span>
@@ -280,8 +280,8 @@
 				</div>
 				<!--------page15--------->
 				<div class="main swiper-slide">
+					 <img class="backImg15" src="<%=request.getContextPath()%>/images/wechat/rocky_report/15.Page 1.png" />
 					<div class="p15-content">
-					 	<img class="backImg15" src="<%=request.getContextPath()%>/images/wechat/rocky_report/15.Page 1.png" />
 						<p><b>【1】</b><i>Holly Yan (2013-05-14). "What's the gene that led to Angelina Jolie's double mastectomy?". Health. CNN.</i></p>
 						<p><b>【2】</b><i> "BRCA1 and BRCA2: Cancer Risk and Genetic Testing". National Cancer Institute. 29 May 2009.</i></p>
 						<p><b>【3】</b><i>effrey N. Weitzel, Veronica I. Lagos, Carey A. Cullinane, Patricia J. Gambol, Julie O. Culver, Kathleen R. Blazer, Melanie R. Palomares, Katrina J. Lowstuter, Deborah J. MacDonald (2007). "Limited Family Structure and BRCA Gene Mutation Status in Single Cases of Breast Cancer". Journal of the American Medical Association 297 (23): 2587–2595. doi:10.1001/jama.297.23.2587</i></p>
@@ -297,8 +297,8 @@
 				</div>
 				<!--------page16--------->
 				<div class="main swiper-slide">
+					<img class="backImg16" src="<%=request.getContextPath()%>/images/wechat/rocky_report/16.Page 1.png" />
 					<div class="p16-content">
-						<img class="backImg16" src="<%=request.getContextPath()%>/images/wechat/rocky_report/16.Page 1.png" />
 						<p>本检测的意义是通过基因测序了解遗传背景下患有某癌症的风险情况，如能在疾病未发生之前改变生活方式，积极地干预、预防，可以延缓或者阻止该疾病的发生，建议在疾病未发生前按照健康建议养成良好的生活习惯。</p>
 						<p>癌症遗传风险评估不等于临床诊断，其检测结果不能作为判断是否患有癌症的标准。即某癌种易感基因检测结果阳性或阴性，只代表受检者患病的风险较高或较低，而不代表其已经患有该癌症或不会患有该癌症。癌症遗传风险评估结果可作为临床医生诊断疾病时的参考资料。</p>
 						<p>检测结果为高风险或较高风险时，提示您较他人更易罹患此类癌症，但并不代表必定患此癌症。受检测者依据检测结果所做出的民亊行为，由受检者自行承担一切法律后果。</p>
@@ -310,6 +310,7 @@
 				<div class="main swiper-slide h_lastpage_hide">
 					<div class="h_lastpage">
 						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/last.png">
+
 					</div>
 				</div>
 			</div>
@@ -321,6 +322,6 @@
         <script type="text/javascript">
 		     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 		</script>
-        <script src="<%=request.getContextPath()%>/js/rote.js?v=3.8" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/rote.js?v=3.9" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>
