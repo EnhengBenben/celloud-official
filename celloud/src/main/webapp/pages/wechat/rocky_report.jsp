@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
         <title>CelLoud华木兰报告</title>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=2.6" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=3.4" />
     </head>
 
     <body>
@@ -322,6 +322,6 @@
         <script type="text/javascript">
 		     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 		</script>
-        <script src="<%=request.getContextPath()%>/js/rote.js?v=3.2" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/rote.js?v=4.0" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>
