@@ -201,7 +201,7 @@ public class LoginAction {
 				mv.addObject("route", "#/product/rocky/report");
 			}
 		} else if (bsiNum.intValue() == 1 && !rocky) {
-			mv.addObject("route", "#/product/bactive/report/" + bsiId);
+			mv.addObject("route", "#/product/bactive/report/" + bsiId + "/1/20/all/all/all/all/all/0/asc/asc/asc/desc");
 		}
 		return mv;
 	}
