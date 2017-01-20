@@ -102,27 +102,27 @@ html {
 }
 
 .report_title img:nth-child(1) {
+	display: block;
 	margin: 0 auto;
 	margin-top: 3.1rem;
 	width: 2.04rem;
     height: 0.84rem;
-	display: block;
 }
 
 .report_title img:nth-child(2) {
+	display: block;
 	margin: 0 auto;
 	margin-top: 0.6rem;
 	width: 4.36rem;
     height: 1.2rem;
-	display: block;
 }
 
 .report_title img:nth-child(3) {
-	margin: 0 auto;
-	margin-top: 4.45rem;
-	width: 3.62rem;
-/* 	height: 0.28rem; */
 	display: block;
+	margin: 0 auto;
+/* 	height: 0.28rem; */
+	width: 3.62rem;
+	margin-top: 4.45rem;
 }
 
 .test_title {
@@ -717,6 +717,7 @@ html {
 
 .p12-content {
 	width: 6.9rem;
+	height: 11rem;
 	margin: 1.55rem 0.3rem 0.61rem 0.3rem;
 }
 
@@ -811,7 +812,7 @@ html {
 }
 
 .p15-content {
-	
+	height: 13.34rem;
 	margin: 1.65rem 0 0.4rem 0.3rem;
 }
 
@@ -865,7 +866,7 @@ html {
 
 .p9-content {
 	width: 7rem;
-    height: auto;
+    height: 13.34rem;
     margin: 0.4rem auto;
     margin-bottom: 0.61rem;
 }
@@ -939,7 +940,7 @@ html {
 
 .p10-content {
 	width: 6.9rem;
-	height: auto;
+	height: 11rem;
 	margin: 1.86rem 0 0.61rem 0.3rem;
 }
 
