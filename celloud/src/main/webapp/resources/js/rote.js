@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.ready=function(){
 	var swiper = new Swiper(".swiper-container", {
 			direction: 'vertical',
 			// 如果需要分页器
@@ -7,7 +7,6 @@ $(document).ready(function() {
 			autoHeight: true,
 			observer: true, //修改swiper自己或子元素时，自动初始化swiper
 			observeParents: true //修改swiper的父元素时，自动初始化swiper
-			/*slidesPerView:15*/
 		})
 	//返回顶部
 	/*$('.pages').bind('touchend',function(){
@@ -213,5 +212,7 @@ $(document).ready(function() {
 			}
 
 		}
+		
+		//---------------
 	});
-})
+}
