@@ -92,7 +92,7 @@ html {
 
 .report_title {
 	width: 100%;
-	height: 11rem;
+	height: 100%;
 	overflow-y: auto;
 	text-align: center;
 }
@@ -103,7 +103,7 @@ html {
 
 .report_title img:nth-child(1) {
 	margin: 0 auto;
-	margin-top: 3.0rem;
+	margin-top: 3.1rem;
 	width: 2.04rem;
     height: 0.84rem;
 	display: block;
@@ -119,7 +119,7 @@ html {
 
 .report_title img:nth-child(3) {
 	margin: 0 auto;
-	margin-top: 3.7rem;
+	margin-top: 4.45rem;
 	width: 3.62rem;
 /* 	height: 0.28rem; */
 	display: block;
@@ -318,7 +318,7 @@ html {
 
 .p7-content {
     width: 6.9rem;
-   /* height: 11rem;*/
+    height: auto;
     margin: 0.4rem auto;
     margin-bottom: 0.61rem;
     /* overflow-x: visible; */
@@ -655,7 +655,6 @@ html {
 
 .p8_content {
 	width: 6.9rem;
-	height: 11rem;
 	margin: 1.86rem 0 0.4rem 0.3rem;
 	text-align: justify;
 }
@@ -684,7 +683,7 @@ html {
 	margin:0.4rem 0  0.48rem 0;
 	text-indent: 0.48rem;
 }
-.p8_text{width: 5.9rem;min-height: 0.24rem;display: block;margin: 0.3rem auto;}
+.p8_text{width: 6.1rem;min-height: 0.24rem;display: block;margin: 0.3rem auto;}
 .p8_text b{margin-right: 0.2rem;float: left;}
 .p8_text i{display: block;width: 5.56rem;float: left;} 
 .p8_last{    display: block;
@@ -695,7 +694,7 @@ html {
 
 .p11-content {
 	width: 6.9rem;
-	height: 11rem;
+	height: auto;
 	margin: 1.85rem 0 0.61rem 0.3rem;
 	text-align: justify;	
 }
@@ -718,7 +717,6 @@ html {
 
 .p12-content {
 	width: 6.9rem;
-	height: 11rem;
 	margin: 1.55rem 0.3rem 0.61rem 0.3rem;
 }
 
@@ -753,7 +751,6 @@ html {
 
 .p13-content {
 	width: 6.9rem;
-	height: 11rem;
 	margin: 1.46rem 0 0.61rem 0.3rem;
 }
 
@@ -785,8 +782,8 @@ html {
 
 .p14-content {
 	width: 6.9rem;
-	height: 11rem;
 	margin: 1.46rem 0 0.61rem 0.3rem;
+	height: 100%;
 }
 
 .p14-content div {
@@ -814,7 +811,7 @@ html {
 }
 
 .p15-content {
-	height: 11rem;
+	
 	margin: 1.65rem 0 0.4rem 0.3rem;
 }
 
@@ -836,7 +833,6 @@ html {
 .p15-content p:nth-child(11){margin-bottom: 0.61rem;}
 .p16-content {
 	width: 6.9rem;
-	height: 11rem;
 	margin: 1.65rem 0 0.4rem 0.3rem;
 }
 
@@ -864,20 +860,12 @@ html {
 }
 
 .p9-tab {
-	border: 0;
-	width: 7rem;
-	margin-left: -0.25rem;
-	width: 100%;
-	text-align: center;
-	border-collapse: collapse;
-	border-spacing: 1;
-	border-spacing: 0;
-	margin: 0 auto;
+	border:0;
 }
 
 .p9-content {
 	width: 7rem;
-    height: 11rem;
+    height: auto;
     margin: 0.4rem auto;
     margin-bottom: 0.61rem;
 }
@@ -951,7 +939,7 @@ html {
 
 .p10-content {
 	width: 6.9rem;
-	height: 11rem;
+	height: auto;
 	margin: 1.86rem 0 0.61rem 0.3rem;
 }
 
@@ -979,19 +967,10 @@ html {
 }
 
 .p10_tab {
-width: 100%;
-height: auto;
-border: 0;
-border-top: 1px solid #9f7bad;
-width: 7rem;
-margin-left: -0.25rem;
-width: 100%;
-text-align: center;
-border-collapse: collapse;
-border-spacing: 1;
-border-spacing: 0;
-margin: 0 auto;
-border-top: 1px solid #9f7bad;
+    width: 6.9rem;
+    height: auto;
+    border: 0;
+    border-top: 1px solid #9f7bad;
 }
 
 .p10_tab_body {
