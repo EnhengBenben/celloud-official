@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
         <title>CelLoud华木兰报告</title>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=3.1" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=3.2" />
     </head>
 
     <body>
@@ -90,7 +90,7 @@
 				<!--------page4--------->
 				<div class="main swiper-slide p4 ">
 					<div class="p4_content">
-					<img class="backImg1" src="<%=request.getContextPath()%>/images/wechat/rocky_report/04.Page 1.png" />
+						<img class="backImg1" src="<%=request.getContextPath()%>/images/wechat/rocky_report/04.Page 1.png" />
 						<p>我们向您致敬！</p>
 						<p>在健康管理上态度积极并作出明智选择，不仅是勇气，更是责任。我们愿陪您一起迈出健康管理的第一步。</p>
 						<p>作为您个人健康管理的重要参考，BRCA基因检测报告能协助您评估自身罹患遗传性乳腺癌的风险。报告基于您提供的检测样品，经过精密的基因测序和专业的数据分析，同时结合最新的科学研究成果，专业、客观地解释您的基因与已知遗传性乳腺癌突变之间的关系，用以协助您与您的健康管理顾问作出准确的健康评估和管理规划。</p>
@@ -229,8 +229,8 @@
 				<!--------page11--------->
 				<div class="main swiper-slide">
 					<div class="p11-content">
-						<div>人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。<span style="font-style: italic;font-family: 'times new roman';">BRCA1/BRCA2</span>突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</div>
      					<img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 1.png" />
+						<div>人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。<span style="font-style: italic;font-family: 'times new roman';">BRCA1/BRCA2</span>突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</div>
 						<div><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_26.png" /></div>
 						<div>本次检测在您的乳腺癌关键基因<span style="font-style: italic;font-family: 'times new roman';">BRCA1</span>和<span id="BCRA">BRCA2</span>中未检测到致病突变，在大多数情况下，您的亲属不需要进行这两个基因的突变筛查。在有乳腺癌家族史的情况下，为了分析家族遗传风险信息，建议确诊为乳腺癌患者的直系亲属接受此基因的突变检测。</div>
 					</div>
@@ -310,7 +310,6 @@
 				<div class="main swiper-slide h_lastpage_hide">
 					<div class="h_lastpage">
 						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/last.png">
-
 					</div>
 				</div>
 			</div>
@@ -322,6 +321,6 @@
         <script type="text/javascript">
 		     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 		</script>
-        <script src="<%=request.getContextPath()%>/js/rote.js?v=3.9" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/rote.js?v=3.8" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>
