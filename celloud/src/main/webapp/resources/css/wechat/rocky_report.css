@@ -119,17 +119,8 @@ html {
 
 .report_title img:nth-child(3) {
 	margin: 0 auto;
-<<<<<<< HEAD
-<<<<<<< HEAD
 	margin-top: 4.45rem;
-=======
-	margin-top: 3.7rem;
->>>>>>> release_3.4.4
-=======
-	margin-top: 4.45rem;
->>>>>>> release_3.4.4
 	width: 3.62rem;
-/* 	height: 0.28rem; */
 	display: block;
 }
 
@@ -975,32 +966,10 @@ html {
 }
 
 .p10_tab {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> release_3.4.4
     width: 6.9rem;
     height: auto;
     border: 0;
     border-top: 1px solid #9f7bad;
-<<<<<<< HEAD
-=======
-width: 100%;
-height: auto;
-border: 0;
-border-top: 1px solid #9f7bad;
-width: 7rem;
-margin-left: -0.25rem;
-width: 100%;
-text-align: center;
-border-collapse: collapse;
-border-spacing: 1;
-border-spacing: 0;
-margin: 0 auto;
-border-top: 1px solid #9f7bad;
->>>>>>> release_3.4.4
-=======
->>>>>>> release_3.4.4
 }
 
 .p10_tab_body {
@@ -1064,6 +1033,4 @@ border-top: 1px solid #9f7bad;
     }
 .pages span{font-size: 0.14rem;}
 .p10_img{display: block;width: 6rem;height: 2.66rem;margin: 0.2rem auto;}
-.p8_img img{    display: block;
-    width: 6.56rem;
-    margin: 0 auto;}
+.p8_img img{    display: block;width: 6.56rem;margin: 0 auto;}
