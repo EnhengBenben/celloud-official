@@ -598,7 +598,7 @@
 		  var appId = $routeParams.appId,
 		      page = $scope.bsiReportParams.page,
           size = $scope.bsiReportParams.size,
-          condition = $scope.bsiReportParams.condition==null?"all":$scope.bsiReportParams.condition,
+          condition = $scope.bsiReportParams.condition==null||$scope.bsiReportParams.condition==''?"all":$scope.bsiReportParams.condition,
           sort = $scope.bsiReportParams.sort,
           sortBatch = $scope.bsiReportParams.sortBatch=="all"?"asc":$scope.bsiReportParams.sortBatch,
           sortName= $scope.bsiReportParams.sortName=="all"?"asc":$scope.bsiReportParams.sortName,
