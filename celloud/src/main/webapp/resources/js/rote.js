@@ -66,8 +66,8 @@ $(document).ready(function() {
 	 }
 	//峰图服务器地址base
 	var fengtuBase = 'https://www.celloud.cc';
-	 var webService=protocol+"//"+hostname+port+"/celloud/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');
-
+/*	 var webService=protocol+"//"+hostname+port+"/celloud/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');*/
+	var webService  = "https://www.celloud.cc/api/report/getRockyReport?projectId=1881&dataKey=16112200312383&appId=123"
 	$.ajax({
 		type: "get",
 		url: webService,
