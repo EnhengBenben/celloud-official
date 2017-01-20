@@ -322,7 +322,7 @@ html {
 
 .p7-content {
     width: 6.9rem;
-    height: 11rem;
+   /* height: 11rem;*/
     margin: 0.4rem auto;
     margin-bottom: 0.61rem;
     /* overflow-x: visible; */
