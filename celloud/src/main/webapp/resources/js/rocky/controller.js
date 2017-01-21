@@ -263,16 +263,6 @@
 	  			$scope.periodMap = dataMap.periodMap;
 	  		})
 		}
-		$scope.conditionFind = function(){
-			$scope.params.condition = $("#condition-input").val();
-			$scope.params.page = 1;
-			$scope.pageQuery();
-		}
-		$scope.conditionSearch = function($event){
-			if($event.keyCode == 13){
-		    		$scope.conditionFind();
-		    	}
-		}
 		// 分页按钮
 		$scope.paginationBtn = function(currentPage){
 			$scope.params.page = currentPage;
@@ -294,6 +284,26 @@
 				$scope.params.sortType = "desc";
 			}
 			$scope.pageQuery();
+		}
+		/**
+		 * 样本编号查询
+		 */
+		$scope.sampleQuery = function($event){
+			if($event.keyCode == 13){
+				$scope.params.sample = $scope.sample;
+				$scope.params.page = 1;
+				$scope.pageQuery();
+			}
+		}
+		/**
+		 * 上方搜索框查询
+		 */
+		$scope.conditionQuery = function($event){
+			if($event.keyCode == 13){
+				$scope.params.condition = $scope.condition;
+				$scope.params.page = 1;
+				$scope.pageQuery();
+		    	}
 		}
 		$scope.curDate = new Date();
 		$scope.pageQuery();

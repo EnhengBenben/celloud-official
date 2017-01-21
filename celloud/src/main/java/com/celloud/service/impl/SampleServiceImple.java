@@ -125,6 +125,7 @@ public class SampleServiceImple implements SampleService {
 
 	@Override
 	public Integer delete(Integer sampleId) {
+        sampleLogMapper.deleteBySampling(sampleId);
 		return sampleMapper.deleteByPrimaryKey(sampleId);
 	}
 

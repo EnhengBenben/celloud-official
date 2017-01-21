@@ -143,7 +143,9 @@ public class HomeAction {
 		String url = ResetPwdUtils.celloudPath.replaceAll("resetpwduname", user.getUsername())
 				.replaceAll("resetpwdcode", randomCode);
 		AliEmail aliEmail = AliEmail.template(EmailType.PWD_FIND)
-				.substitutionVars(AliSubstitution.sub().set(EmailParams.PWD_FIND.url.name(), url));
+				.substitutionVars(
+						AliSubstitution.sub().set(EmailParams.PWD_FIND.home.name(), ConstantsData.getContextUrl())
+								.set(EmailParams.PWD_FIND.url.name(), url));
 		emailUtils.simpleSend(aliEmail, email);
 
 		email = email.substring(0, 1) + "***" + email.substring(email.lastIndexOf("@"));

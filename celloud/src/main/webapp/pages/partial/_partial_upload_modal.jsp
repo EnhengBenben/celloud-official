@@ -33,7 +33,7 @@
         </div>
         
         <div class="upload-content" ng-class="{hide: step!='two'}">
-          <div class="info">第二步：拖拽文件到下面指定区域或者点击指定位置的选择文件，后即可自动上传文件</div>
+          <div class="info">第二步：拖拽文件到下面指定区域或者点击指定位置的选择文件</div>
           <div class="info text-left">数据标签：{{batch}}&nbsp;&nbsp;产品标签：{{tagSelected.tagName}}</div>
           <div id="plupload-content" class="plupload-content" style="height:120px;overflow-y: auto;">
 	          <table class="table table-main" id="upload-list-table">
