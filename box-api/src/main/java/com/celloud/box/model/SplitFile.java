@@ -148,7 +148,7 @@ public class SplitFile {
 	}
 
 	public boolean check() {
-		return this.txtPath != null && this.r1Path != null && this.r2Path != null;
+		return this.r1Path != null && this.r2Path != null;
 	}
 
 	public boolean toFile() {

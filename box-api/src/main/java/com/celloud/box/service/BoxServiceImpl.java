@@ -2,11 +2,14 @@ package com.celloud.box.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -167,10 +170,7 @@ public class BoxServiceImpl implements BoxService {
 		String filename = dataFile.getFilename();
 		int index = -1;
 		int fileType = 0;
-		if (filename.toLowerCase().endsWith(".txt") || filename.toLowerCase().endsWith(".lis")) {
-			fileType = 3;
-			name = filename.substring(0, filename.lastIndexOf("."));
-		} else if ((index = filename.indexOf("R1")) != -1) {
+		if ((index = filename.indexOf("R1")) != -1) {
 			fileType = 1;
 			name = filename.substring(0, index);
 		} else if ((index = filename.indexOf("R2")) != -1) {
@@ -198,9 +198,6 @@ public class BoxServiceImpl implements BoxService {
 		case 2:
 			splitFile.setR2Path(dataFile.getPath());
 			break;
-		case 3:
-			splitFile.setTxtPath(dataFile.getPath());
-			break;
 		default:
 			break;
 		}
@@ -214,6 +211,53 @@ public class BoxServiceImpl implements BoxService {
 			logger.info("不能运行split:{}", splitFile.toJSON());
 			return;
 		}
+		// 检查是否包含r1和r2, 如果包含, 根据storageName向celloud请求.txt文件信息
+		String pubName = splitFile.getName();
+		String storageName = StringUtils.splitByWholeSeparator(splitFile.getName(), "_")[0];
+		String txtName = pubName + ".txt";
+		// 获取file信息, 在盒子内创建.txt文件
+		Map<String, Object> result = apiService.splittxt(dataFile.getUserId(), pubName, storageName,
+		        dataFile.getBatch());
+		// 没有绑定成功.txt文件
+		if (result == null) {
+			return;
+		}
+		String folder = UploadPath.getUploadingPath(dataFile.getUserId());
+		String uniqueName = UploadPath.getUniqueName(dataFile.getUserId(), txtName, new Date().getTime(),
+		        Long.parseLong(result.get("size").toString()));
+		File txtFile = new File(folder + UploadPath.getRandomName(uniqueName));
+		try {
+			FileUtils.write(txtFile, result.get("content").toString());
+		} catch (IOException e) {
+			logger.info("创建txt文件失败");
+			return;
+		}
+		// 创建txt文件信息
+		DataFile file = new DataFile();
+		file.setPath(txtFile.getAbsolutePath());
+		file.setBatch(dataFile.getBatch());
+		file.setUserId(dataFile.getUserId());
+		file.setFilename(txtName);
+		file.setAnotherName(null);
+		file.setNeedSplit(0);
+		file.setTagId(null);
+		String md5 = MD5Util.getFileMD5(file.getPath());
+		file.setMd5(md5);
+		file.setFileSize(Long.parseLong(result.get("size").toString()));
+		file.setDataKey(result.get("dataKey").toString());
+		file.setExt(result.get("ext").toString());
+		file.setNewName(result.get("newName").toString());
+		file.setFileId(Integer.parseInt(result.get("fileId").toString()));
+		file.setObjectKey(UploadPath.getObjectKey(file.getUserId(), result.get("dataKey").toString(), result.get("ext").toString()));
+		file.setUploaded(true);
+		file.serialize();
+		if (!file.serialize()) {
+			return;
+		}
+		// 移动文件
+		finish(file);
+		// 运行split
+		splitFile.setTxtPath(file.getPath());
 		splitFile.toFile();
 		splitQueue.add(splitFile);
 	}

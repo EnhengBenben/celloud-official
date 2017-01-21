@@ -48,4 +48,9 @@ public class SparkPro {
      */
     public static final String SPARKKILL = "perl /share/biosoft/perl/wangzhen/16s-meta-pipeline/spark_kill.pl";
 
+	/**
+	 * rocky生成pdf路径
+	 */
+	public static final String ROCKYPDF = "python /share/biosoft/perl/PGS_MG/python/rockypdf.py";
+
 }

@@ -10,6 +10,12 @@
         <li>华木兰</li>
         <li>数据</li>
     </ol>
+	<div class="search-form" style="float: right;z-index: 99">
+	    <input style="border-radius: 20px;margin-bottom: 5px;margin-right: 21px;height: 30px;width: 180px;font-size: 14px;padding-left: 35px;" id="data-condition-input" class="field" ng-keypress="conditionQuery($event)" ng-model="condition" type="text" placeholder="搜索" />
+	    <a id="data-condition-find" class="action" style="background: #2C3E50;font-size: 14px;height: 28px;width: 28px;">
+	        <i class="fa fa-search"></i>
+	    </a>
+	</div>
     <div id="common-container" class="common-container" style="width:98%">
 		<div id="rocky-data-list">
 	        <table class="table table-main">
@@ -17,7 +23,7 @@
 			        <tr>
 			            <th class="th-checkoutbox"></th>
 			            <th width="140">
-			                <input id="data-sample-filter" type="text" placeholder="样本编号/病历号" value="${sampleFilter}">
+			                <input id="data-sample-filter" type="text" placeholder="样本编号/病历号" ng-model="sample" ng-keypress="sampleQuery($event)" >
 			            </th>
 			            <th>
 			                文件名
@@ -38,14 +44,11 @@
 			            <th>
 			                文件大小
                             <a id="dataSortBtn-batch-desc" href="javascript:void(0);" ng-click="sortQuery('filesize')">
-                                <i ng-show="params.sortField=='fileSize'&&params.sortType=='asc'" class="fa fa-sort-amount-asc"></i>
-                                <i ng-show="params.sortField=='fileSize'&&params.sortType=='desc'" class="fa fa-sort-amount-desc"></i>
-                                <i ng-show="params.sortField!='fileSize'" class="fa fa-sort" aria-hidden="true"></i>
+                                <i ng-show="params.sortField=='filesize'&&params.sortType=='asc'" class="fa fa-sort-amount-asc"></i>
+                                <i ng-show="params.sortField=='filesize'&&params.sortType=='desc'" class="fa fa-sort-amount-desc"></i>
+                                <i ng-show="params.sortField!='filesize'" class="fa fa-sort" aria-hidden="true"></i>
                             </a>
 			            </th>
-			            <th>
-                            状态
-                        </th>
 			            <th>
 			                上传时间
 		                    <a id="dataSortBtn-createDate-desc" href="javascript:void(0);" ng-click="sortQuery('createDate')">
@@ -68,7 +71,6 @@
 		                <td style="text-align: left;" title="{{data.fileName}}" name="data-name-td">{{data.fileName}}</td>
 		                <td>{{data.batch}}</td>
 		                <td>{{data.size | fileSizeFormat}}</td>
-                        <td>0</td>
 		                <td>{{data.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 		            </tr>
 	            </tbody>

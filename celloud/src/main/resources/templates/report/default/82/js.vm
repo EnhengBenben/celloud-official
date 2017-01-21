@@ -94,7 +94,7 @@ $(function(){
         $("#otherPng").find("img").each(function(){
             num++;
         });
-        if(num > 25){
+        if(num%35 > 25){
             $("#sevenW3c").css("display","block");
         }
         var _flag = $("#_flag").html();

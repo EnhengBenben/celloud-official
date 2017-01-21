@@ -28,6 +28,29 @@ public class ApiService {
 	private OSSConfig ossConfig;
 	private static Logger logger = LoggerFactory.getLogger(ApiService.class);
 
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2017年1月20日下午4:16:07
+	 * @description 向celloud请求split所需的.txt参数
+	 *
+	 * @return
+	 */
+	public Map<String, Object> splittxt(Integer userId, String pubName, String storageName, String batch) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("userId", userId);
+		params.put("pubName", pubName);
+		params.put("storageName", storageName);
+		params.put("batch", batch);
+		ApiResponse response = HttpClientUtil.post(api.getNewfile(), params);
+		if (response.isSuccess()) {
+			// 在盒子内生成txt文件
+			return response.getData();
+		} else {
+			return null;
+		}
+	}
+
 	public Newfile newfile(Integer userId, String name, String anotherName, long size, String md5, Integer tagId,
 			String batch) {
 		Map<String, Object> params = new HashMap<>();

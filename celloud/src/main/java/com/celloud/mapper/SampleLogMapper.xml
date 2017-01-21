@@ -22,6 +22,10 @@
     delete from tb_sample_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteBySampling" parameterType="java.lang.Integer" >
+    delete from tb_sample_log
+    where sample_id = #{sampleId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.celloud.model.mysql.SampleLog" >
     insert into tb_sample_log (id, sample_id, user_id, 
       exper_state, create_date, state

@@ -140,6 +140,7 @@ public class ProjectAction {
 				//构造邮件内容
 				AliEmail aliEmail = AliEmail.template(EmailType.PROJECT_SHARE).substitutionVars(
 						AliSubstitution.sub().set(EmailParams.PROJECT_SHARE.shareUserName.name(), shareUserName)
+								.set(EmailParams.PROJECT_SHARE.home.name(), ConstantsData.getContextUrl())
 								.set(EmailParams.PROJECT_SHARE.userName.name(), shareTo.getUsername())
 								.set(EmailParams.PROJECT_SHARE.dataName.name(), projectName)
 								.set(EmailParams.PROJECT_SHARE.dataKey.name(), projectID));

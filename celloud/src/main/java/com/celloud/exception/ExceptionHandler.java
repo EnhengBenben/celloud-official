@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
+import com.celloud.constants.ConstantsData;
 import com.celloud.mail.EmailUtils;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
@@ -34,7 +35,9 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 			Exception exception) {
 		String errorInfo = emailUtils.getError(request, exception);
 		AliEmail aliEmail = AliEmail.template(EmailType.EXCEPTION)
-				.substitutionVars(AliSubstitution.sub().set(EmailParams.EXCEPTION.context.name(), errorInfo));
+				.substitutionVars(
+						AliSubstitution.sub().set(EmailParams.EXCEPTION.home.name(), ConstantsData.getContextUrl())
+								.set(EmailParams.EXCEPTION.context.name(), errorInfo));
 		aliEmailUtils.simpleSend(aliEmail, emailUtils.getErrorMailTo());
 		response.setHeader("exceptionstatus", "exception");
 		if (exception instanceof BusinessException) {
