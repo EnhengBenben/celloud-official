@@ -265,9 +265,4 @@ public class PGSProjectPDF {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        PGSProjectPDF pdf = new PGSProjectPDF();
-        pdf.createPDF("G:\\15\\129", "ApmLibrary", 100, 200,
-                "16102500215030,test_t,aaa;16102600215162,test_t,bbb;16102600215268,test_t,ccc;", "1937");
-    }
 }
