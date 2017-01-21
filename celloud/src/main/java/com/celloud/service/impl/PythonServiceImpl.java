@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
+import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
 import com.celloud.model.mysql.DataFile;
@@ -169,6 +170,7 @@ public class PythonServiceImpl implements PythonService {
 
 		AliEmail aliEmail = AliEmail.template(EmailType.UPLOAD_OVER)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.UPLOAD_OVER.dataName.name(), fileName)
+						.set(EmailParams.UPLOAD_OVER.home.name(), ConstantsData.getContextUrl())
 						.set(EmailParams.UPLOAD_OVER.userName.name(), user.getUsername()));
 		emailUtils.simpleSend(aliEmail, user.getEmail());
 	}

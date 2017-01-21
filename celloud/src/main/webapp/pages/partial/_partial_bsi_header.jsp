@@ -13,17 +13,17 @@
                    <i class="celicon my-upload-icon"></i><br>上传
                    <canvas id="upload-progress" class="upload-progress" width="64" height="64"></canvas>
                </a>
-               <a class="item-btn" ng-class="{active: isActive('product/bactive/data')}" id="to-data-a" di-href="${pageContext.request.contextPath }/index#/product/bactive/data/{{appId}}">
+               <a class="item-btn" ng-class="{active: isActive('product/bactive/d')}" id="to-data-a" di-href="${pageContext.request.contextPath }/index#/product/bactive/data/{{appId}}">
                    <i class="celicon my-data-icon"></i><br>数据
                </a>
-               <a class="item-btn" ng-class="{active: isActive('product/bactive/r')}" id="to-report-a" di-href="${pageContext.request.contextPath }/index#/product/bactive/report/{{appId}}">
+               <a class="item-btn" ng-class="{active: isActive('product/bactive/r')}" id="to-report-a" di-href="${pageContext.request.contextPath }/index#/product/bactive/report/{{appId}}/1/20/all/all/all/all/all/0/asc/asc/asc/desc">
                    <i class="celicon my-report-icon"></i><br>报告
                </a>
             </div>
         </div>
         <div id="common-menu-right" class="searchs common-menu-btn">
             <div class="data-search">
-                <input id="condition-input" class="input-sm" type="text" placeholder="搜索" ng-keypress="conditionSearch($event)" />
+                <input id="condition-input" class="input-sm" type="text" placeholder="搜索" ng-keypress="conditionSearch($event)" value="{{bsiReportParams.condition}}" />
                 <a id="condition-find" class="input-group-btn" ng-click="conditionFind()">
                     <i class="fa fa-search"></i>
                 </a>

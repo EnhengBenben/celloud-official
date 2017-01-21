@@ -26,6 +26,7 @@ import com.celloud.constants.AppConstants;
 import com.celloud.constants.ClassifyFloor;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
+import com.celloud.constants.UserResource;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Classify;
 import com.celloud.model.mysql.Screen;
@@ -275,6 +276,11 @@ public class AppAction {
 		} else {
             map.put("onlyBSI", false);
         }
+		boolean hasUpload = ConstantsData.hasResource(UserResource.ROCKYUPLOAD);
+		map.put("rockyupload", hasUpload);
+		if (!hasUpload) {
+			map.put("rockyreport", ConstantsData.hasResource(UserResource.ROCKYREPORT));
+		}
 		return map;
 	}
 

@@ -13,13 +13,9 @@
 					<i class="fa fa-print"></i> 打印报告
 				</a> --%>
 				<a class="btn btn-success" style="line-height: 28px;" target="_blank"
-                    href="/rocky/${rocky.userId }/${rocky.dataKey }/${rocky.dataKey}.pdf">
-                    <i class="fa fa-print"></i> 打印报告
+                    href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${rocky.projectId}&dataKey=${rocky.dataKey}&appId=${rocky.appId}">
+                    <i class="fa fa-print"></i> 查看报告
                 </a>
-<%-- 				<a class="btn btn-success" style="line-height: 28px;" target="_blank"
-					href="<%=request.getContextPath()%>/report/printRockyReport?projectId=${rocky.projectId}&dataKey=${rocky.dataKey}&appId=${rocky.appId}">
-					<i class="fa fa-print"></i> 打印报告
-				</a> --%>
 			</div>
 		</div>
 		<section>

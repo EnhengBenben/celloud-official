@@ -233,6 +233,7 @@ public class UserServiceImpl implements UserService {
                 + loginUser.getCompanyId() + "/" + appCompanyId + "/" + 0);
         aliEmail.simpleSend(
                 AliEmail.template(EmailType.USER_REGISTER).substitutionVars(AliSubstitution.sub()
+						.set(EmailParams.USER_REGISTER.home.name(), ConstantsData.getContextUrl())
                         .set(EmailParams.USER_REGISTER.url.name(), ResetPwdUtils.userPath.replaceAll("path", param))),
                 email);
         return count > 0;

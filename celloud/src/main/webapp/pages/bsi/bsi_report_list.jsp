@@ -15,14 +15,14 @@
                 <div class="selector">
 				    <div id="batch-sl" class="selector-line">
 				        <div class="sl-key">标签：</div>
-				        <div id="selected-batch" class="sl-val selected-val hide">
-					        <span></span>
+				        <div id="selected-batch" class="sl-val selected-val" ng-if="bsiReportParams.batch != null">
+					        <span>{{bsiReportParams.batch}}</span>
 					        <a id="clear-sl-batch" ng-click="clearSlBatch()"><i class="fa fa-times"></i></a>
 				        </div>
-					    <div id="to-sl-batch">
+					    <div id="to-sl-batch" ng-if="bsiReportParams.batch == null">
 					        <div id="batch-lists" class="sl-val">
-				                <div class="sl-val-content" ng-repeat="batch in batchList" ng-click="batchLists('batchId' + $index)">
-                                    <div class="celicon checkbox checkbox-un hide" id="batchId{{$index}}"></div>
+				                <div class="sl-val-content" ng-repeat="batch in batchList">
+                                    <div class="celicon checkbox checkbox-un hide" id="batchId{{$index}}" ng-click="batchLists('batchId' + $index)"></div>
                                     <a ng-click="reportBatchSearch('batchId' + $index)" href="javascript:void(0)"><span>{{batch}}</span></a>
                                 </div>
 						        <div class="multisl-btns hide">
@@ -38,11 +38,11 @@
 				    </div>
 				    <div id="period-sl" class="selector-line">
 				        <div class="sl-key">状态：</div>
-				        <div id="selected-period" class="sl-val selected-val hide">
-				            <span></span>
+				        <div id="selected-period" class="sl-val selected-val" ng-if="bsiReportParams.period != null">
+				            <span>{{bsiReportParams.period | taskPeriodFilter}}</span>
 				            <a id="clear-sl-period" ng-click="clearSlPeriod()"><i class="fa fa-times"></i></a>
 				        </div>
-				        <div id="to-sl-period">
+				        <div id="to-sl-period" ng-if="bsiReportParams.period == null">
 				            <div id="period-lists" class="sl-val">
 				                <div class="sl-val-content" ng-click="periodLists('finish')">
 				                    <div class="celicon on_check checkbox checkbox-un hide" id="finish"></div>
@@ -85,8 +85,8 @@
 				    <div class="selector-line">
 				        <div class="sl-key">时间：</div>
 				        <div class="sl-val">
-				            <input id="report-begindate-search" type="text" class="Wdate" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'report-enddate-search\')}'})" readonly="readonly" placeholder="  年    月    日"> - 
-				            <input id="report-enddate-search" type="text" class="Wdate" onclick="WdatePicker({minDate:'#F{$dp.$D(\'report-begindate-search\')}',maxDate:'%y-%M-%d'})" readonly="readonly" placeholder="  年    月    日">
+				            <input id="report-begindate-search" type="text" class="Wdate" onclick="WdatePicker({maxDate:'#F{$dp.$D(\'report-enddate-search\')}'})" readonly="readonly" placeholder="  年    月    日" value="{{bsiReportParams.beginDate}}"> - 
+				            <input id="report-enddate-search" type="text" class="Wdate" onclick="WdatePicker({minDate:'#F{$dp.$D(\'report-begindate-search\')}',maxDate:'%y-%M-%d'})" readonly="readonly" placeholder="  年    月    日" value="{{bsiReportParams.endDate}}">
 				            <button data-click="report-date-search" ng-click="dateQuery()" class="sl-btn" href="javascript:void(0)">确定</button>
 				        </div>
 				    </div>

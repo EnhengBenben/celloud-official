@@ -92,6 +92,7 @@ import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
 
@@ -136,6 +137,17 @@ public class ReportAction {
 		return reportService.getProjectPeriod(projectId);
 	}
 
+	@RequestMapping("checkPdf")
+	@ResponseBody
+	public Integer checkPdf(String dataKey) {
+		Integer userId = ConstantsData.getLoginUserId();
+		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
+		if (!new File(filePath).exists()) {
+			return 0;
+		}
+		return 1;
+	}
+
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("down")
 	@ResponseStatus(value = HttpStatus.OK)
@@ -149,17 +161,20 @@ public class ReportAction {
 		return 1;
 	}
 
-//    @ActionLog(value = "下载", button = "下载")
-//    @RequestMapping("downRockyPdf")
-//    @ResponseBody
-//    public Integer downRockyPdf(Integer userId, String dataKey) {
-//        String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
-//        if (new File(filePath).exists()) {
-//            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-//            return 0;
-//        }
-//        return 1;
-//    }
+	@ActionLog(value = "下载", button = "下载")
+	@RequestMapping("downRockyPdf")
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public Integer downRockyPdf(String dataKey, String objId) {
+		// 进行下载
+		Integer userId = ConstantsData.getLoginUserId();
+		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
+		if (new File(filePath).exists()) {
+			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+			return 0;
+		}
+		return 1;
+	}
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")
@@ -1253,7 +1268,22 @@ public class ReportAction {
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public Integer updateRockyFilling(Rocky rocky) {
-		return reportService.updateRockyFilling(rocky);
+		Integer flag = reportService.updateRockyFilling(rocky);
+		if (flag.intValue() == 1) {
+			// 构建pdf路径
+			Integer userId = ConstantsData.getLoginUserId();
+			String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + rocky.getDataKey() + "/"
+			        + rocky.getDataKey() + ".pdf";
+			// 删除原有的pdf,创建新的pdf
+			File pdfFile = new File(filePath);
+			if (pdfFile.exists()) {
+				pdfFile.delete();
+			}
+			// 调用python生成pdf
+			String command = SparkPro.ROCKYPDF + " " + rocky.getId();
+			PerlUtils.excutePerlNoResult(command);
+		}
+		return flag;
 	}
 
 	/**
