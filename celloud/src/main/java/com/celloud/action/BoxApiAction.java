@@ -1,27 +1,35 @@
 package com.celloud.action;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.celloud.constants.BoxUploadState;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
+import com.celloud.constants.FileFormat;
 import com.celloud.model.BoxFile;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.OSSConfig;
+import com.celloud.model.mysql.Sample;
 import com.celloud.service.BoxApiService;
 import com.celloud.service.BoxConfigService;
 import com.celloud.service.DataService;
 import com.celloud.service.OSSConfigService;
+import com.celloud.service.SampleService;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.FileTools;
@@ -43,6 +51,59 @@ public class BoxApiAction {
 	private BoxConfigService configService;
 	@Resource
 	private OSSConfigService ossService;
+	@Autowired
+	private SampleService sampleService;
+
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2017年1月20日下午2:13:39
+	 * @description 根据storageName获取运行split所需的.txt文件
+	 *
+	 * @return
+	 */
+	@RequestMapping("splittxt")
+	public Response splittxt(Integer userId, String pubName, String storageName,
+	        String batch) {
+		logger.info("盒子请求运行split所需的txt文件");
+		List<Sample> sampleList = sampleService.getSamplesByStorageName(storageName);
+		logger.info("文库 {} 下样本列表长度 {} ", storageName, sampleList.size());
+		if (sampleList != null && sampleList.size() > 0) {
+			DataFile data = new DataFile();
+			data.setFileName(pubName + ".txt");
+			data.setUserId(userId);
+			data.setCreateDate(new Date());
+			data.setFileFormat(FileFormat.NONE);
+			data.setState(DataState.ACTIVE);
+			data.setBatch(batch);
+			Integer id = dataService.addDataInfo(data);
+			String index_dataKey = DataUtil.getNewDataKey(id);
+			data.setFileId(id);
+			data.setDataKey(index_dataKey);
+			String path = new StringBuffer().append(PropertiesUtil.bigFilePath).append(userId).append("/")
+			        .append(DateUtil.getDateToString("yyyyMMdd")).append("/").append(index_dataKey + ".txt").toString();
+			StringBuilder slist = new StringBuilder();
+			for (Sample s : sampleList) {
+				slist.append(s.getExperSampleName())
+				        .append(":").append(s.getSindex().contains(":")
+				                ? StringUtils.splitByWholeSeparator(s.getSindex(), ":")[1] : s.getSindex())
+				        .append("\n");
+			}
+			FileTools.appendWrite(path, slist.toString());
+			data.setPath(path);
+			data.setSize(FileUtils.sizeOf(new File(path)));
+			dataService.updateByPrimaryKeySelective(data);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("dataKey", data.getDataKey());
+			map.put("fileId", data.getFileId());
+			map.put("ext", ".txt");
+			map.put("newName", data.getDataKey() + ".txt");
+			map.put("content", slist.toString());
+			map.put("size", data.getSize());
+			return Response.SUCCESS(map);
+		}
+		return null;
+	}
 
 	/**
 	 * 盒子端创建文件
