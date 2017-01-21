@@ -253,17 +253,19 @@ public class TaskAction {
 		}
 		// 6.结束任务修改项目报告状态
 		Task task = taskService.updateToDone(appId, Integer.parseInt(projectId), dataKey, dataNames, xml);
+		String startDate = null;
+		String endDate = null;
 		if (task != null) {
 			logger.info("任务{}执行完毕", task.getTaskId());
 			runService.runNext(appId);
+			// 构造邮件内容
+			startDate = DateUtil.getDateToString(task.getStartDate(), DateUtil.YMDHMS);
+			endDate = DateUtil.getDateToString(task.getEndDate(), DateUtil.YMDHMS);
 		}
 		String tipsName = pubName.equals("") ? fname : pubName;
 		// 构造桌面消息
 		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL)
 				.send(NoticeConstants.createMessage("task", "运行完成", "文件【" + tipsName + "】运行应用【" + appName + "】完成"));
-		// 构造邮件内容
-		String startDate = DateUtil.getDateToString(task.getStartDate(), DateUtil.YMDHMS);
-		String endDate = DateUtil.getDateToString(task.getEndDate(), DateUtil.YMDHMS);
 		AliEmail aliEmail = AliEmail.template(EmailType.RUN_OVER)
 				.substitutionVars(AliSubstitution.sub().set(EmailParams.RUN_OVER.userName.name(), username)
 						.set(EmailParams.RUN_OVER.home.name(), ConstantsData.getContextUrl())
