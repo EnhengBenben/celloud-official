@@ -23,6 +23,9 @@ from reportlab.platypus import Image, Paragraph, SimpleDocTemplate, Spacer, Tabl
 from reportlab.pdfgen import canvas
 from reportlab.pdfgen.canvas import Canvas
 from PDFPro import PDFPro
+from bson.objectid import ObjectId
+sys.path.append("..")
+from mongo.mongoOperate import mongo
 
 significances = {
     'Pathogenic':'致病相关变异',
@@ -616,7 +619,31 @@ class RockyPdf:
         f.close()
         return data
     # create pdf
-    def createPDF(self,path,dataKey,userId,companyId):
+    #def createPDF(self,path,dataKey,userId,companyId):
+    def createPDF(self, objId):
+        mo = mongo.getInstance()
+        dataReport = mo.get({'_id':ObjectId(objId)},"Rocky")
+        path = dataReport['path']
+        dataKey = dataReport['dataKey']
+        userId = dataReport['userId']
+        companyId = dataReport['companyId']
+        baseInfo = None
+        sampleType = ''
+        sampleId = ''
+        detectionDate = ''
+        reportDate = ''
+        examineeName = ''
+        birthday = ''
+        if 'baseInfo' in dataReport.keys():
+            baseInfo = dataReport['baseInfo']
+            sampleType = baseInfo['sampleType']
+            sampleId = baseInfo['sampleId']
+            detectionDate = baseInfo['detectionDate']
+            reportDate = baseInfo['reportDate']
+            examineeName = baseInfo['examineeName']
+            birthday = baseInfo['birthday']
+        if 'baseInfo' in dataReport.keys():
+            baseInfo = dataReport['baseInfo']
         peakPath = os.path.join(path,dataKey+"/")
         px = os.path.join(PDFPro.rockyPicPath,"px.png")
         end = Image(os.path.join(PDFPro.rockyPicPath,"end.png"),5,4)
@@ -697,13 +724,19 @@ class RockyPdf:
         page2_title.drawOn(c,203,753)
         page2_icon1.drawOn(c,95,679)
         self.drawPara('姓名：',ps,c,42,14,119,669)
+        self.drawPara(examineeName,ps,c,140,14,161,669)
         page2_icon2.drawOn(c,323,679)
         self.drawPara('出生年月：',ps,c,70,14,343,669)
+        self.drawPara(birthday,ps,c,140,14,413,669)
         c.line(95,668,550,668)
         self.drawPara('样本类型：',ps,c,70,14,95,614)
+        self.drawPara(sampleType,ps,c,140,14,165,614)
         self.drawPara('样本编号：',ps,c,70,14,323,614)
+        self.drawPara(sampleId,ps,c,140,14,393,614)
         self.drawPara('送检日期：',ps,c,70,14,95,580)
+        self.drawPara(detectionDate,ps,c,140,14,165,580)
         self.drawPara('报告日期：',ps,c,70,14,323,580)
+        self.drawPara(reportDate,ps,c,140,14,393,580)
         c.line(95,559,550,559)
         ps.firstLineIndent = 24
         ps.fontSize = 12
@@ -954,4 +987,4 @@ class RockyPdf:
         c.save()
 if __name__ == '__main__':
     RockyPdf = RockyPdf.getInstance()
-    RockyPdf.createPDF('/ossfs/output/12/123','16122605441911',33)
+    RockyPdf.createPDF('587d81d8bbddbd0ae31b4d21')

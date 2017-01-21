@@ -701,54 +701,54 @@
         where
         f.state=#{state}
     </select>
-	<select id="filterRockyList" resultMap="ResultMapWithRunState"
-		parameterType="java.lang.Integer">
-		select
-		<include refid="Base_Column_List" />
-		,
-		<include refid="Blob_Column_List" />
-		,
-		(select count(*) reportNum from tb_report r where r.period = #{period
-		} and
-		r.flag = #{reportType } and r.state = #{state } and
-		r.file_id=f.file_id) reportNum,
-		(select count(*) isRunning from
-		tb_report r where r.period != #{period } and
-		r.flag = #{reportType }
-		and r.state = #{state } and
-		r.file_id=f.file_id) isRunning
-		from tb_file f
+	<select id="filterRockyList" resultType="java.util.Map" >
+		SELECT
+		f.file_id fileId, f.user_id userId, f.data_key dataKey, f.file_name fileName, f.strain strain,
+		f.size size, f.create_date createDate, f.update_date updateDate, f.path path, f.state state,
+		f.file_format fileFormat, f.sample sample, f.another_name anotherName, f.md5 md5, f.batch batch,
+        f.oss_path ossPath,f.upload_state uploadState, data_tags dataTags, s.sample_name sampleName,
+		(SELECT count(*) reportNum
+		  FROM tb_report r
+		  WHERE r.period = #{period}
+		  AND r.flag = #{reportType }
+		  AND r.state = #{state }
+		  AND r.file_id=f.file_id) reportNum,
+		(SELECT count(*) isRunning
+		  FROM tb_report r
+		  WHERE r.period != #{period }
+		  AND r.flag = #{reportType }
+		  AND r.state = #{state }
+		  AND r.file_id=f.file_id) isRunning
+		FROM tb_file f LEFT JOIN tb_file_sample_relat fsr ON f.file_id = fsr.file_id LEFT JOIN tb_sample s ON fsr.sample_id = s.sample_id
 		<where>
-			user_id = #{userId } and state = #{state }
-			<choose>
-				<when test="condition != null">
-					and (file_name like concat('%',#{condition},'%')
-					or sample like concat('%',#{condition},'%')
-					or batch like concat('%',#{condition},'%'))
-				</when>
-				<when test="sample != null">
-					and sample like concat('%',#{sample},'%')
-				</when>
-			</choose>
+			f.user_id = #{userId } and f.state = #{state }
+			<if test="condition != null and condition != ''">
+				and (f.file_name LIKE CONCAT('%',#{condition},'%')
+				or s.sample_name LIKE CONCAT('%',#{condition},'%')
+				or f.batch LIKE CONCAT('%',#{condition},'%'))
+			</if>
+			<if test="sample != null and sample != ''">
+				and s.sample_name LIKE CONCAT('%',#{sample},'%')
+			</if>
 		</where>
 		<choose>
 			<when test="sidx == 'createDate'">
-				order by create_date ${sord}
+				order by f.create_date ${sord}
 			</when>
 			<when test="sidx == 'batch'">
-				order by batch ${sord}
+				order by f.batch ${sord}
 			</when>
 			<when test="sidx == 'filename'">
-				order by file_name ${sord}
+				order by f.file_name ${sord}
 			</when>
 			<when test="sidx == 'filesize'">
-				order by size ${sord}
+				order by f.size ${sord}
 			</when>
 			<when test="sidx == 'sample'">
-				order by sample ${sord}
+				order by s.sample_name ${sord}
 			</when>
 			<otherwise>
-				order by create_date ${sord}
+				order by f.create_date ${sord}
 			</otherwise>
 		</choose>
 	</select>

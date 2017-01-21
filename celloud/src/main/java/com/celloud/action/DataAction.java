@@ -249,27 +249,39 @@ public class DataAction {
         return mv;
     }
 
+	/**
+	 * 
+	 * @author miaoqi
+	 * @description 用户查看乳腺癌数据列表页面
+	 * @date 2017年1月13日上午11:13:49
+	 *
+	 * @param page
+	 * @param size
+	 * @param sample
+	 * @param condition
+	 * @param sidx
+	 * @param sord
+	 * @return
+	 */
 	@ActionLog(value = "打开rocky数据页面", button = "数据")
 	@RequestMapping("rocky/list")
-	public ModelAndView rockyDataAllList(@RequestParam(defaultValue = "1") int page,
-			@RequestParam(defaultValue = "20") int size, String sample, String condition,
-			@RequestParam(defaultValue = "createDate") String sidx, @RequestParam(defaultValue = "desc") String sord) {
-		ModelAndView mv = new ModelAndView("rocky/data/data_main");
+	@ResponseBody
+	public Map<String, Object> rockyDataAllList(@RequestParam(defaultValue = "1") int page,
+	        @RequestParam(defaultValue = "20") int size, String sample, String condition,
+	        @RequestParam(defaultValue = "createDate") String sortField,
+	        @RequestParam(defaultValue = "desc") String sortType) {
 		Page pager = new Page(page, size);
+		PageList<Map<String, Object>> dataList = dataService.filterRockyList(pager, sample, condition, sortField,
+		        sortType);
 		Integer userId = ConstantsData.getLoginUserId();
-		PageList<DataFile> dataList = dataService.filterRockyList(pager, sample, condition, sidx, sord);
 		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
 		List<String> batchList = dataService.getBatchList(userId);
 		periodMap.put("uploaded", batchList.size());
-		mv.addObject("periodMap", periodMap);
-		mv.addObject("pageList", dataList);
-		mv.addObject("batchList", batchList);
-		mv.addObject("sampleFilter", sample);
-		mv.addObject("conditionFilter", condition);
-		mv.addObject("sidx", sidx);
-		mv.addObject("sord", sord);
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("dataList", dataList);
+		dataMap.put("periodMap", periodMap);
 		logger.info("用户{}打开乳腺癌数据", ConstantsData.getLoginUserName());
-		return mv;
+		return dataMap;
 	}
 
 	/**

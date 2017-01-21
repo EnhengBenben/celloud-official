@@ -241,11 +241,19 @@
       templateUrl: "pages/rocky/rocky_upload.jsp",
       controller: "rockyUploadController"
     })
+    .when('/product/rocky/d',{
+    	templateUrl: "pages/rocky/rocky_data.jsp",
+    	controller: "rockyDataController"
+    })
     .when('/product/rocky/report',{
       templateUrl: "pages/rocky/rocky_report.jsp",
       controller: "rockyReportController"
     })
     .when('/product/bactive/report/:appId',{
+      templateUrl: "pages/bsi/bsi_report_list.jsp",
+      controller: "bsiReportController"
+    })
+    .when('/product/bactive/report/:appId/:page/:size/:begin/:end/:period/:batch/:condition/:sort/:sortBatch/:sortName/:sortPeriod/:sortDate',{
       templateUrl: "pages/bsi/bsi_report_list.jsp",
       controller: "bsiReportController"
     })

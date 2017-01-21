@@ -519,6 +519,7 @@
 		success(function(dataMap){
 			$scope.bsi = dataMap.bsi;
 			$scope.data = dataMap.data;
+			$scope.sample = dataMap.sample == undefined ? {"sampleName":""} : dataMap.sample;
 			$rootScope.tab = $rootScope.tab == undefined?'patient':$rootScope.tab;
 		    $scope.havestrain = "";
 		    
@@ -573,33 +574,50 @@
 		});
 	});
 	
-	celloudApp.controller("bsiReportController", function($scope, $rootScope, $routeParams, bsiService) {
+	celloudApp.controller("bsiReportController", function($scope, $rootScope, $routeParams,$location ,bsiService) {
 	  $rootScope.appId = $routeParams.appId;
 		$scope.bsiReportParams = {
-			page: 1,
-		    size: 20,
-		    condition: null,
-		    sort: 0,
-		    sortBatch: "asc",
-		    sortName: "asc",
-		    sortPeriod: "asc",
-		    sortDate: "desc",
-		    reportType: 0,  //0:患者报告  1：分析报告
-		    batch: null,
-		    period: null,
-		    beginDate: null,
-		    endDate: null,
-		    distributed: null, //0:是   1： 否
-		    sampleName: null,
+			page: $routeParams.page,
+		    size: $routeParams.size,
+		    condition: $routeParams.condition=="all"?null:$routeParams.condition,
+		    sort: $routeParams.sort,
+		    sortBatch:  $routeParams.sortBatch=="all"?"asc":$routeParams.sortBatch,
+		    sortName:  $routeParams.sortName=="all"?"asc":$routeParams.sortName,
+		    sortPeriod:  $routeParams.sortPeriod=="all"?"asc":$routeParams.sortPeriod,
+		    sortDate:  $routeParams.sortDate=="all"?"desc":$routeParams.sortDate,
+		    reportType:  0,  //0:患者报告  1：分析报告
+		    batch:  $routeParams.batch=="all"?null:$routeParams.batch,
+		    period:  $routeParams.period=="all"?null:$routeParams.period,
+		    beginDate:  $routeParams.begin=="all"?null:$routeParams.begin,
+		    endDate:  $routeParams.end=="all"?null:$routeParams.end,
+		    distributed:  null, //0:是   1： 否
+		    sampleName:  null,
 		    appId: $rootScope.appId
 		}
+		$rootScope.goReportList = function(){
+		  var appId = $routeParams.appId,
+		      page = $scope.bsiReportParams.page,
+          size = $scope.bsiReportParams.size,
+          condition = $scope.bsiReportParams.condition==null||$scope.bsiReportParams.condition==''?"all":$scope.bsiReportParams.condition,
+          sort = $scope.bsiReportParams.sort,
+          sortBatch = $scope.bsiReportParams.sortBatch=="all"?"asc":$scope.bsiReportParams.sortBatch,
+          sortName= $scope.bsiReportParams.sortName=="all"?"asc":$scope.bsiReportParams.sortName,
+          sortPeriod = $scope.bsiReportParams.sortPeriod=="all"?"asc":$scope.bsiReportParams.sortPeriod,
+          sortDate = $scope.bsiReportParams.sortDate=="all"?"desc":$scope.bsiReportParams.sortDate,
+          batch = $scope.bsiReportParams.batch==null?"all":$scope.bsiReportParams.batch,
+          period = $scope.bsiReportParams.period==null?"all":$scope.bsiReportParams.period,
+          beginDate = $scope.bsiReportParams.beginDate==null?"all":$scope.bsiReportParams.beginDate,
+          endDate =  $scope.bsiReportParams.endDate==null?"all":$scope.bsiReportParams.endDate;
+		  $location.path("/product/bactive/report/"+appId +"/"+page+"/"+size+"/"+beginDate+"/"+endDate+"/"+period+"/"+batch+"/"
+                      +condition+"/"+sort+"/"+sortBatch+"/"+sortName+"/"+sortPeriod+"/"+sortDate);
+		}
 		$scope.pageQuery = function(){
-			bsiService.reportPageQuery($scope.bsiReportParams).
-			success(function(dataMap){
+			bsiService.reportPageQuery($scope.bsiReportParams).success(function(dataMap){
 				$scope.batchList = dataMap.batchList;
 				$scope.pageList = dataMap.pageList;
 				$scope.periodMap = dataMap.periodMap;
 				$scope.nowDate = dataMap.nowDate;
+				$rootScope.goReportList();
 			})
 		}
 		$scope.conditionFind = function(){

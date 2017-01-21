@@ -16,6 +16,17 @@ import com.celloud.page.PageList;
  */
 public interface SampleService {
 
+	/**
+	 * 
+	 * @author miaoqi
+	 * @description 根据主键查询样本对象
+	 * @date 2017年1月12日
+	 *
+	 * @param id
+	 * @return
+	 */
+	Sample findByPrimaryKey(Integer id);
+
     /**
      * 新增样本信息
      * 

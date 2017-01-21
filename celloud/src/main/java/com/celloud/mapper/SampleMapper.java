@@ -67,5 +67,16 @@ public interface SampleMapper {
             @Param("sampleName") String sampleName,
             @Param("state") Integer state);
 
+	/**
+	 * 
+	 * @author miaoqi
+	 * @description 根据id集合查找样本集合
+	 * @date 2017年1月12日
+	 *
+	 * @param ids
+	 * @return
+	 */
+	List<Sample> selectByIds(@Param("ids") List<Integer> ids);
+
     List<Sample> getSamplesByStorageId(@Param("ssid") Integer storageId, @Param("state") Integer state);
 }

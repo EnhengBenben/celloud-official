@@ -336,4 +336,9 @@ public class TaskServiceImpl implements TaskService {
         List<Task> list = taskMapper.findAllByBatch(loginUserId, appId, TaskPeriod.DONE, DataState.ACTIVE, batch);
         return list;
     }
+
+	@Override
+	public Task findTaskByProjectid(Integer projectId) {
+		return taskMapper.selectByProjectId(projectId);
+	}
 }

@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -71,6 +72,7 @@ import com.celloud.model.mysql.Experiment;
 import com.celloud.model.mysql.Medicine;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
+import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.Tag;
 import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
@@ -83,12 +85,14 @@ import com.celloud.service.ExperimentService;
 import com.celloud.service.MedicineService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
+import com.celloud.service.SampleService;
 import com.celloud.service.TagService;
 import com.celloud.service.TaskService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
+import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
 import com.celloud.utils.VelocityUtil;
 
@@ -124,11 +128,24 @@ public class ReportAction {
 	private MedicineService medicineService;
 	@Resource
 	private TagService tagService;
+	@Autowired
+	private SampleService sampleservice;
 
 	@RequestMapping("checkPgsProject")
 	@ResponseBody
 	public Integer checkPgsProject(Integer projectId) {
 		return reportService.getProjectPeriod(projectId);
+	}
+
+	@RequestMapping("checkPdf")
+	@ResponseBody
+	public Integer checkPdf(String dataKey) {
+		Integer userId = ConstantsData.getLoginUserId();
+		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
+		if (!new File(filePath).exists()) {
+			return 0;
+		}
+		return 1;
 	}
 
 	@ActionLog(value = "下载", button = "下载")
@@ -144,17 +161,20 @@ public class ReportAction {
 		return 1;
 	}
 
-//    @ActionLog(value = "下载", button = "下载")
-//    @RequestMapping("downRockyPdf")
-//    @ResponseBody
-//    public Integer downRockyPdf(Integer userId, String dataKey) {
-//        String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
-//        if (new File(filePath).exists()) {
-//            FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
-//            return 0;
-//        }
-//        return 1;
-//    }
+	@ActionLog(value = "下载", button = "下载")
+	@RequestMapping("downRockyPdf")
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public Integer downRockyPdf(String dataKey, String objId) {
+		// 进行下载
+		Integer userId = ConstantsData.getLoginUserId();
+		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
+		if (new File(filePath).exists()) {
+			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
+			return 0;
+		}
+		return 1;
+	}
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")
@@ -887,10 +907,13 @@ public class ReportAction {
         // dataMap.put("bsi", bsi);
         // dataMap.put("data", df);
         // } else {
-            BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
-            DataFile df = dataService.getDataByKey(dataKey);
-            dataMap.put("bsi", bsi);
-            dataMap.put("data", df);
+		Task task = taskService.findTaskByProjectid(projectId);
+		Sample sample = sampleservice.findByPrimaryKey(task.getSampleId());
+		BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
+		DataFile df = dataService.getDataByKey(dataKey);
+		dataMap.put("bsi", bsi);
+		dataMap.put("data", df);
+		dataMap.put("sample", sample);
         // }
         return dataMap;
     }
@@ -1245,7 +1268,22 @@ public class ReportAction {
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public Integer updateRockyFilling(Rocky rocky) {
-		return reportService.updateRockyFilling(rocky);
+		Integer flag = reportService.updateRockyFilling(rocky);
+		if (flag.intValue() == 1) {
+			// 构建pdf路径
+			Integer userId = ConstantsData.getLoginUserId();
+			String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + rocky.getDataKey() + "/"
+			        + rocky.getDataKey() + ".pdf";
+			// 删除原有的pdf,创建新的pdf
+			File pdfFile = new File(filePath);
+			if (pdfFile.exists()) {
+				pdfFile.delete();
+			}
+			// 调用python生成pdf
+			String command = SparkPro.ROCKYPDF + " " + rocky.getId();
+			PerlUtils.excutePerlNoResult(command);
+		}
+		return flag;
 	}
 
 	/**

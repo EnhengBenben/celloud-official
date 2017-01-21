@@ -5,6 +5,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +25,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
+import com.celloud.constants.UserResource;
 import com.celloud.message.category.MessageCategoryCode;
 import com.celloud.message.category.MessageCategoryUtils;
 import com.celloud.model.PrivateKey;
@@ -174,24 +177,31 @@ public class LoginAction {
 		// 获取当前用户所有的app
 		List<App> appList = appService.getMyAppList(userId);
 		// 该用户appId不为空, 判断是否包含bsi与rocky
-		boolean bsi = false;
 		boolean rocky = false;
+		Integer bsiId = null;
+		Integer bsiNum = 0;
 		if (appList != null && appList.size() > 0) {
 			for (App app : appList) {
 				// 获取该app的appId
 				Integer appId = app.getAppId();
 				// bsi
-				if (appId == 118) {
-					bsi = true;
-				} else if (appId == 123) {
+				if (AppConstants.BACTIVE_GROUP.contains(appId) && appId.intValue() != 123) {
+					bsiNum++;
+					bsiId = app.getAppId();
+				} else if (appId.intValue() == 123) {
 					rocky = true;
 				}
 			}
 		}
-		if (!bsi && rocky) {
-			mv.addObject("route", "#/product/rocky/upload");
-        } else if (bsi && !rocky) {
-            mv.addObject("route", "#/product/bsi/bsireport");
+		if (bsiNum.intValue() == 0 && rocky) {
+			Set<String> permissions = userService.findPermissions(loginUser.getUserId());
+			if (permissions.contains(UserResource.ROCKYUPLOAD)) {
+				mv.addObject("route", "#/product/rocky/upload");
+			} else if (permissions.contains(UserResource.ROCKYREPORT)) {
+				mv.addObject("route", "#/product/rocky/report");
+			}
+		} else if (bsiNum.intValue() == 1 && !rocky) {
+			mv.addObject("route", "#/product/bactive/report/" + bsiId + "/1/20/all/all/all/all/all/0/asc/asc/asc/desc");
 		}
 		return mv;
 	}

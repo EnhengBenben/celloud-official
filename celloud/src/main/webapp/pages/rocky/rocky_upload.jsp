@@ -46,7 +46,7 @@
 				</div>
 				<div id="upload-step-two" class="steps hide">
 					<div class="step">
-						<div class="info">第二步：拖拽文件到下面指定区域或者点击指定位置的选择文件进行选择，后即可自动上传文件</div>
+						<div class="info">第二步：拖拽文件到下面指定区域或者点击指定位置的选择文件进行选择后即可自动上传文件</div>
 					</div>
 					<div id="plupload-content" class="box-body plupload-content">
 						<div class="upload-text">

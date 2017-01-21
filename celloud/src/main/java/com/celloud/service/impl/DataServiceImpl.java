@@ -109,9 +109,14 @@ public class DataServiceImpl implements DataService {
 			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
 		}
         DataFile data_s = dataFileMapper.selectByPrimaryKey(data.getFileId());
-        Sample sample = sampleMapper.getSampleByExperName(
-                StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0],
-                DataState.ACTIVE);
+		Sample sample = null;
+		if (tagId.intValue() == 2) {
+			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), "_")[0],
+			        DataState.ACTIVE);
+		} else {
+			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0],
+			        DataState.ACTIVE);
+		}
         if (sample != null) {
             dataFileMapper.addFileSampleRelat(data.getFileId(),
                     sample.getSampleId());
@@ -300,8 +305,10 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public PageList<DataFile> filterRockyList(Page page, String sample, String condition, String sidx, String sord) {
-		List<DataFile> lists = dataFileMapper.filterRockyList(page, ConstantsData.getLoginUserId(), DataState.ACTIVE,
+	public PageList<Map<String, Object>> filterRockyList(Page page, String sample, String condition, String sidx,
+	        String sord) {
+		List<Map<String, Object>> lists = dataFileMapper.filterRockyList(page, ConstantsData.getLoginUserId(),
+		        DataState.ACTIVE,
 				ReportType.DATA, ReportPeriod.COMPLETE, sample, condition, sidx, sord);
 		return new PageList<>(page, lists);
 	}
@@ -421,6 +428,7 @@ public class DataServiceImpl implements DataService {
 		data.setFileFormat(fileFormat);
 		data.setOssPath(newObjectKey);
 		dataFileMapper.updateByPrimaryKeySelective(data);
+
 		data = dataFileMapper.selectByPrimaryKey(dataId);
 		// TODO 需要根据tagId判断是否rocky
 		runService.rockyCheckRun(123, data);

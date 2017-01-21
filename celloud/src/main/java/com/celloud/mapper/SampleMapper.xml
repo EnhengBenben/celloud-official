@@ -217,7 +217,7 @@
     values (#{sampleId,jdbcType=INTEGER}, #{tagId,jdbcType=INTEGER})
   </insert>
   <select id="getSamplesByOrder" resultMap="ResultMapWithTag">
-    select s.sample_id, s.user_id, s.order_id, s.sample_name, s.is_add, s.type, s.sindex, s.create_date, s.update_date,
+    select s.sample_id, s.user_id, s.exper_sample_name, s.order_id, s.sample_name, s.is_add, s.type, s.sindex, s.create_date, s.update_date,
      s.state, s.remark,t.tag_id,t.tag_name
     from tb_sample s
     left join tb_sample_log sl on s.sample_id=sl.sample_id 
@@ -262,5 +262,14 @@
     tb_sample s,tb_sample_storage ss,tb_sample_storage_relat ssr
     where s.sample_id=ssr.sample_id and ss.id=ssr.storage_id
     and ss.id=#{ssid} and s.state=#{state,jdbcType=BIT}
+  </select>
+  <select id="selectByIds" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM tb_sample
+    WHERE sample_id IN
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+        #{id}
+    </foreach>
   </select>
 </mapper>

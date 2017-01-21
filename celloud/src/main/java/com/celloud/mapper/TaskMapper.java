@@ -283,4 +283,6 @@ public interface TaskMapper {
     List<Task> findAllByBatch(@Param("userId") Integer userId, @Param("appId") Integer appId,
             @Param("period") Integer period, @Param("state") Integer state, @Param("batch") String batch);
 
+	Task selectByProjectId(@Param("projectId") Integer projectId);
+
 }

@@ -14,8 +14,9 @@
               <i class="cubes-icon">&nbsp;</i>
             </a>
             <div class="dropdown-menu product-dropdown">
-              <a ng-if="userProduct.app118==118" href="${pageContext.request.contextPath }/index#/product/bactive/report/{{appId}}"><img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探"></a>
-              <a ng-if="userProduct.app123==123" href="${pageContext.request.contextPath }/index#/product/rocky/upload"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
+              <a ng-if="userProduct.app118==118" href="${pageContext.request.contextPath }/index#/product/bactive/report/{{appId}}/1/20/all/all/all/all/all/0/asc/asc/asc/desc"><img src="<%=request.getContextPath()%>/app/image?file=bsi.png" alt="百菌探" title="百菌探"></a>
+              <a ng-if="userProduct.app123==123 && userProduct.rockyupload==true" href="${pageContext.request.contextPath }/index#/product/rocky/upload"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
+              <a ng-if="userProduct.app123==123 && userProduct.rockyreport==true" href="${pageContext.request.contextPath }/index#/product/rocky/report"><img src="<%=request.getContextPath()%>/app/image?file=rocky.png" alt="华木兰" title="华木兰"></a>
             </div>
           </li>
           <shiro:hasPermission name="data:upload">
