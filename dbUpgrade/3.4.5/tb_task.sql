@@ -1,0 +1,3 @@
+/*!40101 SET NAMES utf8 */;
+ALTER TABLE tb_task ADD COLUMN remark VARCHAR(255);
+
