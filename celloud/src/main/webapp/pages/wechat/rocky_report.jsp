@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
         <title>CelLoud华木兰报告</title>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=3.6" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=3.7" />
     </head>
 
     <body>
@@ -37,11 +37,7 @@
 
 					<!--------type开始------------->
 					<div class="p2_main type">
-						<!--<span>样本类型：</span>
-					<span>样本编号：</span><br>
-					<span>送检日期：</span>
-					<span>报告日期：</span>-->
-
+		
 					</div>
 					<!--------type结束------------->
 					
@@ -99,20 +95,7 @@
 					</div>
 				</div>
 				<!--------page5--------->
-				<!--<div class="main swiper-slide">
-					 <img class="backImg1" src="<%=request.getContextPath()%>/images/wechat/rocky_report/04.Page 1.png" />
-					<div class="p5_content">
-						<p>风险提示：</p>
-						
-						<p><b>·</b><i>报告所给出的信息，是作为健康管理的参考信息，不能成为疾病诊断与治疗依据。疾病诊断与治疗需由临床医生给出结论与方案。</i></p>
-						<p><b>·</b><i>健康的身体由基因、良好的生活习惯及生活环境共同影响，基因突变本身不是疾病形成的唯一因素。</i></p>
-						
-						<p><b>·</b><i>健康，是长期管理的结果，此报告所揭示的突变及相关的信息会因为研究的进展而发生变化。</i></p>
-						
-						<p id="p5_bot">送检样本的处理及数据分析、出具报告的整个过程，都有专业的监管与流程记录，以确保您的个人隐私与相应数据的安全。我们遵从相应的服务协议，在未获得本人授权情况下，数据不作他用。同时也请您妥善保管报告以及相应的数据信息，以免泄漏。</p>
-						<p>祝，健康！</p>
-					</div>
-				</div>-->
+				
 				<!--------page6--------->
 				<div class="main swiper-slide">
 					 <img class="backImg6" src="<%=request.getContextPath()%>/images/wechat/rocky_report/06.Page 1.png" />
@@ -128,21 +111,10 @@
 				<div class="main swiper-slide">
 					<div class="p7-content">
 						<div>
-							<p>
-								<b>·</b>&nbsp;&nbsp;Class 5 – 致病相关的变异   Pathogenic 
-							</p>
-							<p>
-								<b>·</b>&nbsp;&nbsp;Class 4 – 可能致病的变异   Likely pathogenic
-							</p>
-							<p>
-								<b>·</b>&nbsp;&nbsp;Class 3 – 意义不明确的变异   Uncertain Significance
-							</p>
-							<p>
-								<b>·</b>&nbsp;&nbsp;Class 2 – 可能良性的变异   Likely benign
-							</p>
-							<p>
-								<b>·</b>&nbsp;&nbsp;Class 1 – 良性的变异   Benign
-							</p>
+							<p><b>·</b>&nbsp;&nbsp;Class 5 – 致病相关的变异   Pathogenic </p>
+							<p><b>·</b>&nbsp;&nbsp;Class 4 – 可能致病的变异   Likely pathogenic</p><p><b>·</b>&nbsp;&nbsp;Class 3 – 意义不明确的变异   Uncertain Significance</p>
+							<p><b>·</b>&nbsp;&nbsp;Class 2 – 可能良性的变异   Likely benign</p>
+							<p><b>·</b>&nbsp;&nbsp;Class 1 – 良性的变异   Benign</p>
 						</div>
 						<div class="p7">
 							<div class="countIn">
@@ -169,14 +141,11 @@
 				<div class="main swiper-slide">
 					 <img class="backImg8" src="<%=request.getContextPath()%>/images/wechat/rocky_report/08.Page 1.png" />
 					<div class="p8_content">
-						<div>
-							根据遗传学“中心法则”，遗传信息由DNA开始最终传向蛋白质，蛋白分子共同协作使我们的身体正常运转。发生有害突变的DNA产生异常的蛋白（蛋白分子大小或分子结构发生变化），不能行使其正常功能，最终可能导致机体发生病变。
-						</div>
+						<div>根据遗传学“中心法则”，遗传信息由DNA开始最终传向蛋白质，蛋白分子共同协作使我们的身体正常运转。发生有害突变的DNA产生异常的蛋白（蛋白分子大小或分子结构发生变化），不能行使其正常功能，最终可能导致机体发生病变。</div>
 						<div class="p8_img"><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_16.png" /></div>
 						<div class="p8_m">参考国际癌症研究机构（International Agency for Research on Cancer,IARC）的分类标准，基因变异的临床意义分类及标准为：</div>
 						<div class="p8_text"><b>·</b><i>致病相关变异：已证实能使癌症风险显著提高的突变。这种变异往往是移码突变，导致蛋白质不能正常表达。</i></div>
 						<div class="p8_text"><b>·</b><i>可能致病变异：没有明确证据，当前认为该变异有害。</i></div>
-						
 						<div class="p8_text"><b>·</b><i>意义不明确变异：不确定该变异是有害还是无影响。这是一种常见的检测结果，很多变异一开始都被分为这一类。随着证据的不断补充，这些变异会被重新分类。</i></div>
 						<div class="p8_text"><b>·</b><i>可能良性变异：没有明确证据，当前认为该变异对人体无害。</i></div>
 						<div class="p8_text"><b>·</b><i>良性变异：被证实为对人体无害的变异，可以被认为是“未发生突变”。</i></div>
@@ -228,7 +197,7 @@
 				</div>
 				<!--------page11--------->
 				<div class="main swiper-slide">
-					 <img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 1.png" />
+					<img class="backImg11" src="<%=request.getContextPath()%>/images/wechat/rocky_report/11.Page 1.png" />
 					<div class="p11-content">
 						<div>人是二倍体基因组生物，每个细胞中有两套基因（一份来自父亲一份来自母亲）。一般来说，子代携带者只有其中一套基因上会遗传来自父辈的突变，被称为杂合子突变携带者。<span style="font-style: italic;font-family: 'times new roman';">BRCA1/BRCA2</span>突变升高癌症风险是显性遗传作用，只要等位基因中的一个基因位点发生突变就能表现出来。突变可以从父母任何一方遗传而来，也可以遗传给儿子或女儿。子代不论性别，从突变携带者父/母亲那里遗传到同一突变的概率为50%，因此男性也可能会携带有突变。</div>
 						<div><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_26.png" /></div>
@@ -245,12 +214,12 @@
 						<div class="p12_img">
 							<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/未标题-1_03.png" />
 						</div>
-						<div>确凿证据表明，有乳腺癌家族史的女性，尤其是一级亲属患乳腺癌的女性，发生乳腺癌的风险升高。如果只有一名一级亲属患病，则风险翻倍；如果有两名一级亲属诊断患病，则风险增加4倍。</div>
+						<div class="p12-last">确凿证据表明，有乳腺癌家族史的女性，尤其是一级亲属患乳腺癌的女性，发生乳腺癌的风险升高。如果只有一名一级亲属患病，则风险翻倍；如果有两名一级亲属诊断患病，则风险增加4倍。</div>
 					</div>
 				</div>
 				<!--------page13--------->
 				<div class="main swiper-slide">
-					  <img class="backImg13" src="<%=request.getContextPath()%>/images/wechat/rocky_report/12.Page 1.png" />
+					<img class="backImg13" src="<%=request.getContextPath()%>/images/wechat/rocky_report/12.Page 1.png" />
 					<div class="p13-content">
 						<span>主要遗传易感性</span>
 						<div>确凿证据表明，有乳腺癌相关遗传基因突变的女性患病风险升高，取决于基因突变、家族史和其他影响基因表达的危险因素。</div>
@@ -275,7 +244,7 @@
                         <span><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/14.Smile.png	">保持心情舒畅，避免压力过大</span>
                         <div>长期心情不畅的女性是乳腺癌的高危人群，建议大家在日常生活中保持情绪稳定,避免精神刺激,适当给自己减压,保持心情舒畅及乐观的生活态度,避免和减少精神、心理紧张因素,可以减少乳腺癌的发生。</div>
 						<span><img src="<%=request.getContextPath()%>/images/wechat/rocky_report/14.inspect.png">定期去正规医疗机构进行体检</span>
-						<div>建议长期饮酒、心情不畅及乳腺增生、有乳腺癌家族史、携带相关基因有害突变的人群定期进行乳腺自检，同时去正规体检机构进行相关的检查，包括 X 线检查、糖类抗原 CA153、CEA、乳腺B超等，早监测、早发现，早诊断、早治疗。</div>
+						<div class="p14-last">建议长期饮酒、心情不畅及乳腺增生、有乳腺癌家族史、携带相关基因有害突变的人群定期进行乳腺自检，同时去正规体检机构进行相关的检查，包括 X 线检查、糖类抗原 CA153、CEA、乳腺B超等，早监测、早发现，早诊断、早治疗。</div>
 					</div>
 				</div>
 				<!--------page15--------->
@@ -310,7 +279,6 @@
 				<div class="main swiper-slide h_lastpage_hide">
 					<div class="h_lastpage">
 						<img src="<%=request.getContextPath()%>/images/wechat/rocky_report/last.png">
-
 					</div>
 				</div>
 			</div>
@@ -322,6 +290,6 @@
         <script type="text/javascript">
 		     window.CONTEXT_PATH = '<%=request.getContextPath()%>';
 		</script>
-        <script src="<%=request.getContextPath()%>/js/rote.js?v=4.1" type="text/javascript" charset="utf-8"></script>
+        <script src="<%=request.getContextPath()%>/js/rote.js?v=4.3" type="text/javascript" charset="utf-8"></script>
     </body>
 </html>

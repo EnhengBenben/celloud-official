@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -276,10 +277,10 @@ public class AppAction {
 		} else {
             map.put("onlyBSI", false);
         }
-		boolean hasUpload = ConstantsData.hasResource(UserResource.ROCKYUPLOAD);
+		boolean hasUpload = SecurityUtils.getSubject().isPermitted(UserResource.ROCKYUPLOAD);
 		map.put("rockyupload", hasUpload);
 		if (!hasUpload) {
-			map.put("rockyreport", ConstantsData.hasResource(UserResource.ROCKYREPORT));
+			map.put("rockyreport", SecurityUtils.getSubject().isPermitted(UserResource.ROCKYREPORT));
 		}
 		return map;
 	}
