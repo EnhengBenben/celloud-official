@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -179,15 +178,6 @@ public class ConstantsData {
 	 */
 	public static HttpSession getSession() {
 		return getRequset().getSession();
-	}
-
-	public static boolean hasResource(String resource) {
-		Object resources = getShioSession().getAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS);
-		if (resources == null) {
-			return false;
-		}
-		Set<String> set = (Set<String>) resources;
-		return set.contains(resource);
 	}
 
 	public static Session getShioSession() {
