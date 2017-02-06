@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -141,7 +142,7 @@ public class AppAction {
     @ActionLog(value = "APP首页查看指定一级分类的子分类", button = "APP一级分类按钮")
     @RequestMapping("toSclassifyApp")
     @ResponseBody
-    public Map<String, Object> toSclassifyApp(Integer paramId) {
+    public Map<String, Object> toSclassifyApp(Integer paramId) throws Exception {
         log.info("{}在APP首页查看{}的子分类", ConstantsData.getLoginUserName(), paramId);
         Map<String, Object> map = new HashMap<String, Object>();
         Integer userId = ConstantsData.getLoginUserId();
@@ -165,6 +166,10 @@ public class AppAction {
         map.put("sclassifys", sclassifys);
         map.put("classifyAppMap", classifyAppMap);
         return map;
+    }
+
+    public static void main(String[] args) throws CloneNotSupportedException {
+        App app = new App();
     }
 
     @ActionLog(value = "查看分类指定分类下的所有APP列表页面", button = "APP获取更多")
@@ -276,10 +281,10 @@ public class AppAction {
 		} else {
             map.put("onlyBSI", false);
         }
-		boolean hasUpload = ConstantsData.hasResource(UserResource.ROCKYUPLOAD);
+		boolean hasUpload = SecurityUtils.getSubject().isPermitted(UserResource.ROCKYUPLOAD);
 		map.put("rockyupload", hasUpload);
 		if (!hasUpload) {
-			map.put("rockyreport", ConstantsData.hasResource(UserResource.ROCKYREPORT));
+			map.put("rockyreport", SecurityUtils.getSubject().isPermitted(UserResource.ROCKYREPORT));
 		}
 		return map;
 	}
@@ -288,6 +293,10 @@ public class AppAction {
     @ResponseBody
     @RequestMapping("addApp")
     public Object userAddApp(Integer paramId, HttpServletResponse response) {
+        Integer role = ConstantsData.getLoginUser().getRole();
+        if (role.intValue() == 5) {
+            return -1;
+        }
         log.info("用户{}添加APP{}", ConstantsData.getLoginUserName(), paramId);
         Integer userId = ConstantsData.getLoginUserId();
         return appService.userAddApp(userId, paramId);
@@ -297,6 +306,10 @@ public class AppAction {
     @ResponseBody
     @RequestMapping("removeApp")
     public Object userRemoveApp(Integer paramId, HttpServletResponse response) {
+        Integer role = ConstantsData.getLoginUser().getRole();
+        if (role.intValue() == 5) {
+            return -1;
+        }
         log.info("用户{}取消添加APP{}", ConstantsData.getLoginUserName(), paramId);
         Integer userId = ConstantsData.getLoginUserId();
         return appService.userRemoveApp(userId, paramId);

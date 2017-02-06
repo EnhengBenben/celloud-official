@@ -216,32 +216,31 @@ body, html {
 }
 
 .rep {
-	width: 4.55rem;
-	border-bottom: none;
+    width: 6.9rem;
+    border-bottom: none;
+    margin: 0 auto;
 }
 
 .report {
-	width: 5rem;
-	height: auto;
-	padding: 0.3rem 0;
+    width: 6.9rem;
+    height: auto;
+    padding: 0.3rem 0;
 }
 
 .p2_main {
 	width: 6.7rem;
 	border-bottom: 1px solid #9F7BAF;
 	margin: 0 auto;
-	margin-left: 0.3rem;
-	margin-right: 0.3rem;
 }
 
 .p2 {
-	padding: 0 0.1rem;
+	width: 6.9rem;
+    margin: 0 auto;
 }
 
 .tab_data_p2 {
 	width: 7rem;
 	border: none;
-	margin-left: 0.3rem;
 }
 
 .tab_header_p2 th {
@@ -301,7 +300,7 @@ body, html {
 	width: 6.9rem;
 	height: 100%;
 	margin: 0.4rem auto;
-	margin-bottom: 0.61rem;
+
 	/* overflow-x: visible; */
 }
 
@@ -439,12 +438,14 @@ body, html {
 }
 
 .date {
-	width: 6.9rem;
-	padding: 0.4rem 0 0.61rem 0;
-	display: -webkit-flex;
-	flex-flow: wrap;
-	border-bottom: none;
-	border-top: 1px solid #9F7BAF;
+    width: 6.9rem;
+    height: auto;
+    display: -webkit-flex;
+    flex-flow: wrap;
+    border-bottom: none;
+    border-top: 1px solid #9F7BAF;
+    padding-top: 0.41rem;
+    margin-bottom: 0.61rem;
 }
 
 .p3_pos {
@@ -1082,10 +1083,6 @@ body, html {
 	margin: 0 auto;
 }
 
-.p14-last {
-	margin-bottom: 0.61rem;
-}
-
-.p12-last {
-	margin-bottom: 0;
-}
+.p14-last{margin-bottom: 0.61rem;}
+.p12-last{margin-bottom: 0;}
+.p7{	margin-bottom: 0.61rem;}

@@ -26,6 +26,9 @@
 				}
 			}).
 			error(function(data, status){
+				if(status == 403){
+					alert("测试账号不允许修改信息");
+				}
 				if(status == 400){
 					// 参数错误
 					$.alert("手机号格式有误!");
@@ -43,7 +46,11 @@
 				$.alert(data.message);
 			}).
 			error(function(data, status){
-				$.alert(data.message);
+				if(status == 403){
+					alert("测试账号不允许修改信息");
+				}else{
+					$.alert(data.message);
+				}
 			});
 		};
 		$scope.reset = function(){
@@ -62,7 +69,9 @@
 	    	userService.updatePassword($scope.oldPwd,$scope.newPwd).
 	    	success(function(data){
 	    		$scope.code = data.code;
-	    		if($scope.code==203){
+	    		if(parseInt($scope.code) == 403){
+	    			alert("测试账号不允许修改信息");
+	    		}else if($scope.code==203){
 	    			$scope.pwdMessage = data.message;
 	    		}else{
 	    			$.alert(data.message);
@@ -105,7 +114,9 @@
 		$scope.updateEmail = function(){
 			userService.updateEmail($scope.user.email).
 			success(function(data){
-				if(data==1){
+				if(data == -1){
+					alert("测试账号不允许修改邮箱");
+				}else if(data==1){
 					$scope.sendFail = true;
 				}else if(data==0){
 					$scope.sendSuccess = true;

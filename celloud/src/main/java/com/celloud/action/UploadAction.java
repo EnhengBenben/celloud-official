@@ -59,6 +59,22 @@ public class UploadAction {
 		return tagService.findProductTags(ConstantsData.getLoginUserId());
 	}
 
+    /**
+     * 
+     * @description 检测用户的角色
+     * @author miaoqi
+     * @date 2017年2月5日 下午1:12:39
+     * @return
+     */
+    @RequestMapping("checkRole")
+    @ResponseBody
+    public String checkRole() {
+        Integer role = ConstantsData.getLoginUser().getRole();
+        if (role.intValue() == 5) {
+            return "0";
+        }
+        return "1";
+    }
 
 	/**
 	 * 
@@ -82,7 +98,9 @@ public class UploadAction {
     public String uploadManyFile(String name, String originalName, Integer chunk,
             Integer chunks, MultipartFile file, HttpServletRequest request, Integer tagId, String batch,
             Integer needSplit, Long size, Date lastModifiedDate) {
-
+        if ("0".equals(this.checkRole())) {
+            return "0";
+        }
         // 如果是百菌探, 先检查同一批次下, 是否包含相同文件名的文件, 如果有 则直接返回
         if (tagId.intValue() == 1) {
             if (chunk.intValue() == 0) {
