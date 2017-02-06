@@ -37,7 +37,7 @@ public class AppDataListType {
 	 * path
 	 */
     public static final List<Integer> ONLY_PATH = Arrays.asList(1, 73, 82, 84,
-            89, 90, 105, 106, 107, 108, 117, 118, 133, 134, 135, 136, 137);
+            89, 90, 105, 106, 107, 108, 117, 118, 133, 134, 135, 136, 137, 142);
 
 	/**
 	 * path and name
