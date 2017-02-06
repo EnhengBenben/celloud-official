@@ -1,22 +1,43 @@
 <!DOCTYPE html>
-<html style="color: #323232;width: 100%;min-height: 100%;background: #fffffb;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;">
+<html style="color: #323232;width: 100%;min-height: 100%;background: #fffffb;padding:0;margin:0;font-family: '微软雅黑';font-size: 16rem;">
 	<head>
 		<meta charset="UTF-8">
 		<title>celLoud邮件</title>
 	</head>
-	<body style="color: #323232;width: 100%;min-height: 100%;padding:0;margin:0; font-family: '微软雅黑';font-size: 16px;background: #fffffb;">
-		<div style="color: #323232;padding:0;margin:0;width:900px ;font-family: '微软雅黑';font-size: 16px;height: 1000px;background: url('img/bgnew.gif') no-repeat ;margin: 0 auto;overflow: hidden;">
-			<div style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px; margin: 54px 0 82px 834px;">
-			<a style="color: #323232;padding:0;margin:0;width:900px ;font-family: '微软雅黑';font-size: 16px; text-decoration: none;color: #969696;font-size: 14px;" href='${home}'>登录</a>
-			</div>
-			<div style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;width: 650px;height: 351px;margin-left: 106px;">
-				<h2 style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;text-align: center;font-size: 18px;color: #323232;font-weight: bold;margin-bottom: 50px;">系统邮件</h2>
-				<p style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;  margin-bottom: 30px;text-indent: 40px;">标题：${title}</p>
-				<p style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;  margin-bottom: 30px;text-indent: 40px;">提问时间：${start}</p>
-				<p style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;  margin-bottom: 30px;text-indent: 40px;">用户：${userName}（${email}）</p>
-				<p style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;  margin-bottom: 30px;text-indent: 40px;">问题描述：${context}</p>
-			</div>
+	
+	<body style="color: #323232;width: 100%;min-height: 100%;padding:0;margin:0; font-family: '微软雅黑';font-size: 16rem;background: #fffffb;">
+		<div style="color: #323232;padding:0;margin:0;width:900px;font-family: '微软雅黑';font-size: 16px;margin: 0 auto;overflow: hidden;">
+			<table border="0" cellspacing="0" cellpadding="0" >
+				<tbody>
+					<!--------top-------->
+					<tr style="padding:0;margin:0;display:block;width: 900px;height: 269px;background: url('img/top.png') no-repeat;overflow: hidden;">
+						<td style="display:block; width: 820px;height: 269px;margin: 54px auto;overflow: hidden;">
+							<div ><a  href='${home}' style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px; text-decoration: none;color: #969696;font-size: 14px;float:right;">登录</a></div>
+							<div ><h2 style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;text-align: center;font-size: 18px;color: #323232;font-weight: bold;margin-top: 130px;">问题反馈</h2></div>
+						</td>
+					</tr>
+					<!-------middle---------->
+					<tr style="padding:0;margin:0;display:block;width: 900px;height:auto;background: url('img/middle.png') repeat-y;overflow: hidden;">
+						<td style="display:block; width: 700px;height: auto;margin: 0 auto;">
+							<p style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;  margin-bottom: 19px;text-indent: 32px;">标题：${title}</p>
+							<p style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;  margin-bottom: 19px;text-indent: 32px;">提问时间：${start}</p>
+							<p style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;  margin-bottom: 19px;text-indent: 32px;">用户：${userName}（${email}）</p>
+							<p style="color: #323232;padding:0;margin:0;font-family: '微软雅黑';font-size: 16px;  margin-bottom: 19px;word-wrap: break-word;width: 660px;margin-left: 32px;">问题描述：<br/>${context}</p>
+						</td>
+					</tr>
+					<!------bottom---------->
+					<tr style="padding:0;margin:0;display:block;width: 900px;height: 490px;background: url('img/bottom.png') no-repeat;overflow: hidden;">
+						<td style="display:block;width: 700px;height: 490px;margin: 0 auto;">
+							<div style="height: 131px;width:237px;margin-top: 245px;">
+								<span style="display:block;float: left;font-size: 14px;color: #646464;margin-bottom:10px;">公 司：上海华点云生物科技有限公司</span>
+								<span style="display:block;float: left;font-size: 14px;color: #646464;margin-bottom:10px;">电 话：400 770 1010 </span>
+								<span style="display:block;float: left;font-size: 14px;color: #646464;margin-bottom:10px;">邮 箱：service@celloud.cn</span>
+								<span style="display:block;float: left;font-size: 14px;color: #646464;margin-bottom:10px;">官 网：www.celloud.cn</span>								
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>	
 		</div>
 	</body>
 </html>
-
