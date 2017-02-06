@@ -69,15 +69,13 @@
 	    	userService.updatePassword($scope.oldPwd,$scope.newPwd).
 	    	success(function(data){
 	    		$scope.code = data.code;
-	    		if(parseInt($scope.code) == 403){
-	    			alert("测试账号不允许修改信息");
-	    		}else if($scope.code==203){
+	    		if($scope.code==203){
 	    			$scope.pwdMessage = data.message;
 	    		}else{
 	    			$.alert(data.message);
 	    		}
 	    	}).error(function(data) {
-
+	    		alert("测试账号不允许修改信息");
 			});
 		};
 		$scope.checkOldPwd = function(){
