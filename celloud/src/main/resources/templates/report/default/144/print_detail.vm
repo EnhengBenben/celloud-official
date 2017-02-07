@@ -1,0 +1,12 @@
+#parse("templates/report/layout.vm")
+#parse("templates/report/default/${hbv.appId}/reference.vm")
+<div id="printMain">
+    <form id="print-form">
+    <div>
+        #parse("templates/report/default/${hbv.appId}/title_detail.vm")
+        #parse("templates/report/default/${hbv.appId}/content_detail.vm")
+        #parse("templates/report/default/${hbv.appId}/foot_detail.vm")
+    </div>
+    </form>
+</div>  
+#parse("templates/report/default/${hbv.appId}/js.vm")
