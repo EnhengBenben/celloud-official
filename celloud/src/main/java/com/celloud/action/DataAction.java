@@ -450,6 +450,10 @@ public class DataAction {
 	@RequestMapping("runWithProject")
 	@ResponseBody
 	public Response runWithProject(String dataIds) {
+        Integer role = ConstantsData.getLoginUser().getRole();
+        if (role.intValue() == 5) {
+            return new Response();
+        }
 		Integer userId = ConstantsData.getLoginUserId();
 		return runService.run(userId, dataIds);
 	}

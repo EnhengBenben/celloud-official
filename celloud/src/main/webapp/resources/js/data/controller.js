@@ -68,36 +68,43 @@
     }
     //项目运行
     $scope.runWithProject = function() {
-      if(!$scope.checkNum()){
-        return ;
-      }
-      if($.dataManager.options.isRun!=0){
-        $rootScope.errorInfo = "所勾选的数据必须不处于运行状态！";
-        $("#tips-modal").modal("show");
-        return;
-      }
-      if($.dataManager.options.isTag!=0){
-        $rootScope.errorInfo = "所勾选的数据必须有产品标签！";
-        $("#tips-modal").modal("show");
-        return;
-      }
-      if($.dataManager.options.isBSI!=0){
-        $rootScope.errorInfo = "所勾选的数据产品标签不能为百菌探！";
-        $("#tips-modal").modal("show");
-        return;
-      }
-      if($.dataManager.options.isRocky!=0){
-        $rootScope.errorInfo = "所勾选的数据产品标签不能为华木兰！";
-        $("#tips-modal").modal("show");
-        return;
-      }
-      if($.dataManager.options.isPair!=0){
-        $.confirm("请保证所选数据为配对数据！","确认框",function(){
-          $scope.run();
-        });
-      }else{
-        $scope.run();
-      }
+    	uploadService.checkRole().
+		success(function(data){
+			if(data == "0"){
+				return;
+			}else{
+				if(!$scope.checkNum()){
+			        return ;
+			      }
+			      if($.dataManager.options.isRun!=0){
+			        $rootScope.errorInfo = "所勾选的数据必须不处于运行状态！";
+			        $("#tips-modal").modal("show");
+			        return;
+			      }
+			      if($.dataManager.options.isTag!=0){
+			        $rootScope.errorInfo = "所勾选的数据必须有产品标签！";
+			        $("#tips-modal").modal("show");
+			        return;
+			      }
+			      if($.dataManager.options.isBSI!=0){
+			        $rootScope.errorInfo = "所勾选的数据产品标签不能为百菌探！";
+			        $("#tips-modal").modal("show");
+			        return;
+			      }
+			      if($.dataManager.options.isRocky!=0){
+			        $rootScope.errorInfo = "所勾选的数据产品标签不能为华木兰！";
+			        $("#tips-modal").modal("show");
+			        return;
+			      }
+			      if($.dataManager.options.isPair!=0){
+			        $.confirm("请保证所选数据为配对数据！","确认框",function(){
+			          $scope.run();
+			        });
+			      }else{
+			        $scope.run();
+			      }
+			}
+		});
     };
     var opts = {
       lines: 13, // The number of lines to draw
