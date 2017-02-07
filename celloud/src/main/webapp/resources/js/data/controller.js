@@ -190,6 +190,7 @@
 			    		}
 			    	}
 			    });
+			    $("#data-detail-modal").modal("show");
 			}
 		});
     }
