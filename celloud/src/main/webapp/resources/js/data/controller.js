@@ -1,5 +1,5 @@
 (function(){
-  celloudApp.controller("dataListController", function($scope, $rootScope, $location, $routeParams, runService){
+  celloudApp.controller("dataListController", function($scope, $rootScope, $location, $routeParams, runService, uploadService){
     //基本检索方法
     $scope.pageQuery = function(page,pageSize){
       $.dataManager.options.condition = $scope.dataCondition;
@@ -140,18 +140,27 @@
     }
     //数据删除
     $scope.deleteData = function(){
-      if(!$scope.checkNum()){
-        return ;
-      }
-      $.confirm("确定要归档所选数据？","确认框",function(){
-        runService.deleteData().success(function(response){
-          if(response.success){
-            $scope.conditionList();
-            $.dataManager.refreshDataList();
-          }
-          $.alert(response.message);
-        });
-      });
+    	// 检查用户角色是否为测试账号
+		uploadService.checkRole().
+		success(function(data){
+			if(data == "0"){
+				alert("测试账号不可归档");
+			}else{
+		      if(!$scope.checkNum()){
+			      return ;
+			  }
+		      uploadService.checkRole
+		      $.confirm("确定要归档所选数据？","确认框",function(){
+		        runService.deleteData().success(function(response){
+		          if(response.success){
+		            $scope.conditionList();
+		            $.dataManager.refreshDataList();
+		          }
+		          $.alert(response.message);
+		        });
+		      });
+			}
+		});
     };
     //跳转数据编辑
     $scope.toEditData = function(fileId){

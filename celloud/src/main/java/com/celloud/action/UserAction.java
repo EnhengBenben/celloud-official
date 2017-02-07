@@ -148,6 +148,10 @@ public class UserAction {
      */
     @RequestMapping(value = "sendCaptcha", method = RequestMethod.POST)
     public ResponseEntity<Void> sendCapcha(String cellphone) {
+        Integer role = ConstantsData.getLoginUser().getRole();
+        if (role.intValue() == 5) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         logger.info("用户 {} 申请验证手机号码 {}", ConstantsData.getLoginUserId(), cellphone);
         if (StringUtils.isEmpty(cellphone)) {
             logger.info("手机号码 {} 格式有误", cellphone);
@@ -187,6 +191,10 @@ public class UserAction {
      */
     @RequestMapping(value = "authenticationCellphone", method = RequestMethod.POST)
     public ResponseEntity<Response> authenticationCellphone(String cellphone, String captcha) {
+        Integer role = ConstantsData.getLoginUser().getRole();
+        if (role.intValue() == 5) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
         // 参数校验
         logger.info("用户 {} 进行手机号认证, 手机号 = {}, 验证码 = {}", ConstantsData.getLoginUserId(), cellphone, captcha);
         if (StringUtils.isEmpty(cellphone)) {
@@ -388,6 +396,9 @@ public class UserAction {
 	@ResponseBody
 	public Response updatePassword(String oldPassword, String newPassword) {
 		User user = ConstantsData.getLoginUser();
+        if (user.getRole().intValue() == 5) {
+            return new Response("5", "角色错误");
+        }
 		user.setPassword(MD5Util.getMD5(oldPassword));
 		if (userService.login(user) == null) {
 			return WRONG_PASSWORD;
@@ -426,6 +437,10 @@ public class UserAction {
 	@RequestMapping("sendOldEmail")
 	@ResponseBody
 	public Integer sendOldEmail(String email) {
+        Integer role = ConstantsData.getLoginUser().getRole();
+        if(role.intValue() == 5){
+            return -1;
+        }
 		if (StringUtils.isBlank(email)) {
 			return 1;// error
 		}

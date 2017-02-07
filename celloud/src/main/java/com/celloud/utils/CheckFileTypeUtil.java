@@ -23,33 +23,36 @@ public class CheckFileTypeUtil {
 	 */
 	public int checkFileType(String fileName, String dayPath) {
 		String extName = "";
-		int fileType = 0;
 		if (fileName.lastIndexOf(".") > 0) {
 			extName = fileName.substring(fileName.lastIndexOf("."));
 		}
-        String titleType = checkTitleType(fileName, dayPath);
-        if (titleType.startsWith(FileTitleType.ABI)
+		if (fileName.toLowerCase().indexOf(".fastq") != -1 || fileName.toLowerCase().indexOf(".fq") != -1) {
+			return FileFormat.FQ;
+		}
+		if (extName.equals(".tsv")) {
+			return FileFormat.TSV;
+		}
+		String titleType = checkTitleType(fileName, dayPath);
+		if (titleType.startsWith(FileTitleType.ABI)
 				&& (".ab1".equals(extName.toLowerCase()) || ".abi".equals(extName.toLowerCase()))) {
 			// 文件为峰图文件
-			fileType = FileFormat.FENGTU;
-		} else if (fileName.toLowerCase().indexOf(".fastq") == -1 && fileName.toLowerCase().indexOf(".fq") == -1
-                && ((".zip".equals(extName.toLowerCase()) && (titleType.startsWith(FileTitleType.ZIP)))
-						|| (".gz".equals(extName.toLowerCase())
-                                && (titleType.startsWith(FileTitleType.GZ))))) {
-			// 文件为压缩文件
-			fileType = FileFormat.YASUO;
-        } else if (titleType.startsWith(FileTitleType.BAM) && extName.equals(".bam")) {
-			// bam格式文件
-			fileType = FileFormat.BAM;
-        } else if (titleType.startsWith(FileTitleType.FASTA) && (checkFasta(fileName, dayPath)
-				|| ".fa".equals(extName.toLowerCase()) || ".fasta".equals(extName.toLowerCase()))) {
-			fileType = FileFormat.FA;
-		} else if (fileName.toLowerCase().indexOf(".fastq") != -1 || fileName.toLowerCase().indexOf(".fq") != -1) {
-			fileType = FileFormat.FQ;
-		} else if (extName.equals(".tsv")) {
-			fileType = FileFormat.TSV;
+			return FileFormat.FENGTU;
 		}
-		return fileType;
+		if (fileName.toLowerCase().indexOf(".fastq") == -1 && fileName.toLowerCase().indexOf(".fq") == -1
+				&& ((".zip".equals(extName.toLowerCase()) && (titleType.startsWith(FileTitleType.ZIP)))
+						|| (".gz".equals(extName.toLowerCase()) && (titleType.startsWith(FileTitleType.GZ))))) {
+			// 文件为压缩文件
+			return FileFormat.YASUO;
+		}
+		if (titleType.startsWith(FileTitleType.BAM) && extName.equals(".bam")) {
+			// bam格式文件
+			return FileFormat.BAM;
+		}
+		if (titleType.startsWith(FileTitleType.FASTA) && (checkFasta(fileName, dayPath)
+				|| ".fa".equals(extName.toLowerCase()) || ".fasta".equals(extName.toLowerCase()))) {
+			return FileFormat.FA;
+		}
+		return 0;
 	}
 
 	/**
@@ -144,9 +147,9 @@ public class CheckFileTypeUtil {
 		return isFastq;
 	}
 
-    public String checkTitleType(String fileName, String dayPath) {
+	public String checkTitleType(String fileName, String dayPath) {
 		String path = dayPath + File.separator + fileName;
-        return getTypeByStream(path);
+		return getTypeByStream(path);
 	}
 
 	/**

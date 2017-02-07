@@ -9,6 +9,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.celloud.common.mq.ProducerUtil;
+import com.celloud.common.mq.entity.TaskMessage;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.Mod;
 import com.celloud.exception.BusinessException;
@@ -66,5 +68,22 @@ public class AppSubmitUtil {
 			throw new BusinessException("没有找到" + target + "对应的集群，不能投递任务：command=" + command);
 		}
 		ssh.sshSubmit(command, isWait);
+	}
+
+	/**
+	 * 消息队列的方式投递任务
+	 * 
+	 * @param appCode
+	 * @param taskId
+	 * @param datas
+	 */
+	public static void mq(String appCode, Integer taskId, Integer userId, Map<String, String> datas) {
+		ProducerUtil utils = (ProducerUtil) SpringTool.getBean("producerUtil");
+		TaskMessage message = new TaskMessage();
+		message.setAppCode(appCode);
+		message.setTaskId(taskId);
+		message.setUserId(userId);
+		message.setDatas(datas);
+		utils.deliveryTask(message);
 	}
 }

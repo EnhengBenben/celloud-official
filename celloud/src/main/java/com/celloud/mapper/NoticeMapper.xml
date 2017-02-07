@@ -18,7 +18,8 @@
 	</sql>
 	<sql id="Join_Column_List">
 		tb_notice.notice_id, tb_notice.notice_title, tb_notice.create_date, tb_notice.expire_date,
-		tb_notice.state,tb_notice.notice_context, tb_notice.type, tb_notice.category,tb_notice_user.state as read_state
+		tb_notice.state,tb_notice.notice_context, tb_notice.type, tb_notice.category,tb_notice_user.state
+		as read_state
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
@@ -34,7 +35,8 @@
 	<insert id="insert" parameterType="com.celloud.model.mysql.Notice" useGeneratedKeys="true" keyProperty="noticeId">
 		insert
 		into tb_notice (notice_id, notice_title, create_date,
-		expire_date, notice_context,type,category
+		expire_date,
+		notice_context,type,category
 		)
 		values
 		(#{noticeId,jdbcType=INTEGER},
@@ -169,7 +171,7 @@
 		update tb_notice_user
 		set state = 1
 		where user_id = #{userId,jdbcType=INTEGER} and notice_id in (
-			select notice_id from tb_notice where  type = #{type,jdbcType=VARCHAR}
+		select notice_id from tb_notice where type = #{type,jdbcType=VARCHAR}
 		)
 	</update>
 	<select id="pageUserUnreadNotices" resultMap="BaseResultMap">
@@ -177,13 +179,10 @@
 		<include refid="Join_Column_List" />
 		from tb_notice
 		left join tb_notice_user on
-		tb_notice_user.notice_id=tb_notice.notice_id and
+		tb_notice_user.notice_id=tb_notice.notice_id
+		where
+		tb_notice_user.state = 0 and
 		tb_notice_user.user_id=#{userId,jdbcType=INTEGER}
-		where tb_notice.notice_id in ( select notice_id from
-		tb_notice_user
-		where user_id = #{userId,jdbcType=INTEGER})
-		and
-		tb_notice_user.state = 0
 		and tb_notice.type=#{type,jdbcType=VARCHAR}
 		order by tb_notice_user.state
 		asc,
@@ -194,11 +193,8 @@
 		<include refid="Join_Column_List" />
 		from tb_notice
 		left join tb_notice_user on
-		tb_notice_user.notice_id=tb_notice.notice_id and
-		tb_notice_user.user_id=#{userId,jdbcType=INTEGER}
-		where tb_notice.notice_id in ( select notice_id from
-		tb_notice_user
-		where user_id = #{userId,jdbcType=INTEGER})
+		tb_notice_user.notice_id=tb_notice.notice_id 
+		where tb_notice_user.user_id=#{userId,jdbcType=INTEGER}
 		and type=#{type,jdbcType=VARCHAR}
 		order by
 		tb_notice_user.state asc,

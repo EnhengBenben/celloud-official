@@ -39,6 +39,8 @@ import com.celloud.service.ReportService;
 import com.celloud.service.RunService;
 import com.celloud.service.SampleService;
 import com.celloud.service.TaskService;
+import com.celloud.task.DataGroup;
+import com.celloud.task.DataGroupFactory;
 import com.celloud.utils.AppSubmitUtil;
 import com.celloud.utils.DataKeyListToFile;
 import com.celloud.utils.DataUtil;
@@ -67,10 +69,17 @@ public class RunServiceImpl implements RunService {
 	@Resource
 	private SampleService sampleService;
 
+	/**
+	 * 参考接口{@link com.celloud.task.DataGroup}
+	 * 进行改造，在所有的app全部通过消息队列的方式投递时，将这两个东西合二为一
+	 * 
+	 * @param appId
+	 * @param dataList
+	 * @return
+	 */
 	@Override
-    public Map<String, Object> getDataListFile(Integer appId,
-            List<DataFile> dataList) {
-        Map<String, Object> dataFilePathMap = new HashMap<>();
+	public Map<String, Object> getDataListFile(Integer appId, List<DataFile> dataList) {
+		Map<String, Object> dataFilePathMap = new HashMap<>();
 		if (AppDataListType.FASTQ_PATH.contains(appId)) {
 			dataFilePathMap = DataKeyListToFile.onlyFastqPath(dataList);
 		} else if (AppDataListType.ONLY_PATH.contains(appId)) {
@@ -172,23 +181,23 @@ public class RunServiceImpl implements RunService {
 		return Response.SUCCESS();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String runSingle(Integer userId, Integer appId, List<DataFile> dataList) {
 		// 1. 创建 dataListFile
-        String result = null;
-        Map<String, Object> dataFilePathMap = getDataListFile(appId, dataList);
-        String dataReportNum = dataFilePathMap
-                .get(DataKeyListToFile.DATA_REPORT_NUM).toString();
+		String result = null;
+		Map<String, Object> dataFilePathMap = getDataListFile(appId, dataList);
+		String dataReportNum = dataFilePathMap.get(DataKeyListToFile.DATA_REPORT_NUM).toString();
 		dataFilePathMap.remove(DataKeyListToFile.DATA_REPORT_NUM);
-        if (dataFilePathMap.get("canRunDataList") != null) {
-            dataList = (List<DataFile>) dataFilePathMap.get("canRunDataList");
-            dataFilePathMap.remove("canRunDataList");
-        }
-        if (dataList == null || dataList.size() == 0) {
-            result = "所选数据未成功匹配";
-            logger.info("用户{}{}", userId, result);
-            return result;
-        }
+		if (dataFilePathMap.get("canRunDataList") != null) {
+			dataList = (List<DataFile>) dataFilePathMap.get("canRunDataList");
+			dataFilePathMap.remove("canRunDataList");
+		}
+		if (dataList == null || dataList.size() == 0) {
+			result = "所选数据未成功匹配";
+			logger.info("用户{}{}", userId, result);
+			return result;
+		}
 
 		// 2. 创建项目
 		Integer projectId = createProject(userId, dataList, Integer.valueOf(dataReportNum));
@@ -208,6 +217,11 @@ public class RunServiceImpl implements RunService {
 
 		// 4. 投递
 		App app = appService.selectByPrimaryKey(appId);
+		Map<String, String> datas = null;
+		DataGroup group = DataGroupFactory.get(app.getCode());
+		if (group != null) {
+			datas = group.group(dataList);
+		}
 		String appPath = SparkPro.TOOLSPATH + userId + "/" + appId + "/";
 		if (!FileTools.checkPath(appPath)) {
 			new File(appPath).mkdirs();
@@ -215,9 +229,9 @@ public class RunServiceImpl implements RunService {
 		if (dataList.get(0).getOssPath() != null) {
 			appPath = UploadPathUtils.getObjectKeyByPath(UploadPathUtils.getOutPathInOSS(userId, appId));
 		}
-        for (Entry<String, Object> entry : dataFilePathMap.entrySet()) {
+		for (Entry<String, Object> entry : dataFilePathMap.entrySet()) {
 			String dataKey = entry.getKey();
-            String dataListFile = entry.getValue().toString();
+			String dataListFile = entry.getValue().toString();
 			String command = CommandKey.getCommand(dataListFile, appPath, projectId, app.getCommand());
 			Task task = taskService.findTaskByDataKeyAndApp(dataKey, appId);
 			if (task == null) {
@@ -230,11 +244,18 @@ public class RunServiceImpl implements RunService {
 			task.setCommand(command);
 			task.setDatalist(dataListFile);
 			task.setResult(appPath);
-            task.setSampleId(dataService.getSampleIdByDataKey(dataKey));
+			task.setSampleId(dataService.getSampleIdByDataKey(dataKey));
 			taskService.updateTask(task);
 			Integer taskId = task.getTaskId();
-			Boolean iswait = runCheckIsWait(app);
-			if (iswait) {
+			Integer[] dataIds = new Integer[dataList.size()];
+			for (int i = 0; i < dataIds.length; i++) {
+				dataIds[i] = dataList.get(i).getFileId();
+			}
+			taskService.saveTaskDataRelat(taskId, dataIds);
+			if (AppDataListType.MQ_RUN.contains(appId)) {
+				AppSubmitUtil.mq(app.getCode(), taskId, userId, datas);
+				taskService.updateToRunning(taskId);
+			} else if (runCheckIsWait(app)) {
 				if (AppDataListType.API_RUN.contains(appId)) {
 					AppSubmitUtil.http(appId, dataListFile, appPath, projectId);
 				} else {
@@ -264,27 +285,25 @@ public class RunServiceImpl implements RunService {
 		}
 	}
 
-    @Override
+	@Override
 	public String bsiCheckRun(String batch, Integer dataId, String dataKey, String originalName, Integer userId,
 			Integer fileFormat) {
 		logger.info("判断是否数据{}上传完即刻运行", originalName);
 		Integer appId;
 		String pubName = "";
-        String storageName = null;
+		String storageName = null;
 		if (fileFormat == FileFormat.FQ) {
 			appId = IconConstants.APP_ID_SPLIT;
 			Boolean isR1 = false;
 			if (originalName.contains("R1")) {
 				pubName = originalName.substring(0, originalName.lastIndexOf("R1"));
-                storageName = StringUtils.splitByWholeSeparator(originalName,
-                        "_")[0];
+				storageName = StringUtils.splitByWholeSeparator(originalName, "_")[0];
 				isR1 = true;
 			} else if (originalName.contains("R2")) {
 				pubName = originalName.substring(0, originalName.lastIndexOf("R2"));
-                storageName = StringUtils.splitByWholeSeparator(originalName,
-                        "_")[0];
+				storageName = StringUtils.splitByWholeSeparator(originalName, "_")[0];
 			}
-            logger.info("文库编号为{}", storageName);
+			logger.info("文库编号为{}", storageName);
 			Pattern p = Pattern.compile("\\_|\\%");
 			Matcher m = p.matcher(pubName);
 			StringBuffer sb = new StringBuffer();
@@ -319,47 +338,41 @@ public class RunServiceImpl implements RunService {
 			task.setAppId(appId);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
-                logger.info("完全上传BSI所需的配对文件");
-                List<Sample> sampleList = sampleService
-                        .getSamplesByStorageName(storageName);
-                logger.info("文库{}下样本列表长度{}", storageName, sampleList.size());
-                if (sampleList != null && sampleList.size() > 0) {
-                    DataFile data = new DataFile();
-                    data.setFileName(pubName + ".txt");
-                    data.setUserId(userId);
-                    data.setCreateDate(new Date());
-                    data.setFileFormat(FileFormat.NONE);
-                    data.setState(DataState.ACTIVE);
-                    data.setBatch(batch);
-                    Integer id = dataService.addDataInfo(data);
-                    String index_dataKey = DataUtil.getNewDataKey(id);
-                    data.setFileId(id);
-                    data.setDataKey(index_dataKey);
-                    String path = new StringBuffer()
-                            .append(PropertiesUtil.bigFilePath)
-                            .append(userId).append("/")
-                            .append(DateUtil.getDateToString("yyyyMMdd"))
-                            .append("/").append(index_dataKey + ".txt")
-                            .toString();
-                    StringBuffer slist = new StringBuffer();
-                    for (Sample s : sampleList) {
-                        slist.append(s.getExperSampleName()).append(":")
-                                .append(s.getSindex().contains(":")
-                                        ? StringUtils.splitByWholeSeparator(
-                                                s.getSindex(), ":")[1]
-                                        : s.getSindex())
-                                .append("\n");
-                    }
-                    FileTools.appendWrite(path, slist.toString());
-                    data.setPath(path);
-                    data.setSize(FileUtils.sizeOf(new File(path)));
-                    dataService.updateByPrimaryKeySelective(data);
-                    dataList.add(data);
-                    runSingle(userId, appId, dataList);
-                    logger.info("判断BSI运行成功");
-                    dataService.delete(String.valueOf(id));
-                }
-            }
+				logger.info("完全上传BSI所需的配对文件");
+				List<Sample> sampleList = sampleService.getSamplesByStorageName(storageName);
+				logger.info("文库{}下样本列表长度{}", storageName, sampleList.size());
+				if (sampleList != null && sampleList.size() > 0) {
+					DataFile data = new DataFile();
+					data.setFileName(pubName + ".txt");
+					data.setUserId(userId);
+					data.setCreateDate(new Date());
+					data.setFileFormat(FileFormat.NONE);
+					data.setState(DataState.ACTIVE);
+					data.setBatch(batch);
+					Integer id = dataService.addDataInfo(data);
+					String index_dataKey = DataUtil.getNewDataKey(id);
+					data.setFileId(id);
+					data.setDataKey(index_dataKey);
+					String path = new StringBuffer().append(PropertiesUtil.bigFilePath).append(userId).append("/")
+							.append(DateUtil.getDateToString("yyyyMMdd")).append("/").append(index_dataKey + ".txt")
+							.toString();
+					StringBuffer slist = new StringBuffer();
+					for (Sample s : sampleList) {
+						slist.append(s.getExperSampleName()).append(":")
+								.append(s.getSindex().contains(":")
+										? StringUtils.splitByWholeSeparator(s.getSindex(), ":")[1] : s.getSindex())
+								.append("\n");
+					}
+					FileTools.appendWrite(path, slist.toString());
+					data.setPath(path);
+					data.setSize(FileUtils.sizeOf(new File(path)));
+					dataService.updateByPrimaryKeySelective(data);
+					dataList.add(data);
+					runSingle(userId, appId, dataList);
+					logger.info("判断BSI运行成功");
+					dataService.delete(String.valueOf(id));
+				}
+			}
 		} else if (fileFormat == FileFormat.YASUO) {
 			appId = IconConstants.APP_ID_BSI;
 			List<DataFile> dataList = new ArrayList<>();
@@ -421,10 +434,9 @@ public class RunServiceImpl implements RunService {
 		}
 	}
 
-    public static void main(String[] args) {
-        String originalName = "16102862_ffffff_R1.fastq";
-        String storageName = StringUtils.splitByWholeSeparator(originalName,
-                "_")[0];
-        System.out.println(storageName);
-    }
+	public static void main(String[] args) {
+		String originalName = "16102862_ffffff_R1.fastq";
+		String storageName = StringUtils.splitByWholeSeparator(originalName, "_")[0];
+		System.out.println(storageName);
+	}
 }
