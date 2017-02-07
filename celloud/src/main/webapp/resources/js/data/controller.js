@@ -71,6 +71,7 @@
     	uploadService.checkRole().
 		success(function(data){
 			if(data == "0"){
+				$.alert("运行成功");
 				return;
 			}else{
 				if(!$scope.checkNum()){
@@ -171,17 +172,26 @@
     };
     //跳转数据编辑
     $scope.toEditData = function(fileId){
-      $scope.updateState = false;
-      runService.toEditData(fileId).success(function(response){
-        $scope.dataFile = response['file'];
-        $scope.appList = response['appList'];
-        for(i = 0; i < $scope.appList.length; i++){
-        	if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
-        		$scope.appSelected = $scope.appList[i];
-        		break;
-        	}
-        }
-      });
+    	
+    	uploadService.checkRole().
+		success(function(data){
+			if(data == "0"){
+				alert("测试账号不可以修改数据信息!");
+			}else{
+				$scope.updateState = false;
+			    runService.toEditData(fileId).
+			    success(function(response){
+			    	$scope.dataFile = response['file'];
+			    	$scope.appList = response['appList'];
+			    	for(i = 0; i < $scope.appList.length; i++){
+			    		if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
+			    			$scope.appSelected = $scope.appList[i];
+			    			break;
+			    		}
+			    	}
+			    });
+			}
+		});
     }
     //修改数据信息
     $scope.submitEditData = function(){
