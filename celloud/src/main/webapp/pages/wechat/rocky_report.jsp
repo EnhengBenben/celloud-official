@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
         <title>CelLoud华木兰报告</title>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=3.8" />
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/wechat/rocky_report.css?v=3.9" />
     </head>
 
     <body>
