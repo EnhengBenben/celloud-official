@@ -804,7 +804,6 @@
    * sanger数据报告controller
    */
   celloudApp.controller("sangerDataReportController", function($scope, $routeParams, $compile, dataReportService){
-	  alert($routeParams.proId);
 	  dataReportService.getDataReportInfo("report/getHBVInfo",$routeParams.dataKey,$routeParams.proId,$routeParams.appId).
 	  success(function(hbvInfo){
 		  $scope.hbv = hbvInfo.hbv;
