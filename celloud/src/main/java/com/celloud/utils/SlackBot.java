@@ -23,6 +23,7 @@ public class SlackBot {
 	private static String fallback = "[CelLoud]异常报告";
 	private static String pretext = "[CelLoud]异常报告";
 	private static String color = "danger";
+	private static boolean isClose = true;
 	private static String webhook;
 	static {
 		Properties prop = ConstantsData.loadProperties("slack.properties");
@@ -30,9 +31,15 @@ public class SlackBot {
 		pretext = prop.getProperty("pretext") != null ? prop.getProperty("pretext") : fallback;
 		color = prop.getProperty("color") != null ? prop.getProperty("color") : fallback;
 		webhook = prop.getProperty("webhook");
+		String close = prop.getProperty("close");
+		isClose = close != null && close.toLowerCase().equals("true");
 	}
 
 	public static void error(HttpServletRequest request, Exception exception) {
+		if (isClose) {
+			logger.debug("Slack notice is closed!");
+			return;
+		}
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		exception.printStackTrace(pw);
