@@ -21,11 +21,11 @@ from app.Rocky_PDF import RockyPdf
 # eg : python e:/git/celloud/python/task_over.py d:/share/data/webapps/Tools/upload/ 88 112 15112501860090,15112501860183
 
 # 对应class名
-method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI, 123: Rocky, 126: CMP, 127: CMP, 128: CMP, 131: AccuSeqa2, 133: BSI, 134: BSI, 135: BSI, 136: BSI, 137: BSI}
+method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI, 123: Rocky, 126: CMP, 127: CMP, 128: CMP, 131: AccuSeqa2, 133: BSI, 134: BSI, 135: BSI, 136: BSI, 137: BSI, 145: MIB}
 
 # 对应database名
 collection_dic = {110: "CmpReport", 111: "CmpReport", 112: "CmpReport", 113: "Split", 114: "MIB", 118: "BSI",
-                  123: "Rocky", 126: "CmpReport", 127: "CmpReport", 128: "CmpReport", 131: "AccuSeqα2", 133: "BSI", 134: "BSI", 135: "BSI", 136: "BSI", 137: "BSI"}
+                  123: "Rocky", 126: "CmpReport", 127: "CmpReport", 128: "CmpReport", 131: "AccuSeqα2", 133: "BSI", 134: "BSI", 135: "BSI", 136: "BSI", 137: "BSI", 145: "MIB"}
 
 if len(sys.argv) != 6:
     print 'Usage: *.py path userId appId dataKeys projectId'

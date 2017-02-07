@@ -68,36 +68,44 @@
     }
     //项目运行
     $scope.runWithProject = function() {
-      if(!$scope.checkNum()){
-        return ;
-      }
-      if($.dataManager.options.isRun!=0){
-        $rootScope.errorInfo = "所勾选的数据必须不处于运行状态！";
-        $("#tips-modal").modal("show");
-        return;
-      }
-      if($.dataManager.options.isTag!=0){
-        $rootScope.errorInfo = "所勾选的数据必须有产品标签！";
-        $("#tips-modal").modal("show");
-        return;
-      }
-      if($.dataManager.options.isBSI!=0){
-        $rootScope.errorInfo = "所勾选的数据产品标签不能为百菌探！";
-        $("#tips-modal").modal("show");
-        return;
-      }
-      if($.dataManager.options.isRocky!=0){
-        $rootScope.errorInfo = "所勾选的数据产品标签不能为华木兰！";
-        $("#tips-modal").modal("show");
-        return;
-      }
-      if($.dataManager.options.isPair!=0){
-        $.confirm("请保证所选数据为配对数据！","确认框",function(){
-          $scope.run();
-        });
-      }else{
-        $scope.run();
-      }
+    	uploadService.checkRole().
+		success(function(data){
+			if(data == "0"){
+				$.alert("运行成功");
+				return;
+			}else{
+				if(!$scope.checkNum()){
+			        return ;
+			      }
+			      if($.dataManager.options.isRun!=0){
+			        $rootScope.errorInfo = "所勾选的数据必须不处于运行状态！";
+			        $("#tips-modal").modal("show");
+			        return;
+			      }
+			      if($.dataManager.options.isTag!=0){
+			        $rootScope.errorInfo = "所勾选的数据必须有产品标签！";
+			        $("#tips-modal").modal("show");
+			        return;
+			      }
+			      if($.dataManager.options.isBSI!=0){
+			        $rootScope.errorInfo = "所勾选的数据产品标签不能为百菌探！";
+			        $("#tips-modal").modal("show");
+			        return;
+			      }
+			      if($.dataManager.options.isRocky!=0){
+			        $rootScope.errorInfo = "所勾选的数据产品标签不能为华木兰！";
+			        $("#tips-modal").modal("show");
+			        return;
+			      }
+			      if($.dataManager.options.isPair!=0){
+			        $.confirm("请保证所选数据为配对数据！","确认框",function(){
+			          $scope.run();
+			        });
+			      }else{
+			        $scope.run();
+			      }
+			}
+		});
     };
     var opts = {
       lines: 13, // The number of lines to draw
@@ -164,17 +172,26 @@
     };
     //跳转数据编辑
     $scope.toEditData = function(fileId){
-      $scope.updateState = false;
-      runService.toEditData(fileId).success(function(response){
-        $scope.dataFile = response['file'];
-        $scope.appList = response['appList'];
-        for(i = 0; i < $scope.appList.length; i++){
-        	if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
-        		$scope.appSelected = $scope.appList[i];
-        		break;
-        	}
-        }
-      });
+    	
+    	uploadService.checkRole().
+		success(function(data){
+			if(data == "0"){
+				alert("测试账号不可以修改数据信息!");
+			}else{
+				$scope.updateState = false;
+			    runService.toEditData(fileId).
+			    success(function(response){
+			    	$scope.dataFile = response['file'];
+			    	$scope.appList = response['appList'];
+			    	for(i = 0; i < $scope.appList.length; i++){
+			    		if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
+			    			$scope.appSelected = $scope.appList[i];
+			    			break;
+			    		}
+			    	}
+			    });
+			}
+		});
     }
     //修改数据信息
     $scope.submitEditData = function(){

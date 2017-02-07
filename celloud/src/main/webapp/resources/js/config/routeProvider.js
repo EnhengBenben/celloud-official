@@ -197,6 +197,14 @@
     .when('/reportdata/bsi',{
       templateUrl: "pages/report/report_data_bsi.jsp"
     })
+    .when('/reportdata/Sanger/:appId/:dataKey/:proId',{
+      templateUrl: "pages/report/report_data_sanger.jsp",
+      controller: "sangerDataReportController"
+    })
+    .when('/reportdata/Ngs/:appId/:dataKey/:proId',{
+      templateUrl: "pages/report/report_data_ngs.jsp",
+      controller: "ngsReportController"
+    })
     .when('/reportdata/MIB/:appId/:dataKey/:proId',{
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
