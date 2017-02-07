@@ -45,8 +45,10 @@ public class SlackBot {
 		exception.printStackTrace(pw);
 		Attachment attach = new Attachment();
 		attach.setFallback(fallback);
+		attach.setFooter("CelLoud 云平台");
 		attach.setPretext(pretext);
 		attach.setColor(color);
+		attach.setTs(System.currentTimeMillis());
 		List<AttachField> fields = new ArrayList<>();
 		String url = request.getMethod() + "   " + request.getRequestURL();
 		if (request.getQueryString() != null) {
@@ -54,11 +56,11 @@ public class SlackBot {
 		}
 		fields.add(new AttachField("异常地址", url));
 		com.celloud.model.mysql.ActionLog log = UserAgentUtil.getActionLog(request);
-		String userInfo = "user:  "
+		String userInfo = "userInfo:  "
 				+ (log.getUserId() == null ? "无登录用户" : (log.getUserId() + " , " + log.getUsername()));
-		userInfo = userInfo + "\nenviron:  " + log.getOs() + " " + log.getOsVersion() + " , " + log.getBrowser() + " "
+		userInfo = userInfo + "\nenviron :  " + log.getOs() + " " + log.getOsVersion() + " , " + log.getBrowser() + " "
 				+ log.getBrowserVersion();
-		userInfo = userInfo + "\nlocal:  " + log.getIp() + " , " + log.getAddress();
+		userInfo = userInfo + "\nlocation:  " + log.getIp() + " , " + log.getAddress();
 		fields.add(new AttachField("用户信息", userInfo));
 		fields.add(new AttachField("异常信息", exception.toString()));
 		fields.add(new AttachField("异常描述", sw.toString(), true));
@@ -155,8 +157,26 @@ public class SlackBot {
 		private String fallback;
 		private String text;
 		private String pretext;
+		private String footer;
+		private long ts;
 		private String color = "#36a64f";
 		private List<AttachField> fields;
+
+		public String getFooter() {
+			return footer;
+		}
+
+		public void setFooter(String footer) {
+			this.footer = footer;
+		}
+
+		public long getTs() {
+			return ts;
+		}
+
+		public void setTs(long ts) {
+			this.ts = ts;
+		}
 
 		public String getFallback() {
 			return fallback;
