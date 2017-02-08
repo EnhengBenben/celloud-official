@@ -72,7 +72,7 @@
 	    		if($scope.code==203){
 	    			$scope.pwdMessage = data.message;
 	    		}else{
-	    			$.alert(data.message);
+	    			alert("测试账号不允许修改信息");
 	    		}
 	    	}).error(function(data) {
 	    		alert("测试账号不允许修改信息");
