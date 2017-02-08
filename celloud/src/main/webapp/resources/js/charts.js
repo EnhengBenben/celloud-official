@@ -214,18 +214,30 @@ $.reportChar.draw = {
   	/**
   	 * HBV基因型分类总览
   	 */
-  	echartsShowHBVType : function(id, hbvType, currentType, rotate) {
+  	echartsShowHBVType : function(id, appId, hbvType, currentType, rotate) {
+  		subtext = "";
+  		genDat = "";
+  		seriesName = "";
+  		if(appId == 82){
+  			subtext = "数据来源:CelLoud全部HBV数据";
+  			genDat = "HBV基因型";
+  			seriesName = "HBV基因型";
+  		}else {
+  			subtext = "数据来源:CelLoud全部Sanger数据";
+  			genDat = "Sanger基因型";
+  			seriesName = "Sanger基因型";
+  		}
         var option = {
     		title : {
     			text : '基因型分类总览表',
-    			subtext : '数据来源:CelLoud全部HBV数据',
+    			subtext : subtext,
     			x : 'center'
     		},
     		tooltip : {
     		    trigger: 'axis'
     		},
     		legend: {
-    		    data:['HBV基因型','当前数据基因型'],
+    		    data:[genDat,'当前数据基因型'],
     		    y : 340
     		},
     		calculable : true,
@@ -247,7 +259,7 @@ $.reportChar.draw = {
     		],
     		series : [
     		    {
-    		        name:'HBV基因型',
+    		        name:seriesName,
     		        type:'bar',
     		        data:eval(hbvType),
     		        barWidth:30
