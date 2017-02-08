@@ -1,0 +1,279 @@
+#parse("templates/report/layout.vm")
+<link href="${base}/css/print_gdd.css?version=3.1.15" rel="stylesheet">
+<section class="section2 border1 w3cbbs">
+    <div class="header">
+        <h1 style="font-size:32px;padding:0 0 5 0px;">细菌感染检测分析报告</h1>
+    </div>
+    <h4>1.&nbsp;&nbsp; 基本信息</h4>
+    <div class="section1">
+    <form id="print-form">
+        <input type="hidden" name="id" value="$!mib.id">
+        <ul>
+            <li>编号：<span><input type="text" name='baseInfo["number"]' value="$!mib.baseInfo.number"></span></li>
+            <li>样本类型：<span><input type="text" name='baseInfo["sampleType"]' value="$!mib.baseInfo.sampleType"></span></li>
+            <li>姓名：<span><input type="text" name='baseInfo["name"]' value="$!mib.baseInfo.name"></span></li>
+            <li>申请日期：<span><input type="text" name='baseInfo["applicationDate"]' value="$!mib.baseInfo.applicationDate"></span></li>
+            <li>性别： <span id="_sex"><input type="radio" name='baseInfo["sex"]' value="男" #if($!mib.baseInfo.sex.equals("男")) checked="checked" #end >男<input type="radio" name='baseInfo["sex"]' value="女" #if($!mib.baseInfo.sex.equals("女")) checked="checked" #end >女</span></li>
+            <li>接收日期：<span><input type="text" name='baseInfo["receivedDate"]' value="$!mib.baseInfo.receivedDate"></span></li>
+            <li>年龄：<span><input type="text" id="patientAge" name='baseInfo["age"]' value="$!mib.baseInfo.age"></span>岁</li>
+            <li>样本状态：<span><input type="text" name='baseInfo["status"]' value="$!mib.baseInfo.status"></span></li>
+        </ul>
+    </form>
+    </div>
+    <h4>2.&nbsp;&nbsp;数据统计</h4>
+    <div class="info">
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr><th>序列总数</th><th>平均质量</th><th>平均GC含量</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>$!mib.totalReads</td>
+                    <td>$!mib.avgQuality</td>
+                    <td>$!mib.avgGCContent</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h4>3.&nbsp;&nbsp; 检测结果（$!mib.dataKey）</h4>
+    <div class="info">
+        $!mib.conclusion
+    </div>
+    <h4>4.&nbsp;&nbsp;详细结果</h4>
+    <div class="info w3cbbs">
+        <table class="table table-bordered table-condensed">
+            <thead>
+               <tr>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;">种<br><span style="font-size:12px;color: #9A9999;">Species</span></th>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:92px;">属<br><span style="font-size:12px;color: #9A9999;">Genus</span></th>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:54px;">GI号<br><span style="font-size:12px;color: #9A9999;">GI</span></th>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:45px;">覆盖长度%<br><span style="font-size:12px;color: #9A9999;">%Coverage</span></th>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;min-width:30px;">种比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_hit</span></th>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;">属比对上的序列数<br><span style="font-size:12px;color: #9A9999;">Reads_num</span></th>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;">种序列百分比<br><span style="font-size:12px;color: #9A9999;">%Reads_Ratio</span></th>
+                 <th style="line-height: 14px;vertical-align: middle;text-align: center;">平均覆盖深度<br><span style="font-size:12px;color: #9A9999;">Average depth of coverage</span></th>
+               </tr>
+             </thead>
+             <tbody>
+               #if($mib.summaryTable)
+                   #foreach($summary in $!mib.summaryTable) 
+                     <tr>
+                         <td>$!summary.Species</td>
+                         <td>$!summary.Genus</td>
+                         <td>$!summary.GI</td>
+                         <td>$!summary.Coverage</td>
+                         <td>$!summary.Reads_hit</td>
+                         <td>$!summary.Reads_num</td>
+                         <td>$!summary.Reads_Ratio</td>
+                         <td>$!summary.avgCoverage</td>
+                     </tr>
+                   #end
+               #else
+                   <tr><td colspan="7">无结果</td></tr>
+               #end
+             </tbody>
+        </table>
+    </div>
+    <h4>5.&nbsp;&nbsp;测序结果分布图</h4>
+    <div class="info">
+        <table style="width:90%;">
+          <tr>
+            <td style="width:49%;">
+               #if($mib.readsDistributionInfo)
+                   <div id="reads-distribution-char" style="width:100%;height:330px;">$!readsDistributionInfo</div>
+               #else
+                #if($mib.readsDistributionInfo)
+                    <img src="#if(!$mib.readsDistribution.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.readsDistribution }" style="width:100%;">
+                #end
+               #end
+            </td>
+            <td>
+               #if($mib.familyDistributionInfo)
+                   <div id="family-distribution-char" style="width:100%;height:330px;">$!familyDistributionInfo</div>
+               #else
+                #if($mib.readsDistributionInfo)
+                    <img src="#if(!$!mib.familyDistribution.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.familyDistribution }" style="width:100%;">
+                #end
+               #end
+            </td>
+          </tr>
+        </table>
+    </div>
+    <h4>6.&nbsp;&nbsp;属分布图</h4>
+    <div class="info">
+      #if($mib.genusDistributionInfo)
+        <div id="genus-distribution-char" style="width:100%;height:330px;">$!genusDistributionInfo</div>
+      #else
+        #if($mib.readsDistributionInfo)
+            <img src="#if(!$mib.genusDistribution.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.genusDistribution" style="width:100%;">
+        #end
+      #end
+    </div>
+    <h4>7.&nbsp;&nbsp;各菌16s rRNA序列覆盖分布图</h4>
+    <div class="info">
+      #if($mib.pngPath.top1png)
+        <img src="#if(!$mib.pngPath.top1png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top1png" style="width:90%;">
+      #end
+      #if($mib.pngPath.top2png)
+        <img src="#if(!$mib.pngPath.top2png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top2png" style="width:90%;">
+      #end
+      #if($mib.pngPath.top3png)
+        <img src="#if(!$mib.pngPath.top3png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top3png" style="width:90%;">
+      #end
+      #if($mib.pngPath.top4png)
+        <img src="#if(!$mib.pngPath.top4png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top4png" style="width:90%;">
+      #end
+      #if($mib.pngPath.top5png)
+        <img src="#if(!$mib.pngPath.top5png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top5png" style="width:90%;">
+      #end
+      #if($mib.pngPath.top6png)
+        <img src="#if(!$mib.pngPath.top6png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top6png" style="width:90%;">
+      #end
+      #if($mib.pngPath.top7png)
+        <img src="#if(!$mib.pngPath.top7png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top7png" style="width:90%;">
+      #end
+      #if($mib.pngPath.top8png)
+        <img src="#if(!$mib.pngPath.top8png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top8png" style="width:90%;">
+      #end
+      #if($mib.pngPath.top9png)
+        <img src="#if(!$mib.pngPath.top9png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top9png" style="width:90%;">
+      #end
+      #if($mib.pngPath.top10png)
+        <img src="#if(!$mib.pngPath.top10png.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.pngPath.top10png" style="width:90%;">
+      #end
+    </div>
+</section>
+<section class="section8 border1 w3cbbs">
+    <h3>序列质量分析（见QC结果）</h3>
+    <div class="h2">Basic Statistics</div>
+    <table class="table table-green table-striped-blue table-text-center">
+        <thead>
+            <tr>
+                <th>#Measure</th>
+                <th colspan="2">Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Filename</td>
+                <td>$!mib.basicStatistics1.Filename</td>
+                <td>$!mib.basicStatistics2.Filename</td>
+            </tr>
+            <tr>
+                <td>File type</td>
+                <td>$!mib.basicStatistics1.FileType</td>
+                <td>$!mib.basicStatistics2.FileType</td>
+            </tr>
+            <tr>
+                <td>Encoding</td>
+                <td>$!mib.basicStatistics1.Encoding</td>
+                <td>$!mib.basicStatistics2.Encoding</td>
+            </tr>
+            <tr>
+                <td>Total Sequences</td>
+                <td>$!mib.basicStatistics1.TotalSeq</td>
+                <td>$!mib.basicStatistics2.TotalSeq</td>
+            </tr>
+            <tr>
+                <td>Filtered Sequences</td>
+                <td>$!mib.basicStatistics1.FilteredSeq</td>
+                <td>$!mib.basicStatistics2.FilteredSeq</td>
+            </tr>
+            <tr>
+                <td>Sequence length</td>
+                <td>$!mib.basicStatistics1.SeqLength</td>
+                <td>$!mib.basicStatistics2.SeqLength</td>
+            </tr>
+            <tr>
+                <td>%GC</td>
+                <td>$!mib.basicStatistics1.gc</td>
+                <td>$!mib.basicStatistics2.gc</td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="width:100%;">
+      <tr>
+        <td style="width:50%;">
+          #if($mib.qualityPath1)
+            <img style="width: 100%;" src="#if(!$mib.qualityPath1.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.qualityPath1">
+          #end
+        </td>
+        <td>
+          #if($mib.qualityPath2)
+            <img style="width: 100%;" src="#if(!$mib.qualityPath2.contains('Tools'))$!uploadPath/$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.qualityPath2">
+          #end
+        </td>
+      </tr>
+      <tr>
+        <td>
+          #if($mib.seqContentPath1)
+            <img style="width: 100%;" src="#if(!$mib.seqContentPath1.contains('Tools'))$!uploadPath$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.seqContentPath1">
+          #end
+        </td>
+        <td>
+          #if($mib.seqContentPath2)
+            <img style="width: 100%;" src="#if(!$mib.seqContentPath2.contains('Tools'))$!uploadPath$!mib.userId/$!mib.appId/$!mib.dataKey#end$!mib.seqContentPath2">
+          #end
+        </td>
+      </tr>
+    </table>
+</section>
+<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+<script src="${base}/js/charts.js"></script>
+<script type="text/javascript">
+$(function(){
+    var mib_readsDisInfo = $("#reads-distribution-char").text();
+    var mib_familyDisInfo = $("#family-distribution-char").text();
+    var min_genusDisInfo = $("#genus-distribution-char").text();
+    if(mib_readsDisInfo != ""){
+        $.reportChar.draw.circularGraph("reads-distribution-char","Reads","Distribution",eval("("+mib_readsDisInfo+")"));
+    }
+    if(mib_familyDisInfo != ""){
+        $.reportChar.draw.circularGraph("family-distribution-char","Family","Distribution",eval("("+mib_familyDisInfo+")"));
+    }
+    if(min_genusDisInfo != ""){
+        $.reportChar.draw.singleBar("genus-distribution-char","Top 10 genus distribution","",eval("("+min_genusDisInfo+")"),"Depth","Depth");
+    }
+    $("#print").on("click",function(){
+        $("body").find("section").each(function(){
+            $(this).removeClass("border1");
+        });
+        $("body").find("input[type='text']").each(function(){
+            var inputVal = $(this).val();
+            var classname = $(this).attr("class");
+            var name = $(this).attr("name");
+            $(this).parent().html("<input type='hidden' name='"+name+"' value='"+classname+"'><span name='print'>"+inputVal+"</span>");
+        });
+        var sex = $("input[type='radio']:checked").val();
+        $("#_sex").html(sex);
+        $(".buttons").hide();
+        window.print();
+        $(".buttons").show();
+        $("body").find("section").each(function(){
+            $(this).addClass("border1");
+        });
+        $("body").find("span[name='print']").each(function(){
+            var inputVal = $(this).html();
+            var classname = $(this).prev().val();
+            var name = $(this).prev().attr("name");
+            $(this).parent().html("<input type='text' name='"+name+"' class='"+classname+"' value='"+inputVal+"'>");
+        });
+        $("#_sex").html("<input type='radio' name='baseInfo.sex' value='男'>男<input type='radio' name='baseInfo.sex' value='女'>女");
+        $("input[type='radio'][value="+sex+"]").prop("checked",true); 
+    });
+    $("#save").on("click",function(){
+        $.post("../report/updateMIBFilling",$("#print-form").serialize(),function(result){
+            if(result == 1){
+                $.lAlert("修改成功");
+            }else{
+                $.lAlert("修改失败");
+            }
+        });
+    });
+    $("#reset").on("click",function(){
+        $.lConfirm("确认重置?", function(){
+            $("#print-form")[0].reset();
+        });
+    });
+});
+</script>

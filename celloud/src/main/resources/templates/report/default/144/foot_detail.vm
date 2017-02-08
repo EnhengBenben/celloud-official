@@ -1,0 +1,9 @@
+<hr/>
+<div class="wrapper">
+    <ul class="footer">
+        <li>检验日期：<span><input name="detailBaseInfo['inspectionDate']" value="$!{hbv.detailBaseInfo.inspectionDate}" type="text"></span></li>
+        <li>报告日期：<span><input name="detailBaseInfo['reportDate']" value="$!{hbv.detailBaseInfo.reportDate}" type="text"></span></li>
+        <li class="right">检验者：<span><input name="detailBaseInfo['inspectionPerson']" value="$!{hbv.detailBaseInfo.inspectionPerson}"  type="text"></span></li>
+        <li class="right">审核者：<span><input name="detailBaseInfo['review']" value="$!{hbv.detailBaseInfo.review}" type="text"></span></li>
+    </ul>
+</div>

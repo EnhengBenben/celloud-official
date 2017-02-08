@@ -1,0 +1,241 @@
+<script type="text/javascript">
+var companyId = $("#_companyId").html();
+$(function(){
+    var companyId = $("#_companyId").html();
+    var browser = $.NV('name');
+    var allHeight;
+    if(browser=='firefox'){
+        allHeight = 1900;
+    }else if(browser=='chrome'){
+        allHeight = 2000;
+    }else if(browser=='safari'){
+        allHeight = 1500;
+    }else {
+        allHeight = 1600;
+    }
+    $("#_allDiv").height(allHeight);
+    var num = 0;
+    $("#otherPng").find("img").each(function(){
+        num++;
+    });
+    var _flag = $("#_flag").html();
+    if(_flag==0){
+        inputVal = $("#des").html();
+        if(inputVal){
+            inputVal = inputVal.replace(/&lt;br\/&gt;/g,"\n");
+            $("#des").html(inputVal);
+        }
+    }
+    $(".table").find("td").each(function(){
+        $(this).css("vertical-align","middle");
+        $(this).css("word-break","break-all");
+        $(this).css("word-wrap","break-word");
+        var isSaved = $("#isSaved").val();
+        if(isSaved==1){
+            var text= $(this).text();
+            if(text.indexOf('突变型:')>=0){
+                var cl = $(this).attr("class");
+                if(cl){
+                    $(this).html("突变型:<input type='text' class='"+cl+" havebefore' value='"+text.replace('突变型:','')+"'/>");
+                }else{
+                    $(this).html("突变型:<input type='text' class='havebefore' value='"+text.replace('突变型:','')+"'/>");
+                }
+            }
+        }
+    });
+    var isSaved = $("#isSaved").val();
+	if(isSaved==1){
+		$("input[class='_hard havebefore']").each(function(){
+			$(this).parent().append("<i class=\"fa fa-star\" aria-hidden=\"true\"></i>");
+		});
+		$("input[class='_light havebefore']").each(function(){
+			$(this).parent().append("<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>");
+		});
+	}
+    $("#print").on("click",function(){
+        var url = window.location.href.split("print")[0];
+        if(companyId==57){
+            imgRemove.hideRemove();
+        }
+        var inputVal;
+        $("#printMain").find("input[type='text']").each(function(){
+            inputVal = $(this).val();
+            inputName = $(this).attr("name");
+            var cl = $(this).attr("class"); 
+            if(cl){
+                if(cl.indexOf('havebefore')>-1){
+                	append = '';
+                	if(cl.indexOf('_hard')>-1){
+                		append = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"fa fa-star\" aria-hidden=\"true\"></i>";
+                	}
+                	if(cl.indexOf('_light')>-1){
+                		append = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+                	}
+                    $(this).parent().html("突变型:<span tempName=\""+inputName+"\" name='print' class='"+cl+"'>"+inputVal+"</span>"+append);
+                }else{
+                    $(this).parent().html("<span tempName=\""+inputName+"\" name='print' class='"+cl+"'>"+inputVal+"</span>");
+                }
+            }else{
+                $(this).parent().html("<span tempName=\""+inputName+"\" name='print'>"+inputVal+"</span>");
+            }
+        });
+        var sex = $("input[type='radio']:checked").val();
+        var sexName = $("input[type='radio']").attr("name");
+        $("#_sex").html(sex);
+        $("a[name='change']").hide();
+        $("hr[name='change']").hide();
+        $(".buttons").hide();
+        if(companyId!=57){
+            $(".w3cbbs").css("display","");
+            $(".container").css("display","");
+            $("#sevenW3c").css("display","none");
+        }
+        var num = 0;
+        $("#otherPng").find("img").each(function(){
+            num++;
+        });
+        if(num%35 > 25){
+            $("#sevenW3c").css("display","block");
+        }
+        var _flag = $("#_flag").html();
+        if(_flag==1){
+            $("h1").css("padding","0 0 5px 0");
+        }
+        inputVal = $("#des").children().val();
+        desName = $("#des").children().attr("name");
+        if(inputVal){
+            inputVal = inputVal.replace(/\n/g,"<br/>");
+            $("#des").html(inputVal);
+        }
+        inputVal = $("#des1").children().val();
+        des1Name = $("#des1").children().attr("name");
+        var oldInputVal = inputVal
+        if(inputVal){
+            inputVal = inputVal.replace(/\n/g,"<br/>&nbsp;&nbsp;&nbsp;");
+            $("#des1").html(inputVal);
+        }
+        $(".imgmiss").addClass("imgmissprint");
+        $(".lowTips").css("width","110px");
+        window.print();
+        $(".lowTips").css("width","120px");
+        
+        $(".imgmiss").removeClass("imgmissprint");
+        inputVal = $("#des").html();
+        if(inputVal){
+            inputVal = inputVal.replace(/<br>/g,"\n");
+            $("#des").html("<textarea name=\""+desName+"\" rows=\"6\">"+inputVal+"</textarea>");
+        }
+        inputVal = $("#des1").html();
+        if(inputVal){
+            $("#des1").html("<textarea name=\""+des1Name+"\" rows=\"5\">"+oldInputVal+"</textarea>");
+        }
+        if(_flag==1){
+            $("h1").css("padding","40px 0 5px 0");
+        }
+        if(companyId!=57){
+            $(".w3cbbs").css("display","none");
+            $(".container").css("display","none");
+        }
+        $(".buttons").show();
+        $("a[name='change']").show();
+        $("hr[name='change']").show();
+        $("body").find("span[name='print']").each(function(){
+            inputVal = $(this).html();
+            inputName = $(this).attr("tempName");
+            var cl = $(this).attr("class");
+            if(cl){
+              if(cl.indexOf('havebefore')>=0){
+              	append = '';
+              	if(cl.indexOf('_hard')>-1){
+            		append = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>";
+            	}
+            	if(cl.indexOf('_light')>-1){
+            		append = "<i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>";
+            	}
+                $(this).parent().html("突变型:<input name=\""+inputName+"\" type='text' class='"+cl+"' value='"+inputVal+"'>"+append);
+              }else{
+                $(this).parent().html("<input name=\""+inputName+"\" type='text' class='"+cl+"' value='"+inputVal+"'>");
+              }
+            }else{
+                $(this).parent().html("<input name=\""+inputName+"\" type='text' value='"+inputVal+"'>");
+            }
+        });
+        
+        $("body").find("span[name='print']").each(function(){
+            inputVal = $(this).html();
+            inputName = $(this).attr("tempName");
+            $(this).parent().html("<input name=\""+inputName+"\" type='text' value='"+inputVal+"'>");
+        });
+        $("#_sex").html("<input type='radio' name=\""+sexName+"\" value='男'>男<input type='radio' name=\""+sexName+"\" value='女'>女");
+        $("input[type='radio'][value="+sex+"]").attr("checked",true);  
+    });
+    
+    $("#save").on("click",function(){
+        var url = window.location.href.split("print")[0];
+        $("table").find("input").each(function(){
+            $(this).attr("value",$(this).val());
+        });
+    
+        $("#clinical").val($("table").html());
+        $("#imgs").val($("#originalImgs").html());
+        var _flag = $("#_flag").html();
+        if(_flag==0){
+            url = url + "updateHbvDetailFilling";
+        }else{
+            url = url + "updateHbvBriefFilling";
+        }
+        $.post(url,$("#print-form").serialize(),function(result){
+            if(result==1){
+                $.lAlert("信息保存成功！");
+            }else{
+                $.lAlert("信息保存失败！");
+            }
+        });
+    });
+
+    $("#reset").on("click",function(){
+        var url = window.location.href.split("print")[0];
+        $.lConfirm('确认重置？', function() {
+            var _flag = $("#_flag").html();
+            if(_flag == 0){//详细报告
+                url = url + "updateHbvDetailFilling";
+            }else{//简要报告
+                url = url + "updateHbvBriefFilling";
+            }
+            $.post(url,{id:$("#hbvId").val()},function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
+        });
+    });
+});
+function radioClick(num){
+    if(num==0){
+        $("#men").attr("checked","checked");
+        $("#women").removeAttr("checked");
+    }else{
+        $("#women").attr("checked","checked");
+        $("#men").removeAttr("checked");
+    }
+};
+
+function showResistance(){
+    $("div[name='resistanceType']").removeClass("hide");
+    $("span[name='resistanceType']").removeClass("hide");
+    $("h2[name='resistanceType']").removeClass("hide");
+    $("div[name='geneType']").addClass("hide");
+    $("span[name='geneType']").addClass("hide");
+    $("h2[name='geneType']").addClass("hide");
+}
+function showGeneType(){
+    $("div[name='geneType']").removeClass("hide");
+    $("span[name='geneType']").removeClass("hide");
+    $("h2[name='geneType']").removeClass("hide");
+    $("div[name='resistanceType']").addClass("hide");
+    $("span[name='resistanceType']").addClass("hide");
+    $("h2[name='resistanceType']").addClass("hide");
+}
+</script>
