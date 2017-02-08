@@ -24,7 +24,7 @@
             <li>床号：<span><input name="detailBaseInfo['bedNo']" value="$!{hbv.detailBaseInfo.bedNo}" type="text"></span></li>
             <li>住院号：<span><input name="detailBaseInfo['inpatientNumber']" value="$!{hbv.detailBaseInfo.inpatientNumber}" type="text"></span></li>
         </ul>
-        <div class="gray">送检目的：HBV基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
+        <div class="gray">送检目的：Sanger基因分型，拉米夫定LAM，阿德福韦ADV，恩替卡韦ETV，替比夫定LDT，替诺福韦酯TDF，恩曲他滨FTC</div>
         <div class="gray">相关位点：rt169，rt173，rt180，rt181，rt184，rt194，rt202，rt204，rt215，rt233，rt236，rt250</div>
     </div>
     <hr class="hr-bold mt5" />

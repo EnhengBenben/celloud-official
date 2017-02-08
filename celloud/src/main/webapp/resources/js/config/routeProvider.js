@@ -150,6 +150,10 @@
     	templateUrl: "pages/report/report_data_gdd.jsp",
     	controller: "gddDataReportController"
     })
+    .when('/reportdata/GDD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_gdd.jsp",
+    	controller: "gddDataReportController"
+    })
     .when('/reportpro/AccuSeqΩ/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_gdd.jsp",
     	controller: "gddDataReportController"
