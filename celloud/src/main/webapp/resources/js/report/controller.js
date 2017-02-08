@@ -729,7 +729,7 @@
 					aType += ("['异常数据'," + hbvtype[9]/2 + "]");
 				}
 				aType += "]";
-				$.reportChar.draw.echartsShowHBVType('char0',hbvtype,aType,45);
+				$.reportChar.draw.echartsShowHBVType('char0',$routeParams.appId,hbvtype,aType,45);
 				
 				var result = $("#resultDiv").html();
 				if(result){
