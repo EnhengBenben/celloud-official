@@ -38,6 +38,45 @@
     }
   });
   
+  celloudApp.controller("samplingInfoController", function($scope, samplingService){
+    $scope.productTags = samplingService.getProductTags();
+    $scope.typeList = samplingService.typeList();
+    var refreshList = function(){
+      $scope.sampleList = samplingService.sampleList();
+    }
+    refreshList();
+    $scope.addSample = function(){
+      samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type.name).success(function(data){
+        if(data == 2){
+          $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
+        }else {
+          refreshList();
+        }
+        $scope.sampleName = "";
+      })
+    }
+    $scope.commitSample = function(){
+      samplingService.commitSample($scope.sampleList).success(function(data){
+        if(data > 0){
+          window.open(window.CONTEXT_PATH+"/sample_order.html#/sampling/order/"+data);
+          refreshList();
+        }else {
+          $.alert("样本已提交");
+        }
+      })
+    }
+    $scope.deleteSample = function(id){
+      samplingService.deleteSample(id).success(function(data){
+        if(data > 0){
+          refreshList();
+          $.alert("删除样本成功!");
+        }else {
+          $.alert("删除样本失败!");
+        }
+      })
+    }
+  });
+  
   celloudApp.controller("sampleTrackingController", function($scope, $routeParams, sampleTrackingService){
     $scope.pages = {
         page : 1,

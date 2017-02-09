@@ -217,6 +217,10 @@
       templateUrl: "pages/experiment_scan/sampling.jsp",
       controller: "samplingController"
     })
+    .when('/sampling/info-collection',{
+      templateUrl: "pages/experiment_scan/sampling_info.jsp",
+      controller: "samplingInfoController"
+    })
     .when('/sampling/order/:orderId',{
       templateUrl: "pages/experiment_scan/order_detail.jsp",
       controller: "sampleOrderController"
