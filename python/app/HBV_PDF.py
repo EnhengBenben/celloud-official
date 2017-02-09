@@ -44,7 +44,7 @@ def createPDF(path,appName,fileName):
 	im = Image(PDFPro.logo, 15, 17)
 	pdftitle = '<font size=14 name="hei">'+appName+' 报告</font>'
 	data= [[im, Paragraph(pdftitle, styleContext)]]
-	table = Table(data, colWidths=[0.9 * cm, 5.5 * cm])
+	table = Table(data, colWidths=[0.9 * cm, 8.5 * cm])
 	table.setStyle(TableStyle([('VALIGN',(-1,-1),(-1,-1),'TOP')]))
 	total.append(table)
 	total.append(Spacer(1, 12))
