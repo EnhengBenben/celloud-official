@@ -5,7 +5,7 @@
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li><a style="color: #a0a0a0" href="javascript:void(0);" ng-click="goBack()">报告管理</a></li>
-      <li>MIB报告</li>
+      <li>NGS报告</li>
     </ol>
     <div class="content">
       <div class="content-header">

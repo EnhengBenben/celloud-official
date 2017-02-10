@@ -168,10 +168,6 @@ public class AppAction {
         return map;
     }
 
-    public static void main(String[] args) throws CloneNotSupportedException {
-        App app = new App();
-    }
-
     @ActionLog(value = "查看分类指定分类下的所有APP列表页面", button = "APP获取更多")
     @RequestMapping("toMoreAppList")
     public ModelAndView toMoreAppList(Integer classifyId, Integer classifyPid, String condition, String type,

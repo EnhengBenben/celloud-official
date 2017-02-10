@@ -4,7 +4,7 @@
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li><a style="color: #a0a0a0" href="javascript:void(0);" ng-click="goBack()">报告管理</a></li>
-      <li>HBV_SNP2报告</li>
+      <li>Sanger报告</li>
     </ol>
     <div class="content">
       <div class="content-header">
@@ -18,10 +18,10 @@
             {{hbv.fileName}}({{hbv.dataKey}})
         </p>
         <div class="btn-groups">
-            <a ng-if="hbv.dataKey != null && hbv.dataKey != ''" class="btn -low" target="_blank" href='report/printHBV?appId={{hbv.appId}}&dataKey={{hbv.dataKey}}&projectId={{hbv.projectId}}&flag=0'><i class="fa fa-print"></i>详细报告</a>
-            <a ng-if="hbv.dataKey != null && hbv.dataKey != ''" class="btn -low" target="_blank" href='report/printHBV?appId={{hbv.appId}}&dataKey={{hbv.dataKey}}&projectId={{hbv.projectId}}&flag=1'><i class="fa fa-print"></i>简要报告</a>
-            <a ng-if="hbv.pdf != null && hbv.pdf != ''" class="btn -middle" href="/report/down?path={{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/{{hbv.pdf}}"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
-            <a ng-if="hbv.pdf != zip && hbv.zip != ''" class="btn -high" href="/report/down?path={{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/{{hbv.zip}}"><i class="fa fa-cloud-download"></i>报告下载</a>
+            <a ng-if="hbv.dataKey != null && hbv.dataKey != ''" class="btn -low" target="_blank" href='report/printSanger?appId={{hbv.appId}}&dataKey={{hbv.dataKey}}&projectId={{hbv.projectId}}&flag=0'><i class="fa fa-print"></i>详细报告</a>
+            <a ng-if="hbv.dataKey != null && hbv.dataKey != ''" class="btn -low" target="_blank" href='report/printSanger?appId={{hbv.appId}}&dataKey={{hbv.dataKey}}&projectId={{hbv.projectId}}&flag=1'><i class="fa fa-print"></i>简要报告</a>
+            <a ng-if="hbv.pdf != null && hbv.pdf != ''" class="btn -middle" href="/report/down?path={{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/Sanger.pdf"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+            <a ng-if="hbv.pdf != zip && hbv.zip != ''" class="btn -high" href="/report/down?path={{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/Sanger.zip"><i class="fa fa-cloud-download"></i>报告下载</a>
         </div>
       </div>
       <div>
