@@ -86,7 +86,7 @@
             <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td ng-if="file.reportNum < 1" style="font-weight: bold;">未运行</td>
             <td ng-if="file.reportNum > 0">已运行</td>
-            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#data-detail-modal" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+            <td><a href="javascript:void(0)" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
           <tr ng-show="dataList.datas.length == 0">
           	<td colspan="9">暂无数据</td>

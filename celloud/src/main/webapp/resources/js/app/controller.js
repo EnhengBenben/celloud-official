@@ -102,6 +102,9 @@
 		
 		$scope.removeApp = function(id){
 			$.get("app/removeApp",{"paramId":id},function(responseText){
+				if(responseText == -1){
+					alert("测试账号不允许修改App");
+				}
 				if(responseText>0){
 					appService.getMyApp().
 					success(function(data){
@@ -165,6 +168,9 @@
 		
 		$scope.addApp = function(id){
 			$.get("app/addApp",{"paramId":id},function(responseText){
+				if(responseText == -1){
+					alert("测试账号不允许修改App");
+				}
 				if(responseText>0){
 //					$("#toAddApp").attr("onclick","appStore.removeApp("+id+")");
 //					$("#toAddApp").html("<i class=\"fa fa-minus\"></i>&nbsp;取消添加");
@@ -181,6 +187,9 @@
 		
 		$scope.removeApp = function(id){
 			$.get("app/removeApp",{"paramId":id},function(responseText){
+				if(responseText == -1){
+					alert("测试账号不允许修改App");
+				}
 				if(responseText>0){
 //					var appId=$("#app-detail-appId").val();
 //					if(appId==id){

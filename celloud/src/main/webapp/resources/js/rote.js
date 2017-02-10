@@ -1,4 +1,4 @@
-$(document).ready(function() {
+	$(document).ready(function() {
 	var swiper = new Swiper(".swiper-container", {
 			direction: 'vertical',
 			// 如果需要分页器
@@ -38,22 +38,21 @@ $(document).ready(function() {
 	window.addEventListener('resize', function() {
 		document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
 	})
- //获取url参数
-  function request(strParame) {   
+ 	//获取url参数
+  	function request(strParame) {   
       var args = new Object( );   
       var query = location.search.substring(1);   
-        
       var pairs = query.split("&"); // Break at ampersand   
       for(var i = 0; i < pairs.length; i++) {   
-      var pos = pairs[i].indexOf('=');   
-      if (pos == -1) continue;   
-      var argname = pairs[i].substring(0,pos);   
-      var value = pairs[i].substring(pos+1);   
-      value = decodeURIComponent(value);   
-      args[argname] = value;   
+	      var pos = pairs[i].indexOf('=');   
+	      if (pos == -1) continue;   
+	      var argname = pairs[i].substring(0,pos);   
+	      var value = pairs[i].substring(pos+1);   
+	      value = decodeURIComponent(value);   
+	      args[argname] = value;   
       }   
       return args[strParame];   
-  }
+ 	 }
 	 var protocol = window.location.protocol;
 	 var hostname = window.location.hostname;
 	 var port = window.location.port ? ":" + window.location.port : "";
@@ -64,7 +63,7 @@ $(document).ready(function() {
 		 context = '/celloud';
 	 }
 	//峰图服务器地址base
-	var fengtuBase = 'https://www.celloud.cn';
+	var fengtuBase = 'https://www.celloud.cc';
 	 var webService=protocol+"//"+hostname+port+"/celloud/api/report/getRockyReport?projectId="+request('projectId')+"&dataKey="+request("dataKey")+"&appId="+request('appId');
 
 	$.ajax({
@@ -74,7 +73,6 @@ $(document).ready(function() {
 		dataType: 'json',
 		jsonpCallback: "callback",
 		success: function(data) {
-			console.log(data)
 			var report = data
 			var name = report.rocky.baseInfo.examineeName;
 			var sampleType = report.rocky.baseInfo.sampleType;
@@ -115,8 +113,7 @@ $(document).ready(function() {
 				$('.rep').hide();
 				$('.p7').html(res)
 			}
-
-			//添加检测数据
+			//添加检测数据翻译
 			for (var i in record) {
 				switch(record[i].significance){
 					case 'Pathogenic':
@@ -160,7 +157,6 @@ $(document).ready(function() {
 						'本次检测在您的乳腺癌关键基因<span id="BCRA">' + 'BRCA1</span>和<span 						id="BCRA">BRCA2</span>上未发现致病变异，因而该因素没有提高您的乳腺癌风险。</p>'
 					$('.result').html(res);
 				}
-
 				res1 = '本次检测，在您的<span id="BCRA">' + 'BRCA1/2</span>基因中共发现了<u>' + record.length + 						'</u>个突变。它们是：'
 				$('.countIn').html(res1);
 			}
@@ -189,7 +185,7 @@ $(document).ready(function() {
 					p1 = '<div class="report_title">' +
 						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3.png"/>' +
 						'<img src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 3-1.png" alt="" title="" />' +
-						'<img style="display:block;width:3.3rem;" src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 2.png" alt="" title="" />' +
+						'<img style="display:block;width:3.3rem;margin-top:3.8rem;" src="'+window.CONTEXT_PATH+'/images/wechat/rocky_report/logo 2.png" alt="" title="" />' +
 						'</div>';
 					$('.h_lastpage_hide').hide()
 				} else {

@@ -10,6 +10,7 @@ public class APIConfig {
 	private String updatefile;
 	private String reportHealth;
 	private String ossConfig;
+	private String splittxt;
 
 	public String getNewfile() {
 		return newfile;
@@ -41,6 +42,14 @@ public class APIConfig {
 
 	public void setOssConfig(String ossConfig) {
 		this.ossConfig = ossConfig;
+	}
+
+	public String getSplittxt() {
+		return splittxt;
+	}
+
+	public void setSplittxt(String splittxt) {
+		this.splittxt = splittxt;
 	}
 
 }

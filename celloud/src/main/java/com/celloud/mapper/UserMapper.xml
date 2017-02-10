@@ -474,7 +474,7 @@
 		<include refid="Base_Column_List" />
 		,password
 		from tb_user
-		where (username = #{username} or email = #{username}) and state = 0 AND (role=0 or role=3)
+		where (username = #{username} or email = #{username}) and state = 0 AND (role=0 or role=3 or role = 5)
 	</select>
 	<select id="isEmailInUse" resultType="int">
 		select count(1) from tb_user where email=#{email} and user_id != #{userId}

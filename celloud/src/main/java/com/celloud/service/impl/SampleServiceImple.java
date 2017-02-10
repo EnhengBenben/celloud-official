@@ -104,7 +104,7 @@ public class SampleServiceImple implements SampleService {
 		// 修改sample状态为已添加，并添加订单编号, 实验样本编号
         List<Sample> samples = sampleMapper.selectByIds(sampleIds);
         for(Sample sample : samples){
-			sample.setIsAdd(1 == SampleTypes.ISADD);
+			sample.setIsAdd(true);
 			sample.setOrderId(so.getId());
 			sample.setExperSampleName(DataUtil.getExperSampleNo(sample.getType(), sample.getSampleId()));
 			sampleMapper.updateByPrimaryKeySelective(sample);

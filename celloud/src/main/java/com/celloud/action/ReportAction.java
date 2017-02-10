@@ -2283,6 +2283,44 @@ public class ReportAction {
 		returnToVelocity(path, context, projectId);
 	}
 
+    /**
+     * 打印HBV
+     * 
+     * @param appId
+     * @param dataKey
+     * @param projectId
+     * @param flag
+     * @return
+     * @author lin
+     * @date 2016年3月21日下午2:51:25
+     */
+    @ActionLog(value = "打印HBV数据报告", button = "打印数据报告")
+    @RequestMapping("printSanger")
+    @ResponseBody
+    public void printSanger(Integer appId, String dataKey, Integer projectId, Integer flag) {
+        // 获取结果视图路径
+        String path = null;
+        if (flag == 0) { // 详细报告
+            path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_detail.vm";
+            if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+                path = "default/" + appId + "/print_detail.vm";
+            }
+        } else { // 简要报告
+            path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_brief.vm";
+            if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+                path = "default/" + appId + "/print_brief.vm";
+            }
+        }
+        Map<String, Object> context = new HashMap<String, Object>();
+        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
+        Integer userId = ConstantsData.getLoginUserId();
+        Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+        context.put("hbv", hbv);
+        context.put("report", report);
+        returnToVelocity(path, context, projectId);
+    }
+
 	/**
 	 * 打印HCV
 	 * 

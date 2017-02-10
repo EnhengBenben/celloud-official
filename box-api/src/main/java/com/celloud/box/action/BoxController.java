@@ -73,10 +73,14 @@ public class BoxController {
 			if (f == null) {
 				return new Response("文件上传失败，服务器异常！");
 			}
+			// 在盒子中保存文件
 			DataFile dataFile = boxService.save(userId, name, null, tagId, batch, needSplit, f);
+			// 通知celloud生成文件
 			dataFile = boxService.newfile(dataFile);
 			if (dataFile != null) {
+				// 排队上传到oss
 				queue.add(f);
+				// 检查是否可运行split
 				boxService.checkRunSplit(dataFile);
 			}
 		}

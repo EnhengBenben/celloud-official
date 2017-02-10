@@ -683,17 +683,19 @@ public class ReportServiceImpl implements ReportService {
 		FileTools.createFile(path);
 		FileTools.appendWrite(path,
 				"数据编号\tBarcode\t数据别名\t上传日期\tAPP\tTotal_Reads\tMap_Reads\tMap_Ratio(%)\tDuplicate\tGC_Count(%)\t*SD\n");
-		StringBuffer line = new StringBuffer();
-		for (Pgs pgs : pgsList) {
-			line.append(pgs.getDataKey()).append("\t").append(CustomStringUtils.getBarcode(pgs.getFileName()))
-					.append("\t").append(pgs.getAnotherName()).append("\t")
-					.append(DateUtil.getDateToString(pgs.getUploadDate(), "yyyy-MM-dd")).append("\t")
-					.append(pgs.getAppName()).append("\t").append(pgs.getTotalReads()).append("\t")
-					.append(pgs.getMapReads()).append("\t").append(pgs.getMapRatio()).append("\t")
-					.append(pgs.getDuplicate()).append("\t").append(pgs.getGcCount()).append("\t").append(pgs.getSd())
-					.append("\n");
+		if (pgsList != null && pgsList.size() > 0) {
+			StringBuffer line = new StringBuffer();
+			for (Pgs pgs : pgsList) {
+				line.append(pgs.getDataKey()).append("\t").append(CustomStringUtils.getBarcode(pgs.getFileName()))
+						.append("\t").append(pgs.getAnotherName()).append("\t")
+						.append(DateUtil.getDateToString(pgs.getUploadDate(), "yyyy-MM-dd")).append("\t")
+						.append(pgs.getAppName()).append("\t").append(pgs.getTotalReads()).append("\t")
+						.append(pgs.getMapReads()).append("\t").append(pgs.getMapRatio()).append("\t")
+						.append(pgs.getDuplicate()).append("\t").append(pgs.getGcCount()).append("\t")
+						.append(pgs.getSd()).append("\n");
+			}
+			FileTools.appendWrite(path, line.toString());
 		}
-		FileTools.appendWrite(path, line.toString());
 		ExcelUtil.simpleTxtToExcel(path, excelpath, "count");
 		return result;
 	}

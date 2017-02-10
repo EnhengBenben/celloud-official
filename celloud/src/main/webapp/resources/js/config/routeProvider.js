@@ -150,6 +150,10 @@
     	templateUrl: "pages/report/report_data_gdd.jsp",
     	controller: "gddDataReportController"
     })
+    .when('/reportdata/GDD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_gdd.jsp",
+    	controller: "gddDataReportController"
+    })
     .when('/reportpro/AccuSeqΩ/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_gdd.jsp",
     	controller: "gddDataReportController"
@@ -196,6 +200,14 @@
     })
     .when('/reportdata/bsi',{
       templateUrl: "pages/report/report_data_bsi.jsp"
+    })
+    .when('/reportdata/Sanger/:appId/:dataKey/:proId',{
+      templateUrl: "pages/report/report_data_sanger.jsp",
+      controller: "sangerDataReportController"
+    })
+    .when('/reportdata/Ngs/:appId/:dataKey/:proId',{
+      templateUrl: "pages/report/report_data_ngs.jsp",
+      controller: "ngsReportController"
     })
     .when('/reportdata/MIB/:appId/:dataKey/:proId',{
       templateUrl: "pages/report/report_data_mib.jsp",
@@ -257,7 +269,7 @@
       templateUrl: "pages/bsi/bsi_report_list.jsp",
       controller: "bsiReportController"
     })
-    .when('/product/bactive/data/:appId',{
+    .when('/product/bactive/dat/:appId',{
       templateUrl: "pages/bsi/bsi_data.jsp",
       controller: "bsiDataController"
     })

@@ -12,11 +12,19 @@
 			}else if($location.path().indexOf('/product/bactive') > -1){
 				
 			}else{
-				if($scope.step == 'one'){
-					$scope.upload.splice();
-					$rootScope.tags = uploadService.getProductTags().query();
-				}
-				$("#upload-modal").modal("show");
+				// 检查用户角色是否为测试账号
+				uploadService.checkRole().
+				success(function(data){
+					if(data == "0"){
+						alert("测试账号不可上传，请联系我们注册正式账号");
+					}else{
+						if($scope.step == 'one'){
+							$scope.upload.splice();
+							$rootScope.tags = uploadService.getProductTags().query();
+						}
+						$("#upload-modal").modal("show");
+					}
+				})
 			}
 		}
 		$scope.nextStep = function(){
