@@ -259,7 +259,6 @@ html {
 .p2 {
 	width: 6.9rem;
     margin: 0 auto;
-    margin-bottom: 0.61rem;
 }
 
 .tab_data_p2 {
@@ -464,7 +463,7 @@ html {
     flex-flow: wrap;
     border-bottom: none;
     border-top: 1px solid #9F7BAF;
-    padding-top: 0.41rem;
+    padding: 0.41rem 0 0.61rem 0;
 }
 
 .p3_pos {
