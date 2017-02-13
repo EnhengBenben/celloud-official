@@ -340,8 +340,8 @@ public class RunServiceImpl implements RunService {
 			if (hasR1 && hasR2) {
 				logger.info("完全上传BSI所需的配对文件");
 				List<Sample> sampleList = sampleService.getSamplesByStorageName(storageName);
-				logger.info("文库{}下样本列表长度{}", storageName, sampleList.size());
 				if (sampleList != null && sampleList.size() > 0) {
+                    logger.info("文库{}下样本列表长度{}", storageName, sampleList.size());
 					DataFile data = new DataFile();
 					data.setFileName(pubName + ".txt");
 					data.setUserId(userId);
