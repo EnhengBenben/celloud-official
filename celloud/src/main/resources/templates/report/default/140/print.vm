@@ -1,0 +1,13 @@
+#parse("templates/report/layout.vm")
+#parse("templates/report/default/${fsocg.appId}/reference.vm")
+<div id="printMain">
+    <form id="print-form">
+    <div>
+        #parse("templates/report/default/${fsocg.appId}/title.vm")
+        #parse("templates/report/default/${fsocg.appId}/content.vm")
+        #parse("templates/report/default/${fsocg.appId}/foot.vm")
+        #parse("templates/report/default/${fsocg.appId}/note.vm")
+    </div>
+    </form>
+</div>  
+#parse("templates/report/default/${fsocg.appId}/js.vm")

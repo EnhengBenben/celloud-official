@@ -63,7 +63,8 @@
 						{title : "tsv", extensions : "tsv"},
 						{title : "gz", extensions : "gz"},
 						{title : "lis", extensions : "lis"},
-						{title : "txt", extensions : "txt"}
+						{title : "txt", extensions : "txt"},
+						{title : "xls", extensions : "xls,xlsx"}
 					]
 				},
 				max_retries : 5,
