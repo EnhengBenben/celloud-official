@@ -1,98 +1,52 @@
 package com.celloud.model.mongo;
 
-import org.bson.types.ObjectId;
+import java.util.List;
+import java.util.Map;
+
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
 
-/**
- * FSocg 流程的数据库
- * 
- * @author lin
- *
- */
+import com.celloud.model.mysql.DataFile;
+
 @Entity(noClassnameStored = true)
-public class FSocg {
-	@Id
-	private ObjectId id;
-	private String chrom;
-	private String positionStr;
-	private String positionEnd;
-	private String alleleName;
-	private String num;
-	private String plus;
-	private String variant;
-	private String gene;
+public class FSocg extends Base {
+	private static final long serialVersionUID = 1L;
+	private List<List<String>> dna;
+	private List<String> rna;
+	@Embedded
+	private List<DataFile> data;
+	private Map<String, String> baseInfo;
 
-	public String getChrom() {
-		return chrom;
+	public List<List<String>> getDna() {
+		return dna;
 	}
 
-	public void setChrom(String chrom) {
-		this.chrom = chrom;
+	public void setDna(List<List<String>> dna) {
+		this.dna = dna;
 	}
 
-	public String getPositionStr() {
-		return positionStr;
+	public List<String> getRna() {
+		return rna;
 	}
 
-	public void setPositionStr(String positionStr) {
-		this.positionStr = positionStr;
+	public void setRna(List<String> rna) {
+		this.rna = rna;
 	}
 
-	public String getPositionEnd() {
-		return positionEnd;
+	public List<DataFile> getData() {
+		return data;
 	}
 
-	public void setPositionEnd(String positionEnd) {
-		this.positionEnd = positionEnd;
+	public void setData(List<DataFile> data) {
+		this.data = data;
 	}
 
-	public String getAlleleName() {
-		return alleleName;
+	public Map<String, String> getBaseInfo() {
+		return baseInfo;
 	}
 
-	public void setAlleleName(String alleleName) {
-		this.alleleName = alleleName;
-	}
-
-	public String getNum() {
-		return num;
-	}
-
-	public void setNum(String num) {
-		this.num = num;
-	}
-
-	public String getPlus() {
-		return plus;
-	}
-
-	public void setPlus(String plus) {
-		this.plus = plus;
-	}
-
-	public String getVariant() {
-		return variant;
-	}
-
-	public void setVariant(String variant) {
-		this.variant = variant;
-	}
-
-	public String getGene() {
-		return gene;
-	}
-
-	public void setGene(String gene) {
-		this.gene = gene;
-	}
-
-	public ObjectId getId() {
-		return id;
-	}
-
-	public void setId(ObjectId id) {
-		this.id = id;
+	public void setBaseInfo(Map<String, String> baseInfo) {
+		this.baseInfo = baseInfo;
 	}
 
 }

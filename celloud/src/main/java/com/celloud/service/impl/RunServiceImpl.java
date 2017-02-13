@@ -33,6 +33,7 @@ import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.Task;
 import com.celloud.service.AppService;
 import com.celloud.service.DataService;
+import com.celloud.service.DirectReportService;
 import com.celloud.service.ExpensesService;
 import com.celloud.service.ProjectService;
 import com.celloud.service.ReportService;
@@ -68,6 +69,8 @@ public class RunServiceImpl implements RunService {
 	private DataService dataService;
 	@Resource
 	private SampleService sampleService;
+	@Resource
+	private DirectReportService directReportService;
 
 	/**
 	 * 参考接口{@link com.celloud.task.DataGroup}
@@ -90,6 +93,8 @@ public class RunServiceImpl implements RunService {
 			dataFilePathMap = DataKeyListToFile.toSplit(dataList);
 		} else if (AppDataListType.AB_FASTQ_PATH.contains(appId)) {
 			dataFilePathMap = DataKeyListToFile.abFastqPath(dataList);
+		} else if (AppDataListType.XLS_PATH.contains(appId)) {
+			dataFilePathMap = DataKeyListToFile.pair(dataList, "DNA.xls", "RNA.xls");
 		}
 		return dataFilePathMap;
 	}
@@ -256,7 +261,9 @@ public class RunServiceImpl implements RunService {
 				AppSubmitUtil.mq(app.getCode(), taskId, userId, datas);
 				taskService.updateToRunning(taskId);
 			} else if (runCheckIsWait(app)) {
-				if (AppDataListType.API_RUN.contains(appId)) {
+				if (AppDataListType.JAVA_RUN.contains(appId)) {
+					directReportService.fsocg(userId, appId, dataListFile, appPath, projectId);
+				} else if (AppDataListType.API_RUN.contains(appId)) {
 					AppSubmitUtil.http(appId, dataListFile, appPath, projectId);
 				} else {
 					AppSubmitUtil.ssh("sge", command, false);
@@ -432,11 +439,5 @@ public class RunServiceImpl implements RunService {
 		} else {
 			logger.info("数据{}上传完不可以运行", originalName);
 		}
-	}
-
-	public static void main(String[] args) {
-		String originalName = "16102862_ffffff_R1.fastq";
-		String storageName = StringUtils.splitByWholeSeparator(originalName, "_")[0];
-		System.out.println(storageName);
 	}
 }

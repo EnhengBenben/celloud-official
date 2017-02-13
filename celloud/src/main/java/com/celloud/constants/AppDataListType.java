@@ -26,6 +26,10 @@ public class AppDataListType {
 	 * 两对fastq文件 ...(A/B)_(R1/R2).fastq
 	 */
 	public static final List<Integer> AB_FASTQ_PATH = Arrays.asList(131);
+	/**
+	 * XLS配对规则
+	 */
+	public static final List<Integer> XLS_PATH = Arrays.asList(140);
 
 	/**
 	 * split
@@ -52,5 +56,14 @@ public class AppDataListType {
 	 * 调用封装的API运行
 	 */
 	public static final List<Integer> MQ_RUN = Arrays.asList(123);
+	/**
+	 * JAVA直接将输入文件做为结果文件处理
+	 */
+	public static final List<Integer> JAVA_RUN = Arrays.asList(140);
+	/**
+	 * FSOCG需要排除的id
+	 */
+	public static final List<String> FSOCG_noId = Arrays.asList("HMBS.ENCTRL.E8E9", "TBP.ENCTRL.E3E4",
+			"LRP1.ENCTRL.E57E58", "MRPL13.ENCTRL.E1.E2", "JUN.ENCTRL.E1");
 
 }

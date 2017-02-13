@@ -48,6 +48,7 @@ import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.EGFR;
 import com.celloud.model.mongo.EGFRCount;
+import com.celloud.model.mongo.FSocg;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.GeneDetectionResult;
 import com.celloud.model.mongo.HBV;
@@ -156,6 +157,11 @@ public class ReportServiceImpl implements ReportService {
 			}
 		}
 		return hbv;
+	}
+
+	@Override
+	public FSocg getFSocgReport(String dataKey, Integer projectId, Integer appId) {
+		return reportDao.getDataReport(FSocg.class, dataKey, projectId, appId);
 	}
 
 	@Override
@@ -1070,6 +1076,17 @@ public class ReportServiceImpl implements ReportService {
 			ur = reportDao.editData(HBV.class, hbv.getId(), "briefBaseInfo", new HashMap<String, String>());
 		} else {
 			ur = reportDao.editData(HBV.class, hbv.getId(), "briefBaseInfo", hbv.getBriefBaseInfo());
+		}
+		return ur != null ? 1 : 0;
+	}
+
+	@Override
+	public Integer updateFSocgFilling(FSocg fsocg) {
+		UpdateResults ur = null;
+		if (fsocg.getBaseInfo() == null) {
+			ur = reportDao.editData(FSocg.class, fsocg.getId(), "baseInfo", new HashMap<String, String>());
+		} else {
+			ur = reportDao.editData(FSocg.class, fsocg.getId(), "baseInfo", fsocg.getBaseInfo());
 		}
 		return ur != null ? 1 : 0;
 	}
