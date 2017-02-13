@@ -918,10 +918,9 @@
 
       prevTooltipButton.onclick = function() {
     	  $.get("user/updateInfo",{"navigation":0});
-//    	  if(intro != null){
-//    		  intro.exit();
-//    		  intro = null;
-//    	  }
+    	  if(localStorage.hbvIntro != undefined){
+          localStorage.hbvIntro = 1;
+        }
     	  if (self._introItems.length - 1 == self._currentStep && typeof (self._introCompleteCallback) === 'function') {
               self._introCompleteCallback.call(self);
             }
@@ -967,7 +966,7 @@
       buttonsLayer.appendChild(prevTooltipButton);
 
       //in order to prevent displaying next/previous button always
-      if (this._introItems.length > 1) {
+      if (this._introItems.length > 2) {
         buttonsLayer.appendChild(prevTooltipButton);
         buttonsLayer.appendChild(nextTooltipButton);
       }

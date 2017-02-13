@@ -62,6 +62,22 @@ tr.introjs-showElement > th {
        -o-transition: all 0.3s ease-out;
           transition: all 0.3s ease-out;
 }
+.hbv-introjs-helperLayer {
+  position: absolute;
+  width: 140px;
+  height: 180px;
+  top: 0px;
+  left: 135px;
+  z-index: 9999998;
+  background-color: #FFF;
+  background: url("hbv_focus_bg.png") no-repeat;
+  background-position: -20px -30px;
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+      -ms-transition: all 0.3s ease-out;
+       -o-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+}
 
 .introjs-tooltipReferenceLayer {
   position: absolute;
@@ -77,7 +93,10 @@ tr.introjs-showElement > th {
 
 .introjs-helperLayer *,
 .introjs-helperLayer *:before,
-.introjs-helperLayer *:after {
+.introjs-helperLayer *:after,
+.hbv-introjs-helperLayer *,
+.hbv-introjs-helperLayer *:before,
+.hbv-introjs-helperLayer *:after {
   -webkit-box-sizing: content-box;
      -moz-box-sizing: content-box;
       -ms-box-sizing: content-box;
