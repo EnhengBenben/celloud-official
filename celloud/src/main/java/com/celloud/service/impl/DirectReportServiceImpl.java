@@ -2,7 +2,9 @@ package com.celloud.service.impl;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -98,7 +100,7 @@ public class DirectReportServiceImpl implements DirectReportService {
 		String rnaPath = input.split("\t")[1];
 		String rnaKey = getDataKey(rnaPath);
 		List<String> rnaList = FileTools.filetoList(new File(rnaPath));
-		List<String> rnaContigId = new ArrayList<>();
+		Set<String> rnaContigId = new HashSet<>();
 		for (int i = 1; i < rnaList.size(); i++) {
 			String line = rnaList.get(i);
 			String[] rna = line.split("\t");
