@@ -1,6 +1,7 @@
 package com.celloud.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -23,6 +24,9 @@ public interface SampleMapper {
     List<Sample> selectAllByUser(@Param("userId") Integer userId,
             @Param("isAdd") Integer isAdd, @Param("state") Integer state,
             @Param("experState") Integer experState);
+
+    List<Map<String, String>> listSampleAndPatient(@Param("userId") Integer userId, @Param("isAdd") Integer isAdd,
+            @Param("state") Integer state);
 
     Sample selectByName(@Param("userId") Integer userId,
             @Param("sampleName") String sampleName,
@@ -79,4 +83,19 @@ public interface SampleMapper {
 	List<Sample> selectByIds(@Param("ids") List<Integer> ids);
 
     List<Sample> getSamplesByStorageId(@Param("ssid") Integer storageId, @Param("state") Integer state);
+
+    /**
+     * 
+     * @description 根据样本id查询样本和病人信息
+     * @author miaoqi
+     * @date 2017年2月14日 下午2:13:29
+     * @param userId
+     * @param sampleId
+     * @param notadd
+     * @param active
+     * @return
+     */
+    Map<String, String> getSampleAndPatient(@Param("userId") Integer userId, @Param("sampleId") Integer sampleId,
+            @Param("isAdd") Integer isAdd,
+            @Param("state") Integer state);
 }

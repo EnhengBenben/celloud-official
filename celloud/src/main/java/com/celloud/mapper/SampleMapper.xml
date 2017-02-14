@@ -14,6 +14,7 @@
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
     <result column="state" jdbcType="BIT" property="state" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="patient_id" jdbcType="VARCHAR" property="patientId" />
   </resultMap>
   <resultMap type="com.celloud.model.mysql.Sample" id="ResultMapWithlogDate" extends="BaseResultMap">
     <result column="log_date" jdbcType="TIMESTAMP" property="logDate" />
@@ -39,7 +40,7 @@
       <result column="updateDate" property="updateDate" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    sample_id, user_id, order_id, sample_name,exper_sample_name, is_add, type, sindex, create_date, update_date, state, remark
+    sample_id, user_id, order_id, sample_name,exper_sample_name, is_add, type, sindex, create_date, update_date, state, remark, patient_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -88,6 +89,9 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sampleId != null" >
@@ -115,6 +119,9 @@
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -154,6 +161,9 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="patientId != null" >
+        patient_id = #{patientId,jdbcType=INTEGER},
+      </if>
     </set>
     where sample_id = #{sampleId,jdbcType=INTEGER}
   </update>
@@ -174,6 +184,29 @@
     where sl.exper_state = #{experState}
     and s.user_id = #{userId} and is_add = #{isAdd,jdbcType=BIT} and s.state =#{state,jdbcType=BIT}
     order by s.create_date desc,s.sample_name desc
+  </select>
+  <select id="listSampleAndPatient" resultType="java.util.Map">
+    SELECT s.sample_id sampleId, s.sample_name sampleName, s.type type, p.name name, p.gender gender,
+    p.age age, p.tel tel, p.id_card idCard, s.create_date createDate, t.tag_name tagName
+    FROM tb_sample s, tb_patient p, tb_sample_tag_relat str, tb_tag t
+    WHERE s.user_id = #{userId}
+    AND s.is_add = #{isAdd}
+    AND s.state = #{state}
+    AND s.patient_id = p.id
+    AND s.sample_id = str.sample_id
+    AND t.tag_id = str.tag_id
+  </select>
+  <select id="getSampleAndPatient" resultType="java.util.Map">
+    SELECT s.sample_id sampleId, s.sample_name sampleName, s.type type, p.name name, p.gender gender,
+    p.age age, p.tel tel, p.id_card idCard, s.create_date createDate, t.tag_name tagName, t.tag_id tagId
+    FROM tb_sample s, tb_patient p, tb_sample_tag_relat str, tb_tag t
+    WHERE s.user_id = #{userId}
+    AND s.is_add = #{isAdd}
+    AND s.state = #{state}
+    AND s.patient_id = p.id
+    AND s.sample_id = str.sample_id
+    AND t.tag_id = str.tag_id
+    AND s.sample_id = #{sampleId}
   </select>
   <select id="selectByName" resultMap="BaseResultMap">
     select *

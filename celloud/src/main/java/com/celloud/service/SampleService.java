@@ -3,6 +3,7 @@ package com.celloud.service;
 import java.util.List;
 import java.util.Map;
 
+import com.celloud.model.mysql.Patient;
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleStorage;
 import com.celloud.page.Page;
@@ -140,6 +141,20 @@ public interface SampleService {
             String type, Integer tagId);
 
     /**
+     * 
+     * @description 增加样本信息和病人信息
+     * @author miaoqi
+     * @date 2017年2月13日 上午10:53:10
+     * @param userId
+     * @param samplename
+     * @param type
+     * @param tagId
+     * @param patient
+     */
+    public Boolean saveSampleInfoAndPatient(Integer userId, String sampleName, String type, Integer tagId,
+            Patient patient);
+
+    /**
      * 修改样本实验状态
      * 
      * @param userId
@@ -271,4 +286,35 @@ public interface SampleService {
      * @date 2016年12月2日 下午1:45:56
      */
     public Integer updateSampleInMechine(Integer userId, Integer sampleStorageId);
+
+    /**
+     * 
+     * @description 获取样本和病人信息
+     * @author miaoqi
+     * @date 2017年2月13日 下午6:03:16
+     * @param loginUserId
+     * @return
+     */
+    List<Map<String, String>> listSampleAndPatient(Integer userId);
+
+    /**
+     * 
+     * @description 删除样本信息,级联删除病人信息
+     * @author miaoqi
+     * @date 2017年2月14日 下午1:18:53
+     * @param sampleId
+     * @return
+     */
+    Boolean removeSampleInfo(Integer sampleId);
+
+    /**
+     * 
+     * @description 根据样本id查询样本和病人信息
+     * @author miaoqi
+     * @date 2017年2月14日 下午2:12:23
+     * @param loginUserId
+     * @param sampleId
+     * @return
+     */
+    Map<String, String> getSampleAndPatient(Integer userId, Integer sampleId);
 }

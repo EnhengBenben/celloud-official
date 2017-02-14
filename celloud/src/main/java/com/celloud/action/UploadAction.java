@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +59,12 @@ public class UploadAction {
 	public List<Tag> getProductTag() {
 		return tagService.findProductTags(ConstantsData.getLoginUserId());
 	}
+
+    @RequestMapping("listProductTagToSelect")
+    @ResponseBody
+    public List<Map<String, String>> listProductTagToSelect() {
+        return tagService.listProductTagsToSelect(ConstantsData.getLoginUserId());
+    }
 
     /**
      * 

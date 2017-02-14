@@ -31,6 +31,41 @@
       return $http({method:"POST",url:'sample/commitSampling',params:{"sampleIds":sampleIds}});
     }
   });
+  
+  celloudApp.service("sampleInfoService", function($resource,$http){
+    var self = this;
+    self.getSampleInfo = function(id){
+    	return $http({ method:"GET", url:'sample/sampleInfos/' + id});
+    }
+    self.listSampleInfo = function(){
+    	return $http({ method:"GET", url:'sample/listSampleInfo' });
+    }
+    self.getProductTags = function(){
+    	return $resource("uploadFile/getProductTag").query();
+    }
+    self.typeList = function(){
+    	return $resource("metadata/sampleType").query();
+    }
+    self.sampleInfos = function(patient, sampleName, tagId, type){
+    	var p ={"sampleName":sampleName,"tagId":tagId[0],"type":type[0]};
+    	$.extend(patient,p);
+    	console.log(patient);
+    	return $http({ method:"POST", url:'sample/sampleInfos',headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, data:$.param(patient) });
+    }
+    self.removeSampleInfo = function(id){
+    	return $http({method:"POST",url:'sample/removeSampleInfo',headers: { 'Content-Type': 'application/x-www-form-urlencoded' },data:$.param({"sampleId":id})});
+    }
+    self.commitSample = function(sampleList){
+    	var sampleIds=new Array()
+    	for(s in sampleList){
+    		if(sampleList[s].sampleId != undefined){
+    			sampleIds.push(sampleList[s].sampleId);
+    		}
+    	}
+    	return $http({method:"POST",url:'sample/commitSampling',params:{"sampleIds":sampleIds}});
+    }
+  });
+  
   celloudApp.service("sampleOrderService", function($resource,$http){
     this.sampleOrderInfo = function(orderId){
       return $http({method:"POST",url:'sample/getSampleOrderInfo',params:{"orderId":orderId,"v":new Date()}});

@@ -69,4 +69,14 @@
   	AND uar.user_id = #{userId}
   	AND a.off_line = #{state}
   </select>
+  <select id="listProductTagsToSelect" resultType="java.util.Map">
+    SELECT t.tag_id as id, t.tag_name as text
+    FROM tb_user_app_right uar, tb_app a, tb_app_tag_relat atr, tb_tag t
+    WHERE t.tag_id = atr.tag_id
+    AND atr.app_id = a.app_id
+    AND uar.app_id = a.app_id
+    AND uar.is_add = 1
+    AND uar.user_id = #{userId}
+    AND a.off_line = #{state}
+  </select>
 </mapper>

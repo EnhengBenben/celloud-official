@@ -10,18 +10,23 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.DataState;
 import com.celloud.constants.IconConstants;
 import com.celloud.constants.SampleTypes;
 import com.celloud.constants.TaskPeriod;
+import com.celloud.mapper.PatientMapper;
 import com.celloud.mapper.SampleLogMapper;
 import com.celloud.mapper.SampleMapper;
 import com.celloud.mapper.SampleOrderMapper;
 import com.celloud.mapper.SampleStorageMapper;
 import com.celloud.mapper.TaskMapper;
 import com.celloud.model.mysql.Metadata;
+import com.celloud.model.mysql.Patient;
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleLog;
 import com.celloud.model.mysql.SampleOrder;
@@ -29,6 +34,7 @@ import com.celloud.model.mysql.SampleStorage;
 import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.PatientService;
 import com.celloud.service.SampleService;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
@@ -42,6 +48,8 @@ import com.celloud.utils.QRCodeUtil;
  */
 @Service("sampleService")
 public class SampleServiceImple implements SampleService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SampleServiceImple.class);
 	@Resource
 	SampleMapper sampleMapper;
 	@Resource
@@ -52,6 +60,10 @@ public class SampleServiceImple implements SampleService {
     SampleStorageMapper sampleStorageMapper;
     @Resource
 	TaskMapper taskMapper;
+    @Autowired
+    private PatientService patientService;
+    @Autowired
+    private PatientMapper patientMapper;
 
 	@Override
 	public Integer saveSample(String sampleName, Integer userId) {
@@ -319,4 +331,54 @@ public class SampleServiceImple implements SampleService {
 	public Sample findByPrimaryKey(Integer id) {
 		return sampleMapper.selectByPrimaryKey(id);
 	}
+
+    @Override
+    public Boolean saveSampleInfoAndPatient(Integer userId, String sampleName, String type, Integer tagId,
+            Patient patient) {
+
+        // 增加患者信息
+        patientService.save(patient);
+        if (patient.getId() == null) {
+            LOGGER.info("增加患者信息失败");
+            return false;
+        }
+        // 增加样本信息
+        Sample sample = new Sample();
+        sample.setSampleName(sampleName);
+        sample.setType(type);
+        sample.setUserId(userId);
+        sample.setPatientId(patient.getId());
+        sampleMapper.insertSelective(sample);
+        sampleMapper.addSampleTagRelat(sample.getSampleId(), tagId);
+        // 增加样本日志信息
+        SampleLog sampleLog = new SampleLog();
+        sampleLog.setUserId(userId);
+        sampleLog.setSampleId(sample.getSampleId());
+        sampleLogMapper.insertSelective(sampleLog);
+        return true;
+    }
+
+    @Override
+    public List<Map<String, String>> listSampleAndPatient(Integer userId) {
+        return sampleMapper.listSampleAndPatient(userId, SampleTypes.NOTADD, DataState.ACTIVE);
+    }
+
+    @Override
+    public Boolean removeSampleInfo(Integer sampleId) {
+        // 获取样本信息
+        Sample sample = sampleMapper.selectByPrimaryKey(sampleId);
+        if (sample == null) {
+            return false;
+        }
+        Integer patientId = sample.getPatientId();
+        Integer count1 = sampleMapper.deleteByPrimaryKey(sampleId);
+        Integer count2 = patientMapper.deleteByPrimaryKey(patientId);
+        return count1.intValue() == 1 && count2.intValue() == 1;
+    }
+
+    @Override
+    public Map<String, String> getSampleAndPatient(Integer userId, Integer sampleId) {
+        return sampleMapper.getSampleAndPatient(userId, sampleId, SampleTypes.NOTADD, DataState.ACTIVE);
+    }
+
 }

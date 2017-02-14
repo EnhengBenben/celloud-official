@@ -38,41 +38,211 @@
     }
   });
   
-  celloudApp.controller("samplingInfoController", function($scope, samplingService){
-    $scope.productTags = samplingService.getProductTags();
-    $scope.typeList = samplingService.typeList();
-    var refreshList = function(){
-      $scope.sampleList = samplingService.sampleList();
-    }
-    refreshList();
-    $scope.addSample = function(){
-      samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type.name).success(function(data){
-        if(data == 2){
-          $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
-        }else {
-          refreshList();
+  celloudApp.controller("samplingInfoController", function($scope, sampleInfoService, $timeout){
+	  $scope.sampleTypes = sampleInfoService.typeList();
+	  var productTagObj1 = null;
+      var productTagObj2 = null;
+      var sampleTypeObj1 = null;
+      var sampleTypeObj2 = null;
+	  $scope.sample = {};
+	  $scope.patient = {};
+	  $scope.changeSampleTypeByTag = function(flag){
+		  $scope.sampleType = null;
+		  var oldWidth = $("#sampleTypes"+flag+" .select2-search__field").attr("style");
+		  $("#sampleTypes"+flag+" li.select2-selection__choice").remove();
+	      $("#sampleTypes"+flag+" span.select2-selection__clear").remove();
+		  $("#sampleTypes"+flag+" .select2-search__field").attr("placeholder","请选择样本类型");
+		  $("#sampleTypes"+flag+" .select2-search__field").attr("style","oldWidth");
+		  $("#sampleType"+flag+" option").remove();
+	      var tagId = null;
+	      var optionVal = $("#productTag"+flag).val();
+		  if(optionVal != null){
+			  if(!isNaN(optionVal)){
+		          tagId = parseInt(optionVal);
+		      }
+			  $.ajax({
+			      url : "metadata/listMetadataToSelectByTagIdAndFlag",
+			      type : 'POST',
+			      data:{
+			          'tagId' : tagId,
+			          'flag' : 3
+			      },
+			      success : function(data) {
+			          // 从后台获取json数据
+			          var json = eval(data);
+			          $("#sampleType"+flag).select2({
+			              data : json,
+			              tags : true,
+			              placeholder : '请选择样本类型',
+			              language : 'zh-CN',
+			              allowClear : true,
+			              maximumSelectionLength: 1
+			          });
+			          $(".select2-search__field").css("height","20px");
+			      }
+			  });
+	      }
+		  $(".select2-search__field").css("height","20px");
+	  }
+      $scope.listSampleInfo = function(){
+    	  sampleInfoService.listSampleInfo()
+    	  .success(function(data){
+    		  $scope.sampleInfoList = data;
+    	  });
+      }
+      $scope.toAddSample = function(){
+    	  $("#addSampleInfoModal").modal("show");
+      }
+	  $scope.saveSample = function(){
+		  $scope.patient.gender = $("input[name='gender']:checked").val();
+		  $scope.patient.smoke = $("input[name='smoke']:checked").val();
+		  sampleInfoService.sampleInfos($scope.patient, $scope.sample.sampleName, $scope.productTag, $scope.sampleType)
+		  	.success(function(data, status){
+		  		if (status == 201){
+		  			$("#addSampleInfoModal").modal("hide");
+		  			$.alert("新增样本成功");
+		  			$scope.listSampleInfo();
+		  		}
+		  	    $scope.sampleName = "";
+		  	})
+		  	.error(function(data, status){
+		  		if(status == 400){
+		  			$.alert("您输入的信息有误!");
+		  		}else if(status == 500){
+		  			$.alert("服务器发生内部错误");
+		  		}
+		  	});
+	  }
+      $scope.toEditSampleInfo = function(id){
+    	  sampleInfoService.getSampleInfo(id)
+    	  .success(function(data){
+    		  $scope.sample.sampleId = data['sampleId'];
+    		  $scope.sample.sampleName = data['sampleName'];
+    		  $scope.sample.type = data['type'];
+    		  $scope.sample.createDate = data['createDate'];
+    		  $scope.sample.tagId = data['tagId'];
+    		  $scope.sample.tagName = data['tagName'];
+    		  $scope.patient.name = data['name'];
+    		  $scope.patient.gender = data['gender'];
+    		  $scope.patient.age = data['age'];
+    		  $scope.patient.tel = data['tel'];
+    		  $scope.patient.idCard = data['idCard'];
+    		  $("#editSampleInfoModal").modal("show");
+    		  $timeout(function(){
+    			  productTagObj2.val([data['tagId'],data['tagName']]).trigger("change");
+    			  $.ajax({
+    			      url : "metadata/listMetadataToSelectByTagIdAndFlag",
+    			      type : 'POST',
+    			      data:{
+    			          'tagId' : data['tagId'],
+    			          'flag' : 3
+    			      },
+    			      success : function(data) {
+    			          // 从后台获取json数据
+    			          var json = eval(data);
+    			          $("#sampleType2").select2({
+    			              data : json,
+    			              tags : true,
+    			              placeholder : '请选择样本类型',
+    			              language : 'zh-CN',
+    			              allowClear : true,
+    			              maximumSelectionLength: 1
+    			          });
+    	    			  sampleTypeObj2.val(["口腔","口腔"]).trigger("change");
+    			          $(".select2-search__field").css("height","20px");
+    			      }
+    			  });
+    		  });
+    	  });
+      }
+      $("#addSampleInfoModal").on("hidden.bs.modal",function(e){
+    	  $scope.sample = {};
+    	  $scope.patient = {};
+    	  $scope.patient.gender = 1;
+    	  $scope.patient.smoke = 1;
+    	  $scope.productTag = "";
+    	  $scope.sampleType = "";
+    	  productTagObj1.val(null).trigger("change");
+    	  sampleTypeObj1.val(null).trigger("change");
+	  });
+      $("#editSampleInfoModal").on("hidden.bs.modal",function(e){
+    	  $scope.sample = {};
+    	  $scope.patient = {};
+    	  $scope.patient.gender = 1;
+    	  $scope.patient.smoke = 1;
+    	  $scope.productTag = "";
+    	  $scope.sampleType = "";
+    	  productTagObj2.val(null).trigger("change");
+    	  sampleTypeObj2.val(null).trigger("change");
+	  });
+      $.ajax({
+          url : CONTEXT_PATH + "/uploadFile/listProductTagToSelect",
+          type : 'post',
+          dataType : 'text',
+          success : function(data) {
+              // 从后台获取json数据
+              var json = eval('(' + data + ')');
+              productTagObj1 = $("#productTag1").select2({
+                  data : json,
+                  tags : true,
+                  placeholder : '检测产品编号',
+                  language : 'zh-CN',
+                  allowClear : true,
+                  maximumSelectionLength: 1
+              })
+              productTagObj2 = $("#productTag2").select2({
+                  data : json,
+                  tags : true,
+                  placeholder : '检测产品编号',
+                  language : 'zh-CN',
+                  allowClear : true,
+                  maximumSelectionLength: 1
+              })
+              $(".select2-search__field").css("height","20px");
+          },
+          error : function(data) {
+
+          }
+      });
+      sampleTypeObj1 = $("#sampleType1").select2({
+          tags : true,
+          placeholder : '请选择样本类型',
+          language : 'zh-CN',
+          allowClear : true,
+          maximumSelectionLength: 1
+      });
+      sampleTypeObj2 = $("#sampleType2").select2({
+          tags : true,
+          placeholder : '请选择样本类型',
+          language : 'zh-CN',
+          allowClear : true,
+          maximumSelectionLength: 1
+      });
+  	  $(".select2-search__field").css("height","20px");
+      
+      $scope.listSampleInfo();
+//    $scope.commitSample = function(){
+//      samplingService.commitSample($scope.sampleList).success(function(data){
+//        if(data > 0){
+//          window.open(window.CONTEXT_PATH+"/sample_order.html#/sampling/order/"+data);
+//          refreshList();
+//        }else {
+//          $.alert("样本已提交");
+//        }
+//      })
+//    }
+    $scope.removeSampleInfo = function(sampleId){
+      sampleInfoService.removeSampleInfo(sampleId)
+      .success(function(data, status){
+        if(status == 204){
+        	$scope.listSampleInfo();
+            $.alert("删除样本成功!");
         }
-        $scope.sampleName = "";
       })
-    }
-    $scope.commitSample = function(){
-      samplingService.commitSample($scope.sampleList).success(function(data){
-        if(data > 0){
-          window.open(window.CONTEXT_PATH+"/sample_order.html#/sampling/order/"+data);
-          refreshList();
-        }else {
-          $.alert("样本已提交");
-        }
-      })
-    }
-    $scope.deleteSample = function(id){
-      samplingService.deleteSample(id).success(function(data){
-        if(data > 0){
-          refreshList();
-          $.alert("删除样本成功!");
-        }else {
-          $.alert("删除样本失败!");
-        }
+      .error(function(data, status){
+    	  if(status == 500){
+    		  $.alert("删除样本失败!");
+		  }
       })
     }
   });

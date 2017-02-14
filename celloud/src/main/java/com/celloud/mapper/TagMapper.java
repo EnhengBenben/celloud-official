@@ -1,6 +1,7 @@
 package com.celloud.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -33,4 +34,16 @@ public interface TagMapper {
      *
      */
     List<Tag> selectProductTags(@Param("userId") Integer userId, @Param("state") Integer state);
+
+    /**
+     * 
+     * @description 查询产品标签返回给select2
+     * @author miaoqi
+     * @date 2017年2月13日 下午2:50:13
+     * @param userid
+     * @param state
+     * @return
+     */
+    List<Map<String, String>> listProductTagsToSelect(@Param("userId") Integer userId, @Param("state") Integer state);
+    
 }

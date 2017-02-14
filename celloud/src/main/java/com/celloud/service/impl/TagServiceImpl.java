@@ -1,6 +1,7 @@
 package com.celloud.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -30,6 +31,11 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<Tag> findProductTags(Integer userId) {
         return tagMapper.selectProductTags(userId, DataState.ACTIVE);
+    }
+
+    @Override
+    public List<Map<String, String>> listProductTagsToSelect(Integer userId) {
+        return tagMapper.listProductTagsToSelect(userId, DataState.ACTIVE);
     }
 
 }
