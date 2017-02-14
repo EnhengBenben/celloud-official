@@ -21,52 +21,28 @@
     <hr class="hr-bold mt5" />
     <h2 class="mt10">检测结果：</h2>
 	    <div class="m-box">
-			<h2>（DNA）突变位点 野生型 突变型 等位突变类型 突变率 质量 插入缺失类型 等位基因源 等位基因名 基因ID 基因区
+			<h2>（DNA）突变位点 野生型 突变型 等位突变类型 突变率 质量 插入缺失类型 等位基因名 基因区
 			</h2>
 	    	#if($fsocg.dna.size() > 1)
-				<table class="table table-bordered table-condensed">
+				<table class="table table-bordered table-condensed" style="width: 800px;">
 			        #foreach($info in $fsocg.dna)
 			        	<tr>
 				        	<td>$info[0]</td>
-						    <td title="$info[1]">
-						    	#if(${info[1].length()}>3)
-						    		${info[1].substring(0,3)}...
-						    	#else
-						    		$!{info[1]}
-						    	#end
+						    <td>
+					    		$!{info[1]}
 						    </td>
 						    <td>
-						    	#if(${info[2].length()}>3)
-						    		${info[2].substring(0,3)}...
-						    	#else
-						    		$!{info[2]}
-						    	#end
+						    	$!{info[2]}
 						    </td>
 						    <td>$info[3]</td>
 						    <td>
-						    	#if(${info[4].length()}>4)
-						    		${info[4].substring(0,4)}...
-						    	#else
-						    		$!{info[4]}
-						    	#end
+						    	$!{info[4]}
 						    </td>
 						    <td>$info[5]</td>
-						    <td title="$info[6]">
-						    	#if(${info[6].length()}>3)
-						    		${info[6].substring(0,3)}...
-						    	#else
-						    		$!{info[6]}
-						    	#end
+						    <td>
+						    	$!{info[6]}
 							</td>
-						    <td>$info[7]</td>
 						    <td>$info[8]</td>
-						    <td title="$info[9]">
-						    	#if(${info[9].length()}>3)
-						    		${info[9].substring(0,3)}...
-						    	#else
-						    		$!{info[9]}
-						    	#end
-						    </td>
 						    <td>$info[10]</td>
 					    </tr>
 			        #end

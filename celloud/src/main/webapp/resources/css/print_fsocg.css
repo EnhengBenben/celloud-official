@@ -8,7 +8,7 @@ h1, h2, h3, h4, h5, h6 {font-size:100%;font-weight:normal;}
 .mt10{ margin-top:10px;}
 .mt5{ margin-top:5px;}
 /* base */
-body{ font-family:"黑体","宋体"; font-size:14px; color:#353535;max-width: 900px;margin:auto;}
+body{ font-family:"黑体","宋体"; font-size:16px; color:#353535;max-width: 900px;margin:auto;}
 .container{ border-top:4px solid #00a88c;}
 .wrapper{margin:auto 10px;}
 hr{ border:solid 2px #d7d7d7; background-color:#d7d7d7; width:100%;margin:0px}
@@ -17,11 +17,11 @@ h1{ text-align:center; font-family: "华文新魏"; font-size:28px; padding:10px
 h2{ font-weight:bold; line-height:1.5em}
 .info li{ display:inline-block;*display: inline-block; width:30%; line-height:1.8em}
 .info .liWidth{width: 90%;}
-.info .inputWidth{width:90%;}
+.info .inputWidth{width:80%;}
 
 .result li{ display:inline-block; width:18%; padding:14px 0;}
 .result li img{ width:150px;height:150px;}
-.footer li{ display:inline-block; width:40%; padding-left: 5%;padding-bottom:0px; font-size:12px;}
+.footer li{ display:inline-block; width:30%; padding-left: 15%;padding-bottom:5px;padding-top:10px;}
 .gray{ color:#757575; font-size:12px;}
 p{ color:#535353; line-height:1.5em;}
 input[type="text"]{width:100px;line-height:2em;border-radius:0px;border:0px;border-bottom:1px solid #D4D4D4;box-shadow:inset 0 0px 0px rgba(0, 0, 0, 0.075);}
