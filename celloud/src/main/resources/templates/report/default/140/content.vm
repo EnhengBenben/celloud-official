@@ -81,12 +81,12 @@
 				<table class="table table-bordered table-condensed">
 			        #foreach($info in $fsocg.rna)
 			        	<tr>
-				        	<td>$info[0]</td>
+				        	<td>$info</td>
 					    </tr>
 			        #end
 			    </table>
 	        #end
-	        #if($fsocg.rna.size() == 1)
+	        #if($fsocg.rna.size() <= 1)
 	        	暂无结果
 	        #end
 	    </div>
