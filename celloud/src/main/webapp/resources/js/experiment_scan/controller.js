@@ -148,7 +148,7 @@
     			              allowClear : true,
     			              maximumSelectionLength: 1
     			          });
-    	    			  sampleTypeObj2.val(["口腔","口腔"]).trigger("change");
+    	    			  sampleTypeObj2.val([data['type'],data['type']]).trigger("change");
     			          $(".select2-search__field").css("height","20px");
     			      }
     			  });
