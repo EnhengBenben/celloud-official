@@ -35,7 +35,7 @@
 					<table class='table table-main'>
 						<tr ng-repeat="info in fsocg.dna">
 						    <td style="padding-left: 0px;">{{info[0]}}</td>
-						    <td style="padding-left: 0px;" title="{{info[1]}}">{{info[1]}}</td>
+						    <td style="padding-left: 0px;" title="{{info[1]}}">{{info[1].length > 30 ? info[1].substr(0,30) + '...' : info[1]}}</td>
 						    <td style="padding-left: 0px;">{{info[2]}}</td>
 						    <td style="padding-left: 0px;">{{info[3]}}</td>
 						    <td style="padding-left: 0px;">{{info[4]}}</td>
