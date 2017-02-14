@@ -73,9 +73,9 @@ public class BoxController {
 			if (f == null) {
 				return new Response("文件上传失败，服务器异常！");
 			}
-			// 在盒子中保存文件
+            // 在盒子中保存文件信息存成.json文件
 			DataFile dataFile = boxService.save(userId, name, null, tagId, batch, needSplit, f);
-			// 通知celloud生成文件
+            // 通知celloud生成文件信息保存至数据库
 			dataFile = boxService.newfile(dataFile);
 			if (dataFile != null) {
 				// 排队上传到oss
