@@ -37,6 +37,9 @@ input[type="text"]{width:100px;line-height:2em;border-radius:0px;border:0px;bord
 .r_img_body{padding:5px 10px 10px 5px;}
 .r_seq{word-wrap: break-word; word-break: normal;max-width: 1000px;}
 
+.table .maxwidth{
+	max-width: 140px;
+}
 table {
   max-width: 100%;
   background-color: transparent;

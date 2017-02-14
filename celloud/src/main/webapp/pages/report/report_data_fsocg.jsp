@@ -35,7 +35,7 @@
 					<table class='table table-main'>
 						<tr ng-repeat="info in fsocg.dna">
 						    <td style="padding-left: 0px;">{{info[0]}}</td>
-						    <td style="padding-left: 0px;">{{info[1]}}</td>
+						    <td style="padding-left: 0px;" title="{{info[1]}}">{{info[1]}}</td>
 						    <td style="padding-left: 0px;">{{info[2]}}</td>
 						    <td style="padding-left: 0px;">{{info[3]}}</td>
 						    <td style="padding-left: 0px;">{{info[4]}}</td>
@@ -47,7 +47,7 @@
 					</table>
 				</div>
 				<div ng-if="fsocg.dna.length == 1">
-					<td>没有符合条件的结果</td>
+					<p>没有符合条件的结果</p>
 				</div>
 			</div>
 	     </section>
@@ -60,12 +60,12 @@
 				<div ng-if="fsocg.rna.length > 1">
 					<table class='table table-main'>
 						<tr ng-repeat="info in fsocg.rna">
-						    <td>{{info}}</td>
+						    <td class="left">{{info}}</td>
 						</tr>
 					</table>
 				</div>
 				<div ng-if="fsocg.rna.length == 1">
-					<td>没有符合条件的结果</td>
+					<p>没有符合条件的结果</p>
 				</div>
 			</div>
 	     </section>
