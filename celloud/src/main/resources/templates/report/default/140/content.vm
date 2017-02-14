@@ -54,7 +54,7 @@
 			<h2>（RNA）融合COSF
 			</h2>
 	    	#if($fsocg.rna.size() > 1)
-				<table class="table table-bordered table-condensed">
+				<table class="table table-bordered table-condensed" style="width: 800px;">
 			        #foreach($info in $fsocg.rna)
 			        	<tr>
 				        	<td>$info</td>
