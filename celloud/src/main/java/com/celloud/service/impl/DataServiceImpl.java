@@ -341,6 +341,9 @@ public class DataServiceImpl implements DataService {
 	@Override
 	public int updateFileInfo(Integer dataId, String dataKey, String filePath, String batch, Integer fileFormat,
 			String md5, String anotherName, Integer tagId) {
+        logger.info(
+                "更新文件状态 dataId = {}, dataKey = {}, filePath = {}, batch = {}, fileFormat = {}, md5 = {}, anothername = {}, tagId = {}",
+                dataId, dataKey, filePath, batch, fileFormat, md5, anotherName, tagId);
 		DataFile data = new DataFile();
 		data.setFileId(dataId);
 		data.setDataKey(dataKey);
