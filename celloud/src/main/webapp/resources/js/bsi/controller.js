@@ -325,7 +325,7 @@
 			    	$("#bsi-upload-modal").modal("hide");
 			    });
 			    uploader.bind("BeforeUpload", function(uploader, file) {
-			    	uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':true});
+			    	uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
 			    });
 			    uploader.bind("Error", function(uploader, error) {
 			       if(error.code=='-602'){
