@@ -16,6 +16,7 @@ import com.celloud.model.mongo.CmpGeneSnpResult;
 import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.EGFR;
+import com.celloud.model.mongo.FSocg;
 import com.celloud.model.mongo.GddDiseaseDict;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
@@ -157,6 +158,17 @@ public interface ReportService {
 	 * @date 2016-1-8 下午4:40:37
 	 */
 	public HBV getHBVReport(String dataKey, Integer projectId, Integer appId);
+
+	/**
+	 * @Description:获取FSocg报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author lin
+	 * @date 2017年2月10日 下午4:47:49
+	 */
+	public FSocg getFSocgReport(String dataKey, Integer projectId, Integer appId);
 
 	/**
 	 * 获取ABINJ数据报告
@@ -745,6 +757,15 @@ public interface ReportService {
      *
      */
     public Integer updateHbvBriefFilling(HBV hbv);
+
+	/**
+	 * @Description:修改fsocg用户填写的信息
+	 * @param fsocg
+	 * @return
+	 * @author lin
+	 * @date 2017年2月13日 下午3:20:59
+	 */
+	public Integer updateFSocgFilling(FSocg fsocg);
 
     /**
      * 取出所有的hbv详细报告, 上线后可删

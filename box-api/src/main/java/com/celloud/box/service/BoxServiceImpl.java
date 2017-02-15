@@ -220,6 +220,7 @@ public class BoxServiceImpl implements BoxService {
 		        dataFile.getBatch());
 		// 没有绑定成功.txt文件
 		if (result == null) {
+            logger.info("绑定.txt文件失败, pubName = {}", pubName);
 			return;
 		}
 		String folder = UploadPath.getUploadingPath(dataFile.getUserId());
@@ -254,6 +255,7 @@ public class BoxServiceImpl implements BoxService {
 		if (!file.serialize()) {
 			return;
 		}
+        logger.info("存储.txt信息成功");
 		// 移动文件
 		finish(file);
 		// 运行split

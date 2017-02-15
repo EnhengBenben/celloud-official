@@ -1,0 +1,69 @@
+    <input type="hidden" name="id" value="${fsocg.id}" id="fsocgId" />
+    <input type="hidden" value="${fsocg.projectId}" id="_projectId">
+    <div style="display: none;" id="_userId">${fsocg.userId}</div>
+    <div style="display: none;" id="_appId">${fsocg.appId}</div>
+    <div style="display: none;" id="_companyId">${fsocg.companyId}</div>
+    <div class="wrapper">
+        <ul class="info mt5">
+            <li>姓名：<span><input name="baseInfo['name']" value="$!{fsocg.baseInfo.name}" type="text"></span></li>
+            <li>性别：<span id="_sex"><input type="radio" name="baseInfo['sex']" value="男" #if(${fsocg.baseInfo.sex}!='女')checked="checked"#end onclick="radioClick(0)" id="men">男<input type="radio" name="baseInfo['sex']" #if(${fsocg.baseInfo.sex}=='女')checked="checked"#end value="女" onclick="radioClick(1)" id="women">女</span></li>
+            <li>年龄：<span><input name="baseInfo['age']" value="$!{fsocg.baseInfo.age}" type="text"></span></li>
+            <li>病床号：<span><input name="baseInfo['bednumber']" value="$!{fsocg.baseInfo.bednumber}" type="text"></span></li>
+            <li>标本病理号：<span><input name="baseInfo['samplenumber']" value="$!{fsocg.baseInfo.samplenumber}" type="text"></span></li>
+            <li>标本状态：<span><input name="baseInfo['samplestatus']" value="$!{fsocg.baseInfo.samplestatus}" type="text"></span></li>
+            <li>标本类型：<span><input name="baseInfo['sampletype']" value="$!{fsocg.baseInfo.sampletype}" type="text"></span></li>
+            <li>送检医院：<span><input name="baseInfo['hospital']" value="$!{fsocg.baseInfo.hospital}" type="text"></span></li>
+            <li>送检医生：<span><input name="baseInfo['doctor']" value="$!{fsocg.baseInfo.doctor}" type="text"></span></li>
+            <li class="liWidth">临床诊断：<span><input class="inputWidth" name="baseInfo['clinical']" value="$!{fsocg.baseInfo.clinical}" type="text"></span></li>
+            <li class="liWidth">检测项目：<span>AKT1，BRAF，EGFR，ERBB2，KIT，KRAS，MET，NRAS，PDGFRA，PIK3CA基因检测</span></li>
+        </ul>
+    </div>
+    <hr class="hr-bold mt5" />
+    <h2 class="mt10">检测结果：</h2>
+	    <div class="m-box">
+			<h2>（DNA）突变位点 野生型 突变型 等位突变类型 突变率 质量 插入缺失类型 等位基因名 基因区
+			</h2>
+	    	#if($fsocg.dna.size() > 1)
+				<table class="table table-bordered table-condensed" style="width: 800px;">
+			        #foreach($info in $fsocg.dna)
+			        	<tr>
+				        	<td>$info[0]</td>
+						    <td class="maxwidth">
+					    		$!{info[1]}
+						    </td>
+						    <td>
+						    	$!{info[2]}
+						    </td>
+						    <td>$info[3]</td>
+						    <td>
+						    	$!{info[4]}
+						    </td>
+						    <td>$info[5]</td>
+						    <td>
+						    	$!{info[6]}
+							</td>
+						    <td>$info[8]</td>
+						    <td>$info[10]</td>
+					    </tr>
+			        #end
+			    </table>
+	        #end
+	        #if($fsocg.dna.size() == 1)
+	        	暂无结果
+	        #end
+			<h2>（RNA）融合COSF
+			</h2>
+	    	#if($fsocg.rna.size() > 1)
+				<table class="table table-bordered table-condensed" style="width: 800px;">
+			        #foreach($info in $fsocg.rna)
+			        	<tr>
+				        	<td>$info</td>
+					    </tr>
+			        #end
+			    </table>
+	        #end
+	        #if($fsocg.rna.size() <= 1)
+	        	暂无结果
+	        #end
+	    </div>
+    </div>

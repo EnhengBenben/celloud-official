@@ -1275,6 +1275,12 @@
 		  $scope.significances=rockyInfo.significances;
 	  });
   });
+  celloudApp.controller("fsocgDataReportController", function($scope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getFSocgInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(map){
+		  $scope.fsocg = map.fsocg;
+	  });
+  });
   /**
    * split数据报告controller
    */

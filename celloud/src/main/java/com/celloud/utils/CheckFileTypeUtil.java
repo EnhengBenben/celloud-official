@@ -32,6 +32,9 @@ public class CheckFileTypeUtil {
 		if (extName.equals(".tsv")) {
 			return FileFormat.TSV;
 		}
+		if (".xls".equals(extName) || ".xlsx".equals(extName)) {
+			return FileFormat.XLS;
+		}
 		String titleType = checkTitleType(fileName, dayPath);
 		if (titleType.startsWith(FileTitleType.ABI)
 				&& (".ab1".equals(extName.toLowerCase()) || ".abi".equals(extName.toLowerCase()))) {

@@ -1,0 +1,4 @@
+<hr/>
+联系方式： <span><input name="baseInfo['phone']" value="$!{fsocg.baseInfo.phone}" type="text"></span>
+<br>
+注：该结果只对检测标本负责，如有异议请在报告发出后三天内提出。
