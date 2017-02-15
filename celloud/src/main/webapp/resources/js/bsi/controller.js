@@ -166,7 +166,7 @@
 					var config = configs[index];
 				    var port = config.port||80;
 				    var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
-				    config = "https://"+config.intranetAddress+":"+port+context;
+				    config = "http://"+config.intranetAddress+":"+port+context;
 				    var response = $.ajax(config+"/box/alive",{async: false}).responseText;
 				    if(response && JSON.parse(response).success){
 				    	$scope.box=config;
@@ -325,7 +325,7 @@
 			    	$("#bsi-upload-modal").modal("hide");
 			    });
 			    uploader.bind("BeforeUpload", function(uploader, file) {
-			    	uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
+			    	uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':true});
 			    });
 			    uploader.bind("Error", function(uploader, error) {
 			       if(error.code=='-602'){

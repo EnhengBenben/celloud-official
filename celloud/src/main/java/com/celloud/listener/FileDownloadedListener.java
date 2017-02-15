@@ -34,7 +34,7 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
 				boxFile.getBatch(), fileFormat, boxFile.getMd5(), anotherName, boxFile.getTagId());
 		logger.info("文件更新状态{}:{}", result > 0 ? "成功" : "失败", boxFile.getPath());
 		if (boxFile.getTagId() != null && boxFile.getTagId().intValue() == 1) {
-            if (boxFile.getNeedSplit() != null && boxFile.isSplited()) {
+            if (boxFile.getNeedSplit() != null && boxFile.getNeedSplit().intValue() == 0 && boxFile.isSplited()) {
                 logger.info("文件已经运行完split，不需要再运行：{}", boxFile.getFileName());
                 return;
             }
