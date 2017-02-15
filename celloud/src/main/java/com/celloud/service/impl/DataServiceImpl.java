@@ -358,8 +358,10 @@ public class DataServiceImpl implements DataService {
 			data.setAnotherName(anotherName);
 		}
 		if (tagId == null) {
+            logger.info("根据fileId更新文件");
 			return updateDataInfoByFileId(data);
 		} else {
+            logger.info("根据tagId更新文件");
 			return updateDataInfoByFileIdAndTagId(data, tagId);
 		}
 	}
