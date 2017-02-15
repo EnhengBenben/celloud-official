@@ -74,7 +74,7 @@ public class BoxApiAction {
 			data.setUserId(userId);
 			data.setCreateDate(new Date());
 			data.setFileFormat(FileFormat.NONE);
-			data.setState(DataState.ACTIVE);
+            data.setState(DataState.DEELTED);
 			data.setBatch(batch);
             Integer id = dataService.addDataInfo(data);
 			String index_dataKey = DataUtil.getNewDataKey(id);
