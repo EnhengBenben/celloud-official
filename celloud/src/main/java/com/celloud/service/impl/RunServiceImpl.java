@@ -231,7 +231,7 @@ public class RunServiceImpl implements RunService {
 		if (!FileTools.checkPath(appPath)) {
 			new File(appPath).mkdirs();
 		}
-		if (dataList.get(0).getOssPath() != null) {
+        if (dataList.get(0).getOssPath() != null && appId != 118) {
 			appPath = UploadPathUtils.getObjectKeyByPath(UploadPathUtils.getOutPathInOSS(userId, appId));
 		}
 		for (Entry<String, Object> entry : dataFilePathMap.entrySet()) {
