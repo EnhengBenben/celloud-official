@@ -104,6 +104,7 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
+	    logger.info("根据tagId和fileId更新数据信息----前 " + data.toString());
 		Integer result = dataFileMapper.selectTagRelat(data.getFileId(), tagId);
 		if (result == null || result.intValue() == 0) {
 			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
@@ -120,7 +121,10 @@ public class DataServiceImpl implements DataService {
 		if (sample != null) {
 			dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
 		}
-		return dataFileMapper.updateDataInfoByFileId(data);
+		logger.info("根据tagId和fileId更新数据信息----后 " + data.toString());
+		int updateDataInfoByFileId = dataFileMapper.updateDataInfoByFileId(data);
+        logger.info("根据tagId和fileId更新数据信息----后 {}", updateDataInfoByFileId);
+        return updateDataInfoByFileId;
 	}
 
 	@Override
