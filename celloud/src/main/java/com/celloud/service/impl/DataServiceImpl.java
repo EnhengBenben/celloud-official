@@ -127,7 +127,10 @@ public class DataServiceImpl implements DataService {
 		if (sample != null) {
             logger.info("获取sample成功 sampleId = {}", sample.getSampleId());
             logger.info("dataFileMapper.addFileSampleRelat");
-			dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
+            Integer count = dataFileMapper.getFileSampleCount(data.getFileId(), sample.getSampleId());
+            if (count != null && count.intValue() <= 0) {
+                dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
+            }
 		}
 		logger.info("根据tagId和fileId更新数据信息----后 " + data.toString());
 		int updateDataInfoByFileId = dataFileMapper.updateDataInfoByFileId(data);
