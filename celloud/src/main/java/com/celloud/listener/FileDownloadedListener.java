@@ -30,7 +30,6 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
 		CheckFileTypeUtil util = new CheckFileTypeUtil();
 		File file = new File(boxFile.getPath());
 		int fileFormat = util.checkFileType(file.getName(), file.getParentFile().getAbsolutePath());
-        logger.info("文件下载后, 文件类型 = {}", fileFormat);
 		int result = service.updateFileInfo(boxFile.getFileId(), boxFile.getDataKey(), boxFile.getPath(),
 				boxFile.getBatch(), fileFormat, boxFile.getMd5(), anotherName, boxFile.getTagId());
         logger.info("result = {}", result);
