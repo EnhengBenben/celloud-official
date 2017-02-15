@@ -33,6 +33,7 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
         logger.info("文件下载后, 文件类型 = {}", fileFormat);
 		int result = service.updateFileInfo(boxFile.getFileId(), boxFile.getDataKey(), boxFile.getPath(),
 				boxFile.getBatch(), fileFormat, boxFile.getMd5(), anotherName, boxFile.getTagId());
+        logger.info("result = {}", result);
 		logger.info("文件更新状态{}:{}", result > 0 ? "成功" : "失败", boxFile.getPath());
 		if (boxFile.getTagId() != null && boxFile.getTagId().intValue() == 1) {
             if (boxFile.getNeedSplit() != null && boxFile.getNeedSplit().intValue() == 0 && boxFile.isSplited()) {
