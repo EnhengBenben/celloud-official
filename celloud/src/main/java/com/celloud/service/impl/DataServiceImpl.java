@@ -104,23 +104,38 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
+        logger.info("tagId = {}", tagId);
+	    logger.info("根据tagId和fileId更新数据信息----前 " + data.toString());
 		Integer result = dataFileMapper.selectTagRelat(data.getFileId(), tagId);
+        logger.info("dataFileMapper.selectTagRelat result = {}", result);
 		if (result == null || result.intValue() == 0) {
-			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+            Integer insertFileTagRelat = dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+            logger.info("insertFileTagRelat = {}", insertFileTagRelat);
 		}
 		DataFile data_s = dataFileMapper.selectByPrimaryKey(data.getFileId());
+        logger.info("ataFileMapper.selectByPrimaryKey  ------" + data_s);
 		Sample sample = null;
 		if (tagId.intValue() == 2) {
+            logger.info("进入tag==2");
 			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), "_")[0],
 					DataState.ACTIVE);
 		} else {
+            logger.info("进入tag!=2");
 			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0],
 					DataState.ACTIVE);
 		}
 		if (sample != null) {
-			dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
+            logger.info("获取sample成功 sampleId = {}", sample.getSampleId());
+            logger.info("dataFileMapper.addFileSampleRelat");
+            Integer count = dataFileMapper.getFileSampleCount(data.getFileId(), sample.getSampleId());
+            if (count != null && count.intValue() <= 0) {
+                dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
+            }
 		}
-		return dataFileMapper.updateDataInfoByFileId(data);
+		logger.info("根据tagId和fileId更新数据信息----后 " + data.toString());
+		int updateDataInfoByFileId = dataFileMapper.updateDataInfoByFileId(data);
+        logger.info("根据tagId和fileId更新数据信息----后 {}", updateDataInfoByFileId);
+        return updateDataInfoByFileId;
 	}
 
 	@Override
