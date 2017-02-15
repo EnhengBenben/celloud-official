@@ -41,14 +41,12 @@
 		    roles.push($(this).val());
 		  });
 			$("#submit").prop("disabled",true);
-			companyService.sendRegisterEmail($scope.email,$scope.kaptcha,apps,roles).
-			success(function(data, status){
+			companyService.sendRegisterEmail($scope.email,$scope.kaptcha,apps,roles).success(function(data, status){
 				 if(status == 204){
 					$("#company-addUser-modal").modal("hide");
 					$.alert("发送成功!");
 				}
-			}).
-			error(function(data, status){
+			}).error(function(data, status){
 				if(status == 400){
 					$scope.emailError = data.emailError;
 					$scope.kaptchaError = data.kaptchaError;
@@ -58,7 +56,32 @@
 				}
 			});
 		}
-		
+		$scope.sendCellphoneCaptcha = function(){
+		  console.log("sss");
+      var apps = new Array();
+      $("#userAddForm").find("input[name='cellphone-app']:checked").each(function(){
+        apps.push($(this).val());
+      });
+      var roles = new Array();
+      $("#userAddForm").find("input[name='cellphone-role']:checked").each(function(){
+        roles.push($(this).val());
+      });
+      $("#submit").prop("disabled",true);
+      companyService.sendCellphoneCaptcha($scope.email,$scope.captcha,apps,roles,$scope.truename).success(function(data, status){
+         if(status == 204){
+          $("#company-addUser-modal").modal("hide");
+          $.alert("发送成功!");
+        }
+      }).error(function(data, status){
+        if(status == 400){
+          $scope.cellphoneError = data.cellphoneError;
+          $scope.kaptchaError = data.kaptchaError;
+          $('#kaptchaImage').click();
+        }else if(status == 500){
+          
+        }
+      });
+    }
 		
 		$scope.toAddApp = function(userId){
 		  $scope.addApp.isShow = false;

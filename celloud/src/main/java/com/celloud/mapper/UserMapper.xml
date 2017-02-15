@@ -479,6 +479,9 @@
 	<select id="isEmailInUse" resultType="int">
 		select count(1) from tb_user where email=#{email} and user_id != #{userId}
 	</select>
+	<select id="isCellphoneInUse" resultType="int">
+	   select count(1) from tb_user where cellphone=#{cellphone}
+	</select>
 	<select id="getCompanyIdByUserId" resultType="java.lang.Integer">
 		select company_id from tb_user_company_relat where user_id =
 		#{userId}

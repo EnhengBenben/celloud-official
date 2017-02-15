@@ -30,5 +30,4 @@ public interface UserRegisterMapper {
      * @date 2016年1月28日 下午3:06:19
      */
     public Integer deleteUserRegisterInfo(@Param("email") String email);
-
 }

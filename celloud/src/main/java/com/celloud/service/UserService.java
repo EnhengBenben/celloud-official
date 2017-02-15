@@ -129,6 +129,16 @@ public interface UserService {
     public boolean isEmailInUse(String email, Integer userId);
 
     /**
+     * 校验手机号码是否存在
+     * 
+     * @param mobile
+     * @return
+     * @author leamo
+     * @date 2017年2月13日 下午3:46:15
+     */
+    public boolean isCellphoneInUse(String cellphone);
+
+    /**
      * 根据用户名称获取用户
      * 
      * @param username
@@ -280,6 +290,15 @@ public interface UserService {
      *            登录用户id
      */
 	public Boolean sendRegisterEmail(String email, Integer[] appIds, Integer[] roles);
+
+    /**
+     * 发送注册短信
+     * 
+     * @return
+     * @author leamo
+     * @date 2017年2月13日 下午4:46:29
+     */
+    public Boolean sendRegisterSms(String cellphone, String truename, Integer[] appIds, Integer[] roles);
 
     /**
      * 新增C端用户

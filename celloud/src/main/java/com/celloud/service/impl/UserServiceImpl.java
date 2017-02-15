@@ -16,6 +16,7 @@ import org.mongodb.morphia.Key;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.celloud.alidayu.AliDayuUtils;
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
@@ -35,6 +36,7 @@ import com.celloud.service.SecResourceService;
 import com.celloud.service.SecRoleService;
 import com.celloud.service.UserService;
 import com.celloud.utils.Base64Util;
+import com.celloud.utils.DataUtil;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.ResetPwdUtils;
 
@@ -155,6 +157,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean isCellphoneInUse(String cellphone) {
+        return userMapper.isCellphoneInUse(cellphone) > 0;
+    }
+
+    @Override
     public User getUserByName(String username) {
         return userMapper.getUserByName(username);
     }
@@ -236,6 +243,26 @@ public class UserServiceImpl implements UserService {
 						.set(EmailParams.USER_REGISTER.home.name(), ConstantsData.getContextUrl())
                         .set(EmailParams.USER_REGISTER.url.name(), ResetPwdUtils.userPath.replaceAll("path", param))),
                 email);
+        return count > 0;
+    }
+
+    @Override
+    public Boolean sendRegisterSms(String cellphone, String truename, Integer[] appIds, Integer[] roles) {
+        // 删除注册信息
+        userRegisterMapper.deleteUserRegisterInfo(cellphone);
+
+        // 发送验证码
+        String randomCode = DataUtil.getCapchaRandom();
+        String sendResult = AliDayuUtils.sendRegisterCaptcha(cellphone, randomCode);
+        Integer count = 0;
+
+        // 保存注册信息
+        if (!"error".equals(sendResult)) {
+            User loginUser = ConstantsData.getLoginUser();
+            Integer loginUserId = loginUser.getUserId();
+            count = userRegisterMapper.insertUserRegisterInfo(cellphone, randomCode, StringUtils.join(appIds, ","),
+                    StringUtils.join(roles, ","), loginUserId);
+        }
         return count > 0;
     }
 

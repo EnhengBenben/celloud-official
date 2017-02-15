@@ -40,6 +40,8 @@ public interface UserMapper {
 
     public Integer isEmailInUse(@Param("email") String email, @Param("userId") int userId);
 
+    public Integer isCellphoneInUse(@Param("cellphone") String cellphone);
+
     public User getUserByName(@Param("username") String username);
 
     public List<Integer> getUserIdsByName(@Param("usernames") List<String> usernames);
