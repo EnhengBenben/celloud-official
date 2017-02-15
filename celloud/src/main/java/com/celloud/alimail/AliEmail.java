@@ -28,7 +28,6 @@ public class AliEmail {
 	@PostConstruct
 	public void init() {
 		AliEmail.setAliEmail(this);
-		aliEmail.templateService = templateService;
 	}
 
 	/**
@@ -74,11 +73,11 @@ public class AliEmail {
 		return template;
 	}
 
-	public void setTemplate(EmailTemplate template) {
+	private void setTemplate(EmailTemplate template) {
 		aliEmail.template = template;
 	}
 
-	public static void setAliEmail(AliEmail aliEmail) {
+	private static void setAliEmail(AliEmail aliEmail) {
 		AliEmail.aliEmail = aliEmail;
 	}
 }
