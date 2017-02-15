@@ -30,6 +30,7 @@ public class BoxApiServiceImpl implements BoxApiService {
 	@Override
 	public Future<Boolean> downloadFromOSS(BoxFile file) {
 		boolean isDownloaded = downloadFromOSS(file.getObjectKey(), file.getPath(), file.getMd5());
+        logger.info("downloadFromOSS isDownloaded = {}, fileName = {}", isDownloaded, file.getFileName());
 		context.publishEvent(isDownloaded ? new FileDownloadedEvent(file) : new FileDownloadErrorEvent(file));
 		return new AsyncResult<Boolean>(isDownloaded);
 	}
