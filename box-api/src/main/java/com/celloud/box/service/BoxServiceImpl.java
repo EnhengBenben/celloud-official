@@ -206,12 +206,12 @@ public class BoxServiceImpl implements BoxService {
 			logger.info("split正在运行:{}", splitFile.toJSON());
 			return;
 		}
+        // 检查是否包含r1和r2, 如果包含, 根据storageName向celloud请求.txt文件信息
 		if (!splitFile.check()) {
 			splitFile.toFile();
 			logger.info("不能运行split:{}", splitFile.toJSON());
 			return;
 		}
-		// 检查是否包含r1和r2, 如果包含, 根据storageName向celloud请求.txt文件信息
 		String pubName = splitFile.getName();
 		String storageName = StringUtils.splitByWholeSeparator(splitFile.getName(), "_")[0];
 		String txtName = pubName + ".txt";
@@ -220,6 +220,7 @@ public class BoxServiceImpl implements BoxService {
 		        dataFile.getBatch());
 		// 没有绑定成功.txt文件
 		if (result == null) {
+            logger.info("绑定.txt文件失败, pubName = {}", pubName);
 			return;
 		}
 		String folder = UploadPath.getUploadingPath(dataFile.getUserId());
@@ -254,6 +255,7 @@ public class BoxServiceImpl implements BoxService {
 		if (!file.serialize()) {
 			return;
 		}
+        logger.info("存储.txt信息成功");
 		// 移动文件
 		finish(file);
 		// 运行split

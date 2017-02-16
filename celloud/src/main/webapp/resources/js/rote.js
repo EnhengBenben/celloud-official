@@ -1,4 +1,4 @@
-	$(document).ready(function() {
+$(document).ready(function(){
 	var swiper = new Swiper(".swiper-container", {
 			direction: 'vertical',
 			// 如果需要分页器
@@ -206,5 +206,7 @@
 			}
 
 		}
+		
+		//---------------
 	});
 })

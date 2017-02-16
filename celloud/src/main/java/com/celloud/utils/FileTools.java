@@ -40,6 +40,45 @@ import org.apache.log4j.Logger;
  */
 public class FileTools {
 	private static Logger log = Logger.getLogger(FileTools.class);
+	
+	/**
+	 * @Description:文件转list
+	 * @param file
+	 * @return
+	 * @author lin
+	 * @date 2017年2月8日 下午2:22:30
+	 */
+	public static List<String> filetoList(File file) {
+		if (!file.exists()) {
+			return null;
+		}
+		List<String> list = new ArrayList<String>();
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			System.out.println(file.getAbsolutePath() + "文件不存在");
+		}
+		if (br == null)
+			return null;
+		String line = null;
+		try {
+			while ((line = br.readLine()) != null) {
+				list.add(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null) {
+					br.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
 
 	/**
 	 * 文件重命名

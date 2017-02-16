@@ -41,7 +41,7 @@
     <include refid="Blob_Column_List" />
     from tb_email_template
     where method = #{method }
-    and id = #{id,jdbcType=INTEGER}
+    and state = #{state,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_email_template

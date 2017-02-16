@@ -74,11 +74,11 @@ public class BoxApiAction {
 			data.setUserId(userId);
 			data.setCreateDate(new Date());
 			data.setFileFormat(FileFormat.NONE);
-			data.setState(DataState.ACTIVE);
+            data.setState(DataState.DEELTED);
 			data.setBatch(batch);
-			Integer id = dataService.addDataInfo(data);
+            Integer id = dataService.addDataInfo(data);
 			String index_dataKey = DataUtil.getNewDataKey(id);
-			data.setFileId(id);
+            data.setFileId(id);
 			data.setDataKey(index_dataKey);
 			String path = new StringBuffer().append(PropertiesUtil.bigFilePath).append(userId).append("/")
 			        .append(DateUtil.getDateToString("yyyyMMdd")).append("/").append(index_dataKey + ".txt").toString();

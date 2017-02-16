@@ -80,7 +80,7 @@
 				    	<span ng-if="hbv.known['194_png'] != null">
 					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['194_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['194_10_png']);" >
 								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['194_png']}}" height="170px;" width="150px;">
-								<div style="width:120px;margin-left:30px;" ng-if="hbv.known['194_png'] != null && lowQcStr.indexOf('194') > -1">
+								<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="hbv.known['194_png'] != null && lowQcStr.indexOf('194') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 		                                                   该位点测序质量低，结果仅供参考
 		                        </div>
 							</a>
@@ -99,7 +99,7 @@
 				    	<span ng-if="hbv.known['204_png'] != null">
 					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
-								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('204') > -1">
+								<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('204') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 		                                                    该位点测序质量低，结果仅供参考
 		                        </div>
 							</a>
@@ -118,7 +118,7 @@
 				    	<span ng-if="hbv.known['181_png'] != null">
 					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['181_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['181_10_png']);" >
 								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['181_png']}}" height="170px;" width="150px;">
-								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('181') > -1">
+								<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('181') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 		                                                    该位点测序质量低，结果仅供参考
 		                        </div>
 							</a>
@@ -129,7 +129,7 @@
 						<span ng-if="hbv.known['236_png'] != null">
 							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['236_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['236_10_png']);" >
 								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['236_png']}}" height="170px;" width="150px;">
-								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('236') > -1">
+								<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('236') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 		                                                    该位点测序质量低，结果仅供参考
 		                        </div>
 							</a>
@@ -148,7 +148,7 @@
 					    <span ng-if="hbv.known['173_png'] != null">
 							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
 								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_png']}}" height="170px;" width="150px;">
-								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('173') > -1">
+								<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('173') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 		                                                    该位点测序质量低，结果仅供参考
 		                        </div>
 							</a>
@@ -159,7 +159,7 @@
 						<span ng-if="hbv.known['180_png'] != null">
 							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
 								<img style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
-								<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('180') > -1">
+								<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('180') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 		                                                    该位点测序质量低，结果仅供参考
 		                        </div>
 							</a>
@@ -170,7 +170,7 @@
 						<span ng-if="hbv.known['204_png'] != null">
 				    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 							<img style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('204') > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('204') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
                                                             该位点测序质量低，结果仅供参考
                             </div>
 						</a>
@@ -189,7 +189,7 @@
 				    	<span ng-if="hbv.known['173_png'] != null">
 						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['173_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['173_10_png']);" >
 							<img style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['173_png']}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('173') > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('173') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
@@ -200,7 +200,7 @@
 						<span ng-if="hbv.known['180_png'] != null">
 						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
 							<img style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('180') > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('180') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
@@ -211,7 +211,7 @@
 						<span ng-if="hbv.known['204_png'] != null">
 				    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 							<img style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('204') > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('204') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
@@ -230,7 +230,7 @@
 				    	<span ng-if="hbv.known['169_png'] != null">
 						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['169_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['169_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['169_png']}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('169') > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('169') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
@@ -241,7 +241,7 @@
 						<span ng-if="hbv.known['180_png'] != null">
 						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['180_png']}}" height="170px;" width="150px;">
-	                        <div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('180') > -1">
+	                        <div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('180') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
@@ -252,7 +252,7 @@
                         <span ng-if="hbv.known['184_png'] != null">
 						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['184_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['184_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['184_png']}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('184') > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('184') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
@@ -263,7 +263,7 @@
 						<span ng-if="hbv.known['202_png'] != null">
 						<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['202_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['202_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['202_png']}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('202') > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('202') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
@@ -274,7 +274,7 @@
 						<span ng-if="hbv.known['204_png'] != null">
 				    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('204') > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('204') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
@@ -285,7 +285,7 @@
 						<span ng-if="hbv.known['250_png'] != null">
 				    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['250_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['250_10_png']);" >
 							<img class="imgtop" style="padding-left: 30px;" name="imgSrc" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['250_png']}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf('250') > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf('250') > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>
@@ -305,7 +305,7 @@
 				    <div class="m-boxCon" id="otherPng">
 			    		<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img.replace('png','10.png')}}")>
 							<img class="imgtop" title="{{img}}" name="imgSrc" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img}}" height="170px;" width="150px;">
-							<div style="width:120px;margin-left:30px;" ng-if="lowQcStr.indexOf(img.split('_')[0]) > -1">
+							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf(img.split('_')[0]) > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
 	                        </div>
 						</a>

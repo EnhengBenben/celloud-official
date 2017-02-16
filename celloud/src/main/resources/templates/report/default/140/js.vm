@@ -1,0 +1,71 @@
+<script type="text/javascript">
+$(function(){
+    $("#print").on("click",function(){
+        var inputVal;
+        $("#printMain").find("input[type='text']").each(function(){
+            inputVal = $(this).val();
+            inputName = $(this).attr("name");
+            var cl = $(this).attr("class"); 
+            if(cl){
+                $(this).parent().html("<span tempName=\""+inputName+"\" name='print' class='"+cl+"'>"+inputVal+"</span>");
+            }else{
+                $(this).parent().html("<span tempName=\""+inputName+"\" name='print'>"+inputVal+"</span>");
+            }
+        });
+        var sex = $("input[type='radio']:checked").val();
+        var sexName = $("input[type='radio']").attr("name");
+        $("#_sex").html(sex);
+        window.print();
+        $("body").find("span[name='print']").each(function(){
+            inputVal = $(this).html();
+            inputName = $(this).attr("tempName");
+            var cl = $(this).attr("class");
+            if(cl){
+                $(this).parent().html("<input name=\""+inputName+"\" type='text' class='"+cl+"' value='"+inputVal+"'>");
+            }else{
+                $(this).parent().html("<input name=\""+inputName+"\" type='text' value='"+inputVal+"'>");
+            }
+        });
+        $("#_sex").html("<input type='radio' name=\""+sexName+"\" value='男'>男<input type='radio' name=\""+sexName+"\" value='女'>女");
+        $("input[type='radio'][value="+sex+"]").attr("checked",true);  
+    });
+    
+    $("#save").on("click",function(){
+        var url = window.location.href.split("print")[0];
+        url = url + "updateFSocgFilling";
+        $("table").find("input").each(function(){
+            $(this).attr("value",$(this).val());
+        });
+        $.post(url,$("#print-form").serialize(),function(result){
+            if(result==1){
+                $.lAlert("信息保存成功！");
+            }else{
+                $.lAlert("信息保存失败！");
+            }
+        });
+    });
+
+    $("#reset").on("click",function(){
+        var url = window.location.href.split("print")[0];
+        url = url + "updateFSocgFilling";
+        $.lConfirm('确认重置？', function() {
+            $.post(url,{id:$("#fsocgId").val()},function(result){
+                if(result==1){
+                    location=location ;
+                }else{
+                    $.lAlert("信息重置失败！");
+                }
+            });
+        });
+    });
+});
+function radioClick(num){
+    if(num==0){
+        $("#men").attr("checked","checked");
+        $("#women").removeAttr("checked");
+    }else{
+        $("#women").attr("checked","checked");
+        $("#men").removeAttr("checked");
+    }
+};
+</script>

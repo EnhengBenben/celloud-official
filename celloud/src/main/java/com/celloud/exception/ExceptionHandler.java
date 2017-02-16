@@ -16,6 +16,7 @@ import com.celloud.constants.ConstantsData;
 import com.celloud.mail.EmailUtils;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
+import com.celloud.utils.SlackBot;
 
 /**
  * 全局异常处理器
@@ -34,12 +35,12 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
 			Exception exception) {
 		String errorInfo = emailUtils.getError(request, exception);
-		AliEmail aliEmail = AliEmail.template(EmailType.EXCEPTION)
-				.substitutionVars(
-						AliSubstitution.sub().set(EmailParams.EXCEPTION.home.name(), ConstantsData.getContextUrl())
-								.set(EmailParams.EXCEPTION.context.name(), errorInfo));
+		AliEmail aliEmail = AliEmail.template(EmailType.EXCEPTION).substitutionVars(
+				AliSubstitution.sub().set(EmailParams.EXCEPTION.home.name(), ConstantsData.getContextUrl())
+						.set(EmailParams.EXCEPTION.context.name(), errorInfo));
 		aliEmailUtils.simpleSend(aliEmail, emailUtils.getErrorMailTo());
 		response.setHeader("exceptionstatus", "exception");
+		SlackBot.error(request, exception);
 		if (exception instanceof BusinessException) {
 			return new ModelAndView("errors/business").addObject("exception", exception);
 		}

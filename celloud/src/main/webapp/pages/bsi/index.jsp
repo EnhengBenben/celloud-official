@@ -5,22 +5,22 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>CelLoud 控制台</title>
-  <meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
-  <meta name="description" content="一站式高通量基因检测数据分析系统" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="bookmark">
-  <link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
-  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.3" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/css/upload.css" rel="stylesheet" type="text/css">
-  <link href="<%=request.getContextPath()%>/css/bsi_main.css?v=0.1" rel="stylesheet" type="text/css" />
-  <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
-  <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
-  <!-- [if It IE 9]>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>CelLoud 控制台</title>
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
+<meta name="description" content="一站式高通量基因检测数据分析系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="<%=request.getContextPath()%>/images/favicon.ico" rel="bookmark">
+<link href="<%=request.getContextPath()%>/images/favicon.ico" rel="shortcut icon">
+<link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/celloud.min.css?v=3.3.3" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/upload.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/bsi_main.css?v=0.1" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
+<!-- [if It IE 9]>
   <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]  -->
@@ -95,14 +95,10 @@
 								<input id="batch-info" type="text" placeholder="请输入标签" value="" />
 								<br>
 								<p>
-									<span>
-										添加数据标签，便于使用报告查询、数据管理、分类汇总等平台功能。
-										<span>
+									<span> 添加数据标签，便于使用报告查询、数据管理、分类汇总等平台功能。 </span>
 								</p>
 								<p>
-									<span>
-										示例：外科5月；ICU-9床；急诊发热
-										<span>
+									<span> 示例：外科5月；ICU-9床；急诊发热 </span>
 								</p>
 								<a id="next-step" class="btn" href="javascript:void(0)">下一步</a>
 							</div>
@@ -115,21 +111,21 @@
 										</div>
 									</div>
 								</div>
-<!-- 								<p> -->
-<!-- 									<span> -->
-<!-- 										<input id="need-split" type="checkbox" value="1" checked="checked"> -->
-<!-- 										需要数据拆分 (run: Split) -->
-<!-- 									</span> -->
-<!-- 								</p> -->
+								<!-- 								<p> -->
+								<!-- 									<span> -->
+								<!-- 										<input id="need-split" type="checkbox" value="1" checked="checked"> -->
+								<!-- 										需要数据拆分 (run: Split) -->
+								<!-- 									</span> -->
+								<!-- 								</p> -->
 								<p>
 									<span>&gt;目前支持 .tar.gz; .zip; 压缩过的fasta 格式的配对序列文件</span>
 								</p>
 								<p>
-									<span>&gt;文件命名规则为  (实验样本编号.tar.gz) 或 (文库编码_R1.tar.gz & 文库编码_R2.tar.gz )</span>
+									<span>&gt;文件命名规则为 (实验样本编号.tar.gz) 或 (文库编码_R1.tar.gz & 文库编码_R2.tar.gz )</span>
 								</p>
-<!-- 								<p> -->
-<!-- 									<span>&gt;数据拆分(Split) 选中时系统先按index文件对数据拆分并重命名.</span> -->
-<!-- 								</p> -->
+								<!-- 								<p> -->
+								<!-- 									<span>&gt;数据拆分(Split) 选中时系统先按index文件对数据拆分并重命名.</span> -->
+								<!-- 								</p> -->
 								<input id="tag-info" type="hidden" value="1" />
 								<a id="begin-upload" class="btn" href="javascript:void(0)">开始上传</a>
 							</div>
@@ -251,36 +247,37 @@
 			<!-- /.modal -->
 		</div>
 	</div>
-  </div>
-  <div id="fullbg"></div> 
-  <div id="pageContent" class="pageContent hide">
-    <a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
-    <img id="imageFullScreen" src="">
-  </div>
-  <script type="text/javascript">
+	</div>
+	<div id="fullbg"></div>
+	<div id="pageContent" class="pageContent hide">
+		<a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
+		<img id="imageFullScreen" src="">
+	</div>
+	<script type="text/javascript">
      window.CONTEXT_PATH = '<%=request.getContextPath()%>';
-     window.userId = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUserId() %>';
-  </script>
-  <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
-  <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
-  <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
-  <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js" type="text/javascript"></script>
-  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
-  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
-  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
-  <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
-  <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
-  <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
-  <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
-  <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.10.1"></script>
-  <script src="<%=request.getContextPath()%>/js/bsi_main.js?version=3.1.15" type="text/javascript"></script>
-  <script src="<%=request.getContextPath() %>/js/bsi_upload.js?version=3.3.3"></script>
-  <script src="<%=request.getContextPath()%>/js/charts.js"></script>
+     window.userId = '<%=((User) request.getSession().getAttribute("loginUserInSession")).getUserId()%>
+		';
+	</script>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/waveLoading.min.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
+	<script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
+	<script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js" type="text/javascript"></script>
+	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
+	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
+	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
+	<script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
+	<script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/jquery.ba-resize.min.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
+	<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
+	<script src="<%=request.getContextPath()%>/js/main.min.js?version=3.3.10.1"></script>
+	<script src="<%=request.getContextPath()%>/js/bsi_main.js?version=3.1.15" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/bsi_upload.js?version=3.3.3"></script>
+	<script src="<%=request.getContextPath()%>/js/charts.js"></script>
 </body>
 </html>

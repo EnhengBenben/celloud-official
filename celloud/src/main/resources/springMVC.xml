@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
          http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
@@ -14,8 +12,7 @@
 	<context:component-scan base-package="com.celloud" />
 	<mvc:annotation-driven />
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
-	<bean id="mappingJacksonHttpMessageConverter"
-		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
 				<value>text/html;charset=UTF-8</value>
@@ -24,8 +21,7 @@
 	</bean>
 	<!-- 允许异步运行的配置 -->
 	<task:annotation-driven executor="asyncExecutor" />
-	<task:executor id="asyncExecutor" pool-size="100-10000"
-		queue-capacity="10" />
+	<task:executor id="asyncExecutor" pool-size="100-10000" queue-capacity="10" />
 	<mvc:resources mapping="/js/**" location="/resources/js/" />
 	<mvc:resources mapping="/css/**" location="/resources/css/" />
 	<mvc:resources mapping="/less/**" location="/resources/less/" />
@@ -33,14 +29,12 @@
 	<mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<!--配置一个返回视图用的bean，下面的这个class整合了jstl技术 -->
-	<bean id="jspViewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="order" value="1" />
 		<property name="prefix" value="/pages/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<bean id="velocityViewResolver"
-		class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+	<bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
 		<property name="order" value="0" />
 		<property name="cache" value="true" />
 		<property name="contentType" value="text/html;charset=UTF-8" />
@@ -49,27 +43,25 @@
 		<property name="layoutUrl" value="layout.vm" />
 		<property name="screenContentKey" value="screen_content" />
 	</bean>
-	<bean id="velocityConfigurer"
-		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+	<bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
 		<!-- velocity配置文件路径 -->
 		<property name="configLocation" value="classpath:velocity.properties" />
 		<!-- velocity模板路径 -->
 		<property name="resourceLoaderPath" value="classpath:templates/report/" />
 	</bean>
 	<!-- 引入配置文件 -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:jdbc.properties</value>
+				<value>classpath:kafka.properties</value>
 				<value>classpath:mongodb.properties</value>
 				<value>classpath:email.properties</value>
 				<value>classpath:wechat.properties</value>
 			</list>
 		</property>
 	</bean>
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${driver}" />
 		<property name="url" value="${url}" />
 		<property name="username" value="${username}" />
@@ -107,8 +99,7 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	<!-- 文件上传配置 -->
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="utf-8"></property>
 		<property name="maxUploadSize" value="10485760000"></property>
 		<property name="maxInMemorySize" value="40960"></property>
@@ -135,8 +126,7 @@
 	<!-- 启动面向切面的自动代理 -->
 	<aop:aspectj-autoproxy />
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<!-- 拦截器方式配置事物 -->
@@ -158,10 +148,8 @@
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
-		<aop:pointcut id="transactionPointcut"
-			expression="execution(* com.celloud.service.*.*(..))" />
-		<aop:advisor pointcut-ref="transactionPointcut"
-			advice-ref="transactionAdvice" />
+		<aop:pointcut id="transactionPointcut" expression="execution(* com.celloud.service.*.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
 	</aop:config>
 
 	<bean id="mongoServerAddress" class="com.mongodb.ServerAddress">
@@ -169,18 +157,14 @@
 		<constructor-arg value="${mongo.port}" />
 	</bean>
 	<!-- 如果没有启用mongodb的用户验证，可不使用此配置 -->
-	<!-- <bean id="mongoCredential" class="com.mongodb.MongoCredential" factory-method="createCredential"> 
-		构造Credential的方法的参数，顺序不能改变 <constructor-arg value="${mongo.username}" /> <constructor-arg 
-		value="${mongo.database}" /> <constructor-arg value="${mongo.password}" /> 
-		</bean> -->
-	<bean id="mongoClient" class="com.mongodb.MongoClient"
-		destroy-method="close">
+	<!-- <bean id="mongoCredential" class="com.mongodb.MongoCredential" factory-method="createCredential"> 构造Credential的方法的参数，顺序不能改变 <constructor-arg value="${mongo.username}" /> <constructor-arg value="${mongo.database}" 
+		/> <constructor-arg value="${mongo.password}" /> </bean> -->
+	<bean id="mongoClient" class="com.mongodb.MongoClient" destroy-method="close">
 		<constructor-arg ref="mongoServerAddress" />
 		<!-- <constructor-arg> <list> <ref bean="mongoCredential" /> </list> </constructor-arg> -->
 	</bean>
 	<bean id="morphia" class="org.mongodb.morphia.Morphia" />
-	<bean id="datastore" class="org.mongodb.morphia.Datastore"
-		factory-bean="morphia" factory-method="createDatastore">
+	<bean id="datastore" class="org.mongodb.morphia.Datastore" factory-bean="morphia" factory-method="createDatastore">
 		<constructor-arg ref="mongoClient" />
 		<constructor-arg value="${mongo.database}" />
 	</bean>
@@ -217,8 +201,7 @@
 		<property name="qrcodeCreate" value="${wechat.qrcodeCreate}" />
 		<property name="qrcodeShow" value="${wechat.qrcodeShow}" />
 	</bean>
-	<bean id="velocityEngine"
-		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
 		<property name="velocityProperties">
 			<props>
 				<prop key="resource.loader">class</prop>
@@ -282,6 +265,57 @@
 	</bean>
 	<bean id="springTool" class="com.celloud.utils.SpringTool"></bean>
 	<bean id="taskUtils" class="com.celloud.utils.TaskUtils"></bean>
-	<bean id="messageUtils" class="com.celloud.message.MessageUtils"
-		scope="prototype"></bean>
+	<bean id="messageUtils" class="com.celloud.message.MessageUtils" scope="prototype"></bean>
+	<bean id="consumerConfig" class="com.celloud.common.mq.kafka.KafkaConsumerConfig">
+		<property name="servers" value="${public.bootstrap.servers}" />
+		<property name="workerNum" value="${consumer.workerNum}" />
+		<property name="autoCommit" value="${consumer.enable.auto.commit}" />
+		<property name="keyDeserializer" value="${consumer.key.deserializer}" />
+		<property name="valueDeserializer" value="${consumer.key.deserializer}" />
+		<property name="sessionTimeout" value="${consumer.session.timeout.ms}" />
+		<property name="props">
+			<map>
+				<entry key="fetch.max.wait.ms" value="${consumer.fetch.max.wait.ms}" />
+				<entry key="auto.commit.interval.ms" value="${consumer.auto.commit.interval.ms}" />
+			</map>
+		</property>
+	</bean>
+	<bean id="messageConsumer" class="com.celloud.common.mq.kafka.KafkaConsumerImpl" destroy-method="shutdown">
+		<property name="config" ref="consumerConfig" />
+		<property name="subscriptions">
+			<set>
+				<bean class="com.celloud.common.mq.entity.Subscription">
+					<property name="topic" value="user-message" />
+					<property name="expression" value="*" />
+					<property name="listener" value="com.celloud.message.UserMessageListener" />
+				</bean>
+			</set>
+		</property>
+	</bean>
+	<bean id="producerConfig" class="com.celloud.common.mq.kafka.KafkaProducerConfig">
+		<property name="servers" value="${public.bootstrap.servers}" />
+		<property name="keySerializer" value="${producer.key.serializer}" />
+		<property name="valueSerializer" value="${producer.value.serializer}" />
+		<property name="props">
+			<map>
+				<entry key="acks" value="${producer.acks}" />
+				<entry key="retries" value="${producer.retries}" />
+				<entry key="batch.size" value="${producer.batch.size}" />
+				<entry key="linger.ms" value="${producer.linger.ms}" />
+				<entry key="buffer.memory" value="${producer.buffer.memory}" />
+			</map>
+		</property>
+	</bean>
+	<bean id="messageProducer" class="com.celloud.common.mq.kafka.KafkaProducerImpl" destroy-method="shutdown" init-method="startup">
+		<property name="config" ref="producerConfig"></property>
+	</bean>
+	<bean id="producerUtil" class="com.celloud.common.mq.ProducerUtil">
+		<property name="producer" ref="messageProducer" />
+		<property name="topics">
+			<bean class="com.celloud.common.mq.entity.Topics">
+				<property name="userNotice" value="user-message" />
+				<property name="task" value="task-delivery" />
+			</bean>
+		</property>
+	</bean>
 </beans>

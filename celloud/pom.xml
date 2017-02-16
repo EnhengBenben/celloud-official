@@ -11,10 +11,10 @@
 	<name>celloud Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-	    <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
 		<!-- jsoup -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
@@ -35,11 +35,11 @@
 			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
-        <dependency>  
-            <groupId>net.glxn</groupId>  
-            <artifactId>qrgen</artifactId>  
-            <version>1.2</version>  
-        </dependency>  
+		<dependency>
+			<groupId>net.glxn</groupId>
+			<artifactId>qrgen</artifactId>
+			<version>1.2</version>
+		</dependency>
 		<!-- Spring核心依赖 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -266,10 +266,15 @@
 			<version>2.4.0</version>
 		</dependency>
 		<dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-sms</artifactId>
-            <version>3.0.0-rc1</version>
-        </dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-sms</artifactId>
+			<version>3.0.0-rc1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.celloud</groupId>
+			<artifactId>commons-mq</artifactId>
+			<version>1.0.3-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<profiles>
 		<profile>
@@ -327,6 +332,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>utf-8</encoding>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
