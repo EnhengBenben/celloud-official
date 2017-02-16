@@ -240,4 +240,14 @@ public class DataFile implements Serializable {
 		this.tagId = tagId;
 	}
 
+    @Override
+    public String toString() {
+        return "DataFile [fileId=" + fileId + ", userId=" + userId + ", dataKey=" + dataKey + ", fileName=" + fileName
+                + ", strain=" + strain + ", size=" + size + ", createDate=" + createDate + ", updateDate=" + updateDate
+                + ", path=" + path + ", state=" + state + ", fileFormat=" + fileFormat + ", sample=" + sample
+                + ", anotherName=" + anotherName + ", md5=" + md5 + ", dataTags=" + dataTags + ", batch=" + batch
+                + ", ossPath=" + ossPath + ", uploadState=" + uploadState + ", isRunning=" + isRunning + ", reportNum="
+                + reportNum + ", appId=" + appId + ", tagId=" + tagId + ", tagName=" + tagName + "]";
+    }
+
 }

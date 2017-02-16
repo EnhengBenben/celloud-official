@@ -48,8 +48,8 @@ public class ReportAPIAction {
 	 * @date 2016年11月3日下午3:09:10
 	 */
 	@ResponseBody
-	@RequestMapping(value = "getToken", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public ResponseEntity<Auth> getToken(@RequestParam("keyId") String keyId,
+	@RequestMapping(value = "token", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public ResponseEntity<Auth> token(@RequestParam("keyId") String keyId,
 			@RequestParam("keySecret") String keySecret) {
 		Auth auth = reportAPI.getToken(keyId, keySecret);
 		if (auth == null) {
@@ -80,9 +80,9 @@ public class ReportAPIAction {
 		return ResponseEntity.ok(auth);
 	}
 
-	@RequestMapping(value = "getRockyReport", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@RequestMapping(value = "rocky", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public Map<String, Object> getRockyReport(
+	public Map<String, Object> rocky(
 			@RequestParam("dataKey") String dataKey, @RequestParam("projectId") Integer projectId,
 			@RequestParam("appId") Integer appId) {
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
@@ -93,9 +93,9 @@ public class ReportAPIAction {
 		return context;
 	}
 
-	@RequestMapping(value = "getBSIReport", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@RequestMapping(value = "bsi", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public Map<String, Object> getBSIReport(@RequestParam("token") String token,
+	public Map<String, Object> bsi(@RequestParam("token") String token,
 			@RequestParam("dataKey") String dataKey) {
 		Map<String, Object> context = new HashMap<String, Object>();
 		Auth auth = authService.getByToken(token);

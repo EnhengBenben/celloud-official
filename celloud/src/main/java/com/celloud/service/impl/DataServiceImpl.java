@@ -106,7 +106,7 @@ public class DataServiceImpl implements DataService {
 	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
 		Integer result = dataFileMapper.selectTagRelat(data.getFileId(), tagId);
 		if (result == null || result.intValue() == 0) {
-			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+            dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
 		}
 		DataFile data_s = dataFileMapper.selectByPrimaryKey(data.getFileId());
 		Sample sample = null;
@@ -118,9 +118,13 @@ public class DataServiceImpl implements DataService {
 					DataState.ACTIVE);
 		}
 		if (sample != null) {
-			dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
+            Integer count = dataFileMapper.getFileSampleCount(data.getFileId(), sample.getSampleId());
+            if (count != null && count.intValue() <= 0) {
+                dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
+            }
 		}
-		return dataFileMapper.updateDataInfoByFileId(data);
+		int updateDataInfoByFileId = dataFileMapper.updateDataInfoByFileId(data);
+        return updateDataInfoByFileId;
 	}
 
 	@Override

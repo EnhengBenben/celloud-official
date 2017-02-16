@@ -42,7 +42,7 @@ public class ApiService {
 		params.put("pubName", pubName);
 		params.put("storageName", storageName);
 		params.put("batch", batch);
-		ApiResponse response = HttpClientUtil.post(api.getNewfile(), params);
+        ApiResponse response = HttpClientUtil.post(api.getSplittxt(), params);
 		if (response.isSuccess()) {
 			// 在盒子内生成txt文件
 			return response.getData();

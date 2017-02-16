@@ -35,21 +35,19 @@
 					<table class='table table-main'>
 						<tr ng-repeat="info in fsocg.dna">
 						    <td style="padding-left: 0px;">{{info[0]}}</td>
-						    <td style="padding-left: 0px;" title="{{info[1]}}">{{info[1].length > 3 ? info[1].substr(0,3) + '...' : info[1]}}</td>
+						    <td style="padding-left: 0px;" title="{{info[1]}}">{{info[1].length > 30 ? info[1].substr(0,30) + '...' : info[1]}}</td>
 						    <td style="padding-left: 0px;">{{info[2]}}</td>
 						    <td style="padding-left: 0px;">{{info[3]}}</td>
-						    <td style="padding-left: 0px;" width="40px;">{{info[4]}}</td>
+						    <td style="padding-left: 0px;">{{info[4]}}</td>
 						    <td style="padding-left: 0px;">{{info[5]}}</td>
-						    <td style="padding-left: 0px;" title="{{info[6]}}">{{info[6].length > 3 ? info[6].substr(0,3) + '...' : info[6]}}</td>
-						    <td style="padding-left: 0px;">{{info[7]}}</td>
+						    <td style="padding-left: 0px;">{{info[6]}}</td>
 						    <td style="padding-left: 0px;">{{info[8]}}</td>
-						    <td style="padding-left: 0px;" title="{{info[9]}}">{{info[9].length > 10 ? info[9].substr(0,10) + '...' : info[9]}}</td>
 						    <td style="padding-left: 0px;">{{info[10]}}</td>
 						</tr>
 					</table>
 				</div>
 				<div ng-if="fsocg.dna.length == 1">
-					<td>没有符合条件的结果</td>
+					<p>没有符合条件的结果</p>
 				</div>
 			</div>
 	     </section>
@@ -62,12 +60,12 @@
 				<div ng-if="fsocg.rna.length > 1">
 					<table class='table table-main'>
 						<tr ng-repeat="info in fsocg.rna">
-						    <td>{{info}}</td>
+						    <td class="left">{{info}}</td>
 						</tr>
 					</table>
 				</div>
 				<div ng-if="fsocg.rna.length == 1">
-					<td>没有符合条件的结果</td>
+					<p>没有符合条件的结果</p>
 				</div>
 			</div>
 	     </section>

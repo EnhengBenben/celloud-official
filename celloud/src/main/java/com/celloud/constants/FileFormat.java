@@ -16,4 +16,5 @@ public class FileFormat {
     // GZ格式文件
     public static final int GZ = 6;
     public static final int TSV = 7;
+	public static final int XLS = 8;
 }
