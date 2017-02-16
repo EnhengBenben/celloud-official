@@ -2,9 +2,9 @@
 <div class="wrapper">
     <ul class="footer">
         <li>检验者：<span><input name="baseInfo['inspectionPerson']" value="$!{fsocg.baseInfo.inspectionPerson}" type="text"></span></li>
-        <li class="right">送检日期：<span><input name="baseInfo['inspectionDate']" value="$!{fsocg.baseInfo.inspectionDate}" type="text"></span></li>
+        <li>送检日期：<span><input name="baseInfo['inspectionDate']" value="$!{fsocg.baseInfo.inspectionDate}" type="text"></span></li>
         <br>
         <li>审核者：<span><input name="baseInfo['examinePerson']" value="$!{fsocg.baseInfo.examinePerson}"  type="text"></span></li>
-        <li class="right">报告日期：<span><input name="baseInfo['reportDate']" value="$!{fsocg.baseInfo.reportDate}" type="text"></span></li>
+        <li>报告日期：<span><input name="baseInfo['reportDate']" value="$!{fsocg.baseInfo.reportDate}" type="text"></span></li>
     </ul>
 </div>

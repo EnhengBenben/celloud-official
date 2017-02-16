@@ -1,10 +1,13 @@
 package com.celloud.alimail;
 
-import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.springframework.stereotype.Component;
 
 import com.celloud.model.mysql.EmailTemplate;
+import com.celloud.service.EmailTemplateService;
 
 /**
  * 阿里云邮件构造方法
@@ -14,13 +17,17 @@ import com.celloud.model.mysql.EmailTemplate;
  * @author lin
  * @date 2016年7月7日 下午2:58:46
  */
+@Component
 public class AliEmail {
-	public static Map<String, EmailTemplate> templates;
+	@Resource
+	private EmailTemplateService templateService;
+	private static AliEmail aliEmail;
 	private EmailTemplate template;
 	private AliSubstitution.Sub sub;
 
-	public AliEmail(EmailTemplate template) {
-		this.template = template;
+	@PostConstruct
+	public void init() {
+		AliEmail.setAliEmail(this);
 	}
 
 	/**
@@ -32,7 +39,9 @@ public class AliEmail {
 	 * @date 2016年7月7日下午3:01:33
 	 */
 	public static AliEmail template(String method) {
-		return new AliEmail(templates.get(method));
+		EmailTemplate template = aliEmail.templateService.getTemplate(method);
+		aliEmail.setTemplate(template);
+		return aliEmail;
 	}
 
 	/**
@@ -44,8 +53,8 @@ public class AliEmail {
 	 * @date 2016年7月7日下午3:01:52
 	 */
 	public AliEmail substitutionVars(AliSubstitution.Sub sub) {
-		this.sub = sub;
-		return this;
+		aliEmail.sub = sub;
+		return aliEmail;
 	}
 
 	/**
@@ -57,10 +66,18 @@ public class AliEmail {
 	 */
 	public String getContext() {
 		StrSubstitutor ss = new StrSubstitutor(sub.get());
-		return ss.replace(this.template.getContext());
+		return ss.replace(aliEmail.template.getContext());
 	}
 
 	public EmailTemplate getTemplate() {
 		return template;
+	}
+
+	private void setTemplate(EmailTemplate template) {
+		aliEmail.template = template;
+	}
+
+	private static void setAliEmail(AliEmail aliEmail) {
+		AliEmail.aliEmail = aliEmail;
 	}
 }

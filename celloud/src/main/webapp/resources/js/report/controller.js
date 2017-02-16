@@ -581,6 +581,7 @@
 			    intro.setOption('showStepNumbers', false);
 			    intro.setOption('showButtons', true);
 			    intro.setOption('highlightClass', 'hbv-introjs-helperLayer');
+			    intro.setOption('tooltipClass', 'introjs-hbv-tooltip');
 			    intro.goToStep(2).start();
 			  }
 		  }
