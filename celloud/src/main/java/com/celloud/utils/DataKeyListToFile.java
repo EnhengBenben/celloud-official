@@ -1,6 +1,7 @@
 package com.celloud.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -8,6 +9,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.celloud.model.mysql.DataFile;
 
@@ -18,6 +22,7 @@ import com.celloud.model.mysql.DataFile;
  * @description :将dataKeyList转化成输入文件
  */
 public class DataKeyListToFile {
+	private static Logger logger = LoggerFactory.getLogger(DataKeyListToFile.class);
 	private static String datalist = PropertiesUtil.datalist;
 	public static final String DATA_REPORT_NUM = "dataReportNum";
 
@@ -181,6 +186,76 @@ public class DataKeyListToFile {
                 dataReportNum++;
                 canRunDataList.add(data_R1);
 			}
+		}
+		dataListFileMap.put(DATA_REPORT_NUM, dataReportNum.toString());
+		dataListFileMap.put("canRunDataList", canRunDataList);
+		return dataListFileMap;
+	}
+
+	/**
+	 * @Description:根据parameters配对dataList
+	 * @param dataList
+	 *            只支持长度为2的倍数
+	 * @param parameters
+	 *            只支持长度为2
+	 * @return
+	 * @author lin
+	 * @date 2017年2月9日 下午2:41:59
+	 */
+	public static Map<String, Object> pair(List<DataFile> dataList, String... parameters) {
+		// XXX 希望可以匹配任意多的配对条件
+		// 1.dataList长度需要是parameters长度的整数倍
+		// 2.parameters的规则要和APPID绑定，不能这样传入
+		// 3.while内部也许需要递归
+		if (dataList == null || parameters == null)
+			return null;
+		if (dataList.size() % 2 != 0) {
+			logger.error("运行数据有误！");
+			return null;
+		}
+		Integer pairNum = parameters.length;
+		if (pairNum != 2) {
+			logger.error("配对条件有误！");
+			return null;
+		}
+		Map<String, Object> dataListFileMap = new HashMap<>();
+		List<DataFile> canRunDataList = new ArrayList<>();
+		// 均排序
+		sortDataList(dataList);
+		Arrays.sort(parameters);
+
+		Iterator<DataFile> chk_it = dataList.iterator();
+		Integer dataReportNum = 0;
+		Integer listIndex = 0;
+		while (chk_it.hasNext()) {
+			listIndex++;
+			DataFile data_left = chk_it.next();
+			String fname_left = data_left.getFileName();
+			if (!fname_left.contains(parameters[0])) {
+				logger.error("文件名称不符合配对条件" + fname_left);
+				continue;
+			}
+			int index = fname_left.lastIndexOf(parameters[0]);
+			String commonPrefix = fname_left.substring(0, index);
+			// 满足条件：1. 后面还有至少1个数据
+			// 2. 后面的数据是以 “ 数据的公共部分+匹配条件2” 开始
+			if (dataList.size() >= (listIndex + 1)
+					&& dataList.get(listIndex).getFileName().startsWith(commonPrefix + parameters[1])) {
+				DataFile data_right = chk_it.next();
+				listIndex++;
+
+				StringBuffer dataFileInfo = new StringBuffer();
+				dataFileInfo.append(data_left.getOssPath() == null ? data_left.getPath() : data_left.getOssPath())
+						.append("\t")
+						.append(data_right.getOssPath() == null ? data_right.getPath() : data_right.getOssPath());
+				String dataListFile = getDataListFile(data_left.getOssPath() != null);
+				FileTools.appendWrite(dataListFile, dataFileInfo.toString());
+				dataListFileMap.put(data_left.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
+				dataReportNum++;
+				canRunDataList.add(data_left);
+				canRunDataList.add(data_right);
+			}
+
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, dataReportNum.toString());
 		dataListFileMap.put("canRunDataList", canRunDataList);

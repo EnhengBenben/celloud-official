@@ -215,22 +215,26 @@ public class ConstantsData {
 		return bioinfoServices == null ? null : bioinfoServices.getProperty(app);
 	}
 
-	public static void loadSystemProperties() {
-		systemProperties = loadProperties(Constants.SYSTEM_PROPERTIES_FILE);
+	public synchronized static Properties getSystemProperties() {
+		if (systemProperties == null) {
+			systemProperties = loadProperties(Constants.SYSTEM_PROPERTIES_FILE);
+		}
+		return systemProperties;
 	}
 
 	public static String getContextUrl() {
-		if (systemProperties == null) {
-			loadSystemProperties();
+		return getSystemProperties().getProperty("context_url");
+	}
+
+	private synchronized static Properties getFilePathProperties() {
+		if (filePathProperties == null) {
+			return loadProperties(Constants.FILEPATH_PROPERTIES_FILE);
 		}
-		return systemProperties.getProperty("context_url");
+		return filePathProperties;
 	}
 
 	public static String getOfsPath() {
-		if (filePathProperties == null) {
-			filePathProperties=loadProperties(Constants.FILEPATH_PROPERTIES_FILE);
-		}
-		String ofsPath = filePathProperties.getProperty("ossfsPath");
+		String ofsPath = getFilePathProperties().getProperty("ossfsPath");
 		if (ofsPath != null && !ofsPath.endsWith(File.separatorChar + "")) {
 			ofsPath = ofsPath + File.separatorChar;
 		}

@@ -386,4 +386,6 @@ public interface DataFileMapper {
      * @date 2016年11月29日 上午10:43:44
      */
     Long getSampleIdByDataKey(@Param("dataKey") String dataKey);
+
+    Integer getFileSampleCount(@Param("fileId") Integer fileId, @Param("sampleId") Integer sampleId);
 }

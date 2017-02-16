@@ -789,4 +789,9 @@
         FROM tb_file_sample_relat fs,tb_file f
         WHERE fs.file_id=f.file_id and f.data_key=#{dataKey}
     </select>
+    <select id="getFileSampleCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM tb_file_sample_relat
+        WHERE file_id = #{fileId}
+        AND sample_id = #{sampleId}
+    </select>
 </mapper>

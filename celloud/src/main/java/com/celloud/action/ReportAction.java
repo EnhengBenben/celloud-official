@@ -53,6 +53,7 @@ import com.celloud.model.mongo.CmpReport;
 import com.celloud.model.mongo.DPD;
 import com.celloud.model.mongo.DrugResistanceSite;
 import com.celloud.model.mongo.EGFR;
+import com.celloud.model.mongo.FSocg;
 import com.celloud.model.mongo.HBV;
 import com.celloud.model.mongo.HCV;
 import com.celloud.model.mongo.KRAS;
@@ -1329,6 +1330,16 @@ public class ReportAction {
         return map;
     }
 
+	@ActionLog(value = "查看FSocg数据报告", button = "数据报告")
+	@RequestMapping("getFSocgInfo")
+	@ResponseBody
+	public Map<String, Object> getFSocgInfo(String dataKey, Integer projectId, Integer appId) {
+		FSocg fsocg = reportService.getFSocgReport(dataKey, projectId, appId);
+		Map<String, Object> map = getCommonInfo(projectId);
+		map.put("fsocg", fsocg);
+		return map;
+	}
+
 	/**
 	 * 获取ABINJ的数据报告
 	 * 
@@ -2090,6 +2101,17 @@ public class ReportAction {
 		returnToVelocity(path, context, projectId);
 	}
 
+	@ActionLog(value = "打印FSocg数据报告", button = "打印数据报告")
+	@RequestMapping("printFSocg")
+	@ResponseBody
+	public void printFSocg(Integer appId, Integer projectId, String dataKey) {
+		FSocg fsocg = reportService.getFSocgReport(dataKey, projectId, appId);
+		String path = "default/" + appId + "/print.vm";
+		Map<String, Object> context = new HashMap<String, Object>();
+		context.put("fsocg", fsocg);
+		returnToVelocity(path, context, projectId);
+	}
+
 
 	/**
 	 * 
@@ -2656,6 +2678,14 @@ public class ReportAction {
 	@ResponseBody
 	public Integer updateHbvBriefFilling(HBV hbv) {
 		return reportService.updateHbvBriefFilling(hbv);
+	}
+
+	@ActionLog(value = "保存FSocg用户填写的信息", button = "修改数据报告")
+	@RequestMapping("updateFSocgFilling")
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public Integer updateFSocgFilling(FSocg fsocg) {
+		return reportService.updateFSocgFilling(fsocg);
 	}
 
 	/**
