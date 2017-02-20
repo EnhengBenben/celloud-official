@@ -6,41 +6,40 @@
       <li>样本管理</li>
       <li>样本信息采集</li>
     </ol>
-    <div class="content sample">
+    <div class="content sampleInfo">
         <div class="content-header clearfix">
-          <p><br><br></p>
           <div class="info-btn-group">
             <button ng-click="commitSampleInfo()" class="btn -low pull-right" ng-disabled="sampleInfoList.length <= 0">提交订单</button>
-            <button ng-click="toAddSample()" class="btn -low pull-right" style="margin-right: 10px;" >新建</button>
+            <button ng-click="toAddSample()" class="btn -low pull-right sampleInfo" >新建</button>
           </div>
         </div>
         <table class="table table-main">
           <thead>
               <tr>
-                  <th>样本编号</th>
-                  <th>检测项目</th>
-                  <th>样本类型</th>
-                  <th>姓名</th>
-                  <th>性别</th>
-                  <th>年龄</th>
-                  <th>联系电话</th>
-                  <th>身份证号</th>
-                  <th>更新时间</th>
-                  <th>操作</th>
+                  <th class="sampleInfo">样本编号</th>
+                  <th class="sampleInfo">检测项目</th>
+                  <th class="sampleInfo">样本类型</th>
+                  <th class="sampleInfo">姓名</th>
+                  <th class="sampleInfo">性别</th>
+                  <th class="sampleInfo">年龄</th>
+                  <th class="sampleInfo">联系电话</th>
+                  <th class="sampleInfo">身份证号</th>
+                  <th class="sampleInfo">更新时间</th>
+                  <th class="sampleInfo">操作</th>
               </tr>
           </thead>
           <tbody>
               <tr ng-repeat="sampleInfo in sampleInfoList" ng-if="sampleInfoList.length > 0">
-                  <td>{{sampleInfo.sampleName }}</td>
-                  <td>{{sampleInfo.tagName }}</td>
-                  <td>{{sampleInfo.type }}</td>
-                  <td>{{sampleInfo.name }}</td>
-                  <td>{{sampleInfo.gender == 0 ? '女' : '男' }}</td>
-                  <td>{{sampleInfo.age }}</td>
-                  <td>{{sampleInfo.tel }}</td>
-                  <td>{{sampleInfo.idCard }}</td>
-                  <td>{{sampleInfo.updateDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
-                  <td>
+                  <td class="sampleInfo">{{sampleInfo.sampleName }}</td>
+                  <td class="sampleInfo">{{sampleInfo.tagName }}</td>
+                  <td class="sampleInfo">{{sampleInfo.type }}</td>
+                  <td class="sampleInfo">{{sampleInfo.name }}</td>
+                  <td class="sampleInfo">{{sampleInfo.gender == 0 ? '女' : '男' }}</td>
+                  <td class="sampleInfo">{{sampleInfo.age }}</td>
+                  <td class="sampleInfo">{{sampleInfo.tel }}</td>
+                  <td class="sampleInfo">{{sampleInfo.idCard }}</td>
+                  <td class="sampleInfo">{{sampleInfo.updateDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td class="sampleInfo">
                       <a href="javascript:void(0)" ng-click="toEditSampleInfo(sampleInfo.sampleId)">
                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                       </a>
@@ -162,7 +161,7 @@
               </div>
               <div class="form-group">
                 <div class="text-center">
-		            <button type="reset" class="btn btn-cancel">重置</button>
+		            <button ng-click="addReset()" type="button" class="btn btn-cancel">重置</button>
 		            <button type="submit" class="btn" ng-disabled="addSampleInfoForm.$invalid" >提交</button>
 		        </div>
               </div>
@@ -277,7 +276,7 @@
               </div>
               <div class="form-group">
                 <div class="text-center">
-                    <button type="reset" class="btn btn-cancel">重置</button>
+                    <button ng-click="editReset();" type="button" class="btn btn-cancel">重置</button>
                     <button type="submit" class="btn" ng-disabled="updateSampleInfoForm.$invalid" >提交</button>
                 </div>
               </div>

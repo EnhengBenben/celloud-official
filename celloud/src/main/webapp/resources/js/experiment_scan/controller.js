@@ -46,6 +46,16 @@
       var sampleTypeObj2 = null;
 	  $scope.sample = {};
 	  $scope.patient = {};
+	  $scope.addReset = function(){
+		  $timeout(function(){
+			  $scope.sample = {};
+			  $scope.patient = {};
+			  productTagObj1.val(null).trigger("change");
+	    	  sampleTypeObj1.val(null).trigger("change");
+	    	  $scope.patient.gender = 1;
+	    	  $scope.patient.smoke = 1;
+		  });
+	  }
 	  $scope.changeSampleTypeByTag = function(flag){
 		  $scope.sampleType = null;
 		  var oldWidth = $("#sampleTypes"+flag+" .select2-search__field").attr("style");
@@ -91,7 +101,15 @@
     	  });
       }
       $scope.toAddSample = function(){
-    	  $("#addSampleInfoModal").modal("show");
+    	  $timeout(function(){
+    		  $scope.sample = {};
+    		  $scope.patient = {};
+    		  $scope.patient.gender = 1;
+    		  $scope.patient.smoke = 1;
+	    	  productTagObj1.val(null).trigger("change");
+			  sampleTypeObj1.val(null).trigger("change");
+	    	  $("#addSampleInfoModal").modal("show");
+    	  });
       }
 	  $scope.saveSample = function(){
 		  $scope.patient.gender = $("input[name='gender']:checked").val();
@@ -112,6 +130,37 @@
 		  			$.alert("服务器发生内部错误");
 		  		}
 		  	});
+	  }
+	  $scope.bakPatient = {};
+	  $scope.bakSample = {};
+	  $scope.editReset = function(){
+		  $timeout(function(){
+			  $scope.patient = angular.copy($scope.bakPatient);
+			  $scope.sample = angular.copy($scope.bakSample);
+			  productTagObj2.val([$scope.bakSample['tagId'],$scope.bakSample['tagName']]).trigger("change");
+			  $.ajax({
+			      url : "metadata/listMetadataToSelectByTagIdAndFlag",
+			      type : 'POST',
+			      data:{
+			          'tagId' : $scope.bakSample['tagId'],
+			          'flag' : 3
+			      },
+			      success : function(data) {
+			          // 从后台获取json数据
+			          var json = eval(data);
+			          $("#sampleType2").select2({
+			              data : json,
+			              tags : true,
+			              placeholder : '请选择样本类型',
+			              language : 'zh-CN',
+			              allowClear : true,
+			              maximumSelectionLength: 1
+			          });
+	    			  sampleTypeObj2.val([$scope.bakSample['type'],$scope.bakSample['type']]).trigger("change");
+			          $(".select2-search__field").css("height","20px");
+			      }
+			  });
+		  });
 	  }
       $scope.toEditSampleInfo = function(id){
     	  sampleInfoService.getSampleInfo(id)
@@ -134,6 +183,8 @@
     		  $scope.patient.smoke = sampleData['smoke'];
     		  $scope.patient.personalHistory = sampleData['personalHistory'];
     		  $scope.patient.familyHistory = sampleData['familyHistory'];
+    		  $scope.bakPatient = angular.copy($scope.patient);
+    		  $scope.bakSample = angular.copy($scope.sample);
     		  $("#editSampleInfoModal").modal("show");
     		  $timeout(function(){
     			  productTagObj2.val([sampleData['tagId'],sampleData['tagName']]).trigger("change");
