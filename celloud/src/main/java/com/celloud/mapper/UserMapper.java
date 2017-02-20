@@ -131,4 +131,5 @@ public interface UserMapper {
 
     public User findUserByCellphoneAndRole(@Param("cellphone") String cellphone,
             @Param("role") Integer role, @Param("state") Integer state);
+
 }

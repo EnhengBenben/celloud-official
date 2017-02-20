@@ -15,6 +15,8 @@ CREATE TABLE `tb_patient` (
   `smoke` int(1) DEFAULT NULL COMMENT '吸烟 0:否 1:是',
   `personal_history` varchar(255) DEFAULT NULL COMMENT '个人史',
   `family_history` varchar(255) DEFAULT NULL COMMENT '家族史',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

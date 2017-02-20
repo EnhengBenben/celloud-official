@@ -151,8 +151,7 @@ public interface SampleService {
      * @param tagId
      * @param patient
      */
-    public Boolean saveSampleInfoAndPatient(Integer userId, String sampleName, String type, Integer tagId,
-            Patient patient);
+    public Boolean saveSampleInfoAndPatient(Integer userId, Sample sample, Patient patient);
 
     /**
      * 修改样本实验状态
@@ -295,7 +294,7 @@ public interface SampleService {
      * @param loginUserId
      * @return
      */
-    List<Map<String, String>> listSampleAndPatient(Integer userId);
+    List<Map<String, String>> listSampleAndPatient(Integer userId, Integer isAdd, Integer orderId);
 
     /**
      * 
@@ -317,4 +316,39 @@ public interface SampleService {
      * @return
      */
     Map<String, String> getSampleAndPatient(Integer userId, Integer sampleId);
+
+    /**
+     * 
+     * @description 更新患者和样本信息
+     * @author miaoqi
+     * @date 2017年2月16日 上午10:55:59
+     * @param patient
+     * @param tagId
+     * @param type
+     * @return
+     */
+    Boolean updateSampleInfoAndPatient(Patient patient, Sample sample, Integer oldTagId);
+
+    /**
+     * 
+     * @description 提交样本信息订单, 返回订单主键
+     * @author miaoqi
+     * @date 2017年2月16日 下午2:01:58
+     * @param loginUserId
+     * @return
+     */
+    Integer commitSampleInfo(Integer userId);
+
+    Map<String, Object> getSampleInfoOrderInfo(Integer userId, Integer orderId);
+
+    /**
+     * 
+     * @description 向用户所属的大客户发送订单
+     * @author miaoqi
+     * @date 2017年2月17日 上午10:18:18
+     * @param userId
+     * @param orderId
+     * @return
+     */
+    Boolean sendOrderInfo(Integer userId, Integer orderId);
 }

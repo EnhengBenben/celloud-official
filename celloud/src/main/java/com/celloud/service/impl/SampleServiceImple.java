@@ -10,12 +10,16 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.celloud.alimail.AliEmailUtils;
+import com.celloud.config.Config;
 import com.celloud.constants.DataState;
+import com.celloud.constants.FileFormat;
 import com.celloud.constants.IconConstants;
 import com.celloud.constants.SampleTypes;
 import com.celloud.constants.TaskPeriod;
@@ -25,6 +29,7 @@ import com.celloud.mapper.SampleMapper;
 import com.celloud.mapper.SampleOrderMapper;
 import com.celloud.mapper.SampleStorageMapper;
 import com.celloud.mapper.TaskMapper;
+import com.celloud.model.mysql.CompanyEmail;
 import com.celloud.model.mysql.Metadata;
 import com.celloud.model.mysql.Patient;
 import com.celloud.model.mysql.Sample;
@@ -34,8 +39,11 @@ import com.celloud.model.mysql.SampleStorage;
 import com.celloud.model.mysql.Task;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.CompanyEmailService;
+import com.celloud.service.DataService;
 import com.celloud.service.PatientService;
 import com.celloud.service.SampleService;
+import com.celloud.service.UserService;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.QRCodeUtil;
@@ -51,19 +59,29 @@ public class SampleServiceImple implements SampleService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SampleServiceImple.class);
 	@Resource
-	SampleMapper sampleMapper;
+    private SampleMapper sampleMapper;
 	@Resource
-    SampleOrderMapper sampleOrderMapper;
+    private SampleOrderMapper sampleOrderMapper;
     @Resource
-    SampleLogMapper sampleLogMapper;
+    private SampleLogMapper sampleLogMapper;
     @Resource
-    SampleStorageMapper sampleStorageMapper;
+    private SampleStorageMapper sampleStorageMapper;
     @Resource
-	TaskMapper taskMapper;
+    private TaskMapper taskMapper;
     @Autowired
     private PatientService patientService;
     @Autowired
     private PatientMapper patientMapper;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CompanyEmailService companyEmailService;
+    @Autowired
+    private Config config;
+    @Autowired
+    private AliEmailUtils aliEmailUtil;
+    @Autowired
+    private DataService dataService;
 
 	@Override
 	public Integer saveSample(String sampleName, Integer userId) {
@@ -333,23 +351,21 @@ public class SampleServiceImple implements SampleService {
 	}
 
     @Override
-    public Boolean saveSampleInfoAndPatient(Integer userId, String sampleName, String type, Integer tagId,
-            Patient patient) {
+    public Boolean saveSampleInfoAndPatient(Integer userId, Sample sample, Patient patient) {
 
         // 增加患者信息
+        patient.setCreateDate(new Date());
+        patient.setUpdateDate(patient.getCreateDate());
         patientService.save(patient);
         if (patient.getId() == null) {
             LOGGER.info("增加患者信息失败");
             return false;
         }
         // 增加样本信息
-        Sample sample = new Sample();
-        sample.setSampleName(sampleName);
-        sample.setType(type);
         sample.setUserId(userId);
         sample.setPatientId(patient.getId());
         sampleMapper.insertSelective(sample);
-        sampleMapper.addSampleTagRelat(sample.getSampleId(), tagId);
+        sampleMapper.addSampleTagRelat(sample.getSampleId(), sample.getTagId());
         // 增加样本日志信息
         SampleLog sampleLog = new SampleLog();
         sampleLog.setUserId(userId);
@@ -359,8 +375,8 @@ public class SampleServiceImple implements SampleService {
     }
 
     @Override
-    public List<Map<String, String>> listSampleAndPatient(Integer userId) {
-        return sampleMapper.listSampleAndPatient(userId, SampleTypes.NOTADD, DataState.ACTIVE);
+    public List<Map<String, String>> listSampleAndPatient(Integer userId, Integer isAdd, Integer orderId) {
+        return sampleMapper.listSampleAndPatient(userId, orderId, isAdd, DataState.ACTIVE);
     }
 
     @Override
@@ -379,6 +395,169 @@ public class SampleServiceImple implements SampleService {
     @Override
     public Map<String, String> getSampleAndPatient(Integer userId, Integer sampleId) {
         return sampleMapper.getSampleAndPatient(userId, sampleId, SampleTypes.NOTADD, DataState.ACTIVE);
+    }
+
+    @Override
+    public Boolean updateSampleInfoAndPatient(Patient patient, Sample sample, Integer oldTagId) {
+        // 更新患者信息
+        patient.setCreateDate(null);
+        patient.setUpdateDate(new Date());
+        Integer count1 = patientMapper.updateByPrimaryKeySelective(patient);
+        // 更新样本信息
+        sample.setCreateDate(null);
+        sample.setUpdateDate(patient.getUpdateDate());
+        Integer count2 = sampleMapper.updateByPrimaryKeySelective(sample);
+        // 查找样本和产品标签的关系
+        Integer key = sampleMapper.getKeyBySampleIdAndTagId(sample.getSampleId(), oldTagId);
+        // 更新样本标签关系
+        Integer count3 = sampleMapper.updateSampleIdAndTagIdByKey(key, sample.getSampleId(), sample.getTagId());
+        return count1.intValue() == 1 && count2.intValue() == 1 && count3.intValue() == 1;
+    }
+
+    @Override
+    public Integer commitSampleInfo(Integer userId) {
+        List<Map<String, Object>> sampleInfos = sampleMapper.listSample(userId, SampleTypes.NOTADD,
+                DataState.ACTIVE);
+        if (sampleInfos == null || sampleInfos.size() <= 0) {
+            return 0;
+        }
+        List<Integer> sampleIds = new ArrayList<>();
+        for (Map<String, Object> sampleinfo : sampleInfos) {
+            sampleIds.add(Integer.parseInt(sampleinfo.get("sampleId").toString()));
+        }
+        // 添加样本寄送订单
+        SampleOrder so = new SampleOrder();
+        so.setUserId(userId);
+        sampleOrderMapper.insertSelective(so);
+        so.setOrderNo(DataUtil.getSampleOrderNo(so.getId()));
+        sampleOrderMapper.updateByPrimaryKeySelective(so);
+        // 修改sample状态为已添加，并添加订单编号
+        // sampleMapper.updateAddTypeById(sampleIds, SampleTypes.ISADD,
+        // so.getId());
+
+        for (int i = 0; i < sampleInfos.size(); i++) {
+            // 生成tb_file
+            Integer dataId = dataService.addFileInfo(userId, "");
+            // 文件datakey
+            String fileDataKey = DataUtil.getNewDataKey(dataId);
+            dataService.updateFileInfo(dataId, fileDataKey, null, "", FileFormat.NONE, null, null,
+                    (Integer) sampleInfos.get(i).get("tagId"));
+            // 生成tb_task
+            Task task = new Task();
+            task.setAppId(Integer.parseInt(sampleInfos.get(i).get("appId").toString()));
+            task.setUserId(userId);
+            task.setSampleId(Integer.parseInt(sampleInfos.get(i).get("sampleId").toString()));
+            task.setPeriod(TaskPeriod.RUNNING);
+            task.setCreateDate(new Date());
+            task.setUpdateDate(task.getCreateDate());
+            task.setDataKey(fileDataKey);
+            taskMapper.insertSelective(task);
+            // 生成tb_sample
+            Sample sample = new Sample();
+            sample.setSampleId(Integer.parseInt(sampleInfos.get(i).get("sampleId").toString()));
+            sample.setIsAdd(true);
+            sample.setOrderId(so.getId());
+            sample.setExperSampleName(
+                    DataUtil.getExperSampleNo(sampleInfos.get(i).get("type").toString(),
+                            Integer.parseInt(sampleInfos.get(i).get("sampleId").toString())));
+            sampleMapper.updateByPrimaryKeySelective(sample);
+        }
+        return so.getId();
+    }
+
+    @Override
+    public Map<String, Object> getSampleInfoOrderInfo(Integer userId, Integer orderId) {
+        Map<String, Object> map = new HashMap<>();
+        SampleOrder so = sampleOrderMapper.selectByPrimaryKey(orderId, userId);
+        List<Map<String, String>> sampleInfos = listSampleAndPatient(userId, SampleTypes.ISADD, orderId);
+        map.put("sampleOrder", so);
+        map.put("sampleInfos", sampleInfos);
+        QRCodeUtil.createQRCode(so.getOrderNo(), IconConstants.getTempPath() + so.getOrderNo() + ".png");
+        return map;
+    }
+
+    @Override
+    public Boolean sendOrderInfo(Integer userId, Integer orderId) {
+        // 获取大客户id
+        Integer companyId = userService.getCompanyIdByUserId(userId);
+        // 获取大客户的email
+        CompanyEmail queryCompanyEmail = new CompanyEmail();
+        queryCompanyEmail.setCompanyId(companyId);
+        // 判断当前的环境, 如果是正式环境, 获取正式人员邮箱
+        if (config.getPro()) { // 当前是正式环境
+            queryCompanyEmail.setStatus(1); // 正式人员
+        } else {
+            queryCompanyEmail.setStatus(0); // 测试人员
+        }
+        List<CompanyEmail> companyEmails = companyEmailService.selectBySelective(queryCompanyEmail);
+        if (companyEmails != null && companyEmails.size() > 0) {
+            // 根据orderId查询样本信息
+            Map<String, Object> sampleInfoOrderInfo = getSampleInfoOrderInfo(userId, orderId);
+            if (sampleInfoOrderInfo != null && sampleInfoOrderInfo.keySet().size() > 0) {
+                List<Map<String, String>> gesampleInfos = (List<Map<String, String>>) sampleInfoOrderInfo
+                        .get("sampleInfos");
+                SampleOrder sampleOrder = (SampleOrder) sampleInfoOrderInfo.get("sampleOrder");
+                String[] to = new String[companyEmails.size()];
+                for (int i = 0; i < companyEmails.size(); i++) {
+                    to[i] = companyEmails.get(i).getEmail();
+                }
+                String title = "样本寄送订单";
+                StringBuilder context = new StringBuilder("");
+                
+                
+                context.append("<html>");
+                context.append("<div style=\"margin-bottom:-15px;\">");
+                context.append(
+                        "<h4>订单编号：<span style=\"font-weight: normal;\">" + sampleOrder.getOrderNo() + "</span></h4>");
+                context.append("<h4>下单日期：<span style=\"font-weight: normal;\">"
+                        + new DateTime(sampleOrder.getCreateDate()).toString("yyyy-MM-dd HH:mm:ss") 
+                        + "</span></h4>");
+                context.append("</div>");
+                context.append("<div style=\"border-top:2px solid #a0a0a0;width:800px;padding-top:10px;\">");
+                context.append(
+                        "<table style=\"width:800px;border-top: 1px solid #c8c8c8;border-left: 1px solid #c8c8c8;border-right: 1px solid #c8c8c8;padding:0px 10px;border-collapse: collapse;\">");
+                context.append("<tr style=\"line-height:29px;\">");
+                context.append("<th style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">序号</th>");
+                context.append("<th style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">样本编号</th>");
+                context.append("<th style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">姓名</th>");
+                context.append("<th style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">性别</th>");
+                context.append("<th style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">年龄</th>");
+                context.append("<th style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">联系电话</th>");
+                context.append("<th style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">身份证号</th>");
+                context.append("<th style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">更新时间</th>");
+                context.append("</tr>");
+                
+                for (int i = 0; i < gesampleInfos.size(); i++) {
+                    context.append("<tr style=\"line-height:29px;\">");
+                    context.append("<td style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">"
+                            + (gesampleInfos.size() - i) + "</td>");
+                    context.append("<td style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">"
+                            + gesampleInfos.get(i).get("sampleName") + "</td>");
+                    context.append("<td style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">"
+                            + gesampleInfos.get(i).get("name") + "</td>");
+                    context.append("<td style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">"
+                            + ("0".equals(String.valueOf(gesampleInfos.get(i).get("gender"))) ? '女' : '男')
+                            + "</td>");
+                    context.append("<td style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">"
+                            + String.valueOf(gesampleInfos.get(i).get("age")) + "</td>");
+                    context.append("<td style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">"
+                            + String.valueOf(gesampleInfos.get(i).get("tel")) + "</td>");
+                    context.append("<td style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">"
+                            + String.valueOf(gesampleInfos.get(i).get("idCard")) + "</td>");
+                    context.append(
+                            "<td style=\"text-align:center;border-bottom: 1px solid #c8c8c8;\">"
+                                    + new DateTime(gesampleInfos.get(i).get("updateDate"))
+                                    .toString("yyyy-MM-dd HH:mm:ss") + "</td>");
+                    context.append("</tr>");
+                }
+                context.append("</table>");
+                context.append("</div>");
+                context.append("</html>");
+
+                aliEmailUtil.simpleSend(title, context.toString(), to);
+            }
+        }
+        return true;
     }
 
 }

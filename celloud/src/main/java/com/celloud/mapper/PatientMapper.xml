@@ -14,10 +14,12 @@
     <result column="smoke" property="smoke" jdbcType="INTEGER" />
     <result column="personal_history" property="personalHistory" jdbcType="VARCHAR" />
     <result column="family_history" property="familyHistory" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, tel, age, id_card, gender, weight, height, email, smoke, personal_history, 
-    family_history
+    family_history, create_date, update_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -33,15 +35,15 @@
     insert into tb_patient (id, name, tel, 
       age, id_card, gender, 
       weight, height, email, 
-      smoke, personal_history, family_history
-      )
+      smoke, personal_history, family_history, 
+      create_date, update_date)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
       #{age,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
       #{weight,jdbcType=VARCHAR}, #{height,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{smoke,jdbcType=INTEGER}, #{personalHistory,jdbcType=VARCHAR}, #{familyHistory,jdbcType=VARCHAR}
-      )
+      #{smoke,jdbcType=INTEGER}, #{personalHistory,jdbcType=VARCHAR}, #{familyHistory,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Patient" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.Patient" useGeneratedKeys="true" keyProperty="id" >
     insert into tb_patient
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -79,6 +81,12 @@
       </if>
       <if test="familyHistory != null" >
         family_history,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -118,6 +126,12 @@
       <if test="familyHistory != null" >
         #{familyHistory,jdbcType=VARCHAR},
       </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.Patient" >
@@ -156,6 +170,12 @@
       <if test="familyHistory != null" >
         family_history = #{familyHistory,jdbcType=VARCHAR},
       </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -171,7 +191,9 @@
       email = #{email,jdbcType=VARCHAR},
       smoke = #{smoke,jdbcType=INTEGER},
       personal_history = #{personalHistory,jdbcType=VARCHAR},
-      family_history = #{familyHistory,jdbcType=VARCHAR}
+      family_history = #{familyHistory,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

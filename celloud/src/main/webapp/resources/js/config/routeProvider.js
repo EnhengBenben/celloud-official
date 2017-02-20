@@ -225,6 +225,10 @@
       templateUrl: "pages/experiment_scan/order_detail.jsp",
       controller: "sampleOrderController"
     })
+    .when('/samplinginfo/order/:orderId',{
+      templateUrl: "pages/experiment_scan/order_info_detail.jsp",
+      controller: "sampleInfoOrderController"
+    })
     .when('/sampling/tracking',{
       templateUrl: "pages/experiment_scan/sample_tracking.jsp",
       controller: "sampleTrackingController"

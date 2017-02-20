@@ -92,8 +92,8 @@
                 <span class="info"></span>
               </label>
             </th>
-            <th>文件名称</th>
             <th>样品编号</th>
+            <th>文件名称</th>
             <th>产品标签</th>
             <th>数据标签</th>
             <th>更新时间</th>
@@ -109,8 +109,8 @@
                 <span class="info"></span>
               </label>
             </td>
-            <td>{{task.fileName}}</td>
             <td>{{task.sampleName}}</td>
+            <td>{{task.fileName}}</td>
             <td>{{task.tagName}}</td>
             <td>{{task.batch}}</td>
             <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>

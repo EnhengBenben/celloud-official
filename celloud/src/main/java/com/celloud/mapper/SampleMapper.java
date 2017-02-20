@@ -25,7 +25,11 @@ public interface SampleMapper {
             @Param("isAdd") Integer isAdd, @Param("state") Integer state,
             @Param("experState") Integer experState);
 
-    List<Map<String, String>> listSampleAndPatient(@Param("userId") Integer userId, @Param("isAdd") Integer isAdd,
+    List<Map<String, String>> listSampleAndPatient(@Param("userId") Integer userId, @Param("orderId") Integer orderId,
+            @Param("isAdd") Integer isAdd,
+            @Param("state") Integer state);
+
+    List<Map<String, Object>> listSample(@Param("userId") Integer userid, @Param("isAdd") Integer isAdd,
             @Param("state") Integer state);
 
     Sample selectByName(@Param("userId") Integer userId,
@@ -98,4 +102,28 @@ public interface SampleMapper {
     Map<String, String> getSampleAndPatient(@Param("userId") Integer userId, @Param("sampleId") Integer sampleId,
             @Param("isAdd") Integer isAdd,
             @Param("state") Integer state);
+
+    /**
+     * 
+     * @description 根据sampleId和tagId从关系表中查找主键
+     * @author miaoqi
+     * @date 2017年2月16日 上午11:31:36
+     * @param sampleId
+     * @param tagId
+     * @return
+     */
+    Integer getKeyBySampleIdAndTagId(@Param("sampleId") Integer sampleId, @Param("tagId") Integer tagId);
+
+    /**
+     * 
+     * @description 根据主键更新sampleId和tagId的关系
+     * @author miaoqi
+     * @date 2017年2月16日 上午11:35:42
+     * @param id
+     * @param sampleId
+     * @param tagId
+     * @return
+     */
+    Integer updateSampleIdAndTagIdByKey(@Param("id") Integer id, @Param("sampleId") Integer sampleId,
+            @Param("tagId") Integer tagId);
 }

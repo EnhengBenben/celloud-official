@@ -58,6 +58,7 @@
 				<value>classpath:mongodb.properties</value>
 				<value>classpath:email.properties</value>
 				<value>classpath:wechat.properties</value>
+				<value>classpath:env.properties</value>
 			</list>
 		</property>
 	</bean>

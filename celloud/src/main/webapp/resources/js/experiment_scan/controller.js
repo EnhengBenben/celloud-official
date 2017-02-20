@@ -96,7 +96,7 @@
 	  $scope.saveSample = function(){
 		  $scope.patient.gender = $("input[name='gender']:checked").val();
 		  $scope.patient.smoke = $("input[name='smoke']:checked").val();
-		  sampleInfoService.sampleInfos($scope.patient, $scope.sample.sampleName, $scope.productTag, $scope.sampleType)
+		  sampleInfoService.sampleInfos($scope.patient, $scope.sample, $scope.productTag, $scope.sampleType)
 		  	.success(function(data, status){
 		  		if (status == 201){
 		  			$("#addSampleInfoModal").modal("hide");
@@ -115,26 +115,33 @@
 	  }
       $scope.toEditSampleInfo = function(id){
     	  sampleInfoService.getSampleInfo(id)
-    	  .success(function(data){
-    		  $scope.sample.sampleId = data['sampleId'];
-    		  $scope.sample.sampleName = data['sampleName'];
-    		  $scope.sample.type = data['type'];
-    		  $scope.sample.createDate = data['createDate'];
-    		  $scope.sample.tagId = data['tagId'];
-    		  $scope.sample.tagName = data['tagName'];
-    		  $scope.patient.name = data['name'];
-    		  $scope.patient.gender = data['gender'];
-    		  $scope.patient.age = data['age'];
-    		  $scope.patient.tel = data['tel'];
-    		  $scope.patient.idCard = data['idCard'];
+    	  .success(function(sampleData){
+    		  $scope.sample.sampleId = sampleData['sampleId'];
+    		  $scope.sample.sampleName = sampleData['sampleName'];
+    		  $scope.sample.type = sampleData['type'];
+    		  $scope.sample.tagId = sampleData['tagId'];
+    		  $scope.sample.oldTagId = sampleData['tagId'];
+    		  $scope.sample.tagName = sampleData['tagName'];
+    		  $scope.patient.id = sampleData['id'];
+    		  $scope.patient.name = sampleData['name'];
+    		  $scope.patient.gender = sampleData['gender'];
+    		  $scope.patient.age = sampleData['age'];
+    		  $scope.patient.tel = sampleData['tel'];
+    		  $scope.patient.idCard = sampleData['idCard'];
+    		  $scope.patient.weight = sampleData['weight'];
+    		  $scope.patient.height = sampleData['height'];
+    		  $scope.patient.email = sampleData['email'];
+    		  $scope.patient.smoke = sampleData['smoke'];
+    		  $scope.patient.personalHistory = sampleData['personalHistory'];
+    		  $scope.patient.familyHistory = sampleData['familyHistory'];
     		  $("#editSampleInfoModal").modal("show");
     		  $timeout(function(){
-    			  productTagObj2.val([data['tagId'],data['tagName']]).trigger("change");
+    			  productTagObj2.val([sampleData['tagId'],sampleData['tagName']]).trigger("change");
     			  $.ajax({
     			      url : "metadata/listMetadataToSelectByTagIdAndFlag",
     			      type : 'POST',
     			      data:{
-    			          'tagId' : data['tagId'],
+    			          'tagId' : sampleData['tagId'],
     			          'flag' : 3
     			      },
     			      success : function(data) {
@@ -148,13 +155,34 @@
     			              allowClear : true,
     			              maximumSelectionLength: 1
     			          });
-    	    			  sampleTypeObj2.val([data['type'],data['type']]).trigger("change");
+    	    			  sampleTypeObj2.val([sampleData['type'],sampleData['type']]).trigger("change");
     			          $(".select2-search__field").css("height","20px");
     			      }
     			  });
     		  });
     	  });
       }
+      $scope.updateSample = function(){
+    	  $scope.patient.gender = $("input[name='gender']:checked").val();
+		  $scope.patient.smoke = $("input[name='smoke']:checked").val();
+		  sampleInfoService.updateSampleInfos($scope.patient, $scope.sample, $scope.productTag, $scope.sampleType)
+		  .success(function(data, status){
+			  if (status == 201){
+				  $("#editSampleInfoModal").modal("hide");
+		  		  $.alert("更新样本成功");
+		  		  $scope.listSampleInfo();
+		  	  }
+		  	  $scope.sampleName = "";
+		  })
+		  .error(function(data, status){
+		  	  if(status == 400){
+		  		  $.alert("您输入的信息有误!");
+		  	  }else if(status == 500){
+		  		  $.alert("服务器发生内部错误");
+		  	  }
+		  });
+      }
+      
       $("#addSampleInfoModal").on("hidden.bs.modal",function(e){
     	  $scope.sample = {};
     	  $scope.patient = {};
@@ -218,19 +246,21 @@
           allowClear : true,
           maximumSelectionLength: 1
       });
-  	  $(".select2-search__field").css("height","20px");
-      
-      $scope.listSampleInfo();
-//    $scope.commitSample = function(){
-//      samplingService.commitSample($scope.sampleList).success(function(data){
-//        if(data > 0){
-//          window.open(window.CONTEXT_PATH+"/sample_order.html#/sampling/order/"+data);
-//          refreshList();
-//        }else {
-//          $.alert("样本已提交");
-//        }
-//      })
-//    }
+      $scope.commitSampleInfo = function(){
+    	  sampleInfoService.commitSample()
+    	  .success(function(data, status){
+    		  if(status == 200){
+    			  var url = window.CONTEXT_PATH+"/sampleInfoOrder#/samplinginfo/order/"+data;
+    			  window.open(url);
+    			  $scope.listSampleInfo();
+    		  }
+    	  })
+    	  .error(function(data, status){
+    		  if(status == 500){
+    			  $.alert("服务器发生错误")
+    		  }
+    	  });
+      }
     $scope.removeSampleInfo = function(sampleId){
       sampleInfoService.removeSampleInfo(sampleId)
       .success(function(data, status){
@@ -245,6 +275,8 @@
 		  }
       })
     }
+    $(".select2-search__field").css("height","20px");
+    $scope.listSampleInfo();
   });
   
   celloudApp.controller("sampleTrackingController", function($scope, $routeParams, sampleTrackingService){
@@ -287,6 +319,33 @@
       window.print();
     };
   });
+  
+  celloudApp.controller("sampleInfoOrderController", function($scope, $routeParams, sampleInfoOrderService){
+	  sampleInfoOrderService.sampleInfoOrderInfo($routeParams.orderId)
+	    .success(function(data){
+	      if(data != null){
+	        $scope.sampleOrderInfo = data;
+	      }else {
+	        $.alert("样本已提交");
+	      }
+	    });
+	    $scope.print = function(){
+	      window.print();
+	    };
+	    $scope.send = function(){
+	    	sampleInfoOrderService.sendSampleInfoOrderInfo($routeParams.orderId)
+	    	.success(function(data, status){
+	    		if(status == 200){
+	    			$.alert("发送成功");
+	    		}
+	    	})
+	    	.error(function(data, status){
+	    		if(sttus == 500){
+	    			$.alert("服务器内部错误");
+	    		}
+	    	});
+	    }
+	  });
   
   celloudApp.controller("scanStorageController", function($scope, scanStorageService){
     $scope.pages = {

@@ -251,6 +251,11 @@ public class HomeAction {
 		return "experiment_scan/sampling_order";
 	}
 
+    @RequestMapping("sampleInfoOrder")
+    public String sampleInfoOrder() {
+        return "experiment_scan/sampling_info_order";
+    }
+
 	@RequestMapping("sessionTimeOut.html")
 	public String sessionTimeOut() {
 		return "user/user_timeout";

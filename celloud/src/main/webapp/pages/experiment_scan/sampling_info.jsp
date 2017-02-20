@@ -10,7 +10,7 @@
         <div class="content-header clearfix">
           <p><br><br></p>
           <div class="info-btn-group">
-            <button ng-click="commitSample()" class="btn -low pull-right" ng-disabled="sampleInfoList.length <= 0">提交订单</button>
+            <button ng-click="commitSampleInfo()" class="btn -low pull-right" ng-disabled="sampleInfoList.length <= 0">提交订单</button>
             <button ng-click="toAddSample()" class="btn -low pull-right" style="margin-right: 10px;" >新建</button>
           </div>
         </div>
@@ -39,7 +39,7 @@
                   <td>{{sampleInfo.age }}</td>
                   <td>{{sampleInfo.tel }}</td>
                   <td>{{sampleInfo.idCard }}</td>
-                  <td>{{sampleInfo.createDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td>{{sampleInfo.updateDate | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
                   <td>
                       <a href="javascript:void(0)" ng-click="toEditSampleInfo(sampleInfo.sampleId)">
                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -47,7 +47,6 @@
                       <a href="javascript:void(0)" ng-click="removeSampleInfo(sampleInfo.sampleId)">
                           <i class="fa fa-times-circle" aria-hidden="true"></i>
                       </a>
-                  </td>
                   </td>
               </tr>
               <tr ng-if="sampleInfoList.length == 0">
@@ -65,12 +64,12 @@
           <h4 class="modal-title">请填写样本基本信息</h4>
         </div>
         <div class="modal-body form-modal">
-          <form class="form-horizontal info-form" name="sampleInfoForm" id="editSampleInfoForm" ng-submit="saveSample()">
+          <form class="form-horizontal info-form" name="addSampleInfoForm" id="addSampleInfoForm" ng-submit="saveSample()">
               <div class="form-group">
                 <div class="control-label form-label col-xs-2 md10"><font></font></div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">样品编号：*</div>
+                <div class="control-label form-label col-xs-2 md10">样品编号：<span class="form-star">*</span></div>
                 <div class="col-xs-5 md26">
                     <input type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
                 </div>
@@ -150,13 +149,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">个&nbsp;人&nbsp;&nbsp;史：</div>
+                <div class="control-label form-label col-xs-2 md10">个&ensp;人&ensp;史：</div>
                 <div class="col-xs-11" style="max-width: 620px;">
                     <input type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">家族史：</div>
+                <div class="control-label form-label col-xs-2 md10">家&ensp;族&ensp;史：</div>
                 <div class="col-xs-11" style="max-width: 620px;">
                     <input type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
                 </div>
@@ -164,7 +163,7 @@
               <div class="form-group">
                 <div class="text-center">
 		            <button type="reset" class="btn btn-cancel">重置</button>
-		            <button type="submit" class="btn" ng-disabled="sampleInfoForm.$invalid" >提交</button>
+		            <button type="submit" class="btn" ng-disabled="addSampleInfoForm.$invalid" >提交</button>
 		        </div>
               </div>
           </form>
@@ -180,7 +179,7 @@
           <h4 class="modal-title">请填写样本基本信息</h4>
         </div>
         <div class="modal-body form-modal">
-          <form class="form-horizontal info-form" name="sampleInfoForm" id="sampleInfoForm" ng-submit="editSample()">
+          <form class="form-horizontal info-form" name="updateSampleInfoForm" id="updateSampleInfoForm" ng-submit="updateSample()">
               <div class="form-group">
                 <div class="control-label form-label col-xs-2 md10"><font></font></div>
               </div>
@@ -265,13 +264,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">个&nbsp;人&nbsp;&nbsp;史：</div>
+                <div class="control-label form-label col-xs-2 md10">个&ensp;人&ensp;史：</div>
                 <div class="col-xs-11" style="max-width: 620px;">
                     <input type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">家族史：</div>
+                <div class="control-label form-label col-xs-2 md10">家&ensp;族&ensp;史：</div>
                 <div class="col-xs-11" style="max-width: 620px;">
                     <input type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
                 </div>
@@ -279,7 +278,7 @@
               <div class="form-group">
                 <div class="text-center">
                     <button type="reset" class="btn btn-cancel">重置</button>
-                    <button type="submit" class="btn" ng-disabled="sampleInfoForm.$invalid" >提交</button>
+                    <button type="submit" class="btn" ng-disabled="updateSampleInfoForm.$invalid" >提交</button>
                 </div>
               </div>
           </form>

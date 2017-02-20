@@ -1,15 +1,10 @@
 package com.celloud.model.mysql;
 
-/**
- * 
- * @description 患者信息表
- * @author miaoqi
- * @date 2017年2月10日 下午2:31:06
- */
-public class Patient {
+import java.util.Date;
 
+public class Patient {
     /**
-     * 主键列
+     * 主键
      */
     private Integer id;
 
@@ -49,12 +44,12 @@ public class Patient {
     private String height;
 
     /**
-     * 电子邮箱
+     * 邮箱
      */
     private String email;
 
     /**
-     * 是否吸烟: 0:否 1:是
+     * 吸烟 0:否 1:是
      */
     private Integer smoke;
 
@@ -67,6 +62,16 @@ public class Patient {
      * 家族史
      */
     private String familyHistory;
+
+    /**
+     * 创建时间
+     */
+    private Date createDate;
+
+    /**
+     * 更新时间
+     */
+    private Date updateDate;
 
     public Integer getId() {
         return id;
@@ -162,5 +167,21 @@ public class Patient {
 
     public void setFamilyHistory(String familyHistory) {
         this.familyHistory = familyHistory == null ? null : familyHistory.trim();
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

@@ -187,9 +187,10 @@
   </select>
   <select id="listSampleAndPatient" resultType="java.util.Map">
     SELECT s.sample_id sampleId, s.sample_name sampleName, s.type type, p.name name, p.gender gender,
-    p.age age, p.tel tel, p.id_card idCard, s.create_date createDate, t.tag_name tagName
+    p.age age, p.tel tel, p.id_card idCard, s.update_date updateDate, t.tag_name tagName
     FROM tb_sample s, tb_patient p, tb_sample_tag_relat str, tb_tag t
     WHERE s.user_id = #{userId}
+    AND s.order_id = #{orderId}
     AND s.is_add = #{isAdd}
     AND s.state = #{state}
     AND s.patient_id = p.id
@@ -198,7 +199,9 @@
   </select>
   <select id="getSampleAndPatient" resultType="java.util.Map">
     SELECT s.sample_id sampleId, s.sample_name sampleName, s.type type, p.name name, p.gender gender,
-    p.age age, p.tel tel, p.id_card idCard, s.create_date createDate, t.tag_name tagName, t.tag_id tagId
+    p.age age, p.tel tel, p.id_card idCard, s.create_date createDate, t.tag_name tagName, t.tag_id tagId,
+    p.weight weight, p.height height, p.email email, p.smoke smoke, p.personal_history personalHistory,
+    p.family_history familyHistory, p.id id
     FROM tb_sample s, tb_patient p, tb_sample_tag_relat str, tb_tag t
     WHERE s.user_id = #{userId}
     AND s.is_add = #{isAdd}
@@ -304,5 +307,27 @@
     <foreach collection="ids" item="id" open="(" close=")" separator=",">
         #{id}
     </foreach>
+  </select>
+  <select id="getKeyBySampleIdAndTagId" resultType="java.lang.Integer">
+    SELECT id
+    FROM tb_sample_tag_relat
+    WHERE sample_id = #{sampleId}
+    AND tag_id = #{tagId}
+  </select>
+  <update id="updateSampleIdAndTagIdByKey">
+    UPDATE tb_sample_tag_relat
+    SET sample_id = #{sampleId},
+    tag_id = #{tagId}
+    WHERE id = #{id}
+  </update>
+  <select id="listSample" resultType="java.util.Map">
+    SELECT s.sample_id sampleId, atr.app_id appId, s.type type, str.tag_id tagId
+    FROM tb_sample s, tb_sample_tag_relat str, tb_app_tag_relat atr
+    WHERE s.user_id = #{userId}
+    AND s.sample_id = str.sample_id
+    AND str.tag_id = atr.tag_id
+    AND s.is_add = #{isAdd}
+    AND s.state = #{state}
+    ORDER BY s.sample_id ASC
   </select>
 </mapper>
