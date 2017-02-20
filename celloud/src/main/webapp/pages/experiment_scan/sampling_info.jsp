@@ -56,45 +56,45 @@
         </table>
 	</div>
 </div>
-<div id="addSampleInfoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" style="width:800px;">
+<div id="addSampleInfoModal" class="modal fade sampleInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
           <h4 class="modal-title">请填写样本基本信息</h4>
         </div>
         <div class="modal-body form-modal">
-          <form class="form-horizontal info-form" name="addSampleInfoForm" id="addSampleInfoForm" ng-submit="saveSample()">
+          <form class="form-horizontal info-form sampleInfo" name="addSampleInfoForm" id="addSampleInfoForm" ng-submit="saveSample()">
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10"><font></font></div>
+                <div class="control-label form-label"><font></font></div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">样品编号：<span class="form-star">*</span></div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label">样品编号：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
                 </div>
-                <div class="control-label form-label col-xs-2 md10">姓&emsp;&emsp;名：*</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label second">姓&emsp;&emsp;名：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="name" ng-model="patient.name" placeholder="姓名" maxlength="50" required>
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">手&emsp;&emsp;机：*</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label">手&emsp;&emsp;机：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="tel" ng-model="patient.tel" placeholder="手机" maxlength="11" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required>
                 </div>
-                <div class="control-label form-label col-xs-2 md10">年&emsp;&emsp;龄：*</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label second">年&emsp;&emsp;龄：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">身份证号：*</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label">身份证号：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" maxlength="18" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" required>
                 </div>
-                <div class="control-label form-label col-xs-2 md10">性&emsp;&emsp;别：*</div>
-                <div class="col-xs-5 form-group-content md26">
+                <div class="control-label form-label mr10 second">性&emsp;&emsp;别：<span class="sample-star">*</span></div>
+                <div class="form-group-content">
                    <label class="radio-lable">
                      <input class="radio" type="radio" value="1" ng-model="patient.gender" name="gender" ng-checked="true">
                      <span class="info"></span>
@@ -108,34 +108,34 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">检测类型：*</div>
-                <div class="col-xs-5 md26">
-                    <select ng-model="productTag" class="form-control" id="productTag1" name="productTag" multiple="multiple" style="width: 100%;" ng-change="changeSampleTypeByTag(1)" required>
+                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
+                <div>
+                    <select ng-model="productTag" class="form-control" id="productTag1" name="productTag" multiple="multiple" ng-change="changeSampleTypeByTag(1)" required>
                     </select>
                 </div>
-                <div class="control-label form-label col-xs-2 md10">样本类型：*</div>
-                <div class="col-xs-5 md26" id="sampleTypes1">
-                    <select ng-model="sampleType" class="form-control" id="sampleType1" name="sampleType" multiple="multiple" style="width: 100%;" required>
+                <div class="control-label form-label mr10 second">样本类型：<span class="sample-star">*</span></div>
+                <div id="sampleTypes1">
+                    <select ng-model="sampleType" class="form-control" id="sampleType1" name="sampleType" multiple="multiple" required>
                     </select>
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">体&emsp;&emsp;重：</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label mw76">体&emsp;&emsp;重：</div>
+                <div>
                     <input type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
                 </div>
-                <div class="control-label form-label col-xs-2 md10">身&emsp;&emsp;高：</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label second mw76">身&emsp;&emsp;高：</div>
+                <div>
                     <input type="text" name="height" placeholder="身高" ng-model="patient.height" maxlength="10">
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">邮&emsp;&emsp;箱：</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label mw76">邮&emsp;&emsp;箱：</div>
+                <div>
                     <input type="text" name="email" placeholder="电子邮箱" ng-model="patient.email" maxlength="50">
                 </div>
-                <div class="control-label form-label col-xs-2 md10">是否吸烟：</div>
-                <div class="col-xs-5 form-group-content md26">
+                <div class="control-label form-label mw76 mr10 second">是否吸烟：</div>
+                <div class="form-group-content">
                    <label class="radio-lable">
                      <input class="radio" type="radio" value="1" ng-model="patient.smoke" name="smoke"  ng-checked="true">
                      <span class="info"></span>
@@ -149,15 +149,15 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">个&ensp;人&ensp;史：</div>
-                <div class="col-xs-11" style="max-width: 620px;">
-                    <input type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
+                <div class="control-label form-label mw76">个&ensp;人&ensp;史：</div>
+                <div>
+                    <input class="mw552" type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">家&ensp;族&ensp;史：</div>
-                <div class="col-xs-11" style="max-width: 620px;">
-                    <input type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
+                <div class="control-label form-label mw76">家&ensp;族&ensp;史：</div>
+                <div>
+                    <input class="mw552" type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
                 </div>
               </div>
               <div class="form-group">
@@ -171,8 +171,8 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div id="editSampleInfoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" style="width:800px;">
+<div id="editSampleInfoModal" class="modal fade sampleInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
@@ -184,32 +184,32 @@
                 <div class="control-label form-label col-xs-2 md10"><font></font></div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">样品编号：*</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label">样品编号：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
                 </div>
-                <div class="control-label form-label col-xs-2 md10">姓&emsp;&emsp;名：*</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label mw76 second">姓&emsp;&emsp;名：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="name" ng-model="patient.name" placeholder="姓名" maxlength="50" required>
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">手&emsp;&emsp;机：*</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label mw76">手&emsp;&emsp;机：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="tel" ng-model="patient.tel" placeholder="手机" maxlength="11" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required>
                 </div>
-                <div class="control-label form-label col-xs-2 md10">年&emsp;&emsp;龄：*</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label mw76 second">年&emsp;&emsp;龄：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">身份证号：*</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label">身份证号：<span class="sample-star">*</span></div>
+                <div>
                     <input type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" maxlength="18" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" required>
                 </div>
-                <div class="control-label form-label col-xs-2 md10">性&emsp;&emsp;别：*</div>
-                <div class="col-xs-5 form-group-content md26">
+                <div class="control-label form-label second mr10 mw76">性&emsp;&emsp;别：<span class="sample-star">*</span></div>
+                <div class="form-group-content">
                    <label class="radio-lable">
                      <input class="radio" type="radio" value="1" ng-model="patient.gender" name="gender" ng-checked="true">
                      <span class="info"></span>
@@ -223,34 +223,34 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">检测类型：*</div>
-                <div class="col-xs-5 md26">
-                    <select ng-model="productTag" class="form-control" id="productTag2" name="productTag" multiple="multiple" style="width: 100%;" ng-change="changeSampleTypeByTag(2)" required>
+                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
+                <div>
+                    <select ng-model="productTag" class="form-control" id="productTag2" name="productTag" multiple="multiple" ng-change="changeSampleTypeByTag(2)" required>
                     </select>
                 </div>
-                <div class="control-label form-label col-xs-2 md10">样本类型：*</div>
-                <div class="col-xs-5 md26" id="sampleTypes2">
-                    <select ng-model="sampleType" class="form-control" id="sampleType2" name="sampleType" multiple="multiple" style="width: 100%;" required>
+                <div class="control-label form-label second mr10">样本类型：<span class="sample-star">*</span></div>
+                <div id="sampleTypes2">
+                    <select ng-model="sampleType" class="form-control" id="sampleType2" name="sampleType" multiple="multiple" required>
                     </select>
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">体&emsp;&emsp;重：</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label mw76">体&emsp;&emsp;重：</div>
+                <div>
                     <input type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
                 </div>
-                <div class="control-label form-label col-xs-2 md10">身&emsp;&emsp;高：</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label mw76 second">身&emsp;&emsp;高：</div>
+                <div>
                     <input type="text" name="height" placeholder="身高" ng-model="patient.height" maxlength="10">
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">邮&emsp;&emsp;箱：</div>
-                <div class="col-xs-5 md26">
+                <div class="control-label form-label mw76">邮&emsp;&emsp;箱：</div>
+                <div>
                     <input type="text" name="email" placeholder="电子邮箱" ng-model="patient.email" maxlength="50">
                 </div>
-                <div class="control-label form-label col-xs-2 md10">是否吸烟：</div>
-                <div class="col-xs-5 form-group-content md26">
+                <div class="control-label form-label mw76 mr10 second">是否吸烟：</div>
+                <div class="form-group-content">
                    <label class="radio-lable">
                      <input class="radio" type="radio" value="1" ng-model="patient.smoke" name="smoke"  ng-checked="true">
                      <span class="info"></span>
@@ -264,15 +264,15 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">个&ensp;人&ensp;史：</div>
-                <div class="col-xs-11" style="max-width: 620px;">
-                    <input type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
+                <div class="control-label form-label mw76">个&ensp;人&ensp;史：</div>
+                <div>
+                    <input class="mw552" type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10">家&ensp;族&ensp;史：</div>
-                <div class="col-xs-11" style="max-width: 620px;">
-                    <input type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
+                <div class="control-label form-label mw76">家&ensp;族&ensp;史：</div>
+                <div>
+                    <input class="mw552" type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
                 </div>
               </div>
               <div class="form-group">
@@ -286,8 +286,3 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<script>
-$(function(){
-	
-})
-</script>
