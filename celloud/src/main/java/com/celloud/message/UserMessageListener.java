@@ -8,18 +8,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.celloud.common.mq.MessageListener;
+import com.celloud.common.mq.AloneMessageListener;
 import com.celloud.common.mq.entity.Message;
 import com.celloud.constants.Constants;
 import com.celloud.model.mysql.User;
 
-public class UserMessageListener implements MessageListener {
+public class UserMessageListener implements AloneMessageListener {
 	private static Logger logger = LoggerFactory.getLogger(UserMessageListener.class);
 
 	@Override
 	public boolean consume(Message message) {
 		String key = message.getKey();
-		String value = new String(message.getBody());
+		String value = new String(message.getBodyAsBytes());
 		logger.debug("key = {} , value = {}", key, value);
 		if (Constants.MESSAGE_ALLUSER_KEY.equals(key)) {
 			sendMessage(value);
