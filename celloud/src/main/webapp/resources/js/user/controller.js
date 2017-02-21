@@ -59,23 +59,22 @@
 		};
 	});
 	celloudApp.controller("updatePassword",function($scope,userService){
-		$scope.reset = function() {
-	        $scope.oldPwd = "";
-	        $scope.newPwd = "";
-	        $scope.confirmPwd = "";
-	    };
-	    $scope.updatePassword = function(){
-	    	$scope.state = false;
-	    	userService.updatePassword($scope.oldPwd,$scope.newPwd).
-	    	success(function(data){
-	    		$scope.code = data.code;
-	    		if($scope.code==203){
-	    			$scope.pwdMessage = data.message;
-	    		}else{
-	    			alert("测试账号不允许修改信息");
-	    		}
-	    	}).error(function(data) {
-	    		alert("测试账号不允许修改信息");
+	  $scope.reset = function() {
+        $scope.oldPwd = "";
+        $scope.newPwd = "";
+        $scope.confirmPwd = "";
+    };
+    $scope.updatePassword = function(){
+    	$scope.state = false;
+    	userService.updatePassword($scope.oldPwd,$scope.newPwd).success(function(data){
+    		$scope.code = data.code;
+    		if($scope.code==203){
+    			$scope.pwdMessage = data.message;
+    		}else{
+    			alert("测试账号不允许修改信息");
+    		}
+    	}).error(function(data) {
+    		alert("测试账号不允许修改信息");
 			});
 		};
 		$scope.checkOldPwd = function(){

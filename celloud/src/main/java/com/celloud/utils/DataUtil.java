@@ -2,6 +2,8 @@ package com.celloud.utils;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.celloud.constants.SampleTypes;
 import com.celloud.model.mysql.Metadata;
@@ -69,5 +71,20 @@ public class DataUtil {
      */
     public static String getCapchaRandom() {
         return String.format("%06d", s.nextInt(999999));
+    }
+
+    /**
+     * 判断字符串是不是手机号
+     * 
+     * @param str
+     * @return
+     * @author leamo
+     * @date 2017年2月20日 下午3:46:23
+     */
+    public static boolean checkCellphone(String str) {
+        String regExp = "^1\\d{10}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(str);
+        return m.matches();
     }
 }

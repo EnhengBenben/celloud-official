@@ -20,7 +20,8 @@ public interface UserRegisterMapper {
     int updateByPrimaryKey(UserRegister record);
 
     public Integer insertUserRegisterInfo(@Param("email") String email, @Param("randomCode") String randomCode,
-			@Param("appIds") String appIds, @Param("roleIds") String roleIds, @Param("authFrom") Integer authFrom);
+            @Param("truename") String truename, @Param("appIds") String appIds, @Param("roleIds") String roleIds,
+            @Param("authFrom") Integer authFrom);
 
     /**
      * 删除验证码
@@ -31,4 +32,7 @@ public interface UserRegisterMapper {
      */
     public Integer deleteUserRegisterInfo(@Param("email") String email);
 
+    UserRegister getUserRegisterInfo(@Param("email") String email, @Param("md5") String md5);
+
+    UserRegister getUserRegisterInfoByEmail(@Param("email") String email);
 }

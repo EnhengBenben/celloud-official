@@ -521,6 +521,52 @@ public class UserAction {
 
     }
 
+    /**
+     * 发送注册手机验证码
+     * 
+     * @param email
+     * @param captcha
+     * @param apps
+     * @param roles
+     * @return
+     * @author leamo
+     * @date 2017年2月13日 下午3:34:03
+     */
+    @RequestMapping("/sendCellphoneCaptcha")
+    public ResponseEntity<Map<String, String>> sendCellphoneCaptcha(String cellphone, String captcha, String truename,
+            Integer[] apps, Integer[] roles) {
+        logger.info("医院管理员 {} 发送注册短信 cellphone = {}, captcha = {}", ConstantsData.getLoginUserId(), cellphone,
+                captcha);
+        Boolean flag = true;
+        Map<String, String> errorMap = new HashMap<String, String>();
+        // 校验手机号是否已注册
+        if (userService.isCellphoneInUse(cellphone)) {
+            logger.info("电话号码已被占用 cellphone = {}", cellphone);
+            flag = false;
+            errorMap.put("cellphoneError", "电话号码已被使用");
+        }
+        // 校验验证码
+        Subject subject = SecurityUtils.getSubject();
+        // 获取Shiro的session
+        Session session = subject.getSession();
+        if (!checkKaptcha(captcha, session)) {
+            flag = false;
+            errorMap.put("kaptchaError", "验证码错误");
+        }
+        // 邮箱和验证码均合法
+        if (flag) {
+            if (userService.sendRegisterSms(cellphone, truename, apps, roles)) {
+                logger.info("注册短信发送成功 cellphone = {}", cellphone);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            }
+            logger.info("注册短信发送失败 cellphone = {}", cellphone);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMap);
+        }
+
+    }
+
 	/**
 	 * 获取当前用户的账户余额
 	 * 

@@ -17,6 +17,10 @@ public class UserRegister {
 
     private String roleIds;
 
+    private Integer authFrom;
+
+    private String truename;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +75,21 @@ public class UserRegister {
 
     public void setRoleIds(String roleIds) {
         this.roleIds = roleIds;
+    }
+
+    public Integer getAuthFrom() {
+        return authFrom;
+    }
+
+    public void setAuthFrom(Integer authFrom) {
+        this.authFrom = authFrom;
+    }
+
+    public String getTruename() {
+        return truename;
+    }
+
+    public void setTruename(String truename) {
+        this.truename = truename;
     }
 }

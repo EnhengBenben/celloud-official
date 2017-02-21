@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.celloud.model.mysql.SecRole;
 import com.celloud.model.mysql.User;
+import com.celloud.model.mysql.UserRegister;
 
 /**
  * 用户服务接口
@@ -127,6 +128,16 @@ public interface UserService {
      * @return
      */
     public boolean isEmailInUse(String email, Integer userId);
+
+    /**
+     * 校验手机号码是否存在
+     * 
+     * @param mobile
+     * @return
+     * @author leamo
+     * @date 2017年2月13日 下午3:46:15
+     */
+    public boolean isCellphoneInUse(String cellphone);
 
     /**
      * 根据用户名称获取用户
@@ -282,6 +293,15 @@ public interface UserService {
 	public Boolean sendRegisterEmail(String email, Integer[] appIds, Integer[] roles);
 
     /**
+     * 发送注册短信
+     * 
+     * @return
+     * @author leamo
+     * @date 2017年2月13日 下午4:46:29
+     */
+    public Boolean sendRegisterSms(String cellphone, String truename, Integer[] appIds, Integer[] roles);
+
+    /**
      * 新增C端用户
      * 
      * @param cellphone
@@ -343,4 +363,26 @@ public interface UserService {
      * @return
      */
     Boolean updateToMongo(User user);
+
+    /**
+     * 是否已存在注册信息
+     * 
+     * @param email
+     * @param md5
+     * @return
+     * @author leamo
+     * @date 2017年2月20日 下午3:24:01
+     */
+    UserRegister getUserRegisterInfo(String email, String md5);
+
+    /**
+     * 新增手机短信注册用户
+     * 
+     * @param cellphone
+     * @param password
+     * @return
+     * @author leamo
+     * @date 2017年2月20日 下午5:34:47
+     */
+    Boolean addCellphoneUser(String cellphone, String md5, String password);
 }

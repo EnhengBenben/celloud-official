@@ -271,4 +271,26 @@ public class HomeAction {
     public String wechatRocky(String info) {
         return "wechat/rocky_report";
     }
+
+    /**
+     * 手机注册用户重置密码
+     * 
+     * @param username
+     * @param password
+     * @param randomCode
+     * @param request
+     * @return
+     * @author leamo
+     * @date 2017年2月20日 下午11:26:01
+     */
+    @RequestMapping(value = "resetCellphonePwd.html", method = RequestMethod.POST)
+    public String resetCellphonePwd(String username, String password, String randomCode, Model model) {
+        boolean result = userService.addCellphoneUser(username, randomCode, password);
+        if (result) {
+            model.addAttribute("info", "密码重置成功，请用新密码登录");
+            return "login";
+        }
+        model.addAttribute("info", "密码重置失败，请重试！");
+        return "user/user_pwd_cellphone";
+    }
 }
