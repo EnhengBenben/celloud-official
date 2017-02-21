@@ -49,7 +49,7 @@
                   </td>
               </tr>
               <tr ng-if="sampleInfoList.length == 0">
-                  <td colspan="10" class="table-null">暂无样本信息</td>
+                  <td colspan="10" class="table-null sampleInfo"><font color="#1dd2af">暂无数据!</font></td>
               </tr>
           </tbody>
         </table>
@@ -65,7 +65,8 @@
         <div class="modal-body form-modal">
           <form class="form-horizontal info-form sampleInfo" name="addSampleInfoForm" id="addSampleInfoForm" ng-submit="saveSample()">
               <div class="form-group">
-                <div class="control-label form-label"><font></font></div>
+                <div class="control-label form-label tips sample-star" ng-show="(addSampleInfoForm.sampleName.$dirty && addSampleInfoForm.sampleName.$invalid)||(addSampleInfoForm.tel.$dirty && addSampleInfoForm.tel.$invalid)||(addSampleInfoForm.idCard.$dirty && addSampleInfoForm.idCard.$invalid)||(addSampleInfoForm.productTag.$dirty && addSampleInfoForm.productTag.$invalid)||
+                (addSampleInfoForm.name.$dirty && addSampleInfoForm.name.$invalid)||(addSampleInfoForm.age.$dirty && addSampleInfoForm.age.$invalid)||(addSampleInfoForm.sampleType.$dirty && addSampleInfoForm.sampleType.$invalid)">您输入的信息有误,请检查后再输入...</div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label">样品编号：<span class="sample-star">*</span></div>
@@ -109,12 +110,12 @@
               <div class="form-group">
                 <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
                 <div>
-                    <select ng-model="productTag" class="form-control" id="productTag1" name="productTag" multiple="multiple" ng-change="changeSampleTypeByTag(1)" required>
+                    <select ng-model="productTag" name="productTag" class="form-control" id="productTag1" multiple="multiple" ng-change="changeSampleTypeByTag(1)" required>
                     </select>
                 </div>
                 <div class="control-label form-label mr10 second">样本类型：<span class="sample-star">*</span></div>
                 <div id="sampleTypes1">
-                    <select ng-model="sampleType" class="form-control" id="sampleType1" name="sampleType" multiple="multiple" required>
+                    <select ng-model="sampleType" name="sampleType" class="form-control" id="sampleType1" multiple="multiple" required>
                     </select>
                 </div>
               </div>
@@ -180,7 +181,8 @@
         <div class="modal-body form-modal">
           <form class="form-horizontal info-form" name="updateSampleInfoForm" id="updateSampleInfoForm" ng-submit="updateSample()">
               <div class="form-group">
-                <div class="control-label form-label col-xs-2 md10"><font></font></div>
+                <div class="control-label form-label tips sample-star" ng-show="(addSampleInfoForm.sampleName.$dirty && addSampleInfoForm.sampleName.$invalid)||(addSampleInfoForm.tel.$dirty && addSampleInfoForm.tel.$invalid)||(addSampleInfoForm.idCard.$dirty && addSampleInfoForm.idCard.$invalid)||(addSampleInfoForm.productTag.$dirty && addSampleInfoForm.productTag.$invalid)||
+                (addSampleInfoForm.name.$dirty && addSampleInfoForm.name.$invalid)||(addSampleInfoForm.age.$dirty && addSampleInfoForm.age.$invalid)||(addSampleInfoForm.sampleType.$dirty && addSampleInfoForm.sampleType.$invalid)">您输入的信息有误,请检查后再输入...</div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label">样品编号：<span class="sample-star">*</span></div>

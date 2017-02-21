@@ -109,6 +109,7 @@
 	    	  productTagObj1.val(null).trigger("change");
 			  sampleTypeObj1.val(null).trigger("change");
 	    	  $("#addSampleInfoModal").modal("show");
+	    	  $scope.addSampleInfoForm.$setPristine();
     	  });
       }
 	  $scope.saveSample = function(){
