@@ -147,4 +147,11 @@
     order by priority asc
   </select>
   
+  <select id="getMetadataToSelectByTagIdAndFlag" resultType="java.util.Map">
+    SELECT m.name as id, m.name as text
+    FROM tb_metadata m, tb_app_tag_relat atr
+    WHERE atr.tag_id = #{tagId} AND m.app_id = atr.app_id
+    AND m.flag = #{flag}
+  </select>
+  
 </mapper>

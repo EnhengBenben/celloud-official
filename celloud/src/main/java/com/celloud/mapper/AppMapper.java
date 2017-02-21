@@ -204,4 +204,14 @@ public interface AppMapper {
 
 	public Integer deleteByAuthFrom(@Param("userId") Integer userId, @Param("authFrom") Integer authFrom,
 			@Param("appIds") Integer[] appIds);
+	
+    /**
+     * 
+     * @description 根据tagId获取appId
+     * @author miaoqi
+     * @date 2017年2月13日 下午4:03:08
+     * @param tagId
+     * @return
+     */
+    Integer getAppIdByTagId(@Param("tagId") Integer tagId);
 }

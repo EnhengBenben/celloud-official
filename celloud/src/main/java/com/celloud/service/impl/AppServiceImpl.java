@@ -169,4 +169,9 @@ public class AppServiceImpl implements AppService {
 		return appMapper.deleteByAuthFrom(userId, authFrom, appIds) > 0;
 	}
 
+    @Override
+    public Integer getAppIdByTagId(Integer tagId) {
+        return appMapper.getAppIdByTagId(tagId);
+    }
+
 }

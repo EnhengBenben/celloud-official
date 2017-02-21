@@ -14,6 +14,17 @@ import com.celloud.page.PageList;
  * @date 2015年12月25日 下午5:43:03
  */
 public interface AppService {
+
+    /**
+     * 
+     * @description 根据tagId获取appId
+     * @author miaoqi
+     * @date 2017年2月13日 下午4:02:04
+     * @param tagId
+     * @return
+     */
+    public Integer getAppIdByTagId(Integer tagId);
+
     /**
      * 获取已添加的APP数量
      * 
