@@ -26,12 +26,14 @@ import com.celloud.constants.IconConstants;
 import com.celloud.constants.SparkPro;
 import com.celloud.constants.TaskPeriod;
 import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.ComputeCluster;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Project;
 import com.celloud.model.mysql.Report;
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.Task;
 import com.celloud.service.AppService;
+import com.celloud.service.ComputeClusterService;
 import com.celloud.service.DataService;
 import com.celloud.service.DirectReportService;
 import com.celloud.service.ExpensesService;
@@ -71,6 +73,8 @@ public class RunServiceImpl implements RunService {
 	private SampleService sampleService;
 	@Resource
 	private DirectReportService directReportService;
+	@Resource
+	private ComputeClusterService computeClusterService;
 
 	/**
 	 * 参考接口{@link com.celloud.task.DataGroup}
@@ -231,7 +235,7 @@ public class RunServiceImpl implements RunService {
 		if (!FileTools.checkPath(appPath)) {
 			new File(appPath).mkdirs();
 		}
-        if (dataList.get(0).getOssPath() != null && appId != 118) {
+		if (dataList.get(0).getOssPath() != null && appId != 118) {
 			appPath = UploadPathUtils.getObjectKeyByPath(UploadPathUtils.getOutPathInOSS(userId, appId));
 		}
 		for (Entry<String, Object> entry : dataFilePathMap.entrySet()) {
@@ -258,8 +262,11 @@ public class RunServiceImpl implements RunService {
 			}
 			taskService.saveTaskDataRelat(taskId, dataIds);
 			if (AppDataListType.MQ_RUN.contains(appId)) {
-				AppSubmitUtil.mq(app.getCode(), taskId, userId, datas);
-				taskService.updateToRunning(taskId);
+				if (!datas.isEmpty()) {
+					ComputeCluster cluster = computeClusterService.selectByAppId(appId);
+					AppSubmitUtil.mq(cluster.getTopic(), app.getCode(), taskId, userId, datas);
+					taskService.updateToRunning(taskId);
+				}
 			} else if (runCheckIsWait(app)) {
 				if (AppDataListType.JAVA_RUN.contains(appId)) {
 					directReportService.fsocg(userId, appId, dataListFile, appPath, projectId);
@@ -348,7 +355,7 @@ public class RunServiceImpl implements RunService {
 				logger.info("完全上传BSI所需的配对文件");
 				List<Sample> sampleList = sampleService.getSamplesByStorageName(storageName);
 				if (sampleList != null && sampleList.size() > 0) {
-                    logger.info("文库{}下样本列表长度{}", storageName, sampleList.size());
+					logger.info("文库{}下样本列表长度{}", storageName, sampleList.size());
 					DataFile data = new DataFile();
 					data.setFileName(pubName + ".txt");
 					data.setUserId(userId);
