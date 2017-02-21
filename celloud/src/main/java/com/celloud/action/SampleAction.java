@@ -429,7 +429,7 @@ public class SampleAction {
                 ConstantsData.getLoginUserId());
         List<String> header = Arrays.asList("文库编号", "文库index", "医院样品编号",
                 "实验样品编号", "样品类型",
-                "建库时间", "样本index");
+                "建库时间", "样本index", "所属医院", "所属部门");
         ExcelUtil.listToExcel(header,
                 sampleService.sampleListInStorage(
                         ConstantsData.getLoginUserId(), ss.getId()),
