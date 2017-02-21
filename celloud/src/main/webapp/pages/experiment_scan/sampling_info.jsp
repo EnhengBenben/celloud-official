@@ -108,18 +108,6 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
-                <div>
-                    <select ng-model="productTag" name="productTag" class="form-control" id="productTag1" multiple="multiple" ng-change="changeSampleTypeByTag(1)" required>
-                    </select>
-                </div>
-                <div class="control-label form-label mr10 second">样本类型：<span class="sample-star">*</span></div>
-                <div id="sampleTypes1">
-                    <select ng-model="sampleType" name="sampleType" class="form-control" id="sampleType1" multiple="multiple" required>
-                    </select>
-                </div>
-              </div>
-              <div class="form-group">
                 <div class="control-label form-label mw76">体&emsp;&emsp;重：</div>
                 <div>
                     <input type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
@@ -146,6 +134,20 @@
                      <span class="info"></span>
                    </label>
                    否
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
+                <div>
+                    <select style="width: 552px;" ng-model="productTag" name="productTag" class="form-control" id="productTag1" multiple="multiple" ng-change="changeSampleTypeByTag(1)" required>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label mr10">样本类型：<span class="sample-star">*</span></div>
+                <div id="sampleTypes1">
+                    <select style="width: 552px;" ng-model="sampleType" name="sampleType" class="form-control" id="sampleType1" multiple="multiple" required>
+                    </select>
                 </div>
               </div>
               <div class="form-group">
@@ -224,18 +226,6 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
-                <div>
-                    <select ng-model="productTag" class="form-control" id="productTag2" name="productTag" multiple="multiple" ng-change="changeSampleTypeByTag(2)" required>
-                    </select>
-                </div>
-                <div class="control-label form-label second mr10">样本类型：<span class="sample-star">*</span></div>
-                <div id="sampleTypes2">
-                    <select ng-model="sampleType" class="form-control" id="sampleType2" name="sampleType" multiple="multiple" required>
-                    </select>
-                </div>
-              </div>
-              <div class="form-group">
                 <div class="control-label form-label mw76">体&emsp;&emsp;重：</div>
                 <div>
                     <input type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
@@ -262,6 +252,20 @@
                      <span class="info"></span>
                    </label>
                    否
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
+                <div>
+                    <select style="width:552px;" ng-model="productTag" class="form-control" id="productTag2" name="productTag" multiple="multiple" ng-change="changeSampleTypeByTag(2)" required>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label mr10">样本类型：<span class="sample-star">*</span></div>
+                <div id="sampleTypes2">
+                    <select style="width:552px;" ng-model="sampleType" class="form-control" id="sampleType2" name="sampleType" multiple="multiple" required>
+                    </select>
                 </div>
               </div>
               <div class="form-group">
