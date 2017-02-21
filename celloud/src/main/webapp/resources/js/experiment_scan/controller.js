@@ -591,7 +591,6 @@
     		}
     	}
     }
-    
     $scope.addSample = function(){
       var sampleList = $scope.infos.pageList.datas;
       var samplelength = $scope.infos.sampleIndex.length;
@@ -622,7 +621,6 @@
         }
       });
     }
-    
     $scope.addLibrary = function(){
       var select = $scope.sindex.name+":"+$scope.sindex.seq;
       buidLibraryService.addLibrary($scope.infos.libraryName,select,$scope.infos.pageList.datas).success(function(data){
@@ -640,17 +638,17 @@
     $scope.addAndDownLibrary = function(){
       var select = $scope.sindex.name+":"+$scope.sindex.seq;
       buidLibraryService.addLibrary($scope.infos.libraryName,select,$scope.infos.pageList.datas).success(function(data){
-        if(data == 0){
+        if(data == null){
           $scope.notPrevError = true;
-        }else if(data > 0){
+        }else if(data != null){
           var storageName = $scope.infos.libraryName;
           $scope.infos = buidLibraryService.infos();
-          buidLibraryService.downloadExcel(data,storageName).success(function(flag){
+          buidLibraryService.downloadExcel(data.id,data.storageName).success(function(flag){
             if(flag==1){
               $.alert("没有正确生成Excel文件");
             }else{
               var url = window.location.href.split("index")[0];
-              window.location.href=url+"sample/downExperExcel?ssId="+data+"&storageName="+storageName;
+              window.location.href=url+"sample/downExperExcel?ssId="+data.id+"&storageName="+data.storageName;
               $.alert("建库并下载成功！");
             }
           });
