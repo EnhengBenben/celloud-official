@@ -31,7 +31,7 @@ public class AliDayuUtils {
      * @author leamo
      * @date 2017年2月13日 下午5:08:59
      */
-    public static String send(String mobile, String captcha, String templateCode) {
+    public static String send(String mobile, String paramSring, String templateCode) {
         IClientProfile profile = DefaultProfile.getProfile(AlidayuConfig.region_id, AlidayuConfig.access_key,
                 AlidayuConfig.secret);
         try {
@@ -41,7 +41,7 @@ public class AliDayuUtils {
             SingleSendSmsRequest request = new SingleSendSmsRequest();
             request.setSignName("华点云");
             request.setTemplateCode(templateCode);
-            request.setParamString("{'number':'" + captcha + "'}");
+            request.setParamString(paramSring);
             request.setRecNum(mobile);
             SingleSendSmsResponse httpResponse = client.getAcsResponse(request);
             return httpResponse.getRequestId();
@@ -64,7 +64,7 @@ public class AliDayuUtils {
      */
     public static String sendCaptcha(String mobile, String captcha) {
         logger.info("准备向手机{}发送登录验证码{}", mobile, captcha);
-        return send(mobile, captcha, AlidayuConfig.captcha_template_code);
+        return send(mobile, "{'number':'" + captcha + "'}", AlidayuConfig.captcha_template_code);
     }
 
     /**
@@ -78,6 +78,7 @@ public class AliDayuUtils {
      */
     public static String sendRegisterCaptcha(String mobile, String captcha) {
         logger.info("准备向手机{}发送注册验证码{}", mobile, captcha);
-        return send(mobile, captcha, AlidayuConfig.register_captcha_template_code);
+        return send(mobile, "{'code':'" + captcha + "','product':'CelLoud云平台'}",
+                AlidayuConfig.register_captcha_template_code);
     }
 }

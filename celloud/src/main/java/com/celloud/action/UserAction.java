@@ -535,7 +535,7 @@ public class UserAction {
     @RequestMapping("/sendCellphoneCaptcha")
     public ResponseEntity<Map<String, String>> sendCellphoneCaptcha(String cellphone, String captcha, String truename,
             Integer[] apps, Integer[] roles) {
-        logger.info("医院管理员 {} 发送注册短信 cellphone = {}, captchat = {}", ConstantsData.getLoginUserId(), cellphone,
+        logger.info("医院管理员 {} 发送注册短信 cellphone = {}, captcha = {}", ConstantsData.getLoginUserId(), cellphone,
                 captcha);
         Boolean flag = true;
         Map<String, String> errorMap = new HashMap<String, String>();

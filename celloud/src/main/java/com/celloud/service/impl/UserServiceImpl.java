@@ -20,6 +20,7 @@ import com.celloud.alidayu.AliDayuUtils;
 import com.celloud.alimail.AliEmail;
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.alimail.AliSubstitution;
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
@@ -30,6 +31,7 @@ import com.celloud.mapper.UserMapper;
 import com.celloud.mapper.UserRegisterMapper;
 import com.celloud.model.mysql.SecRole;
 import com.celloud.model.mysql.User;
+import com.celloud.model.mysql.UserRegister;
 import com.celloud.sendcloud.EmailParams;
 import com.celloud.sendcloud.EmailType;
 import com.celloud.service.SecResourceService;
@@ -234,7 +236,8 @@ public class UserServiceImpl implements UserService {
         User loginUser = ConstantsData.getLoginUser();
         Integer loginUserId = loginUser.getUserId();
         Integer appCompanyId = userMapper.getCompanyIdByUserId(loginUserId);
-		Integer count = userRegisterMapper.insertUserRegisterInfo(email, randomCode, StringUtils.join(appIds, ","),
+        Integer count = userRegisterMapper.insertUserRegisterInfo(email, randomCode, null,
+                StringUtils.join(appIds, ","),
 				StringUtils.join(roles, ","), loginUserId);
         String param = Base64Util.encrypt(email + "/" + randomCode + "/" + loginUser.getDeptId() + "/"
                 + loginUser.getCompanyId() + "/" + appCompanyId + "/" + 0);
@@ -260,8 +263,8 @@ public class UserServiceImpl implements UserService {
         if (!"error".equals(sendResult)) {
             User loginUser = ConstantsData.getLoginUser();
             Integer loginUserId = loginUser.getUserId();
-            count = userRegisterMapper.insertUserRegisterInfo(cellphone, randomCode, StringUtils.join(appIds, ","),
-                    StringUtils.join(roles, ","), loginUserId);
+            count = userRegisterMapper.insertUserRegisterInfo(cellphone, MD5Util.getMD5(randomCode), truename,
+                    StringUtils.join(appIds, ","), StringUtils.join(roles, ","), loginUserId);
         }
         return count > 0;
     }
@@ -346,4 +349,48 @@ public class UserServiceImpl implements UserService {
 		}
 		return roles;
 	}
+
+    @Override
+    public UserRegister getUserRegisterInfo(String email, String md5) {
+        return userRegisterMapper.getUserRegisterInfo(email, md5);
+    }
+
+    @Override
+    public Boolean addCellphoneUser(String cellphone, String md5, String password) {
+        UserRegister userRegister = userRegisterMapper.getUserRegisterInfo(cellphone, md5);
+        if (userRegister != null) {
+            User managerUser = userMapper.selectByPrimaryKey(userRegister.getAuthFrom());
+            User user = new User();
+            user.setPassword(MD5Util.getMD5(password));
+            user.setUsername(cellphone);
+            user.setCellphone(cellphone);
+            user.setTruename(userRegister.getTruename());
+            user.setState(DataState.ACTIVE);
+            user.setCompanyId(managerUser.getCompanyId());
+            user.setCreateDate(new Date());
+
+            Integer appCompanyId = userMapper.getCompanyIdByUserId(managerUser.getUserId());
+
+            int addNum = userMapper.insertSelective(user);
+            if (addNum > 0) {
+                String appIdStr = userRegister != null ? userRegister.getAppIds() : null;
+                String roleIdStr = userRegister != null ? userRegister.getRoleIds() : null;
+                Integer authFrom = userRegister != null ? userRegister.getAuthFrom() : 0;
+                if (StringUtils.isNotBlank(appIdStr)) {
+                    String[] appIds = appIdStr.split(",");
+                    userMapper.addUserAppRight(user.getUserId(), appIds, AppConstants.NOT_ADDED, authFrom);
+                }
+                if (StringUtils.isNotBlank(roleIdStr)) {
+                    String[] roleIds = roleIdStr.split(",");
+                    userMapper.addUserRoleRight(user.getUserId(), roleIds, authFrom);
+                }
+                if (appCompanyId != null) {
+                    userMapper.addUserCompanyRelat(user.getUserId(), appCompanyId);
+                }
+                userRegisterMapper.deleteUserRegisterInfo(cellphone);
+                return true;
+            }
+        }
+        return false;
+    }
 }

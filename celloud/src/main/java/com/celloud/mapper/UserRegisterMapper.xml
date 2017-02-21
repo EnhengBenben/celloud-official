@@ -7,16 +7,18 @@
     <result column="expire_date" property="expireDate" jdbcType="TIMESTAMP" />
     <result column="md5" property="md5" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="truename" property="truename" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.UserRegister" extends="BaseResultMap" >
     <result column="app_ids" property="appIds" jdbcType="LONGVARCHAR" />
     <result column="role_ids" property="roleIds" jdbcType="LONGVARCHAR" />
+    <result column="auth_from" property="authFrom" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, expire_date, md5, email
+    id, user_id, expire_date, md5, email,truename
   </sql>
   <sql id="Blob_Column_List" >
-    app_ids, role_ids
+    app_ids, role_ids, auth_from
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
@@ -32,10 +34,10 @@
   </delete>
   <insert id="insert" parameterType="com.celloud.model.mysql.UserRegister" >
     insert into tb_user_register (id, user_id, expire_date, 
-      md5, email, app_ids, role_ids
+      md5, email,truename, app_ids, role_ids
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{expireDate,jdbcType=TIMESTAMP}, 
-      #{md5,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{appIds,jdbcType=LONGVARCHAR}, #{roleIds, jdbcType=LONGVARCHAR}
+      #{md5,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, #{appIds,jdbcType=LONGVARCHAR}, #{roleIds, jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.UserRegister" >
@@ -55,6 +57,9 @@
       </if>
       <if test="email != null" >
         email,
+      </if>
+      <if test="truename != null" >
+        truename,
       </if>
       <if test="appIds != null" >
         app_ids,
@@ -79,6 +84,9 @@
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
+      <if test="truename != null" >
+        #{truename,jdbcType=VARCHAR},
+      </if>
       <if test="appIds != null" >
         #{appIds,jdbcType=LONGVARCHAR},
       </if>
@@ -102,6 +110,9 @@
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
+      <if test="truename != null" >
+        truename = #{truename,jdbcType=VARCHAR},
+      </if>
       <if test="appIds != null" >
         app_ids = #{appIds,jdbcType=LONGVARCHAR},
       </if>
@@ -117,6 +128,7 @@
       expire_date = #{expireDate,jdbcType=TIMESTAMP},
       md5 = #{md5,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
+      truename = #{truename,jdbcType=VARCHAR},
       app_ids = #{appIds,jdbcType=LONGVARCHAR},
       role_ids = #{roleIds,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -126,15 +138,17 @@
     set user_id = #{userId,jdbcType=INTEGER},
       expire_date = #{expireDate,jdbcType=TIMESTAMP},
       md5 = #{md5,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR}
+      email = #{email,jdbcType=VARCHAR},
+      truename = #{truename,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <insert id="insertUserRegisterInfo">
         insert into tb_user_register (email, expire_date,
-        md5,app_ids, role_ids,auth_from)
+        md5,truename,app_ids, role_ids,auth_from)
         values (#{email,jdbcType=VARCHAR},
         DATE_ADD(now(),INTERVAL 1 DAY),
         #{randomCode,jdbcType=VARCHAR},
+        #{truename,jdbcType=VARCHAR},
         #{appIds,jdbcType=VARCHAR},
         #{roleIds,jdbcType=VARCHAR},
         #{authFrom,jdbcType=VARCHAR})
@@ -149,6 +163,17 @@
     </delete>
     
     <select id="getUserRegisterInfo" resultMap="ResultMapWithBLOBs">
-        select * from tb_user_register where email=#{email } and md5=#{md5 }
+        select 
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" /> 
+        from tb_user_register where email=#{email } and md5=#{md5 }
+    </select>
+    <select id="getUserRegisterInfoByEmail" resultMap="ResultMapWithBLOBs">
+        select  
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" /> 
+        from tb_user_register where email=#{email }
     </select>
 </mapper>

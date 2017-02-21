@@ -85,7 +85,7 @@
 		#{companyId,jdbcType=INTEGER},
 		#{sign,jdbcType=VARCHAR}),#{balances,jdbcType=DECIMAL})
 	</insert>
-	<insert id="insertSelective" parameterType="com.celloud.model.mysql.User">
+	<insert id="insertSelective" parameterType="com.celloud.model.mysql.User" useGeneratedKeys="true" keyProperty="userId">
 		insert into tb_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="userId != null">
@@ -632,4 +632,32 @@
         AND role = #{role}
         AND state = #{state}
     </select>
+    <insert id="addUserAppRight"  useGeneratedKeys="true">
+         <selectKey resultType="long" keyProperty="id" order="AFTER">  
+            SELECT  
+            LAST_INSERT_ID()  
+        </selectKey>  
+        insert into tb_user_app_right (
+        user_id, app_id,
+        is_add,auth_from)
+        values
+        <foreach collection="appIds" item="appId" index="index" separator="," >
+            (#{userId},${appId},#{isAdded},#{authFrom})
+        </foreach>
+    </insert>
+    <insert id="addUserRoleRight" useGeneratedKeys="true">
+        insert into 
+        tb_sec_user_role_relat (
+        user_id, role_id,auth_from)
+        values
+        <foreach collection="roleIds" item="roleId" separator=",">
+            (#{userId}, #{roleId},#{authFrom})
+        </foreach>
+    </insert>
+    <insert id="addUserCompanyRelat">
+        insert into tb_user_company_relat (
+        user_id, company_id)
+        values
+        (#{userId},#{companyId})
+    </insert>
 </mapper>

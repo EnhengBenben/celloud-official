@@ -103,14 +103,13 @@
                 <div class="control-label form-label col-xs-2">姓名：</div>
                 <div class="col-xs-10">
                     <input type="text" ng-change="clearState()" name="truename" placeholder="真实姓名" ng-model="truename" required="true">
-                    <span class="input-alert" ng-show="userAddForm.email.$dirty && userAddForm.email.$invalid">手机号码格式不正确!</span>
-                    <span class="input-alert" ng-show="emailError != null">{{emailError}}</span>
+                    <span class="input-alert" ng-show="userAddForm.truename.$dirty && userAddForm.truename.$invalid">真实姓名不能为空!</span>
                 </div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label col-xs-2">验证码：</div>
                 <div class="col-xs-7">
-                    <input type="text" ng-change="clearState()" name="cellphone-captcha" placeholder="验证码" ng-model="kaptcha" required="true" />
+                    <input type="text" ng-change="clearState()" name="cellphone-captcha" placeholder="验证码" ng-model="captcha" required="true" />
                     <span class="input-alert" ng-show="kaptchaError != null">{{kaptchaError}}</span>
                 </div>
                 <div class="col-xs-2">

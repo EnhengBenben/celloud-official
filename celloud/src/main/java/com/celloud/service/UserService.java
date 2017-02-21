@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.celloud.model.mysql.SecRole;
 import com.celloud.model.mysql.User;
+import com.celloud.model.mysql.UserRegister;
 
 /**
  * 用户服务接口
@@ -362,4 +363,26 @@ public interface UserService {
      * @return
      */
     Boolean updateToMongo(User user);
+
+    /**
+     * 是否已存在注册信息
+     * 
+     * @param email
+     * @param md5
+     * @return
+     * @author leamo
+     * @date 2017年2月20日 下午3:24:01
+     */
+    UserRegister getUserRegisterInfo(String email, String md5);
+
+    /**
+     * 新增手机短信注册用户
+     * 
+     * @param cellphone
+     * @param password
+     * @return
+     * @author leamo
+     * @date 2017年2月20日 下午5:34:47
+     */
+    Boolean addCellphoneUser(String cellphone, String md5, String password);
 }

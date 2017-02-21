@@ -12,6 +12,10 @@
       templateUrl: "pages/user/user_pwdreset.jsp",
       controller: "updatePassword"
     })
+    .when('/user/pwd/reset/:cellphone',{
+      templateUrl: "pages/user/user_pwdreset.jsp",
+      controller: "updatePwdAndRegister"
+    })
     .when('/user/log',{
       templateUrl: "pages/user/user_log.jsp",
       controller: "pageQueryLog"
