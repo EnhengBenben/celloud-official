@@ -114,8 +114,11 @@ public class DataServiceImpl implements DataService {
 			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), "_")[0],
 					DataState.ACTIVE);
 		} else {
-			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0],
+            if (data_s.getFileName().contains(".")) {
+                sample = sampleMapper.getSampleByExperName(
+                        StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0],
 					DataState.ACTIVE);
+            }
 		}
 		if (sample != null) {
             Integer count = dataFileMapper.getFileSampleCount(data.getFileId(), sample.getSampleId());
@@ -349,7 +352,11 @@ public class DataServiceImpl implements DataService {
 		data.setFileId(dataId);
 		data.setDataKey(dataKey);
 		data.setPath(filePath);
-		data.setSize(FileTools.getFileSize(filePath));
+        if (filePath != null) {
+            data.setSize(FileTools.getFileSize(filePath));
+        } else {
+            data.setSize(0L);
+        }
 		data.setBatch(batch);
 		data.setFileFormat(fileFormat);
 		data.setMd5(md5);

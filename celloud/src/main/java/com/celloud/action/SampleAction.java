@@ -13,9 +13,11 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
 import com.celloud.constants.SampleTypes;
+import com.celloud.model.mysql.Patient;
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleStorage;
 import com.celloud.page.Page;
@@ -47,6 +50,25 @@ public class SampleAction {
     Logger logger = LoggerFactory.getLogger(SampleAction.class);
     @Resource
     private SampleService sampleService;
+
+    /**
+     * 
+     * @description 向用户所属的大客户发送订单
+     * @author miaoqi
+     * @date 2017年2月17日 上午10:11:57
+     * @param orderId
+     * @return
+     */
+    @ActionLog(value = "样本寄送订单", button = "样品")
+    @RequestMapping("sendSampleInfoOrderInfo")
+    public ResponseEntity<Void> sendSampleInfoOrderInfo(Integer orderId) {
+        Integer userId = ConstantsData.getLoginUserId();
+        Boolean flag = sampleService.sendOrderInfo(userId, orderId);
+        if (flag) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
 
     @ActionLog(value = "获取所有未保存样品列表", button = "样品")
     @RequestMapping("{app}/sampleList")
@@ -108,12 +130,30 @@ public class SampleAction {
                 ConstantsData.getLoginUserId());
     }
 
+
+    @RequestMapping("commitSampleInfo")
+    public ResponseEntity<Integer> commitSampleInfo() {
+        Integer count = sampleService.commitSampleInfo(ConstantsData.getLoginUserId());
+        if (count > 0) {
+            return ResponseEntity.status(HttpStatus.OK).body(count);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(count);
+        }
+    }
+
     @ActionLog(value = "获取样品订单信息", button = "提交订单")
     @RequestMapping("getSampleOrderInfo")
     @ResponseBody
     public Map<String, Object> getSampleOrderInfo(Integer orderId) {
         return sampleService.getSampleOrderInfo(ConstantsData.getLoginUserId(),
                 orderId);
+    }
+
+    @ActionLog(value = "获取样品订单信息", button = "提交订单")
+    @RequestMapping("getSampleInfoOrderInfo")
+    @ResponseBody
+    public Map<String, Object> getSampleInfoOrderInfo(Integer orderId) {
+        return sampleService.getSampleInfoOrderInfo(ConstantsData.getLoginUserId(), orderId);
     }
 
     @ActionLog(value = "删除暂存的样本", button = "删除样品")
@@ -149,6 +189,82 @@ public class SampleAction {
             return 2; // 检测样品已添加
         }
         return sampleService.samplingAddSample(userId, sampleName, type, tagId);
+    }
+
+    @ActionLog(value = "新增样本信息", button = "扫码添加")
+    @RequestMapping(value = "sampleInfos", method = RequestMethod.POST)
+    public ResponseEntity<Void> sampleInfos(Patient patient, Sample sample) {
+        if (sample.getSampleName() == null || sample.getTagId() == null || sample.getType() == null
+                || patient == null) {
+            logger.info("新增样本信息参数错误 sampleName = {}, tagId = {}, type = {}, patient = {}", sample.getSampleName(),
+                    sample.getTagId(), sample.getType(),
+                    patient);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        Integer userId = ConstantsData.getLoginUserId();
+        // 检验样本是否重复
+        Boolean check = sampleService.checkSample(sample.getSampleName(), userId);
+        if (check) {
+            logger.info("用户 {} 下已经存在样本名为 {} 的样本", userId, sample.getSampleName());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        Boolean flag = sampleService.saveSampleInfoAndPatient(userId, sample, patient);
+        if (!flag) {
+            logger.info("用户 {} 增加样本和患者信息出错", userId);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        logger.info("用户 {} 增加样本和患者信息成功", userId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @ActionLog(value = "更新样本信息")
+    @RequestMapping(value = "updateSampleInfos")
+    public ResponseEntity<Void> updateSampleInfos(Patient patient, Sample sample, Integer oldTagId) {
+        if (sample.getSampleId() == null || sample.getSampleName() == null || sample.getTagId() == null
+                || sample.getType() == null
+                || patient.getId() == null) {
+            logger.info("更新样本信息参数错误 sampleName = {}, tagId = {}, type = {}, patient = {}", sample.getSampleName(),
+                    sample.getTagId(), sample.getType(),
+                    patient);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        Integer userId = ConstantsData.getLoginUserId();
+        Boolean flag = sampleService.updateSampleInfoAndPatient(patient, sample, oldTagId);
+        if (!flag) {
+            logger.info("用户 {} 更新样本和患者信息出错", userId);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        logger.info("用户 {} 更新样本和患者信息成功", userId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @RequestMapping("removeSampleInfo")
+    public ResponseEntity<Void> removeSampleInfo(Integer sampleId) {
+        Integer uerId = ConstantsData.getLoginUserId();
+        logger.info("用户 {} 删除 sampleId = {} 的样本信息", uerId, sampleId);
+        Boolean flag = sampleService.removeSampleInfo(sampleId);
+        if (flag) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } else {
+            logger.info("用户 {} 删除 sampleid = {} 的样本信息失败", uerId, sampleId);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @RequestMapping(value = "sampleInfos/{sampleId}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> getSampleInfo(@PathVariable("sampleId") Integer sampleId) {
+        Map<String, String> map = sampleService.getSampleAndPatient(ConstantsData.getLoginUserId(), sampleId);
+        if (map != null && map.keySet().size() > 0) {
+            return ResponseEntity.status(HttpStatus.OK).body(map);
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+    @RequestMapping("listSampleInfo")
+    @ResponseBody
+    public List<Map<String, String>> listSampleInfo() {
+        return sampleService.listSampleAndPatient(ConstantsData.getLoginUserId(), SampleTypes.NOTADD, 0);
     }
 
     @ActionLog(value = "样本实验状态列表", button = "样本追踪")
