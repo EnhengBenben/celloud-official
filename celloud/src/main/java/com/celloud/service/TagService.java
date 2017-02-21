@@ -1,6 +1,7 @@
 package com.celloud.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.celloud.model.mysql.Tag;
 
@@ -19,4 +20,14 @@ public interface TagService {
      *
      */
     List<Tag> findProductTags(Integer userId);
+
+    /**
+     * 
+     * @description 查询产品标签返回给select2
+     * @author miaoqi
+     * @date 2017年2月13日 下午2:48:19
+     * @param userId
+     * @return
+     */
+    List<Map<String, String>> listProductTagsToSelect(Integer userId);
 }

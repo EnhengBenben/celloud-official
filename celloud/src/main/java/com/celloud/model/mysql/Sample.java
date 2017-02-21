@@ -39,6 +39,11 @@ public class Sample {
     /** 实验状态 */
     private Integer experState;
 
+    /**
+     * 病人信息外键
+     */
+    private Integer patientId;
+
     public Integer getSampleId() {
         return sampleId;
     }
@@ -181,4 +186,13 @@ public class Sample {
     public void setExperState(Integer experState) {
         this.experState = experState;
     }
+
+    public Integer getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
+    }
+
 }

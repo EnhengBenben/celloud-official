@@ -1,6 +1,7 @@
 package com.celloud.action;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -20,6 +21,26 @@ public class MetadataAction {
 	Logger logger = LoggerFactory.getLogger(MetadataAction.class);
     @Resource
 	private MetadataService ms;
+
+    /**
+     * 
+     * @description 根据tagId获取元数据返回给select2
+     * @author miaoqi
+     * @date 2017年2月13日 下午3:59:33
+     * @param tagId
+     * @param flag
+     * @return
+     */
+    @RequestMapping("listMetadataToSelectByTagIdAndFlag")
+    @ResponseBody
+    public List<Map<String, String>> listMetadataToSelectByTagIdAndFlag(Integer tagId, Integer flag) {
+        if (tagId == null || flag == null) {
+            logger.info("参数有误, 不能获取元数据 tagId = {}, flag = {}", tagId, flag);
+            return null;
+        }
+        // 根据tagId获取appId
+        return ms.getMetadataToSelectByTagIdAndFlag(tagId, flag);
+    }
 
 	/**
 	 * 根据appId和flag动态获取元数据

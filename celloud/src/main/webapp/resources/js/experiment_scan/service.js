@@ -31,10 +31,53 @@
       return $http({method:"POST",url:'sample/commitSampling',params:{"sampleIds":sampleIds}});
     }
   });
+  
+  celloudApp.service("sampleInfoService", function($resource,$http){
+    var self = this;
+    self.getSampleInfo = function(id){
+    	return $http({ method:"GET", url:'sample/sampleInfos/' + id});
+    }
+    self.getProductTags = function(){
+    	return $resource("uploadFile/getProductTag").query();
+    }
+    self.typeList = function(){
+    	return $resource("metadata/sampleType").query();
+    }
+    self.sampleInfos = function(patient, sample, tagId, type){
+    	var param ={"tagId":tagId[0],"type":type[0]};
+    	param = $.extend(sample, param);
+    	param = $.extend(patient, param);
+    	return $http({ method:"POST", url:'sample/sampleInfos',headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, data:$.param(param) });
+    }
+    self.removeSampleInfo = function(id){
+    	return $http({method:"POST",url:'sample/removeSampleInfo',headers: { 'Content-Type': 'application/x-www-form-urlencoded' },data:$.param({"sampleId":id})});
+    }
+    self.updateSampleInfos = function(patient, sample, tagId, type){
+    	var param ={"tagId":tagId[0],"type":type[0]};
+    	param = $.extend(sample, param);
+    	param = $.extend(patient, param);
+    	return $http({ method:"POST", url:'sample/updateSampleInfos',headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, data:$.param(param) });
+    }
+    self.listSampleInfo = function(){
+    	return $http({ method:"GET", url:'sample/listSampleInfo' });
+    }
+    self.commitSample = function(){
+    	return $http({method:"GET",url:'sample/commitSampleInfo'});
+    }
+  });
+  
   celloudApp.service("sampleOrderService", function($resource,$http){
     this.sampleOrderInfo = function(orderId){
       return $http({method:"POST",url:'sample/getSampleOrderInfo',params:{"orderId":orderId,"v":new Date()}});
     }
+  });
+  celloudApp.service("sampleInfoOrderService", function($resource,$http){
+	  this.sampleInfoOrderInfo = function(orderId){
+		  return $http({method:"POST",url:'sample/getSampleInfoOrderInfo',params:{"orderId":orderId,"v":new Date()}});
+	  }
+	  this.sendSampleInfoOrderInfo = function(orderId){
+		  return $http({method:"POST",url:'sample/sendSampleInfoOrderInfo',params:{"orderId":orderId}});
+	  }
   });
   celloudApp.service("sampleTrackingService", function($resource,$http){
     var self = this;

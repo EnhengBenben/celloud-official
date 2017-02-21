@@ -12,6 +12,10 @@
       templateUrl: "pages/user/user_pwdreset.jsp",
       controller: "updatePassword"
     })
+    .when('/user/pwd/reset/:cellphone',{
+      templateUrl: "pages/user/user_pwdreset.jsp",
+      controller: "updatePwdAndRegister"
+    })
     .when('/user/log',{
       templateUrl: "pages/user/user_log.jsp",
       controller: "pageQueryLog"
@@ -225,9 +229,17 @@
       templateUrl: "pages/experiment_scan/sampling.jsp",
       controller: "samplingController"
     })
+    .when('/sampling/info-collection',{
+      templateUrl: "pages/experiment_scan/sampling_info.jsp",
+      controller: "samplingInfoController"
+    })
     .when('/sampling/order/:orderId',{
       templateUrl: "pages/experiment_scan/order_detail.jsp",
       controller: "sampleOrderController"
+    })
+    .when('/samplinginfo/order/:orderId',{
+      templateUrl: "pages/experiment_scan/order_info_detail.jsp",
+      controller: "sampleInfoOrderController"
     })
     .when('/sampling/tracking',{
       templateUrl: "pages/experiment_scan/sample_tracking.jsp",

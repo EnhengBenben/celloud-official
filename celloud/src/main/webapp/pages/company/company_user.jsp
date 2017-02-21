@@ -12,7 +12,8 @@
       <div class="table-opera">
         <div class="table-opera-content">
           <div class="opera-info">
-            <button class="btn data-operate" data-toggle="modal" data-target="#company-addUser-modal" ng-click="showAddUserForm()">新增</button>
+            <button class="btn data-operate" data-toggle="modal" data-target="#company-addUser-modal" ng-click="showAddUserForm()">邮箱注册</button>
+            <button class="btn data-operate" data-toggle="modal" data-target="#company-cellphone-addUser-modal" ng-click="showAddUserForm()">手机注册</button>
           </div>
         </div>
       </div>
@@ -53,6 +54,82 @@
       </table>
       <pagination page="userList.page" change="pageQuery(page,pageSize)"></pagination>
     </div>
+  <div id="company-cellphone-addUser-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
+          <h4 class="modal-title">增加账号--发送短信</h4>
+        </div>
+        <div class="modal-body form-modal">
+          <form class="form-horizontal info-form" name="userCellphoneAddForm" id="userCellphoneAddForm">
+              <div class="form-group">
+                <div class="control-label form-label col-xs-2">APP：</div>
+                <div class="col-xs-10">
+                    <div class="form-group">
+                        <div ng-repeat="app in appList" class="col-xs-6 role">
+                            <label class="checkbox-lable">
+                                <input type="checkbox" name="cellphone-app" class="checkbox"  value="{{app.appId}}">
+                                <span class="info"></span>
+                            </label>
+                            {{app.appName}}
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label col-xs-2">角色：</div>
+                <div class="col-xs-10">
+                    <div class="form-group">
+                        <div ng-repeat="role in roleList" class="col-xs-6 role">
+                            <label class="checkbox-lable">
+                                <input type="checkbox" name="cellphone-role" class="checkbox"  value="{{role.id}}">
+                                <span class="info"></span>
+                            </label>
+                            {{role.name}}
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label col-xs-2">电话：</div>
+                <div class="col-xs-10">
+                    <input type="text" ng-change="clearState()" name="cellphone-email" placeholder="手机号码" ng-model="email" required="true" ng-pattern="/^1\d{10}$/">
+                    <span class="input-alert" ng-show="userAddForm.email.$dirty && userAddForm.email.$invalid">手机号码格式不正确!</span>
+                    <span class="input-alert" ng-show="cellphoneError != null">{{cellphoneError}}</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label col-xs-2">姓名：</div>
+                <div class="col-xs-10">
+                    <input type="text" ng-change="clearState()" name="truename" placeholder="真实姓名" ng-model="truename" required="true">
+                    <span class="input-alert" ng-show="userAddForm.truename.$dirty && userAddForm.truename.$invalid">真实姓名不能为空!</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label col-xs-2">验证码：</div>
+                <div class="col-xs-7">
+                    <input type="text" ng-change="clearState()" name="cellphone-captcha" placeholder="验证码" ng-model="captcha" required="true" />
+                    <span class="input-alert" ng-show="kaptchaError != null">{{kaptchaError}}</span>
+                </div>
+                <div class="col-xs-2">
+                   <div style="position: absolute;top: 0px;right: 0px;">
+                       <img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage" alt="验证码"
+                            class="validateCode" style="cursor: pointer;" />
+                    </div>
+                </div>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="text-center">
+              <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
+              <button type="submit" class="btn" ng-disabled="userCellphoneAddForm.$invalid" ng-click="sendCellphoneCaptcha()" id="submit">发送</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="company-addUser-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog">
 	  <div class="modal-content">

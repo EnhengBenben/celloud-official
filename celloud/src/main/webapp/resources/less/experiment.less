@@ -30,6 +30,9 @@
             position: absolute;
             right: 20px;
             bottom: 10px;
+            &.sampleInfo{
+                right: 0px;
+            }
         }
         select{
             position: absolute;
@@ -68,6 +71,78 @@
         padding-right: 0px;
     }
 }
+
+.content.sampleInfo{
+    .sample-btns {
+        padding-bottom: 10px;
+        .btn{
+            margin-left: 20px;
+        }
+    }
+    .content-header{
+        background-color: #f0f0f0;
+        padding: 0px;
+        min-height: 30px;
+        >img{
+            width: 170px;
+            height: 90px;
+            display: inline-block;
+            float: left;
+        }
+        >p{
+            padding-left: 10px;
+            display: inline-block;
+            float: left;
+            line-height: 23px;
+            font-size: 12px;
+            color: @dark-gray;
+        }
+        .input-alert{
+            position: absolute;
+            right: 20px;
+            bottom: 60px;
+        }
+        .info-btn-group{
+            width: 100%;
+        }
+        select{
+            position: absolute;
+            bottom: 10px;
+            width: 140px;
+            height: 40px;
+            font-size:14px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border: 1px solid @light-gray;
+            .border-radius(4px);
+            color: @font-gray;
+            &.type-select{
+                right: 320px;
+                width: 166px;
+            }
+            &.tag-select{
+                right: 496px;
+            }
+        }
+        .order-input{
+            position: absolute;
+            bottom: 10px;
+            right: 320px;
+            width: 200px;
+            height: 40px;
+            font-size:14px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border: 1px solid @light-gray;
+            .border-radius(4px);
+            color: @font-gray;
+        }
+    }
+    .list {
+        padding-right: 0px;
+    }
+}
+
 .content.library .content-header{
     >.library-name{
         display: inline-block;

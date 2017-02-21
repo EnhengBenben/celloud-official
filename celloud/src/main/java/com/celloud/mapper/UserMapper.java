@@ -40,6 +40,8 @@ public interface UserMapper {
 
     public Integer isEmailInUse(@Param("email") String email, @Param("userId") int userId);
 
+    public Integer isCellphoneInUse(@Param("cellphone") String cellphone);
+
     public User getUserByName(@Param("username") String username);
 
     public List<Integer> getUserIdsByName(@Param("usernames") List<String> usernames);
@@ -131,4 +133,40 @@ public interface UserMapper {
 
     public User findUserByCellphoneAndRole(@Param("cellphone") String cellphone,
             @Param("role") Integer role, @Param("state") Integer state);
+    /**
+     * 注册用户时授权app
+     * 
+     * @param userId
+     * @param appIds
+     * @param isAdded
+     * @param authFrom
+     * @return
+     * @author leamo
+     * @date 2017年2月20日 下午6:14:53
+     */
+    public int addUserAppRight(@Param("userId") int userId, @Param("appIds") String[] appIds,
+            @Param("isAdded") int isAdded, @Param("authFrom") Integer authFrom);
+
+    /**
+     * 注册用户增加用户和大客户关系
+     * 
+     * @param userId
+     * @param companyId
+     * @return
+     * @author leamo
+     * @date 2017年2月20日 下午6:15:04
+     */
+    public int addUserCompanyRelat(@Param("userId") int userId, @Param("companyId") int companyId);
+
+    /**
+     * 增加用户角色关系
+     * 
+     * @param userId
+     * @param roleIds
+     * @param authFrom
+     * @author leamo
+     * @date 2017年2月20日 下午6:15:15
+     */
+    public void addUserRoleRight(@Param("userId") Integer userId, @Param("roleIds") String[] roleIds,
+            @Param("authFrom") Integer authFrom);
 }
