@@ -67,11 +67,12 @@
               <div class="form-group">
                 <div class="control-label form-label tips sample-star" ng-show="(addSampleInfoForm.sampleName.$dirty && addSampleInfoForm.sampleName.$invalid)||(addSampleInfoForm.tel.$dirty && addSampleInfoForm.tel.$invalid)||(addSampleInfoForm.idCard.$dirty && addSampleInfoForm.idCard.$invalid)||(addSampleInfoForm.productTag.$dirty && addSampleInfoForm.productTag.$invalid)||
                 (addSampleInfoForm.name.$dirty && addSampleInfoForm.name.$invalid)||(addSampleInfoForm.age.$dirty && addSampleInfoForm.age.$invalid)||(addSampleInfoForm.sampleType.$dirty && addSampleInfoForm.sampleType.$invalid)">您输入的信息有误,请检查后再输入...</div>
+                <div class="control-label form-label tips sample-star" ng-show="repeat && addSampleInfoForm.$valid">您提交的样品编号重复</div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label">样品编号：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
+                    <input ng-change="repeat = false" type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
                 </div>
                 <div class="control-label form-label second">姓&emsp;&emsp;名：<span class="sample-star">*</span></div>
                 <div>
@@ -108,18 +109,6 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
-                <div>
-                    <select ng-model="productTag" name="productTag" class="form-control" id="productTag1" multiple="multiple" ng-change="changeSampleTypeByTag(1)" required>
-                    </select>
-                </div>
-                <div class="control-label form-label mr10 second">样本类型：<span class="sample-star">*</span></div>
-                <div id="sampleTypes1">
-                    <select ng-model="sampleType" name="sampleType" class="form-control" id="sampleType1" multiple="multiple" required>
-                    </select>
-                </div>
-              </div>
-              <div class="form-group">
                 <div class="control-label form-label mw76">体&emsp;&emsp;重：</div>
                 <div>
                     <input type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
@@ -146,6 +135,20 @@
                      <span class="info"></span>
                    </label>
                    否
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
+                <div>
+                    <select style="width: 552px;" ng-model="productTag" name="productTag" class="form-control" id="productTag1" multiple="multiple" ng-change="changeSampleTypeByTag(1)" required>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label mr10">样本类型：<span class="sample-star">*</span></div>
+                <div id="sampleTypes1">
+                    <select style="width: 552px;" ng-model="sampleType" name="sampleType" class="form-control" id="sampleType1" multiple="multiple" required>
+                    </select>
                 </div>
               </div>
               <div class="form-group">
@@ -181,13 +184,13 @@
         <div class="modal-body form-modal">
           <form class="form-horizontal info-form" name="updateSampleInfoForm" id="updateSampleInfoForm" ng-submit="updateSample()">
               <div class="form-group">
-                <div class="control-label form-label tips sample-star" ng-show="(addSampleInfoForm.sampleName.$dirty && addSampleInfoForm.sampleName.$invalid)||(addSampleInfoForm.tel.$dirty && addSampleInfoForm.tel.$invalid)||(addSampleInfoForm.idCard.$dirty && addSampleInfoForm.idCard.$invalid)||(addSampleInfoForm.productTag.$dirty && addSampleInfoForm.productTag.$invalid)||
-                (addSampleInfoForm.name.$dirty && addSampleInfoForm.name.$invalid)||(addSampleInfoForm.age.$dirty && addSampleInfoForm.age.$invalid)||(addSampleInfoForm.sampleType.$dirty && addSampleInfoForm.sampleType.$invalid)">您输入的信息有误,请检查后再输入...</div>
+                <div class="control-label form-label tips sample-star" ng-show="(updateSampleInfoForm.sampleName.$dirty && updateSampleInfoForm.sampleName.$invalid)||(updateSampleInfoForm.tel.$dirty && updateSampleInfoForm.tel.$invalid)||(updateSampleInfoForm.idCard.$dirty && updateSampleInfoForm.idCard.$invalid)||(updateSampleInfoForm.productTag.$dirty && updateSampleInfoForm.productTag.$invalid)||
+                (updateSampleInfoForm.name.$dirty && updateSampleInfoForm.name.$invalid)||(updateSampleInfoForm.age.$dirty && updateSampleInfoForm.age.$invalid)||(updateSampleInfoForm.sampleType.$dirty && updateSampleInfoForm.sampleType.$invalid)">您输入的信息有误,请检查后再输入...</div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label">样品编号：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
+                    <input ng-change="repeat = false" type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
                 </div>
                 <div class="control-label form-label mw76 second">姓&emsp;&emsp;名：<span class="sample-star">*</span></div>
                 <div>
@@ -224,18 +227,6 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
-                <div>
-                    <select ng-model="productTag" class="form-control" id="productTag2" name="productTag" multiple="multiple" ng-change="changeSampleTypeByTag(2)" required>
-                    </select>
-                </div>
-                <div class="control-label form-label second mr10">样本类型：<span class="sample-star">*</span></div>
-                <div id="sampleTypes2">
-                    <select ng-model="sampleType" class="form-control" id="sampleType2" name="sampleType" multiple="multiple" required>
-                    </select>
-                </div>
-              </div>
-              <div class="form-group">
                 <div class="control-label form-label mw76">体&emsp;&emsp;重：</div>
                 <div>
                     <input type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
@@ -262,6 +253,20 @@
                      <span class="info"></span>
                    </label>
                    否
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label mr10">检测类型：<span class="sample-star">*</span></div>
+                <div>
+                    <select style="width:552px;" ng-model="productTag" class="form-control" id="productTag2" name="productTag" multiple="multiple" ng-change="changeSampleTypeByTag(2)" required>
+                    </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label mr10">样本类型：<span class="sample-star">*</span></div>
+                <div id="sampleTypes2">
+                    <select style="width:552px;" ng-model="sampleType" class="form-control" id="sampleType2" name="sampleType" multiple="multiple" required>
+                    </select>
                 </div>
               </div>
               <div class="form-group">

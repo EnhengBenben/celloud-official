@@ -54,6 +54,7 @@
 	    	  sampleTypeObj1.val(null).trigger("change");
 	    	  $scope.patient.gender = 1;
 	    	  $scope.patient.smoke = 1;
+	    	  $scope.addSampleInfoForm.$setPristine();
 		  });
 	  }
 	  $scope.changeSampleTypeByTag = function(flag){
@@ -126,7 +127,7 @@
 		  	})
 		  	.error(function(data, status){
 		  		if(status == 400){
-		  			$.alert("您输入的信息有误!");
+		  			$scope.repeat = true;
 		  		}else if(status == 500){
 		  			$.alert("服务器发生内部错误");
 		  		}
@@ -161,6 +162,7 @@
 			          $(".select2-search__field").css("height","20px");
 			      }
 			  });
+			  $scope.updateSampleInfoForm.$setPristine();
 		  });
 	  }
       $scope.toEditSampleInfo = function(id){
@@ -228,7 +230,7 @@
 		  })
 		  .error(function(data, status){
 		  	  if(status == 400){
-		  		  $.alert("您输入的信息有误!");
+		  		  $scope.repeat = true;
 		  	  }else if(status == 500){
 		  		  $.alert("服务器发生内部错误");
 		  	  }

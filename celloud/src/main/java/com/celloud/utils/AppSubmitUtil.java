@@ -9,8 +9,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.celloud.common.mq.ProducerUtil;
 import com.celloud.common.mq.entity.TaskMessage;
+import com.celloud.common.mq.utils.ProducerUtil;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.Mod;
 import com.celloud.exception.BusinessException;
@@ -77,13 +77,13 @@ public class AppSubmitUtil {
 	 * @param taskId
 	 * @param datas
 	 */
-	public static void mq(String appCode, Integer taskId, Integer userId, Map<String, String> datas) {
+	public static void mq(String topic, String appCode, Integer taskId, Integer userId, Map<String, String> datas) {
 		ProducerUtil utils = (ProducerUtil) SpringTool.getBean("producerUtil");
 		TaskMessage message = new TaskMessage();
 		message.setAppCode(appCode);
 		message.setTaskId(taskId);
 		message.setUserId(userId);
 		message.setDatas(datas);
-		utils.deliveryTask(message);
+		utils.deliveryTask(topic, message);
 	}
 }
