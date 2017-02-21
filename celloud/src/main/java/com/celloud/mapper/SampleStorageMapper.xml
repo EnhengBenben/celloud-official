@@ -108,10 +108,16 @@
     select * from tb_sample_storage where user_id=#{userId} and state=#{state} order by create_date desc
   </select>
   <select id="sampleListInStorage" resultType="java.util.LinkedHashMap">
-    select ss.id,ss.storage_name storageName,ss.sindex storageSindex,s.sample_name sampleName,s.exper_sample_name experSampleName,s.`type`,ss.create_date createDate,s.sindex sampleSindex
+    select ss.id,ss.storage_name storageName,ss.sindex storageSindex,
+    s.sample_name sampleName,s.exper_sample_name experSampleName,s.`type`,
+    ss.create_date createDate,s.sindex sampleSindex,c.company_name companyName,
+    d.dept_name deptName
 	from tb_sample s
 	left join tb_sample_storage_relat ssr on s.sample_id=ssr.sample_id
 	left join tb_sample_storage ss on ss.id=ssr.storage_id
+	left join tb_user u on s.user_id = u.user_id
+	left join tb_company c on u.company_id = c.company_id
+	left join tb_dept d on c.company_id = d.company_id
 	where ss.user_id=#{userId} and ss.id=#{ssid} and s.state=#{state}
   </select>
 </mapper>
