@@ -36,6 +36,9 @@ public interface SampleMapper {
             @Param("sampleName") String sampleName,
             @Param("state") Integer state);
 
+    Sample selectByNameAndNotIn(@Param("userId") Integer userId, @Param("sample") Sample sample,
+            @Param("state") Integer state);
+
     int deleteList(@Param("sampleIds") List<Integer> sampleIds);
 
     List<Sample> getSamples(Page page, @Param("userId") Integer userId,

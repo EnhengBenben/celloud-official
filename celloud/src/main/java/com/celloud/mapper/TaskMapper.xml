@@ -32,6 +32,7 @@
 		<result column="tag_name" property="tagName" jdbcType="VARCHAR" />
 		<result column="app_name" property="appName" jdbcType="VARCHAR" />
 		<result column="english_name" property="englishName" jdbcType="VARCHAR" />
+		<result column="is_pay" property="isPay" jdbcType="INTEGER" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		task_id, user_id, app_id, data_key, command, period,
@@ -630,7 +631,9 @@
 		group by t.period
 	</select>
 	<select id="findTaskAndDataInfo" resultMap="ResultMapWithFileName">
-		select f.file_id,f.file_name,f.data_key,f.batch,s.sample_name,t.task_id,t.app_id,t.project_id,t.period,t.update_date,tag.tag_name,a.app_name, a.english_name
+		select f.file_id,f.file_name,f.data_key,f.batch,s.sample_name,t.task_id,t.app_id,
+		t.project_id,t.period,t.update_date,tag.tag_name,a.app_name, a.english_name, s.is_pay,
+		t.user_id
 		from
 		(select * from tb_task where
 		task_id in

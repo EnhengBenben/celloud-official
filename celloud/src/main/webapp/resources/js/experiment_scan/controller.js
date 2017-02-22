@@ -48,11 +48,14 @@
 	  $scope.patient = {};
 	  $scope.addReset = function(){
 		  $timeout(function(){
-			  $scope.sample = {};
-			  $scope.patient = {};
 			  productTagObj1.val(null).trigger("change");
 	    	  sampleTypeObj1.val(null).trigger("change");
+	    	  $scope.sample.sampleName = "";
+	    	  $scope.patient.name = "";
+	    	  $scope.patient.tel = "";
+	    	  $scope.patient.age = "";
 	    	  $scope.patient.gender = 1;
+	    	  $scope.patient.idCard = "";
 	    	  $scope.patient.smoke = 1;
 	    	  $scope.addSampleInfoForm.$setPristine();
 		  });
@@ -139,6 +142,15 @@
 		  $timeout(function(){
 			  $scope.patient = angular.copy($scope.bakPatient);
 			  $scope.sample = angular.copy($scope.bakSample);
+			  $scope.sample.sampleName = $scope.bakSample.sampleName
+	    	  $scope.patient.name = $scope.bakPatient.name
+	    	  $scope.patient.tel = $scope.bakPatient.tel
+	    	  $scope.patient.age = $scope.bakPatient.age
+	    	  $scope.patient.gender = $scope.bakPatient.gender
+	    	  $scope.patient.idCard = $scope.bakPatient.idCard
+	    	  $scope.patient.smoke = $scope.bakPatient.smoke
+	    	  $scope.updateSampleInfoForm.$setPristine();
+			  
 			  productTagObj2.val([$scope.bakSample['tagId'],$scope.bakSample['tagName']]).trigger("change");
 			  $.ajax({
 			      url : "metadata/listMetadataToSelectByTagIdAndFlag",

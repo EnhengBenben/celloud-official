@@ -72,27 +72,27 @@
               <div class="form-group">
                 <div class="control-label form-label">样品编号：<span class="sample-star">*</span></div>
                 <div>
-                    <input ng-change="repeat = false" type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" ng-change="repeat = false" type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
                 </div>
                 <div class="control-label form-label second">姓&emsp;&emsp;名：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="name" ng-model="patient.name" placeholder="姓名" maxlength="50" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="name" ng-model="patient.name" placeholder="姓名" maxlength="50" required>
                 </div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label">手&emsp;&emsp;机：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="tel" ng-model="patient.tel" placeholder="手机" maxlength="11" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="tel" ng-model="patient.tel" placeholder="手机" maxlength="11" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required>
                 </div>
                 <div class="control-label form-label second">年&emsp;&emsp;龄：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
                 </div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label">身份证号：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" maxlength="18" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" maxlength="18" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" required>
                 </div>
                 <div class="control-label form-label mr10 second">性&emsp;&emsp;别：<span class="sample-star">*</span></div>
                 <div class="form-group-content">
@@ -111,17 +111,17 @@
               <div class="form-group">
                 <div class="control-label form-label mw76">体&emsp;&emsp;重：</div>
                 <div>
-                    <input type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
                 </div>
                 <div class="control-label form-label second mw76">身&emsp;&emsp;高：</div>
                 <div>
-                    <input type="text" name="height" placeholder="身高" ng-model="patient.height" maxlength="10">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="height" placeholder="身高" ng-model="patient.height" maxlength="10">
                 </div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label mw76">邮&emsp;&emsp;箱：</div>
                 <div>
-                    <input type="text" name="email" placeholder="电子邮箱" ng-model="patient.email" maxlength="50">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="email" placeholder="电子邮箱" ng-model="patient.email" maxlength="50">
                 </div>
                 <div class="control-label form-label mw76 mr10 second">是否吸烟：</div>
                 <div class="form-group-content">
@@ -154,13 +154,13 @@
               <div class="form-group">
                 <div class="control-label form-label mw76">个&ensp;人&ensp;史：</div>
                 <div>
-                    <input class="mw552" type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" class="mw552" type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
                 </div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label mw76">家&ensp;族&ensp;史：</div>
                 <div>
-                    <input class="mw552" type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" class="mw552" type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
                 </div>
               </div>
               <div class="form-group">
@@ -186,31 +186,32 @@
               <div class="form-group">
                 <div class="control-label form-label tips sample-star" ng-show="(updateSampleInfoForm.sampleName.$dirty && updateSampleInfoForm.sampleName.$invalid)||(updateSampleInfoForm.tel.$dirty && updateSampleInfoForm.tel.$invalid)||(updateSampleInfoForm.idCard.$dirty && updateSampleInfoForm.idCard.$invalid)||(updateSampleInfoForm.productTag.$dirty && updateSampleInfoForm.productTag.$invalid)||
                 (updateSampleInfoForm.name.$dirty && updateSampleInfoForm.name.$invalid)||(updateSampleInfoForm.age.$dirty && updateSampleInfoForm.age.$invalid)||(updateSampleInfoForm.sampleType.$dirty && updateSampleInfoForm.sampleType.$invalid)">您输入的信息有误,请检查后再输入...</div>
+                <div class="control-label form-label tips sample-star" ng-show="repeat && updateSampleInfoForm.$valid">您提交的样品编号重复</div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label">样品编号：<span class="sample-star">*</span></div>
                 <div>
-                    <input ng-change="repeat = false" type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" ng-change="repeat = false" type="text" name="sampleName" ng-model="sample.sampleName" placeholder="样品编号" maxlength="50" required>
                 </div>
                 <div class="control-label form-label mw76 second">姓&emsp;&emsp;名：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="name" ng-model="patient.name" placeholder="姓名" maxlength="50" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="name" ng-model="patient.name" placeholder="姓名" maxlength="50" required>
                 </div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label mw76">手&emsp;&emsp;机：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="tel" ng-model="patient.tel" placeholder="手机" maxlength="11" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="tel" ng-model="patient.tel" placeholder="手机" maxlength="11" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required>
                 </div>
                 <div class="control-label form-label mw76 second">年&emsp;&emsp;龄：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
                 </div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label">身份证号：<span class="sample-star">*</span></div>
                 <div>
-                    <input type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" maxlength="18" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" required>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" maxlength="18" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" required>
                 </div>
                 <div class="control-label form-label second mr10 mw76">性&emsp;&emsp;别：<span class="sample-star">*</span></div>
                 <div class="form-group-content">
@@ -229,17 +230,17 @@
               <div class="form-group">
                 <div class="control-label form-label mw76">体&emsp;&emsp;重：</div>
                 <div>
-                    <input type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="weight" placeholder="体重" ng-model="patient.weight" maxlength="10">
                 </div>
                 <div class="control-label form-label mw76 second">身&emsp;&emsp;高：</div>
                 <div>
-                    <input type="text" name="height" placeholder="身高" ng-model="patient.height" maxlength="10">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="height" placeholder="身高" ng-model="patient.height" maxlength="10">
                 </div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label mw76">邮&emsp;&emsp;箱：</div>
                 <div>
-                    <input type="text" name="email" placeholder="电子邮箱" ng-model="patient.email" maxlength="50">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="email" placeholder="电子邮箱" ng-model="patient.email" maxlength="50">
                 </div>
                 <div class="control-label form-label mw76 mr10 second">是否吸烟：</div>
                 <div class="form-group-content">
@@ -272,13 +273,13 @@
               <div class="form-group">
                 <div class="control-label form-label mw76">个&ensp;人&ensp;史：</div>
                 <div>
-                    <input class="mw552" type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" class="mw552" type="text" name="personalHistory" placeholder="个人史" ng-model="patient.personalHistory" maxlength="150">
                 </div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label mw76">家&ensp;族&ensp;史：</div>
                 <div>
-                    <input class="mw552" type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" class="mw552" type="text" name="familyHistory" placeholder="家族史" ng-model="patient.familyHistory" maxlength="50">
                 </div>
               </div>
               <div class="form-group">

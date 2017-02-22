@@ -216,6 +216,11 @@
     from tb_sample
     where user_id = #{userId,jdbcType=INTEGER} and sample_name = #{sampleName,jdbcType=VARCHAR} and state = #{state,jdbcType=BIT} limit 1
   </select>
+  <select id="selectByNameAndNotIn" resultMap="BaseResultMap">
+    select *
+    from tb_sample
+    where sample_id != #{sample.sampleId} and user_id = #{userId,jdbcType=INTEGER} and sample_name = #{sample.sampleName,jdbcType=VARCHAR} and state = #{state,jdbcType=BIT} limit 1
+  </select>
   <delete id="deleteList">
     delete from tb_sample
     where sample_id in(
