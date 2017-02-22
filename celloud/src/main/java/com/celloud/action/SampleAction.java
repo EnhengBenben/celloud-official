@@ -229,6 +229,11 @@ public class SampleAction {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Integer userId = ConstantsData.getLoginUserId();
+        // 检验样本是否重复
+        Boolean check = sampleService.checkSample(sample, userId);
+        if (check) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         Boolean flag = sampleService.updateSampleInfoAndPatient(patient, sample, oldTagId);
         if (!flag) {
             logger.info("用户 {} 更新样本和患者信息出错", userId);

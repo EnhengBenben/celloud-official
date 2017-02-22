@@ -186,6 +186,7 @@
               <div class="form-group">
                 <div class="control-label form-label tips sample-star" ng-show="(updateSampleInfoForm.sampleName.$dirty && updateSampleInfoForm.sampleName.$invalid)||(updateSampleInfoForm.tel.$dirty && updateSampleInfoForm.tel.$invalid)||(updateSampleInfoForm.idCard.$dirty && updateSampleInfoForm.idCard.$invalid)||(updateSampleInfoForm.productTag.$dirty && updateSampleInfoForm.productTag.$invalid)||
                 (updateSampleInfoForm.name.$dirty && updateSampleInfoForm.name.$invalid)||(updateSampleInfoForm.age.$dirty && updateSampleInfoForm.age.$invalid)||(updateSampleInfoForm.sampleType.$dirty && updateSampleInfoForm.sampleType.$invalid)">您输入的信息有误,请检查后再输入...</div>
+                <div class="control-label form-label tips sample-star" ng-show="repeat && updateSampleInfoForm.$valid">您提交的样品编号重复</div>
               </div>
               <div class="form-group">
                 <div class="control-label form-label">样品编号：<span class="sample-star">*</span></div>
