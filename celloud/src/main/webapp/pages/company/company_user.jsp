@@ -69,7 +69,7 @@
                     <div class="form-group">
                         <div ng-repeat="app in appList" class="col-xs-6 role">
                             <label class="checkbox-lable">
-                                <input type="checkbox" name="cellphone-app" class="checkbox"  value="{{app.appId}}">
+                                <input type="checkbox" name="cellphone-app" class="checkbox"  value="{{app.appId}}" checked="checked">
                                 <span class="info"></span>
                             </label>
                             {{app.appName}}
