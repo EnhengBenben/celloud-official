@@ -177,7 +177,7 @@
 				var object = $.ajax({
 					 url: CONTEXT_PATH+"/oss/upload/postPolicy",
 					 async: false,
-					 data:'name='+file.name
+					 data:'name='+file.name+'&oName=ddd'+file.id
 				}).responseText;
 				object = JSON.parse(object);
 				uploader.setOption({
