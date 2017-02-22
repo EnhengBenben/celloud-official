@@ -328,15 +328,15 @@
 		      <div >
 		        <c:if test="{{pageList.datas.size()>0}">
 		          <input id="total-page-hide" value="{{pageList.page.totalPage}}" type="hidden" >
-		          <a class="prev-btn" href="javascript:$.report.detail.prev({{pageList.page.currentPage}})"><i class="fa fa-chevron-circle-left"></i>上一份</a>
-		          <a class="next-btn" href="javascript:$.report.detail.next({{pageList.page.currentPage}})">下一份<i class="fa fa-chevron-circle-right"></i></a>
+		          <a class="prev-btn" ng-href="javascript:$.report.detail.prev({{pageList.page.currentPage}})"><i class="fa fa-chevron-circle-left"></i>上一份</a>
+		          <a class="next-btn" ng-href="javascript:$.report.detail.next({{pageList.page.currentPage}})">下一份<i class="fa fa-chevron-circle-right"></i></a>
 		        </c:if>
 		      </div>
 		    </div>
 		    <div id="report-pagination" class="report-pagination"></div> --%>
 		    <div class="report-btn-group pull-right">
-		       <a class="btn" ng-class="{hide : tab == 'analy'}" id="print-patient-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
-		       <a class="btn" ng-class="{hide : tab == 'patient'}" id="print-analy-a" href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
+		       <a class="btn" ng-class="{hide : tab == 'analy'}" id="print-patient-a" ng-href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_patient" target="_blank"><i class="fa fa-print"></i>打印</a>
+		       <a class="btn" ng-class="{hide : tab == 'patient'}" id="print-analy-a" ng-href="<%=request.getContextPath()%>/report/printBSIReport?projectId={{bsi.projectId }}&dataKey={{bsi.dataKey }}&appId={{bsi.appId }}&templateType=print_analy" target="_blank"><i class="fa fa-print"></i>打印</a>
 		       <a class="btn" href="javascript:void(0)"><i class="fa fa-cloud-download"></i>导出</a>
 			   <a class="btn" href="javascript:void(0)"><i class="fa fa-group"></i>发布</a>
 			   <a class="btn" href="javascript:void(0)"><i class="fa fa-share-square-o"></i>分享</a>

@@ -17,7 +17,7 @@
             {{data.fileName}}({{data.dataKey}})
         </p>
         <div class="btn-group">
-	        <a style="padding:0 10px;" class="btn -low" target="_blank" href="<%=request.getContextPath()%>/report/printGDDReport?projectId={{gdd.projectId}}&dataKey={{gdd.dataKey}}&appId={{gdd.appId}}"><i class="fa fa-print"></i>打印GDD报告</a>
+	        <a style="padding:0 10px;" class="btn -low" target="_blank" ng-href="<%=request.getContextPath()%>/report/printGDDReport?projectId={{gdd.projectId}}&dataKey={{gdd.dataKey}}&appId={{gdd.appId}}"><i class="fa fa-print"></i>打印GDD报告</a>
         </div>
       </div>
       <div>
