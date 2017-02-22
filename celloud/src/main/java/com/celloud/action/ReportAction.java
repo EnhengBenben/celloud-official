@@ -1,7 +1,9 @@
 package com.celloud.action;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,7 +107,7 @@ import net.sf.json.JSONArray;
 @RequestMapping(value = "/report")
 @Controller
 public class ReportAction {
-	Logger log = LoggerFactory.getLogger(ReportAction.class);
+    private Logger log = LoggerFactory.getLogger(ReportAction.class);
 	@Resource
 	private ReportService reportService;
 	@Resource
@@ -176,6 +179,35 @@ public class ReportAction {
 		}
 		return 1;
 	}
+
+    @RequestMapping(value = "openPdf/{userId}/{appId}/{dataKey}")
+    public void openPdf(@PathVariable("userId") Integer userId, @PathVariable("appId") Integer appId,
+            @PathVariable("dataKey") String dataKey, HttpServletResponse response) throws Exception {
+        Integer loginUserId = ConstantsData.getLoginUserId();
+        if (loginUserId.intValue() != userId.intValue()) {
+            log.info("当前登录用户id = {}, 所请求数据用户id = {}", loginUserId, userId);
+            return;
+        }
+        // 查找pdf
+        StringBuilder sb = new StringBuilder();
+        sb.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/").append(dataKey);
+        List<String> files = FileTools.fileSearch(sb.toString(), ".pdf", "endWith");
+        if (files == null || files.size() == 0) {
+            log.info("用户 {} 下没有找到相应的pdf, appId = {}, dataKey = {}", userId, appId, dataKey);
+            return;
+        }
+        response.setContentType("application/pdf");
+        FileInputStream in = new FileInputStream(sb.append("/").append(files.get(0)).toString());
+        OutputStream out = response.getOutputStream();
+        byte[] b = new byte[512];
+        while ((in.read(b)) != -1) {
+            out.write(b);
+        }
+        out.flush();
+        in.close();
+        out.close();
+
+    }
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")
