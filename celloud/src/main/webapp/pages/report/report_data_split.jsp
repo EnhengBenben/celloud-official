@@ -19,7 +19,7 @@
         </p>
         <div class="btn-groups">
         	<a class="btn -low" ng-click="printSplit(split.projectId,split.dataKey,split.appId)"><i class="fa fa-print"></i>打印报告</a>
-            <a class="btn -middle" href="${pageContext.request.contextPath }/report/downByName?path={{split.userId}}/{{split.appId}}/{{split.dataKey}}/result/split_reads.tar.gz"><i class="fa fa-cloud-download"></i>下载全部</a>
+            <a class="btn -middle" ng-href="${pageContext.request.contextPath }/report/downByName?path={{split.userId}}/{{split.appId}}/{{split.dataKey}}/result/split_reads.tar.gz"><i class="fa fa-cloud-download"></i>下载全部</a>
         </div>
       </div>
       <div>
@@ -86,7 +86,7 @@
                         <tr ng-if="split.resultList == null"><td colspan="4">未分析出结果</td></tr>
                         <tr ng-repeat="data in split.resultList" ng-if="!(data.name=='total' ||data.name=='useful'||data.name=='unknown') && split.resultList != null">
                           <td>
-                                <a class="link" href="/report/down?path={{split.userId}}/{{split.appId}}/{{split.dataKey}}/result/split/{{data.name}}.tar.gz">{{data.name}}</a>  
+                                <a class="link" ng-href="/report/down?path={{split.userId}}/{{split.appId}}/{{split.dataKey}}/result/split/{{data.name}}.tar.gz">{{data.name}}</a>  
                           </td>
                           <td>{{data.number}}</td>
                           <td>{{data.avgQuality}}</td>
