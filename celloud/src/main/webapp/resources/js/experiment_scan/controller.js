@@ -402,7 +402,7 @@
 	    	sampleInfoOrderService.sendSampleInfoOrderInfo($routeParams.orderId)
 	    	.success(function(data, status){
 	    		if(status == 200){
-	    			$.alert("发送成功");
+	    			alert("发送成功!");
 	    		}
 	    	})
 	    	.error(function(data, status){
