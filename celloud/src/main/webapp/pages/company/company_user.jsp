@@ -68,13 +68,6 @@
                 <div class="col-xs-10">
                     <div class="form-group">
                         <div ng-repeat="app in appList" class="col-xs-6 role">
-                          <label class="checkbox-lable">
-                            <input type="checkbox" name="cellphone-app-all" class="checkbox">
-                            <span class="info"></span>
-                          </label>
-                                                     全选
-                        </div>
-                        <div ng-repeat="app in appList" class="col-xs-6 role">
                             <label class="checkbox-lable">
                                 <input type="checkbox" name="cellphone-app" class="checkbox"  value="{{app.appId}}">
                                 <span class="info"></span>
