@@ -284,13 +284,15 @@ public class HomeAction {
      * @date 2017年2月20日 下午11:26:01
      */
     @RequestMapping(value = "resetCellphonePwd.html", method = RequestMethod.POST)
-    public String resetCellphonePwd(String username, String password, Model model) {
+    public String resetCellphonePwd(HttpServletRequest request, String username, String password, Model model) {
         boolean result = userService.addCellphoneUser(username, password);
         if (result) {
             model.addAttribute("info", "密码重置成功，请用新密码登录");
-            return "login";
+            return "redirect:login";
         }
         model.addAttribute("info", "密码重置失败，请重试！");
+        HttpSession session = request.getSession();
+        session.removeAttribute("isCellphoneRegister");
         return "user/user_pwd_cellphone";
     }
 }

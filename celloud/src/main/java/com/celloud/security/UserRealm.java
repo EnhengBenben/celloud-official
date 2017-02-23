@@ -91,9 +91,6 @@ public class UserRealm extends AuthorizingRealm {
             userRegister = userService.getUserRegisterInfo(username);
             if (userRegister == null) {// 用户表&注册表都没有
                 throw new UnknownAccountException();// 没找到帐号
-            } else {
-                session.setAttribute("isCellphoneRegister", true);
-                password = userRegister.getMd5();
             }
             if (userRegister.getExpireDate().compareTo(new Date()) <= 0) {// 验证码超时
                 throw new ExpiredCredentialsException();
@@ -101,10 +98,14 @@ public class UserRealm extends AuthorizingRealm {
         } else {
             password = user.getPassword();
             user.setPassword("");
-            session.setAttribute(Constants.SESSION_LOGIN_USER, user);
-            session.removeAttribute(Constants.SESSION_LOGIN_USER_ROLES);
-            session.removeAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS);
         }
+        if (userRegister != null) {
+            session.setAttribute("isCellphoneRegister", true);
+            password = userRegister.getMd5();
+        }
+        session.setAttribute(Constants.SESSION_LOGIN_USER, user);
+        session.removeAttribute(Constants.SESSION_LOGIN_USER_ROLES);
+        session.removeAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS);
 		return new SimpleAuthenticationInfo(username, password, getName());
     }
 

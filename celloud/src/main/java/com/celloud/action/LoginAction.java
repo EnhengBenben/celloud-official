@@ -115,7 +115,8 @@ public class LoginAction {
 	 */
 	@ActionLog(value = "用户登录", button = "登录")
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public ModelAndView login(User user, String kaptchaCode, String newPassword, boolean checked) {
+    public ModelAndView login(User user, String kaptchaCode, String newPassword,
+            boolean checked) {
 		logger.info("用户正在登陆：" + user.getUsername());
 		ConstantsData.getAnotherNamePerlPath(null);
 		Subject subject = SecurityUtils.getSubject();
@@ -153,8 +154,7 @@ public class LoginAction {
 			return mv.addObject("info", "登录失败！");
 		}
         // 手机注册用户
-        if (session.getAttribute("isCellphoneRegister") != null
-                && (boolean) session.getAttribute("isCellphoneRegister")) {
+        if (session.getAttribute("isCellphoneRegister") != null) {
             logger.info("用户（{}）为手机注册，验证码有效跳转修改密码页面", user.getUsername());
             mv.setViewName("user/user_pwd_cellphone");
             return mv.addObject("cellphone", user.getUsername());
