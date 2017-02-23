@@ -18,6 +18,9 @@
                 params:{"sampleName":sampleName,"tagId":tagId,"type":type}
               });
     }
+    self.listMetadata = function(param){
+    	return $http({method:"POST", url:"metadata/listMetadataToSelectByTagIdAndFlag", data:$.param(param), headers: { 'Content-Type': 'application/x-www-form-urlencoded' }});
+    }
     self.deleteSample = function(id){
       return $http({method:"POST",url:'sample/bsi/deleteOne',params:{"sampleId":id}});
     }

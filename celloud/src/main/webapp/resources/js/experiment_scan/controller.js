@@ -1,13 +1,22 @@
 (function(){
   celloudApp.controller("samplingController", function($scope, samplingService){
     $scope.productTags = samplingService.getProductTags();
-    $scope.typeList = samplingService.typeList();
+    $scope.typeList = null;
+    
+    $scope.changeSampleType = function(){
+    	var tagId = $scope.selTags.tagId;
+    	var param = {'tagId' : tagId, 'flag' : 3};
+    	samplingService.listMetadata(param).
+    	success(function(data){
+    		$scope.typeList = data;
+    	});
+    }
     var refreshList = function(){
       $scope.sampleList = samplingService.sampleList();
     }
     refreshList();
     $scope.addSample = function(){
-      samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type.name).success(function(data){
+      samplingService.sampling($scope.sampleName,$scope.selTags.tagId,$scope.type.text).success(function(data){
         if(data == 2){
           $.alert("此样品信息已经收集过，请核查或者采集下一管样品信息！");
         }else {

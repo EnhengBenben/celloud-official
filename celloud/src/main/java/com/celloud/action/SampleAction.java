@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,11 +27,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
 import com.celloud.constants.SampleTypes;
+import com.celloud.model.mysql.Metadata;
 import com.celloud.model.mysql.Patient;
 import com.celloud.model.mysql.Sample;
 import com.celloud.model.mysql.SampleStorage;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.MetadataService;
 import com.celloud.service.SampleService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.DateUtil;
@@ -50,6 +53,8 @@ public class SampleAction {
     Logger logger = LoggerFactory.getLogger(SampleAction.class);
     @Resource
     private SampleService sampleService;
+    @Autowired
+    private MetadataService metadataService;
 
     /**
      * 
@@ -381,16 +386,21 @@ public class SampleAction {
     @RequestMapping("getBuidLibrarySamples")
     @ResponseBody
 	public Map<String, Object> getBuidLibrarySamples() {
+
+        List<Metadata> sampleIndex = metadataService.getMetadata(118, 1);
+        // 文库index
+        List<Metadata> libraryIndex = metadataService.getMetadata(118, 2);
+
         Map<String,Object> map = new HashMap<>();
-        PageList<Sample> pageList = getSamples(1, SampleTypes.index.size(),
+        PageList<Sample> pageList = getSamples(1, sampleIndex.size(),
                 SampleTypes.BUID_LIBRARY);
         Collections.reverse(pageList.getDatas());
         map.put("pageList", pageList);
         SecureRandom s = new SecureRandom();
         map.put("libraryName", DateUtil.getDateToString()
                 + String.format("%02d", s.nextInt(99)));
-		map.put("metaList", SampleTypes.libraryIndex);
-        map.put("sampleIndex", SampleTypes.index);
+        map.put("metaList", libraryIndex);
+        map.put("sampleIndex", sampleIndex);
         return map;
     }
 

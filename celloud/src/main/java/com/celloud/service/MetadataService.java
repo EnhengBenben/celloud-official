@@ -58,4 +58,13 @@ public interface MetadataService {
      */
     List<Map<String, String>> getMetadataToSelectByTagIdAndFlag(Integer tagId, Integer flag);
 
+    /**
+     * 
+     * @description name为key,seq为value获取map
+     * @author miaoqi
+     * @date 2017年2月23日 下午4:18:09
+     * @return
+     */
+    Map<String, Map<String, String>> getNameSeqMap(Integer flag);
+
 }

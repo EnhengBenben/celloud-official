@@ -149,9 +149,17 @@
   
   <select id="getMetadataToSelectByTagIdAndFlag" resultType="java.util.Map">
     SELECT m.name as id, m.name as text
-    FROM tb_metadata m, tb_app_tag_relat atr
-    WHERE atr.tag_id = #{tagId} AND m.app_id = atr.app_id
+    FROM tb_metadata m, tb_app_tag_relat atr, tb_app_metadata_relat amr
+    WHERE atr.tag_id = #{tagId}
+    AND amr.app_id = atr.app_id
+    AND amr.meta_id = m.id
     AND m.flag = #{flag}
+  </select>
+  
+  <select id="getNameSeqMap" resultType="java.util.Map">
+    SELECT distinct m.name name, m.seq seq
+    FROM tb_metadata m
+    WHERE m.flag = #{flag}
   </select>
   
 </mapper>

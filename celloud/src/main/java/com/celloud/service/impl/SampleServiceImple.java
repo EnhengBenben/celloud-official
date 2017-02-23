@@ -41,6 +41,7 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.CompanyEmailService;
 import com.celloud.service.DataService;
+import com.celloud.service.MetadataService;
 import com.celloud.service.PatientService;
 import com.celloud.service.SampleService;
 import com.celloud.service.UserService;
@@ -82,6 +83,8 @@ public class SampleServiceImple implements SampleService {
     private AliEmailUtils aliEmailUtil;
     @Autowired
     private DataService dataService;
+    @Autowired
+    private MetadataService metadataService;
 
 	@Override
 	public Integer saveSample(String sampleName, Integer userId) {
@@ -121,6 +124,7 @@ public class SampleServiceImple implements SampleService {
 
     @Override
     public Integer commitSamples(List<Integer> sampleIds, Integer userId) {
+        Map<String, Map<String, String>> nameSeqMap = metadataService.getNameSeqMap(3);
         sampleIds = new ArrayList<>(new HashSet<>(sampleIds));
         Collections.sort(sampleIds);
         sampleIds = new ArrayList<>(new HashSet<>(sampleIds));
@@ -136,7 +140,8 @@ public class SampleServiceImple implements SampleService {
         for(Sample sample : samples){
 			sample.setIsAdd(true);
 			sample.setOrderId(so.getId());
-			sample.setExperSampleName(DataUtil.getExperSampleNo(sample.getType(), sample.getSampleId()));
+            sample.setExperSampleName(
+                    DataUtil.getExperSampleNo(nameSeqMap.get(sample.getType()).get("seq"), sample.getSampleId()));
 			sampleMapper.updateByPrimaryKeySelective(sample);
         }
         return so.getId();
@@ -199,9 +204,10 @@ public class SampleServiceImple implements SampleService {
     @Override
     public Integer updateExperStateAndIndex(Integer userId, Integer experState,
             Integer sampleId, List<String> sindexList) {
+        List<Metadata> sampleIndex = metadataService.getMetadata(118, 1);
 		if (SampleTypes.indexString == null) {
 			List<String> sampleList = new ArrayList<>();
-			for (Metadata metadata : SampleTypes.index) {
+            for (Metadata metadata : sampleIndex) {
 				sampleList.add(metadata.getName() + ":" + metadata.getSeq());
 			}
 			SampleTypes.indexString = sampleList;
@@ -421,6 +427,7 @@ public class SampleServiceImple implements SampleService {
 
     @Override
     public Integer commitSampleInfo(Integer userId) {
+        Map<String, Map<String, String>> nameSeqMap = metadataService.getNameSeqMap(3);
         List<Map<String, Object>> sampleInfos = sampleMapper.listSample(userId, SampleTypes.NOTADD,
                 DataState.ACTIVE);
         if (sampleInfos == null || sampleInfos.size() <= 0) {
@@ -460,7 +467,7 @@ public class SampleServiceImple implements SampleService {
             sample.setIsAdd(true);
             sample.setOrderId(so.getId());
             sample.setExperSampleName(
-                    DataUtil.getExperSampleNo(sampleInfos.get(i).get("type").toString(),
+                    DataUtil.getExperSampleNo(nameSeqMap.get(sampleInfos.get(i).get("type")).get("seq"),
                             Integer.parseInt(sampleInfos.get(i).get("sampleId").toString())));
             sampleMapper.updateByPrimaryKeySelective(sample);
         }

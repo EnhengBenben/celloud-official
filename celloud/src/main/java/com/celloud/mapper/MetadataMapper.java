@@ -3,6 +3,7 @@ package com.celloud.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.mysql.Metadata;
@@ -34,5 +35,15 @@ public interface MetadataMapper {
      */
     List<Map<String, String>> getMetadataToSelectByTagIdAndFlag(@Param("tagId") Integer tagId,
             @Param("flag") Integer flag);
+
+    /**
+     * 
+     * @description name为key,seq为value获取map
+     * @author miaoqi
+     * @date 2017年2月23日 下午4:19:19
+     * @return
+     */
+    @MapKey("name")
+    Map<String, Map<String, String>> getNameSeqMap(@Param("flag") Integer flag);
 
 }
