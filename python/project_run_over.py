@@ -52,13 +52,14 @@ if my:
 			projectContext += re['dataKey']+'\t'+re['fileName']+'\n'
 
 		projectTxt = os.path.join(p,str(re['projectId'])+'.txt')
-		appendWrite(projectTxt,projectContext)
-		table = simpleToTable(projectTxt,False)
-		updateSql = 'update tb_report set context = "'+table+'",period = 3,end_date=now() where flag = 1 and project_id = '+str(re['projectId'])
-		my=mysql.getInstance()
-		if my:
-			my.execute(updateSql)
-		updateSql = 'update tb_report set period = 3,end_date=now() where flag = 0 and project_id = '+str(re['projectId'])
-		my=mysql.getInstance()
-		if my:
-			my.execute(updateSql)
+		if not os.path.exists(projectTxt):
+			appendWrite(projectTxt,projectContext)
+			table = simpleToTable(projectTxt,False)
+			updateSql = 'update tb_report set context = "'+table+'",period = 3,end_date=now() where flag = 1 and project_id = '+str(re['projectId'])
+			my=mysql.getInstance()
+			if my:
+				my.execute(updateSql)
+			updateSql = 'update tb_report set period = 3,end_date=now() where flag = 0 and project_id = '+str(re['projectId'])
+			my=mysql.getInstance()
+			if my:
+				my.execute(updateSql)
