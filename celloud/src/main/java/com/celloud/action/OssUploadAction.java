@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,6 @@ import com.celloud.model.mysql.OSSConfig;
 import com.celloud.service.DataService;
 import com.celloud.service.OSSConfigService;
 import com.celloud.utils.FileTools;
-import com.celloud.utils.UploadLogUtils;
 
 /**
  * 
@@ -43,9 +41,7 @@ public class OssUploadAction {
 
 	@RequestMapping(value = "postPolicy", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, String> postPolicy(String name, String oName, HttpServletRequest request)
-			throws UnsupportedEncodingException {
-		UploadLogUtils.start(request, oName);
+	public Map<String, String> postPolicy(String name) throws UnsupportedEncodingException {
 		Map<String, String> respMap = new LinkedHashMap<String, String>();
 		String ext = FileTools.getExtName(name);
 		OSSConfig config = service.getLatest();
@@ -73,9 +69,8 @@ public class OssUploadAction {
 	}
 
 	@RequestMapping(value = "newfile")
-	public ResponseEntity<?> newfile(HttpServletRequest request, String objectKey) {
+	public ResponseEntity<?> newfile(String objectKey) {
 		int dataId = dataService.addAndRunFile(ConstantsData.getLoginUserId(), objectKey);
-		UploadLogUtils.stop(request, objectKey);
 		return dataId == 0 ? ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null) : ResponseEntity.ok(null);
 	}
 }

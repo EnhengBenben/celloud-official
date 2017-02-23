@@ -32,7 +32,5 @@ public interface UserRegisterMapper {
      */
     public Integer deleteUserRegisterInfo(@Param("email") String email);
 
-    UserRegister getUserRegisterInfo(@Param("email") String email, @Param("md5") String md5);
-
     UserRegister getUserRegisterInfoByEmail(@Param("email") String email);
 }

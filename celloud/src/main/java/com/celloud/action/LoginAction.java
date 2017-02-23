@@ -3,7 +3,6 @@ package com.celloud.action;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
@@ -36,13 +35,11 @@ import com.celloud.model.PrivateKey;
 import com.celloud.model.PublicKey;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.User;
-import com.celloud.model.mysql.UserRegister;
 import com.celloud.service.ActionLogService;
 import com.celloud.service.AppService;
 import com.celloud.service.RSAKeyService;
 import com.celloud.service.UserService;
 import com.celloud.utils.ActionLog;
-import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
 import com.celloud.utils.MD5Util;
 import com.celloud.utils.RSAUtil;
@@ -118,7 +115,8 @@ public class LoginAction {
 	 */
 	@ActionLog(value = "用户登录", button = "登录")
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public ModelAndView login(User user, String kaptchaCode, String newPassword, boolean checked) {
+    public ModelAndView login(User user, String kaptchaCode, String newPassword,
+            boolean checked) {
 		logger.info("用户正在登陆：" + user.getUsername());
 		ConstantsData.getAnotherNamePerlPath(null);
 		Subject subject = SecurityUtils.getSubject();
@@ -142,32 +140,25 @@ public class LoginAction {
 		try {
 			subject.login(token);
 		} catch (IncorrectCredentialsException | UnknownAccountException e) {
-            // 手机号验证码登录，需要判断注册表有没有记录
-            if (DataUtil.checkCellphone(user.getUsername())) {
-                logger.info("判断用户（{}）是否为手机注册", user.getUsername());
-                UserRegister userRegister = userService.getUserRegisterInfo(user.getUsername(), password);
-                if (userRegister.getExpireDate().compareTo(new Date()) > 0) {
-                    session = subject.getSession();
-                    session.setAttribute("cellphoneRegister", user.getUsername());
-                    System.out.println(session.getAttribute("cellphoneRegister"));
-                    mv.setViewName("user/user_pwd_cellphone");
-                    logger.info("用户（{}）为手机注册，验证码有效调转修改密码页面", user.getUsername());
-                    return mv.addObject("cellphone", user.getUsername()).addObject("randomCode", password);
-                } else {
-                    logger.warn("用户（{}）注册验证码已过期", user.getUsername());
-                    return mv.addObject("info", "验证码已过期，请联系管理员重新申请注册");
-                }
-            }
 			addFailedlogins();
 			logger.warn("用户（{}）登录失败，用户名或密码错误！", user.getUsername());
             return mv.addObject("info", "用户名或密码错误，请重新登录！").addObject("showKaptchaCode", getFailedlogins() >= 3);
-		} catch (Exception e) {
+        } catch (NullPointerException e) {
+            logger.error("用户（{}）注册验证码已过期", user.getUsername());
+            return mv.addObject("info", "登录失败！");
+        } catch (Exception e) {
 			logger.error("登录失败！", e);
 			return mv.addObject("info", "登录失败！");
 		}
 		if (!subject.isAuthenticated()) {
 			return mv.addObject("info", "登录失败！");
 		}
+        // 手机注册用户
+        if (session.getAttribute("isCellphoneRegister") != null) {
+            logger.info("用户（{}）为手机注册，验证码有效跳转修改密码页面", user.getUsername());
+            mv.setViewName("user/user_pwd_cellphone");
+            return mv.addObject("cellphone", user.getUsername());
+        }
 		User loginUser = ConstantsData.getLoginUser();
 		logger.info("用户({})登录成功！", loginUser.getUsername());
 		logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");

@@ -1,5 +1,6 @@
 package com.celloud.security;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -22,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.User;
+import com.celloud.model.mysql.UserRegister;
 import com.celloud.service.UserService;
 
 public class UserRealm extends AuthorizingRealm {
@@ -81,12 +84,25 @@ public class UserRealm extends AuthorizingRealm {
         String username = (String) token.getPrincipal();
         logger.info("getting authenticationInfo: username={}", username);
         User user = userService.findByUsernameOrEmail(username);
-        if (user == null) {
-            throw new UnknownAccountException();// 没找到帐号
-        }
-        String password = user.getPassword();
-        user.setPassword("");
         Session session = SecurityUtils.getSubject().getSession();
+        UserRegister userRegister = null;
+        String password = "";
+        if (user == null) {
+            userRegister = userService.getUserRegisterInfo(username);
+            if (userRegister == null) {// 用户表&注册表都没有
+                throw new UnknownAccountException();// 没找到帐号
+            }
+            if (userRegister.getExpireDate().compareTo(new Date()) <= 0) {// 验证码超时
+                throw new ExpiredCredentialsException();
+            }
+        } else {
+            password = user.getPassword();
+            user.setPassword("");
+        }
+        if (userRegister != null) {
+            session.setAttribute("isCellphoneRegister", true);
+            password = userRegister.getMd5();
+        }
         session.setAttribute(Constants.SESSION_LOGIN_USER, user);
         session.removeAttribute(Constants.SESSION_LOGIN_USER_ROLES);
         session.removeAttribute(Constants.SESSION_LOGIN_USER_PERMISSIONS);
