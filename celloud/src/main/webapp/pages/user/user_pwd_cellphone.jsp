@@ -25,7 +25,6 @@
                 <div class="login-main clearfix">
                   <form id="resetPasswordForm" action="<%=request.getContextPath()%>/resetCellphonePwd.html" method="post">
                       <input type="hidden" id="userNameHidden" name="username" value="${cellphone}">
-                      <input type="hidden" id="userCodeHidden" name="randomCode" value="${randomCode}">
                       <input type="hidden" name="info" id="info" value="${requestScope.info }" />
                       <div class="error">&nbsp;</div>
                       <input type="text" class="input-top" value="用户名：${cellphone }" readonly="readonly"/>

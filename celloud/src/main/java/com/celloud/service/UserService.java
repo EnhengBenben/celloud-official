@@ -373,7 +373,7 @@ public interface UserService {
      * @author leamo
      * @date 2017年2月20日 下午3:24:01
      */
-    UserRegister getUserRegisterInfo(String email, String md5);
+    UserRegister getUserRegisterInfo(String email);
 
     /**
      * 新增手机短信注册用户
@@ -384,5 +384,5 @@ public interface UserService {
      * @author leamo
      * @date 2017年2月20日 下午5:34:47
      */
-    Boolean addCellphoneUser(String cellphone, String md5, String password);
+    Boolean addCellphoneUser(String cellphone, String password);
 }

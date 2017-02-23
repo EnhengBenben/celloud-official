@@ -351,13 +351,13 @@ public class UserServiceImpl implements UserService {
 	}
 
     @Override
-    public UserRegister getUserRegisterInfo(String email, String md5) {
-        return userRegisterMapper.getUserRegisterInfo(email, md5);
+    public UserRegister getUserRegisterInfo(String email) {
+        return userRegisterMapper.getUserRegisterInfoByEmail(email);
     }
 
     @Override
-    public Boolean addCellphoneUser(String cellphone, String md5, String password) {
-        UserRegister userRegister = userRegisterMapper.getUserRegisterInfo(cellphone, md5);
+    public Boolean addCellphoneUser(String cellphone, String password) {
+        UserRegister userRegister = userRegisterMapper.getUserRegisterInfoByEmail(cellphone);
         if (userRegister != null) {
             User managerUser = userMapper.selectByPrimaryKey(userRegister.getAuthFrom());
             User user = new User();

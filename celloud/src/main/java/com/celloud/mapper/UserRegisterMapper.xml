@@ -162,13 +162,6 @@
         delete from tb_user_register where email=#{email }
     </delete>
     
-    <select id="getUserRegisterInfo" resultMap="ResultMapWithBLOBs">
-        select 
-        <include refid="Base_Column_List" />
-        ,
-        <include refid="Blob_Column_List" /> 
-        from tb_user_register where email=#{email } and md5=#{md5 }
-    </select>
     <select id="getUserRegisterInfoByEmail" resultMap="ResultMapWithBLOBs">
         select  
         <include refid="Base_Column_List" />
