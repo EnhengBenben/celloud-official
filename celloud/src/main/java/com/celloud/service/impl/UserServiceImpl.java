@@ -378,7 +378,7 @@ public class UserServiceImpl implements UserService {
                 Integer authFrom = userRegister != null ? userRegister.getAuthFrom() : 0;
                 if (StringUtils.isNotBlank(appIdStr)) {
                     String[] appIds = appIdStr.split(",");
-                    userMapper.addUserAppRight(user.getUserId(), appIds, AppConstants.NOT_ADDED, authFrom);
+                    userMapper.addUserAppRight(user.getUserId(), appIds, AppConstants.ALREADY_ADDED, authFrom);
                 }
                 if (StringUtils.isNotBlank(roleIdStr)) {
                     String[] roleIds = roleIdStr.split(",");
