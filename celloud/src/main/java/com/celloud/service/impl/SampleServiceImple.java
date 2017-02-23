@@ -431,9 +431,6 @@ public class SampleServiceImple implements SampleService {
         sampleOrderMapper.insertSelective(so);
         so.setOrderNo(DataUtil.getSampleOrderNo(so.getId()));
         sampleOrderMapper.updateByPrimaryKeySelective(so);
-        // 修改sample状态为已添加，并添加订单编号
-        // sampleMapper.updateAddTypeById(sampleIds, SampleTypes.ISADD,
-        // so.getId());
 
         for (int i = 0; i < sampleInfos.size(); i++) {
             // 生成tb_file
