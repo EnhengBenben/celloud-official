@@ -48,6 +48,7 @@ public class Task {
     private String tagName;
     private String appName;
     private String englishName;
+    private Integer isPay;
 
     public Integer getTaskId() {
         return taskId;
@@ -255,6 +256,14 @@ public class Task {
 
     public void setReaded(Integer readed) {
         this.readed = readed;
+    }
+
+    public Integer getIsPay() {
+        return isPay;
+    }
+
+    public void setIsPay(Integer isPay) {
+        this.isPay = isPay;
     }
 
 }

@@ -389,7 +389,7 @@ public class FileTools {
 		}
 		String newFileName = filePath.substring(endIndex + 1);
 		File file = new File(filePath);
-		response.addHeader("Content-Disposition", "attachment;filename=" + newFileName);
+        response.addHeader("Content-Disposition", "attachment;filename=" + newFileName);
         response.addHeader("Content-Length", file.length() + "");
 		response.setContentType("application/octet-stream");
 		FileInputStream is = null;

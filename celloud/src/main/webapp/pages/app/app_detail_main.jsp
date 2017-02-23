@@ -24,8 +24,8 @@
 					          <h5>
 					          	<span ng-bind="app.appName"></span>
 					            <span ng-if="app != undefind" id="manageAppBtns" style="display:inline-block;position:relative;margin-left:20px;" data-step="2" data-intro="" data-position="bottom" data-img="changedApp.png">
-					            	<a ng-if="app.runType==0" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="{{app.address}}" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
-					                <a ng-if="app.runType==2" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="{{app.address}}" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
+					            	<a ng-if="app.runType==0" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" ng-href="{{app.address}}" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
+					                <a ng-if="app.runType==2" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" ng-href="{{app.address}}" target="_blank"><i class="fa fa-plus"></i>&nbsp;点击使用</a>
 				                    <a ng-if="app.runType!=0 && app.isAdded==0" class="btn btn-celloud-success btn-flat" style="padding-top: 10px;" href="javascript:void(0);" ng-click="addApp(app.appId)" id="toAddApp"><i class="fa fa-plus"></i>&nbsp;添加</a>
 				                    <a ng-if="app.runType!=0 && app.isAdded==1" class="btn btn-celloud-close btn-flat" style="padding-top: 10px;" href="javascript:void(0);" ng-click="removeApp(app.appId)" id="toAddApp"><i class="fa fa-minus"></i>&nbsp;取消添加</a>
 				                    <a ng-if="app.runType!=0 && app.isAdded==null" class="btn btn-celloud-close btn-flat" style="padding-top: 10px;" href="javascript:void(0);">&nbsp;不需要添加</a>

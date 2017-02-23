@@ -18,7 +18,7 @@
             {{translate.fileName}}({{translate.dataKey}})
         </p>
         <div class="btn-group">
-	        <a class="btn -middle" href="/report/down?path={{translate.userId}}/{{translate.appId}}/{{translate.dataKey}}/result.txt"><i class="fa fa-file-pdf-o"></i>结果下载</a>
+	        <a class="btn -middle" ng-href="/report/down?path={{translate.userId}}/{{translate.appId}}/{{translate.dataKey}}/result.txt"><i class="fa fa-file-pdf-o"></i>结果下载</a>
         </div>
       </div>
       <div>

@@ -57,6 +57,8 @@ public class DirectReportServiceImpl implements DirectReportService {
 				continue;
 			if (Float.valueOf(dna[6]) <= 1)
 				continue;
+			if ("No Call".equals(dna[4]))
+				continue;
 			if (isIn(dna[11])) {
 				dnaFrequency.add(line);
 			}

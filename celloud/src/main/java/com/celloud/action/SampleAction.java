@@ -229,6 +229,11 @@ public class SampleAction {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Integer userId = ConstantsData.getLoginUserId();
+        // 检验样本是否重复
+        Boolean check = sampleService.checkSample(sample, userId);
+        if (check) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         Boolean flag = sampleService.updateSampleInfoAndPatient(patient, sample, oldTagId);
         if (!flag) {
             logger.info("用户 {} 更新样本和患者信息出错", userId);
@@ -429,7 +434,7 @@ public class SampleAction {
                 ConstantsData.getLoginUserId());
         List<String> header = Arrays.asList("文库编号", "文库index", "医院样品编号",
                 "实验样品编号", "样品类型",
-                "建库时间", "样本index");
+                "建库时间", "样本index", "所属医院", "所属部门");
         ExcelUtil.listToExcel(header,
                 sampleService.sampleListInStorage(
                         ConstantsData.getLoginUserId(), ss.getId()),
