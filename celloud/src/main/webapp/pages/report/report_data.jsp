@@ -92,8 +92,8 @@
                 <span class="info"></span>
               </label>
             </th>
-            <th>文件名称</th>
             <th>样品编号</th>
+            <th>文件名称</th>
             <th>产品标签</th>
             <th>数据标签</th>
             <th>更新时间</th>
@@ -109,15 +109,17 @@
                 <span class="info"></span>
               </label>
             </td>
-            <td>{{task.fileName}}</td>
             <td>{{task.sampleName}}</td>
+            <td>{{task.fileName}}</td>
             <td>{{task.tagName}}</td>
             <td>{{task.batch}}</td>
             <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{task.period | taskPeriodFilter}}</td>
             <td>
-              <a ng-if="task.period == 1" ng-class="{disabled:task.period == 1}"><i class="fa fa-eye" aria-hidden="true"></i></a>
-              <a ng-if="task.period == 2" href="#/reportdata/{{task.englishName == '华木兰' ? 'rocky' : task.englishName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a ng-if="task.period == 1 && task.appId < 141 || task.appId > 279" ng-class="{disabled:task.period == 1}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a ng-if="task.period == 2 && task.appId < 141 || task.appId > 279" ng-href="#/reportdata/{{task.englishName == '华木兰' ? 'rocky' : task.englishName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a ng-if="(task.period == 1 || task.isPay == 0) && (task.appId >= 141 && task.appId <= 279)" class="disabled" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a ng-if="task.period == 2 && task.isPay == 1 && (task.appId >= 141 && task.appId <= 279)" target="_blank" ng-href="${pageContext.request.contextPath }/report/openPdf/{{task.userId}}/{{task.appId}}/{{task.dataKey}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
             </td>
           </tr>
         </tbody>

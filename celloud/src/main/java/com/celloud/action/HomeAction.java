@@ -251,6 +251,11 @@ public class HomeAction {
 		return "experiment_scan/sampling_order";
 	}
 
+    @RequestMapping("sampleInfoOrder")
+    public String sampleInfoOrder() {
+        return "experiment_scan/sampling_info_order";
+    }
+
 	@RequestMapping("sessionTimeOut.html")
 	public String sessionTimeOut() {
 		return "user/user_timeout";
@@ -265,5 +270,29 @@ public class HomeAction {
     @RequestMapping("wechat_rocky.html")
     public String wechatRocky(String info) {
         return "wechat/rocky_report";
+    }
+
+    /**
+     * 手机注册用户重置密码
+     * 
+     * @param username
+     * @param password
+     * @param randomCode
+     * @param request
+     * @return
+     * @author leamo
+     * @date 2017年2月20日 下午11:26:01
+     */
+    @RequestMapping(value = "resetCellphonePwd.html", method = RequestMethod.POST)
+    public String resetCellphonePwd(HttpServletRequest request, String username, String password, Model model) {
+        boolean result = userService.addCellphoneUser(username, password);
+        if (result) {
+            model.addAttribute("info", "密码重置成功，请用新密码登录");
+            return "redirect:login";
+        }
+        model.addAttribute("info", "密码重置失败，请重试！");
+        HttpSession session = request.getSession();
+        session.removeAttribute("isCellphoneRegister");
+        return "user/user_pwd_cellphone";
     }
 }

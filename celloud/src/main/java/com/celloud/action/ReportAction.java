@@ -26,9 +26,11 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,7 +106,7 @@ import net.sf.json.JSONArray;
 @RequestMapping(value = "/report")
 @Controller
 public class ReportAction {
-	Logger log = LoggerFactory.getLogger(ReportAction.class);
+    private Logger log = LoggerFactory.getLogger(ReportAction.class);
 	@Resource
 	private ReportService reportService;
 	@Resource
@@ -176,6 +178,28 @@ public class ReportAction {
 		}
 		return 1;
 	}
+
+    @RequestMapping(value = "openPdf/{userId}/{appId}/{dataKey}")
+    public ResponseEntity<byte[]> openPdf(@PathVariable("userId") Integer userId, @PathVariable("appId") Integer appId,
+            @PathVariable("dataKey") String dataKey) throws Exception {
+        Integer loginUserId = ConstantsData.getLoginUserId();
+        if (loginUserId.intValue() != userId.intValue()) {
+            log.info("当前登录用户id = {}, 所请求数据用户id = {}", loginUserId, userId);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        // 查找pdf
+        StringBuilder sb = new StringBuilder();
+        sb.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/").append(dataKey);
+        List<String> files = FileTools.fileSearch(sb.toString(), ".pdf", "endWith");
+        if (files == null || files.size() == 0) {
+            log.info("用户 {} 下没有找到相应的pdf, appId = {}, dataKey = {}", userId, appId, dataKey);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        File targetFile = new File(sb.append("/").append(files.get(0)).toString());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/pdf");
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
+    }
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")

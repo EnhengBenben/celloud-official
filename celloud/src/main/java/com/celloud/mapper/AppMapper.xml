@@ -431,4 +431,9 @@
         	#{appId}
   		</foreach>
   </delete>
+  <select id="getAppIdByTagId" resultType="java.lang.Integer">
+    SELECT app_id
+    FROM tb_app_tag_relat
+    WHERE tag_id = #{tagId}
+  </select>
 </mapper>

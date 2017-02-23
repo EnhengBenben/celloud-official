@@ -58,6 +58,7 @@
 				<value>classpath:mongodb.properties</value>
 				<value>classpath:email.properties</value>
 				<value>classpath:wechat.properties</value>
+				<value>classpath:env.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -309,7 +310,7 @@
 	<bean id="messageProducer" class="com.celloud.common.mq.kafka.KafkaProducerImpl" destroy-method="shutdown" init-method="startup">
 		<property name="config" ref="producerConfig"></property>
 	</bean>
-	<bean id="producerUtil" class="com.celloud.common.mq.ProducerUtil">
+	<bean id="producerUtil" class="com.celloud.common.mq.utils.ProducerUtil">
 		<property name="producer" ref="messageProducer" />
 		<property name="topics">
 			<bean class="com.celloud.common.mq.entity.Topics">

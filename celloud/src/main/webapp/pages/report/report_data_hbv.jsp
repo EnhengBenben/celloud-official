@@ -18,10 +18,10 @@
             {{hbv.fileName}}({{hbv.dataKey}})
         </p>
         <div class="btn-groups">
-            <a ng-if="hbv.dataKey != null && hbv.dataKey != ''" class="btn -low" target="_blank" href='report/printHBV?appId={{hbv.appId}}&dataKey={{hbv.dataKey}}&projectId={{hbv.projectId}}&flag=0'><i class="fa fa-print"></i>详细报告</a>
-            <a ng-if="hbv.dataKey != null && hbv.dataKey != ''" class="btn -low" target="_blank" href='report/printHBV?appId={{hbv.appId}}&dataKey={{hbv.dataKey}}&projectId={{hbv.projectId}}&flag=1'><i class="fa fa-print"></i>简要报告</a>
-            <a ng-if="hbv.pdf != null && hbv.pdf != ''" class="btn -middle" href="/report/down?path={{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/{{hbv.pdf}}"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
-            <a ng-if="hbv.pdf != zip && hbv.zip != ''" class="btn -high" href="/report/down?path={{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/{{hbv.zip}}"><i class="fa fa-cloud-download"></i>报告下载</a>
+            <a ng-if="hbv.dataKey != null && hbv.dataKey != ''" class="btn -low" target="_blank" ng-href='report/printHBV?appId={{hbv.appId}}&dataKey={{hbv.dataKey}}&projectId={{hbv.projectId}}&flag=0'><i class="fa fa-print"></i>详细报告</a>
+            <a ng-if="hbv.dataKey != null && hbv.dataKey != ''" class="btn -low" target="_blank" ng-href='report/printHBV?appId={{hbv.appId}}&dataKey={{hbv.dataKey}}&projectId={{hbv.projectId}}&flag=1'><i class="fa fa-print"></i>简要报告</a>
+            <a ng-if="hbv.pdf != null && hbv.pdf != ''" class="btn -middle" ng-href="/report/down?path={{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/{{hbv.pdf}}"><i class="fa fa-file-pdf-o"></i>PDF下载</a>
+            <a ng-if="hbv.pdf != zip && hbv.zip != ''" class="btn -high" ng-href="/report/down?path={{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/{{hbv.zip}}"><i class="fa fa-cloud-download"></i>报告下载</a>
         </div>
       </div>
       <div>

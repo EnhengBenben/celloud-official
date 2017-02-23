@@ -10,6 +10,9 @@
 		this.sendRegisterEmail = function(email, kaptcha,apps,roles){
 			return $http({method:"POST", url:"user/sendRegistEmail", params:{"email":email, "kaptcha":kaptcha,"apps":apps,"roles":roles}});
 		};
+		this.sendCellphoneCaptcha = function(cellphone,captcha,apps,roles,truename){
+      return $http({method:"POST", url:"user/sendCellphoneCaptcha", params:{"cellphone":cellphone, "captcha":captcha, "truename":truename, "apps":apps,"roles":roles}});
+    };
 		this.getCompanyInfo = function(){
 			return $http({method:"GET", url:"company"});
 		};

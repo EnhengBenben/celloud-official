@@ -115,7 +115,8 @@ public class LoginAction {
 	 */
 	@ActionLog(value = "用户登录", button = "登录")
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public ModelAndView login(User user, String kaptchaCode, String newPassword, boolean checked) {
+    public ModelAndView login(User user, String kaptchaCode, String newPassword,
+            boolean checked) {
 		logger.info("用户正在登陆：" + user.getUsername());
 		ConstantsData.getAnotherNamePerlPath(null);
 		Subject subject = SecurityUtils.getSubject();
@@ -139,17 +140,25 @@ public class LoginAction {
 		try {
 			subject.login(token);
 		} catch (IncorrectCredentialsException | UnknownAccountException e) {
-			String msg = "用户名或密码错误，请重新登录！";
 			addFailedlogins();
 			logger.warn("用户（{}）登录失败，用户名或密码错误！", user.getUsername());
-			return mv.addObject("info", msg).addObject("showKaptchaCode", getFailedlogins() >= 3);
-		} catch (Exception e) {
+            return mv.addObject("info", "用户名或密码错误，请重新登录！").addObject("showKaptchaCode", getFailedlogins() >= 3);
+        } catch (NullPointerException e) {
+            logger.error("用户（{}）注册验证码已过期", user.getUsername());
+            return mv.addObject("info", "登录失败！");
+        } catch (Exception e) {
 			logger.error("登录失败！", e);
 			return mv.addObject("info", "登录失败！");
 		}
 		if (!subject.isAuthenticated()) {
 			return mv.addObject("info", "登录失败！");
 		}
+        // 手机注册用户
+        if (session.getAttribute("isCellphoneRegister") != null) {
+            logger.info("用户（{}）为手机注册，验证码有效跳转修改密码页面", user.getUsername());
+            mv.setViewName("user/user_pwd_cellphone");
+            return mv.addObject("cellphone", user.getUsername());
+        }
 		User loginUser = ConstantsData.getLoginUser();
 		logger.info("用户({})登录成功！", loginUser.getUsername());
 		logService.log("用户登录", "用户" + loginUser.getUsername() + "登录成功");

@@ -24,12 +24,12 @@ public class AlidayuConfig {
     public static String product = props.getProperty("product");
     public static String domain = props.getProperty("domain");
     public static String sign_name = props.getProperty("signName");
-    public static String captcha_template_code = props
-            .getProperty("captchaTemplateCode");
-    /**
-     * 验证码过期时间(min)
-     */
+    public static String captcha_template_code = props.getProperty("captchaTemplateCode");
+    public static String register_captcha_template_code = props.getProperty("registerCaptchaTemplateCode");
+    /** 验证码过期时间(min) */
     public static int captcha_expire_time = 5;
+    /** 注册验证码过期时间(h) */
+    public static int register_captcha_expire_time = 24;
     public static Map<String, UserCaptcha> userCapchaMap;
 
     static {

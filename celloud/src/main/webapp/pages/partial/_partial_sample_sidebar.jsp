@@ -13,6 +13,9 @@
 	        <a di-href="#/sampling/tracking"><span>样本追踪</span></a>
 	      </li>
       </shiro:hasPermission>
+      <li ng-class="{active: isActive('/sampling/info-collection')}">
+        <a di-href="#/sampling/info-collection"><span>样本信息采集</span></a>
+      </li>
     </ul>
   </section>
 </aside>

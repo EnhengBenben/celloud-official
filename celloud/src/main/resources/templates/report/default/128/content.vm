@@ -27,35 +27,69 @@
     （注：本栏结果有明确研究和文献支持；或者是明确致病基因会引起相关蛋白功能改变）
     </p>
     <table class="table table-text-center">
-      <thead>
-        <tr>
-            <th style="text-align:center">疾病名称</th>
-            <th style="text-align:center">检测基因</th>
-            <th style="text-align:center">突变位点数(个)</th>
-            <th style="text-align:center">判定结果</th>
-        </tr>   
-      </thead>
-      <tbody>
-          #if(!$gsrList || $gsrList.size()==0)
-            <tr><td colspan="4">没有发现突变位点</td></tr>
-          #else
-            #foreach(${accountConfig} in $!{gsrList})
-                <tr>  
-                 <td>$!accountConfig.diseaseName</td>
-                 <td>$!accountConfig.gene</td>
-                 <td>$!accountConfig.mutNum</td>
-                 <td><input type="text" name="decisionResult['$!{accountConfig.diseaseEngName}']" value="$!cmpReport.cmpFilling.decisionResult[$!accountConfig.diseaseEngName]"></td>  
+        <thead>
+          <tr>
+            <th>基因</th>
+            <th>突变率</th>
+            <th>覆盖深度</th>
+            <th>突变位置</th>
+            <th>氨基酸变化</th>
+            <th>纯合/杂合</th>
+            <th>疾病名称</th>
+          </tr>
+        </thead>
+        <tbody>
+          #if(${allGsr}==[])
+              <tr><td colspan="7">没有发现突变位点</td></tr>
+          #end
+          #foreach(${r} in ${allGsr})
+            #if(${r.gene.contains('没有发现突变位点')})
+                <tr><td colspan="7">没有发现突变位点</td></tr>
+            #else
+                <tr>
+                    <td>$!r.gene</td>
+                    <td>$!r.mutBase</td>
+                    <td>$!r.depth</td>
+                    <td>#if($!r.cdsMutSyntax.length()>14)$!r.cdsMutSyntax.substring(0,14)#else$!r.cdsMutSyntax#end</td>
+                    <td>#if($!r.aaMutSyntax.length()>14)$!r.aaMutSyntax.substring(0,14)#else$!r.aaMutSyntax#end</td>
+                    <td>
+                            #if($!r.hetOrHom=='het')
+                                杂合
+                            #else
+                                纯合
+                            #end
+                    </td>
+                    <td>$!r.diseaseName</td>
                 </tr>
             #end
           #end
-      </tbody>
+        </tbody>
     </table>
     <p class="font10" style="width:100%;display:block">
         注：检测结果判定为疾病携带者的受检者，需追查其父亲和母亲的相关遗传病基因是否突变，综合分析才能够最后确定检测者是否会患病。我们免费提供携带者父亲和母亲的基因检测和分析服务。
     </p>
   </section>
+  <section class="section2 border1 w3cbbs" id="section4">
+    <h4 class="title">二. 结果说明</h4>
+    <div class="info">
+        <h6>1.&nbsp;&nbsp;关于遗传方式的解释：</h6>
+        <p><span>AR</span>，常染色体隐性遗传：理论上存在2个突变位点才可能致病，在只发现一个杂合突变点的时候，虽然为高危致病基因，但定义为致病基因携带者，并不发病。</p>
+        <p><span>AD</span>，常染色体显性遗传：理论上存在1个杂合突变点即导致致病，通常显性遗传临床症状较轻。</p>
+        <p><span>XR</span>，X染色体隐性遗传：女孩有两条X染色体，男孩只有一条X染色体，通常女孩为致病基因携带者，男孩则发病。</p>
+        <p><span>XD</span>，X染色体显性遗传：理论上1个杂合或纯合的突变位点均可能致病。</p>
+    </div>
+    <div class="info">
+        <h6>2.&nbsp;&nbsp;对经检测发现遗传代谢病致病基因突变的解释：</h6>
+        <p>这些突变位点在人类基因组突变专业数据库（HGMD）内，有明确文献报道位点与该疾病相关，这样的位点一般经过蛋白功能或家系内的严谨验证，确认为高危致病基因，但不排除少数位点局限于以前的科学水平，属于误报道的高危致病位点。</p>
+    </div>
+    <div class="info">
+        <h6>3.&nbsp;&nbsp;对经检验未发现遗传代谢病致病相关基因突变的解释：</h6>
+        <p>结果未发现遗传代谢病相关的致病基因突变位点，表示在基因检测的列表当中没有发现异常，即列表中基因引发的遗传病发病风险很低。随着人类基因组的深入研究，新的致病基因和变异仍在不断被报道出来，不排除有新基因、新发变异导致病变发生的可能。</p>
+        <p>某些遗传性疾病和非遗传性疾病很容易混淆，疾病非遗传原因，一旦发病，在无家族史情况下，散发的患者较为常见。</p>
+    </div>
+  </section>
   <section class="section2 border1 w3cbbs" id="section2">
-    <h4 class="title">二. 检测结果详述</h4>
+    <h4 class="title">三. 检测结果详述</h4>
     #if($!cmpReport.geneDetectionDetail=={} || !$gsrList || $gsrList.size()==0)
       <div class="info">没有发现突变基因</div>
     #else
@@ -117,7 +151,7 @@
   </section>
 </form>
 <section class="section2 border1 w3cbbs" id="section3">
-    <h4 class="title">三. 其他检测结果</h4>
+    <h4 class="title">四. 其他检测结果</h4>
     <table class="table table-text-center">
         <thead>
           <tr>
@@ -142,66 +176,8 @@
         </tbody>
       </table>
   </section>
-  <section class="section2 border1 w3cbbs" id="section4">
-    <h4 class="title">四. 结果说明</h4>
-    <div class="info">
-        <h6>1.&nbsp;&nbsp;关于遗传方式的解释：</h6>
-        <p><span>AR</span>，常染色体隐性遗传：理论上存在2个突变位点才可能致病，在只发现一个杂合突变点的时候，虽然为高危致病基因，但定义为致病基因携带者，并不发病。</p>
-        <p><span>AD</span>，常染色体显性遗传：理论上存在1个杂合突变点即导致致病，通常显性遗传临床症状较轻。</p>
-        <p><span>XR</span>，X染色体隐性遗传：女孩有两条X染色体，男孩只有一条X染色体，通常女孩为致病基因携带者，男孩则发病。</p>
-        <p><span>XD</span>，X染色体显性遗传：理论上1个杂合或纯合的突变位点均可能致病。</p>
-    </div>
-    <div class="info">
-        <h6>2.&nbsp;&nbsp;对经检测发现遗传代谢病致病基因突变的解释：</h6>
-        <p>这些突变位点在人类基因组突变专业数据库（HGMD）内，有明确文献报道位点与该疾病相关，这样的位点一般经过蛋白功能或家系内的严谨验证，确认为高危致病基因，但不排除少数位点局限于以前的科学水平，属于误报道的高危致病位点。</p>
-    </div>
-    <div class="info">
-        <h6>3.&nbsp;&nbsp;对经检验未发现遗传代谢病致病相关基因突变的解释：</h6>
-        <p>结果未发现遗传代谢病相关的致病基因突变位点，表示在基因检测的列表当中没有发现异常，即列表中基因引发的遗传病发病风险很低。随着人类基因组的深入研究，新的致病基因和变异仍在不断被报道出来，不排除有新基因、新发变异导致病变发生的可能。</p>
-        <p>某些遗传性疾病和非遗传性疾病很容易混淆，疾病非遗传原因，一旦发病，在无家族史情况下，散发的患者较为常见。</p>
-    </div>
-  </section>
   <section class="section2 border1 w3cbbs" id="fj1">
-    <h3>附件一：详细检测结果</h3>
-    <table class="table table-text-center">
-        <thead>
-          <tr>
-            <th>基因</th>
-            <th>突变率</th>
-            <th>覆盖深度</th>
-            <th>突变位置</th>
-            <th>氨基酸变化</th>
-            <th>纯合/杂合</th>
-            <th>疾病名称</th>
-          </tr>
-        </thead>
-        <tbody>
-          #if(${allGsr}==[])
-              <tr><td colspan="7">没有发现突变位点</td></tr>
-          #end
-          #foreach(${r} in ${allGsr})
-            #if(${r.gene.contains('没有发现突变位点')})
-                <tr><td colspan="7">没有发现突变位点</td></tr>
-            #else
-                <tr>
-                    <td>$!r.gene</td>
-                    <td>$!r.mutBase</td>
-                    <td>$!r.depth</td>
-                    <td>#if($!r.cdsMutSyntax.length()>14)$!r.cdsMutSyntax.substring(0,14)#else$!r.cdsMutSyntax#end</td>
-                    <td>#if($!r.aaMutSyntax.length()>14)$!r.aaMutSyntax.substring(0,14)#else$!r.aaMutSyntax#end</td>
-                    <td>
-                            #if($!r.hetOrHom=='het')
-                                杂合
-                            #else
-                                纯合
-                            #end
-                    </td>
-                    <td>$!r.diseaseName</td>
-                </tr>
-            #end
-          #end
-        </tbody>
-    </table>
+    <h3>附件一：暂无</h3>
   </section>
   <section class="fj border1 w3cbbs" id="fj1">
     <h3>附件二：检测方法与技术、序列质量控制及覆盖度说明</h3>

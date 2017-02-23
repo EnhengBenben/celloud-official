@@ -100,11 +100,11 @@
                	结束时间：{{report.end_date | date:'yyyy-MM-dd HH:mm:ss'}}
                </div>
                <div class="operate" ng-if="report.userName!='no_one'">
-                   <a style="padding-right: 20px;" title="共享" class="sharefrom" href="javascript:void()">共享自{{report.userName }}</a>
+                   <a style="padding-right: 20px;" title="共享" class="sharefrom" href="javascript:void(0)">共享自{{report.userName }}</a>
                    <a style="padding-right: 20px;" title="删除" class="delete" ng-click="cancelProjectShare(report.project_id)" href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a>
                </div>
                <div class="operate" ng-if="report.userName=='no_one'">
-                   <a style="padding-right: 20px;" title="项目报告" ng-if="report.context!=null && report.context!='' && (companyId == 6 || companyId == 24)" class="projectreport" target="_blank" href="report/printPgsProject?projectId={{report.project_id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+                   <a style="padding-right: 20px;" title="项目报告" ng-if="report.context!=null && report.context!='' && (companyId == 6 || companyId == 24)" class="projectreport" target="_blank" ng-href="report/printPgsProject?projectId={{report.project_id}}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
 	               <a style="padding-right: 20px;" title="PDF下载" ng-if="report.context!=null && report.context!='' && ((report.app_id>84&&report.app_id<89)||(report.app_id>90&&report.app_id<96)||(report.app_id>118&&report.app_id<131&&report.app_id!=126&&report.app_id!=127&&report.app_id!=128&&report.app_id!=123)||report.app_id==104||report.app_id==116)" class="pdfdown" ng-click="downPDF(report.user_id,report.app_id,report.project_id)" href="javascript:void(0)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
 	               <a style="padding-right: 20px;" title="报告共享" ng-if="report.share_num==0" data-toggle="modal" data-target="#project-share-modal" class="share" ng-click="toShareModal(report.project_id,report.project_name,report.data_num)"><i class="fa fa-share" aria-hidden="true"></i></a>
 	               <a style="padding-right: 20px;" title="已共享" ng-if="report.share_num!=0" data-toggle="modal" data-target="#project-share-modal" class="shared" ng-click="shareModal(report.project_id,report.project_name,report.data_num)"><i class="fa fa-share-square-o" aria-hidden="true"></i></a>
