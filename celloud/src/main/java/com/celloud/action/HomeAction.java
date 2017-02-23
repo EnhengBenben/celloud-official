@@ -284,8 +284,8 @@ public class HomeAction {
      * @date 2017年2月20日 下午11:26:01
      */
     @RequestMapping(value = "resetCellphonePwd.html", method = RequestMethod.POST)
-    public String resetCellphonePwd(String username, String password, String randomCode, Model model) {
-        boolean result = userService.addCellphoneUser(username, randomCode, password);
+    public String resetCellphonePwd(String username, String password, Model model) {
+        boolean result = userService.addCellphoneUser(username, password);
         if (result) {
             model.addAttribute("info", "密码重置成功，请用新密码登录");
             return "login";
