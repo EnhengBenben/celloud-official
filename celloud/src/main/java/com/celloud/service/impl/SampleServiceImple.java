@@ -153,6 +153,11 @@ public class SampleServiceImple implements SampleService {
 		return sampleMapper.selectByName(userId, sampleName, DataState.ACTIVE) != null;
 	}
 
+    @Override
+    public Boolean checkSample(Sample sample, Integer userId) {
+        return sampleMapper.selectByNameAndNotIn(userId, sample, DataState.ACTIVE) != null;
+    }
+
 	@Override
 	public Integer delete(Integer sampleId) {
         sampleLogMapper.deleteBySampling(sampleId);

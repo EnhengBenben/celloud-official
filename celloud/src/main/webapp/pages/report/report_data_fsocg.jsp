@@ -22,7 +22,7 @@
 	            </span>
 	        </p>
 	        <div class="btn-groups">
-	        	<a class="btn -low" target="_blank" href="report/printFSocg?appId={{fsocg.appId}}&projectId={{fsocg.projectId}}&dataKey={{fsocg.dataKey}}"><i class="fa fa-print"></i>打印报告</a>
+	        	<a class="btn -low" target="_blank" ng-href="report/printFSocg?appId={{fsocg.appId}}&projectId={{fsocg.projectId}}&dataKey={{fsocg.dataKey}}"><i class="fa fa-print"></i>打印报告</a>
 	        </div>
 	      </div>
     	<section class="m-box"">

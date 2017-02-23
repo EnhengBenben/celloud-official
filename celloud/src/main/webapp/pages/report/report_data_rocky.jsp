@@ -16,7 +16,7 @@
 				</div>
 				<div class="col-xs-6 text-right">
 					<a class="btn -low" style="line-height: 28px;" target="_blank"
-						href="<%=request.getContextPath()%>/report/printRockyReport?projectId={{rocky.projectId}}&dataKey={{rocky.dataKey}}&appId={{rocky.appId}}">
+						ng-href="<%=request.getContextPath()%>/report/printRockyReport?projectId={{rocky.projectId}}&dataKey={{rocky.dataKey}}&appId={{rocky.appId}}">
 						<i class="fa fa-print"></i> 打印报告
 					</a>
 				</div>
@@ -74,7 +74,7 @@
 			</div>
 			<section>
 				<h4 style="text-align: center; margin-top: 20px;">
-					<a target="_blank" href="<%=request.getContextPath()%>/report/printRockyReport?projectId={{rocky.projectId}}&dataKey={{rocky.dataKey}}&appId={{rocky.appId}}">
+					<a target="_blank" ng-href="<%=request.getContextPath()%>/report/printRockyReport?projectId={{rocky.projectId}}&dataKey={{rocky.dataKey}}&appId={{rocky.appId}}">
 						<i class="fa fa-search"></i> 点击查看详细报告
 					</a>
 				</h4>

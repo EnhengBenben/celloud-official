@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import com.celloud.common.mq.ProducerUtil;
 import com.celloud.common.mq.entity.UserNoticeMessage;
+import com.celloud.common.mq.utils.ProducerUtil;
 import com.celloud.constants.Constants;
 import com.celloud.exception.BusinessException;
 import com.celloud.model.mysql.Notice;

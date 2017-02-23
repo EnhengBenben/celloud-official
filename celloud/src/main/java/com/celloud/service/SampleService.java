@@ -82,6 +82,17 @@ public interface SampleService {
     public Boolean checkSample(String sampleName, Integer userId);
 
     /**
+     * 
+     * @description 检查样本是否存在, 排除当前sampleId
+     * @author miaoqi
+     * @date 2017年2月22日 下午3:41:03
+     * @param sample
+     * @param userId
+     * @return
+     */
+    Boolean checkSample(Sample sample, Integer userId);
+
+    /**
      * 删除样本
      * 
      * @param sampleId
@@ -351,4 +362,5 @@ public interface SampleService {
      * @return
      */
     Boolean sendOrderInfo(Integer userId, Integer orderId);
+
 }

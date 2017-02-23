@@ -1,0 +1,3 @@
+﻿/*!40101 SET NAMES utf8 */;
+
+ALTER TABLE tb_tag MODIFY COLUMN tag_name VARCHAR(50);

@@ -48,12 +48,16 @@
 	  $scope.patient = {};
 	  $scope.addReset = function(){
 		  $timeout(function(){
-			  $scope.sample = {};
-			  $scope.patient = {};
 			  productTagObj1.val(null).trigger("change");
 	    	  sampleTypeObj1.val(null).trigger("change");
+	    	  $scope.sample.sampleName = "";
+	    	  $scope.patient.name = "";
+	    	  $scope.patient.tel = "";
+	    	  $scope.patient.age = "";
 	    	  $scope.patient.gender = 1;
+	    	  $scope.patient.idCard = "";
 	    	  $scope.patient.smoke = 1;
+	    	  $scope.addSampleInfoForm.$setPristine();
 		  });
 	  }
 	  $scope.changeSampleTypeByTag = function(flag){
@@ -126,7 +130,7 @@
 		  	})
 		  	.error(function(data, status){
 		  		if(status == 400){
-		  			$.alert("您输入的信息有误!");
+		  			$scope.repeat = true;
 		  		}else if(status == 500){
 		  			$.alert("服务器发生内部错误");
 		  		}
@@ -138,6 +142,15 @@
 		  $timeout(function(){
 			  $scope.patient = angular.copy($scope.bakPatient);
 			  $scope.sample = angular.copy($scope.bakSample);
+			  $scope.sample.sampleName = $scope.bakSample.sampleName
+	    	  $scope.patient.name = $scope.bakPatient.name
+	    	  $scope.patient.tel = $scope.bakPatient.tel
+	    	  $scope.patient.age = $scope.bakPatient.age
+	    	  $scope.patient.gender = $scope.bakPatient.gender
+	    	  $scope.patient.idCard = $scope.bakPatient.idCard
+	    	  $scope.patient.smoke = $scope.bakPatient.smoke
+	    	  $scope.updateSampleInfoForm.$setPristine();
+			  
 			  productTagObj2.val([$scope.bakSample['tagId'],$scope.bakSample['tagName']]).trigger("change");
 			  $.ajax({
 			      url : "metadata/listMetadataToSelectByTagIdAndFlag",
@@ -161,6 +174,7 @@
 			          $(".select2-search__field").css("height","20px");
 			      }
 			  });
+			  $scope.updateSampleInfoForm.$setPristine();
 		  });
 	  }
       $scope.toEditSampleInfo = function(id){
@@ -228,7 +242,7 @@
 		  })
 		  .error(function(data, status){
 		  	  if(status == 400){
-		  		  $.alert("您输入的信息有误!");
+		  		  $scope.repeat = true;
 		  	  }else if(status == 500){
 		  		  $.alert("服务器发生内部错误");
 		  	  }
@@ -388,7 +402,7 @@
 	    	sampleInfoOrderService.sendSampleInfoOrderInfo($routeParams.orderId)
 	    	.success(function(data, status){
 	    		if(status == 200){
-	    			$.alert("发送成功");
+	    			alert("发送成功!");
 	    		}
 	    	})
 	    	.error(function(data, status){
@@ -591,7 +605,6 @@
     		}
     	}
     }
-    
     $scope.addSample = function(){
       var sampleList = $scope.infos.pageList.datas;
       var samplelength = $scope.infos.sampleIndex.length;
@@ -622,7 +635,6 @@
         }
       });
     }
-    
     $scope.addLibrary = function(){
       var select = $scope.sindex.name+":"+$scope.sindex.seq;
       buidLibraryService.addLibrary($scope.infos.libraryName,select,$scope.infos.pageList.datas).success(function(data){
@@ -640,17 +652,17 @@
     $scope.addAndDownLibrary = function(){
       var select = $scope.sindex.name+":"+$scope.sindex.seq;
       buidLibraryService.addLibrary($scope.infos.libraryName,select,$scope.infos.pageList.datas).success(function(data){
-        if(data == 0){
+        if(data == null){
           $scope.notPrevError = true;
-        }else if(data > 0){
+        }else if(data != null){
           var storageName = $scope.infos.libraryName;
           $scope.infos = buidLibraryService.infos();
-          buidLibraryService.downloadExcel(data,storageName).success(function(flag){
+          buidLibraryService.downloadExcel(data.id,data.storageName).success(function(flag){
             if(flag==1){
               $.alert("没有正确生成Excel文件");
             }else{
               var url = window.location.href.split("index")[0];
-              window.location.href=url+"sample/downExperExcel?ssId="+data+"&storageName="+storageName;
+              window.location.href=url+"sample/downExperExcel?ssId="+data.id+"&storageName="+data.storageName;
               $.alert("建库并下载成功！");
             }
           });

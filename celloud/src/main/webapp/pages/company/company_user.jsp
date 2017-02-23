@@ -55,7 +55,7 @@
       <pagination page="userList.page" change="pageQuery(page,pageSize)"></pagination>
     </div>
   <div id="company-cellphone-addUser-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
@@ -69,7 +69,7 @@
                     <div class="form-group">
                         <div ng-repeat="app in appList" class="col-xs-6 role">
                             <label class="checkbox-lable">
-                                <input type="checkbox" name="cellphone-app" class="checkbox"  value="{{app.appId}}">
+                                <input type="checkbox" name="cellphone-app" class="checkbox"  value="{{app.appId}}" checked="checked">
                                 <span class="info"></span>
                             </label>
                             {{app.appName}}
@@ -131,7 +131,7 @@
     </div>
   </div>
   <div id="company-addUser-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 	  <div class="modal-content">
 	    <div class="modal-header">
 	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
@@ -145,7 +145,7 @@
 		            <div class="form-group">
 		             	<div ng-repeat="app in appList" class="col-xs-6 role">
 		             		<label class="checkbox-lable">
-				            	<input type="checkbox" name="app" class="checkbox"  value="{{app.appId}}">
+				            	<input type="checkbox" name="app" class="checkbox" value="{{app.appId}}" checked="checked">
 				            	<span class="info"></span>
 				            </label>
 		            		{{app.appName}}
