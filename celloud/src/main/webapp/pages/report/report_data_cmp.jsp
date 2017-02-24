@@ -226,22 +226,22 @@
 				<table style="width:100%;">
 			      <tr>
 			    	<td style="width:50%;">
-			    		<img style="width:100%;" ng-if="cmp.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}{{cmp.userId}}/{{cmp.appId}}/{{cmp.dataKey}}{{cmp.qualityPath1}}">
-			    		<img style="width:100%;" ng-if="cmp.qualityPath1.indexOf('Tools')>-1" src="{{cmp.qualityPath1}}">
+			    		<img style="width:100%;" ng-if="cmp.qualityPath1.indexOf('Tools')<0" ng-src="{{uploadPath}}{{cmp.userId}}/{{cmp.appId}}/{{cmp.dataKey}}{{cmp.qualityPath1}}">
+			    		<img style="width:100%;" ng-if="cmp.qualityPath1.indexOf('Tools')>-1" ng-src="{{cmp.qualityPath1}}">
 			    	</td>
 			    	<td>
-			    		<img style="width:100%;" ng-if="cmp.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}{{cmp.userId}}/{{cmp.appId}}/{{cmp.dataKey}}/{{cmp.qualityPath2}}">
-			    		<img style="width:100%;"ng-if="cmp.qualityPath2.indexOf('Tools')>-1" src="{{cmp.qualityPath2}}">
+			    		<img style="width:100%;" ng-if="cmp.qualityPath2.indexOf('Tools')<0" ng-src="{{uploadPath}}{{cmp.userId}}/{{cmp.appId}}/{{cmp.dataKey}}/{{cmp.qualityPath2}}">
+			    		<img style="width:100%;"ng-if="cmp.qualityPath2.indexOf('Tools')>-1" ng-src="{{cmp.qualityPath2}}">
 			    	</td>
 			      </tr>
 			      <tr>
 			    	<td>
-			    		<img style="width:100%;" alt="" ng-if="cmp.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}{{cmp.userId}}/{{cmp.appId}}/{{cmp.dataKey}}{{cmp.seqContentPath1}}">
-			    		<img style="width:100%;" alt="" ng-if="cmp.seqContentPath1.indexOf('Tools')>-1" src="{{cmp.seqContentPath1}}">
+			    		<img style="width:100%;" alt="" ng-if="cmp.seqContentPath1.indexOf('Tools')<0" ng-src="{{uploadPath}}{{cmp.userId}}/{{cmp.appId}}/{{cmp.dataKey}}{{cmp.seqContentPath1}}">
+			    		<img style="width:100%;" alt="" ng-if="cmp.seqContentPath1.indexOf('Tools')>-1" ng-src="{{cmp.seqContentPath1}}">
 			    	</td>
 			    	<td>
-			    		<img style="width:100%;" alt="" ng-if="cmp.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}{{cmp.userId}}/{{cmp.appId}}/{{cmp.dataKey}}{{cmp.seqContentPath2}}">
-			    		<img style="width:100%;" alt="" ng-if="cmp.seqContentPath2.indexOf('Tools')>-1" src="{{cmp.seqContentPath2}}">
+			    		<img style="width:100%;" alt="" ng-if="cmp.seqContentPath2.indexOf('Tools')<0" ng-src="{{uploadPath}}{{cmp.userId}}/{{cmp.appId}}/{{cmp.dataKey}}{{cmp.seqContentPath2}}">
+			    		<img style="width:100%;" alt="" ng-if="cmp.seqContentPath2.indexOf('Tools')>-1" ng-src="{{cmp.seqContentPath2}}">
 			    	</td>
 			      </tr>
 			    </table>
