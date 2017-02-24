@@ -151,12 +151,12 @@
                 </table>
                 <table style="width:100%;">
                   <tr>
-                    <td style="width:50%;"><img style="width:100%;" src="{{uploadPath}}/{{split.userId}}/{{split.appId}}/{{split.dataKey}}{{split.qualityPath1}}"></td>
-                    <td><img style="width:100%;" src="{{uploadPath}}/{{split.userId}}/{{split.appId}}/{{split.dataKey}}{{split.qualityPath2}}"></td>
+                    <td style="width:50%;"><img style="width:100%;" ng-src="{{uploadPath}}/{{split.userId}}/{{split.appId}}/{{split.dataKey}}{{split.qualityPath1}}"></td>
+                    <td><img style="width:100%;" ng-src="{{uploadPath}}/{{split.userId}}/{{split.appId}}/{{split.dataKey}}{{split.qualityPath2}}"></td>
                   </tr>
                   <tr>
-                    <td><img style="width:100%;" alt="" src="{{uploadPath}}/{{split.userId}}/{{split.appId}}/{{split.dataKey}}{{split.seqContentPath1}}"></td>
-                    <td><img style="width:100%;" alt="" src="{{uploadPath}}/{{split.userId}}/{{split.appId}}/{{split.dataKey}}{{split.seqContentPath2}}"></td>
+                    <td><img style="width:100%;" alt="" ng-src="{{uploadPath}}/{{split.userId}}/{{split.appId}}/{{split.dataKey}}{{split.seqContentPath1}}"></td>
+                    <td><img style="width:100%;" alt="" ng-src="{{uploadPath}}/{{split.userId}}/{{split.appId}}/{{split.dataKey}}{{split.seqContentPath2}}"></td>
                   </tr>
                 </table>
             </div>
