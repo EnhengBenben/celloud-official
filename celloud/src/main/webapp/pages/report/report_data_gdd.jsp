@@ -225,22 +225,22 @@
 				<table style="width:100%;">
 			      <tr>
 			    	<td style="width:50%;">
-			    		<img style="width:100%;" ng-if="gdd.qualityPath1.indexOf('Tools')<0" src="{{uploadPath}}{{gdd.userId}}/{{gdd.appId}}/{{gdd.dataKey}}{{gdd.qualityPath1}}">
-			    		<img style="width:100%;" ng-if="gdd.qualityPath1.indexOf('Tools')>-1" src="{{gdd.qualityPath1}}">
+			    		<img style="width:100%;" ng-if="gdd.qualityPath1.indexOf('Tools')<0" ng-src="{{uploadPath}}{{gdd.userId}}/{{gdd.appId}}/{{gdd.dataKey}}{{gdd.qualityPath1}}">
+			    		<img style="width:100%;" ng-if="gdd.qualityPath1.indexOf('Tools')>-1" ng-src="{{gdd.qualityPath1}}">
 			    	</td>
 			    	<td>
-			    		<img style="width:100%;" ng-if="gdd.qualityPath2.indexOf('Tools')<0" src="{{uploadPath}}{{gdd.userId}}/{{gdd.appId}}/{{gdd.dataKey}}/{{gdd.qualityPath2}}">
-			    		<img style="width:100%;"ng-if="gdd.qualityPath2.indexOf('Tools')>-1" src="{{gdd.qualityPath2}}">
+			    		<img style="width:100%;" ng-if="gdd.qualityPath2.indexOf('Tools')<0" ng-src="{{uploadPath}}{{gdd.userId}}/{{gdd.appId}}/{{gdd.dataKey}}/{{gdd.qualityPath2}}">
+			    		<img style="width:100%;"ng-if="gdd.qualityPath2.indexOf('Tools')>-1" ng-src="{{gdd.qualityPath2}}">
 			    	</td>
 			      </tr>
 			      <tr>
 			    	<td>
-			    		<img style="width:100%;" alt="" ng-if="gdd.seqContentPath1.indexOf('Tools')<0" src="{{uploadPath}}{{gdd.userId}}/{{gdd.appId}}/{{gdd.dataKey}}{{gdd.seqContentPath1}}">
-			    		<img style="width:100%;" alt="" ng-if="gdd.seqContentPath1.indexOf('Tools')>-1" src="{{gdd.seqContentPath1}}">
+			    		<img style="width:100%;" alt="" ng-if="gdd.seqContentPath1.indexOf('Tools')<0" ng-src="{{uploadPath}}{{gdd.userId}}/{{gdd.appId}}/{{gdd.dataKey}}{{gdd.seqContentPath1}}">
+			    		<img style="width:100%;" alt="" ng-if="gdd.seqContentPath1.indexOf('Tools')>-1" ng-src="{{gdd.seqContentPath1}}">
 			    	</td>
 			    	<td>
-			    		<img style="width:100%;" alt="" ng-if="gdd.seqContentPath2.indexOf('Tools')<0" src="{{uploadPath}}{{gdd.userId}}/{{gdd.appId}}/{{gdd.dataKey}}{{gdd.seqContentPath2}}">
-			    		<img style="width:100%;" alt="" ng-if="gdd.seqContentPath2.indexOf('Tools')>-1" src="{{gdd.seqContentPath2}}">
+			    		<img style="width:100%;" alt="" ng-if="gdd.seqContentPath2.indexOf('Tools')<0" ng-src="{{uploadPath}}{{gdd.userId}}/{{gdd.appId}}/{{gdd.dataKey}}{{gdd.seqContentPath2}}">
+			    		<img style="width:100%;" alt="" ng-if="gdd.seqContentPath2.indexOf('Tools')>-1" ng-src="{{gdd.seqContentPath2}}">
 			    	</td>
 			      </tr>
 			    </table>

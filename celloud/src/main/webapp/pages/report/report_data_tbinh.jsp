@@ -79,7 +79,7 @@
 		 	 <div ng-if="tbinh.original == null" class="m-boxCon">样本数据异常,无法检测</div>
 	 		 <div ng-if="tbinh.original != null" class="m-boxCon"ng-repeat="original in tbinh.original">
 	 			<a ng-click="bigOrigin(uploadPath + tbinh.userId + '/' + tbinh.appId + '/' + tbinh.dataKey + '/SVG/' + original,'original' + ($index+1));">
-	 				<img name="imgSrc" src="{{uploadPath}}{{tbinh.userId}}/{{tbinh.appId}}/{{tbinh.dataKey}}/SVG/{{original}}" class="originImg" id="original{{$index+1}}"><br/>
+	 				<img name="imgSrc" ng-src="{{uploadPath}}{{tbinh.userId}}/{{tbinh.appId}}/{{tbinh.dataKey}}/SVG/{{original}}" class="originImg" id="original{{$index+1}}"><br/>
 	 			</a>
 	 		 </div>
 	     </section>

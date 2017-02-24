@@ -22,7 +22,7 @@
         <section class="m-box">
 	        <h2>Neighbor-Joining 进化距离图</h2>
 		    <div class="m-boxCon">
-				<img style="padding-left: 70px;" src="{{uploadPath}}{{abinj.userId}}/{{abinj.appId}}/{{abinj.projectId}}/{{abinj.resultPng}}" height="500px;" width="500px;">
+				<img style="padding-left: 70px;" ng-src="{{uploadPath}}{{abinj.userId}}/{{abinj.appId}}/{{abinj.projectId}}/{{abinj.resultPng}}" height="500px;" width="500px;">
 		    </div>
 	    </section>
 	   </div>

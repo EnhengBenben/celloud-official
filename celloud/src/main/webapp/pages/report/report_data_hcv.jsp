@@ -91,32 +91,32 @@
 	    	<h2><i class="i-dna"></i>原始峰图</h2>
 		    <div class="m-boxCon result" ng-if="hcv.original['1_all_png'] != null">
 				<a ng-click="bigOrigin(uploadPath + hcv.userId + '/' + hcv.appId + '/' +hcv.dataKey + '/SVG/' + hcv.original['1_all_png'],'listAll1Img');" >
-					<img class="imgtop originImg" name="imgSrc" src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['1_all_png']}}" id="listAll1Img">
+					<img class="imgtop originImg" name="imgSrc" ng-src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['1_all_png']}}" id="listAll1Img">
 				</a>
 		    </div>
 		    <div class="m-boxCon result" ng-if="hcv.original['2_all_png'] != null">
 				<a ng-click="bigOrigin(uploadPath + hcv.userId + '/' + hcv.appId + '/' +hcv.dataKey + '/SVG/' + hcv.original['2_all_png'],'listAll2Img');" >
-					<img class="imgtop originImg" name="imgSrc" src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['2_all_png']}}" id="listAll2Img">
+					<img class="imgtop originImg" name="imgSrc" ng-src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['2_all_png']}}" id="listAll2Img">
 				</a>
 		    </div>
 		    <div class="m-boxCon result" ng-if="hcv.original['3_all_png']">
 				<a ng-click="bigOrigin(uploadPath + hcv.userId + '/' + hcv.appId + '/' +hcv.dataKey + '/SVG/' + hcv.original['3_all_png'],'listAll3Img');" >
-					<img class="imgtop originImg" name="imgSrc" src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['3_all_png']}}" id="listAll3Img">
+					<img class="imgtop originImg" name="imgSrc" ng-src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['3_all_png']}}" id="listAll3Img">
 				</a>
 		    </div>
 		    <div class="m-boxCon result" ng-if="hcv.original['4_all_png']">
 				<a ng-click="bigOrigin(uploadPath + hcv.userId + '/' + hcv.appId + '/' +hcv.dataKey + '/SVG/' + hcv.original['4_all_png'],'listAll4Img');" >
-					<img class="imgtop originImg" name="imgSrc" src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['4_all_png']}}" id="listAll4Img">
+					<img class="imgtop originImg" name="imgSrc" ng-src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['4_all_png']}}" id="listAll4Img">
 				</a>
 		    </div>
 		    <div class="m-boxCon result" ng-if="hcv.original['5_all_png']">
 				<a ng-click="bigOrigin(uploadPath + hcv.userId + '/' + hcv.appId + '/' +hcv.dataKey + '/SVG/' + hcv.original['5_all_png'],'listAll5Img');" >
-					<img class="imgtop originImg" name="imgSrc" src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['5_all_png']}}" id="listAll5Img">
+					<img class="imgtop originImg" name="imgSrc" ng-src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['5_all_png']}}" id="listAll5Img">
 				</a>
 		    </div>
 		    <div class="m-boxCon result" ng-if="hcv.original['6_all_png']">
 				<a ng-click="bigOrigin(uploadPath + hcv.userId + '/' + hcv.appId + '/' +hcv.dataKey + '/SVG/' + hcv.original['6_all_png'],'listAll6Img');" >
-					<img class="imgtop originImg" name="imgSrc" src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['6_all_png']}}" id="listAll6Img">
+					<img class="imgtop originImg" name="imgSrc" ng-src="{{uploadPath}}{{hcv.userId}}/{{hcv.appId}}/{{hcv.dataKey}}/SVG/{{hcv.original['6_all_png']}}" id="listAll6Img">
 				</a>
 		    </div>
 	    </section>
