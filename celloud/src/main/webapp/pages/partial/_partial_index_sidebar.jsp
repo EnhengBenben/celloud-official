@@ -13,9 +13,16 @@
 	        </li>
         </shiro:hasPermission>
         <shiro:hasPermission name="sample:manage">
-            <li ng-class="{active: isActive('/sampling')}">
-              <a di-href="<%=request.getContextPath()%>/index#/sampling/collection"><i class="sample-icon"></i><span>样本采集</span></a>
-            </li>
+            <shiro:hasPermission name="sample:collection">
+	            <li ng-class="{active: isActive('/sampling')}">
+	              <a di-href="<%=request.getContextPath()%>/index#/sampling/collection"><i class="sample-icon"></i><span>样本采集</span></a>
+	            </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="sample:collection-info">
+	            <li ng-class="{active: isActive('/sampling/info-collection')}">
+	               <a di-href="#/sampling/info-collection"><i class="sample-icon"></i><span>样本信息采集</span></a>
+	            </li>
+	        </shiro:hasPermission>
         </shiro:hasPermission>
         <shiro:hasPermission name="experiment:manage">
 	        <li ng-class="{active: isActive('/experiment')}">
