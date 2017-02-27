@@ -377,4 +377,14 @@ public interface DataService {
      * @date 2016年11月29日 上午10:43:44
      */
     Integer getSampleIdByDataKey(String dataKey);
+
+    /**
+     * 
+     * @description 根据dataKey获取batch
+     * @author miaoqi
+     * @date 2017年2月24日 下午6:15:51
+     * @param dataKey
+     * @return
+     */
+    String getBatchByDataKey(String dataKey);
 }

@@ -98,7 +98,15 @@
       templateUrl: "pages/report/report_data_egfr.jsp",
       controller: "egfrDataReportController"
     })
+    .when('/reportdata/EGFR/:appId/:dataKey/:projectId',{
+      templateUrl: "pages/report/data_report_data_egfr.jsp",
+      controller: "dataEgfrDataReportController"
+    })
     .when('/reportpro/KRAS/:appId/:dataKey/:projectId',{
+      templateUrl: "pages/report/report_data_kras.jsp",
+      controller: "krasDataReportController"
+    })
+    .when('/reportdata/KRAS/:appId/:dataKey/:projectId',{
       templateUrl: "pages/report/report_data_kras.jsp",
       controller: "krasDataReportController"
     })
@@ -106,7 +114,15 @@
 	  templateUrl: "pages/report/report_data_hcv.jsp",
 	  controller: "hcvDataReportController"
     })
+    .when('/reportdata/HCV_Genotype/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_hcv.jsp",
+    	controller: "hcvDataReportController"
+    })
     .when('/reportpro/BRAF/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_braf.jsp",
+    	controller: "brafDataReportController"
+    })
+    .when('/reportdata/BRAF/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_braf.jsp",
     	controller: "brafDataReportController"
     })
@@ -114,7 +130,15 @@
     	templateUrl: "pages/report/report_data_tbrifampicin.jsp",
     	controller: "tbRifampicinDataReportController"
     })
+    .when('/reportdata/TB-Rifampicin/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_tbrifampicin.jsp",
+    	controller: "tbRifampicinDataReportController"
+    })
     .when('/reportpro/TB-INH/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_tbinh.jsp",
+    	controller: "tbinhDataReportController"
+    })
+    .when('/reportdata/TB-INH/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_tbinh.jsp",
     	controller: "tbinhDataReportController"
     })
@@ -122,7 +146,15 @@
     	templateUrl: "pages/report/report_data_hbv.jsp",
     	controller: "hbvDataReportController"
     })
+    .when('/reportdata/HBV_SNP2/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_hbv.jsp",
+    	controller: "hbvDataReportController"
+    })
     .when('/reportpro/oncogene/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_oncogene.jsp",
+    	controller: "oncogeneDataReportController"
+    })
+    .when('/reportdata/oncogene/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_oncogene.jsp",
     	controller: "oncogeneDataReportController"
     })
@@ -130,7 +162,15 @@
     	templateUrl: "pages/report/report_data_dpd.jsp",
     	controller: "dpdDataReportController"
     })
+    .when('/reportdata/DPD/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_dpd.jsp",
+    	controller: "dpdDataReportController"
+    })
     .when('/reportpro/ABI_NJ/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_abinj.jsp",
+    	controller: "abinjDataReportController"
+    })
+    .when('/reportdata/ABI_NJ/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_abinj.jsp",
     	controller: "abinjDataReportController"
     })
@@ -138,7 +178,15 @@
     	templateUrl: "pages/report/report_data_ugt.jsp",
     	controller: "ugtDataReportController"
     })
+    .when('/reportdata/UGT/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_ugt.jsp",
+    	controller: "ugtDataReportController"
+    })
     .when('/reportpro/16S/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_16s.jsp",
+    	controller: "16sDataReportController"
+    })
+    .when('/reportdata/16S/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_16s.jsp",
     	controller: "16sDataReportController"
     })
@@ -146,7 +194,15 @@
     	templateUrl: "pages/report/report_data_translate.jsp",
     	controller: "translateDataReportController"
     })
+    .when('/reportdata/translate_simplified/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_translate.jsp",
+    	controller: "translateDataReportController"
+    })
     .when('/reportpro/PGS/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_pgs.jsp",
+    	controller: "pgsDataReportController"
+    })
+    .when('/reportdata/PGS/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_pgs.jsp",
     	controller: "pgsDataReportController"
     })
@@ -162,7 +218,15 @@
     	templateUrl: "pages/report/report_data_gdd.jsp",
     	controller: "gddDataReportController"
     })
+    .when('/reportdata/AccuSeqΩ/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_gdd.jsp",
+    	controller: "gddDataReportController"
+    })
     .when('/reportpro/CMP/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
+    .when('/reportdata/CMP/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_cmp.jsp",
     	controller: "cmpDataReportController"
     })
@@ -170,15 +234,31 @@
     	templateUrl: "pages/report/report_data_cmp.jsp",
     	controller: "cmpDataReportController"
     })
+    .when('/reportdata/AccuSeqα/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
     .when('/reportpro/AccuSeqα2/:appId/:dataKey/:projectId',{
       templateUrl: "pages/report/report_data_accuseqα2.jsp",
       controller: "accuseqa2DataReportController"
+    })
+    .when('/reportdata/AccuSeqα2/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_accuseqα2.jsp",
+    	controller: "accuseqa2DataReportController"
     })
     .when('/reportpro/CMP_199/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_cmp.jsp",
     	controller: "cmpDataReportController"
     })
+    .when('/reportdata/CMP_199/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
     .when('/reportpro/AccuSeqα199/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_cmp.jsp",
+    	controller: "cmpDataReportController"
+    })
+    .when('/reportdata/AccuSeqα199/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_cmp.jsp",
     	controller: "cmpDataReportController"
     })
@@ -224,6 +304,10 @@
     .when('/reportpro/MIB/:appId/:dataKey/:proId',{
       templateUrl: "pages/report/report_data_mib.jsp",
       controller: "mibReportController"
+    })
+    .when('/reportdata/MIB/:appId/:dataKey/:proId',{
+    	templateUrl: "pages/report/report_data_mib.jsp",
+    	controller: "mibReportController"
     })
     .when('/sampling/collection',{
       templateUrl: "pages/experiment_scan/sampling.jsp",

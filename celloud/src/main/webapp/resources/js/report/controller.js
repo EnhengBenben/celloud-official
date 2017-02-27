@@ -228,6 +228,58 @@
 		  }
 	  });
   });
+  
+  celloudApp.controller("dataEgfrDataReportController", function($scope, $routeParams, dataReportService){
+	  dataReportService.getDataReportInfo("report/getEGFRInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(egfrInfo){
+		  $scope.egfr = egfrInfo.egfr;
+		  $scope.project = egfrInfo.project;
+		  $scope.uploadPath = egfrInfo.uploadPath;
+		  $scope.batch = egfrInfo.batch;
+		  // dataInPro($scope.egfr, $scope.project.projectId, $scope.project.projectName);
+		  $scope.dataInBatch = function(currentPage){
+			  var params = {};
+			  if(currentPage != null){
+				  params.currentPage = currentPage;
+			  }
+			  params.appId = $scope.egfr.appId;
+			  params.projectId = $scope.egfr.projectId;
+			  params.dataKey = $scope.egfr.dataKey;
+			  dataReportService.dataInBatch(params);
+		  }
+		  // 数据参数同比
+		  var length = $scope.egfr.pos;
+		  if(length==0 || isNaN(length)){
+			  $("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
+		  }else{  
+			  $.get("count/egfrCompare",{"length":length},function(data){
+			      var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
+				  $("#charDiv").append(div);
+				  var X = "[";
+				  var Y = "[";
+				  var value = data.split("\n");
+				  if(value.length > 1){
+					  for(var k=0;k<value.length-1;k++){
+						  var n = value[k].split("\t");
+						  X+="'"+n[0]+"',";
+						  Y+=n[1]+",";
+					  }
+				  }else{
+					  var n = data.split("\t");
+					  X+="'"+n[0]+"',";
+					  Y+=n[1]+",";
+				  }
+				  X = X.substring(0,X.length-1)+"]";
+				  Y = Y.substring(0,Y.length-1)+"]";
+				  $.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
+			  });
+		  }
+		  $scope.showHelp = function(){
+			  $("#helpModal").modal("show");
+		  }
+	  });
+  });
+  
   /**
    * kras数据报告controller
    */
