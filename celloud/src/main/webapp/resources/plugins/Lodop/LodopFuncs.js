@@ -49,11 +49,11 @@ if (needCLodop()) {
 
 //====获取LODOP对象的主过程：====
 function getLodop(oOBJECT,oEMBED){
-    var strHtmInstall="<font>打印控件未安装!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop32.exe' target='_self'>执行安装</a>,安装后请刷新页面或重新进入。</font>";
-    var strHtmUpdate="<font>打印控件需要升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop32.exe' target='_self'>执行升级</a>,升级后请重新进入。</font>";
-    var strHtm64_Install="<font>打印控件未安装!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop64.exe' target='_self'>执行安装</a>,安装后请刷新页面或重新进入。</font>";
-    var strHtm64_Update="<font>打印控件需要升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop64.exe' target='_self'>执行升级</a>,升级后请重新进入。</font>";
-    var strHtmFireFox="<font>（注意：如曾安装过Lodop旧版附件npActiveXPLugin,请在【工具】->【附加组件】->【扩展】中先卸它）</font>";
+//    var strHtmInstall="<font>打印控件未安装!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop32.exe' target='_self'>执行安装</a>,安装后请刷新页面或重新进入。</font>";
+//    var strHtmUpdate="<font>打印控件需要升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop32.exe' target='_self'>执行升级</a>,升级后请重新进入。</font>";
+//    var strHtm64_Install="<font>打印控件未安装!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop64.exe' target='_self'>执行安装</a>,安装后请刷新页面或重新进入。</font>";
+//    var strHtm64_Update="<font>打印控件需要升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop64.exe' target='_self'>执行升级</a>,升级后请重新进入。</font>";
+//    var strHtmFireFox="<font>（注意：如曾安装过Lodop旧版附件npActiveXPLugin,请在【工具】->【附加组件】->【扩展】中先卸它）</font>";
     var strHtmChrome="<font>(如果此前正常，仅因浏览器升级或重安装而出问题，需点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.068.exe' target='_self'>重新安装</a>,安装后请刷新页面。）</font>";
     var strCLodopInstall="<font>CLodop云打印服务(localhost本地)未安装启动!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.068.exe' target='_self'>执行安装</a>,安装后请刷新页面。</font>";
     var strCLodopUpdate="<font color='#FF00FF'>CLodop云打印服务需升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.068.exe' target='_self'>执行升级</a>,升级后请刷新页面。</font>";
@@ -64,16 +64,12 @@ function getLodop(oOBJECT,oEMBED){
             try{ LODOP=getCLodop();} catch(err) {};
             if (!LODOP && document.readyState!=="complete") {alert("C-Lodop没准备好，请稍后再试！"); return;};
             if (!LODOP) {
-          		 //if (isIE) document.write(strCLodopInstall); else
           		 $.tips(strCLodopInstall,'请下载'); 
-//          		   document.documentElement.innerHTML=strCLodopInstall+document.documentElement.innerHTML;
                  return;
             } else {
-               if (CLODOP.CVERSION<"2.0.6.2") { 
-//                 if (isIE) document.write(strCLodopUpdate); else
-                   $.tips(strCLodopUpdate,'请下载'); 
-//                   document.documentElement.innerHTML=strCLodopUpdate+document.documentElement.innerHTML;
-               };
+//               if (CLODOP.CVERSION<"2.0.6.2") { 
+//                   $.tips(strCLodopUpdate,'请下载'); 
+//               };
                if (oEMBED && oEMBED.parentNode) oEMBED.parentNode.removeChild(oEMBED);
                if (oOBJECT && oOBJECT.parentNode) oOBJECT.parentNode.removeChild(oOBJECT);	
     	      };
@@ -94,29 +90,26 @@ function getLodop(oOBJECT,oEMBED){
              } else LODOP=CreatedOKLodop7766;
             //=====Lodop插件未安装时提示下载地址:==========
             if ((LODOP==null)||(typeof(LODOP.VERSION)=="undefined")) {
-                 if (navigator.userAgent.indexOf('Chrome')>=0)
-                   $.tips(strHtmChrome,'请下载'); 
-//                     document.documentElement.innerHTML=strHtmChrome+document.documentElement.innerHTML;
-                 if (navigator.userAgent.indexOf('Firefox')>=0)
-                   $.tips(strHtmFireFox,'请下载'); 
-//                     document.documentElement.innerHTML=strHtmFireFox+document.documentElement.innerHTML;
-                 if (is64IE) document.write(strHtm64_Install); else
-                 if (isIE)   document.write(strHtmInstall);    else
+//                 if (navigator.userAgent.indexOf('Chrome')>=0)
+//                   $.tips(strHtmChrome,'请下载'); 
+//                 if (navigator.userAgent.indexOf('Firefox')>=0)
+//                   $.tips(strHtmFireFox,'请下载'); 
+//                 if (is64IE) document.write(strHtm64_Install); else
+//                 if (isIE)   document.write(strHtmInstall);    else
                    $.tips(strHtmInstall,'请下载'); 
-//                     document.documentElement.innerHTML=strHtmInstall+document.documentElement.innerHTML;
                  return LODOP;
             };
         };
-        if (LODOP.VERSION<"6.2.0.5") {
-            if (needCLodop())
-              $.tips(strCLodopUpdate,'请下载'); 
+//        if (LODOP.VERSION<"6.2.0.5") {
+//            if (needCLodop())
+//              $.tips(strCLodopUpdate,'请下载'); 
 //            document.documentElement.innerHTML=strCLodopUpdate+document.documentElement.innerHTML; else
-            if (is64IE) $.tips(strHtm64_Update,'请下载'); /*document.write(strHtm64_Update);*/ else
-            if (isIE) $.tips(strHtmUpdate,'请下载');/*document.write(strHtmUpdate);*/ else
-              $.tips(strHtmUpdate,'请下载');
+//            if (is64IE) $.tips(strHtm64_Update,'请下载'); /*document.write(strHtm64_Update);*/ else
+//            if (isIE) $.tips(strHtmUpdate,'请下载');/*document.write(strHtmUpdate);*/ else
+//              $.tips(strHtmUpdate,'请下载');
 //              document.documentElement.innerHTML=strHtmUpdate+document.documentElement.innerHTML;
-            return LODOP;
-        };
+//            return LODOP;
+//        };
         //===如下空白位置适合调用统一功能(如注册语句、语言选择等):===
         LODOP.SET_LICENSES("","214353657A794760E9D65580BF1CA193","C94CEE276DB2187AE6B65D56B3FC2848","214353657A794760E9D65580BF1CA193");
         //===========================================================
