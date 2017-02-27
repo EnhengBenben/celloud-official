@@ -3207,8 +3207,28 @@ public class ReportAction {
 
     @RequestMapping("reportInBatch")
     @ResponseBody
-    public PageList<Task> reportInBatch(Integer page, String dataKey, Integer appId, Integer projectId) {
-        return null;
+    public PageList<Task> reportInBatch(Integer currentPage, String dataKey, Integer appId, Integer projectId,
+            String batch) {
+        Page pager = new Page();
+        Integer userId = ConstantsData.getLoginUserId();
+        if (currentPage == null) {// 代表从报告页面点进来的或者是右侧相同batch的列表点击
+            // 1. 查询相同batch的所有dataKey
+            List<String> dataKeys = taskService.findDataKeysByBatchNoSample(userId, appId, batch);
+            // 2. 当前数据所在的行数
+            Integer dataIndex = 0;
+            for (String data : dataKeys) {
+                dataIndex++;
+                if (data.equals(dataKey)) {
+                    break;
+                }
+            }
+            // 3. 根据当前数据所在行数算出页数
+            currentPage = dataIndex % 2 == 0 ? dataIndex / 2 : dataIndex / 2 + 1;
+        }
+        pager.setCurrentPage(currentPage);
+        pager.setPageSize(2);
+        // 根据page分页查询pageList
+        return taskService.findTasksByBatchNoSample(pager, userId, appId, batch);
     }
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
