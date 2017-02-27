@@ -19,7 +19,7 @@
 	            </li>
             </shiro:hasPermission>
             <shiro:hasPermission name="sample:collection-info">
-	            <li ng-class="{active: isActive('/sampling')}">
+	            <li ng-class="{active: isActive('/sampling/info-collection')}">
 	               <a di-href="#/sampling/info-collection"><i class="sample-icon"></i><span>样本信息采集</span></a>
 	            </li>
 	        </shiro:hasPermission>

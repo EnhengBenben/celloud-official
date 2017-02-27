@@ -236,8 +236,6 @@
 		  $scope.project = egfrInfo.project;
 		  $scope.uploadPath = egfrInfo.uploadPath;
 		  $scope.batch = egfrInfo.batch;
-		  $scope.appName = "EGFR";
-		  $scope.obj = $scope.egfr;
 		  // dataInPro($scope.egfr, $scope.project.projectId, $scope.project.projectName);
 		  $scope.dataInBatch = function(currentPage){
 			  var params = {};
@@ -247,13 +245,8 @@
 			  params.appId = $scope.egfr.appId;
 			  params.projectId = $scope.egfr.projectId;
 			  params.dataKey = $scope.egfr.dataKey;
-			  params.batch = $scope.batch;
-			  dataReportService.dataInBatch(params).
-			  success(function(data){
-				  $scope.taskPageList = data;
-			  });
+			  dataReportService.dataInBatch(params);
 		  }
-		  $scope.dataInBatch(null);
 		  // 数据参数同比
 		  var length = $scope.egfr.pos;
 		  if(length==0 || isNaN(length)){

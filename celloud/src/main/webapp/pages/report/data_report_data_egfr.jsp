@@ -1,98 +1,93 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="pro-body mreport">
+<div class="pro-body mreport col-xs-10">
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li><a style="color: #a0a0a0" href="javascript:void(0);" ng-click="goBack()">报告管理</a></li>
       <li>EGFR报告</li>
     </ol>
     <div class="content">
-      <div class="content-left col-xs-10">
-        <div class="content-header">
-	        <p> 项目名称：
-	            {{project.projectName}}
-	        </p>
-	        <p> 应用名称：
-	            {{egfr.appName}}
-	        </p>
-	        <p> 文件名称：
-	            {{egfr.fileName}}({{egfr.dataKey}})
-	        </p>
-	        <div class="btn-groups">
-	            <a class="btn -low" target="_blank" ng-href="${pageContext.request.contextPath }/report/printEGFR?projectId={{egfr.projectId }}&dataKey={{egfr.dataKey }}&appId={{egfr.appId }}">打印报告</a>
-	            <a class="btn -middle" ng-if="egfr.pdf != null && egfr.pdf != ''" ng-href="${pageContext.request.contextPath }/report/down?path={{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/{{egfr.pdf}}">PDF下载</a>
-	        </div>
-	    </div>
-	    <div>
-        <section class="m-box">
-            <h2>
-                <i class="i-edit"></i>一、 已知突变位点（依据已发表文献，该突变位点有明确临床意义）
-                <span style="float:right;padding-right: 30px;" title="帮助" ng-click="showHelp()"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
-            </h2>
-            <div class="m-boxCon result">
-                <div id="knowResult">
-                    <span ng-if="egfr.position != null && egfr.position != ''" ng-bind-html="egfr.position"></span>
-                    <span ng-if="egfr.position == null || egfr.position == ''">未检测到突变</span>
-                </div>
-                <br/>
-                <img ng-if="egfr.knowMutationBig != null" ng-repeat="kmb in egfr.knowMutationBig" name="know" ng-src="{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{kmb}}" style="width: 100%;">
-            </div>
-        </section>
-        <section class="m-box">
-            <h2>
-                <i class="i-edit"></i>二、 未知突变位点（该突变位点目前没有已发表文献支持，无明确临床意义）
-                <div style="float:right;padding-right: 30px;" title="帮助" ng-click="showHelp()"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></div>
-            </h2>
-            <div class="m-boxCon result">
-                <span ng-if="egfr.mutationPosition!=null">
-                    <p ng-bind-html="egfr.mutationPosition"></p>
-                    <br/>
-                    <a ng-repeat="out in egfr.out" ng-click="bigReplace(uploadPath+egfr.userId+'/'+egfr.appId+'/'+egfr.dataKey+'/SVG/'+out.replace('png','10.png'));" style="padding-right: 20px">
-                        <img ng-src="{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{out}}" style="width: 156px;height: 177px;">
-                    </a>
-                </span>
-                <span ng-if="egfr.mutationPosition==null">
-                    数据正常，未找到其他突变。
-                </span>
-            </div>
-         </section>
-         <section class="m-box">
-             <h2>
-                <i class="i-edit"></i>三、 参考结论
-            </h2>
-            <div ng-bind-html="egfr.conclusion" class="m-boxCon result" id="_result">
-            </div>
-         </section>
-         <section class="m-box">
-             <h2><i class="i-edit"></i>四、 测序序列结果</h2>
-            <div class="m-boxCon result" id="_seq" style="word-break: break-all;">
-                {{egfr.seq}}
-            </div>
-         </section>
-         <section class="m-box">
-             <h2><i class="i-dna"></i>五、 测序峰图结果</h2>
-                <div class="m-boxCon result" ng-if="egfr.original != null">
-                    <a ng-repeat="original in egfr.original" ng-click="bigOrigin(uploadPath+egfr.userId+'/'+egfr.appId+'/'+egfr.dataKey+'/SVG/'+original,'original'+($index+1));" >
-                        <br/>
-                        <img name="imgSrc" class="originImg" ng-src="{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{original}}" id="original{{$index+1}}"><br/>
-                    </a>
-                </div>
-                <div class="m-boxCon result" ng-if="egfr.original == null">
-                样本异常，无法检测
-                </div>
-         </section>
-         <section class="m-box">
-             <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
-            <div class="m-boxCon">
-                <div class="row" id="charDiv">
-                </div>
-            </div>
-         </section>
-       </div>
+      <div class="content-header">
+        <p> 项目名称：
+            {{project.projectName}}
+        </p>
+        <p> 应用名称：
+        	{{egfr.appName}}
+        </p>
+        <p> 文件名称：
+            {{egfr.fileName}}({{egfr.dataKey}})
+        </p>
+        <div class="btn-groups">
+	        <a class="btn -low" target="_blank" ng-href="${pageContext.request.contextPath }/report/printEGFR?projectId={{egfr.projectId }}&dataKey={{egfr.dataKey }}&appId={{egfr.appId }}">打印报告</a>
+	        <a class="btn -middle" ng-if="egfr.pdf != null && egfr.pdf != ''" ng-href="${pageContext.request.contextPath }/report/down?path={{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/{{egfr.pdf}}">PDF下载</a>
+        </div>
       </div>
-      <div class="content-right col-xs-2">
-        <ng-include src="'pages/partial/_partial_datareportoperate.jsp'"></ng-include>
-      </div>
+      <div>
+        <section class="m-box">
+	        <h2>
+				<i class="i-edit"></i>一、 已知突变位点（依据已发表文献，该突变位点有明确临床意义）
+				<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showHelp()"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></span>
+			</h2>
+		    <div class="m-boxCon result">
+		    	<div id="knowResult">
+		    		<span ng-if="egfr.position != null && egfr.position != ''" ng-bind-html="egfr.position"></span>
+		    		<span ng-if="egfr.position == null || egfr.position == ''">未检测到突变</span>
+		    	</div>
+	    		<br/>
+				<img ng-if="egfr.knowMutationBig != null" ng-repeat="kmb in egfr.knowMutationBig" name="know" ng-src="{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{kmb}}" style="width: 100%;">
+		    </div>
+	    </section>
+	    <section class="m-box">
+	        <h2>
+				<i class="i-edit"></i>二、 未知突变位点（该突变位点目前没有已发表文献支持，无明确临床意义）
+				<div style="float:right;padding-right: 30px;" title="帮助" ng-click="showHelp()"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><span style="line-height:38px;" class="fa fa-thumbs-up"></span></div></div>
+			</h2>
+		    <div class="m-boxCon result">
+		    	<span ng-if="egfr.mutationPosition!=null">
+		    		<p ng-bind-html="egfr.mutationPosition"></p>
+		    		<br/>
+			    	<a ng-repeat="out in egfr.out" ng-click="bigReplace(uploadPath+egfr.userId+'/'+egfr.appId+'/'+egfr.dataKey+'/SVG/'+out.replace('png','10.png'));" style="padding-right: 20px">
+		    			<img ng-src="{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{out}}" style="width: 156px;height: 177px;">
+		    		</a>
+		    	</span>
+		    	<span ng-if="egfr.mutationPosition==null">
+		    		数据正常，未找到其他突变。
+		    	</span>
+		    </div>
+	     </section>
+         <section class="m-box">
+	         <h2>
+				<i class="i-edit"></i>三、 参考结论
+			</h2>
+		    <div ng-bind-html="egfr.conclusion" class="m-boxCon result" id="_result">
+		    </div>
+         </section>
+         <section class="m-box">
+	         <h2><i class="i-edit"></i>四、 测序序列结果</h2>
+		    <div class="m-boxCon result" id="_seq" style="word-break: break-all;">
+				{{egfr.seq}}
+		    </div>
+	     </section>
+         <section class="m-box">
+	         <h2><i class="i-dna"></i>五、 测序峰图结果</h2>
+				<div class="m-boxCon result" ng-if="egfr.original != null">
+					<a ng-repeat="original in egfr.original" ng-click="bigOrigin(uploadPath+egfr.userId+'/'+egfr.appId+'/'+egfr.dataKey+'/SVG/'+original,'original'+($index+1));" >
+						<br/>
+						<img name="imgSrc" class="originImg" ng-src="{{uploadPath}}{{egfr.userId}}/{{egfr.appId}}/{{egfr.dataKey}}/SVG/{{original}}" id="original{{$index+1}}"><br/>
+					</a>
+			    </div>
+			    <div class="m-boxCon result" ng-if="egfr.original == null">
+			    样本异常，无法检测
+			    </div>
+	     </section>
+         <section class="m-box">
+	         <h2><i class="i-celloud"></i>Celloud数据参数同比分析</h2>
+			<div class="m-boxCon">
+				<div class="row" id="charDiv">
+			    </div>
+			</div>
+	     </section>
+	   </div>
      </div>
  </div>
 <div id="helpModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -122,3 +117,4 @@
     	</div>
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
+<ng-include src="'pages/partial/_partial_datareportoperate.jsp'"></ng-include>

@@ -268,34 +268,4 @@ public interface TaskMapper {
 
 	Task selectByProjectId(@Param("projectId") Integer projectId);
 
-    /**
-     * 
-     * @description 根据batch, appId, userId, state查询全部的task
-     * @author miaoqi
-     * @date 2017年2月27日 上午11:05:39
-     * @param userId
-     * @param appId
-     * @param batch
-     * @param active
-     * @return
-     */
-    List<String> findDataKeysByBatchNoSample(@Param("userId") Integer userId, @Param("period") Integer period,
-            @Param("appId") Integer appId, @Param("batch") String batch, @Param("state") Integer state);
-
-    /**
-     * 检索某批次下的运行完的任务列表, 不关联样本信息
-     * 
-     * @param page
-     * @param userId
-     * @param condition
-     * @param sort
-     * @param sortDateType
-     * @param sortNameType
-     * @param state
-     * @param reportType
-     * @return
-     */
-    List<Task> findTasksByBatchNoSample(Page page, @Param("userId") Integer userId, @Param("appId") Integer appId,
-            @Param("period") Integer period, @Param("state") Integer state, @Param("batch") String batch);
-
 }

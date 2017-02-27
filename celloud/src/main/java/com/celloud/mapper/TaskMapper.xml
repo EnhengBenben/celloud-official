@@ -666,7 +666,7 @@
 		<if test="endDate != null and endDate !=''">
 			and t.update_date&lt;=#{endDate}
 		</if>
-		order by t.update_date ${sord}, t.data_key DESC
+		order by t.update_date ${sord}
 	</select>
 	<insert id="saveTaskDataRelat">
 		INSERT INTO `tb_task_data_relat` (`task_id`,`data_id`) VALUES
@@ -682,32 +682,4 @@
 		FROM tb_task
 		WHERE project_id = #{projectId}
 	</select>
-	<select id="findDataKeysByBatchNoSample" resultType="java.lang.String">
-	   SELECT data_key FROM tb_task
-       WHERE task_id IN
-       (SELECT max(task_id) FROM tb_task t LEFT JOIN tb_file f ON t.data_key = f.data_key
-       WHERE f.state = #{state}
-       AND t.user_id = #{userId}
-       AND t.app_id = #{appId}
-       AND f.batch = #{batch}
-       AND t.period = #{period}
-       GROUP BY t.data_key
-       ORDER BY t.update_date DESC)ORDER BY update_date DESC, data_key DESC
-    </select>
-    <select id="findTasksByBatchNoSample" resultMap="ResultMapWithFileName">
-        SELECT f.file_name,f.file_id,f.batch,t.*
-        FROM
-            (SELECT * FROM tb_task WHERE task_id
-            IN(select max(task_id) from tb_task
-            WHERE state=#{state}
-            AND user_id=#{userId}
-            AND app_id=#{appId}
-            GROUP BY data_key))t
-        LEFT JOIN tb_file f ON f.data_key = t.data_key
-        WHERE f.user_id=#{userId}
-        AND f.state=#{state}
-        AND f.batch=#{batch}
-        AND t.period=#{period}
-        ORDER BY t.update_date DESC, t.data_key DESC
-    </select>
 </mapper>
