@@ -143,6 +143,7 @@ public class ReportAction {
 	@RequestMapping("checkPdf")
 	@ResponseBody
 	public Integer checkPdf(String dataKey) {
+        System.out.println("试试");
 		Integer userId = ConstantsData.getLoginUserId();
 		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
 		if (!new File(filePath).exists()) {
