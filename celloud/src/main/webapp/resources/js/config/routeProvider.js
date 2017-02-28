@@ -107,32 +107,32 @@
       controller: "krasDataReportController"
     })
     .when('/reportdata/KRAS/:appId/:dataKey/:projectId',{
-      templateUrl: "pages/report/report_data_kras.jsp",
-      controller: "krasDataReportController"
+      templateUrl: "pages/report/data_report_data_kras.jsp",
+      controller: "dataKrasDataReportController"
     })
     .when('/reportpro/HCV_Genotype/:appId/:dataKey/:projectId',{
 	  templateUrl: "pages/report/report_data_hcv.jsp",
 	  controller: "hcvDataReportController"
     })
     .when('/reportdata/HCV_Genotype/:appId/:dataKey/:projectId',{
-    	templateUrl: "pages/report/report_data_hcv.jsp",
-    	controller: "hcvDataReportController"
+    	templateUrl: "pages/report/data_report_data_hcv.jsp",
+    	controller: "dataHcvDataReportController"
     })
     .when('/reportpro/BRAF/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_braf.jsp",
     	controller: "brafDataReportController"
     })
     .when('/reportdata/BRAF/:appId/:dataKey/:projectId',{
-    	templateUrl: "pages/report/report_data_braf.jsp",
-    	controller: "brafDataReportController"
+    	templateUrl: "pages/report/data_report_data_braf.jsp",
+    	controller: "dataBrafDataReportController"
     })
     .when('/reportpro/TB-Rifampicin/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_tbrifampicin.jsp",
     	controller: "tbRifampicinDataReportController"
     })
     .when('/reportdata/TB-Rifampicin/:appId/:dataKey/:projectId',{
-    	templateUrl: "pages/report/report_data_tbrifampicin.jsp",
-    	controller: "tbRifampicinDataReportController"
+    	templateUrl: "pages/report/data_report_data_tbrifampicin.jsp",
+    	controller: "dataTbRifampicinDataReportController"
     })
     .when('/reportpro/TB-INH/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_tbinh.jsp",
