@@ -184,6 +184,23 @@
     });
   });
   
+  celloudApp.controller("commonReport", function($rootScope, dataReportService){
+	  // 右侧相同数据标签分页栏
+	  $rootScope.dataInBatch = function(currentPage, obj){
+		  var params = {};
+		  if(currentPage != null){
+			  params.currentPage = currentPage;
+		  }
+		  params.appId = obj.appId;
+		  params.projectId = obj.projectId;
+		  params.dataKey = obj.dataKey;
+		  params.batch = obj.batch;
+		  dataReportService.dataInBatch(params).
+		  success(function(data){
+			  $rootScope.taskPageList = data;
+		  });
+	  }
+  });
   
   
   /**
@@ -229,31 +246,17 @@
 	  });
   });
   
-  celloudApp.controller("dataEgfrDataReportController", function($scope, $routeParams, dataReportService){
+  celloudApp.controller("dataEgfrDataReportController", function($scope, $rootScope, $routeParams, dataReportService){
 	  dataReportService.getDataReportInfo("report/getEGFRInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
 	  success(function(egfrInfo){
 		  $scope.egfr = egfrInfo.egfr;
 		  $scope.project = egfrInfo.project;
 		  $scope.uploadPath = egfrInfo.uploadPath;
-		  $scope.batch = egfrInfo.batch;
 		  $scope.appName = "EGFR";
 		  $scope.obj = $scope.egfr;
-		  // dataInPro($scope.egfr, $scope.project.projectId, $scope.project.projectName);
-		  $scope.dataInBatch = function(currentPage){
-			  var params = {};
-			  if(currentPage != null){
-				  params.currentPage = currentPage;
-			  }
-			  params.appId = $scope.egfr.appId;
-			  params.projectId = $scope.egfr.projectId;
-			  params.dataKey = $scope.egfr.dataKey;
-			  params.batch = $scope.batch;
-			  dataReportService.dataInBatch(params).
-			  success(function(data){
-				  $scope.taskPageList = data;
-			  });
-		  }
-		  $scope.dataInBatch(null);
+		  $scope.obj.batch = egfrInfo.batch;
+		  
+		  $rootScope.dataInBatch(null, $scope.obj);
 		  // 数据参数同比
 		  var length = $scope.egfr.pos;
 		  if(length==0 || isNaN(length)){
@@ -329,6 +332,54 @@
 		  }
 	  });
   });
+  
+  /**
+   * kras数据报告controller
+   */
+  celloudApp.controller("dataKrasDataReportController", function($scope, $rootScope, $routeParams, dataReportService){
+	  dataReportService.getDataReportInfo("report/getKRASInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(krasInfo){
+		  $scope.kras = krasInfo.kras;
+		  $scope.project = krasInfo.project;
+		  $scope.uploadPath = krasInfo.uploadPath;
+		  $scope.appName = "KRAS";
+		  $scope.obj = $scope.kras;
+		  $scope.obj.batch = krasInfo.batch;
+		  
+		  $rootScope.dataInBatch(null, $scope.obj);
+		  // 数据参数同比
+		  var length = $scope.kras.pos;
+		  if(length==0 || isNaN(length)){
+			  $("#charDiv").html("<p style=\"color: red;\">数据异常，没有同比结果</p>");
+		  }else{  
+			  $.get("count/krasCompare",{"length":length},function(data){
+				  var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
+				  $("#charDiv").append(div);
+				  var X = "[";
+				  var Y = "[";
+				  var value = data.split("\n");
+				  if(value.length > 1){
+					  for(var k=0;k<value.length-1;k++){
+						  var n = value[k].split("\t");
+						  X+="'"+n[0]+"',";
+						  Y+=n[1]+",";
+					  }
+				  }else{
+					  var n = data.split("\t");
+					  X+="'"+n[0]+"',";
+					  Y+=n[1]+",";
+				  }
+				  X = X.substring(0,X.length-1)+"]";
+				  Y = Y.substring(0,Y.length-1)+"]";
+				  $.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
+			  });
+		  }
+		  $scope.showHelp = function(){
+			  $("#helpModal").modal("show");
+		  }
+	  });
+  });
+  
   /**
    * hcv数据报告controller
    */
@@ -338,7 +389,6 @@
 		  $scope.hcv = hcvInfo.hcv;
 		  $scope.project = hcvInfo.project;
 		  $scope.uploadPath = hcvInfo.uploadPath;
-		  
 		  dataInPro($scope.hcv, $scope.project.projectId, $scope.project.projectName);
 		  $scope.change = function(){
 			  var val = $("#_change").html();
@@ -375,6 +425,57 @@
 		});
 	  });
   });
+  
+  /**
+   * hcv数据报告controller
+   */
+  celloudApp.controller("dataHcvDataReportController", function($scope, $rootScope, $routeParams, dataReportService){
+	  dataReportService.getDataReportInfo("report/getHCVInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(hcvInfo){
+		  $scope.hcv = hcvInfo.hcv;
+		  $scope.project = hcvInfo.project;
+		  $scope.uploadPath = hcvInfo.uploadPath;
+		  $scope.appName = "HCV_Genotype";
+		  $scope.obj = $scope.hcv;
+		  $scope.obj.batch = hcvInfo.batch;
+		  
+		  $rootScope.dataInBatch(null, $scope.obj);
+		  $scope.change = function(){
+			  var val = $("#_change").html();
+			  if(val=="显示更多"){
+				  $("#nomal").css("display","");
+				  $("#cfda").css("display","none");
+				  $("#_change").html("返回");
+			  }else{
+				  $("#nomal").css("display","none");
+				  $("#cfda").css("display","");
+				  $("#_change").html("显示更多");
+			  }
+		  }
+		  // 数据参数同比
+		  $.get("count/hcvCompare",{},function(data){
+			  var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
+			  $("#charDiv").append(div);
+			  var one = getCountValue("Subtype","nomal");
+			  var X = "[";
+			  var Y = "[";
+			  var value = data.split(";");
+			  for(var k=0;k<value.length-1;k++){
+			  	  var n = value[k].split(",");
+			  	  X+="'"+n[0]+"',";
+			  	  if(n[0]==one){
+			  	  	  Y+="{ dataLabels: { enabled: true, y: 0, crop: false, style: { fontWeight: 'bold', fontSize:16 }, }, y:"+ n[1]+"},";
+			  	  }else{
+			  	  	  Y+=n[1]+",";
+			  	  }
+			  }
+			  X = X.substring(0,X.length-1)+"]";
+			  Y = Y.substring(0,Y.length-1)+"]";
+			  $.reportChar.draw.echartsShowBar("char0", "Subtype", eval(X), eval(Y), 0, 500, 300);
+		});
+	  });
+  });
+  
   /**
    * braf数据报告controller
    */
@@ -386,6 +487,54 @@
 		  $scope.uploadPath = brafInfo.uploadPath;
 		  
 		  dataInPro($scope.braf, $scope.project.projectId, $scope.project.projectName);
+		  if($scope.braf != undefined){
+			  var $table = $($scope.braf.mutationPosition);
+			  $scope.searchTable = function(){
+				  var result = "";
+				  $table.find("td").each(function() {
+			      	  var context = $(this).html();
+			      	  var len = context.indexOf("-");
+			      	  var before = $.trim(context.substring(len - 2, len - 1));
+			      	  var after = $.trim(context.substring(len + 1, len + 3));
+			      	  var d = context.indexOf(",");
+			      	  var k = context.indexOf(")");
+			      	  if (k == -1) {
+			      	  	  result += after;
+			      	  } else if (before != after) {
+			      	  	  result += after;
+			      	  } else {
+			      	  	  var search = $("#_snum").val();
+			      	  	  var r = context.substring(d + 1, k);
+			      	  	  if (parseFloat(r) > parseFloat(search)) {
+			      	  		  result += after;
+			      	  	  } else {
+			      	  		  var l = context.indexOf("|");
+			      	  		  var r = context.indexOf("(");
+			      	  		  result += context.substring(l + 1, r);
+			      	  	  }
+			      	  }
+			      });
+			      $("#searchResult").html(map[result]);
+	          }
+			  $scope.searchTable();
+		  }
+	  });
+  });
+  
+  /**
+   * braf数据报告controller
+   */
+  celloudApp.controller("dataBrafDataReportController", function($scope, $rootScope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getBRAFInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(brafInfo){
+		  $scope.braf = brafInfo.braf;
+		  $scope.project = brafInfo.project;
+		  $scope.uploadPath = brafInfo.uploadPath;
+		  $scope.appName = "BRAF";
+		  $scope.obj = $scope.braf;
+		  $scope.obj.batch = brafInfo.batch;
+		  
+		  $rootScope.dataInBatch(null, $scope.obj);
 		  if($scope.braf != undefined){
 			  var $table = $($scope.braf.mutationPosition);
 			  $scope.searchTable = function(){
@@ -515,6 +664,108 @@
 				Y = Y.substring(0,Y.length-1)+"]";
 				$.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
 		});
+		  
+	  });
+  });
+  
+  /**
+   * tbRifampicin数据报告controller
+   */
+  celloudApp.controller("dataTbRifampicinDataReportController", function($scope, $rootScope, $routeParams, $compile, dataReportService){
+	  dataReportService.getDataReportInfo("report/getTBRifampicinInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
+	  success(function(tbrifampicinInfo){
+		  $scope.tbrifampicin = tbrifampicinInfo.tbrifampicin;
+		  $scope.project = tbrifampicinInfo.project;
+		  $scope.uploadPath = tbrifampicinInfo.uploadPath;
+		  $scope.appName = "TB-Rifampicin";
+		  $scope.obj = $scope.tbrifampicin;
+		  $scope.obj.batch = tbrifampicinInfo.batch;
+		  
+		  $rootScope.dataInBatch(null, $scope.obj);
+		  $scope.searchTable = function(){
+			  var search = $("#_snum").val();
+			  $("#_sr").html("");
+			  $($scope.tbrifampicin.report).find("td").each(function() {
+				  var context = $(this).html();
+				  if (!search) {
+					  $("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+				  } else {
+					  var len = context.indexOf("-");
+					  var d = context.indexOf(",");
+					  var k = context.indexOf(")");
+					  if (len == -1) {
+						  if (d > -1 && k > -1) {
+							  var result = context.substring(d + 1, k);
+							  if (parseFloat(result) < parseFloat(search)) {
+								  $("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+							  } else {
+								  var kl = context.indexOf("(");
+								  context = context.substring(0, kl)+ context.substring(k + 1,context.length);
+								  $("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;") + "</tr></td>");
+							  }
+						  } else {
+							  $("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+						  }
+					  } else {
+						  var before = $.trim(context.substring(len - 2, len - 1));
+						  var after = $.trim(context.substring(len + 1, len + 3));
+						  if (before == after) {
+							  if (d > -1 && k > -1) {
+								  var result = context.substring(d + 1, k);
+								  if (parseFloat(result) < parseFloat(search)) {
+									  $("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+								  }
+							  } else {
+								  $("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+							  }
+						  } else {
+							  if (d > -1 && k > -1) {
+								  var result = context.substring(d + 1, k);
+								  if (parseFloat(result) > parseFloat(search)) {
+									  var c = context.split("\t");
+									  var c3 = c[3].substring(0, c[3].indexOf("|"));
+									  var c4 = (c[4].substring(0,c[3].lastIndexOf("|") - 1) + c[4].substring(c[4].lastIndexOf(")") + 1,c[4].length)).replace("(", "");
+									  var c5;
+									  if (c[5].indexOf("|") == -1) {
+										  c5 = c[5];
+									  } else {
+										  c5 = c[5].substring(0, c[5].indexOf("|"));
+									  }
+									  var last = c[0] + "\t" + c[1] + "\t" + c[2] + "\t" + c3 + "\t" + c4 + "\t" + c5;
+									  $("#_sr").append("<tr><td>"+ last.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+								  } else {
+									  $("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+								  }
+							  } else {
+								  $("#_sr").append("<tr><td>"+ context.replace(new RegExp("\t","g"),"&nbsp;&nbsp;&nbsp;&nbsp;")+ "</tr></td>");
+							  }
+						  }
+					  }
+				  }
+			  });
+		  }
+		  $scope.searchTable();
+		  $.get("count/tbCompare",{},function(data){
+			  var div = $("<div id='char0' class='col-lg-6' style='width: 1000px;height:400px;'></div>");
+			  $("#charDiv").append(div);
+			  var X = "[";
+			  var Y = "[";
+			  var value = data.split("\n");
+			  if(value.length > 1){
+				  for(var k=0;k<value.length-1;k++){
+					  var n = value[k].split("\t");
+					  X+="'"+n[0]+"',";
+					  Y+=n[1]+",";
+				  }
+			  }else{
+				  var n = data.split("\t");
+				  X+="'"+n[0]+"',";
+				  Y+=n[1]+",";
+			  }
+			  X = X.substring(0,X.length-1)+"]";
+			  Y = Y.substring(0,Y.length-1)+"]";
+			  $.reportChar.draw.echartsShowBar("char0", "位点", eval(X), eval(Y), 0, 500, 300);
+		  });
 		  
 	  });
   });

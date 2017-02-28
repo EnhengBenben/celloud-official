@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.config.Config;
+import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
 import com.celloud.constants.IconConstants;
@@ -487,6 +488,7 @@ public class SampleServiceImple implements SampleService {
 
     @Override
     public Boolean sendOrderInfo(Integer userId, Integer orderId) {
+        LOGGER.info("用户 {} 发送邮件", ConstantsData.getLoginUserId());
         // 获取大客户id
         Integer companyId = userService.getCompanyIdByUserId(userId);
         // 获取大客户的email
@@ -495,11 +497,18 @@ public class SampleServiceImple implements SampleService {
         // 判断当前的环境, 如果是正式环境, 获取正式人员邮箱
         if (config.getPro()) { // 当前是正式环境
             queryCompanyEmail.setStatus(1); // 正式人员
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("当前是正式环境");
+            }
         } else {
             queryCompanyEmail.setStatus(0); // 测试人员
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("当前不是正式环境");
+            }
         }
         List<CompanyEmail> companyEmails = companyEmailService.selectBySelective(queryCompanyEmail);
         if (companyEmails != null && companyEmails.size() > 0) {
+            LOGGER.info("获取到大客户收件邮箱");
             // 根据orderId查询样本信息
             Map<String, Object> sampleInfoOrderInfo = getSampleInfoOrderInfo(userId, orderId);
             if (sampleInfoOrderInfo != null && sampleInfoOrderInfo.keySet().size() > 0) {
@@ -565,6 +574,8 @@ public class SampleServiceImple implements SampleService {
 
                 aliEmailUtil.simpleSend(title, context.toString(), to);
             }
+        } else {
+            LOGGER.info("没有获取到大客户的收件邮箱");
         }
         return true;
     }

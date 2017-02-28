@@ -413,8 +413,7 @@ public class DataServiceImpl implements DataService {
 		data.setFileId(dataId);
 		data.setDataKey(fileDataKey);
 		data.setSize(size);
-		String batch = metadata.get("batch");
-		data.setBatch(batch);
+		data.setBatch(metadata.get("batch"));
 		data.setMd5(metadata.get("etag").toLowerCase());
 		data.setFileName(name);
 		data.setState(DataState.ACTIVE);
@@ -442,11 +441,8 @@ public class DataServiceImpl implements DataService {
 		dataFileMapper.updateByPrimaryKeySelective(data);
 
 		data = dataFileMapper.selectByPrimaryKey(dataId);
-		if (tagId == 1) {
-			runService.bsiCheckRun(batch, dataId, fileDataKey, name, userId, fileFormat);
-		} else if (tagId == 2) {
-			runService.rockyCheckRun(123, data);
-		}
+		// TODO 需要根据tagId判断是否rocky
+		runService.rockyCheckRun(123, data);
 		return dataId;
 	}
 
