@@ -382,7 +382,7 @@
     $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
   });
   
-  celloudApp.controller("sampleOrderController", function($scope, $routeParams, sampleOrderService){
+  celloudApp.controller("sampleOrderController", function($scope, commonService, $routeParams, sampleOrderService){
     sampleOrderService.sampleOrderInfo($routeParams.orderId).success(function(data){
       if(data != null){
     	$scope.userProduct = commonService.getProduct().get();
