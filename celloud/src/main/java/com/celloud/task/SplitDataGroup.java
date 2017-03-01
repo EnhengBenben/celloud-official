@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.celloud.model.mysql.DataFile;
 
@@ -17,6 +18,7 @@ import com.celloud.model.mysql.DataFile;
  * @date 2017年2月28日下午12:08:21
  * @version Revision: 1.0
  */
+@Component
 public class SplitDataGroup implements DataGroup {
 	private static Logger logger = LoggerFactory.getLogger(FastqDataGroup.class);
 	private static List<String> supportedApps = Arrays.asList("split");
@@ -56,7 +58,7 @@ public class SplitDataGroup implements DataGroup {
 			return datas;
 		}
 		if (!r1.getFileName().substring(0, r1.getFileName().lastIndexOf("R1"))
-				.equals(r2.getFileName().substring(0, r1.getFileName().lastIndexOf("R2")))
+				.equals(r2.getFileName().substring(0, r2.getFileName().lastIndexOf("R2")))
 				|| !r1.getFileName().substring(0, r1.getFileName().lastIndexOf("R1"))
 						.endsWith(txt.getFileName().substring(0, txt.getFileName().lastIndexOf(".")))) {
 			logger.warn("文件名不匹配：r1={},r2={},txt={}", r1.getFileName(), r2.getFileName(), txt.getFileName());

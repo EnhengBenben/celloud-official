@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.celloud.model.mysql.DataFile;
 
@@ -17,6 +18,7 @@ import com.celloud.model.mysql.DataFile;
  * @date 2017年2月28日下午12:08:21
  * @version Revision: 1.0
  */
+@Component
 public class OnlyPathGroup implements DataGroup {
 	private static Logger logger = LoggerFactory.getLogger(FastqDataGroup.class);
 	private static List<String> supportedApps = Arrays.asList("BSI");

@@ -7,9 +7,18 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.celloud.model.mysql.DataFile;
 
+/**
+ * 给fastq文件分组
+ * 
+ * @author <a href="mailto:sunwendong@celloud.cn">sun8wd</a>
+ * @date 2017年3月1日下午3:52:10
+ * @version Revision: 1.0
+ */
+@Component
 public class FastqDataGroup implements DataGroup {
 	private static Logger logger = LoggerFactory.getLogger(FastqDataGroup.class);
 	// TODO 每个app都要在这里列举，不利于扩展，可以给app另外一个字段标识

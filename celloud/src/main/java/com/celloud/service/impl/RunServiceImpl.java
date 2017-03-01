@@ -262,7 +262,7 @@ public class RunServiceImpl implements RunService {
 			}
 			taskService.saveTaskDataRelat(taskId, dataIds);
 			if (AppDataListType.MQ_RUN.contains(appId)) {
-				if (!datas.isEmpty()) {
+				if (datas != null && !datas.isEmpty()) {
 					ComputeCluster cluster = computeClusterService.selectByAppId(appId);
 					AppSubmitUtil.mq(cluster.getTopic(), app.getCode(), taskId, userId, datas);
 					taskService.updateToRunning(taskId);
