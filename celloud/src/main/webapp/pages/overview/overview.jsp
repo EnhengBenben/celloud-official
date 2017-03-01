@@ -103,9 +103,9 @@
 	            <h1>{{map.countApp}}<span>个</span></h1>
 	            <div class="footer">
 	              <span>产品总量</span>
-	              <shiro:hasPermission name="application:center">
+<%-- 	              <shiro:hasPermission name="application:center"> --%>
 		              <a href="#/app"><span>详情</span><i class="next-icon"></i></a>
-	              </shiro:hasPermission>
+<%-- 	              </shiro:hasPermission> --%>
 	            </div>
 	          </div>
 	        </li>
