@@ -16,7 +16,7 @@
 
 .mreport .forward,.mreport  .backward,.mreport  .m-box h2 i,.mreport  .m-tips i,.mreport .i-view,.mreport .i-back,.mreport .i-printback{ background-image:url(../images/report/_celloud.png); background-repeat: no-repeat;}
 /*m-box*/
-.mreport .m-box{ margin:10px;border:1px solid #d8e2f0; border-radius:6px; background-color:#fff}
+.mreport .m-box{ border:1px solid #d8e2f0; border-radius:6px; background-color:#fff}
 .mreport .m-box-yc{background-color:#faffef}
 .mreport .m-box h2{padding: 0px;margin: 0px; height:53px; line-height:38px; background:url(../images/report/bg_mboxh2.png) 0 0 repeat-x; color:#009BCA; padding-left:19px; position:relative;font-size: 100%;}
 .mreport .m-box h2 i{ display:inline-block;*display:inline;*zoom:1; width:16px; height:16px; vertical-align:middle; margin-right:9px;}
@@ -52,8 +52,20 @@
 .mreport .table_ tr td:last-child{border:1px solid #d8e2f0;border-right:none;}
 .mreport .table_ .red,.table .red{ color:#ff9992;}
 
+.mreport{
+    .content-left{
+        padding-left: 0px;
+        padding-right: 0px;
+        word-break: break-all;
+    }
+    .content-right{
+        padding-left: 5px;
+        padding-right: 0px;
+        word-break: break-all;
+    }
+}
+
 .mreport .content-header{
-	margin:10px;
 	word-break: break-all;
 }
 

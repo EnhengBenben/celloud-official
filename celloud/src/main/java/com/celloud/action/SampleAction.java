@@ -394,7 +394,6 @@ public class SampleAction {
         Map<String,Object> map = new HashMap<>();
         PageList<Sample> pageList = getSamples(1, sampleIndex.size(),
                 SampleTypes.BUID_LIBRARY);
-        Collections.reverse(pageList.getDatas());
         map.put("pageList", pageList);
         SecureRandom s = new SecureRandom();
         map.put("libraryName", DateUtil.getDateToString()
@@ -445,11 +444,11 @@ public class SampleAction {
         List<String> header = Arrays.asList("文库编号", "文库index", "医院样品编号",
                 "实验样品编号", "样品类型",
                 "建库时间", "样本index", "所属医院", "所属部门");
-        ExcelUtil.listToExcel(header,
-                sampleService.sampleListInStorage(
-                        ConstantsData.getLoginUserId(), ss.getId()),
-                PropertiesUtil.experimentExcelPath + libraryName + ss.getId()
-                        + ".xls");
+        List<Map<String, Object>> sampleList = sampleService.sampleListInStorage(ConstantsData.getLoginUserId(),
+                ss.getId());
+        Collections.reverse(sampleList);
+        ExcelUtil.listToExcel(header, sampleList,
+                PropertiesUtil.experimentExcelPath + libraryName + ss.getId() + ".xls");
         return ss;
     }
 
