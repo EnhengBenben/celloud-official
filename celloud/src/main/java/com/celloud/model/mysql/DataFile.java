@@ -42,6 +42,8 @@ public class DataFile implements Serializable {
 
 	private Integer uploadState;
 
+    private Integer isRun;
+
 	/** 是否正在运行，0 否，>0 是 */
 	private Integer isRunning;
 	/** 报告数量 */
@@ -239,6 +241,14 @@ public class DataFile implements Serializable {
 	public void setTagId(Integer tagId) {
 		this.tagId = tagId;
 	}
+
+    public Integer getIsRun() {
+        return isRun;
+    }
+
+    public void setIsRun(Integer isRun) {
+        this.isRun = isRun;
+    }
 
     @Override
     public String toString() {

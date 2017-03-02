@@ -257,6 +257,11 @@ public class TaskAction {
 		String endDate = null;
 		if (task != null) {
 			logger.info("任务{}执行完毕", task.getTaskId());
+            // 修改data的isRun状态
+            dataList.forEach(dataFile -> {
+                dataFile.setIsRun(0);
+                dataService.updateByPrimaryKeySelective(dataFile);
+            });
 			runService.runNext(appId);
 			// 构造邮件内容
 			startDate = DateUtil.getDateToString(task.getStartDate(), DateUtil.YMDHMS);
@@ -414,6 +419,9 @@ public class TaskAction {
 				}
 			}
 		}
+        DataFile dataFile = dataService.getDataByKey(dataKey);
+        dataFile.setIsRun(1);
+        dataService.updateByPrimaryKeySelective(dataFile);
 		// 构造桌面消息
 		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants
 				.createMessage("task", "运行完成", "项目【" + projectName + "】下数据【" + dataKey + "】运行【" + appName + "】完成。"));
