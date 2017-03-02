@@ -200,6 +200,7 @@
 				var res = JSON.parse(response.response);
 				uploader.setOption("multipart_params",{'originalName': file.name, "tagId":2, "batch":$rootScope.rockyBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
 				$("#" + file.id +" .percent").html("上传完成");
+				messageUtils.notify("上传完成","数据【" + file.name + "】上传成功。");
 				$.post(CONTEXT_PATH+"/oss/upload/newfile",{
 					'name':file.name,
 					'batch':$rootScope.rockyBatch,
