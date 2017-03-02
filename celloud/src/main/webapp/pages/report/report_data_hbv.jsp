@@ -58,7 +58,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="text-center mb20 w500">
+			<div class="text-center mb20 w500 mt10">
 				<a href="javascript:void(0)" ng-click="change1()" class="btn -low"><i class="i-view"></i>查看详情</a>
 			</div>
 	     </section>
