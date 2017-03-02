@@ -61,8 +61,7 @@ function getLodop(oOBJECT,oEMBED){
     try{
         var isIE = (navigator.userAgent.indexOf('MSIE')>=0) || (navigator.userAgent.indexOf('Trident')>=0);
         if (needCLodop()) {
-          alert("needCLodop");
-            try{ LODOP=getCLodop(); alert(getCLodop())} catch(err) {};
+            try{ LODOP=getCLodop(); } catch(err) {};
             if (!LODOP && document.readyState!=="complete") {alert("C-Lodop没准备好，请稍后再试！"); return;};
             if (!LODOP) {
           		 $.tips(strCLodopInstall,'请下载'); 
@@ -154,6 +153,7 @@ function printQRCodeBatch(sampleNames,dates){
 	    LODOP.ADD_PRINT_TEXTA('date',25,11,180,8,dates[i]);
 	    LODOP.SET_PRINT_STYLEA('date', 'FontSize', 6);
 	    LODOP.SET_PRINT_STYLEA('date', 'Angle', -90);
+	    LODOP.SET_PRINT_PAGESIZE(1, 90, 380, "");
 	}
     LODOP.PRINT();
 }
