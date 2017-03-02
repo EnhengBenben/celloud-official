@@ -303,7 +303,7 @@
 				 	  	<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				 	</h2>
 				    <div class="m-boxCon" id="otherPng">
-			    		<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img.replace('png','10.png')}}")>
+			    		<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey +'/SVG/' + img.replace('png','10.png'))">
 							<img class="imgtop" title="{{img}}" name="imgSrc" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img}}" height="170px;" width="150px;">
 							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf(img.split('_')[0]) > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
