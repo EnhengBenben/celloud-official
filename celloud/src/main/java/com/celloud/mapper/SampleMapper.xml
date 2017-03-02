@@ -183,7 +183,7 @@
      left join tb_tag t on st.tag_id=t.tag_id
     where sl.exper_state = #{experState}
     and s.user_id = #{userId} and is_add = #{isAdd,jdbcType=BIT} and s.state =#{state,jdbcType=BIT}
-    order by s.create_date desc,s.sample_name desc
+    order by s.create_date desc,s.sample_id desc
   </select>
   <select id="listSampleAndPatient" resultType="java.util.Map">
     SELECT s.sample_id sampleId, s.sample_name sampleName, s.type type, p.name name, p.gender gender,
@@ -265,7 +265,7 @@
     left join tb_sample_tag_relat st on s.sample_id=st.sample_id
     left join tb_tag t on st.tag_id=t.tag_id
     where s.user_id = #{userId} and s.order_id=#{orderId} and s.state =#{state,jdbcType=BIT}
-    order by s.create_date desc, s.sample_name desc
+    order by s.create_date desc, s.sample_id desc
   </select>
   <select id="getSampleByNameAndOrderNo" resultMap="BaseResultMap">
     select s.*
