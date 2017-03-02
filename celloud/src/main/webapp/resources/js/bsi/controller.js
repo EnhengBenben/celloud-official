@@ -287,15 +287,17 @@
 			        $rootScope.$apply();
 			    });
 			    uploader.bind("FileUploaded", function(uploader, file, response) {
-			    	var res = JSON.parse(response.response);
-					uploader.setOption("multipart_params",{'originalName': file.name, "tagId":1, "batch":$rootScope.bsiBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
-					$("#" + file.id +" .percent").html("上传完成");
-					$.post(CONTEXT_PATH+"/oss/upload/newfile",{
-						'objectKey':file.objectKey
-					},function(data){
-						console.log(data);
-					});
-			    	handleStatus(file);
+			    	if($scope.box==null){
+				    	var res = JSON.parse(response.response);
+						uploader.setOption("multipart_params",{'originalName': file.name, "tagId":1, "batch":$rootScope.bsiBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
+						$("#" + file.id +" .percent").html("上传完成");
+						$.post(CONTEXT_PATH+"/oss/upload/newfile",{
+							'objectKey':file.objectKey
+						},function(data){
+							console.log(data);
+						});
+				    	handleStatus(file);
+			    	}
 			    });
 			    uploader.bind("FilesRemoved", function(uploader, files) {
 			    	$rootScope.$apply();
@@ -352,9 +354,10 @@
 			    				'x-oss-meta-tagId':1
 			    			}
 			    		});
+			    		file.objectKey = object.dir + file.id +object.ext;
+			    	}else{
+			    		uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
 			    	}
-			    	file.objectKey = object.dir + file.id +object.ext;
-//			    	uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
 			    });
 			    uploader.bind("Error", function(uploader, error) {
 			       if(error.code=='-602'){
