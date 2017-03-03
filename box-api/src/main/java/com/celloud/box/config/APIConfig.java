@@ -11,6 +11,7 @@ public class APIConfig {
 	private String reportHealth;
 	private String ossConfig;
 	private String splittxt;
+    private String fileRunOver;
 
 	public String getNewfile() {
 		return newfile;
@@ -51,5 +52,13 @@ public class APIConfig {
 	public void setSplittxt(String splittxt) {
 		this.splittxt = splittxt;
 	}
+
+    public String getFileRunOver() {
+        return fileRunOver;
+    }
+
+    public void setFileRunOver(String fileRunOver) {
+        this.fileRunOver = fileRunOver;
+    }
 
 }

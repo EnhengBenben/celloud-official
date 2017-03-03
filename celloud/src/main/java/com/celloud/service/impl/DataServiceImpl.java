@@ -385,6 +385,8 @@ public class DataServiceImpl implements DataService {
 	public Integer addFileInfo(Integer userId, String fileName) {
 		DataFile data = new DataFile();
 		data.setUserId(userId);
+        data.setIsRun(0);
+        data.setUploadState(3);
 		// 只允许字母和数字
 		String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
 		Pattern p = Pattern.compile(regEx);

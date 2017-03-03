@@ -19,6 +19,7 @@
 		<result column="batch" property="batch" jdbcType="VARCHAR" />
 		<result column="oss_path" property="ossPath" jdbcType="VARCHAR" />
 		<result column="upload_state" property="uploadState" jdbcType="INTEGER" />
+		<result column="is_run" property="isRun" jdbcType="INTEGER"/>
 	</resultMap>
 	<resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.DataFile"
 		extends="BaseResultMap">
@@ -45,7 +46,7 @@
 	<sql id="Tag_Base_Column_List">
 		f.file_id, f.user_id, data_key, file_name, strain, size,
 		create_date, update_date,
-		path,
+		path, f.is_run,
 		state, file_format, sample,
 		another_name, md5, batch,oss_path,upload_state
 	</sql>
@@ -395,11 +396,11 @@
 	</select>
 	<insert id="addDataInfo" useGeneratedKeys="true" keyProperty="fileId"
 		parameterType="com.celloud.model.mysql.DataFile">
-		insert into tb_file(user_id,file_name,create_date,state
+		insert into tb_file(user_id,is_run,file_name,create_date,state
 		<if test="md5 != null">
 			,md5
 		</if>
-		) values(#{userId },#{fileName },now(),#{state}
+		) values(#{userId },#{isRun},#{fileName },now(),#{state}
 		<if test="md5 != null">
 			,#{md5}
 		</if>
@@ -408,6 +409,9 @@
 	<update id="updateDataInfoByFileId" parameterType="com.celloud.model.mysql.DataFile">
 		update tb_file
 		set data_key=#{dataKey },size=#{size },path=#{path},
+		<if test="isRun != null">
+		  is_run=#{isRun},
+		</if>
 		<if test="anotherName != null">
 		 another_name=#{anotherName },
 		</if>
