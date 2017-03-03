@@ -22,7 +22,7 @@
         <section class="m-box">
 	        <h2><i class="i-edit"></i>突变类型</h2>
 		    <div class="m-boxCon result">
-	    		<span ng-if="ugt.position!=null && ugt.position!=''">{{ugt.position}}</span>
+	    		<span ng-if="ugt.position!=null && ugt.position!=''" ng-bind-html="ugt.position"></span>
 	    		<span ng-if="ugt.position==null || ugt.position==''">未检测到突变</span>
 		    </div>
 	    </section>
@@ -31,7 +31,7 @@
 				<i class="i-edit"></i>SNP
 			</h2>
 		    <div class="m-boxCon result" id="report_tb">
-		    	<span ng-if="ugt.mutationPosition != null">{{ugt.mutationPosition}}</span>
+		    	<span ng-if="ugt.mutationPosition != null" ng-bind-html="ugt.mutationPosition"></span>
 		    	<span ng-if="ugt.mutationPosition == null">数据正常，未找到其他突变。</span>
 		    </div>
 	     </section>

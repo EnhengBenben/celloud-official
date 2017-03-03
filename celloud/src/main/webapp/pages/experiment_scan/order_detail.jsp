@@ -6,12 +6,13 @@
   <div class="title-content">
       <div class="title">样本寄送订单</div>
   </div>
-  <div class="clearfix" style="height: 80px">
-    <div class="pull-left" style="margin-top: 20px">
-	  <h4>订单编号：<span>{{sampleOrderInfo.sampleOrder.orderNo}}</span></h4><br>
-	  <h4>下单日期：<span>{{sampleOrderInfo.sampleOrder.createDate| date : 'yyyy-MM-dd HH:mm:ss'}}</span></h4>
+  <div class="clearfix" style="position: relative;">
+    <div style="margin-top: 20px">
+      <h4>订单编号：<span>{{sampleOrderInfo.sampleOrder.orderNo}}</span></h4><br>
+      <h4>下单日期：<span>{{sampleOrderInfo.sampleOrder.createDate| date : 'yyyy-MM-dd HH:mm:ss'}}</span></h4><span ng-if="userProduct.app123==123"><br/></span>
+      <h4 ng-if="userProduct.app123==123">寄送信息：<span>艾吉泰康-张三-13800138000-北京市朝阳区京顺东街8号北京地坛医院</span></h4>
     </div>
-    <img class="pull-right" width="76" alt="" ng-src="<%=request.getContextPath()%>/user/icon/temp?file={{sampleOrderInfo.sampleOrder.orderNo}}.png">
+    <img style="position: absolute;right: 0px; top: 0px;" width="76" alt="" ng-src="<%=request.getContextPath()%>/user/icon/temp?file={{sampleOrderInfo.sampleOrder.orderNo}}.png">
   </div>
   <div class="tests-content">
 	  <table class="table table-count">
@@ -37,6 +38,7 @@
 	    </tbody>
 	  </table>
 	  <p>
+	    <span ng-if="userProduct.app123==123">本次样品为 {{sampleOrderInfo.samples.length}} 管血液样品 , 寄样人：${loginUserInSession.username } 联系电话：${loginUserInSession.cellphone }<br/></span>
 	    备注：在送样进入实验室，需要把该订单打印并交付到样本接受人员手中，否则无法进行样本入库及影响后续的实验安排。
 	  </p>
   </div>

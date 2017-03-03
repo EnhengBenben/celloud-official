@@ -342,15 +342,11 @@ public class TaskAction {
 		// 3. 创建项目结果文件
 		StringBuffer basePath = new StringBuffer();
 		basePath.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/");
-		String projectFile = basePath + projectId + "/" + projectId + ".txt";
-		FileLock filelock = null;
+		String projectFile = basePath.toString() + projectId + "/" + projectId + ".txt";
 		if (!new File(projectFile).exists()) {
-			FileTools.createFile(projectFile);
-			filelock = FileTools.getFileLock(new File(projectFile));
 			FileTools.appendWrite(projectFile, title);
-		} else {
-			filelock = FileTools.getFileLock(new File(projectFile));
 		}
+		FileLock filelock = FileTools.getFileLock(new File(projectFile));
 		// 4. 通过反射调用相应app的处理方法，传参格式如下：
 		// String appPath, String appName, String appTitle,String
 		// projectFile,String projectId, List<DataFile> proDataList,String

@@ -27,6 +27,27 @@ public class DataKeyListToFile {
 	public static final String DATA_REPORT_NUM = "dataReportNum";
 
 	/**
+	 * @Description 包含路径和文件名，格式为：path \t name
+	 * @param dataList
+	 * @return
+	 * @author lin
+	 * @date 2017年2月28日 下午4:26:17
+	 */
+	public static Map<String, Object> projectContainName(List<DataFile> dataList) {
+		Map<String, Object> dataListFileMap = new HashMap<>();
+		Iterator<DataFile> iterator = dataList.iterator();
+		DataFile first = dataList.get(0);
+		String dataListFile = getDataListFile(first.getOssPath() != null);
+		while (iterator.hasNext()) {
+			DataFile data = iterator.next();
+			FileTools.appendWrite(dataListFile, path(data) + "\t" + data.getFileName() + "\n");
+		}
+		dataListFileMap.put(first.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
+		dataListFileMap.put(DATA_REPORT_NUM, String.valueOf(dataList.size()));
+		return dataListFileMap;
+	}
+
+	/**
 	 * 包含路径和文件名，格式为：path \t name
 	 * 
 	 * @param dataKeyList
@@ -38,8 +59,7 @@ public class DataKeyListToFile {
 		while (iterator.hasNext()) {
 			DataFile data = iterator.next();
 			String dataListFile = getDataListFile(data.getOssPath() != null);
-			FileTools.appendWrite(dataListFile,
-					(data.getOssPath() == null ? data.getPath() : data.getOssPath()) + "\t" + data.getFileName());
+			FileTools.appendWrite(dataListFile, path(data) + "\t" + data.getFileName());
 			dataListFileMap.put(data.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, String.valueOf(dataList.size()));
@@ -311,4 +331,7 @@ public class DataKeyListToFile {
 				+ new Double(Math.random() * 1000).intValue() + ".txt";
 	}
 
+	private static String path(DataFile data) {
+		return data.getOssPath() == null ? data.getPath() : data.getOssPath();
+	}
 }

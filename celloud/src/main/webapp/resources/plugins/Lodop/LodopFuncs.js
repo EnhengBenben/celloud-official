@@ -52,24 +52,24 @@ function getLodop(oOBJECT,oEMBED){
 //    var strHtmInstall="<font>打印控件未安装!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop32.exe' target='_self'>执行安装</a>,安装后请刷新页面或重新进入。</font>";
 //    var strHtmUpdate="<font>打印控件需要升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop32.exe' target='_self'>执行升级</a>,升级后请重新进入。</font>";
 //    var strHtm64_Install="<font>打印控件未安装!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop64.exe' target='_self'>执行安装</a>,安装后请刷新页面或重新进入。</font>";
-//    var strHtm64_Update="<font>打印控件需要升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/install_lodop64.exe' target='_self'>执行升级</a>,升级后请重新进入。</font>";
+    var strHtm64_Update="<font>打印控件需要升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.094.exe' target='_self'>执行升级</a>,升级后请重新进入。</font>";
 //    var strHtmFireFox="<font>（注意：如曾安装过Lodop旧版附件npActiveXPLugin,请在【工具】->【附加组件】->【扩展】中先卸它）</font>";
-    var strHtmChrome="<font>(如果此前正常，仅因浏览器升级或重安装而出问题，需点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.068.exe' target='_self'>重新安装</a>,安装后请刷新页面。）</font>";
-    var strCLodopInstall="<font>CLodop云打印服务(localhost本地)未安装启动!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.068.exe' target='_self'>执行安装</a>,安装后请刷新页面。</font>";
-    var strCLodopUpdate="<font color='#FF00FF'>CLodop云打印服务需升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.068.exe' target='_self'>执行升级</a>,升级后请刷新页面。</font>";
+    var strHtmChrome="<font>(如果此前正常，仅因浏览器升级或重安装而出问题，需点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.094.exe' target='_self'>重新安装</a>,安装后请刷新页面。）</font>";
+    var strCLodopInstall="<font>CLodop云打印服务(localhost本地)未安装启动!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.094.exe' target='_self'>执行安装</a>,安装后请刷新页面。</font>";
+    var strCLodopUpdate="<font color='#FF00FF'>CLodop云打印服务需升级!点击这里<a href='"+window.CONTEXT_PATH+"/plugins/Lodop/CLodop_Setup_for_Win32NT_https_2.094.exe' target='_self'>执行升级</a>,升级后请刷新页面。</font>";
     var LODOP;
     try{
         var isIE = (navigator.userAgent.indexOf('MSIE')>=0) || (navigator.userAgent.indexOf('Trident')>=0);
         if (needCLodop()) {
-            try{ LODOP=getCLodop();} catch(err) {};
+            try{ LODOP=getCLodop(); } catch(err) {};
             if (!LODOP && document.readyState!=="complete") {alert("C-Lodop没准备好，请稍后再试！"); return;};
             if (!LODOP) {
           		 $.tips(strCLodopInstall,'请下载'); 
                  return;
             } else {
-//               if (CLODOP.CVERSION<"2.0.6.2") { 
-//                   $.tips(strCLodopUpdate,'请下载'); 
-//               };
+               if (CLODOP.CVERSION<"2.0.9.4") { 
+                   $.tips(strCLodopUpdate,'请下载'); 
+               };
                if (oEMBED && oEMBED.parentNode) oEMBED.parentNode.removeChild(oEMBED);
                if (oOBJECT && oOBJECT.parentNode) oOBJECT.parentNode.removeChild(oOBJECT);	
     	      };
@@ -120,19 +120,19 @@ function getLodop(oOBJECT,oEMBED){
 function printQRCode(sampleName,date){
   var LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
   LODOP.PRINT_INIT("打印提取DNA二维码takenDNAS");
-  LODOP.ADD_PRINT_BARCODE(0, 7, 20, 20, 'QRCode', sampleName);
+  LODOP.ADD_PRINT_BARCODE(8, 5, 20, 20, 'QRCode', sampleName);
   LODOP.NEWPAGEA();
-  LODOP.ADD_PRINT_BARCODE(2, 7, 20, 20, 'QRCode', sampleName);
-  LODOP.ADD_PRINT_TEXTA('sname',25,30,180,8,sampleName);
+  LODOP.ADD_PRINT_BARCODE(2, 5, 20, 20, 'QRCode', sampleName);
+  LODOP.ADD_PRINT_TEXTA('sname',25,27,180,8,sampleName);
   LODOP.SET_PRINT_STYLEA('sname', 'FontSize', 6);
   LODOP.SET_PRINT_STYLEA('sname', 'Angle', -90);
-  LODOP.ADD_PRINT_TEXTA('uname',25,22,180,8,window.username);
+  LODOP.ADD_PRINT_TEXTA('uname',25,18,180,8,window.username);
   LODOP.SET_PRINT_STYLEA('uname', 'FontSize', 6);
   LODOP.SET_PRINT_STYLEA('uname', 'Angle', -90);
-  LODOP.ADD_PRINT_TEXTA('date',25,14,180,8,date);
+  LODOP.ADD_PRINT_TEXTA('date',25,11,180,8,date);
   LODOP.SET_PRINT_STYLEA('date', 'FontSize', 6);
   LODOP.SET_PRINT_STYLEA('date', 'Angle', -90);
-  LODOP.SET_PRINT_PAGESIZE(1, 90, 380, "");
+//  LODOP.SET_PRINT_PAGESIZE(1, 90, 380, "");
   LODOP.PRINT();
 }
 
@@ -153,6 +153,7 @@ function printQRCodeBatch(sampleNames,dates){
 	    LODOP.ADD_PRINT_TEXTA('date',25,11,180,8,dates[i]);
 	    LODOP.SET_PRINT_STYLEA('date', 'FontSize', 6);
 	    LODOP.SET_PRINT_STYLEA('date', 'Angle', -90);
+	    LODOP.SET_PRINT_PAGESIZE(1, 90, 380, "");
 	}
     LODOP.PRINT();
 }

@@ -143,6 +143,7 @@ public class ReportAction {
 	@RequestMapping("checkPdf")
 	@ResponseBody
 	public Integer checkPdf(String dataKey) {
+        System.out.println("试试");
 		Integer userId = ConstantsData.getLoginUserId();
 		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
 		if (!new File(filePath).exists()) {
@@ -800,7 +801,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getMIBReportInfo(String dataKey, Integer projectId, Integer appId) {
 		MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
-		Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		if (mib.getReadsDistributionInfo() != null && mib.getReadsDistributionInfo().size() > 0)
 			map.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
 		if (mib.getFamilyDistributionInfo() != null && mib.getFamilyDistributionInfo().size() > 0)

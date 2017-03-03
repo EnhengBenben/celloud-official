@@ -87,7 +87,9 @@ public class RunServiceImpl implements RunService {
 	@Override
 	public Map<String, Object> getDataListFile(Integer appId, List<DataFile> dataList) {
 		Map<String, Object> dataFilePathMap = new HashMap<>();
-		if (AppDataListType.FASTQ_PATH.contains(appId)) {
+		if (AppDataListType.PROJECT.contains(appId)) {
+			dataFilePathMap = DataKeyListToFile.projectContainName(dataList);
+		} else if (AppDataListType.FASTQ_PATH.contains(appId)) {
 			dataFilePathMap = DataKeyListToFile.onlyFastqPath(dataList);
 		} else if (AppDataListType.ONLY_PATH.contains(appId)) {
 			dataFilePathMap = DataKeyListToFile.onlyPath(dataList);
