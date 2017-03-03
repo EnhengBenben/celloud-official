@@ -3,13 +3,6 @@
 	celloudApp.controller("sidebarController", function($scope,
 			$location, $rootScope, $timeout, commonService) {
 		
-		$('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});
-		var revise = $(document).width()-$('.sidebar-menu').width();
-		$("#pageContent").css("width",revise+"px");
-		$('.sidebar-menu').resize(function(){
-			revise = $(document).width()-$(this).width();
-			$("#pageContent").css("width",revise+"px");
-		});
 		$rootScope.showZoom = function(src) {
 			var bh = $("body").height();  
 			var bw = $("body").width();
@@ -27,13 +20,21 @@
 			$('#imageFullScreen').smartZoom('destroy');
 			$("#fullbg,#pageContent,#closeZoom").hide(); 
 		}
+		$rootScope.showBg = function(src,id) { 
+      var width = $("#" + id).width();
+      var height = $("#" + id).height();
+      $("#imageFullScreen").css("width",width*1.5);
+      $("#imageFullScreen").css("height",height*1.5);
+      $rootScope.showZoom(src);
+    }
+		$("#imageFullScreen").smartZoom({'containerClass':'zoomableContainer'});
 		/**
 	     * HBV峰图放大
 	     * @param src
 	     */
 	    $rootScope.bigFigure = function(src){
-	        $("img[id='imageFullScreen']").css("width",960);
-	        $("img[id='imageFullScreen']").css("height",144);
+	        $("#imageFullScreen").css("width",960);
+	        $("#imageFullScreen").css("height",144);
 	        $rootScope.showZoom(src);
 	    }
 	    /**
@@ -44,8 +45,8 @@
 	    $rootScope.bigOrigin = function(src,id) { 
 	        var width = $("#" + id).width();
 	        var height = $("#" + id).height();
-	        $("img[id='imageFullScreen']").css("width",width*1.5);
-	        $("img[id='imageFullScreen']").css("height",height*1.5);
+	        $("#imageFullScreen").css("width",width*1.5);
+	        $("#imageFullScreen").css("height",height*1.5);
 	        $rootScope.showZoom(src);
 	    }
 	    /**
@@ -53,8 +54,8 @@
 	     * @param src
 	     */
 	    $rootScope.bigReplace = function(src){
-	        $("img[id='imageFullScreen']").css("width",1050);
-	        $("img[id='imageFullScreen']").css("height",157.5);
+	        $("#imageFullScreen").css("width",1050);
+	        $("#imageFullScreen").css("height",157.5);
 	        $rootScope.showZoom(src);
 	    }
 	    

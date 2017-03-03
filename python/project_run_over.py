@@ -63,3 +63,7 @@ if my:
 			my=mysql.getInstance()
 			if my:
 				my.execute(updateSql)
+			updateSql = 'update tb_task set period = 2 where project_id = '+str(re['projectId'])
+			my=mysql.getInstance()
+			if my:
+				my.execute(updateSql)

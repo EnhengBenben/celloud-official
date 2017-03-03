@@ -58,7 +58,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="text-center mb20 w500">
+			<div class="text-center mb20 w500 mt10">
 				<a href="javascript:void(0)" ng-click="change1()" class="btn -low"><i class="i-view"></i>查看详情</a>
 			</div>
 	     </section>
@@ -303,7 +303,7 @@
 				 	  	<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				 	</h2>
 				    <div class="m-boxCon" id="otherPng">
-			    		<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img.replace('png','10.png')}}")>
+			    		<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.imgString!=''" ng-repeat="img in hbv.imgString.split(',')" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey +'/SVG/' + img.replace('png','10.png'))">
 							<img class="imgtop" title="{{img}}" name="imgSrc" style="padding-left: 30px;" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{img}}" height="170px;" width="150px;">
 							<div style="width:120px;margin-left:30px;margin-top: 10px;" ng-if="lowQcStr.indexOf(img.split('_')[0]) > -1" data-step="2" data-position="bottom" data-intro="" data-img="hbv_tips.png">
 	                                                    该位点测序质量低，结果仅供参考
@@ -335,28 +335,27 @@
 					<span style="float:right;padding-right: 30px;" title="帮助" ng-click="showModal('helpModal',1)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 				</h2>
 			    <div ng-if="hbv.original['1_all_png'] != null" class="m-boxCon result">
-					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['1_all_png']}}","listAll1Img")>
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['1_all_png'],'listAll1Img')">
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['1_all_png']}}" id="listAll1Img">
 					</a>
 			    </div>
 			    <div ng-if="hbv.original['2_all_png'] != null" class="m-boxCon result">
-					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['2_all_png']}}","listAll2Img")>
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['2_all_png'],'listAll2Img')">
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['2_all_png']}}" id="listAll2Img">
 					</a>
 			    </div>
 			    <div ng-if="hbv.original['3_all_png'] != null" class="m-boxCon result">
-					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['3_all_png']}}","listAll3Img")>
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['3_all_png'],'listAll3Img')">
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['3_all_png']}}" id="listAll3Img">
 					</a>
 			    </div>
 			     <div ng-if="hbv.original['4_all_png'] != null" class="m-boxCon result">
-					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['4_all_png']}}","listAll4Img")>
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['4_all_png'],'listAll4Img')">
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['4_all_png']}}" id="listAll4Img">
 					</a>
 			    </div>
 			    <div ng-if="hbv.original['5_all_png'] != null" class="m-boxCon result">
-<!-- 					<a ng-click="bigFigure({{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['5_all_png']}},'listAll5Img');" > -->
-					<a ng-click=bigFigure("{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['5_all_png']}}","listAll5Img")>
+					<a ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.original['5_all_png'],'listAll5Img')">
 						<img class="imgtop originImg" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.original['5_all_png']}}" id="listAll5Img">
 					</a>
 			    </div>

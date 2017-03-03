@@ -79,7 +79,9 @@
 	            <h1>{{map.countData}}<span>个</span></h1>
 	            <div class="footer">
 		          <span>数据总量</span>
-	              <a href="#/data"><span>详情</span><i class="next-icon"></i></a>
+		          <shiro:hasPermission name="data:manage">
+		              <a href="#/data"><span>详情</span><i class="next-icon"></i></a>
+		          </shiro:hasPermission>
 	            </div>
 	          </div>
 	        </li>
@@ -89,7 +91,9 @@
 	            <h1>{{map.sumData}}<span>{{map.format}}</span></h1>
 	            <div class="footer">
 	              <span>数据大小</span>
-	              <a href="#/data"><span>详情</span><i class="next-icon"></i></a>
+	              <shiro:hasPermission name="data:manage">
+		              <a href="#/data"><span>详情</span><i class="next-icon"></i></a>
+	              </shiro:hasPermission>
 	            </div>
 	          </div>
 	        </li>
@@ -99,7 +103,9 @@
 	            <h1>{{map.countApp}}<span>个</span></h1>
 	            <div class="footer">
 	              <span>产品总量</span>
-	              <a href="#/app"><span>详情</span><i class="next-icon"></i></a>
+<%-- 	              <shiro:hasPermission name="application:center"> --%>
+		              <a href="#/app"><span>详情</span><i class="next-icon"></i></a>
+<%-- 	              </shiro:hasPermission> --%>
 	            </div>
 	          </div>
 	        </li>
