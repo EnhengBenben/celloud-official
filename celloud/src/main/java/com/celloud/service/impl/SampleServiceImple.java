@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.alimail.AliEmailUtils;
 import com.celloud.config.Config;
+import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
 import com.celloud.constants.IconConstants;
@@ -41,6 +42,7 @@ import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.CompanyEmailService;
 import com.celloud.service.DataService;
+import com.celloud.service.MetadataService;
 import com.celloud.service.PatientService;
 import com.celloud.service.SampleService;
 import com.celloud.service.UserService;
@@ -82,6 +84,8 @@ public class SampleServiceImple implements SampleService {
     private AliEmailUtils aliEmailUtil;
     @Autowired
     private DataService dataService;
+    @Autowired
+    private MetadataService metadataService;
 
 	@Override
 	public Integer saveSample(String sampleName, Integer userId) {
@@ -121,6 +125,7 @@ public class SampleServiceImple implements SampleService {
 
     @Override
     public Integer commitSamples(List<Integer> sampleIds, Integer userId) {
+        Map<String, Map<String, String>> nameSeqMap = metadataService.getNameSeqMap(3);
         sampleIds = new ArrayList<>(new HashSet<>(sampleIds));
         Collections.sort(sampleIds);
         sampleIds = new ArrayList<>(new HashSet<>(sampleIds));
@@ -136,7 +141,8 @@ public class SampleServiceImple implements SampleService {
         for(Sample sample : samples){
 			sample.setIsAdd(true);
 			sample.setOrderId(so.getId());
-			sample.setExperSampleName(DataUtil.getExperSampleNo(sample.getType(), sample.getSampleId()));
+            sample.setExperSampleName(
+                    DataUtil.getExperSampleNo(nameSeqMap.get(sample.getType()).get("seq"), sample.getSampleId()));
 			sampleMapper.updateByPrimaryKeySelective(sample);
         }
         return so.getId();
@@ -199,9 +205,10 @@ public class SampleServiceImple implements SampleService {
     @Override
     public Integer updateExperStateAndIndex(Integer userId, Integer experState,
             Integer sampleId, List<String> sindexList) {
+        List<Metadata> sampleIndex = metadataService.getMetadata(118, 1);
 		if (SampleTypes.indexString == null) {
 			List<String> sampleList = new ArrayList<>();
-			for (Metadata metadata : SampleTypes.index) {
+            for (Metadata metadata : sampleIndex) {
 				sampleList.add(metadata.getName() + ":" + metadata.getSeq());
 			}
 			SampleTypes.indexString = sampleList;
@@ -421,6 +428,7 @@ public class SampleServiceImple implements SampleService {
 
     @Override
     public Integer commitSampleInfo(Integer userId) {
+        Map<String, Map<String, String>> nameSeqMap = metadataService.getNameSeqMap(3);
         List<Map<String, Object>> sampleInfos = sampleMapper.listSample(userId, SampleTypes.NOTADD,
                 DataState.ACTIVE);
         if (sampleInfos == null || sampleInfos.size() <= 0) {
@@ -436,9 +444,6 @@ public class SampleServiceImple implements SampleService {
         sampleOrderMapper.insertSelective(so);
         so.setOrderNo(DataUtil.getSampleOrderNo(so.getId()));
         sampleOrderMapper.updateByPrimaryKeySelective(so);
-        // 修改sample状态为已添加，并添加订单编号
-        // sampleMapper.updateAddTypeById(sampleIds, SampleTypes.ISADD,
-        // so.getId());
 
         for (int i = 0; i < sampleInfos.size(); i++) {
             // 生成tb_file
@@ -463,7 +468,7 @@ public class SampleServiceImple implements SampleService {
             sample.setIsAdd(true);
             sample.setOrderId(so.getId());
             sample.setExperSampleName(
-                    DataUtil.getExperSampleNo(sampleInfos.get(i).get("type").toString(),
+                    DataUtil.getExperSampleNo(nameSeqMap.get(sampleInfos.get(i).get("type")).get("seq"),
                             Integer.parseInt(sampleInfos.get(i).get("sampleId").toString())));
             sampleMapper.updateByPrimaryKeySelective(sample);
         }
@@ -483,6 +488,7 @@ public class SampleServiceImple implements SampleService {
 
     @Override
     public Boolean sendOrderInfo(Integer userId, Integer orderId) {
+        LOGGER.info("用户 {} 发送邮件", ConstantsData.getLoginUserId());
         // 获取大客户id
         Integer companyId = userService.getCompanyIdByUserId(userId);
         // 获取大客户的email
@@ -491,11 +497,18 @@ public class SampleServiceImple implements SampleService {
         // 判断当前的环境, 如果是正式环境, 获取正式人员邮箱
         if (config.getPro()) { // 当前是正式环境
             queryCompanyEmail.setStatus(1); // 正式人员
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("当前是正式环境");
+            }
         } else {
             queryCompanyEmail.setStatus(0); // 测试人员
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("当前不是正式环境");
+            }
         }
         List<CompanyEmail> companyEmails = companyEmailService.selectBySelective(queryCompanyEmail);
         if (companyEmails != null && companyEmails.size() > 0) {
+            LOGGER.info("获取到大客户收件邮箱");
             // 根据orderId查询样本信息
             Map<String, Object> sampleInfoOrderInfo = getSampleInfoOrderInfo(userId, orderId);
             if (sampleInfoOrderInfo != null && sampleInfoOrderInfo.keySet().size() > 0) {
@@ -561,6 +574,8 @@ public class SampleServiceImple implements SampleService {
 
                 aliEmailUtil.simpleSend(title, context.toString(), to);
             }
+        } else {
+            LOGGER.info("没有获取到大客户的收件邮箱");
         }
         return true;
     }

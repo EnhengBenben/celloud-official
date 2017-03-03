@@ -43,4 +43,9 @@ public class MetadataServiceImpl implements MetadataService {
         return mm.getMetadataToSelectByTagIdAndFlag(tagId, flag);
     }
 
+    @Override
+    public Map<String, Map<String, String>> getNameSeqMap(Integer flag) {
+        return mm.getNameSeqMap(flag);
+    }
+
 }

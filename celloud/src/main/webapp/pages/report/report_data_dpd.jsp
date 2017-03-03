@@ -55,7 +55,7 @@
 	         <h2><i class="i-dna"></i>原始峰图</h2>
 	 		 <div ng-if="dpd.original!=null" ng-repeat="original in dpd.original" class="m-boxCon result">
  				<a ng-click="bigOrigin(uploadPath + dpd.userId + '/' + dpd.appId + '/' + dpd.dataKey + '/SVG/' + original,'original' + ($index+1));" >
- 					<img name="imgSrc" class="originImg" src="{{uploadPath}}{{dpd.userId}}/{{dpd.appId}}/{{dpd.dataKey}}/SVG/{{original}}" id="original{{$index+1}}">
+ 					<img name="imgSrc" class="originImg" ng-src="{{uploadPath}}{{dpd.userId}}/{{dpd.appId}}/{{dpd.dataKey}}/SVG/{{original}}" id="original{{$index+1}}">
  				</a>
 	 	     </div>
 		     <div ng-if="dpd.original==null" class="m-boxCon result">

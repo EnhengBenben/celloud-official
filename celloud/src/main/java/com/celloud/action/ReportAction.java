@@ -143,6 +143,7 @@ public class ReportAction {
 	@RequestMapping("checkPdf")
 	@ResponseBody
 	public Integer checkPdf(String dataKey) {
+        System.out.println("试试");
 		Integer userId = ConstantsData.getLoginUserId();
 		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
 		if (!new File(filePath).exists()) {
@@ -331,11 +332,13 @@ public class ReportAction {
 	 * @param projectId
 	 *
 	 */
-	private Map<String, Object> getCommonInfo(Integer projectId) {
+    private Map<String, Object> getCommonInfo(Integer projectId, String dataKey) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Project project = projectService.selectByPrimaryKey(projectId);
+        String batch = dataService.getBatchByDataKey(dataKey);
 		map.put("uploadPath", "/upload/");
 		map.put("project", project);
+        map.put("batch", batch);
 		return map;
 	}
 
@@ -358,7 +361,7 @@ public class ReportAction {
                 ConstantsData.getLoginUserName(), projectId, dataKey, appId);
         AccuSeqα2 accuSeqα2 = reportService.getAccuSeqα2Report(dataKey,
                 projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
         map.put("accuSeqα2", accuSeqα2);
         System.out.println(
                 "AccuSeq报告=============================================");
@@ -448,7 +451,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getCMPInfo(String dataKey, Integer projectId, Integer appId) {
 		CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("cmp", cmp);
 		return map;
 	}
@@ -517,7 +520,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getGDDInfo(String dataKey, Integer projectId, Integer appId) {
 		CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("cmp", cmp);
 		return map;
 	}
@@ -765,7 +768,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getSplitInfo(String dataKey, Integer projectId, Integer appId) {
 		Split split = reportService.getSplitReport(dataKey, projectId, appId);
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("split", split);
 		map.put("splitId", split.getId().toString());
 		return map;
@@ -798,7 +801,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getMIBReportInfo(String dataKey, Integer projectId, Integer appId) {
 		MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
-		Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		if (mib.getReadsDistributionInfo() != null && mib.getReadsDistributionInfo().size() > 0)
 			map.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
 		if (mib.getFamilyDistributionInfo() != null && mib.getFamilyDistributionInfo().size() > 0)
@@ -942,6 +945,7 @@ public class ReportAction {
         // }
         return dataMap;
     }
+
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）
     @RequestMapping("/baozheng/getBSIPatientReport")
@@ -1175,7 +1179,7 @@ public class ReportAction {
 	public Map<String, Object> getBSIInfo(String dataKey, Integer projectId, Integer appId) {
 		BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
 		// Map<String, JSONArray> mibCharList = new HashMap<>();
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		if (bsi == null)
 			return map;
 		// mibCharList.put("readsDistributionInfo",
@@ -1348,7 +1352,7 @@ public class ReportAction {
         hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
         List<Map.Entry<String, Map<String, String>>> hbvOtherSiteList = reportService
                 .getHBVOtherSiteByUserId(ConstantsData.getLoginUserId(), appId);
-        Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
         map.put("hbvOtherSiteList", hbvOtherSiteList);
         map.put("hbv", hbv);
         return map;
@@ -1359,7 +1363,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getFSocgInfo(String dataKey, Integer projectId, Integer appId) {
 		FSocg fsocg = reportService.getFSocgReport(dataKey, projectId, appId);
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("fsocg", fsocg);
 		return map;
 	}
@@ -1398,7 +1402,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getABINJInfo(String dataKey, Integer projectId, Integer appId) {
 		ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("abinj", abinj);
 		return map;
 	}
@@ -1437,7 +1441,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> get16SInfo(String dataKey, Integer projectId, Integer appId) {
 		S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("s16", s16);
 		return map;
 	}
@@ -1478,7 +1482,7 @@ public class ReportAction {
 	@RequestMapping("getPgsInfo")
 	@ResponseBody
 	public Map<String, Object> getPgsInfo(String dataKey, Integer projectId, Integer appId) {
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
 		List<Experiment> expList = null;
 		if (pgs != null) {
@@ -1559,7 +1563,7 @@ public class ReportAction {
 				oncogene.setOut(out);
 			}
 		}
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("oncogene", oncogene);
 		return map;
 	}
@@ -1597,7 +1601,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getHCVInfo(String dataKey, Integer projectId, Integer appId) {
 		HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("hcv", hcv);
 		return map;
 	}
@@ -1656,7 +1660,7 @@ public class ReportAction {
 		} else {
 			translate.setResult(CustomStringUtils.htmlbr(result));
 		}
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("translate", translate);
 		return map;
 	}
@@ -1699,7 +1703,7 @@ public class ReportAction {
 		if (StringUtils.isNotBlank(position)) {
 			egfr.setPosition(CustomStringUtils.htmlbr(position));
 		}
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("egfr", egfr);
 		return map;
 	}
@@ -1753,7 +1757,7 @@ public class ReportAction {
 		if (StringUtils.isNotBlank(pos)) {
 			kras.setPosition(CustomStringUtils.htmlbr(pos));
 		}
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("kras", kras);
 		return map;
 	}
@@ -1804,7 +1808,7 @@ public class ReportAction {
 		if (StringUtils.isNotBlank(postion)) {
 			dpd.setPosition(CustomStringUtils.htmlbr(postion));
 		}
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("dpd", dpd);
 		return map;
 	}
@@ -1859,7 +1863,7 @@ public class ReportAction {
 		if (StringUtils.isNotBlank(mutationPosition)) {
 			ugt.setMutationPosition(CustomStringUtils.htmlbr(mutationPosition));
 		}
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("ugt", ugt);
 		return map;
 	}
@@ -1937,7 +1941,7 @@ public class ReportAction {
 		Integer wild = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 1);
 		// 非野生型
 		Integer mutant = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 2);
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("tbinh", tbinh);
 		map.put("wild", wild);
 		map.put("mutant", mutant);
@@ -1982,7 +1986,7 @@ public class ReportAction {
 		TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
 		String report = tbrifampicin.getReport();
 		tbrifampicin.setReport(CustomStringUtils.toTable(report));
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("tbrifampicin", tbrifampicin);
 		return map;
 	}
@@ -2023,7 +2027,7 @@ public class ReportAction {
 		BRAF braf = reportService.getBRAFReport(dataKey, projectId, appId);
 		String mp = braf.getMutationPosition();
 		braf.setMutationPosition(CustomStringUtils.toTable(mp));
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("braf", braf);
 		return map;
 	}
@@ -2973,7 +2977,7 @@ public class ReportAction {
 	@RequestMapping("getRockyInfo")
 	@ResponseBody
 	public Map<String, Object> getRockyInfo(String dataKey, Integer projectId, Integer appId) {
-		Map<String, Object> map = getCommonInfo(projectId);
+        Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		map.put("rocky", rocky);
 		map.put("significances", ConstantsData.significances());
@@ -3200,6 +3204,32 @@ public class ReportAction {
             dataMap.put("dataIndexFlag", false);
         }
         return dataMap;
+    }
+
+    @RequestMapping("reportInBatch")
+    @ResponseBody
+    public PageList<Task> reportInBatch(Integer currentPage, String dataKey, Integer appId, Integer projectId,
+            String batch) {
+        Page pager = new Page();
+        Integer userId = ConstantsData.getLoginUserId();
+        if (currentPage == null) {// 代表从报告页面点进来的或者是右侧相同batch的列表点击
+            // 1. 查询相同batch的所有dataKey
+            List<String> dataKeys = taskService.findDataKeysByBatchNoSample(userId, appId, batch);
+            // 2. 当前数据所在的行数
+            Integer dataIndex = 0;
+            for (String data : dataKeys) {
+                dataIndex++;
+                if (data.equals(dataKey)) {
+                    break;
+                }
+            }
+            // 3. 根据当前数据所在行数算出页数
+            currentPage = dataIndex % 2 == 0 ? dataIndex / 2 : dataIndex / 2 + 1;
+        }
+        pager.setCurrentPage(currentPage);
+        pager.setPageSize(2);
+        // 根据page分页查询pageList
+        return taskService.findTasksByBatchNoSample(pager, userId, appId, batch);
     }
 
     // XXX 百菌探报证结束后删除（完全拷贝的↑）

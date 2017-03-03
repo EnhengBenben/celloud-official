@@ -1,12 +1,8 @@
 package com.celloud.utils;
 
 import java.security.SecureRandom;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.celloud.constants.SampleTypes;
-import com.celloud.model.mysql.Metadata;
 
 public class DataUtil {
     private static SecureRandom s = new SecureRandom();
@@ -48,17 +44,16 @@ public class DataUtil {
      * @author leamo
      * @date 2016年10月24日 下午2:30:32
      */
-    public static String getExperSampleNo(String type, int id) {
-		if (SampleTypes.typesMap == null) {
-			HashMap<String, String> map = new HashMap<>();
-			for (Metadata metadata : SampleTypes.types) {
-				map.put(metadata.getName(), metadata.getSeq());
-			}
-			SampleTypes.typesMap = map;
-		}
-		String timeStamp = SampleTypes.typesMap.get(type)
-                + DateUtil.getDateToString("yyyyMM")
-                + String.format("%06d", id);
+    public static String getExperSampleNo(String seq, int id) {
+        // if (SampleTypes.typesMap == null) {
+        // HashMap<String, String> map = new HashMap<>();
+        // for (Metadata metadata : SampleTypes.types) {
+        // map.put(metadata.getName(), metadata.getSeq());
+        // }
+        // SampleTypes.typesMap = map;
+        // }
+
+        String timeStamp = seq + DateUtil.getDateToString("yyyyMM") + String.format("%06d", id);
         return timeStamp;
     }
 

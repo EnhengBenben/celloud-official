@@ -59,7 +59,7 @@
 		 	 </div>
 	 		 <div ng-if="tbrifampicin.original != null" ng-repeat="original in tbrifampicin.original" class="m-boxCon">
 	 			<a ng-click="bigOrigin(uploadPath + tbrifampicin.userId + '/' + tbrifampicin.appId + '/' + tbrifampicin.dataKey + '/SVG/' + original,'original' + ($index+1));">
-	 				<img name="imgSrc" src="{{uploadPath}}{{tbrifampicin.userId}}/{{tbrifampicin.appId}}/{{tbrifampicin.dataKey}}/SVG/{{original}}" class="originImg" id="original{{$index+1}}">
+	 				<img name="imgSrc" ng-src="{{uploadPath}}{{tbrifampicin.userId}}/{{tbrifampicin.appId}}/{{tbrifampicin.dataKey}}/SVG/{{original}}" class="originImg" id="original{{$index+1}}">
 	 		 	</a>
 	 		 </div>
 	     </section>

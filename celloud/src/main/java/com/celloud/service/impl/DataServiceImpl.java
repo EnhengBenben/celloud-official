@@ -452,4 +452,9 @@ public class DataServiceImpl implements DataService {
 		return id == null ? null : id.intValue();
 	}
 
+    @Override
+    public String getBatchByDataKey(String dataKey) {
+        return dataFileMapper.selectByDataKey(dataKey).getBatch();
+    }
+
 }
