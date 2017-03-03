@@ -175,7 +175,7 @@ public class BoxApiAction {
 		boxFile.setTagId(tagId);
 		boxFile.setUserId(file.getUserId());
 		dataService.updateUploadState(fileId, objectKey, BoxUploadState.IN_OSS);
-		apiService.downloadFromOSS(boxFile);
+		// apiService.downloadFromOSS(boxFile);
 		return Response.SUCCESS();
 	}
 
