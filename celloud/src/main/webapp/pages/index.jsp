@@ -16,7 +16,7 @@
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
-  <link href="<%=request.getContextPath()%>/css/celloud.min.css?version=3.4.8.04" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css?version=3.4.8.05" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
 <%--   <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" /> --%>
 <!--   <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script> -->
@@ -42,8 +42,8 @@
 </script>
 <!-- End of KF5 supportbox script -->
 </head>
-<body ng-app="celloudApp" ng-controller="sidebarController">
-  <div class="container">
+<body ng-app="celloudApp">
+  <div class="container" ng-controller="sidebarController">
 	<!--   <ng-include src="'pages/partial/_partial_index_header.jsp'"></ng-include> -->
 	<!--   <ng-include src="'pages/partial/_partial_index_sidebar.jsp'"></ng-include> -->
 	  <jsp:include page="partial/_partial_index_header.jsp"></jsp:include>
@@ -63,13 +63,13 @@
 	    </div><!-- /.modal-dialog -->
 	  </div><!-- /.modal -->
 	  <!-- 放大图片所需的div -->
-	  <div id="fullbg"></div> 
-	  <div id="pageContent" class="pageContent">
-		<a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
-		<img id="imageFullScreen" src="">
-	  </div>
       <div id="alerts" class="alerts"></div>
       <ng-include src="'pages/partial/_partial_upload_modal.jsp'"></ng-include>
+  </div>
+  <div id="fullbg"></div> 
+  <div id="pageContent" class="pageContent">
+    <a class="zoomClose" id="closeZoom" ng-click="closeZoom();" style="margin-right: 75px;"></a>
+    <img id="imageFullScreen" src="">
   </div>
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/intro/intro.js?version=1.1"></script>
@@ -92,13 +92,12 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
-  <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
   <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-  <script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js?v=3.3.4"></script>
+  <script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js?v=3.4.8"></script>
   <script src="<%=request.getContextPath()%>/plugins/area/area.js?v=3.3.4"></script>
-  
+  <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js?v=3.4.8"></script>
   <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.4.8.24"></script>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';

@@ -17,6 +17,7 @@ public interface DataGroup {
 	 * 数据分组，给同一个样本的数据打标记（如华木兰数据，标记出r1和r2来）
 	 * 
 	 * @param dataFiles
+	 *            TODO java.util.Optional
 	 * @return
 	 */
 	public Map<String, String> group(List<DataFile> dataFiles);

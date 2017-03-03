@@ -385,6 +385,8 @@ public class DataServiceImpl implements DataService {
 	public Integer addFileInfo(Integer userId, String fileName) {
 		DataFile data = new DataFile();
 		data.setUserId(userId);
+        data.setIsRun(0);
+        data.setUploadState(3);
 		// 只允许字母和数字
 		String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
 		Pattern p = Pattern.compile(regEx);
@@ -413,7 +415,8 @@ public class DataServiceImpl implements DataService {
 		data.setFileId(dataId);
 		data.setDataKey(fileDataKey);
 		data.setSize(size);
-		data.setBatch(metadata.get("batch"));
+		String batch = metadata.get("batch");
+		data.setBatch(batch);
 		data.setMd5(metadata.get("etag").toLowerCase());
 		data.setFileName(name);
 		data.setState(DataState.ACTIVE);
@@ -441,8 +444,11 @@ public class DataServiceImpl implements DataService {
 		dataFileMapper.updateByPrimaryKeySelective(data);
 
 		data = dataFileMapper.selectByPrimaryKey(dataId);
-		// TODO 需要根据tagId判断是否rocky
-		runService.rockyCheckRun(123, data);
+		if (tagId == 1) {
+			runService.bsiCheckRun(batch, dataId, fileDataKey, name, userId, fileFormat);
+		} else if (tagId == 2) {
+			runService.rockyCheckRun(123, data);
+		}
 		return dataId;
 	}
 

@@ -28,6 +28,14 @@ public class ApiService {
 	private OSSConfig ossConfig;
 	private static Logger logger = LoggerFactory.getLogger(ApiService.class);
 
+    public Boolean fileRunOver(Integer r1Id, Integer r2Id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("r1Id", r1Id);
+        params.put("r2Id", r2Id);
+        ApiResponse response = HttpClientUtil.post(api.getFileRunOver(), params);
+        return response.isSuccess();
+    }
+
 	/**
 	 * 
 	 * @author miaoqi
