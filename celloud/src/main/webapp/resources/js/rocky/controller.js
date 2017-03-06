@@ -207,7 +207,6 @@
 						 data:'name='+file.name+'&oName=ddd'+file.id
 					}).responseText;
 					object = JSON.parse(object);
-					alert(object.host);
 					uploader.setOption({
 						url:"https://"+object.host,
 						multipart_params:{
