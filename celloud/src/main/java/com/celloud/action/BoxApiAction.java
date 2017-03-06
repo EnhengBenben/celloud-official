@@ -156,7 +156,7 @@ public class BoxApiAction {
 		data.setMd5(md5);
 		data.setSize(size);
 		data.setBatch(batch);
-        if (tagId == 118) {
+        if (tagId == 1 || tagId == 40 || tagId == 41 || tagId == 42 || tagId == 43 || tagId == 44) {
             data.setIsRun(1);
         } else {
             data.setIsRun(0);
