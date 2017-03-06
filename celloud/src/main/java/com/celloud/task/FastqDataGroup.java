@@ -54,7 +54,7 @@ public class FastqDataGroup implements DataGroup {
 			return datas;
 		}
 		if (!r1.getFileName().substring(0, r1.getFileName().lastIndexOf("R1"))
-				.equals(r2.getFileName().substring(0, r1.getFileName().lastIndexOf("R2")))) {
+				.equals(r2.getFileName().substring(0, r2.getFileName().lastIndexOf("R2")))) {
 			logger.warn("文件名不匹配：{}\t{}", r1.getFileName(), r2.getFileName());
 		}
 		datas.put("r1", r1.getDataKey());
