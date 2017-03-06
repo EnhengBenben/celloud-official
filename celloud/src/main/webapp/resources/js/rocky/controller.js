@@ -208,6 +208,7 @@
 					object = JSON.parse(object);
 					uploader.setOption({
 						url:"https://"+object.host,
+						chunk_size: 0,
 						multipart_params:{
 							'key' : object.dir + file.id +object.ext,
 							'policy': object.policy,
@@ -221,7 +222,18 @@
 					});
 					file.objectKey = object.dir + file.id +object.ext;
 				} else {
-					uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':2,'batch': $rootScope.rockyBatch});
+					uploader.setOption({
+						chunk_size: "1mb",
+						multipart_params:{
+							'userId':window.userId,
+							"lastModifiedDate":file.lastModifiedDate,
+							'size':file.size,
+							'originalName': file.name,
+							'name': file.name,
+							'tagId':2,
+							'batch': $rootScope.rockyBatch
+						}
+					});
 				}
 			});
 			uploader.bind("FileUploaded", function(uploader, file, response) {
