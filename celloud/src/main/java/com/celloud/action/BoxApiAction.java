@@ -156,7 +156,11 @@ public class BoxApiAction {
 		data.setMd5(md5);
 		data.setSize(size);
 		data.setBatch(batch);
-        data.setIsRun(1);
+        if (tagId == 118) {
+            data.setIsRun(1);
+        } else {
+            data.setIsRun(0);
+        }
 		data.setState(DataState.ACTIVE);
 		dataService.updateDataInfoByFileIdAndTagId(data, tagId);
 		values.put("dataKey", fileDataKey);
