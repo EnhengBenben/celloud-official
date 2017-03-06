@@ -141,7 +141,6 @@
 				browse_button : 'plupload-content',
 				url : uploadUrl,
 				drop_element : 'plupload-content',
-				chunk_size : '1mb',
 				filters : {
 					max_file_size : '10gb',
 					prevent_duplicates : true, // 不允许选取重复文件
