@@ -350,13 +350,13 @@
 			    				'signature': object.signature,
 			    				'x-oss-meta-name':file.name,
 			    				'x-oss-meta-batch':$rootScope.bsiBatch,
-			    				'x-oss-meta-tagId':1
+			    				'x-oss-meta-tagId':$("#tag-info").val()
 			    			}
 			    		});
 			    		file.objectKey = object.dir + file.id +object.ext;
 			    	}else{
 			    		uploader.setOption({
-			    			chunk_size:0,
+			    			chunk_size:"1mb",
 			    			multipart_params:{
 				    			'userId':window.userId,
 				    			"lastModifiedDate":file.lastModifiedDate,

@@ -3,7 +3,7 @@ package com.celloud.action;
 import java.io.File;
 import java.io.IOException;
 import java.nio.channels.FileLock;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -212,36 +212,10 @@ public class TaskAction {
 							data.setMd5(MD5Util.getFileMD5(filePath));
 							dataService.updateDataInfoByFileIdAndTagId(data, tagId);
 							// TODO 需要去掉写死的自动运行
-							if (tagId == 1) {
+							Integer bsiApp = Constants.bsiTags.get(tagId);
+							if (bsiApp != null) {
 								logger.info("bsi自动运行split分数据");
-								List<DataFile> bsiList = new ArrayList<>();
-								bsiList.add(data);
-								runService.runSingle(userId, 118, bsiList);
-							} else if (tagId == 40) {
-								logger.info("bsi自动运行split分数据");
-								List<DataFile> bsiList = new ArrayList<>();
-								bsiList.add(data);
-								runService.runSingle(userId, 133, bsiList);
-							} else if (tagId == 41) {
-								logger.info("bsi自动运行split分数据");
-								List<DataFile> bsiList = new ArrayList<>();
-								bsiList.add(data);
-								runService.runSingle(userId, 134, bsiList);
-							} else if (tagId == 42) {
-								logger.info("bsi自动运行split分数据");
-								List<DataFile> bsiList = new ArrayList<>();
-								bsiList.add(data);
-								runService.runSingle(userId, 135, bsiList);
-							} else if (tagId == 43) {
-								logger.info("bsi自动运行split分数据");
-								List<DataFile> bsiList = new ArrayList<>();
-								bsiList.add(data);
-								runService.runSingle(userId, 136, bsiList);
-							} else if (tagId == 44) {
-								logger.info("bsi自动运行split分数据");
-								List<DataFile> bsiList = new ArrayList<>();
-								bsiList.add(data);
-								runService.runSingle(userId, 137, bsiList);
+								runService.runSingle(userId, bsiApp, Arrays.asList(data));
 							}
 						}
 					}
@@ -254,11 +228,11 @@ public class TaskAction {
 		String endDate = null;
 		if (task != null) {
 			logger.info("任务{}执行完毕", task.getTaskId());
-            // 修改data的isRun状态
-            dataList.forEach(dataFile -> {
-                dataFile.setIsRun(0);
-                dataService.updateByPrimaryKeySelective(dataFile);
-            });
+			// 修改data的isRun状态
+			dataList.forEach(dataFile -> {
+				dataFile.setIsRun(0);
+				dataService.updateByPrimaryKeySelective(dataFile);
+			});
 			runService.runNext(appId);
 			// 构造邮件内容
 			startDate = DateUtil.getDateToString(task.getStartDate(), DateUtil.YMDHMS);
@@ -412,9 +386,9 @@ public class TaskAction {
 				}
 			}
 		}
-        DataFile dataFile = dataService.getDataByKey(dataKey);
-        dataFile.setIsRun(1);
-        dataService.updateByPrimaryKeySelective(dataFile);
+		DataFile dataFile = dataService.getDataByKey(dataKey);
+		dataFile.setIsRun(1);
+		dataService.updateByPrimaryKeySelective(dataFile);
 		// 构造桌面消息
 		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants
 				.createMessage("task", "运行完成", "项目【" + projectName + "】下数据【" + dataKey + "】运行【" + appName + "】完成。"));
