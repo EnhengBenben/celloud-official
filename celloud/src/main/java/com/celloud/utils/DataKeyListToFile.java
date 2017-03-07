@@ -185,7 +185,7 @@ public class DataKeyListToFile {
 					listIndex++;
 
 					dataFileInfo = new StringBuffer();
-					dataFileInfo.append(data_R1.getOssPath() == null ? data_R1.getPath() : data_R1.getOssPath())
+                    dataFileInfo.append(data_R1.getOssPath() == null ? data_R1.getPath() : data_R1.getOssPath())
 							.append("\t")
 							.append(data_R2.getOssPath() == null ? data_R2.getPath() : data_R2.getOssPath())
 							.append("\t");
@@ -198,9 +198,9 @@ public class DataKeyListToFile {
 				}
 			} else if (fname_R1.contains(".tar.gz")) {
 				dataFileInfo = new StringBuffer();
-				dataFileInfo.append(data_R1.getOssPath() == null ? data_R1.getPath() : data_R1.getOssPath())
+                dataFileInfo.append(data_R1.getPath())
 						.append("\t");
-				String dataListFile = getDataListFile(data_R1.getOssPath() != null);
+                String dataListFile = getDataListFile(false);
 				FileTools.appendWrite(dataListFile, dataFileInfo.toString());
 				dataListFileMap.put(data_R1.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
 				dataReportNum++;
