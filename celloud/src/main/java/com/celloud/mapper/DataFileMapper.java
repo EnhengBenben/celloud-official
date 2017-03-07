@@ -332,6 +332,19 @@ public interface DataFileMapper {
 	 */
 	List<String> getBatchList(@Param("userId") Integer userId, @Param("state") int state);
 
+    /**
+     * 
+     * @description 根据appId查询批次
+     * @author miaoqi
+     * @date 2017年3月7日 下午6:04:26
+     * @param userId
+     * @param state
+     * @param appId
+     * @return
+     */
+    List<String> getBatchListByAppId(@Param("userId") Integer userId, @Param("state") Integer state,
+            @Param("appId") Integer appId);
+
 	List<String> getBsiBatchList(@Param("userId") Integer userId, @Param("state") int state,
 	        @Param("appId") Integer appId);
 

@@ -688,6 +688,14 @@
 		where user_id=#{userId} and state=#{state} and batch is not null and batch !=''
 		group by batch
 	</select>
+	<select id="getBatchListByAppId" resultType="java.lang.String">
+		SELECT DISTINCT f.batch
+		FROM tb_file f
+		LEFT JOIN tb_report r ON f.file_id = r.file_id
+		WHERE r.app_id = #{appId}
+		AND f.user_id = #{userId}
+		AND f.state = #{state}
+	</select>
 	<select id="getBsiBatchList" resultType="java.lang.String">
         select distinct f.batch from
         (select * from
