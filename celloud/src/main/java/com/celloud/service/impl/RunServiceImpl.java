@@ -332,10 +332,6 @@ public class RunServiceImpl implements RunService {
 			boolean hasR1 = false;
 			boolean hasR2 = false;
 			for (DataFile d : dataList) {
-				File f = new File(d.getPath());
-				if (!f.exists() || f.length() != d.getSize().longValue()) {
-					continue;
-				}
 				String name_tmp = d.getFileName();
 				if (name_tmp.contains("R1")) {
 					hasR1 = true;
