@@ -38,9 +38,9 @@ import com.celloud.service.DataService;
 import com.celloud.service.RunService;
 import com.celloud.utils.DataUtil;
 import com.celloud.utils.DateUtil;
-import com.celloud.utils.FileTools;
-import com.celloud.utils.MD5Util;
+import com.celloud.utils.OSSUtils;
 import com.celloud.utils.PropertiesUtil;
+import com.celloud.utils.UploadPathUtils;
 import com.celloud.wechat.ParamFormat;
 import com.celloud.wechat.ParamFormat.Param;
 import com.celloud.wechat.constant.WechatParams;
@@ -148,8 +148,9 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 					}
 					String filePath = folderByDay + File.separatorChar + new_dataKey + extName;
 					logger.info("正在复制文件：{} ---> {}", resourcePath, filePath);
-					boolean state = FileTools.nioTransferCopy(new File(resourcePath), new File(filePath));
-					if (!state) {
+					String objectKey = UploadPathUtils.getObjectKeyByPath(resourcePath);
+					String md5 = OSSUtils.download(objectKey, filePath);
+					if (md5 == null) {
 						logger.warn("文件复制失败：{} ---> {}", resourcePath, filePath);
 						continue;
 					}
@@ -161,7 +162,7 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 					data.setFileFormat(FileFormat.FQ);
 					data.setState(DataState.ACTIVE);
 					data.setBatch(batch);
-					data.setMd5(MD5Util.getFileMD5(filePath));
+					data.setMd5(md5);
 					dataService.updateDataInfoByFileIdAndTagId(data, tagId);
 					// TODO 需要去掉写死的自动运行
 					Integer bsiApp = Constants.bsiTags.get(tagId);
