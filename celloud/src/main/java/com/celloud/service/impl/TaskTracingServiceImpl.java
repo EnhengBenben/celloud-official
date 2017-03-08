@@ -146,23 +146,25 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 					}
 					String filePath = folderByDay + File.separatorChar + new_dataKey + extName;
 					boolean state = FileTools.nioTransferCopy(new File(resourcePath), new File(filePath));
-					if (state) {
-						data.setFileId(dataId);
-						data.setDataKey(new_dataKey);
-						data.setAnotherName(tipsName);
-						data.setSize(size);
-						data.setPath(filePath);
-						data.setFileFormat(FileFormat.FQ);
-						data.setState(DataState.ACTIVE);
-						data.setBatch(batch);
-						data.setMd5(MD5Util.getFileMD5(filePath));
-						dataService.updateDataInfoByFileIdAndTagId(data, tagId);
-						// TODO 需要去掉写死的自动运行
-						Integer bsiApp = Constants.bsiTags.get(tagId);
-						if (bsiApp != null) {
-							logger.info("bsi自动运行split分数据");
-							runService.runSingle(userId, bsiApp, Arrays.asList(data));
-						}
+					if (!state) {
+						logger.warn("文件复制失败：{} ---> {}", resourcePath, filePath);
+						continue;
+					}
+					data.setFileId(dataId);
+					data.setDataKey(new_dataKey);
+					data.setAnotherName(tipsName);
+					data.setSize(size);
+					data.setPath(filePath);
+					data.setFileFormat(FileFormat.FQ);
+					data.setState(DataState.ACTIVE);
+					data.setBatch(batch);
+					data.setMd5(MD5Util.getFileMD5(filePath));
+					dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+					// TODO 需要去掉写死的自动运行
+					Integer bsiApp = Constants.bsiTags.get(tagId);
+					if (bsiApp != null) {
+						logger.info("bsi自动运行split分数据");
+						runService.runSingle(userId, bsiApp, Arrays.asList(data));
 					}
 				}
 			}
