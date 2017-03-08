@@ -1,10 +1,9 @@
 package com.celloud.service.impl;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 
 import javax.annotation.Resource;
 
@@ -116,53 +115,53 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 			logger.info("华木兰微信提醒wechatUrl：" + wechatUrl);
 		}
 		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu, wechatUrl);
-		logger.info("appId={}", appId);
 		if (appId == 113) {
 			String inPath = new StringBuffer().append(ConstantsData.getOfsPath()).append("output/").append(userId)
-					.append("/").append(appId).append("/").append(dataKey).append("/").append("result/split/")
-					.toString();
-			logger.info("resultPath={}", inPath);
-			HashSet<String> resultFiles = FileTools.getFiles(inPath);
-			if (resultFiles != null) {
-				Iterator<String> rFile = resultFiles.iterator();
-				Long size = null;
-				while (rFile.hasNext()) {
-					String fstr = rFile.next();
-					if (!fstr.equals("...tar.gz") && !fstr.equals("..tar.gz")) {
-						String extName = fstr.substring(fstr.lastIndexOf(".tar.gz"));
-						String resourcePath = inPath + fstr;
-						size = new File(resourcePath).length();
-						DataFile data = new DataFile();
-						data.setUserId(userId);
-						data.setFileName(fstr);
-						data.setState(DataState.DEELTED);
-						int dataId = dataService.addDataInfo(data);
-						String new_dataKey = DataUtil.getNewDataKey(dataId);
-						String folderByDay = PropertiesUtil.bigFilePath + userId + File.separator
-								+ DateUtil.getDateToString("yyyyMMdd");
-						File pf = new File(folderByDay);
-						if (!pf.exists()) {
-							pf.mkdirs();
-						}
-						String filePath = folderByDay + File.separatorChar + new_dataKey + extName;
-						boolean state = FileTools.nioTransferCopy(new File(resourcePath), new File(filePath));
-						if (state) {
-							data.setFileId(dataId);
-							data.setDataKey(new_dataKey);
-							data.setAnotherName(tipsName);
-							data.setSize(size);
-							data.setPath(filePath);
-							data.setFileFormat(FileFormat.FQ);
-							data.setState(DataState.ACTIVE);
-							data.setBatch(batch);
-							data.setMd5(MD5Util.getFileMD5(filePath));
-							dataService.updateDataInfoByFileIdAndTagId(data, tagId);
-							// TODO 需要去掉写死的自动运行
-							Integer bsiApp = Constants.bsiTags.get(tagId);
-							if (bsiApp != null) {
-								logger.info("bsi自动运行split分数据");
-								runService.runSingle(userId, bsiApp, Arrays.asList(data));
-							}
+					.append("/").append(appId).append("/").append(dataKey).append("/result/split/").toString();
+			File[] files = new File(inPath).listFiles(new FileFilter() {
+				@Override
+				public boolean accept(File f) {
+					return f.isFile() && !f.getName().equals("...tar.gz") && !f.getName().equals("..tar.gz");
+				}
+			});
+			if (files != null) {
+				for (int i = 0; i < files.length; i++) {
+					File f = files[i];
+					logger.info("提取到split结果数据：{}", f.getName());
+					String fstr = f.getName();
+					String extName = fstr.substring(fstr.lastIndexOf(".tar.gz"));
+					String resourcePath = inPath + fstr;
+					long size = f.length();
+					DataFile data = new DataFile();
+					data.setUserId(userId);
+					data.setFileName(fstr);
+					data.setState(DataState.DEELTED);
+					int dataId = dataService.addDataInfo(data);
+					String new_dataKey = DataUtil.getNewDataKey(dataId);
+					String folderByDay = PropertiesUtil.bigFilePath + userId + File.separator
+							+ DateUtil.getDateToString("yyyyMMdd");
+					File pf = new File(folderByDay);
+					if (!pf.exists()) {
+						pf.mkdirs();
+					}
+					String filePath = folderByDay + File.separatorChar + new_dataKey + extName;
+					boolean state = FileTools.nioTransferCopy(new File(resourcePath), new File(filePath));
+					if (state) {
+						data.setFileId(dataId);
+						data.setDataKey(new_dataKey);
+						data.setAnotherName(tipsName);
+						data.setSize(size);
+						data.setPath(filePath);
+						data.setFileFormat(FileFormat.FQ);
+						data.setState(DataState.ACTIVE);
+						data.setBatch(batch);
+						data.setMd5(MD5Util.getFileMD5(filePath));
+						dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+						// TODO 需要去掉写死的自动运行
+						Integer bsiApp = Constants.bsiTags.get(tagId);
+						if (bsiApp != null) {
+							logger.info("bsi自动运行split分数据");
+							runService.runSingle(userId, bsiApp, Arrays.asList(data));
 						}
 					}
 				}
