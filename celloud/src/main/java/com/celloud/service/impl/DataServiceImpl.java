@@ -109,7 +109,7 @@ public class DataServiceImpl implements DataService {
 		Integer result = dataFileMapper.selectTagRelat(data.getFileId(), tagId);
 		logger.info("3.2");
 		if (result == null || result.intValue() == 0) {
-			logger.info("fileId={},tagId={}");
+			logger.info("fileId={},tagId={}", data.getFileId(), tagId);
 			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
 			logger.info("3.3");
 		}
