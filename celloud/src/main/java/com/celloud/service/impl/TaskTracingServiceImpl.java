@@ -131,7 +131,6 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 					String fstr = f.getName();
 					String extName = fstr.substring(fstr.lastIndexOf(".tar.gz"));
 					String resourcePath = inPath + fstr;
-					long size = f.length();
 					logger.info("1");
 					DataFile data = new DataFile();
 					data.setUserId(userId);
@@ -154,6 +153,7 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 						logger.warn("文件复制失败：{} ---> {}", resourcePath, filePath);
 						continue;
 					}
+					long size = new File(filePath).length();
 					data.setFileId(dataId);
 					data.setDataKey(new_dataKey);
 					data.setAnotherName(tipsName);
@@ -163,13 +163,17 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 					data.setState(DataState.ACTIVE);
 					data.setBatch(batch);
 					data.setMd5(md5);
+					logger.info("3");
 					dataService.updateDataInfoByFileIdAndTagId(data, tagId);
+					logger.info("4");
 					// TODO 需要去掉写死的自动运行
 					Integer bsiApp = Constants.bsiTags.get(tagId);
 					if (bsiApp != null) {
 						logger.info("bsi自动运行split分数据");
 						runService.runSingle(userId, bsiApp, Arrays.asList(data));
+						logger.info("5");
 					}
+					logger.info("6");
 				}
 			}
 		}
