@@ -116,10 +116,12 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 			logger.info("华木兰微信提醒wechatUrl：" + wechatUrl);
 		}
 		mcu.sendMessage(userId, MessageCategoryCode.REPORT, aliEmail, params, mu, wechatUrl);
+		logger.info("appId={}", appId);
 		if (appId == 113) {
 			String inPath = new StringBuffer().append(ConstantsData.getOfsPath()).append("output/").append(userId)
 					.append("/").append(appId).append("/").append(dataKey).append("/").append("result/split/")
 					.toString();
+			logger.info("resultPath={}", inPath);
 			HashSet<String> resultFiles = FileTools.getFiles(inPath);
 			if (resultFiles != null) {
 				Iterator<String> rFile = resultFiles.iterator();
