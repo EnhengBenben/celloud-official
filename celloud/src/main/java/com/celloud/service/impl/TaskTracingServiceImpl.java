@@ -132,11 +132,13 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 					String extName = fstr.substring(fstr.lastIndexOf(".tar.gz"));
 					String resourcePath = inPath + fstr;
 					long size = f.length();
+					logger.info("1");
 					DataFile data = new DataFile();
 					data.setUserId(userId);
 					data.setFileName(fstr);
 					data.setState(DataState.DEELTED);
 					int dataId = dataService.addDataInfo(data);
+					logger.info("2");
 					String new_dataKey = DataUtil.getNewDataKey(dataId);
 					String folderByDay = PropertiesUtil.bigFilePath + userId + File.separator
 							+ DateUtil.getDateToString("yyyyMMdd");
@@ -145,6 +147,7 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 						pf.mkdirs();
 					}
 					String filePath = folderByDay + File.separatorChar + new_dataKey + extName;
+					logger.info("正在复制文件：{} ---> {}", resourcePath, filePath);
 					boolean state = FileTools.nioTransferCopy(new File(resourcePath), new File(filePath));
 					if (!state) {
 						logger.warn("文件复制失败：{} ---> {}", resourcePath, filePath);
