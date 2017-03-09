@@ -125,7 +125,7 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 				}
 			});
 			if (files != null) {
-				logger.info("找到split后的数据个数为：", files.length);
+				logger.info("找到split后的数据个数为：{}", files.length);
 				for (int i = 0; i < files.length; i++) {
 					File f = files[i];
 					logger.info("提取到split结果数据：{}", f.getName());
