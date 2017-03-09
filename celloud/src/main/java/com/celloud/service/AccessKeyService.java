@@ -1,6 +1,8 @@
 package com.celloud.service;
 
 import com.celloud.model.mysql.AccessKey;
+import com.celloud.page.Page;
+import com.celloud.page.PageList;
 
 /**
  * 用户和id、secret绑定关系
@@ -51,4 +53,35 @@ public interface AccessKeyService {
 	 */
     int updateByPrimaryKeySelective(AccessKey record);
 
+    /**
+     * 
+     * @description 根据用户id分页查询key
+     * @author miaoqi
+     * @date 2017年3月8日 下午5:09:42
+     * @param userId
+     * @param page
+     * @return
+     */
+    PageList<AccessKey> listKeys(Integer userId, Page page);
+
+    /**
+     * 
+     * @description 为用户增加一对key, secret
+     * @author miaoqi
+     * @date 2017年3月9日 上午10:51:59
+     * @param userId
+     * @param username
+     * @return
+     */
+    Boolean save(Integer userId, String username);
+
+    /**
+     * 
+     * @description 根据主键删除一对key, secret
+     * @author miaoqi
+     * @date 2017年3月9日 上午11:21:05
+     * @param id
+     * @return
+     */
+    Boolean remove(Integer id);
 }
