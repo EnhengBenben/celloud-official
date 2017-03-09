@@ -1,0 +1,5 @@
+#parse("templates/report/layout.vm")
+#parse("templates/report/default/${cmpReport.appId}/reference.vm")
+#parse("templates/report/1/126/title_more.vm")
+#parse("templates/report/default/${cmpReport.appId}/content_more.vm")
+#parse("templates/report/default/${cmpReport.appId}/js_more.vm")
