@@ -125,19 +125,18 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 				}
 			});
 			if (files != null) {
+				logger.info("找到split后的数据个数为：", files.length);
 				for (int i = 0; i < files.length; i++) {
 					File f = files[i];
 					logger.info("提取到split结果数据：{}", f.getName());
 					String fstr = f.getName();
 					String extName = fstr.substring(fstr.lastIndexOf(".tar.gz"));
 					String resourcePath = inPath + fstr;
-					logger.info("1");
 					DataFile data = new DataFile();
 					data.setUserId(userId);
 					data.setFileName(fstr);
 					data.setState(DataState.DEELTED);
 					int dataId = dataService.addDataInfo(data);
-					logger.info("2");
 					String new_dataKey = DataUtil.getNewDataKey(dataId);
 					String folderByDay = PropertiesUtil.bigFilePath + userId + File.separator
 							+ DateUtil.getDateToString("yyyyMMdd");
@@ -163,9 +162,7 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 					data.setState(DataState.ACTIVE);
 					data.setBatch(batch);
 					data.setMd5(md5);
-					logger.info("3");
 					dataService.updateDataInfoByFileIdAndTagId(data, tagId);
-					logger.info("4");
 					// TODO 需要去掉写死的自动运行
 					Integer bsiApp = Constants.bsiTags.get(tagId);
 					if (bsiApp != null) {

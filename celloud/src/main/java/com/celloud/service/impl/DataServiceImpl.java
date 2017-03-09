@@ -105,40 +105,27 @@ public class DataServiceImpl implements DataService {
 
 	@Override
 	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
-		logger.info("3.1");
 		Integer result = dataFileMapper.selectTagRelat(data.getFileId(), tagId);
-		logger.info("3.2");
 		if (result == null || result.intValue() == 0) {
-			logger.info("fileId={},tagId={}", data.getFileId(), tagId);
 			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
-			logger.info("3.3");
 		}
-		logger.info("3.4");
 		DataFile data_s = dataFileMapper.selectByPrimaryKey(data.getFileId());
-		logger.info("3.5");
 		Sample sample = null;
 		if (tagId.intValue() == 2) {
-			logger.info("3.6");
 			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), "_")[0],
 					DataState.ACTIVE);
-			logger.info("3.7");
 		} else {
 			if (data_s.getFileName().contains(".")) {
-				logger.info("3.8");
 				sample = sampleMapper.getSampleByExperName(
 						StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0], DataState.ACTIVE);
-				logger.info("3.9");
 			}
 		}
 		if (sample != null) {
-			logger.info("3.10");
 			Integer count = dataFileMapper.getFileSampleCount(data.getFileId(), sample.getSampleId());
 			if (count != null && count.intValue() <= 0) {
-				logger.info("3.11");
 				dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
 			}
 		}
-		logger.info("3.12");
 		int updateDataInfoByFileId = dataFileMapper.updateDataInfoByFileId(data);
 		return updateDataInfoByFileId;
 	}
