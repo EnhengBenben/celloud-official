@@ -278,6 +278,7 @@
 			<map>
 				<entry key="fetch.max.wait.ms" value="${consumer.fetch.max.wait.ms}" />
 				<entry key="auto.commit.interval.ms" value="${consumer.auto.commit.interval.ms}" />
+				<entry key="client.id" value="userMessageConsumer" />
 			</map>
 		</property>
 	</bean>
@@ -305,6 +306,7 @@
 			<map>
 				<entry key="fetch.max.wait.ms" value="${consumer.fetch.max.wait.ms}" />
 				<entry key="auto.commit.interval.ms" value="${consumer.auto.commit.interval.ms}" />
+				<entry key="client.id" value="taskTraceConsumer" />
 			</map>
 		</property>
 	</bean>
@@ -331,6 +333,7 @@
 				<entry key="batch.size" value="${producer.batch.size}" />
 				<entry key="linger.ms" value="${producer.linger.ms}" />
 				<entry key="buffer.memory" value="${producer.buffer.memory}" />
+				<entry key="client.id" value="celloudProducer" />
 			</map>
 		</property>
 	</bean>
