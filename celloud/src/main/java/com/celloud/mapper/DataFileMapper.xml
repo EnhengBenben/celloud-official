@@ -84,7 +84,7 @@
 	</select>
 	<select id="selectByDataKey" resultMap="ResultMapWithBLOBs">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
 		,
