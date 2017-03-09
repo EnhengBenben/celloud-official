@@ -168,9 +168,7 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 					if (bsiApp != null) {
 						logger.info("bsi自动运行split分数据");
 						runService.runSingle(userId, bsiApp, Arrays.asList(data));
-						logger.info("5");
 					}
-					logger.info("6");
 				}
 			}
 		}
