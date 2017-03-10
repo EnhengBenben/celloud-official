@@ -303,7 +303,7 @@
 		}
 	});
 	
-celloudApp.controller("companyKeyController", function($scope, companyService, userService){
+celloudApp.controller("companyKeyController", function($scope, $rootScope, companyService, userService){
 		$scope.pageInfo = {"currentPage" : 1, "pageSize" : 20};
 		$scope.pageQuery = function(currentPage, pageSize){
 			$scope.pageInfo.currentPage = currentPage || $scope.pageInfo.currentPage;
@@ -356,14 +356,28 @@ celloudApp.controller("companyKeyController", function($scope, companyService, u
 					$.alert("更改状态失败");				}
 			});
 		}
-		$scope.checkCellphone = function(){
-			companyService.checkCellphone().
-			success(function(data, status){
-				if(status == 200){
-					$scope.cellphone = data;
-					$("#company-showKey").modal("show");
-				}
-			})
+		$scope.showSecret = function(id){
+			if($rootScope.authenFlag){
+				// 已认证
+				companyService.getKey(id).
+				success(function(data, status){
+					$scope.getSecretJson();
+					$scope.pageQuery($scope.pageInfo.currnetPage, $scope.pageInfo.pageSize);
+				}).
+				error(function(data, status){
+					$.alert("服务器错误")
+				});
+			}else{
+				$rootScope.authenId = id;
+				// 未认证
+				companyService.checkCellphone().
+				success(function(data, status){
+					if(status == 200){
+						$scope.cellphone = data;
+						$("#company-showKey").modal("show");
+					}
+				})
+			}
 		}
 		$scope.hideModal = function(){
 			$("#company-showKey").modal("hide");
@@ -376,7 +390,7 @@ celloudApp.controller("companyKeyController", function($scope, companyService, u
 			}
 		});
 		$scope.sendCaptcha = function(){
-			userService.sendCaptcha().
+			companyService.sendCaptcha().
 			success(function(data, status){
 				if(status == 200){
 					// 倒计时60秒
@@ -402,6 +416,41 @@ celloudApp.controller("companyKeyController", function($scope, companyService, u
 				}
 			})
 		};
+		$scope.authenticationCellphone = function(){
+			companyService.authenticationCellphone($scope.captcha).
+			success(function(data, status){
+				if(status == 200){
+					$rootScope.authenFlag = true;
+					$("#company-showKey").modal("hide");
+					$scope.showSecret($rootScope.authenId);
+				}
+			})
+		}
+		$scope.getAuthenFlag = function(){
+			companyService.getAuthenFlag().
+			success(function(data, status){
+				if(data == 1){
+					$rootScope.authenFlag = true;
+				}else{
+					$rootScope.authenFlag = false;
+				}
+			})
+		}
+		$scope.getSecretJson = function(){
+			companyService.getSecretJson().
+			success(function(data, status){
+				$rootScope.secretJson = data;
+			})
+		}
+		$scope.hideSecret = function(id){
+			companyService.removeSecret(id).
+			success(function(data, status){
+				$rootScope.secretJson = data;
+				$scope.pageQuery();
+			})
+		}
+		$scope.getAuthenFlag();
+		$scope.getSecretJson();
 		$scope.pageQuery($scope.pageInfo.currnetPage, $scope.pageInfo.pageSize);
 	});
 	

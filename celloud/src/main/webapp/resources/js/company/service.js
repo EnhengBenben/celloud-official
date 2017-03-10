@@ -68,5 +68,20 @@
 		this.sendCaptcha = function(){
 			return $http({method:"GET", url:'key/sendCaptcha', params:{}});
 		}
+		this.authenticationCellphone = function(captcha){
+			return $http({method:"POST", url:'key/authenticationCellphone', params:{"captcha" : captcha}});
+		}
+		this.getKey = function(id){
+			return $http({method:"GET", url:'key/keys/' + id, params:{}});
+		}
+		this.getAuthenFlag = function(){
+			return $http({method:"GET", url:'key/getAuthenFlag', params:{}});
+		}
+		this.getSecretJson = function(){
+			return $http({method:"GET", url:'key/getSecretJson', params:{}});
+		}
+		this.removeSecret = function(id){
+			return $http({method:"GET", url:'key/removeSecret', params:{"id" : id}});
+		}
 	});
 }());

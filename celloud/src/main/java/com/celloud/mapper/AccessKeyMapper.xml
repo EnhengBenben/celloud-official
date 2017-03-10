@@ -116,7 +116,7 @@
   </select>
   <select id="selectKeysByPage" resultMap="BaseResultMap">
     SELECT
-    <include refid="Base_Column_List" />
+    id, user_id, key_id, state, create_date
     FROM tb_access_key
     WHERE user_id = #{userId}
     ORDER BY create_date DESC

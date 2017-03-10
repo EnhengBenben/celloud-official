@@ -84,4 +84,14 @@ public interface AccessKeyService {
      * @return
      */
     Boolean remove(Integer id);
+
+    /**
+     * 
+     * @description 根据id查询key, secret
+     * @author miaoqi
+     * @date 2017年3月9日 下午6:27:52
+     * @param id
+     * @return
+     */
+    AccessKey get(Integer id);
 }

@@ -17,6 +17,11 @@
           </div>
         </div>
       </div>
+      <div class="table-opera">
+        <span class="tips">
+             Access Key ID和Access Key Secret是您访问阿里云API的密钥，具有该账户完全的权限，请您妥善保管。
+        </span>
+      </div>
       <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state">
       	<button type="button" class="close" ng-click="state=false"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
       	<span>{{message}}</span>
@@ -34,9 +39,10 @@
         <tbody>
           <tr ng-repeat="key in keyList.datas">
             <td title="{{key.keyId}}">{{key.keyId}}</td>
-            <!-- <td title="{{key.keySecret}}">{{key.keySecret}}</td> -->
             <td title="{{key.keySecret}}">
-                <button class="btn-link" data-toggle="modal" ng-click="checkCellphone()">显示</button>
+                {{secretJson[key.id]}}
+                <button ng-if="secretJson[key.id] == null" class="btn-link" ng-click="showSecret(key.id)">显示</button>
+                <button ng-if="secretJson[key.id] != null" class="btn-link" ng-click="hideSecret(key.id)">隐藏</button>
             </td>
             <td>{{key.state == 0 ? '启用' : '禁用'}}</td>
             <td>{{key.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -77,7 +83,7 @@
         <div class="modal-footer">
           <div class="text-center">
               <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
-              <button type="submit" class="btn" ng-disabled="userAuthenticationForm.$invalid" ng-click="sendCellphoneCaptcha()">发送</button>
+              <button type="button" class="btn" ng-disabled="userAuthenticationForm.$invalid" ng-click="authenticationCellphone()">发送</button>
           </div>
         </div>
       </div>

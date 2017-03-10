@@ -64,4 +64,9 @@ public class AccessKeyServiceImpl implements AccessKeyService {
         Integer num = accessKeyMapper.deleteByPrimaryKey(id);
         return num.intValue() == 1;
     }
+
+    @Override
+    public AccessKey get(Integer id) {
+        return accessKeyMapper.selectByPrimaryKey(id);
+    }
 }
