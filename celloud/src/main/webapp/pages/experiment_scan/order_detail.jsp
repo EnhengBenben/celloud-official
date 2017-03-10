@@ -10,7 +10,7 @@
     <div style="margin-top: 20px">
       <h4>订单编号：<span>{{sampleOrderInfo.sampleOrder.orderNo}}</span></h4><br>
       <h4>下单日期：<span>{{sampleOrderInfo.sampleOrder.createDate| date : 'yyyy-MM-dd HH:mm:ss'}}</span></h4><span ng-if="userProduct.app123==123"><br/></span>
-      <h4 ng-if="userProduct.app123==123">寄送信息：<span>艾吉泰康-张三-13800138000-北京市朝阳区京顺东街8号北京地坛医院</span></h4>
+      <h4 ng-if="userProduct.app123==123">寄送信息：<span>艾吉泰康-彭福乐-17710561989-北京市昌平区中关村生命科学园生命园路8号院一区9号楼301</span></h4>
     </div>
     <img style="position: absolute;right: 0px; top: 0px;" width="76" alt="" ng-src="<%=request.getContextPath()%>/user/icon/temp?file={{sampleOrderInfo.sampleOrder.orderNo}}.png">
   </div>
