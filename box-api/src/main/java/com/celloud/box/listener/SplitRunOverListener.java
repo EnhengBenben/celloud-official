@@ -47,25 +47,31 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 		SplitFile splitFile = SplitFile.load(path);
 		splitFile.setRunning(Boolean.FALSE);
 		splitFile.toFile();
-		// 分别处理三个文件
-		DataFile r1 = setSplited(splitFile.getR1Path());
-		boxService.finish(r1);
-		DataFile r2 = setSplited(splitFile.getR2Path());
-		boxService.finish(r2);
         // 读取r1, r2, 通知celloud修改r1, r2的运行状态
         try {
+            logger.info("split运行完成");
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode r1Tree = objectMapper.readTree(splitFile.getR1Path());
+            logger.info("r1Path = {}", splitFile.getR1Path());
             JsonNode r2Tree = objectMapper.readTree(splitFile.getR2Path());
+            logger.info("r2Path = {}", splitFile.getR2Path());
             Integer r1Id = Integer.parseInt(String.valueOf(r1Tree.get("fileId")));
+            logger.info("r1Id = {}", r1Id);
             Integer r2Id = Integer.parseInt(String.valueOf(r2Tree.get("fileId")));
+            logger.info("r2id = {}", r2Id);
             Boolean flag = apiService.fileRunOver(r1Id, r2Id);
+            logger.info("flag = {}", flag);
             if (flag) {
                 logger.info("修改数据运行状态成功");
             }
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+        // 分别处理三个文件
+        DataFile r1 = setSplited(splitFile.getR1Path());
+        boxService.finish(r1);
+        DataFile r2 = setSplited(splitFile.getR2Path());
+        boxService.finish(r2);
 
 		DataFile txt = setSplited(splitFile.getTxtPath());
 		boxService.finish(txt);
