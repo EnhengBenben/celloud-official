@@ -322,6 +322,9 @@
 			<if test="uploadState != null">
 				upload_state = #{uploadState,jdbcType=INTEGER},
 			</if>
+			<if test="isRun != null">
+				is_run = #{isRun,jdbcType=INTEGER},
+			</if>
 		</set>
 		where file_id = #{fileId,jdbcType=INTEGER}
 	</update>

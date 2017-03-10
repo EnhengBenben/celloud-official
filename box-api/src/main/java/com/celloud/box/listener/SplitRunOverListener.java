@@ -51,16 +51,16 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
         try {
             logger.info("split运行完成");
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode r1Tree = objectMapper.readTree(splitFile.getR1Path());
-            logger.info("r1Path = {}", splitFile.getR1Path());
-            JsonNode r2Tree = objectMapper.readTree(splitFile.getR2Path());
-            logger.info("r2Path = {}", splitFile.getR2Path());
+            JsonNode r1Tree = objectMapper.readTree(new File(splitFile.getR1Path() + ".json"));
+            logger.debug("r1Path = {}", splitFile.getR1Path());
+            JsonNode r2Tree = objectMapper.readTree(new File(splitFile.getR2Path() + ".json"));
+            logger.debug("r2Path = {}", splitFile.getR2Path());
             Integer r1Id = Integer.parseInt(String.valueOf(r1Tree.get("fileId")));
-            logger.info("r1Id = {}", r1Id);
+            logger.debug("r1Id = {}", r1Id);
             Integer r2Id = Integer.parseInt(String.valueOf(r2Tree.get("fileId")));
-            logger.info("r2id = {}", r2Id);
+            logger.debug("r2id = {}", r2Id);
             Boolean flag = apiService.fileRunOver(r1Id, r2Id);
-            logger.info("flag = {}", flag);
+            logger.debug("flag = {}", flag);
             if (flag) {
                 logger.info("修改数据运行状态成功");
             }
