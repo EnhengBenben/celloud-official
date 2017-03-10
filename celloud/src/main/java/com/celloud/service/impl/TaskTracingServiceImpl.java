@@ -86,6 +86,8 @@ public class TaskTracingServiceImpl implements TaskTracingService {
 		String startDate = DateUtil.getDateToString(task.getStartDate(), DateUtil.YMDHMS);
 		String endDate = DateUtil.getDateToString(task.getEndDate(), DateUtil.YMDHMS);
 		DataFile dataFile = dataMapper.selectByDataKey(dataKey);
+        dataFile.setIsRun(0);
+        dataMapper.updateByPrimaryKeySelective(dataFile);
 		String batch = dataFile.getBatch();
 		Integer tagId = dataFile.getTagId();
 		int nameIndex = dataFile.getFileName().lastIndexOf("R1");
