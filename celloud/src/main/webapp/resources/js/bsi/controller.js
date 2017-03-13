@@ -288,14 +288,14 @@
 			    	if($scope.box==null){
 				    	var res = JSON.parse(response.response);
 						uploader.setOption("multipart_params",{'originalName': file.name, "tagId":1, "batch":$rootScope.bsiBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
-						$("#" + file.id +" .percent").html("上传完成");
 						$.post(CONTEXT_PATH+"/oss/upload/newfile",{
 							'objectKey':file.objectKey
 						},function(data){
 							console.log(data);
 						});
-				    	handleStatus(file);
 			    	}
+			    	$("#" + file.id +" .percent").html("上传完成");
+			    	handleStatus(file);
 			    });
 			    uploader.bind("FilesRemoved", function(uploader, files) {
 			    	$rootScope.$apply();
