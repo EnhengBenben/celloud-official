@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
 
@@ -31,13 +33,17 @@ public class BoxServiceImpl implements BoxService {
 	@Resource
 	private ApiService apiService;
 	@Resource
-	private FileUploadQueue fileUploadQueue;
+	private FileUpload fileUploadQueue;
 	@Resource
-	private SplitQueue splitQueue;
+    private SplitRun splitRun;
 	@Resource
 	private BoxConfig config;
 	@Resource
-	private FileUploadQueue fileQueue;
+	private FileUpload fileQueue;
+    @Resource
+    private BoxConfig boxConfig;
+    // 固定线程池
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(boxConfig.getMaxSplitting());
 
 	@Override
 	public DataFile save(Integer userId, String name, String anotherName, Integer tagId, String batch,
@@ -131,7 +137,7 @@ public class BoxServiceImpl implements BoxService {
 		for (String file : uploadingFiles.values()) {
 			DataFile dataFile = DataFile.load(file + ".json");
 			if (!dataFile.isUploaded()) {
-				fileUploadQueue.add(file);
+                // fileUploadQueue.add(file);
 			}
 			if (!dataFile.isSplited()) {
 				checkRunSplit(dataFile);
@@ -181,7 +187,7 @@ public class BoxServiceImpl implements BoxService {
 			return;
 		}
 		String path = UploadPath.getSplitCheckingPath(dataFile.getUserId(), dataFile.getBatch(), name);
-		SplitFile splitFile = SplitFile.load(path);
+        SplitFile splitFile = SplitFile.load(path);
 		if (splitFile == null) {
 			splitFile = new SplitFile();
 			splitFile.setListPath(UploadPath.getSplitListPath(dataFile.getUserId(), dataFile.getBatch(), name));
@@ -261,7 +267,11 @@ public class BoxServiceImpl implements BoxService {
 		// 运行split
 		splitFile.setTxtPath(file.getPath());
 		splitFile.toFile();
-		splitQueue.add(splitFile);
+
+        final SplitFile finalSplitFile = splitFile;
+        fixedThreadPool.execute(() -> {
+            splitRun.split(finalSplitFile);
+        });
 	}
 
 	@Async
@@ -272,7 +282,7 @@ public class BoxServiceImpl implements BoxService {
 		logger.info("anotherName={}", anotherName);
 		file = newfile(file);
 		if (file != null) {
-			fileQueue.add(f);
+            // fileQueue.add(f);
 		}
 	}
 }
