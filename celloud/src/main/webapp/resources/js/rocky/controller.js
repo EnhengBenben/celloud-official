@@ -251,6 +251,7 @@
 						console.log(data);
 					});
 				}
+				file.hint;
 				messageUtils.notify("上传完成","数据【" + file.name + "】上传成功。");
 			});
 			uploader.bind("UploadComplete",function(uploader,files){
