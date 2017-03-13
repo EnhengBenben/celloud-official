@@ -93,7 +93,7 @@
               </div>
               <div class="form-group">
                 <div class="control-label form-label col-xs-2">电话：</div>
-                <div class="col-xs-10">
+                <div class="col-xs-7">
                     <input type="text" ng-change="clearState()" name="cellphone-email" placeholder="手机号码" ng-model="email" required="true" ng-pattern="/^1\d{10}$/">
                     <span class="input-alert" ng-show="userAddForm.email.$dirty && userAddForm.email.$invalid">手机号码格式不正确!</span>
                     <span class="input-alert" ng-show="cellphoneError != null">{{cellphoneError}}</span>
@@ -101,7 +101,7 @@
               </div>
               <div class="form-group">
                 <div class="control-label form-label col-xs-2">姓名：</div>
-                <div class="col-xs-10">
+                <div class="col-xs-7">
                     <input type="text" ng-change="clearState()" name="truename" placeholder="真实姓名" ng-model="truename" required="true">
                     <span class="input-alert" ng-show="userAddForm.truename.$dirty && userAddForm.truename.$invalid">真实姓名不能为空!</span>
                 </div>
@@ -113,8 +113,8 @@
                     <span class="input-alert" ng-show="kaptchaError != null">{{kaptchaError}}</span>
                 </div>
                 <div class="col-xs-2">
-                   <div style="position: absolute;top: 0px;right: 0px;">
-                       <img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage" alt="验证码"
+                   <div style="position: absolute;top: 0px;right: 60px;">
+                       <img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" name="kaptchaImage" alt="验证码"
                             class="validateCode" style="cursor: pointer;" />
                     </div>
                 </div>
@@ -169,7 +169,7 @@
 	          </div>
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-2">邮箱：</div>
-	            <div class="col-xs-10">
+	            <div class="col-xs-7">
 	                <input type="text" ng-change="clearState()" name="email" placeholder="邮箱地址" ng-model="email" required="true" ng-pattern="/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/">
 	                <span class="input-alert" ng-show="userAddForm.email.$dirty && userAddForm.email.$invalid">邮箱格式不正确!</span>
 	                <span class="input-alert" ng-show="emailError != null">{{emailError}}</span>
@@ -182,8 +182,8 @@
 	                <span class="input-alert" ng-show="kaptchaError != null">{{kaptchaError}}</span>
 	            </div>
 	            <div class="col-xs-2">
-	               <div style="position: absolute;top: 0px;right: 0px;">
-                       <img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage" alt="验证码"
+	               <div style="position: absolute;top: 0px;right: 60px;">
+                       <img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" name="kaptchaImage" alt="验证码"
                             class="validateCode" style="cursor: pointer;" />
                     </div>
 	            </div>
