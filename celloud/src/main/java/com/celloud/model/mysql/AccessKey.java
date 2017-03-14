@@ -11,6 +11,8 @@ public class AccessKey {
 
     private String keySecret;
 
+    private Integer state;
+
     private Date createDate;
 
     public Integer getId() {
@@ -43,6 +45,14 @@ public class AccessKey {
 
     public void setKeySecret(String keySecret) {
         this.keySecret = keySecret == null ? null : keySecret.trim();
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public Date getCreateDate() {
