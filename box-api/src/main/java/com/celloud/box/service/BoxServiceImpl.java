@@ -209,7 +209,7 @@ public class BoxServiceImpl implements BoxService {
         // 检查是否包含r1和r2, 如果包含, 根据storageName向celloud请求.txt文件信息
 		if (!splitFile.check()) {
 			splitFile.toFile();
-			logger.info("不能运行split:{}", splitFile.toJSON());
+            logger.debug("不能运行split:{}", splitFile.toJSON());
 			return;
 		}
 		String pubName = splitFile.getName();

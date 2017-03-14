@@ -261,28 +261,29 @@ public interface TaskService {
 
 	public int saveTaskDataRelat(Integer taskId, Integer... dataIds);
 
-    /**
-     * 
-     * @description
-     * @author miaoqi 查询同一批次下的所有dataKey
-     * @date 2017年2月27日 上午11:18:51
-     * @param userId
-     * @param appId
-     * @param batch
-     * @return
-     */
-    List<String> findDataKeysByBatchNoSample(Integer userId, Integer appId, String batch);
+	/**
+	 * 
+	 * @description
+	 * @author miaoqi 查询同一批次下的所有dataKey
+	 * @date 2017年2月27日 上午11:18:51
+	 * @param userId
+	 * @param appId
+	 * @param batch
+	 * @return
+	 */
+	List<String> findDataKeysByBatchNoSample(Integer userId, Integer appId, String batch);
 
-    /**
-     * 
-     * @description 分页获取同一批次列表, 不包含样本信息
-     * @author miaoqi
-     * @date 2017年2月27日 下午1:21:51
-     * @param page
-     * @param userId
-     * @param appId
-     * @param batch
-     * @return
-     */
-    public PageList<Task> findTasksByBatchNoSample(Page page, Integer userId, Integer appId, String batch);
+	/**
+	 * 
+	 * @description 分页获取同一批次列表, 不包含样本信息
+	 * @author miaoqi
+	 * @date 2017年2月27日 下午1:21:51
+	 * @param page
+	 * @param userId
+	 * @param appId
+	 * @param batch
+	 * @return
+	 */
+	public PageList<Task> findTasksByBatchNoSample(Page page, Integer userId, Integer appId, String batch);
+
 }

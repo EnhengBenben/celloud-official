@@ -180,8 +180,6 @@
 					runtimes : 'html5,flash,silverlight,html4',
 					browse_button : ['bsi-plupload-content','bsi-upload-more'],
 					url :uploadUrl,
-					// Maximum file size
-					chunk_size : '1mb',
 					dragdrop : true,
 					unique_names:true,
 					drop_element : 'upload-filelist',
@@ -290,14 +288,14 @@
 			    	if($scope.box==null){
 				    	var res = JSON.parse(response.response);
 						uploader.setOption("multipart_params",{'originalName': file.name, "tagId":1, "batch":$rootScope.bsiBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
-						$("#" + file.id +" .percent").html("上传完成");
 						$.post(CONTEXT_PATH+"/oss/upload/newfile",{
 							'objectKey':file.objectKey
 						},function(data){
 							console.log(data);
 						});
-				    	handleStatus(file);
 			    	}
+			    	$("#" + file.id +" .percent").html("上传完成");
+			    	handleStatus(file);
 			    });
 			    uploader.bind("FilesRemoved", function(uploader, files) {
 			    	$rootScope.$apply();
@@ -343,6 +341,7 @@
 			    		object = JSON.parse(object);
 			    		uploader.setOption({
 			    			url:"https://"+object.host,
+			    			chunk_size:0,
 			    			multipart_params:{
 			    				'key' : object.dir + file.id +object.ext,
 			    				'policy': object.policy,
@@ -351,12 +350,24 @@
 			    				'signature': object.signature,
 			    				'x-oss-meta-name':file.name,
 			    				'x-oss-meta-batch':$rootScope.bsiBatch,
-			    				'x-oss-meta-tagId':1
+			    				'x-oss-meta-tagId':$("#tag-info").val()
 			    			}
 			    		});
 			    		file.objectKey = object.dir + file.id +object.ext;
 			    	}else{
-			    		uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':$("#tag-info").val(),'batch': $("#batch-info").val(),'needSplit':$("#need-split:checked").val()});
+			    		uploader.setOption({
+			    			chunk_size:"1mb",
+			    			multipart_params:{
+				    			'userId':window.userId,
+				    			"lastModifiedDate":file.lastModifiedDate,
+				    			'size':file.size,
+				    			'originalName': file.name,
+				    			'name': file.name,
+				    			'tagId':$("#tag-info").val(),
+				    			'batch': $("#batch-info").val(),
+				    			'needSplit':$("#need-split:checked").val()
+			    			}
+			    		});
 			    	}
 			    });
 			    uploader.bind("Error", function(uploader, error) {

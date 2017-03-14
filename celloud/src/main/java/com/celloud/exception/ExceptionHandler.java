@@ -34,6 +34,7 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
 			Exception exception) {
+		logger.error("系统出现未捕获的异常:" + request.getRequestURI(), exception);
 		String errorInfo = emailUtils.getError(request, exception);
 		AliEmail aliEmail = AliEmail.template(EmailType.EXCEPTION).substitutionVars(
 				AliSubstitution.sub().set(EmailParams.EXCEPTION.home.name(), ConstantsData.getContextUrl())
@@ -44,7 +45,6 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 		if (exception instanceof BusinessException) {
 			return new ModelAndView("errors/business").addObject("exception", exception);
 		}
-		logger.error("系统出现未捕获的异常:" + request.getRequestURI(), exception);
 		return new ModelAndView("errors/error").addObject("exception", exception);
 	}
 

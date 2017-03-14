@@ -311,14 +311,14 @@ public class TaskServiceImpl implements TaskService {
 		return taskMapper.selectByProjectId(projectId);
 	}
 
-    @Override
-    public List<String> findDataKeysByBatchNoSample(Integer userId, Integer appId, String batch) {
-        return taskMapper.findDataKeysByBatchNoSample(userId, TaskPeriod.DONE, appId, batch, DataState.ACTIVE);
-    }
+	@Override
+	public List<String> findDataKeysByBatchNoSample(Integer userId, Integer appId, String batch) {
+		return taskMapper.findDataKeysByBatchNoSample(userId, TaskPeriod.DONE, appId, batch, DataState.ACTIVE);
+	}
 
-    @Override
-    public PageList<Task> findTasksByBatchNoSample(Page page, Integer userId, Integer appId, String batch) {
-        return new PageList<>(page,
-                taskMapper.findTasksByBatchNoSample(page, userId, appId, TaskPeriod.DONE, DataState.ACTIVE, batch));
-    }
+	@Override
+	public PageList<Task> findTasksByBatchNoSample(Page page, Integer userId, Integer appId, String batch) {
+		return new PageList<>(page,
+				taskMapper.findTasksByBatchNoSample(page, userId, appId, TaskPeriod.DONE, DataState.ACTIVE, batch));
+	}
 }

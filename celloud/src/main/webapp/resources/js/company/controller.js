@@ -50,7 +50,8 @@
 				if(status == 400){
 					$scope.emailError = data.emailError;
 					$scope.kaptchaError = data.kaptchaError;
-					$('#kaptchaImage').click();
+//					$('#kaptchaImage').click();
+					$("img[name=kaptchaImage]").click();
 				}else if(status == 500){
 					
 				}
@@ -75,7 +76,7 @@
         if(status == 400){
           $scope.cellphoneError = data.cellphoneError;
           $scope.kaptchaError = data.kaptchaError;
-          $('#kaptchaImage').click();
+          $("img[name=kaptchaImage]").click();
         }else if(status == 500){
           
         }
@@ -229,7 +230,7 @@
 			$scope.captcha = '';
 			$scope.clearState();
 		}
-		$('#kaptchaImage').click(function() {
+		$("img[name=kaptchaImage]").click(function() {
 			$(this).hide().attr('src','kaptcha?' + Math.floor(Math.random() * 100)).fadeIn();
 		});
 		$scope.pageQuery($scope.pageInfo.currnetPage, $scope.pageInfo.pageSize);

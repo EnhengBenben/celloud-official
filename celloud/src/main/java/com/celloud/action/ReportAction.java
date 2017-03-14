@@ -2893,7 +2893,7 @@ public class ReportAction {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer userId = ConstantsData.getLoginUserId();
 		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
-		List<String> batchList = dataService.getBatchList(userId);
+        List<String> batchList = dataService.getBatchListByAppId(userId, 123);
 		Page pager = new Page(page, size);
 
 		ArrayList<String> queryBatches = null;
@@ -3085,7 +3085,7 @@ public class ReportAction {
         Map<String, Object> periodMap = taskService.findTaskPeriodNum(appId,
                 userId);
 		List<String> batchList1 = dataService.getBsiBatchList(userId, appId);
-		List<String> batchList2 = dataService.getBatchList(userId);
+        List<String> batchList2 = dataService.getBatchListByAppId(userId, 118);
 		List<String> batchList = new ArrayList<>();
 		for (String temp : batchList1) {
 			if (!batchList.contains(temp)) {

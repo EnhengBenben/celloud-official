@@ -20,8 +20,6 @@ import com.celloud.box.model.SplitFile;
 import com.celloud.box.service.ApiService;
 import com.celloud.box.service.BoxService;
 import com.celloud.box.utils.UploadPath;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * split队列监听器，监听split运行结束的事件，某个文件运行split结束后，触发一下个文件的split运行
@@ -47,25 +45,16 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 		SplitFile splitFile = SplitFile.load(path);
 		splitFile.setRunning(Boolean.FALSE);
 		splitFile.toFile();
-		// 分别处理三个文件
-		DataFile r1 = setSplited(splitFile.getR1Path());
-		boxService.finish(r1);
-		DataFile r2 = setSplited(splitFile.getR2Path());
-		boxService.finish(r2);
+        // 分别处理三个文件
+        DataFile r1 = setSplited(splitFile.getR1Path());
+        DataFile r2 = setSplited(splitFile.getR2Path());
         // 读取r1, r2, 通知celloud修改r1, r2的运行状态
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode r1Tree = objectMapper.readTree(splitFile.getR1Path());
-            JsonNode r2Tree = objectMapper.readTree(splitFile.getR2Path());
-            Integer r1Id = Integer.parseInt(String.valueOf(r1Tree.get("fileId")));
-            Integer r2Id = Integer.parseInt(String.valueOf(r2Tree.get("fileId")));
-            Boolean flag = apiService.fileRunOver(r1Id, r2Id);
-            if (flag) {
-                logger.info("修改数据运行状态成功");
-            }
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        Boolean flag = apiService.fileRunOver(r1.getFileId(), r2.getFileId());
+        if (flag) {
+            logger.info("修改数据运行状态成功");
         }
+        boxService.finish(r1);
+        boxService.finish(r2);
 
 		DataFile txt = setSplited(splitFile.getTxtPath());
 		boxService.finish(txt);

@@ -33,7 +33,7 @@ public class BehaviorInterceptor extends HandlerInterceptorAdapter {
 	private Logger logger = LoggerFactory.getLogger(BehaviorInterceptor.class);
 	@Resource
 	private BehaviorService service;
-	@Resource
+	@Resource(name = "messageConsumer")
 	private MessageConsumer consumer;
 
 	/**

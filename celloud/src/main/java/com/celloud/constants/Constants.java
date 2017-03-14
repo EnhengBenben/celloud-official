@@ -1,5 +1,8 @@
 package com.celloud.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 系统静态变量
  * 
@@ -91,6 +94,22 @@ public class Constants {
 	public static final String MESSAGE_USER_TOPIC = "user-message";
 
 	public static final String MESSAGE_USER_CHANNEL = "userMessage";
+
 	public static final String FILEPATH_PROPERTIES_FILE = "file_path.properties";
+	/**
+	 * bsi系列app的tagId和appId对应关系
+	 */
+	public static final Map<Integer, Integer> bsiTags = new HashMap<Integer, Integer>() {
+		private static final long serialVersionUID = 1L;
+
+		{
+			put(1, 118);
+			put(40, 133);
+			put(41, 134);
+			put(42, 135);
+			put(43, 136);
+			put(44, 137);
+		}
+	};
 
 }

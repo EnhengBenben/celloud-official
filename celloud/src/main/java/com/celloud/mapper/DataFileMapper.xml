@@ -84,10 +84,15 @@
 	</select>
 	<select id="selectByDataKey" resultMap="ResultMapWithBLOBs">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from tb_file
+		,
+		<include refid="Tag_Column_List" />
+		from tb_file f
+		left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+		left join tb_tag tag on tag.tag_id = filetag.tag_id
+		left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
 		where data_key = #{dataKey}
 	</select>
 	<select id="selectByDataKeys" resultMap="ResultMapWithBLOBs">
@@ -316,6 +321,9 @@
 			</if>
 			<if test="uploadState != null">
 				upload_state = #{uploadState,jdbcType=INTEGER},
+			</if>
+			<if test="isRun != null">
+				is_run = #{isRun,jdbcType=INTEGER},
 			</if>
 		</set>
 		where file_id = #{fileId,jdbcType=INTEGER}
@@ -687,6 +695,14 @@
 		select batch from tb_file
 		where user_id=#{userId} and state=#{state} and batch is not null and batch !=''
 		group by batch
+	</select>
+	<select id="getBatchListByAppId" resultType="java.lang.String">
+		SELECT DISTINCT f.batch
+		FROM tb_file f
+		LEFT JOIN tb_report r ON f.file_id = r.file_id
+		WHERE r.app_id = #{appId}
+		AND f.user_id = #{userId}
+		AND f.state = #{state}
 	</select>
 	<select id="getBsiBatchList" resultType="java.lang.String">
         select distinct f.batch from

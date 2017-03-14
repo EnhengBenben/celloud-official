@@ -4,7 +4,10 @@
     $scope.typeList = null;
     
     $scope.changeSampleType = function(){
-    	var tagId = $scope.selTags.tagId;
+    	var tagId = 0;
+    	if($scope.selTags != undefined){
+    		tagId = $scope.selTags.tagId;
+    	}
     	var param = {'tagId' : tagId, 'flag' : 3};
     	samplingService.listMetadata(param).
     	success(function(data){

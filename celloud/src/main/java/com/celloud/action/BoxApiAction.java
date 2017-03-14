@@ -156,7 +156,11 @@ public class BoxApiAction {
 		data.setMd5(md5);
 		data.setSize(size);
 		data.setBatch(batch);
-        data.setIsRun(1);
+        if (tagId == 1 || tagId == 40 || tagId == 41 || tagId == 42 || tagId == 43 || tagId == 44) {
+            data.setIsRun(1);
+        } else {
+            data.setIsRun(0);
+        }
 		data.setState(DataState.ACTIVE);
 		dataService.updateDataInfoByFileIdAndTagId(data, tagId);
 		values.put("dataKey", fileDataKey);
@@ -187,21 +191,21 @@ public class BoxApiAction {
 		String today = DateUtil.getDateToString("yyyyMMdd");
 		String folderByDay = realPath + userId + File.separator + today;
 		String newName = file.getDataKey() + FileTools.getExtName(file.getFileName());
-		BoxFile boxFile = new BoxFile();
-		boxFile.setFileId(fileId);
-		boxFile.setBatch(batch);
-		boxFile.setFileName(file.getFileName());
-		boxFile.setAnotherName(file.getAnotherName());
-		boxFile.setDataKey(file.getDataKey());
-		boxFile.setMd5(file.getMd5());
-		boxFile.setSplited(splited);
-		boxFile.setNeedSplit(needSplit);
-		boxFile.setObjectKey(objectKey);
-		boxFile.setPath(folderByDay + File.separator + newName);
-		boxFile.setTagId(tagId);
-		boxFile.setUserId(file.getUserId());
+        BoxFile boxFile = new BoxFile();
+        boxFile.setFileId(fileId);
+        boxFile.setBatch(batch);
+        boxFile.setFileName(file.getFileName());
+        boxFile.setAnotherName(file.getAnotherName());
+        boxFile.setDataKey(file.getDataKey());
+        boxFile.setMd5(file.getMd5());
+        boxFile.setSplited(splited);
+        boxFile.setNeedSplit(needSplit);
+        boxFile.setObjectKey(objectKey);
+        boxFile.setPath(folderByDay + File.separator + newName);
+        boxFile.setTagId(tagId);
+        boxFile.setUserId(file.getUserId());
 		dataService.updateUploadState(fileId, objectKey, BoxUploadState.IN_OSS);
-		// apiService.downloadFromOSS(boxFile);
+        apiService.downloadFromOSS(boxFile);
 		return Response.SUCCESS();
 	}
 

@@ -141,7 +141,6 @@
 				browse_button : 'plupload-content',
 				url : uploadUrl,
 				drop_element : 'plupload-content',
-				chunk_size : '1mb',
 				filters : {
 					max_file_size : '10gb',
 					prevent_duplicates : true, // 不允许选取重复文件
@@ -207,9 +206,9 @@
 						 data:'name='+file.name+'&oName=ddd'+file.id
 					}).responseText;
 					object = JSON.parse(object);
-					alert(object.host);
 					uploader.setOption({
 						url:"https://"+object.host,
+						chunk_size: 0,
 						multipart_params:{
 							'key' : object.dir + file.id +object.ext,
 							'policy': object.policy,
@@ -223,7 +222,18 @@
 					});
 					file.objectKey = object.dir + file.id +object.ext;
 				} else {
-					uploader.setOption("multipart_params",{'userId':window.userId,"lastModifiedDate":file.lastModifiedDate,'size':file.size,'originalName': file.name,'name': file.name,'tagId':2,'batch': $rootScope.rockyBatch});
+					uploader.setOption({
+						chunk_size: "1mb",
+						multipart_params:{
+							'userId':window.userId,
+							"lastModifiedDate":file.lastModifiedDate,
+							'size':file.size,
+							'originalName': file.name,
+							'name': file.name,
+							'tagId':2,
+							'batch': $rootScope.rockyBatch
+						}
+					});
 				}
 			});
 			uploader.bind("FileUploaded", function(uploader, file, response) {
@@ -231,7 +241,6 @@
 					var res = JSON.parse(response.response);
 					uploader.setOption("multipart_params",{'originalName': file.name, "tagId":2, "batch":$rootScope.rockyBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
 					$("#" + file.id +" .percent").html("上传完成");
-          messageUtils.notify("上传完成","数据【" + file.name + "】上传成功。");
 					$.post(CONTEXT_PATH+"/oss/upload/newfile",{
 						'name':file.name,
 						'batch':$rootScope.rockyBatch,
@@ -242,6 +251,8 @@
 						console.log(data);
 					});
 				}
+				file.hint;
+				messageUtils.notify("上传完成","数据【" + file.name + "】上传成功。");
 			});
 			uploader.bind("UploadComplete",function(uploader,files){
 				uploader.splice(0, uploader.files.length);
