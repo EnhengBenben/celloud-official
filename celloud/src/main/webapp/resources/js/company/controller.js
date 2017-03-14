@@ -51,7 +51,7 @@
 					$scope.emailError = data.emailError;
 					$scope.kaptchaError = data.kaptchaError;
 //					$('#kaptchaImage').click();
-					$("img[name=kaptchaImage]").click();
+					$("img[name=kaptchaImage]").eq(1).click();
 				}else if(status == 500){
 					
 				}
@@ -76,7 +76,7 @@
         if(status == 400){
           $scope.cellphoneError = data.cellphoneError;
           $scope.kaptchaError = data.kaptchaError;
-          $("img[name=kaptchaImage]").click();
+          $("img[name=kaptchaImage]").eq(0).click();
         }else if(status == 500){
           
         }
@@ -215,6 +215,7 @@
 			$scope.cellphoneError = null;
 		}
 		$scope.showAddUserForm = function(){
+			$("img[name=kaptchaImage]").click();
 		  companyService.getAppList()
 		  .success(function(data){
 		    $scope.appList = data;
