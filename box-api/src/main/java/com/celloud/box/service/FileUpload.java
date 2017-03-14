@@ -25,6 +25,7 @@ public class FileUpload {
     private BoxService boxService;
 
     public void upload(ExecutorService fixedThreadPool, String file) {
+        logger.info("开始上传文件到oss, file = {}", file);
 		DataFile dataFile = DataFile.load(file + ".json");
 		boolean result = false;
 		if (dataFile != null) {
@@ -41,24 +42,24 @@ public class FileUpload {
 			result = true;
 		}
         if (result) {
-            logger.info("文件上传成功, {}", file);
+            logger.info("文件上传成功, file = {}", file);
             dataFile = DataFile.load(new File(file + ".json"));
             dataFile.setUploaded(Boolean.TRUE);
             dataFile.serialize();
             boxService.finish(dataFile);
             boxService.updatefile(dataFile);
         } else {
-            logger.info("文件上传失败，重新上传：{}", file);
+            logger.info("文件上传失败，重新上传：file = {}", file);
             fixedThreadPool.execute(() -> {
                 this.upload(fixedThreadPool, file);
             });
         }
 	}
 
-	public List<String> getAll() {
+    public List<String> getAll() {
         // return new ArrayList<String>(queue);
         return null;
-	}
+    }
 
 	public void printAll() {
 

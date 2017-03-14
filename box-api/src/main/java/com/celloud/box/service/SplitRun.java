@@ -36,10 +36,12 @@ public class SplitRun {
 
 
     public void split(SplitFile splitFile) {
+        logger.info("splitFile校验通过, 开始运行split");
         splitFile.setRunning(Boolean.TRUE);
         splitFile.toFile();
         boolean result = service.run(splitFile);
         if (result) {
+            logger.info("split运行成功");
             // 标记运行完成
             splitFile.setRunning(Boolean.FALSE);
             splitFile.toFile();
@@ -123,7 +125,7 @@ public class SplitRun {
             new File(splitFile.getListPath()).delete();// 删除生成的list文件
             new File(path).delete();// 删除split的校验文件
         } else {
-
+            logger.info("split运行失败");
         }
     }
 
