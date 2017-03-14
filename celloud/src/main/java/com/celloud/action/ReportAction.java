@@ -494,7 +494,7 @@ public class ReportAction {
 	@RequestMapping("printMoreCMPReport")
 	@ResponseBody
 	public void printMoreCMPReport(String dataKey, Integer projectId, Integer appId) {
-		String path = ConstantsData.getLoginCompanyId() + "/" + appId + "print_more.vm";
+		String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_more.vm";
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/" + appId + "/print_more.vm";
 		}

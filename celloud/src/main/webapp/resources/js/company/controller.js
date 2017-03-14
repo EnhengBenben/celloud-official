@@ -303,4 +303,156 @@
 			})
 		}
 	});
+	
+celloudApp.controller("companyKeyController", function($scope, $rootScope, companyService, userService){
+		$scope.pageInfo = {"currentPage" : 1, "pageSize" : 20};
+		$scope.pageQuery = function(currentPage, pageSize){
+			$scope.pageInfo.currentPage = currentPage || $scope.pageInfo.currentPage;
+			$scope.pageInfo.pageSize = pageSize || $scope.pageInfo.pageSize;
+			companyService.pageQueryKey($scope.pageInfo.currentPage, $scope.pageInfo.pageSize).
+			success(function(keyList, status){
+				if(status == 200){
+					$scope.keyList = keyList;
+				}
+			});
+		}
+		$scope.add = function(){
+			companyService.saveKey().
+			success(function(data, status){
+				if(status == 201){
+					$.alert("创建成功");
+					$scope.pageQuery();
+				}
+			}).
+			error(function(data, status){
+				if(status == 500){
+					$.alert("创建失败");
+				}
+			});
+		}
+		$scope.remove = function(id){
+			companyService.removeKey(id).
+			success(function(data, status){
+				if(status == 204){
+					$.alert("删除成功");
+					$scope.pageQuery();
+				}
+			}).
+			error(function(data ,status){
+				console.log("success" + status);
+				if(status == 500){
+					$.alert("删除失败");
+				}
+			});
+		}
+		$scope.update = function(id, state){
+			state = state == 0 ? 1 : 0;
+			companyService.updateKey(id, state).
+			success(function(data, status){
+				$.alert("更改状态成功");
+				$scope.pageQuery();
+			}).
+			error(function(data, status){
+				if(status == 500){
+					$.alert("更改状态失败");				}
+			});
+		}
+		$scope.showSecret = function(id){
+			if($rootScope.authenFlag){
+				// 已认证
+				companyService.getKey(id).
+				success(function(data, status){
+					$scope.getSecretJson();
+					$scope.pageQuery($scope.pageInfo.currnetPage, $scope.pageInfo.pageSize);
+				}).
+				error(function(data, status){
+					$.alert("服务器错误")
+				});
+			}else{
+				$rootScope.authenId = id;
+				// 未认证
+				companyService.checkCellphone().
+				success(function(data, status){
+					if(status == 200){
+						$scope.cellphone = data;
+						$("#company-showKey").modal("show");
+					}
+				})
+			}
+		}
+		$scope.hideModal = function(){
+			$("#company-showKey").modal("hide");
+			$scope.btnFlag = true;
+		}
+		$("#company-showKey").on("hidden.bs.modal",function(e){
+			if($scope.btnFlag){
+				$scope.btnFlag = false;
+				window.location.href = CONTEXT_PATH + "/index#/user/base";
+			}
+		});
+		$scope.sendCaptcha = function(){
+			companyService.sendCaptcha().
+			success(function(data, status){
+				if(status == 200){
+					// 倒计时60秒
+			        time = 60;
+			        $("#captchaButton").prop("disabled",true);
+			        $("#captchaButton").html("重新发送(<span id='times'>60</span>)");
+			        var setinterval = setInterval(function(){
+			            time--;    
+			            if(time==0){
+			                $("#captchaButton").prop("disabled",false);
+			                clearInterval(setinterval);
+			                $("#captchaButton").html("重新发送");
+			            } else {
+			                $("#times").html(time);
+			            }
+			        }, 1000);
+				}
+			}).
+			error(function(data, status){
+				if(status == 500){
+					// 请勿频繁发送
+					$.alert("请勿频繁获取验证码");
+				}
+			})
+		};
+		$scope.authenticationCellphone = function(){
+			companyService.authenticationCellphone($scope.captcha).
+			success(function(data, status){
+				if(status == 200){
+					$rootScope.authenFlag = true;
+					$("#company-showKey").modal("hide");
+					$scope.showSecret($rootScope.authenId);
+				}
+			})
+		}
+		$scope.getAuthenFlag = function(){
+			companyService.getAuthenFlag().
+			success(function(data, status){
+				if(data == 1){
+					$rootScope.authenFlag = true;
+				}else{
+					$rootScope.authenFlag = false;
+				}
+			})
+		}
+		$scope.getSecretJson = function(){
+			companyService.getSecretJson().
+			success(function(data, status){
+				$rootScope.secretJson = data;
+			})
+		}
+		$scope.hideSecret = function(id){
+			companyService.removeSecret(id).
+			success(function(data, status){
+				$rootScope.secretJson = data;
+				$scope.pageQuery();
+			})
+		}
+		$scope.getAuthenFlag();
+		$scope.getSecretJson();
+		$scope.pageQuery($scope.pageInfo.currnetPage, $scope.pageInfo.pageSize);
+	});
+	
 })();

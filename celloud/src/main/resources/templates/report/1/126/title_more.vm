@@ -1,0 +1,17 @@
+<form id="cmp-form">
+    <section class="section0 border1 w3cbbs">
+        <div class="header">
+            <h1>肿瘤样本基因检测与个体化样本分析</h1>
+        </div>
+        <div class="titletype">
+            <div>
+                <span>姓</span><span style="margin-left:40px">名：</span><span><input id="patientName1" type="text" class="input200" value="$!{cmpReport.cmpFilling.patientName}"></span>
+            </div>
+            <div>
+                <span>取样日期：</span><span><input id="samplingDate1" type="text" class="input200" value="$!{cmpReport.cmpFilling.samplingDate}" ></span>
+            </div>
+            <div>
+                <span>报告日期：</span><span><input type="text" class="input200" name="reportDate" value="$!{cmpReport.cmpFilling.reportDate}"></span>
+            </div>
+        </div>
+    </section>

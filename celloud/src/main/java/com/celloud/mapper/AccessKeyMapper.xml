@@ -6,10 +6,11 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="key_id" property="keyId" jdbcType="VARCHAR" />
     <result column="key_secret" property="keySecret" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, key_id, key_secret, create_date
+    id, user_id, key_id, key_secret, state, create_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,9 +24,9 @@
   </delete>
   <insert id="insert" parameterType="com.celloud.model.mysql.AccessKey" >
     insert into tb_access_key (id, user_id, key_id, 
-      key_secret, create_date)
+      key_secret, state, create_date)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{keyId,jdbcType=VARCHAR}, 
-      #{keySecret,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP})
+      #{keySecret,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.celloud.model.mysql.AccessKey" >
     insert into tb_access_key
@@ -41,6 +42,9 @@
       </if>
       <if test="keySecret != null" >
         key_secret,
+      </if>
+      <if test="state != null" >
+        state,
       </if>
       <if test="createDate != null" >
         create_date,
@@ -59,6 +63,9 @@
       <if test="keySecret != null" >
         #{keySecret,jdbcType=VARCHAR},
       </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
       </if>
@@ -76,6 +83,9 @@
       <if test="keySecret != null" >
         key_secret = #{keySecret,jdbcType=VARCHAR},
       </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
       <if test="createDate != null" >
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
@@ -87,6 +97,7 @@
     set user_id = #{userId,jdbcType=INTEGER},
       key_id = #{keyId,jdbcType=VARCHAR},
       key_secret = #{keySecret,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
       create_date = #{createDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -102,5 +113,12 @@
     <include refid="Base_Column_List" />
     from tb_access_key
     where key_id = #{keyId,jdbcType=VARCHAR} and key_secret = #{keySecret,jdbcType=VARCHAR}
+  </select>
+  <select id="selectKeysByPage" resultMap="BaseResultMap">
+    SELECT
+    id, user_id, key_id, state, create_date
+    FROM tb_access_key
+    WHERE user_id = #{userId}
+    ORDER BY create_date DESC
   </select>
 </mapper>
