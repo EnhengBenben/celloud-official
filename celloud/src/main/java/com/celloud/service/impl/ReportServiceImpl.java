@@ -37,6 +37,7 @@ import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.ReportMapper;
 import com.celloud.mapper.TaskMapper;
 import com.celloud.model.mongo.ABINJ;
+import com.celloud.model.mongo.AccuGddDiseaseDict;
 import com.celloud.model.mongo.AccuSeqα2;
 import com.celloud.model.mongo.AccuSeqα2Fill;
 import com.celloud.model.mongo.BRAF;
@@ -829,10 +830,15 @@ public class ReportServiceImpl implements ReportService {
 
 	@Override
 	public List<GddDiseaseDict> getGddDiseaseDictNormal(String[] fields, Map<String, List<String>> conditionMap,
-			String sortField) {
+            String sortField) {
 		return reportDao.getDataFieldInAndOrder(GddDiseaseDict.class, fields, conditionMap, sortField);
 	}
 
+    @Override
+    public List<AccuGddDiseaseDict> getAccuGddDiseaseDictNormal(String[] fields, Map<String, List<String>> conditionMap,
+            String sortField) {
+        return reportDao.getDataFieldInAndOrder(AccuGddDiseaseDict.class, fields, conditionMap, sortField);
+    }
 	@Override
 	public List<CmpGeneSnpResult> getGddResult(String dataKey, Integer projectId, Integer appId) {
 		List<CmpGeneSnpResult> resultList = new ArrayList<>();

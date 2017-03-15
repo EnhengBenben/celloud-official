@@ -99,7 +99,7 @@
 			appId = appInfo.appId;
 			userId = appInfo.userId;
 			dataKey = appInfo.dataKey;
-			if(appId == 110||appId == 111||appId == 112||appId == 113||appId == 126||appId == 127||appId == 128||appId == 131){
+			if(appId == 110||appId == 111||appId == 112||appId == 113||appId == 126||appId == 127||appId == 128||appId == 131||appId == 279){
 				$.each(fileList,function(index,item){
 				  if(!utils.isConfigure(item.fileName)){
 				    fileNames.push(item.fileName);
@@ -2871,11 +2871,11 @@
                 }
               }
             }
-            if(appId=="131"||appId=="128"||appId=="127"||appId=="126"||appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
+            if(appId == "279"||appId=="131"||appId=="128"||appId=="127"||appId=="126"||appId=="118"||appId=="117"||appId=="114"||appId=="113"||appId=="112"||appId=="111"||appId=="110"||appId=="109"||appId=="106"||appId=="107"||appId=="108"||appId=="105"||appId=="82"||appId=="84"||appId=="89"||appId=="73"||appId=="1"){
               if(j>0&&i==1){
                 $(this).addClass("sub");
                 var fileName = $(this).html();
-                if(fileName.length>30&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"&&appId!="126"&&appId!="127"&&appId!="128"&&appId!="131"){
+                if(fileName.length>30&&appId!="279"&&appId!="113"&&appId!="112"&&appId!="111"&&appId!="110"&&appId!="126"&&appId!="127"&&appId!="128"&&appId!="131"){
                   fileName = fileName.substring(0,30) + "...";
                 }
                 if(appId!="114"&&appId!="118"){
@@ -3048,7 +3048,7 @@
         	minTdNum = fileCount + 1;
         }
         // 这几个app名称过长, 所以最小行数为4
-        if(appId=="131"||appId=="128"||appId=="127"||appId=="126"||appId=="113"||appId=="112"||appId=="111"||appId=="110"){
+        if(appId=="279"||appId=="131"||appId=="128"||appId=="127"||appId=="126"||appId=="113"||appId=="112"||appId=="111"||appId=="110"){
         	if(fileCount < 4){
         		minTdNum = 4;
         	}else{
