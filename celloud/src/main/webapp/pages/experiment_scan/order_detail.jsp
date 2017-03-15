@@ -38,7 +38,7 @@
 	    </tbody>
 	  </table>
 	  <p>
-	    <span ng-if="userProduct.app123==123">本次样品为 {{sampleOrderInfo.samples.length}} 管血液样品 , 寄样人：${loginUserInSession.username } 联系电话：${loginUserInSession.cellphone }<br/></span>
+	    <span ng-if="sampleOrderInfo.samples[0].tagName == 华木兰">本次样品为 {{sampleOrderInfo.samples.length}} 管血液样品 , 寄样人：${loginUserInSession.username } 联系电话：${loginUserInSession.cellphone }<br/></span>
 	    备注：在送样进入实验室，需要把该订单打印并交付到样本接受人员手中，否则无法进行样本入库及影响后续的实验安排。
 	  </p>
   </div>
