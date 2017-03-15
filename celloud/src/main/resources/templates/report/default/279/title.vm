@@ -1,0 +1,22 @@
+<form id="gdd-form">
+    <section class="section0 border1 w3cbbs">
+        <div class="header">
+            <h1>新生儿遗传代谢疾病检测分析报告</h1>
+            <img src="${base}/images/report/accuxam_print.png">
+        </div>
+        <div class="titletype">
+            <div class="titleinfo">
+                <span>姓</span><span style="margin-left:40px">名：</span><span><input id="patientName1" type="text" class="input200" value="$!{cmpReport.cmpFilling.patientName}"></span>
+            </div>
+            <div class="titleinfo">
+                <span>取样日期：</span><span><input id="samplingDate1" type="text" class="input200" value="$!{cmpReport.cmpFilling.samplingDate}" ></span>
+            </div>
+            <div class="titleinfo">
+                <span>报告日期：</span><span><input id="reportDate1" type="text" class="input200" value="$!{cmpReport.cmpFilling.reportDate}"></span>
+            </div>
+        </div>
+        <footer>
+             检测机构：艾科优美医学技术（北京）有限公司<br>
+            蛋白质药物国家工程研究中心
+        </footer>
+    </section>

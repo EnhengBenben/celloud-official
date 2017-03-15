@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Key;
 
 import com.celloud.model.mongo.ABINJ;
+import com.celloud.model.mongo.AccuGddDiseaseDict;
 import com.celloud.model.mongo.AccuSeqα2;
 import com.celloud.model.mongo.AccuSeqα2Fill;
 import com.celloud.model.mongo.BRAF;
@@ -429,8 +430,21 @@ public interface ReportService {
 	 * @date 2016年1月18日 下午3:08:01
 	 */
 	public List<GddDiseaseDict> getGddDiseaseDictNormal(String[] fields, Map<String, List<String>> conditionMap,
-			String sortField);
+            String sortField);
 
+    /**
+     * 获取AccuSeqΩ-exon未检测到的疾病
+     * 
+     * @param fields
+     * @param conditionMap
+     * @param sortField
+     * @return
+     * @author leamo
+     * @date 2017年3月15日 下午3:18:11
+     */
+    public List<AccuGddDiseaseDict> getAccuGddDiseaseDictNormal(String[] fields, Map<String, List<String>> conditionMap,
+            String sortField);
+	
 	/**
 	 * 获取GDD总表检测突变数统计
 	 * 
