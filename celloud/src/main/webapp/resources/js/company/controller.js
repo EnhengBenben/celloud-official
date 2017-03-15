@@ -376,6 +376,7 @@ celloudApp.controller("companyKeyController", function($scope, $rootScope, compa
 				success(function(data, status){
 					if(status == 200){
 						$scope.cellphone = data;
+						$scope.errorInfo = "";
 						$("#company-showKey").modal("show");
 					}
 				})
@@ -414,7 +415,7 @@ celloudApp.controller("companyKeyController", function($scope, $rootScope, compa
 			error(function(data, status){
 				if(status == 500){
 					// 请勿频繁发送
-					$.alert("请勿频繁获取验证码");
+					$scope.errorInfo = "请勿频繁获取验证码";
 				}
 			})
 		};
@@ -426,7 +427,10 @@ celloudApp.controller("companyKeyController", function($scope, $rootScope, compa
 					$("#company-showKey").modal("hide");
 					$scope.showSecret($rootScope.authenId);
 				}
-			})
+			}).
+			error(function(data, status){
+				$scope.errorInfo = data;
+			});
 		}
 		$scope.getAuthenFlag = function(){
 			companyService.getAuthenFlag().
@@ -451,6 +455,7 @@ celloudApp.controller("companyKeyController", function($scope, $rootScope, compa
 				$scope.pageQuery();
 			})
 		}
+		$scope.errorInfo = "";
 		$scope.getAuthenFlag();
 		$scope.getSecretJson();
 		$scope.pageQuery($scope.pageInfo.currnetPage, $scope.pageInfo.pageSize);
