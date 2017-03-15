@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
@@ -547,7 +548,10 @@ public class ReportAction {
 		if (geneMap == null) {
 			String[] fields = { "name" };
 			context.put("cmpReport", cmpReport);
-			context.put("gddDiseaseList", reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+            context.put("gddDiseaseList",
+                    appId.equals(AppConstants.AccuSeqC)
+                            ? reportService.getAccuGddDiseaseDictNormal(fields, conditionMap, "gene")
+                            : reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
 			returnToVelocity(path, context, projectId);
 			return;
 		}
@@ -654,7 +658,10 @@ public class ReportAction {
 
 		String[] fields = { "gene", "name" };
 		conditionMap.put("gene", unnormalGene);
-		context.put("gddDiseaseList", reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+        context.put("gddDiseaseList",
+                appId.equals(AppConstants.AccuSeqC)
+                        ? reportService.getAccuGddDiseaseDictNormal(fields, conditionMap, "gene")
+                        : reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
 
 		returnToVelocity(path, context, projectId);
 	}

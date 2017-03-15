@@ -23,7 +23,7 @@ public class AppDataListType {
 	/**
 	 * fastq
 	 */
-	public static final List<Integer> FASTQ_PATH = Arrays.asList(110, 111, 112, 114, 123, 126, 127, 128, 139);
+    public static final List<Integer> FASTQ_PATH = Arrays.asList(110, 111, 112, 114, 123, 126, 127, 128, 139, 279);
 
 	/**
 	 * 两对fastq文件 ...(A/B)_(R1/R2).fastq
