@@ -325,6 +325,10 @@
       templateUrl: "pages/experiment_scan/sample_tracking.jsp",
       controller: "sampleTrackingController"
     })
+    .when('/sampling/info-tracking',{
+      templateUrl: "pages/experiment_scan/sample_info_tracking.jsp",
+      controller: "sampleInfoTrackingController"
+    })
     .when('/experiment/scanStorage',{
       templateUrl: "pages/experiment_scan/scan_storage.jsp",
       controller: "scanStorageController"
