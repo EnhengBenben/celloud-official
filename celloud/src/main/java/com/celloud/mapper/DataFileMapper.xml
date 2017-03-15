@@ -739,9 +739,13 @@
 		  AND r.flag = #{reportType }
 		  AND r.state = #{state }
 		  AND r.file_id=f.file_id) isRunning
-		FROM tb_file f LEFT JOIN tb_file_sample_relat fsr ON f.file_id = fsr.file_id LEFT JOIN tb_sample s ON fsr.sample_id = s.sample_id
+		FROM tb_file f LEFT JOIN tb_file_sample_relat fsr ON f.file_id = fsr.file_id
+		LEFT JOIN tb_sample s ON fsr.sample_id = s.sample_id
+		LEFT JOIN tb_file_tag_relat ftr ON f.file_id = ftr.file_id
+		lEFT JOIN tb_app_tag_relat atr ON ftr.tag_id = atr.tag_id
 		<where>
 			f.user_id = #{userId } and f.state = #{state }
+			AND atr.app_id = 123
 			<if test="condition != null and condition != ''">
 				and (f.file_name LIKE CONCAT('%',#{condition},'%')
 				or s.sample_name LIKE CONCAT('%',#{condition},'%')
