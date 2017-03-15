@@ -50,7 +50,7 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
                     logger.debug("bsi check run result: {}", checkRunresult);
                 }
             } else if (boxFile.getTagId().intValue() == 2) {
-                logger.info("盒子上传, oss瞎子啊, tagId = 2, 检查是否可以运行华木兰");
+                logger.info("盒子上传, oss下载成功, tagId = 2, 检查是否可以运行华木兰");
                 DataFile data = new DataFile();
                 data.setFileFormat(fileFormat);
                 data.setFileName(boxFile.getFileName());
