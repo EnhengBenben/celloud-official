@@ -385,6 +385,34 @@
     $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
   });
   
+  celloudApp.controller("sampleInfoTrackingController", function($scope, $routeParams, sampleTrackingService){
+	    $scope.pages = {
+	        page : 1,
+	        pageSize : 20
+	    };
+	    $scope.pageQuery = function(page,pageSize){
+	      $scope.pages = {
+	        page : page,
+	        pageSize : pageSize
+	      };
+	      sampleTrackingService.pageList($scope.pages.page,$scope.pages.pageSize,$scope.sampleName).success(function(data){
+	        $scope.sampleList = data;
+	      });
+	    }
+	    $scope.sampleNameQuery = function(){
+	      $scope.pageQuery(1,$scope.pages.pageSize);
+	    }
+	    $scope.doOnKeyPress= function($event){
+	      if($event.keyCode == 13){
+	        if($scope.sampleName==''||$scope.sampleName==undefined){
+	        }else{
+	          $scope.sampleNameQuery();
+	        }
+	      }
+	    }
+	    $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
+	  });
+  
   celloudApp.controller("sampleOrderController", function($scope, commonService, $routeParams, sampleOrderService){
     sampleOrderService.sampleOrderInfo($routeParams.orderId).success(function(data){
       if(data != null){

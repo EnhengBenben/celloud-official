@@ -39,6 +39,13 @@ public class Sample {
     /** 实验状态 */
     private Integer experState;
 
+    // 受检人姓名
+    private String name;
+    // 受检人性别
+    private Integer gender;
+    // 受检人年龄
+    private Integer age;
+
     /**
      * 病人信息外键
      */
@@ -193,6 +200,30 @@ public class Sample {
 
     public void setPatientId(Integer patientId) {
         this.patientId = patientId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
 }
