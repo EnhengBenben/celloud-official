@@ -143,3 +143,13 @@ table [class*=span],.row-fluid table [class*=span] { display: table-cell;  float
   border-width: 7px;
 }
 .break-page { page-break-after:always;}
+
+.clearfix{
+	overflow: hidden;
+}
+.order_info{
+	float: left;
+}
+.order_qr{
+	float: right;
+}
