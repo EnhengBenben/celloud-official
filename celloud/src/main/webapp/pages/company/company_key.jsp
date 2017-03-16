@@ -19,7 +19,7 @@
       </div>
       <div class="table-opera">
         <span class="tips">
-             Access Key ID和Access Key Secret是您访问阿里云API的密钥，具有该账户完全的权限，请您妥善保管。
+             Access Key ID和Access Key Secret是您访问CelLoudAPI的密钥，请您妥善保管。
         </span>
       </div>
       <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state">
