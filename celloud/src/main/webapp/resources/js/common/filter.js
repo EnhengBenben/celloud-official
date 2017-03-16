@@ -1,7 +1,7 @@
 (function(){
   celloudApp.filter("collapsedFilter",function(){
     return function(collapsed){
-      return collapsed ? "collapsed":"";
+      return collapsed? "collapsed":"";
     }
   });
   celloudApp.filter("logoMiniFilter",function(){
