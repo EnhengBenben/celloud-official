@@ -19,7 +19,7 @@
       </div>
       <div class="table-opera">
         <span class="tips">
-             Access Key ID和Access Key Secret是您访问阿里云API的密钥，具有该账户完全的权限，请您妥善保管。
+             Access Key ID和Access Key Secret是您访问CelLoudAPI的密钥，请您妥善保管。
         </span>
       </div>
       <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state">
@@ -56,8 +56,8 @@
       <pagination page="keyList.page" change="pageQuery(page,pageSize)"></pagination>
     </div>
   <div id="company-showKey" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content" style="width: 500px;">
+    <div class="modal-dialog modal-lg" style="width: 500px;">
+      <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
           <h4 class="modal-title">安全校验</h4>
@@ -77,6 +77,10 @@
                 <div class="col-xs-9">
                     <input type="text" name="captcha" placeholder="验证码" ng-model="captcha" required="true">
                 </div>
+              </div>
+              <div ng-show="errorInfo != ''" class="form-group" style="padding-top: 5px;margin-bottom: -5px;color: #ff587d">
+                <div class="col-xs-3"></div>
+                <div class="col-xs-9">{{errorInfo}}</div>
               </div>
           </form>
         </div>

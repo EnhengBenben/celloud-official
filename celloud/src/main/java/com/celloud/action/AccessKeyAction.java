@@ -176,11 +176,11 @@ public class AccessKeyAction {
         LOGGER.info("用户 {} 进行手机号认证, 手机号 = {}, 验证码 = {}", ConstantsData.getLoginUserId(), cellphone, captcha);
         if (StringUtils.isEmpty(cellphone)) {
             LOGGER.info("手机号码格式有误");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("手机号码格式有误");
+            return new ResponseEntity<String>("手机号码格式有误", headers, HttpStatus.BAD_REQUEST);
         }
         if (StringUtils.isEmpty(captcha)) {
             LOGGER.info("验证码格式有误");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("验证码格式有误");
+            return new ResponseEntity<String>("验证码格式有误", headers, HttpStatus.BAD_REQUEST);
         }
         // 1. 根据手机号从mongo中查询用户的验证码信息
         UserCaptcha userCaptcha = customerService.getUserCaptchaByCellphone(cellphone);
@@ -191,11 +191,11 @@ public class AccessKeyAction {
             if (createDate.plusMinutes(AlidayuConfig.captcha_expire_time).isAfterNow()) {
                 if (userCaptcha.getCaptcha().equals(captcha)) {
                     LOGGER.info("用户 {} 认证成功", ConstantsData.getLoginUserId());
-        session.setAttribute("authenFlag", 1);
-        return new ResponseEntity<String>("认证成功", headers, HttpStatus.OK);
+                    session.setAttribute("authenFlag", 1);
+                    return new ResponseEntity<String>("认证成功", headers, HttpStatus.OK);
                 } else {
                     LOGGER.info("用户 {} 验证码有误", ConstantsData.getLoginUserId());
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("验证码有误");
+                    return new ResponseEntity<String>("验证码有误", headers, HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
         }

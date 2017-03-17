@@ -182,7 +182,7 @@
 					url :uploadUrl,
 					dragdrop : true,
 					unique_names:true,
-					drop_element : 'upload-filelist',
+					drop_element : 'bsi-plupload-content',
 					// Specify what files to browse for
 					filters : {
 						max_file_size : '10gb',
