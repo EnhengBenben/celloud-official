@@ -185,7 +185,7 @@ public class DataKeyListToFile {
 					listIndex++;
 
 					dataFileInfo = new StringBuffer();
-					dataFileInfo.append(data_R1.getOssPath() == null ? data_R1.getPath() : data_R1.getOssPath())
+                    dataFileInfo.append(data_R1.getOssPath() == null ? data_R1.getPath() : data_R1.getOssPath())
 							.append("\t")
 							.append(data_R2.getOssPath() == null ? data_R2.getPath() : data_R2.getOssPath())
 							.append("\t");
@@ -196,15 +196,15 @@ public class DataKeyListToFile {
 					canRunDataList.add(data_R1);
 					canRunDataList.add(data_R2);
 				}
-            } else if (fname_R1.contains(".tar.gz")) {
-                dataFileInfo = new StringBuffer();
-                dataFileInfo.append(data_R1.getOssPath() == null ? data_R1.getPath() : data_R1.getOssPath())
-                        .append("\t");
-                String dataListFile = getDataListFile(data_R1.getOssPath() != null);
-                FileTools.appendWrite(dataListFile, dataFileInfo.toString());
-                dataListFileMap.put(data_R1.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
-                dataReportNum++;
-                canRunDataList.add(data_R1);
+			} else if (fname_R1.contains(".tar.gz")) {
+				dataFileInfo = new StringBuffer();
+                dataFileInfo.append(data_R1.getPath())
+						.append("\t");
+                String dataListFile = getDataListFile(false);
+				FileTools.appendWrite(dataListFile, dataFileInfo.toString());
+				dataListFileMap.put(data_R1.getDataKey(), UploadPathUtils.getObjectKeyByPath(dataListFile));
+				dataReportNum++;
+				canRunDataList.add(data_R1);
 			}
 		}
 		dataListFileMap.put(DATA_REPORT_NUM, dataReportNum.toString());
@@ -298,14 +298,14 @@ public class DataKeyListToFile {
 		String dataKey = "";
 		boolean inOSS = false;
 		for (DataFile data : dataList) {
-			String path = data.getPath();
-			if (path.endsWith(".lis") || path.endsWith(".txt")) {
-				endPath = path;
+			String filename = data.getFileName();
+			if (filename.endsWith(".lis") || filename.endsWith(".txt")) {
+				endPath = data.getPath();
 			} else {
 				if (i == 0) {
 					dataKey = data.getDataKey();
 				}
-				pathList.add(path);
+				pathList.add(data.getPath());
 				i++;
 			}
 		}

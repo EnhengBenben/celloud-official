@@ -278,6 +278,7 @@
 			<map>
 				<entry key="fetch.max.wait.ms" value="${consumer.fetch.max.wait.ms}" />
 				<entry key="auto.commit.interval.ms" value="${consumer.auto.commit.interval.ms}" />
+				<entry key="client.id" value="userMessageConsumer" />
 			</map>
 		</property>
 	</bean>
@@ -293,6 +294,34 @@
 			</set>
 		</property>
 	</bean>
+	<bean id="taskTraceConsumerConfig" class="com.celloud.common.mq.kafka.KafkaConsumerConfig">
+		<property name="servers" value="${public.bootstrap.servers}" />
+		<property name="workerNum" value="${consumer.workerNum}" />
+		<property name="groupId" value="celloud-task-finish-tracing" />
+		<property name="autoCommit" value="${consumer.enable.auto.commit}" />
+		<property name="keyDeserializer" value="${consumer.key.deserializer}" />
+		<property name="valueDeserializer" value="${consumer.key.deserializer}" />
+		<property name="sessionTimeout" value="${consumer.session.timeout.ms}" />
+		<property name="props">
+			<map>
+				<entry key="fetch.max.wait.ms" value="${consumer.fetch.max.wait.ms}" />
+				<entry key="auto.commit.interval.ms" value="${consumer.auto.commit.interval.ms}" />
+				<entry key="client.id" value="taskTraceConsumer" />
+			</map>
+		</property>
+	</bean>
+	<bean id="taskTraceMessageConsumer" class="com.celloud.common.mq.kafka.KafkaConsumerImpl" init-method="startup" destroy-method="shutdown">
+		<property name="config" ref="taskTraceConsumerConfig" />
+		<property name="subscriptions">
+			<set>
+				<bean class="com.celloud.common.mq.entity.Subscription">
+					<property name="topic" value="task-tracing" />
+					<property name="expression" value="*" />
+					<property name="listener" value="com.celloud.task.TaskTracingListener" />
+				</bean>
+			</set>
+		</property>
+	</bean>
 	<bean id="producerConfig" class="com.celloud.common.mq.kafka.KafkaProducerConfig">
 		<property name="servers" value="${public.bootstrap.servers}" />
 		<property name="keySerializer" value="${producer.key.serializer}" />
@@ -304,6 +333,7 @@
 				<entry key="batch.size" value="${producer.batch.size}" />
 				<entry key="linger.ms" value="${producer.linger.ms}" />
 				<entry key="buffer.memory" value="${producer.buffer.memory}" />
+				<entry key="client.id" value="celloudProducer" />
 			</map>
 		</property>
 	</bean>

@@ -30,7 +30,8 @@ import com.celloud.box.utils.UploadPath;
 		"https://celloud.cn", "https://www.celloud.cc", "https://celloud.cc", "https://www.genecode.cn",
 		"https://genecode.cn", "http://www.celloud.cn", "http://celloud.cn", "http://www.celloud.cc",
 		"http://celloud.cc", "http://www.genecode.cn",
-		"http://genecode.cn" }, methods = { RequestMethod.POST, RequestMethod.GET }, allowedHeaders = { "*" })
+        "http://genecode.cn" }, methods = {
+                RequestMethod.POST, RequestMethod.GET }, allowedHeaders = { "*" })
 public class BoxController {
 	private static Logger logger = LoggerFactory.getLogger(BoxController.class);
 	@Resource
@@ -53,7 +54,6 @@ public class BoxController {
 		if (file == null || file.isEmpty()) {
 			return new Response("没有要上传的文件！");
 		}
-		tagId = tagId == null ? 118 : tagId;
 		logger.debug("name={}\tsize={}\tlastModifiedDate={}", name, size,
 				new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(lastModifiedDate));
 		String folder = UploadPath.getUploadingPath(userId);
@@ -68,7 +68,7 @@ public class BoxController {
 		}
 		logger.debug("【{}】 chunk={} {}", name, chunk, getLoaded(userId, uniqueName));
 		if (chunks == null || chunks == 0 || chunk == chunks - 1) {
-			logger.info("文件上传完成【{}】", name);
+            logger.info("文件上传完成【{}】, tagId = {}", name, tagId);
 			File f = finish(chunkFile.getParentFile(), chunks == null ? 0 : chunks.intValue(), uniqueName);
 			if (f == null) {
 				return new Response("文件上传失败，服务器异常！");
@@ -81,7 +81,9 @@ public class BoxController {
 				// 排队上传到oss
 				queue.add(f);
 				// 检查是否可运行split
-				boxService.checkRunSplit(dataFile);
+                if (tagId == 1 || tagId == 40 || tagId == 41 || tagId == 42 || tagId == 43 || tagId == 44) {
+                    boxService.checkRunSplit(dataFile);
+                }
 			}
 		}
 		return Response.SUCCESS;

@@ -111,11 +111,36 @@
 			return 
 		}
 		var initUploader = function(){
+			var uploadUrl = "../uploadFile/uploadManyFile";
+			$.ajax({
+				type:"GET",
+				async:false,
+				url:CONTEXT_PATH+"/box/configs",
+				success:function(configs){
+					for(var index in configs){
+						var config = configs[index];
+						var port = config.port||80;
+						var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
+						config = "https://"+config.intranetAddress+":"+port+context;
+						var response = $.ajax(config+"/box/alive",{async: false}).responseText;
+						if(response && JSON.parse(response).success){
+							$scope.box=config;
+							break;
+						}
+					}
+					if($scope.box != null){
+						uploadUrl = $scope.box + "/box/upload";
+						console.log("成功找到了一个盒子，地址为："+$scope.box);
+					}else{
+						console.log("没有找到盒子...");
+					}
+				}
+			});
 			var uploader = new plupload.Uploader({
 				runtimes : 'html5,flash,silverlight,html4',
 				browse_button : 'plupload-content',
-				url : CONTEXT_PATH+"/uploadFile/uploadManyFile",
-				drop_element : 'plupload-content', 
+				url : uploadUrl,
+				drop_element : 'plupload-content',
 				filters : {
 					max_file_size : '10gb',
 					prevent_duplicates : true, // 不允许选取重复文件
@@ -173,42 +198,61 @@
 				}
 			});
 			uploader.bind("BeforeUpload", function(uploader, file) {
-				$("#" + file.id +" .percent").html("正在上传");
-				var object = $.ajax({
-					 url: CONTEXT_PATH+"/oss/upload/postPolicy",
-					 async: false,
-					 data:'name='+file.name+'&oName=ddd'+file.id
-				}).responseText;
-				object = JSON.parse(object);
-				uploader.setOption({
-					url:"https://"+object.host,
-					multipart_params:{
-						'key' : object.dir + file.id +object.ext,
-						'policy': object.policy,
-				        'OSSAccessKeyId': object.accessid, 
-				        'success_action_status' : '200', //让服务端返回200,不然，默认会返回204
-				        'signature': object.signature,
-				        'x-oss-meta-name':file.name,
-				        'x-oss-meta-batch':$rootScope.rockyBatch,
-				        'x-oss-meta-tagId':2
-					}
-				});
-				file.objectKey = object.dir + file.id +object.ext;
-				//uploader.setOption("multipart_params",{'originalName': file.name, "tagId":2, "batch":$rootScope.rockyBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
+				if($scope.box==null){
+					$("#" + file.id +" .percent").html("正在上传");
+					var object = $.ajax({
+						 url: CONTEXT_PATH+"/oss/upload/postPolicy",
+						 async: false,
+						 data:'name='+file.name+'&oName=ddd'+file.id
+					}).responseText;
+					object = JSON.parse(object);
+					uploader.setOption({
+						url:"https://"+object.host,
+						chunk_size: 0,
+						multipart_params:{
+							'key' : object.dir + file.id +object.ext,
+							'policy': object.policy,
+					        'OSSAccessKeyId': object.accessid, 
+					        'success_action_status' : '200', //让服务端返回200,不然，默认会返回204
+					        'signature': object.signature,
+					        'x-oss-meta-name':file.name,
+					        'x-oss-meta-batch':$rootScope.rockyBatch,
+					        'x-oss-meta-tagId':2
+						}
+					});
+					file.objectKey = object.dir + file.id +object.ext;
+				} else {
+					uploader.setOption({
+						chunk_size: "1mb",
+						multipart_params:{
+							'userId':window.userId,
+							"lastModifiedDate":file.lastModifiedDate,
+							'size':file.size,
+							'originalName': file.name,
+							'name': file.name,
+							'tagId':2,
+							'batch': $rootScope.rockyBatch
+						}
+					});
+				}
 			});
 			uploader.bind("FileUploaded", function(uploader, file, response) {
-				var res = JSON.parse(response.response);
-				uploader.setOption("multipart_params",{'originalName': file.name, "tagId":2, "batch":$rootScope.rockyBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
-				$("#" + file.id +" .percent").html("上传完成");
-				$.post(CONTEXT_PATH+"/oss/upload/newfile",{
-					'name':file.name,
-					'batch':$rootScope.rockyBatch,
-					'size':file.size, 
-					'objectKey':file.objectKey,
-					'tagId':2
-				},function(data){
-					console.log(data);
-				});
+				if($scope.box==null){
+					var res = JSON.parse(response.response);
+					uploader.setOption("multipart_params",{'originalName': file.name, "tagId":2, "batch":$rootScope.rockyBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
+					$("#" + file.id +" .percent").html("上传完成");
+					$.post(CONTEXT_PATH+"/oss/upload/newfile",{
+						'name':file.name,
+						'batch':$rootScope.rockyBatch,
+						'size':file.size, 
+						'objectKey':file.objectKey,
+						'tagId':2
+					},function(data){
+						console.log(data);
+					});
+				}
+				file.hint;
+				messageUtils.notify("上传完成","数据【" + file.name + "】上传成功。");
 			});
 			uploader.bind("UploadComplete",function(uploader,files){
 				uploader.splice(0, uploader.files.length);

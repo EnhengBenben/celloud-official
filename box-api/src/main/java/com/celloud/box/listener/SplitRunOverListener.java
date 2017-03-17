@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import com.celloud.box.event.SplitRunOverEvent;
 import com.celloud.box.model.DataFile;
 import com.celloud.box.model.SplitFile;
+import com.celloud.box.service.ApiService;
 import com.celloud.box.service.BoxService;
 import com.celloud.box.utils.UploadPath;
 
@@ -30,6 +32,9 @@ import com.celloud.box.utils.UploadPath;
 public class SplitRunOverListener implements ApplicationListener<SplitRunOverEvent> {
 	@Resource
 	private BoxService boxService;
+    @Autowired
+    private ApiService apiService;
+
 	private static Logger logger = LoggerFactory.getLogger(SplitRunOverListener.class);
 
 	@Async
@@ -40,11 +45,17 @@ public class SplitRunOverListener implements ApplicationListener<SplitRunOverEve
 		SplitFile splitFile = SplitFile.load(path);
 		splitFile.setRunning(Boolean.FALSE);
 		splitFile.toFile();
-		// 分别处理三个文件
-		DataFile r1 = setSplited(splitFile.getR1Path());
-		boxService.finish(r1);
-		DataFile r2 = setSplited(splitFile.getR2Path());
-		boxService.finish(r2);
+        // 分别处理三个文件
+        DataFile r1 = setSplited(splitFile.getR1Path());
+        DataFile r2 = setSplited(splitFile.getR2Path());
+        // 读取r1, r2, 通知celloud修改r1, r2的运行状态
+        Boolean flag = apiService.fileRunOver(r1.getFileId(), r2.getFileId());
+        if (flag) {
+            logger.info("修改数据运行状态成功");
+        }
+        boxService.finish(r1);
+        boxService.finish(r2);
+
 		DataFile txt = setSplited(splitFile.getTxtPath());
 		boxService.finish(txt);
 		// 读取split结果

@@ -8,7 +8,7 @@
 			var bw = $("body").width();
 			$("#imageFullScreen").smartZoom({'containerClass':'zoomableContainer'});
 			$("#imageFullScreen").attr("src",src);
-			$("#fullbg").css({  
+			$("#fullbg").css({
 				height:bh,  
 				width:bw,  
 				display:"block"  
@@ -29,43 +29,43 @@
     }
 		$("#imageFullScreen").smartZoom({'containerClass':'zoomableContainer'});
 		/**
-	     * HBV峰图放大
-	     * @param src
-	     */
-	    $rootScope.bigFigure = function(src){
-	        $("#imageFullScreen").css("width",960);
-	        $("#imageFullScreen").css("height",144);
-	        $rootScope.showZoom(src);
-	    }
-	    /**
-	     * 原始峰图放大
-	     * @param src
-	     * @param id
-	     */
-	    $rootScope.bigOrigin = function(src,id) { 
-	        var width = $("#" + id).width();
-	        var height = $("#" + id).height();
-	        $("#imageFullScreen").css("width",width*1.5);
-	        $("#imageFullScreen").css("height",height*1.5);
-	        $rootScope.showZoom(src);
-	    }
-	    /**
-	     * 有路径替换的
-	     * @param src
-	     */
-	    $rootScope.bigReplace = function(src){
-	        $("#imageFullScreen").css("width",1050);
-	        $("#imageFullScreen").css("height",157.5);
-	        $rootScope.showZoom(src);
-	    }
-	    
-	    /**
-	     * 用于记录数据报告中哪个数据被点击过的json数组
-	     * proId:项目id
-	     * dataKeys:该项目下的dataKey
-	     * [{proId:proId,dataKeys:[dataKey1,dataKey2,...]},{proId:proId,dataKeys:[dataKey1,dataKey2,...]},...]
-	     */
-	    window.rememberDataReport = new Array();
+     * HBV峰图放大
+     * @param src
+     */
+    $rootScope.bigFigure = function(src){
+      $("#imageFullScreen").css("width",960);
+      $("#imageFullScreen").css("height",144);
+      $rootScope.showZoom(src);
+    }
+    /**
+     * 原始峰图放大
+     * @param src
+     * @param id
+     */
+    $rootScope.bigOrigin = function(src,id) { 
+      var width = $("#" + id).width();
+      var height = $("#" + id).height();
+      $("#imageFullScreen").css("width",width*1.5);
+      $("#imageFullScreen").css("height",height*1.5);
+      $rootScope.showZoom(src);
+    }
+    /**
+     * 有路径替换的
+     * @param src
+     */
+    $rootScope.bigReplace = function(src){
+      $("#imageFullScreen").css("width",1050);
+      $("#imageFullScreen").css("height",157.5);
+      $rootScope.showZoom(src);
+    }
+    
+    /**
+     * 用于记录数据报告中哪个数据被点击过的json数组
+     * proId:项目id
+     * dataKeys:该项目下的dataKey
+     * [{proId:proId,dataKeys:[dataKey1,dataKey2,...]},{proId:proId,dataKeys:[dataKey1,dataKey2,...]},...]
+     */
+    window.rememberDataReport = new Array();
 		
 		$scope.isActive = function(viewLocation) {
 			if (viewLocation != "/") {
@@ -74,11 +74,11 @@
 			return viewLocation === $location.path();
 		};
 		$rootScope.collapsed = false;
-		$scope.toggleCollapse = function() {
-			if ($scope.collapsed) {
-				$scope.collapsed = false;
+		$rootScope.toggleCollapse = function() {
+			if ($rootScope.collapsed) {
+			  $rootScope.collapsed = false;
 			} else {
-				$scope.collapsed = true;
+			  $rootScope.collapsed = true;
 			}
 		};
 		$rootScope.errorInfo = "";
@@ -149,5 +149,9 @@
 	      intro.start();
 	    }
     }, 1000);
+	});
+	celloudApp.controller("proSidebarController", function($rootScope) {
+	  $rootScope.collapsed = false;
+	  $rootScope.toggleCollapse();
 	});
 })();

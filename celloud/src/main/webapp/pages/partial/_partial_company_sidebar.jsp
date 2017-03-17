@@ -13,6 +13,9 @@
 	        <a di-href="#/company/base"><span>医院基本信息</span></a>
 	      </li>
       </shiro:hasPermission>
+        <li ng-class="{active: isActive('/company/key')}">
+          <a di-href="#/company/key"><span>AccessKey</span></a>
+        </li>
     </ul>
   </section>
 </aside>

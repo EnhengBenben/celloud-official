@@ -4,7 +4,10 @@
     $scope.typeList = null;
     
     $scope.changeSampleType = function(){
-    	var tagId = $scope.selTags.tagId;
+    	var tagId = 0;
+    	if($scope.selTags != undefined){
+    		tagId = $scope.selTags.tagId;
+    	}
     	var param = {'tagId' : tagId, 'flag' : 3};
     	samplingService.listMetadata(param).
     	success(function(data){
@@ -382,9 +385,10 @@
     $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
   });
   
-  celloudApp.controller("sampleOrderController", function($scope, $routeParams, sampleOrderService){
+  celloudApp.controller("sampleOrderController", function($scope, commonService, $routeParams, sampleOrderService){
     sampleOrderService.sampleOrderInfo($routeParams.orderId).success(function(data){
       if(data != null){
+    	$scope.userProduct = commonService.getProduct().get();
         $scope.sampleOrderInfo = data;
       }else {
         $.alert("样本已提交");

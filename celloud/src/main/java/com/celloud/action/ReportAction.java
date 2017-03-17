@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.celloud.constants.AppConstants;
 import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
@@ -494,7 +495,7 @@ public class ReportAction {
 	@RequestMapping("printMoreCMPReport")
 	@ResponseBody
 	public void printMoreCMPReport(String dataKey, Integer projectId, Integer appId) {
-		String path = ConstantsData.getLoginCompanyId() + "/" + appId + "print_more.vm";
+		String path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_more.vm";
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/" + appId + "/print_more.vm";
 		}
@@ -547,7 +548,10 @@ public class ReportAction {
 		if (geneMap == null) {
 			String[] fields = { "name" };
 			context.put("cmpReport", cmpReport);
-			context.put("gddDiseaseList", reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+            context.put("gddDiseaseList",
+                    appId.equals(AppConstants.AccuSeqC)
+                            ? reportService.getAccuGddDiseaseDictNormal(fields, conditionMap, "gene")
+                            : reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
 			returnToVelocity(path, context, projectId);
 			return;
 		}
@@ -654,7 +658,10 @@ public class ReportAction {
 
 		String[] fields = { "gene", "name" };
 		conditionMap.put("gene", unnormalGene);
-		context.put("gddDiseaseList", reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+        context.put("gddDiseaseList",
+                appId.equals(AppConstants.AccuSeqC)
+                        ? reportService.getAccuGddDiseaseDictNormal(fields, conditionMap, "gene")
+                        : reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
 
 		returnToVelocity(path, context, projectId);
 	}
@@ -2893,7 +2900,7 @@ public class ReportAction {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer userId = ConstantsData.getLoginUserId();
 		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
-		List<String> batchList = dataService.getBatchList(userId);
+        List<String> batchList = dataService.getBatchListByAppId(userId, 123);
 		Page pager = new Page(page, size);
 
 		ArrayList<String> queryBatches = null;
@@ -3085,7 +3092,7 @@ public class ReportAction {
         Map<String, Object> periodMap = taskService.findTaskPeriodNum(appId,
                 userId);
 		List<String> batchList1 = dataService.getBsiBatchList(userId, appId);
-		List<String> batchList2 = dataService.getBatchList(userId);
+        List<String> batchList2 = dataService.getBatchListByAppId(userId, 118);
 		List<String> batchList = new ArrayList<>();
 		for (String temp : batchList1) {
 			if (!batchList.contains(temp)) {

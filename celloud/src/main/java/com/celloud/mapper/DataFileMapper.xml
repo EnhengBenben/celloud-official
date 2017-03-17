@@ -19,6 +19,7 @@
 		<result column="batch" property="batch" jdbcType="VARCHAR" />
 		<result column="oss_path" property="ossPath" jdbcType="VARCHAR" />
 		<result column="upload_state" property="uploadState" jdbcType="INTEGER" />
+		<result column="is_run" property="isRun" jdbcType="INTEGER"/>
 	</resultMap>
 	<resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.DataFile"
 		extends="BaseResultMap">
@@ -45,7 +46,7 @@
 	<sql id="Tag_Base_Column_List">
 		f.file_id, f.user_id, data_key, file_name, strain, size,
 		create_date, update_date,
-		path,
+		path, f.is_run,
 		state, file_format, sample,
 		another_name, md5, batch,oss_path,upload_state
 	</sql>
@@ -83,10 +84,15 @@
 	</select>
 	<select id="selectByDataKey" resultMap="ResultMapWithBLOBs">
 		select
-		<include refid="Base_Column_List" />
+		<include refid="Tag_Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from tb_file
+		,
+		<include refid="Tag_Column_List" />
+		from tb_file f
+		left join tb_file_tag_relat filetag on f.file_id = filetag.file_id
+		left join tb_tag tag on tag.tag_id = filetag.tag_id
+		left join tb_app_tag_relat apptag on tag.tag_id = apptag.tag_id
 		where data_key = #{dataKey}
 	</select>
 	<select id="selectByDataKeys" resultMap="ResultMapWithBLOBs">
@@ -316,6 +322,9 @@
 			<if test="uploadState != null">
 				upload_state = #{uploadState,jdbcType=INTEGER},
 			</if>
+			<if test="isRun != null">
+				is_run = #{isRun,jdbcType=INTEGER},
+			</if>
 		</set>
 		where file_id = #{fileId,jdbcType=INTEGER}
 	</update>
@@ -395,11 +404,11 @@
 	</select>
 	<insert id="addDataInfo" useGeneratedKeys="true" keyProperty="fileId"
 		parameterType="com.celloud.model.mysql.DataFile">
-		insert into tb_file(user_id,file_name,create_date,state
+		insert into tb_file(user_id,is_run,file_name,create_date,state
 		<if test="md5 != null">
 			,md5
 		</if>
-		) values(#{userId },#{fileName },now(),#{state}
+		) values(#{userId },#{isRun},#{fileName },now(),#{state}
 		<if test="md5 != null">
 			,#{md5}
 		</if>
@@ -408,6 +417,9 @@
 	<update id="updateDataInfoByFileId" parameterType="com.celloud.model.mysql.DataFile">
 		update tb_file
 		set data_key=#{dataKey },size=#{size },path=#{path},
+		<if test="isRun != null">
+		  is_run=#{isRun},
+		</if>
 		<if test="anotherName != null">
 		 another_name=#{anotherName },
 		</if>
@@ -684,6 +696,14 @@
 		where user_id=#{userId} and state=#{state} and batch is not null and batch !=''
 		group by batch
 	</select>
+	<select id="getBatchListByAppId" resultType="java.lang.String">
+		SELECT DISTINCT f.batch
+		FROM tb_file f
+		LEFT JOIN tb_report r ON f.file_id = r.file_id
+		WHERE r.app_id = #{appId}
+		AND f.user_id = #{userId}
+		AND f.state = #{state}
+	</select>
 	<select id="getBsiBatchList" resultType="java.lang.String">
         select distinct f.batch from
         (select * from
@@ -719,9 +739,13 @@
 		  AND r.flag = #{reportType }
 		  AND r.state = #{state }
 		  AND r.file_id=f.file_id) isRunning
-		FROM tb_file f LEFT JOIN tb_file_sample_relat fsr ON f.file_id = fsr.file_id LEFT JOIN tb_sample s ON fsr.sample_id = s.sample_id
+		FROM tb_file f LEFT JOIN tb_file_sample_relat fsr ON f.file_id = fsr.file_id
+		LEFT JOIN tb_sample s ON fsr.sample_id = s.sample_id
+		LEFT JOIN tb_file_tag_relat ftr ON f.file_id = ftr.file_id
+		lEFT JOIN tb_app_tag_relat atr ON ftr.tag_id = atr.tag_id
 		<where>
 			f.user_id = #{userId } and f.state = #{state }
+			AND atr.app_id = 123
 			<if test="condition != null and condition != ''">
 				and (f.file_name LIKE CONCAT('%',#{condition},'%')
 				or s.sample_name LIKE CONCAT('%',#{condition},'%')

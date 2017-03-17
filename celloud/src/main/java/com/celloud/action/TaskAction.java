@@ -3,7 +3,7 @@ package com.celloud.action;
 import java.io.File;
 import java.io.IOException;
 import java.nio.channels.FileLock;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -128,8 +128,7 @@ public class TaskAction {
 		// 2. 利用 python将数据报告插入 mongodb
 		StringBuffer command = new StringBuffer();
 		command.append("python ").append(SparkPro.TASKOVERPY).append(" ")
-                .append(dataList.get(0).getOssPath() == null
-                        ? SparkPro.TOOLSPATH
+				.append(dataList.get(0).getOssPath() == null ? SparkPro.TOOLSPATH
 						: ConstantsData.getOfsPath() + "output")
 				.append(" ").append(userId).append(" ").append(appId).append(" ").append(dataNames).append(" ")
 				.append(projectId);
@@ -149,10 +148,8 @@ public class TaskAction {
 		// projectFile,String projectId, List<DataFile> dataList
 		RunOverUtil ros = new RunOverUtil();
 		try {
-			ros.getClass()
-					.getMethod(method,
-							new Class[] { String.class, String.class, String.class, String.class, String.class,
-									List.class })
+			ros.getClass().getMethod(method,
+					new Class[] { String.class, String.class, String.class, String.class, String.class, List.class })
 					.invoke(ros, reportPath.toString(), dataKey, title, projectFile, projectId, dataList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,9 +169,9 @@ public class TaskAction {
 			fname = d_tmp.getFileName();
 			if (filename.endsWith(".txt") || filename.endsWith(".lis")) {
 				pubName = filename.substring(0, filename.lastIndexOf("."));
-            } else {
-                batch = d_tmp.getBatch();
-                tagId = d_tmp.getTagId();
+			} else {
+				batch = d_tmp.getBatch();
+				tagId = d_tmp.getTagId();
 			}
 		}
 		if (appId == 113) {
@@ -215,37 +212,11 @@ public class TaskAction {
 							data.setMd5(MD5Util.getFileMD5(filePath));
 							dataService.updateDataInfoByFileIdAndTagId(data, tagId);
 							// TODO 需要去掉写死的自动运行
-                            if (tagId == 1) {
+							Integer bsiApp = Constants.bsiTags.get(tagId);
+							if (bsiApp != null) {
 								logger.info("bsi自动运行split分数据");
-								List<DataFile> bsiList = new ArrayList<>();
-								bsiList.add(data);
-								runService.runSingle(userId, 118, bsiList);
-                            } else if (tagId == 40) {
-                                logger.info("bsi自动运行split分数据");
-                                List<DataFile> bsiList = new ArrayList<>();
-                                bsiList.add(data);
-                                runService.runSingle(userId, 133, bsiList);
-                            } else if (tagId == 41) {
-                                logger.info("bsi自动运行split分数据");
-                                List<DataFile> bsiList = new ArrayList<>();
-                                bsiList.add(data);
-                                runService.runSingle(userId, 134, bsiList);
-                            } else if (tagId == 42) {
-                                logger.info("bsi自动运行split分数据");
-                                List<DataFile> bsiList = new ArrayList<>();
-                                bsiList.add(data);
-                                runService.runSingle(userId, 135, bsiList);
-                            } else if (tagId == 43) {
-                                logger.info("bsi自动运行split分数据");
-                                List<DataFile> bsiList = new ArrayList<>();
-                                bsiList.add(data);
-                                runService.runSingle(userId, 136, bsiList);
-                            } else if (tagId == 44) {
-                                logger.info("bsi自动运行split分数据");
-                                List<DataFile> bsiList = new ArrayList<>();
-                                bsiList.add(data);
-                                runService.runSingle(userId, 137, bsiList);
-                            }
+								runService.runSingle(userId, bsiApp, Arrays.asList(data));
+							}
 						}
 					}
 				}
@@ -257,6 +228,11 @@ public class TaskAction {
 		String endDate = null;
 		if (task != null) {
 			logger.info("任务{}执行完毕", task.getTaskId());
+			// 修改data的isRun状态
+			dataList.forEach(dataFile -> {
+				dataFile.setIsRun(0);
+				dataService.updateByPrimaryKeySelective(dataFile);
+			});
 			runService.runNext(appId);
 			// 构造邮件内容
 			startDate = DateUtil.getDateToString(task.getStartDate(), DateUtil.YMDHMS);
@@ -279,7 +255,7 @@ public class TaskAction {
 				.set(WechatParams.RUN_OVER.keyword2.name(), startDate, "#222222")
 				.set(WechatParams.RUN_OVER.keyword3.name(), endDate, "#222222");
 		String wechatUrl = null;
-		if (appId.equals(123)) {//华木兰要追加跳转页面
+		if (appId.equals(123)) {// 华木兰要追加跳转页面
 			params.set(WechatParams.RUN_OVER.remark.name(), "点击下方详情查看报告", "#222222");
 			wechatUrl = ConstantsData.getContextUrl() + "wechat_rocky.html?projectId=" + projectId + "&dataKey="
 					+ dataKey + "&appId=" + appId;
@@ -410,6 +386,9 @@ public class TaskAction {
 				}
 			}
 		}
+		DataFile dataFile = dataService.getDataByKey(dataKey);
+		dataFile.setIsRun(1);
+		dataService.updateByPrimaryKeySelective(dataFile);
 		// 构造桌面消息
 		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants
 				.createMessage("task", "运行完成", "项目【" + projectName + "】下数据【" + dataKey + "】运行【" + appName + "】完成。"));

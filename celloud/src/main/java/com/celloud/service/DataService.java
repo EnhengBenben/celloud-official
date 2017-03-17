@@ -325,6 +325,17 @@ public interface DataService {
 	 */
 	public List<String> getBatchList(Integer userId);
 
+    /**
+     * 
+     * @description 根据appId获取批次列表
+     * @author miaoqi
+     * @date 2017年3月7日 下午6:10:24
+     * @param userId
+     * @param appId
+     * @return
+     */
+    public List<String> getBatchListByAppId(Integer userId, Integer appId);
+
 	public List<String> getBsiBatchList(Integer userId, Integer appId);
 
 	/**

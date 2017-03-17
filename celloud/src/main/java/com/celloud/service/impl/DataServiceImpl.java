@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.celloud.constants.BoxUploadState;
+import com.celloud.constants.Constants;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
 import com.celloud.constants.FileFormat;
@@ -106,7 +107,7 @@ public class DataServiceImpl implements DataService {
 	public int updateDataInfoByFileIdAndTagId(DataFile data, Integer tagId) {
 		Integer result = dataFileMapper.selectTagRelat(data.getFileId(), tagId);
 		if (result == null || result.intValue() == 0) {
-            dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
+			dataFileMapper.insertFileTagRelat(data.getFileId(), tagId);
 		}
 		DataFile data_s = dataFileMapper.selectByPrimaryKey(data.getFileId());
 		Sample sample = null;
@@ -114,20 +115,19 @@ public class DataServiceImpl implements DataService {
 			sample = sampleMapper.getSampleByExperName(StringUtils.splitByWholeSeparator(data_s.getFileName(), "_")[0],
 					DataState.ACTIVE);
 		} else {
-            if (data_s.getFileName().contains(".")) {
-                sample = sampleMapper.getSampleByExperName(
-                        StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0],
-					DataState.ACTIVE);
-            }
+			if (data_s.getFileName().contains(".")) {
+				sample = sampleMapper.getSampleByExperName(
+						StringUtils.splitByWholeSeparator(data_s.getFileName(), ".")[0], DataState.ACTIVE);
+			}
 		}
 		if (sample != null) {
-            Integer count = dataFileMapper.getFileSampleCount(data.getFileId(), sample.getSampleId());
-            if (count != null && count.intValue() <= 0) {
-                dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
-            }
+			Integer count = dataFileMapper.getFileSampleCount(data.getFileId(), sample.getSampleId());
+			if (count != null && count.intValue() <= 0) {
+				dataFileMapper.addFileSampleRelat(data.getFileId(), sample.getSampleId());
+			}
 		}
 		int updateDataInfoByFileId = dataFileMapper.updateDataInfoByFileId(data);
-        return updateDataInfoByFileId;
+		return updateDataInfoByFileId;
 	}
 
 	@Override
@@ -306,6 +306,11 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
+	public List<String> getBatchListByAppId(Integer userId, Integer appId) {
+		return dataFileMapper.getBatchListByAppId(userId, DataState.ACTIVE, appId);
+	}
+
+	@Override
 	public List<String> getBsiBatchList(Integer userId, Integer appId) {
 		return dataFileMapper.getBsiBatchList(userId, DataState.ACTIVE, appId);
 	}
@@ -352,11 +357,11 @@ public class DataServiceImpl implements DataService {
 		data.setFileId(dataId);
 		data.setDataKey(dataKey);
 		data.setPath(filePath);
-        if (filePath != null) {
-            data.setSize(FileTools.getFileSize(filePath));
-        } else {
-            data.setSize(0L);
-        }
+		if (filePath != null) {
+			data.setSize(FileTools.getFileSize(filePath));
+		} else {
+			data.setSize(0L);
+		}
 		data.setBatch(batch);
 		data.setFileFormat(fileFormat);
 		data.setMd5(md5);
@@ -385,6 +390,8 @@ public class DataServiceImpl implements DataService {
 	public Integer addFileInfo(Integer userId, String fileName) {
 		DataFile data = new DataFile();
 		data.setUserId(userId);
+		data.setIsRun(0);
+		data.setUploadState(3);
 		// 只允许字母和数字
 		String regEx = "[^\\w\\.\\_\\-\u4e00-\u9fa5]";
 		Pattern p = Pattern.compile(regEx);
@@ -413,7 +420,8 @@ public class DataServiceImpl implements DataService {
 		data.setFileId(dataId);
 		data.setDataKey(fileDataKey);
 		data.setSize(size);
-		data.setBatch(metadata.get("batch"));
+		String batch = metadata.get("batch");
+		data.setBatch(batch);
 		data.setMd5(metadata.get("etag").toLowerCase());
 		data.setFileName(name);
 		data.setState(DataState.ACTIVE);
@@ -441,8 +449,11 @@ public class DataServiceImpl implements DataService {
 		dataFileMapper.updateByPrimaryKeySelective(data);
 
 		data = dataFileMapper.selectByPrimaryKey(dataId);
-		// TODO 需要根据tagId判断是否rocky
-		runService.rockyCheckRun(123, data);
+		if (Constants.bsiTags.containsKey(tagId)) {
+			runService.bsiCheckRun(batch, dataId, fileDataKey, name, userId, fileFormat);
+		} else if (tagId == 2) {
+			runService.rockyCheckRun(123, data);
+		}
 		return dataId;
 	}
 
@@ -452,9 +463,9 @@ public class DataServiceImpl implements DataService {
 		return id == null ? null : id.intValue();
 	}
 
-    @Override
-    public String getBatchByDataKey(String dataKey) {
-        return dataFileMapper.selectByDataKey(dataKey).getBatch();
-    }
+	@Override
+	public String getBatchByDataKey(String dataKey) {
+		return dataFileMapper.selectByDataKey(dataKey).getBatch();
+	}
 
 }

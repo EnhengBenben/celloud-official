@@ -78,7 +78,7 @@
                 <span class="info"></span>
               </label>
             </td>
-            <td title="{{file.fileName}}"><i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1"></i> {{file.fileName.length > 23 ? file.fileName.substring(0,23) + '...' : file.fileName}}</td>
+            <td title="{{file.fileName}}"><i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1 || file.isRun == 1"></i> {{file.fileName.length > 23 ? file.fileName.substring(0,23) + '...' : file.fileName}}</td>
             <td title="{{file.anotherName}}">{{file.anotherName.length > 23 ? file.anotherName.substring(0,23) + '...' : file.anotherName}}</td>
             <td>{{file.tagName}}</td>
             <td>{{file.batch}}</td>
