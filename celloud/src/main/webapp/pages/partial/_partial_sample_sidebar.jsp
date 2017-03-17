@@ -19,6 +19,11 @@
 	        <a di-href="#/sampling/tracking"><span>样本追踪</span></a>
 	      </li>
       </shiro:hasPermission>
+      <shiro:hasPermission name="sample:tracking-info">
+	      <li ng-class="{active: isActive('/sampling/info-tracking')}">
+	        <a di-href="#/sampling/info-tracking"><span>样本追踪</span></a>
+	      </li>
+      </shiro:hasPermission>
     </ul>
   </section>
 </aside>

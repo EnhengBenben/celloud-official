@@ -38,6 +38,9 @@
       <result column="exper_state" property="experState" jdbcType="INTEGER" />
       <result column="orderNo" property="orderNo" jdbcType="VARCHAR" />
       <result column="updateDate" property="updateDate" jdbcType="VARCHAR" />
+      <result column="name" property="name" jdbcType="INTEGER"/>
+      <result column="gender" property="gender" jdbcType="INTEGER"/>
+      <result column="age" property="age" jdbcType="INTEGER"/>
   </resultMap>
   <sql id="Base_Column_List">
     sample_id, user_id, order_id, sample_name,exper_sample_name, is_add, type, sindex, create_date, update_date, state, remark, patient_id
@@ -286,12 +289,14 @@
   </select>
   <select id="getSamplesExperState" resultMap="ResultWithAll">
    select s.sample_id, s.user_id, s.order_id, s.sample_name,s.exper_sample_name, s.is_add, s.type, s.sindex, s.create_date, s.update_date,
-     s.state, s.remark,t.tag_id,t.tag_name,sl.create_date as log_date, sl.create_date updateDate, sl.id sampleLogId,sl.exper_state,sr.order_no orderNo
+     s.state, s.remark,t.tag_id,t.tag_name,sl.create_date as log_date, sl.create_date updateDate, sl.id sampleLogId,sl.exper_state,sr.order_no orderNo,
+     p.name, p.gender, p.age
     from tb_sample s
     left join tb_sample_log sl on s.sample_id=sl.sample_id 
     left join tb_sample_tag_relat st on s.sample_id=st.sample_id
     left join tb_tag t on st.tag_id=t.tag_id
     left join tb_sample_order sr on s.order_id=sr.id
+    left join tb_patient p on s.patient_id = p.id
     where s.user_id = #{userId} and s.state =#{state,jdbcType=BIT} and sl.state=#{state,jdbcType=BIT}
     <if test="sampleName != null and sampleName != ''">
         and s.sample_name like '%${sampleName}%'
