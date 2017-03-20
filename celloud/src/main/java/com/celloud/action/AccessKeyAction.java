@@ -1,7 +1,5 @@
 package com.celloud.action;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -167,10 +165,10 @@ public class AccessKeyAction {
      * @param captcha
      * @return
      */
-    @RequestMapping(value = "authenticationCellphone", method = RequestMethod.POST)
+    @RequestMapping(value = "authenticationCellphone", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public ResponseEntity<String> authenticationCellphone(String captcha, HttpSession session) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "text/plain");
+        headers.add("Content-Type", "text/html;charset=UTF-8");
         String cellphone = ConstantsData.getLoginUser().getCellphone();
         // 参数校验
         LOGGER.info("用户 {} 进行手机号认证, 手机号 = {}, 验证码 = {}", ConstantsData.getLoginUserId(), cellphone, captcha);
@@ -216,16 +214,7 @@ public class AccessKeyAction {
         Integer userId = ConstantsData.getLoginUserId();
         LOGGER.info("用户 {} 获取key信息", userId);
         Optional<AccessKey> opt = Optional.ofNullable(accessKeyService.get(keyId));
-        if (opt.isPresent()) {
-            Map<Integer, String> map = (Map<Integer, String>) session.getAttribute("secretJson");
-            if (map == null) {
-                map = new HashMap<Integer, String>();
-            }
-            map.put(opt.get().getId(), opt.get().getKeySecret());
-            session.setAttribute("secretJson", map);
-            return ResponseEntity.ok(opt.get());
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return opt.isPresent() ? ResponseEntity.ok(opt.get()) : ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
     
     /**
@@ -240,33 +229,6 @@ public class AccessKeyAction {
     public ResponseEntity<Integer> getAuthenFlag(HttpSession session) {
         Integer authenFlag = (Integer) session.getAttribute("authenFlag");
         return ResponseEntity.ok(authenFlag);
-    }
-
-    /**
-     * 
-     * @description 获取用户已显示的key, secret
-     * @author miaoqi
-     * @date 2017年3月10日 上午10:01:37
-     * @return
-     */
-    @RequestMapping("getSecretJson")
-    public ResponseEntity<Map<Integer, String>> getSecretJson(HttpSession session) {
-        Map<Integer, String> map = (Map<Integer, String>) session.getAttribute("secretJson");
-        if (map == null) {
-            map = new HashMap<Integer, String>();
-        }
-        return ResponseEntity.ok(map);
-    }
-
-    @RequestMapping("removeSecret")
-    public ResponseEntity<Map<Integer, String>> removeSecret(Integer id, HttpSession session) {
-        Map<Integer, String> map = (Map<Integer, String>) session.getAttribute("secretJson");
-        if (map == null) {
-            map = new HashMap<Integer, String>();
-        } else {
-            map.remove(id);
-        }
-        return ResponseEntity.ok(map);
     }
 
 }
