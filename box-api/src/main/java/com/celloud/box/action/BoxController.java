@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.celloud.box.config.BoxConfig;
 import com.celloud.box.constants.Response;
 import com.celloud.box.model.DataFile;
 import com.celloud.box.service.ApiService;
@@ -40,13 +39,11 @@ public class BoxController {
 	@Resource
 	private BoxService boxService;
 	@Resource
-	private FileUpload queue;
-	@Resource
-	private ApiService apiService;
+    private FileUpload queue;
     @Resource
-    private BoxConfig boxConfig;
+	private ApiService apiService;
     // 固定线程池
-    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(boxConfig.getMaxUploading());
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
 
 	@RequestMapping(value = "alive", method = RequestMethod.GET)
 	public Response alive() {

@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.celloud.box.config.BoxConfig;
 import com.celloud.box.model.DataFile;
 import com.celloud.box.model.Newfile;
 import com.celloud.box.model.SplitFile;
@@ -32,18 +31,10 @@ public class BoxServiceImpl implements BoxService {
 	private OSSService ossService;
 	@Resource
 	private ApiService apiService;
-	@Resource
-	private FileUpload fileUploadQueue;
-	@Resource
-    private SplitRun splitRun;
-	@Resource
-	private BoxConfig config;
-	@Resource
-	private FileUpload fileQueue;
     @Resource
-    private BoxConfig boxConfig;
+    private SplitRun splitRun;
     // 固定线程池
-    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(boxConfig.getMaxSplitting());
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
 
 	@Override
 	public DataFile save(Integer userId, String name, String anotherName, Integer tagId, String batch,
@@ -270,7 +261,7 @@ public class BoxServiceImpl implements BoxService {
 
         final SplitFile finalSplitFile = splitFile;
         fixedThreadPool.execute(() -> {
-            splitRun.split(finalSplitFile);
+            splitRun.split(this, finalSplitFile);
         });
 	}
 

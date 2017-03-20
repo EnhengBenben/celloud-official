@@ -29,13 +29,13 @@ public class SplitRun {
     private BoxConfig config;
     @Resource
     private ApplicationContext context;
-    @Resource
-    private BoxService boxService;
+    // @Resource
+    // private BoxService boxService;
     @Autowired
     private ApiService apiService;
 
 
-    public void split(SplitFile splitFile) {
+    public void split(BoxService boxService, SplitFile splitFile) {
         logger.info("splitFile校验通过, 开始运行split");
         splitFile.setRunning(Boolean.TRUE);
         splitFile.toFile();
