@@ -46,7 +46,10 @@
             </td>
             <td>{{key.state == 0 ? '启用' : '禁用'}}</td>
             <td>{{key.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td><a class="btn-link" ng-click="update(key.id, key.state)">{{key.state == 0 ? '禁用' : '启用'}}</a><a class="btn-link" ng-click="remove(key.id)">删除</a></td>
+            <td>
+                <a class="btn-link" ng-click="update(key.id, key.state)">{{key.state == 0 ? '禁用' : '启用'}}</a>
+                <a class="btn-link" ng-click="remove(key.id)">删除</a>
+            </td>
           </tr>
           <tr ng-show="key.datas.length == 0">
           	<td colspan="9">暂无数据</td>
@@ -69,7 +72,7 @@
                 <div class="col-xs-9">
                     {{cellphone}}
 	                <button id="captchaButton" type="button" class="btn" ng-disabled="cellphone == ''" ng-click="sendCaptcha()">获取验证码</button>
-	                <a ng-click="hideModal()" class="btn" ng-disabled="cellphone != ''">完善手机号</a>
+	                <button ng-click="hideModal()" class="btn" ng-disabled="cellphone != ''">完善手机号</button>
                 </div>
               </div>
               <div class="form-group">
