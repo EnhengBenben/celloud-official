@@ -40,28 +40,20 @@ update tb_company set province = '山西',city = '太原' where company_id = 957
 update tb_company set province = '广东',city = '深圳' where company_id = 958;
 update tb_company set province = '山西',city = '太原' where company_id = 959;
 update tb_company set province = '上海',city = '普陀区' where company_id = 960;
+update tb_company set province = '上海',city = '徐汇区' where company_id = 962;
+update tb_company set province = '安徽',city = '合肥' where company_id = 963;
+update tb_company set province = '广东',city = '广州' where company_id = 961;
 
-insert into tb_company (company_name,state,create_date,province) values ('立菲达安北区',0,now(),'广东');
-insert into tb_dept (dept_name,english_name,company_id,state) select '默认部门','default',company_id,0 from tb_company where company_name = '立菲达安北区';
-insert into tb_user (username,password,email,create_date,role,dept_id,company_id) select 'qianqian.li@thermofisher.com','a6dfca7528b0763968c36c2b19db64d9','qianqian.li@thermofisher.com',now(),4,dept_id,c.company_id from tb_dept d,tb_company c where d.company_id = c.company_id and c.company_name = '立菲达安北区';
-insert into tb_user_app_right (user_id,app_id,is_add,auth_from) select (select user_id from tb_user where email = 'qianqian.li@thermofisher.com'),app_id,0,79 from tb_user_app_right where user_id = 79;
 update tb_user_app_right r,(select u.user_id from tb_user u,tb_company c,tb_user_company_relat r where u.role = 0 and u.company_id = c.company_id and u.user_id = r.user_id and r.company_id = 3 and c.province in ('北京','天津','河北','黑龙江','吉林','辽宁','内蒙古自治区','陕西','甘肃','宁夏','青海','山西','河南','山东')) as p set r.auth_from = (select user_id from tb_user where email = 'qianqian.li@thermofisher.com') where r.user_id=p.user_id;
-insert into tb_sec_user_role_relat (user_id,role_id,auth_from) select (select user_id from tb_user where email = 'qianqian.li@thermofisher.com'),role_id,79 from tb_sec_user_role_relat where user_id = 79;
 update tb_sec_user_role_relat r,(select u.user_id from tb_user u,tb_company c,tb_user_company_relat r where u.role = 0 and u.company_id = c.company_id and u.user_id = r.user_id and r.company_id = 3 and c.province in ('北京','天津','河北','黑龙江','吉林','辽宁','内蒙古自治区','陕西','甘肃','宁夏','青海','山西','河南','山东')) as p set r.auth_from = (select user_id from tb_user where email = 'qianqian.li@thermofisher.com') where r.user_id=p.user_id;
-insert into tb_user_company_relat (user_id,company_id) select user_id,3 from tb_user where email = 'qianqian.li@thermofisher.com';
 update tb_user_company_relat r,(select u.user_id from tb_user u,tb_company c,tb_user_company_relat r where u.role = 0 and u.company_id = c.company_id and u.user_id = r.user_id and r.company_id = 3 and c.province in ('北京','天津','河北','黑龙江','吉林','辽宁','内蒙古自治区','陕西','甘肃','宁夏','青海','山西','河南','山东')) as p set r.company_id = (select company_id from tb_company where company_name = '立菲达安北区') where r.user_id=p.user_id;
-
 
 insert into tb_company (company_name,state,create_date,province) values ('立菲达安东区',0,now(),'广东');
 insert into tb_dept (dept_name,english_name,company_id,state) select '默认部门','default',company_id,0 from tb_company where company_name = '立菲达安东区';
-insert into tb_user (username,password,email,create_date,role,dept_id,company_id) select 'daoliang.ma@thermofisher.com','a6dfca7528b0763968c36c2b19db64d9','daoliang.ma@thermofisher.com',now(),4,dept_id,c.company_id from tb_dept d,tb_company c where d.company_id = c.company_id and c.company_name = '立菲达安东区';
-insert into tb_user_app_right (user_id,app_id,is_add,auth_from) select (select user_id from tb_user where email = 'daoliang.ma@thermofisher.com'),app_id,0,79 from tb_user_app_right where user_id = 79;
+update tb_user set company_id = (select company_id from tb_company where company_name = '立菲达安东区'),dept_id = (select dept_id from tb_dept where company_id = (select company_id from tb_company where company_name = '立菲达安东区')) where email = 'daoliang.ma@thermofisher.com';
 update tb_user_app_right r,(select u.user_id from tb_user u,tb_company c,tb_user_company_relat r where u.role = 0 and u.company_id = c.company_id and u.user_id = r.user_id and r.company_id = 3 and c.province in ('上海','江苏','浙江','安徽','湖南','湖北','四川','重庆','江西')) as p set r.auth_from = (select user_id from tb_user where email = 'daoliang.ma@thermofisher.com') where r.user_id=p.user_id;
-insert into tb_sec_user_role_relat (user_id,role_id,auth_from) select (select user_id from tb_user where email = 'daoliang.ma@thermofisher.com'),role_id,79 from tb_sec_user_role_relat where user_id = 79;
 update tb_sec_user_role_relat r,(select u.user_id from tb_user u,tb_company c,tb_user_company_relat r where u.role = 0 and u.company_id = c.company_id and u.user_id = r.user_id and r.company_id = 3 and c.province in ('上海','江苏','浙江','安徽','湖南','湖北','四川','重庆','江西')) as p set r.auth_from = (select user_id from tb_user where email = 'daoliang.ma@thermofisher.com') where r.user_id=p.user_id;
-insert into tb_user_company_relat (user_id,company_id) select user_id,3 from tb_user where email = 'daoliang.ma@thermofisher.com';
 update tb_user_company_relat r,(select u.user_id from tb_user u,tb_company c,tb_user_company_relat r where u.role = 0 and u.company_id = c.company_id and u.user_id = r.user_id and r.company_id = 3 and c.province in ('上海','江苏','浙江','安徽','湖南','湖北','四川','重庆','江西')) as p set r.company_id = (select company_id from tb_company where company_name = '立菲达安东区') where r.user_id=p.user_id;
-
 
 insert into tb_company (company_name,state,create_date,province) values ('立菲达安南区',0,now(),'广东');
 insert into tb_dept (dept_name,english_name,company_id,state) select '默认部门','default',company_id,0 from tb_company where company_name = '立菲达安南区';
