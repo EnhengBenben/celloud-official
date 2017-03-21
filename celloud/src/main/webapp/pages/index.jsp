@@ -98,7 +98,7 @@
   <script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js?v=3.4.8"></script>
   <script src="<%=request.getContextPath()%>/plugins/area/area.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js?v=3.4.8"></script>
-  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.4.10.07"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.4.10.08"></script>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
 	  window.username = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUsername() %>';
