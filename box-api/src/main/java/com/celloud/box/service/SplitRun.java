@@ -17,8 +17,6 @@ import com.celloud.box.config.BoxConfig;
 import com.celloud.box.model.DataFile;
 import com.celloud.box.model.SplitFile;
 import com.celloud.box.utils.UploadPath;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class SplitRun {
@@ -51,18 +49,9 @@ public class SplitRun {
             DataFile r2 = setSplited(splitFile.getR2Path());
             boxService.finish(r2);
             // 读取r1, r2, 通知celloud修改r1, r2的运行状态
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode r1Tree = objectMapper.readTree(splitFile.getR1Path());
-                JsonNode r2Tree = objectMapper.readTree(splitFile.getR2Path());
-                Integer r1Id = Integer.parseInt(String.valueOf(r1Tree.get("fileId")));
-                Integer r2Id = Integer.parseInt(String.valueOf(r2Tree.get("fileId")));
-                Boolean flag = apiService.fileRunOver(r1Id, r2Id);
-                if (flag) {
-                    logger.info("修改数据运行状态成功");
-                }
-            } catch (IOException e1) {
-                e1.printStackTrace();
+            Boolean flag = apiService.fileRunOver(r1.getFileId(), r2.getFileId());
+            if (flag) {
+                logger.info("修改数据运行状态成功");
             }
 
             DataFile txt = setSplited(splitFile.getTxtPath());
