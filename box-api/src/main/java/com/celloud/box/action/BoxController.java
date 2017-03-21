@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
 
@@ -42,8 +40,6 @@ public class BoxController {
     private FileUpload queue;
     @Resource
 	private ApiService apiService;
-    // 固定线程池
-    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
 
 	@RequestMapping(value = "alive", method = RequestMethod.GET)
 	public Response alive() {
@@ -83,9 +79,7 @@ public class BoxController {
 			dataFile = boxService.newfile(dataFile);
 			if (dataFile != null) {
 				// 排队上传到oss
-                fixedThreadPool.execute(() -> {
-                    queue.upload(fixedThreadPool, f.getAbsolutePath());
-                });
+                queue.upload(f.getAbsolutePath());
 				// 检查是否可运行split
                 if (tagId == 1 || tagId == 40 || tagId == 41 || tagId == 42 || tagId == 43 || tagId == 44) {
                     boxService.checkRunSplit(dataFile);

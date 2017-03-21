@@ -27,10 +27,10 @@ public class SplitRun {
     private BoxConfig config;
     @Resource
     private ApplicationContext context;
-    // @Resource
-    // private BoxService boxService;
     @Autowired
     private ApiService apiService;
+    @Autowired
+    private FileUpload queue;
 
 
     public void split(BoxService boxService, SplitFile splitFile) {
@@ -84,7 +84,8 @@ public class SplitRun {
                     logger.error("移动文件失败：{}", r.getAbsolutePath(), e);
                     continue;
                 }
-                boxService.splitRunOver(splitFile.getUserId(), filename, splitFile.getName(), splitFile.getTagId(),
+                this.splitRunOver(boxService, splitFile.getUserId(), filename, splitFile.getName(),
+                        splitFile.getTagId(),
                         splitFile.getBatch(), null, newPath);
             }
             // clean...
@@ -133,5 +134,16 @@ public class SplitRun {
         temp.setSplited(Boolean.TRUE);
         temp.serialize();
         return temp;
+    }
+
+    public void splitRunOver(BoxService boxService, Integer userId, String name, String anotherName, Integer tagId,
+            String batch,
+            Integer needSplit, File f) {
+        DataFile file = boxService.save(userId, name, anotherName, tagId, batch, needSplit, f);
+        logger.info("anotherName={}", anotherName);
+        file = boxService.newfile(file);
+        if (file != null) {
+            queue.upload(file.getPath());
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.celloud.box.service;
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
 
@@ -23,37 +24,41 @@ public class FileUpload {
 	private BoxConfig config;
     @Resource
     private BoxService boxService;
+    // 固定线程池
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
 
-    public void upload(ExecutorService fixedThreadPool, String file) {
-        logger.info("开始上传文件到oss, file = {}", file);
-		DataFile dataFile = DataFile.load(file + ".json");
-		boolean result = false;
-		if (dataFile != null) {
-			String location = null;
-			for (int i = 0; i <= config.getMaxRetry(); i++) {
-                location = ossService.upload(dataFile.getObjectKey(), new File(file),
-						new OSSProgressListener(dataFile.getUserId(), dataFile.getFilename(), dataFile.getDataKey()));
-				if (location != null) {
-					result = true;
-					break;
-				}
-			}
-		} else {
-			result = true;
-		}
-        if (result) {
-            logger.info("文件上传成功, file = {}", file);
-            dataFile = DataFile.load(new File(file + ".json"));
-            dataFile.setUploaded(Boolean.TRUE);
-            dataFile.serialize();
-            boxService.finish(dataFile);
-            boxService.updatefile(dataFile);
-        } else {
-            logger.info("文件上传失败，重新上传：file = {}", file);
-            fixedThreadPool.execute(() -> {
-                this.upload(fixedThreadPool, file);
-            });
-        }
+    public void upload(String file) {
+        fixedThreadPool.execute(() -> {
+            logger.info("开始上传文件到oss, file = {}", file);
+            DataFile dataFile = DataFile.load(file + ".json");
+            boolean result = false;
+            if (dataFile != null) {
+                String location = null;
+                for (int i = 0; i <= config.getMaxRetry(); i++) {
+                    location = ossService.upload(dataFile.getObjectKey(), new File(file), new OSSProgressListener(
+                            dataFile.getUserId(), dataFile.getFilename(), dataFile.getDataKey()));
+                    if (location != null) {
+                        result = true;
+                        break;
+                    }
+                }
+            } else {
+                result = true;
+            }
+            if (result) {
+                logger.info("文件上传成功, file = {}", file);
+                dataFile = DataFile.load(new File(file + ".json"));
+                dataFile.setUploaded(Boolean.TRUE);
+                dataFile.serialize();
+                boxService.finish(dataFile);
+                boxService.updatefile(dataFile);
+            } else {
+                logger.info("文件上传失败，重新上传：file = {}", file);
+                fixedThreadPool.execute(() -> {
+                    this.upload(file);
+                });
+            }
+        });
 	}
 
     public List<String> getAll() {

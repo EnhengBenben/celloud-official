@@ -265,15 +265,4 @@ public class BoxServiceImpl implements BoxService {
         });
 	}
 
-	@Async
-	@Override
-	public void splitRunOver(Integer userId, String name, String anotherName, Integer tagId, String batch,
-			Integer needSplit, File f) {
-		DataFile file = save(userId, name, anotherName, tagId, batch, needSplit, f);
-		logger.info("anotherName={}", anotherName);
-		file = newfile(file);
-		if (file != null) {
-            // fileQueue.add(f);
-		}
-	}
 }
