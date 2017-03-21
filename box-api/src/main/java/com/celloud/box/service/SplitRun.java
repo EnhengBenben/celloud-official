@@ -143,7 +143,7 @@ public class SplitRun {
         logger.info("anotherName={}", anotherName);
         file = boxService.newfile(file);
         if (file != null) {
-            queue.upload(file.getPath());
+            queue.upload(boxService, file.getPath());
         }
     }
 }

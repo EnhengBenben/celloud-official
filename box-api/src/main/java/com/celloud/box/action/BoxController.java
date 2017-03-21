@@ -79,7 +79,7 @@ public class BoxController {
 			dataFile = boxService.newfile(dataFile);
 			if (dataFile != null) {
 				// 排队上传到oss
-                queue.upload(f.getAbsolutePath());
+                queue.upload(boxService, f.getAbsolutePath());
 				// 检查是否可运行split
                 if (tagId == 1 || tagId == 40 || tagId == 41 || tagId == 42 || tagId == 43 || tagId == 44) {
                     boxService.checkRunSplit(dataFile);

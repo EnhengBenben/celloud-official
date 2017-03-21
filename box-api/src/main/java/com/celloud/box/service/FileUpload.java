@@ -22,12 +22,10 @@ public class FileUpload {
     private OSSService ossService;
 	@Resource
 	private BoxConfig config;
-    @Resource
-    private BoxService boxService;
     // 固定线程池
     private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
 
-    public void upload(String file) {
+    public void upload(BoxService boxService, String file) {
         fixedThreadPool.execute(() -> {
             logger.info("开始上传文件到oss, file = {}", file);
             DataFile dataFile = DataFile.load(file + ".json");
@@ -55,7 +53,7 @@ public class FileUpload {
             } else {
                 logger.info("文件上传失败，重新上传：file = {}", file);
                 fixedThreadPool.execute(() -> {
-                    this.upload(file);
+                    this.upload(boxService, file);
                 });
             }
         });
