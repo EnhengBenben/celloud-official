@@ -214,8 +214,8 @@
 			$scope.kaptchaError = null;
 			$scope.cellphoneError = null;
 		}
-		$scope.showAddUserForm = function(){
-			$("img[name=kaptchaImage]").click();
+		$scope.showAddUserForm = function(i){
+			$("img[name=kaptchaImage]").eq(i).click();
 		  companyService.getAppList()
 		  .success(function(data){
 		    $scope.appList = data;
