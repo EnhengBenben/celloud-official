@@ -595,10 +595,7 @@
 	    }
 	    $scope.doOnKeyPress= function($event){
 	      if($event.keyCode == 13){
-	        if($scope.sampleName==''||$scope.sampleName==undefined){
-	        }else{
 	          $scope.sampleNameQuery();
-	        }
 	      }
 	    }
 	    $scope.sampleList = $scope.pageQuery($scope.pages.page,$scope.pages.pageSize);
