@@ -19,26 +19,26 @@ var appStore=(function(appStore){
 		$("#classifypidLi"+pid).addClass("active");
 		$.get("app/toSclassifyApp",{"paramId":pid},function(responseText){
 			$("#sclassify").html(responseText);
-			if(hasNavi == 1 && intro != null && self.introNext==0){
-				intro.exit();
-				intro = null;
-				intro = introJs();
-				intro.setOption('tooltipPosition', 'bottom');
-				intro.setOption('showStepNumbers', false);
-				intro.setOption('showButtons', false);
-				intro.start();
-				intro.goToStep(2);
-			}
-			if(hasNavi == 1 && intro != null && self.introNext==1){
-				intro.exit();
-				intro = null;
-				intro = introJs();
-				intro.setOption('tooltipPosition', 'left');
-				intro.setOption('showStepNumbers', false);
-				intro.setOption('showButtons', false);
-				intro.start();
-				intro.goToStep(3);
-			}
+//			if(hasNavi == 1 && intro != null && self.introNext==0){
+//				intro.exit();
+//				intro = null;
+//				intro = introJs();
+//				intro.setOption('tooltipPosition', 'bottom');
+//				intro.setOption('showStepNumbers', false);
+//				intro.setOption('showButtons', false);
+//				intro.start();
+//				intro.goToStep(2);
+//			}
+//			if(hasNavi == 1 && intro != null && self.introNext==1){
+//				intro.exit();
+//				intro = null;
+//				intro = introJs();
+//				intro.setOption('tooltipPosition', 'left');
+//				intro.setOption('showStepNumbers', false);
+//				intro.setOption('showButtons', false);
+//				intro.start();
+//				intro.goToStep(3);
+//			}
 			self.introNext = 1;
 		});
 		$("#defaultPid").val(pid);
@@ -103,17 +103,17 @@ var appStore=(function(appStore){
 	            self.sortType=null;
 			});
 			self.sortApp();
-			if(hasNavi == 1 && intro != null){
-				intro.exit();
-				intro = null;
-				intro = introJs();
-				intro.setOption('tooltipPosition', 'auto');
-				intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-				intro.setOption('showStepNumbers', false);
-				intro.setOption('showButtons', false);
-				intro.start();
-				intro.goToStep(2);
-			}
+//			if(hasNavi == 1 && intro != null){
+//				intro.exit();
+//				intro = null;
+//				intro = introJs();
+//				intro.setOption('tooltipPosition', 'auto');
+//				intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+//				intro.setOption('showStepNumbers', false);
+//				intro.setOption('showButtons', false);
+//				intro.start();
+//				intro.goToStep(2);
+//			}
 		});
 	};
 	
@@ -121,34 +121,34 @@ var appStore=(function(appStore){
 		$.get("app/appDetail",{"paramId":id},function(responseText){
 			$("#appMain").html(responseText);
 			window.scrollTo(0,0);//滚动条回到顶部
-			if(hasNavi == 1 && intro != null){
-				intro.exit();
-				intro = null;
-				intro = introJs();
-				intro.setOption('tooltipPosition', 'right');
-				intro.setOption('showStepNumbers', false);
-				intro.setOption('showButtons', false);
-				intro.start();
-				intro.goToStep(2);
-				
-				$("#manageAppBtns .btn").removeAttr("href");
-				$("#manageAppBtns .btn").removeAttr("onclick");
-				$("#manageAppBtns").bind("click",function(){
-					if(hasNavi == 1 && intro != null){
-						$("#toUploadMenu").attr("data-step",3);
-						intro.exit();
-						intro = null;
-						intro = introJs();
-						intro.setOption('tooltipPosition', 'auto');
-						intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-						intro.setOption('showStepNumbers', false);
-						intro.setOption('showButtons', false);
-						intro.start();
-						intro.goToStep(3);
-					}
-					$("#manageAppBtns").unbind("click");
-				});
-			}
+//			if(hasNavi == 1 && intro != null){
+//				intro.exit();
+//				intro = null;
+//				intro = introJs();
+//				intro.setOption('tooltipPosition', 'right');
+//				intro.setOption('showStepNumbers', false);
+//				intro.setOption('showButtons', false);
+//				intro.start();
+//				intro.goToStep(2);
+//				
+//				$("#manageAppBtns .btn").removeAttr("href");
+//				$("#manageAppBtns .btn").removeAttr("onclick");
+//				$("#manageAppBtns").bind("click",function(){
+//					if(hasNavi == 1 && intro != null){
+//						$("#toUploadMenu").attr("data-step",3);
+//						intro.exit();
+//						intro = null;
+//						intro = introJs();
+//						intro.setOption('tooltipPosition', 'auto');
+//						intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+//						intro.setOption('showStepNumbers', false);
+//						intro.setOption('showButtons', false);
+//						intro.start();
+//						intro.goToStep(3);
+//					}
+//					$("#manageAppBtns").unbind("click");
+//				});
+//			}
 		});
 	};
 	
