@@ -116,8 +116,10 @@
   </update>
   <select id="selectBySelective" resultType="java.util.Map">
     SELECT
-    id id, app_id appId, user_id userId, create_date createDate, update_date updateDate, comment comment, score score
-    FROM tb_app_comment
+    ac.id id, ac.app_id appId, ac.user_id userId, ac.create_date createDate,
+    ac.update_date updateDate, ac.comment comment, ac.score score, u.username username
+    FROM tb_app_comment ac
+    LEFT JOIN tb_user u ON ac.user_id = u.user_id
     <where>
       <if test="appId != null" >
         AND app_id = #{appId,jdbcType=INTEGER},
@@ -138,5 +140,39 @@
         AND score = #{score,jdbcType=INTEGER},
       </if>
     </where>
+  </select>
+  <select id="selectBySelectiveNoPage" resultType="java.util.Map">
+    SELECT
+    ac.id id, ac.app_id appId, ac.user_id userId, ac.create_date createDate,
+    ac.update_date updateDate, ac.comment comment, ac.score score, u.username username
+    FROM tb_app_comment ac
+    LEFT JOIN tb_user u ON ac.user_id = u.user_id
+    <where>
+      <if test="appId != null" >
+        AND app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        AND user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        AND create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        AND update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        AND comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        AND score = #{score,jdbcType=INTEGER},
+      </if>
+    </where>
+  </select>
+  <select id="countScore" resultType="java.util.Map">
+    SELECT score score, count(id) count
+    FROM tb_app_comment
+	WHERE app_id = #{appId}
+	GROUP BY score
+	ORDER BY score DESC
   </select>
 </mapper>

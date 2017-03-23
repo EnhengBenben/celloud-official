@@ -33,4 +33,27 @@ public interface AppCommentService {
      */
     Boolean saveAppComment(Integer userId, Integer appId, Integer score, String comment);
 
+    /**
+     * 
+     * @description 根据id更新app的评论
+     * @author miaoqi
+     * @date 2017年3月23日 下午4:33:10
+     * @param id
+     * @param userId
+     * @param score
+     * @param comment
+     * @return
+     */
+    Boolean updateAppComment(Integer id, Integer userId, Integer score, String comment);
+
+    /**
+     * 
+     * @description 根据appId获取每个评分的数量
+     * @author miaoqi
+     * @date 2017年3月23日 下午5:28:41
+     * @param appid
+     * @return
+     */
+    Map<String, Map<String, Integer>> countScore(Integer appId);
+
 }
