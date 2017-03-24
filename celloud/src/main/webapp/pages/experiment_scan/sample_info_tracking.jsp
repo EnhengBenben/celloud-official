@@ -4,7 +4,7 @@
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li>样本管理</li>
-      <li>样本追踪</li>
+      <li>样本信息追踪</li>
     </ol>
     <div class="content sample">
         <div class="table-opera">

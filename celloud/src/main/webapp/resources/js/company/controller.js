@@ -214,8 +214,8 @@
 			$scope.kaptchaError = null;
 			$scope.cellphoneError = null;
 		}
-		$scope.showAddUserForm = function(){
-			$("img[name=kaptchaImage]").click();
+		$scope.showAddUserForm = function(i){
+			$("img[name=kaptchaImage]").eq(i).click();
 		  companyService.getAppList()
 		  .success(function(data){
 		    $scope.appList = data;
@@ -317,69 +317,89 @@ celloudApp.controller("companyKeyController", function($scope, $rootScope, compa
 				}
 			});
 		}
-		$scope.add = function(){
-			companyService.saveKey().
+		$scope.toAuthen = function(modalName){
+			$scope.modalName = modalName;
+			// 未认证
+			companyService.checkCellphone().
 			success(function(data, status){
-				if(status == 201){
-					$.alert("创建成功");
-					$scope.pageQuery();
+				if(status == 200){
+					$scope.cellphone = data;
+					$scope.errorInfo = "";
+					$("#company-showKey").modal("show");
 				}
-			}).
-			error(function(data, status){
-				if(status == 500){
-					$.alert("创建失败");
-				}
-			});
+			})
+		}
+		$scope.add = function(){
+			if($rootScope.authenFlag){
+				companyService.saveKey().
+				success(function(data, status){
+					if(status == 201){
+						$.alert("创建成功");
+						$scope.pageQuery();
+					}
+				}).
+				error(function(data, status){
+					if(status == 500){
+						$.alert("创建失败");
+					}
+				});
+			}else{
+				$scope.toAuthen("add");
+			}
 		}
 		$scope.remove = function(id){
-			companyService.removeKey(id).
-			success(function(data, status){
-				if(status == 204){
-					$.alert("删除成功");
-					$scope.pageQuery();
-				}
-			}).
-			error(function(data ,status){
-				console.log("success" + status);
-				if(status == 500){
-					$.alert("删除失败");
-				}
-			});
+			if($rootScope.authenFlag){
+		      $.confirm("确定要删除该Secret吗?","确认框",function(){
+		    	  companyService.removeKey(id).
+					success(function(data, status){
+						if(status == 204){
+							$.alert("删除成功");
+							$scope.pageQuery();
+						}
+					}).
+					error(function(data ,status){
+						if(status == 500){
+							$.alert("删除失败");
+						}
+					});
+		      });
+			}else{
+				$scope.removeId = id;
+				$scope.toAuthen("remove");
+			}
 		}
 		$scope.update = function(id, state){
-			state = state == 0 ? 1 : 0;
-			companyService.updateKey(id, state).
-			success(function(data, status){
-				$.alert("更改状态成功");
-				$scope.pageQuery();
-			}).
-			error(function(data, status){
-				if(status == 500){
-					$.alert("更改状态失败");				}
-			});
+			if($rootScope.authenFlag){
+				state = state == 0 ? 1 : 0;
+				companyService.updateKey(id, state).
+				success(function(data, status){
+					$.alert("更改状态成功");
+					$scope.pageQuery();
+				}).
+				error(function(data, status){
+					if(status == 500){
+						$.alert("更改状态失败");				}
+				});
+			}else{
+				$scope.updateId = id;
+				$scope.updateState = state;
+				$scope.toAuthen("update");
+			}
 		}
 		$scope.showSecret = function(id){
 			if($rootScope.authenFlag){
 				// 已认证
 				companyService.getKey(id).
 				success(function(data, status){
-					$scope.getSecretJson();
+					$scope.secretJson[data.id] = data.keySecret;
 					$scope.pageQuery($scope.pageInfo.currnetPage, $scope.pageInfo.pageSize);
 				}).
 				error(function(data, status){
 					$.alert("服务器错误")
 				});
 			}else{
-				$rootScope.authenId = id;
-				// 未认证
-				companyService.checkCellphone().
-				success(function(data, status){
-					if(status == 200){
-						$scope.cellphone = data;
-						$scope.errorInfo = "";
-						$("#company-showKey").modal("show");
-					}
-				})
+				$scope.authenId = id;
+				$scope.toAuthen("show");
 			}
 		}
 		$scope.hideModal = function(){
@@ -425,7 +445,15 @@ celloudApp.controller("companyKeyController", function($scope, $rootScope, compa
 				if(status == 200){
 					$rootScope.authenFlag = true;
 					$("#company-showKey").modal("hide");
-					$scope.showSecret($rootScope.authenId);
+					if($scope.modalName == "show"){
+						$scope.showSecret($scope.authenId);
+					}else if($scope.modalName == "add"){
+						$scope.add();
+					}else if($scope.modalName == "update"){
+						$scope.update($scope.updateId, $scope.updateState);
+					}else if($scope.modalName == "remove"){
+						$scope.remove($scope.removeId);
+					}
 				}
 			}).
 			error(function(data, status){
@@ -442,22 +470,13 @@ celloudApp.controller("companyKeyController", function($scope, $rootScope, compa
 				}
 			})
 		}
-		$scope.getSecretJson = function(){
-			companyService.getSecretJson().
-			success(function(data, status){
-				$rootScope.secretJson = data;
-			})
-		}
 		$scope.hideSecret = function(id){
-			companyService.removeSecret(id).
-			success(function(data, status){
-				$rootScope.secretJson = data;
-				$scope.pageQuery();
-			})
+			delete $scope.secretJson[id];
+			$scope.pageQuery();
 		}
 		$scope.errorInfo = "";
 		$scope.getAuthenFlag();
-		$scope.getSecretJson();
+		$scope.secretJson = {};
 		$scope.pageQuery($scope.pageInfo.currnetPage, $scope.pageInfo.pageSize);
 	});
 	
