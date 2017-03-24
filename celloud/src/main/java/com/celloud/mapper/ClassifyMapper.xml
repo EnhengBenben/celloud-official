@@ -85,4 +85,20 @@
   <select id="getClassifyById" resultMap="BaseResultMap">
     select classify_id,classify_pid,classify_name from tb_classify where classify_id=#{classifyId }
   </select>
+  <select id="selectBySelective" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM tb_classify
+    <where>
+      <if test="classifyName != null" >
+        AND classify_name,
+      </if>
+      <if test="classifyPid != null" >
+        AND classify_pid,
+      </if>
+      <if test="notes != null" >
+        AND notes,
+      </if>
+    </where>
+  </select>
 </mapper>

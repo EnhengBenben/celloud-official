@@ -26,6 +26,8 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="method" property="method" jdbcType="VARCHAR" />
     <result column="max_task" property="maxTask" jdbcType="INTEGER" />
+    <result column="classic" property="classic" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.celloud.model.mysql.App" extends="BaseResultMap" >
     <result column="app_doc" property="appDoc" jdbcType="LONGVARCHAR" />
@@ -39,8 +41,8 @@
   </resultMap>
   <sql id="Base_Column_List" >
     app_id, app_name, english_name, address, picture_name, create_date, intro, description, 
-    company_id, attribute, run_type, flag, run_data, data_num, param, off_line, command, 
-    title, method, max_task,code
+    company_id, attribute, run_type, flag, classic, run_data, data_num, param, off_line, command, 
+    title, method, max_task,code, version
   </sql>
   <sql id="Blob_Column_List" >
     app_doc
@@ -61,17 +63,18 @@
     insert into tb_app (app_id, app_name, english_name, 
       address, picture_name, create_date, 
       intro, description, company_id, 
-      attribute, run_type, flag, 
-      run_data, data_num, param, 
+      attribute, run_type, flag,
+      classic, run_data, data_num, param, 
       off_line, command, title, 
-      method, app_doc)
+      method, app_doc, version)
     values (#{appId,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, #{englishName,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{pictureName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{intro,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, 
-      #{attribute,jdbcType=INTEGER}, #{runType,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, 
-      #{runData,jdbcType=INTEGER}, #{dataNum,jdbcType=INTEGER}, #{param,jdbcType=INTEGER}, 
-      #{offLine,jdbcType=INTEGER}, #{command,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{method,jdbcType=VARCHAR}, #{appDoc,jdbcType=LONGVARCHAR})
+      #{attribute,jdbcType=INTEGER}, #{runType,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER},
+      #{classic,jdbcType=INTEGER}, #{runData,jdbcType=INTEGER}, #{dataNum,jdbcType=INTEGER},
+      #{param,jdbcType=INTEGER}, #{offLine,jdbcType=INTEGER}, #{command,jdbcType=VARCHAR},
+      #{title,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{appDoc,jdbcType=LONGVARCHAR},
+      #{version,jdbcType=VARCHAR})
   </insert>
   <insert id="insertUserAppRight" parameterType="java.lang.Integer">
     insert into tb_user_app_right (user_id, app_id, is_add, auth_from)
@@ -117,6 +120,9 @@
       <if test="flag != null" >
         flag,
       </if>
+      <if test="classic != null" >
+        classic,
+      </if>
       <if test="runData != null" >
         run_data,
       </if>
@@ -140,6 +146,9 @@
       </if>
       <if test="appDoc != null" >
         app_doc,
+      </if>
+      <if test="version != null" >
+        version,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -179,6 +188,9 @@
       <if test="flag != null" >
         #{flag,jdbcType=INTEGER},
       </if>
+      <if test="classic != null" >
+        #{classic,jdbcType=INTEGER},
+      </if>
       <if test="runData != null" >
         #{runData,jdbcType=INTEGER},
       </if>
@@ -202,6 +214,9 @@
       </if>
       <if test="appDoc != null" >
         #{appDoc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -241,6 +256,9 @@
       <if test="flag != null" >
         flag = #{flag,jdbcType=INTEGER},
       </if>
+      <if test="classic != null" >
+        classic = #{classic,jdbcType=INTEGER},
+      </if>
       <if test="runData != null" >
         run_data = #{runData,jdbcType=INTEGER},
       </if>
@@ -265,6 +283,9 @@
       <if test="appDoc != null" >
         app_doc = #{appDoc,jdbcType=LONGVARCHAR},
       </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
     </set>
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
@@ -281,6 +302,7 @@
       attribute = #{attribute,jdbcType=INTEGER},
       run_type = #{runType,jdbcType=INTEGER},
       flag = #{flag,jdbcType=INTEGER},
+      classic = #{classic,jdbcType=INTEGER},
       run_data = #{runData,jdbcType=INTEGER},
       data_num = #{dataNum,jdbcType=INTEGER},
       param = #{param,jdbcType=INTEGER},
@@ -288,7 +310,8 @@
       command = #{command,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       method = #{method,jdbcType=VARCHAR},
-      app_doc = #{appDoc,jdbcType=LONGVARCHAR}
+      app_doc = #{appDoc,jdbcType=LONGVARCHAR},
+      version = #{version,jdbcType=VARCHAR},
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.App" >
@@ -304,6 +327,7 @@
       attribute = #{attribute,jdbcType=INTEGER},
       run_type = #{runType,jdbcType=INTEGER},
       flag = #{flag,jdbcType=INTEGER},
+      classic = #{classic,jdbcType=INTEGER},
       run_data = #{runData,jdbcType=INTEGER},
       data_num = #{dataNum,jdbcType=INTEGER},
       param = #{param,jdbcType=INTEGER},
@@ -311,6 +335,7 @@
       command = #{command,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       method = #{method,jdbcType=VARCHAR}
+      version = #{version,jdbcType=VARCHAR}
     where app_id = #{appId,jdbcType=INTEGER}
   </update>
   <select id="countMyApp" resultType="java.lang.Integer" >
@@ -435,5 +460,17 @@
     SELECT app_id
     FROM tb_app_tag_relat
     WHERE tag_id = #{tagId}
+  </select>
+  <select id="listByClassifyId" resultType="java.util.Map">
+    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.address address,
+    t1.picture_name pictureName, t1.create_date createDate, t1.intro intro, t1.description description, t2.is_add isAdd
+    FROM
+    (SELECT a.app_id, a.app_name, a.english_name, a.address, a.picture_name,
+    a.create_date, a.intro, a.description
+    FROM tb_app a
+    LEFT JOIN tb_app_classify_relat acr ON a.app_id = acr.app_id
+    WHERE acr.classify_id = #{classifyId } AND a.off_line = #{offLine }) t1
+    LEFT JOIN (SELECT uar.is_add, uar.app_id FROM tb_user_app_right uar
+    WHERE uar.user_id = #{userId }) t2 ON t1.app_id = t2.app_id
   </select>
 </mapper>

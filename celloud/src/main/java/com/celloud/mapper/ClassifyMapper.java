@@ -2,8 +2,6 @@ package com.celloud.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.celloud.model.mysql.Classify;
 
 public interface ClassifyMapper {
@@ -20,23 +18,12 @@ public interface ClassifyMapper {
     int updateByPrimaryKey(Classify record);
 
     /**
-     * 查询分类列表
      * 
-     * @param pid
-     *            父级分类id,0-查询父分类列表
+     * @description 根据不为空的条件查询分类列表
+     * @author miaoqi
+     * @date 2017年3月23日 下午6:26:31
+     * @param classify
      * @return
-     * @author han
-     * @date 2016年1月6日 上午10:08:29
      */
-    public List<Classify> getClassify(@Param("pid") Integer pid);
-
-    /**
-     * 获取分类信息
-     *
-     * @param id
-     * @return
-     * @author han
-     * @date 2016年1月6日 上午10:26:23
-     */
-    public Classify getClassifyById(@Param("classifyId") Integer id);
+    List<Classify> selectBySelective(Classify classify);
 }

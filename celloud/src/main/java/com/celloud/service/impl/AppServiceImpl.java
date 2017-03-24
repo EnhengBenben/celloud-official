@@ -174,4 +174,13 @@ public class AppServiceImpl implements AppService {
         return appMapper.getAppIdByTagId(tagId);
     }
 
+    @Override
+    public PageList<Map<String, Object>> listByClassifyId(Page page, Integer classifyId, Integer userId) {
+        List<Map<String, Object>> datas = appMapper.listByClassifyId(page, classifyId, userId, AppConstants.ON);
+        if (datas.size() < 1) {
+            return null;
+        }
+        return new PageList<Map<String, Object>>(page, datas);
+    }
+
 }

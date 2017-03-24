@@ -42,7 +42,7 @@ public class AppCommentAction {
      * @param appId
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     public ResponseEntity<PageList<Map<String, Object>>> listByAppId(Page page, Integer appId) {
         Integer userId = ConstantsData.getLoginUserId();
         LOGGER.info("用户 {} 获取app评论列表, appId = {}", userId, appId);
@@ -52,7 +52,11 @@ public class AppCommentAction {
         }
         PageList<Map<String, Object>> pageList = appCommentService.listAppCommentByAppId(page, appId);
         LOGGER.info("用户 {} 获取app评论列表成功, appId = {}", userId, appId);
-        return ResponseEntity.ok(pageList);
+        if (pageList.getDatas().size() > 0) {
+            return ResponseEntity.ok(null);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pageList);
+        }
     }
 
     /**
@@ -79,6 +83,16 @@ public class AppCommentAction {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
+    /**
+     * 
+     * @description 根据评论的主键修改评论信息
+     * @author miaoqi
+     * @date 2017年3月24日 上午9:58:46
+     * @param id
+     * @param score
+     * @param comment
+     * @return
+     */
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> updateAppComment(@PathVariable("id") Integer id, Integer score, String comment) {
         Integer userId = ConstantsData.getLoginUserId();
@@ -93,6 +107,29 @@ public class AppCommentAction {
         }
         LOGGER.error("用户 {} 对app评论修改失败, id = {}, score = {}, comment = {}", userId, id, score, comment);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    /**
+     * 
+     * @description 根据userId和appId获取评论信息
+     * @author miaoqi
+     * @date 2017年3月23日 下午8:55:34
+     * @param appId
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getAppComment(Integer appId) {
+        Integer userId = ConstantsData.getLoginUserId();
+        if (appId == null) {
+            LOGGER.error("用户 {} 获取对app的评论, 参数错误, appId = {}", userId, appId);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        LOGGER.info("用户 {} 获取对app的评论 appId = {}", userId, appId);
+        Map<String, Object> map = appCommentService.getAppComment(userId, appId);
+        if (map == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(map);
     }
 
     /**

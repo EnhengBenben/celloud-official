@@ -15,6 +15,17 @@ public interface AppCommentService {
 
     /**
      * 
+     * @description 根据userId和appId查询一条评论
+     * @author miaoqi
+     * @date 2017年3月24日 上午9:51:35
+     * @param userId
+     * @param appId
+     * @return
+     */
+    Map<String, Object> getAppComment(Integer userId, Integer appId);
+
+    /**
+     * 
      * @description 根据appId分页查询评论列表
      * @author miaoqi
      * @date 2017年3月23日 下午1:58:45

@@ -12,23 +12,13 @@ import com.celloud.model.mysql.Classify;
  */
 public interface ClassifyService {
     /**
-     * 查询分类列表
      * 
+     * @description 根据pid查询分类列表
+     * @author miaoqi
+     * @date 2017年3月23日 下午6:31:09
      * @param pid
-     *            父级分类id,0-查询父分类列表
      * @return
-     * @author han
-     * @date 2016年1月6日 上午10:08:29
      */
-    public List<Classify> getClassify(Integer pid);
+    public List<Classify> listClassifyByPid(Integer pid);
 
-    /**
-     * 获取分类信息
-     *
-     * @param id
-     * @return
-     * @author han
-     * @date 2016年1月6日 上午10:25:40
-     */
-    public Classify getClassifyById(Integer id);
 }

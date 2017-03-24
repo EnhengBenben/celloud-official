@@ -206,4 +206,15 @@ public interface AppService {
 	public int addUserAppRight(Integer userId, Integer[] appIds, Integer authFrom);
 
 	public boolean appDeleteByAuthFrom(Integer userId, Integer[] appIds);
+
+    /**
+     * 
+     * @description 根据classifyId查看app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:34:19
+     * @param classifyId
+     * @param userId
+     * @return
+     */
+    public PageList<Map<String, Object>> listByClassifyId(Page page, Integer classifyId, Integer userId);
 }

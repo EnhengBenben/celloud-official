@@ -214,4 +214,15 @@ public interface AppMapper {
      * @return
      */
     Integer getAppIdByTagId(@Param("tagId") Integer tagId);
+
+    /**
+     * 
+     * @description 根据classifyId获取app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:17:23
+     * @param classifyId
+     * @return
+     */
+    List<Map<String, Object>> listByClassifyId(Page page, @Param("classifyId") Integer classifyId,
+            @Param("userId") Integer userId, @Param("offLine") Integer offLine);
 }

@@ -81,4 +81,16 @@ public class AppCommentServiceImpl implements AppCommentService {
         return appCommentMapper.countScore(appId);
     }
 
+    @Override
+    public Map<String, Object> getAppComment(Integer userId, Integer appId) {
+        AppComment queryAppComment = new AppComment();
+        queryAppComment.setAppId(appId);
+        queryAppComment.setUserId(userId);
+        List<Map<String, Object>> datas = appCommentMapper.selectBySelectiveNoPage(queryAppComment);
+        if (datas.size() == 1) {
+            return datas.get(0);
+        }
+        return null;
+    }
+
 }
