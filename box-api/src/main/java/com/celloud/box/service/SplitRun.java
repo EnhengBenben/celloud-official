@@ -17,8 +17,6 @@ import com.celloud.box.config.BoxConfig;
 import com.celloud.box.model.DataFile;
 import com.celloud.box.model.SplitFile;
 import com.celloud.box.utils.UploadPath;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class SplitRun {
@@ -29,13 +27,13 @@ public class SplitRun {
     private BoxConfig config;
     @Resource
     private ApplicationContext context;
-    @Resource
-    private BoxService boxService;
     @Autowired
     private ApiService apiService;
+    @Autowired
+    private FileUpload queue;
 
 
-    public void split(SplitFile splitFile) {
+    public void split(BoxService boxService, SplitFile splitFile) {
         logger.info("splitFile校验通过, 开始运行split");
         splitFile.setRunning(Boolean.TRUE);
         splitFile.toFile();
@@ -51,18 +49,9 @@ public class SplitRun {
             DataFile r2 = setSplited(splitFile.getR2Path());
             boxService.finish(r2);
             // 读取r1, r2, 通知celloud修改r1, r2的运行状态
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode r1Tree = objectMapper.readTree(splitFile.getR1Path());
-                JsonNode r2Tree = objectMapper.readTree(splitFile.getR2Path());
-                Integer r1Id = Integer.parseInt(String.valueOf(r1Tree.get("fileId")));
-                Integer r2Id = Integer.parseInt(String.valueOf(r2Tree.get("fileId")));
-                Boolean flag = apiService.fileRunOver(r1Id, r2Id);
-                if (flag) {
-                    logger.info("修改数据运行状态成功");
-                }
-            } catch (IOException e1) {
-                e1.printStackTrace();
+            Boolean flag = apiService.fileRunOver(r1.getFileId(), r2.getFileId());
+            if (flag) {
+                logger.info("修改数据运行状态成功");
             }
 
             DataFile txt = setSplited(splitFile.getTxtPath());
@@ -95,7 +84,8 @@ public class SplitRun {
                     logger.error("移动文件失败：{}", r.getAbsolutePath(), e);
                     continue;
                 }
-                boxService.splitRunOver(splitFile.getUserId(), filename, splitFile.getName(), splitFile.getTagId(),
+                this.splitRunOver(boxService, splitFile.getUserId(), filename, splitFile.getName(),
+                        splitFile.getTagId(),
                         splitFile.getBatch(), null, newPath);
             }
             // clean...
@@ -144,5 +134,16 @@ public class SplitRun {
         temp.setSplited(Boolean.TRUE);
         temp.serialize();
         return temp;
+    }
+
+    public void splitRunOver(BoxService boxService, Integer userId, String name, String anotherName, Integer tagId,
+            String batch,
+            Integer needSplit, File f) {
+        DataFile file = boxService.save(userId, name, anotherName, tagId, batch, needSplit, f);
+        logger.info("anotherName={}", anotherName);
+        file = boxService.newfile(file);
+        if (file != null) {
+            queue.upload(boxService, file.getPath());
+        }
     }
 }

@@ -300,7 +300,7 @@ if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SA
         </div>
         <jsp:useBean id="_now" class="java.util.Date" />
         <div class="footer">
-        	© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="javascript:;">生物信息云平台</a> · <a  href="http://www.miitbeian.gov.cn/" target="_blank">沪ICP备14035977号</a> · <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010502001231"><img src="http://www.beian.gov.cn/file/ghs.png" style="margin-bottom: -5px;" border=0/>沪公网安备 31010502001231号</a> · <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/feedback.html" target="_blank">意见反馈</a> · <a href='http://net.china.com.cn/' target="_blank"><img src='images/home/jbzx.png' style="width: 20px; margin-bottom: -5px;" border=0></a>
+        	© <fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" /> CelLoud，Inc. All Rights reserved. <a  href="javascript:;">生物信息云平台</a> · <a  href="http://www.miitbeian.gov.cn/" target="_blank">沪ICP备14035977号</a> · <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010502001231"><img src="<%=request.getContextPath() %>/images/icon/ghs.png" style="margin-bottom: -5px;" border=0/>沪公网安备 31010502001231号</a> · <a href="<%=request.getContextPath() %>/service.html" target="_blank">服务与支持</a> · <a href="<%=request.getContextPath() %>/feedback.html" target="_blank">意见反馈</a> · <a href='http://net.china.com.cn/' target="_blank"><img src='images/home/jbzx.png' style="width: 20px; margin-bottom: -5px;" border=0></a>
         </div>
     </div>
 </div>

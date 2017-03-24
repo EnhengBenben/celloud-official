@@ -387,7 +387,7 @@ public class TaskAction {
 			}
 		}
 		DataFile dataFile = dataService.getDataByKey(dataKey);
-		dataFile.setIsRun(1);
+        dataFile.setIsRun(0);
 		dataService.updateByPrimaryKeySelective(dataFile);
 		// 构造桌面消息
 		MessageUtils mu = MessageUtils.get().on(Constants.MESSAGE_USER_CHANNEL).send(NoticeConstants

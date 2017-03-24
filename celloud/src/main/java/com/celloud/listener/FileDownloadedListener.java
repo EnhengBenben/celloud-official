@@ -43,6 +43,7 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
                     logger.info("文件已经运行完split，不需要再运行：{}", boxFile.getFileName());
                     return;
                 }
+                logger.info("盒子上传, oss下载成功, tagId = 1, 检查是否可以运行百菌探");
                 // TODO 保险起见，这里还应该校验用户是否已经添加app
                 String checkRunresult = runService.bsiCheckRun(boxFile.getBatch(), boxFile.getFileId(),
                         boxFile.getDataKey(), boxFile.getFileName(), boxFile.getUserId(), fileFormat);
@@ -60,6 +61,7 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
                 runService.rockyCheckRun(123, data);
             }
 		}
+        logger.info("盒子上传, oss下载成功, 没有匹配的tag");
 	}
 
 }

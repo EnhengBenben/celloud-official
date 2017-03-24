@@ -328,6 +328,7 @@
 			    	$scope.bsiBatch = "";
 			    	$rootScope.bsiUploader.destroy();
 			    	$rootScope.bsiUploader = undefined;
+			    	$("#upload-filelist").html("");
 			    	$("#uploading-filelist .plupload_done").remove();
 			    	$("#bsi-upload-modal").modal("hide");
 			    });

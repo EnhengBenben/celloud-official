@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
 
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.celloud.box.config.BoxConfig;
 import com.celloud.box.constants.Response;
 import com.celloud.box.model.DataFile;
 import com.celloud.box.service.ApiService;
@@ -40,13 +37,9 @@ public class BoxController {
 	@Resource
 	private BoxService boxService;
 	@Resource
-	private FileUpload queue;
-	@Resource
-	private ApiService apiService;
+    private FileUpload queue;
     @Resource
-    private BoxConfig boxConfig;
-    // 固定线程池
-    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(boxConfig.getMaxUploading());
+	private ApiService apiService;
 
 	@RequestMapping(value = "alive", method = RequestMethod.GET)
 	public Response alive() {
@@ -86,9 +79,7 @@ public class BoxController {
 			dataFile = boxService.newfile(dataFile);
 			if (dataFile != null) {
 				// 排队上传到oss
-                fixedThreadPool.execute(() -> {
-                    queue.upload(fixedThreadPool, f.getAbsolutePath());
-                });
+                queue.upload(boxService, f.getAbsolutePath());
 				// 检查是否可运行split
                 if (tagId == 1 || tagId == 40 || tagId == 41 || tagId == 42 || tagId == 43 || tagId == 44) {
                     boxService.checkRunSplit(dataFile);
