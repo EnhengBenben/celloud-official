@@ -461,7 +461,7 @@
     FROM tb_app_tag_relat
     WHERE tag_id = #{tagId}
   </select>
-  <select id="listByClassifyId" resultType="java.util.Map">
+  <select id="selectByClassifyId" resultType="java.util.Map">
     SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.address address,
     t1.picture_name pictureName, t1.create_date createDate, t1.intro intro, t1.description description, t2.is_add isAdd
     FROM
@@ -473,4 +473,57 @@
     LEFT JOIN (SELECT uar.is_add, uar.app_id FROM tb_user_app_right uar
     WHERE uar.user_id = #{userId }) t2 ON t1.app_id = t2.app_id
   </select>
+  <update id="updateUserAppRight">
+    UPDATE tb_user_app_right
+    <set>
+        is_add = #{isAdd}
+    </set>
+    <where>
+        user_id = #{userId}
+        AND app_id = #{appId}
+    </where>
+  </update>
+  <select id="selectUserAppRight" resultType="java.util.Map">
+    SELECT is_add isAdd
+	FROM tb_user_app_right
+	WHERE user_id = #{userId }
+	AND app_id = #{appId }
+  </select>
+  <select id="selectBySelective" resultType="java.util.Map">
+    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.address address,
+    t1.picture_name pictureName, t1.create_date createDate, t1.intro intro, t1.description description, t2.is_add isAdd
+    FROM
+    (SELECT a.app_id, a.app_name, a.english_name, a.address, a.picture_name,
+    a.create_date, a.intro, a.description
+    FROM tb_app a
+    <where>
+        a.off_line = #{offLine }
+        <if test="flag != null">
+            AND a.flag = #{flag }
+        </if>
+        <if test="classic != null">
+            AND a.classic = #{classic }
+        </if>
+    </where>
+    ) t1
+    LEFT JOIN (SELECT uar.is_add, uar.app_id FROM tb_user_app_right uar
+    WHERE uar.user_id = #{userId }) t2 ON t1.app_id = t2.app_id;
+  </select>
+  <!-- <select id="selectOne" resultType="java.util.Map">
+    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.picture_name pictureName,
+    t1.version version, t1.update_date updateDate, t1.classify classify, t1.screens, t1.intro intro,
+    t1.description description, t1.company_name companyName, t1.price price, t2.is_add isAdd
+    FROM (SELECT a.app_id, a.app_name, a.english_name, a.picture_name, a.version, a.update_date,
+	GROUP_CONCAT(distinct c1.classify_name) classify, GROUP_CONCAT(DISTINCT s.screen_name) screens,
+	a.intro, a.description, c2.company_name, p.price FROM tb_app a
+	LEFT JOIN tb_app_classify_relat acr ON a.app_id = acr.app_id
+	LEFT JOIN tb_classify c1 ON acr.classify_id = c1.classify_id
+	LEFT JOIN tb_company c2 ON a.company_id = c2.company_id
+	LEFT JOIN tb_price p ON a.app_id = p.item_id
+	LEFT JOIN tb_screen s ON a.app_id = s.app_id
+	WHERE a.app_id = #{appId }
+	AND p.expire_date IS NULL
+	GROUP BY a.app_id) t1
+	LEFT JOIN (SELECT * FROM tb_user_app_right uar WHERE user_id = #{userId }) t2 ON t1.app_id = t2.app_id
+  </select> -->
 </mapper>

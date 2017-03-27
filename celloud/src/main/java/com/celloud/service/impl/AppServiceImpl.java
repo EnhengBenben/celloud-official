@@ -176,8 +176,33 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public PageList<Map<String, Object>> listByClassifyId(Page page, Integer classifyId, Integer userId) {
-        List<Map<String, Object>> datas = appMapper.listByClassifyId(page, classifyId, userId, AppConstants.ON);
-        if (datas.size() < 1) {
+        List<Map<String, Object>> datas = appMapper.selectByClassifyId(page, classifyId, userId, AppConstants.ON);
+        if (datas == null || datas.isEmpty()) {
+            return null;
+        }
+        return new PageList<Map<String, Object>>(page, datas);
+    }
+
+    @Override
+    public Boolean updateUserAppRight(Integer userId, Integer appId, Integer isAdd) {
+        Integer num = appMapper.updateUserAppRight(userId, appId, isAdd);
+        return num.intValue() == 1;
+    }
+
+    @Override
+    public App get(Integer id) {
+        return appMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Map<String, Object> getUserAppRight(Integer userId, Integer appId) {
+        return appMapper.selectUserAppRight(userId, appId);
+    }
+
+    @Override
+    public PageList<Map<String, Object>> selectBySelective(Page page, App app, Integer userId) {
+        List<Map<String, Object>> datas = appMapper.selectBySelective(page, userId, AppConstants.ON);
+        if (datas == null || datas.isEmpty()) {
             return null;
         }
         return new PageList<Map<String, Object>>(page, datas);

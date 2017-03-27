@@ -21,4 +21,14 @@ public interface ClassifyService {
      */
     public List<Classify> listClassifyByPid(Integer pid);
 
+    /**
+     * 
+     * @description 根据appId查询app所属分类
+     * @author miaoqi
+     * @date 2017年3月24日 下午3:57:37
+     * @param appId
+     * @return
+     */
+    public List<Classify> listClassifyByAppId(Integer appId);
+
 }

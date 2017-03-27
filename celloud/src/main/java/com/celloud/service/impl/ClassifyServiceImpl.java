@@ -21,4 +21,9 @@ public class ClassifyServiceImpl implements ClassifyService {
         return classifyMapper.selectBySelective(queryClassify);
     }
 
+    @Override
+    public List<Classify> listClassifyByAppId(Integer appId) {
+        return classifyMapper.selectClassifyByAppId(appId);
+    }
+
 }

@@ -17,6 +17,16 @@ public interface AppService {
 
     /**
      * 
+     * @description 根据主键查询app
+     * @author miaoqi
+     * @date 2017年3月24日 下午3:54:53
+     * @param id
+     * @return
+     */
+    public App get(Integer id);
+
+    /**
+     * 
      * @description 根据tagId获取appId
      * @author miaoqi
      * @date 2017年2月13日 下午4:02:04
@@ -217,4 +227,37 @@ public interface AppService {
      * @return
      */
     public PageList<Map<String, Object>> listByClassifyId(Page page, Integer classifyId, Integer userId);
+
+    /**
+     * 
+     * @description
+     * @author miaoqi
+     * @date 2017年3月24日 下午1:48:25
+     * @param userId
+     * @param appId
+     * @return
+     */
+    public Boolean updateUserAppRight(Integer userId, Integer appId, Integer isAdd);
+
+    /**
+     * 
+     * @description 根据userId, appId获取用户app授权信息
+     * @author miaoqi
+     * @date 2017年3月25日 下午11:11:20
+     * @param userId
+     * @param appId
+     * @return
+     */
+    public Map<String, Object> getUserAppRight(Integer userId, Integer appId);
+
+    /**
+     * 
+     * @description 根据classifyId查看app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:34:19
+     * @param classifyId
+     * @param userId
+     * @return
+     */
+    public PageList<Map<String, Object>> selectBySelective(Page page, App app, Integer userId);
 }

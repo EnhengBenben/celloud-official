@@ -13,9 +13,11 @@ import org.apache.commons.io.FileUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,10 +28,15 @@ import com.celloud.constants.IconConstants;
 import com.celloud.constants.UserResource;
 import com.celloud.model.mysql.App;
 import com.celloud.model.mysql.Classify;
+import com.celloud.model.mysql.Company;
+import com.celloud.model.mysql.Price;
+import com.celloud.model.mysql.Screen;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 import com.celloud.service.AppService;
 import com.celloud.service.ClassifyService;
+import com.celloud.service.CompanyService;
+import com.celloud.service.PriceService;
 import com.celloud.service.ScreenService;
 import com.celloud.utils.ActionLog;
 import com.celloud.utils.Response;
@@ -50,7 +57,10 @@ public class AppAction {
     private ClassifyService classifyService;
     @Resource
     private ScreenService screenService;
-    private List<Classify> listClassifyByPid;
+    @Resource
+    private CompanyService companyService;
+    @Autowired
+    private PriceService priceService;
 
 	@ResponseBody
 	@RequestMapping("toAddApp")
@@ -108,9 +118,13 @@ public class AppAction {
     @RequestMapping(value = "listByClassifyId", method = RequestMethod.GET)
     public ResponseEntity<PageList<Map<String,Object>>> listByClassifyId(Page page, Integer classifyId){
         Integer userId = ConstantsData.getLoginUserId();
+        if (classifyId == null) {
+            log.error("用户 {} 根据classifyId获取app列表 classifyId = {}", userId, classifyId);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
         log.info("用户 {} 根据classifyId获取app列表 classifyId = {}", userId, classifyId);
         PageList<Map<String, Object>> list = appService.listByClassifyId(page, classifyId, userId);
-        if(list == null){
+        if (list == null) {
             log.error("用户 {} 根据classifyId没有获取到app列表 classifyId = {}", userId, classifyId);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -118,157 +132,89 @@ public class AppAction {
         return ResponseEntity.ok(list);
     }
 
-    // @ActionLog(value = "打开应用市场首页", button = "应用市场")
-    // @RequestMapping("toAppStore")
-    // @ResponseBody
-    // public List<Classify> toAppStore() {
-    // log.info("用户{}查看应用市场", ConstantsData.getLoginUserName());
-    // /** 一级分类列表 */
-    // return classifyService.getClassify(ClassifyFloor.root);
-    // }
+    /**
+     * 
+     * @description 更新app的是否添加状态
+     * @author miaoqi
+     * @date 2017年3月24日 下午2:07:18
+     * @param appId
+     * @param isAdd
+     * @return
+     */
+    @RequestMapping(value = "addOrRemoveApp", method = RequestMethod.PUT)
+    public ResponseEntity<Void> addOrRemoveApp(Integer appId, Integer isAdd) {
+        Integer role = ConstantsData.getLoginUser().getRole();
+        if (role.intValue() == 5) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        Integer userId = ConstantsData.getLoginUserId();
+        if (appId == null || isAdd == null) {
+            log.error("用户 {} 更新app的添加状态, 参数错误, appId = {}, isAdd = {}", userId, appId, isAdd);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        log.info("用户 {} 更新app的添加状态 appId = {}, isAdd = {}", userId, appId, isAdd);
+        Boolean flag = appService.updateUserAppRight(userId, appId, isAdd);
+        if (!flag) {
+            log.error("用户 {} 更新app的添加状态失败 appId = {}, isAdd = {}", userId, appId, isAdd);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        log.info("用户 {} 更新app的添加状态成功 appId = {}, isAdd = {}", userId, appId, isAdd);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
-    // @ActionLog(value = "APP首页查看指定一级分类的子分类", button = "APP一级分类按钮")
-    // @RequestMapping("toSclassifyApp_bak")
-    // public ModelAndView toSclassifyApp_bak(Integer paramId) {
-    // log.info("{}在APP首页查看{}的子分类", ConstantsData.getLoginUserName(), paramId);
-    // ModelAndView mv = new ModelAndView("app/app_classify");
-    // Integer userId = ConstantsData.getLoginUserId();
-    // List<Classify> sclassifys = null;
-    // if (paramId == ClassifyFloor.js) {
-    // /** 小软件 */
-    // Classify clas = classifyService.getClassifyById(paramId);
-    // sclassifys = new ArrayList<>();
-    // sclassifys.add(clas);
-    // } else {
-    // /** 第一个一级分类的子分类 */
-    // sclassifys = classifyService.getClassify(paramId);
-    // }
-    // /** 二级分类下的app */
-    // Map<Integer, List<App>> classifyAppMap = new HashMap<>();
-    // for (Classify c : sclassifys) {
-    // Integer cid = c.getClassifyId();
-    // List<App> appList = appService.getAppByClassify(cid, userId);
-    // classifyAppMap.put(cid, appList);
-    // }
-    // mv.addObject("sclassifys", sclassifys);
-    // mv.addObject("classifyAppMap", classifyAppMap);
-    // return mv;
-    // }
+    @RequestMapping(value = "{appId}", method = RequestMethod.GET)
+    public ResponseEntity<App> get(@PathVariable("appId") Integer appId) {
+        Integer userId = ConstantsData.getLoginUserId();
+        Map<String, Object> result = new HashMap<String, Object>();
+        log.info("用户 {} 获取app详情, appId = {}", userId, appId);
+        // 1. 根据id查询App信息
+        App app = appService.get(appId);
+        if (app == null) {
+            log.error("用户 {} 获取app详情失败 appId = {}", appId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        // 2. 根据appId查询分类
+        List<Classify> classifys = classifyService.listClassifyByAppId(app.getAppId());
+        // 3. 根据companyId查询app的所有者
+        Company company = companyService.selectByPrimaryKey(app.getCompanyId());
+        // 4. 根据appId获取价格
+        Price price = priceService.getPriceByApp(app.getAppId());
+        // 5. 根据appId获取轮播图
+        List<Screen> screens = screenService.getScreenByAppId(app.getAppId());
+        // 6. 查询用户是否拥有该app权限
+        Map<String, Object> map = appService.getUserAppRight(userId, appId);
+        if (map == null || map.keySet().size() == 0) {
+            result.put("isAdd", 2);
+        } else {
+            result.put("isAdd", map.get("isAdd"));
+        }
+        result.put("app", app);
+        result.put("classifys", classifys);
+        result.put("screens", screens);
+        result.put("company", company);
+        result.put("price", price);
+        log.info("用户 {} 获取app详情成功, appId = {}", userId, appId);
+        return ResponseEntity.ok(app);
+    }
 
-    // @ActionLog(value = "APP首页查看指定一级分类的子分类", button = "APP一级分类按钮")
-    // @RequestMapping("toSclassifyApp")
-    // @ResponseBody
-    // public Map<String, Object> toSclassifyApp(Integer paramId) throws
-    // Exception {
-    // log.info("{}在APP首页查看{}的子分类", ConstantsData.getLoginUserName(), paramId);
-    // Map<String, Object> map = new HashMap<String, Object>();
-    // Integer userId = ConstantsData.getLoginUserId();
-    // List<Classify> sclassifys = null;
-    // if (paramId == ClassifyFloor.js) {
-    // /** 小软件 */
-    // Classify clas = classifyService.getClassifyById(paramId);
-    // sclassifys = new ArrayList<>();
-    // sclassifys.add(clas);
-    // } else {
-    // /** 第一个一级分类的子分类 */
-    // sclassifys = classifyService.getClassify(paramId);
-    // }
-    // /** 二级分类下的app */
-    // Map<Integer, List<App>> classifyAppMap = new HashMap<>();
-    // for (Classify c : sclassifys) {
-    // Integer cid = c.getClassifyId();
-    // List<App> appList = appService.getAppByClassify(cid, userId);
-    // classifyAppMap.put(cid, appList);
-    // }
-    // map.put("sclassifys", sclassifys);
-    // map.put("classifyAppMap", classifyAppMap);
-    // return map;
-    // }
-
-    // @ActionLog(value = "查看分类指定分类下的所有APP列表页面", button = "APP获取更多")
-    // @RequestMapping("toMoreAppList")
-    // public ModelAndView toMoreAppList(Integer classifyId, Integer
-    // classifyPid, String condition, String type,
-    // Integer classifyFloor, @RequestParam(defaultValue = "1") int page,
-    // @RequestParam(defaultValue = "10") int size) {
-    // Page pager = new Page(page, size);
-    // log.info("{}查看分类{}-{}下的APP", ConstantsData.getLoginUserName(),
-    // classifyPid, classifyId);
-    // ModelAndView mv = new ModelAndView("app/app_list");
-    // Integer userId = ConstantsData.getLoginUserId();
-    // List<Classify> pclassifys =
-    // classifyService.getClassify(ClassifyFloor.root);
-    // Integer cid = classifyId;
-    // Integer floor = classifyFloor;
-    // if (classifyId == 0) {
-    // cid = classifyPid;
-    // }
-    // if (classifyPid != ClassifyFloor.js && classifyId != ClassifyFloor.js) {
-    // List<Classify> sclassifys = classifyService.getClassify(classifyPid);
-    // mv.addObject("sclassifys", sclassifys);
-    // } else {
-    // floor = 1;
-    // classifyPid = ClassifyFloor.js;
-    // }
-    // PageList<App> appPageList = appService.getAppPageListByClassify(cid,
-    // floor,userId, condition, type, pager);
-    // mv.addObject("pclassifys", pclassifys);
-    // mv.addObject("appPageList", appPageList);
-    // mv.addObject("classifyId", classifyId);
-    // mv.addObject("classifyPid", classifyPid);
-    // mv.addObject("classifyFloor", classifyFloor);
-    // mv.addObject("condition",condition);
-    // mv.addObject("type",type);
-    // return mv;
-    // }
-
-    // @ActionLog(value = "查看指定APP详细信息", button = "APP详细")
-    // @RequestMapping("appDetail_bak")
-    // public ModelAndView getAppById_bak(Integer paramId) {
-    // log.info("用户{}查看APP{}详细信息", ConstantsData.getLoginUserName(), paramId);
-    // ModelAndView mv = new ModelAndView("app/app_detail");
-    // Integer userId = ConstantsData.getLoginUserId();
-    // App app = appService.getAppById(paramId, userId);
-    // List<Screen> screenList = screenService.getScreenByAppId(paramId);
-    // mv.addObject("app", app);
-    // mv.addObject("screenList", screenList);
-    // return mv;
-    // }
-    //
-    // @ActionLog(value = "查看指定APP详细信息", button = "APP详细")
-    // @RequestMapping("appDetail")
-    // @ResponseBody
-    // public Map<String, Object> getAppById(Integer paramId) {
-    // log.info("用户{}查看APP{}详细信息", ConstantsData.getLoginUserName(), paramId);
-    // Map<String, Object> map = new HashMap<String, Object>();
-    // Integer userId = ConstantsData.getLoginUserId();
-    // App app = appService.getAppById(paramId, userId);
-    // List<Screen> screenList = screenService.getScreenByAppId(paramId);
-    // map.put("app", app);
-    // map.put("screenList", screenList);
-    // return map;
-    // }
-
-    // @ActionLog(value = "查看用户已添加的APP", button = "应用市场")
-    // @RequestMapping("getMyApp_bak")
-    // public ModelAndView getMyApp_bak() {
-    // log.info("用户{}查看已添加的APP", ConstantsData.getLoginUserName());
-    // ModelAndView mv = new ModelAndView("app/app_added");
-    // Integer userId = ConstantsData.getLoginUserId();
-    // List<App> appList = appService.getMyAppList(userId);
-    // mv.addObject("appList", appList);
-    // return mv;
-    // }
-    //
-    // @ActionLog(value = "查看用户已添加的APP", button = "应用市场")
-    // @RequestMapping("myApps")
-    // @ResponseBody
-    // public List<App> getMyApp() {
-    // log.info("用户{}查看已添加的APP", ConstantsData.getLoginUserName());
-    // Integer userId = ConstantsData.getLoginUserId();
-    // List<App> appList = appService.getMyAppList(userId);
-    // return appList;
-    // }
+    /**
+     * 
+     * @description 根据非空条件分页查询app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:16:14
+     * @param classifyId
+     */
+    @RequestMapping(value = "listByCondition", method = RequestMethod.GET)
+    public ResponseEntity<PageList<Map<String, Object>>> listByClassifyId(Page page, App app) {
+        Integer userId = ConstantsData.getLoginUserId();
+        log.info("用户 {} 根据非空条件获取app列表", userId);
+        PageList<Map<String, Object>> list = appService.selectBySelective(page, app, userId);
+        if (list == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        log.info("用户 {} 根据非空条件成功获取app列表", userId);
+        return ResponseEntity.ok(list);
+    }
 
 	/**
 	 * 获取用户的产品

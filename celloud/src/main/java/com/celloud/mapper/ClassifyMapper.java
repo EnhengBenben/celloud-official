@@ -2,6 +2,8 @@ package com.celloud.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.celloud.model.mysql.Classify;
 
 public interface ClassifyMapper {
@@ -26,4 +28,14 @@ public interface ClassifyMapper {
      * @return
      */
     List<Classify> selectBySelective(Classify classify);
+
+    /**
+     * 
+     * @description 根据appId查询app分类
+     * @author miaoqi
+     * @date 2017年3月24日 下午3:59:11
+     * @param appId
+     * @return
+     */
+    List<Classify> selectClassifyByAppId(@Param("appId") Integer appId);
 }

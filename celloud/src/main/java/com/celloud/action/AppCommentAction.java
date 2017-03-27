@@ -42,21 +42,20 @@ public class AppCommentAction {
      * @param appId
      * @return
      */
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<PageList<Map<String, Object>>> listByAppId(Page page, Integer appId) {
         Integer userId = ConstantsData.getLoginUserId();
-        LOGGER.info("用户 {} 获取app评论列表, appId = {}", userId, appId);
         if (appId == null) {
-            LOGGER.error("参数错误 appId = {}", appId);
+            LOGGER.error("用户 {} 获取app评论列表, 参数错误 appId = {}", userId, appId);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+        LOGGER.info("用户 {} 获取app评论列表, appId = {}", userId, appId);
         PageList<Map<String, Object>> pageList = appCommentService.listAppCommentByAppId(page, appId);
         LOGGER.info("用户 {} 获取app评论列表成功, appId = {}", userId, appId);
-        if (pageList.getDatas().size() > 0) {
-            return ResponseEntity.ok(null);
-        } else {
+        if (pageList.getDatas() == null || pageList.getDatas().isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pageList);
         }
+        return ResponseEntity.ok(pageList);
     }
 
     /**
@@ -75,12 +74,12 @@ public class AppCommentAction {
         }
         LOGGER.info("用户 {} 对app进行评论, appId = {}", userId, appId);
         Boolean flag = appCommentService.saveAppComment(userId, appId, score, comment);
-        if (flag) {
-            LOGGER.info("用户 {} 对app进行评论成功, appId = {}", userId, appId);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+        if (!flag) {
+            LOGGER.error("用户 {} 对app进行评论失败, appId = {}, score = {}, comment = {}", userId, appId, score, comment);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        LOGGER.error("用户 {} 对app进行评论失败, appId = {}, score = {}, comment = {}", userId, appId, score, comment);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        LOGGER.info("用户 {} 对app进行评论成功, appId = {}", userId, appId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
@@ -101,12 +100,12 @@ public class AppCommentAction {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         Boolean flag = appCommentService.updateAppComment(id, userId, score, comment);
-        if (flag) {
-            LOGGER.info("用户 {} 对app评论修改成功, id = {}", userId, id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        if (!flag) {
+            LOGGER.error("用户 {} 对app评论修改失败, id = {}, score = {}, comment = {}", userId, id, score, comment);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        LOGGER.error("用户 {} 对app评论修改失败, id = {}, score = {}, comment = {}", userId, id, score, comment);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        LOGGER.info("用户 {} 对app评论修改成功, id = {}", userId, id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /**
@@ -117,8 +116,8 @@ public class AppCommentAction {
      * @param appId
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> getAppComment(Integer appId) {
+    @RequestMapping(value = "{appId}", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> getAppComment(@PathVariable("appId") Integer appId) {
         Integer userId = ConstantsData.getLoginUserId();
         if (appId == null) {
             LOGGER.error("用户 {} 获取对app的评论, 参数错误, appId = {}", userId, appId);
