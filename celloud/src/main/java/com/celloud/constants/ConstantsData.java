@@ -3,9 +3,6 @@ package com.celloud.constants;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.shiro.session.InvalidSessionException;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -184,81 +181,7 @@ public class ConstantsData {
 	}
 
 	public static Session getShioSession() {
-        // return SecurityUtils.getSubject().getSession();
-        return new Session() {
-
-            @Override
-            public void touch() throws InvalidSessionException {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void stop() throws InvalidSessionException {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void setTimeout(long maxIdleTimeInMillis) throws InvalidSessionException {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void setAttribute(Object key, Object value) throws InvalidSessionException {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public Object removeAttribute(Object key) throws InvalidSessionException {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-            @Override
-            public long getTimeout() throws InvalidSessionException {
-                // TODO Auto-generated method stub
-                return 0;
-            }
-
-            @Override
-            public Date getStartTimestamp() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-            @Override
-            public Date getLastAccessTime() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-            @Override
-            public Serializable getId() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-            @Override
-            public String getHost() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-            @Override
-            public Collection<Object> getAttributeKeys() throws InvalidSessionException {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-            @Override
-            public Object getAttribute(Object key) throws InvalidSessionException {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        };
+        return SecurityUtils.getSubject().getSession();
 	}
 
 	public static Properties loadProperties(String filepath) {
