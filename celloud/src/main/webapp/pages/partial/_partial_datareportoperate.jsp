@@ -11,7 +11,7 @@
           <tbody id="data-list-tbody" ng-if="taskPageList.datas.length > 0">
             <tr id="reportbatch{{task.dataKey}}" ng-class="{active: task.dataKey == obj.dataKey }" ng-repeat="task in taskPageList.datas">
               <td title="{{task.fileName}}" name="data-name-td" style="padding: 0px;text-align: center;" >
-                 <a ng-href="${pageContext.request.contextPath }/index#/reportdata/{{appName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}" ng-if="task.period == 2">
+                 <a ng-href="${pageContext.request.contextPath }/index#/reportdata/{{appName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}" ng-if="task.period == 2" style="display: block;margin: 0px;line-height: 30px;">
                    {{task.fileName.length > 17 ? task.fileName.substring(0, 17) + '...' : task.fileName}}{{task.anotherName == null? '' : task.anotherName}}
                  </a>
                  <a href="javascript:void(0)" ng-if="task.period != 2">
