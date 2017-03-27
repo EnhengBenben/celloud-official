@@ -37,7 +37,7 @@
 					   <form name="batchForm">
 							<div class="form-group">
 								<label for="batch-info">数据标签</label> <input type="text"
-									class="form-control" id="batch-info-input" ng-model="rockyBatch" name="batch" placeholder="标签" required>
+									class="form-control" id="batch-info-input" ng-model="rockyBatch" name="batch" placeholder="标签" required maxlength="30">
 								<input type="hidden" id="tag-info-input">
 							</div>
 							<button id="upload-next" class="btn -confirm" ng-click="stepTwo()" ng-disabled="batchForm.$invalid">下一步</button>

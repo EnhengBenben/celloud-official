@@ -18,7 +18,7 @@
 	          <div class="info-form-group">
 	            <label>数据标签：</label>
 	            <div>
-	              <input type="text" placeholder="请输入数据标签" name="batch" ng-model="batch" required/>
+	              <input type="text" placeholder="请输入数据标签" name="batch" ng-model="batch" required maxlength="30"/>
 	            </div>
 	          </div>
 	          <div class="info-form-group">
@@ -93,7 +93,7 @@
 	                    <div class="step-three">3</div>
 	                </div>
 	                <div class="step-one-content">
-	                    <input id="batch-info" type="text" placeholder="请输入标签" ng-model="bsiBatch" ng-keypress="batchInfo($event)" />
+	                    <input id="batch-info" type="text" placeholder="请输入标签" ng-model="bsiBatch" ng-keypress="batchInfo($event)" maxlength="30" />
 	                    <br>
 	                    <p>
 	                        <span>
