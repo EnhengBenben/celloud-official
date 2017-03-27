@@ -126,7 +126,7 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">数据标签：</div>
 	            <div class="col-xs-9">
-	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="50" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
+	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="30" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
 	            </div>
 	          </div>
             <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
