@@ -69,7 +69,7 @@
 		                </td>
 		                <td>{{data.sampleName}}</td>
 		                <td style="text-align: left;" title="{{data.fileName}}" name="data-name-td">{{data.fileName}}</td>
-		                <td>{{data.batch}}</td>
+		                <td title="{{data.batch}}">{{data.batch}}</td>
 		                <td>{{data.size | fileSizeFormat}}</td>
 		                <td>{{data.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 		            </tr>

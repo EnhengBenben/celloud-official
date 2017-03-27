@@ -81,7 +81,7 @@
             <td title="{{file.fileName}}"><i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1 || file.isRun == 1"></i> {{file.fileName.length > 23 ? file.fileName.substring(0,23) + '...' : file.fileName}}</td>
             <td title="{{file.anotherName}}">{{file.anotherName.length > 23 ? file.anotherName.substring(0,23) + '...' : file.anotherName}}</td>
             <td>{{file.tagName}}</td>
-            <td>{{file.batch}}</td>
+            <td title="{{file.batch}}">{{file.batch}}</td>
             <td>{{file.size | fileSizeFormat}}</td>
             <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td ng-if="file.reportNum < 1" style="font-weight: bold;">未运行</td>
