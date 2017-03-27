@@ -91,13 +91,13 @@
     FROM tb_classify
     <where>
       <if test="classifyName != null" >
-        AND classify_name,
+        AND classify_name = #{classifyName}
       </if>
       <if test="classifyPid != null" >
-        AND classify_pid,
+        AND classify_pid = #{classifyPid}
       </if>
       <if test="notes != null" >
-        AND notes,
+        AND notes = #{notes}
       </if>
     </where>
   </select>
