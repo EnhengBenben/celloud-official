@@ -79,21 +79,24 @@ public class UserAgentUtil {
 			return null;
 		}
 		String userAgent = request.getHeader("user-agent");
-		ActionLog log = new ActionLog();
-		Client c = uaParser.parse(userAgent);
-		log.setBrowser(c.userAgent.family);
-		log.setBrowserVersion(getBrowserVersion(c));
-		log.setOs(c.os.family);
-		log.setOsVersion(getOsVersion(c));
-		if (log.getOsVersion() == null) {
-			logger.debug("no os_version is found in userAgent:{}", userAgent);
+        if (userAgent != null) {
+            ActionLog log = new ActionLog();
+            Client c = uaParser.parse(userAgent);
+            log.setBrowser(c.userAgent.family);
+            log.setBrowserVersion(getBrowserVersion(c));
+            log.setOs(c.os.family);
+            log.setOsVersion(getOsVersion(c));
+            if (log.getOsVersion() == null) {
+                logger.debug("no os_version is found in userAgent:{}", userAgent);
+            }
+            String ip = getIp(request);
+            log.setIp(ip);
+            log.setAddress(getAddreeByIp(ip));
+            log.setUserId(ConstantsData.getLoginUserId());
+            log.setUsername(ConstantsData.getLoginUserName());
+            return log;
 		}
-		String ip = getIp(request);
-		log.setIp(ip);
-		log.setAddress(getAddreeByIp(ip));
-		log.setUserId(ConstantsData.getLoginUserId());
-		log.setUsername(ConstantsData.getLoginUserName());
-		return log;
+        return null;
 	}
 
 	/**
@@ -108,7 +111,9 @@ public class UserAgentUtil {
 		ActionLog al = getActionLog(request);
 		Behavior ub = new Behavior();
 		try {
-			BeanUtils.copyProperties(ub, al);
+            if (al != null) {
+                BeanUtils.copyProperties(ub, al);
+            }
 		} catch (IllegalAccessException e) {
 			logger.error("ActionLog转UserBehavior失败：" + e);
 		} catch (InvocationTargetException e) {
