@@ -121,23 +121,23 @@
     FROM tb_app_comment ac
     LEFT JOIN tb_user u ON ac.user_id = u.user_id
     <where>
-      <if test="appId != null" >
-        AND app_id = #{appId,jdbcType=INTEGER}
+      <if test="appComment.appId != null" >
+        AND app_id = #{appComment.appId}
       </if>
-      <if test="userId != null" >
-        AND user_id = #{userId,jdbcType=INTEGER}
+      <if test="appComment.userId != null" >
+        AND ac.user_id = #{appComment.userId}
       </if>
-      <if test="createDate != null" >
-        AND create_date = #{createDate,jdbcType=TIMESTAMP}
+      <if test="appComment.createDate != null" >
+        AND create_date = #{appComment.createDate}
       </if>
-      <if test="updateDate != null" >
-        AND update_date = #{updateDate,jdbcType=TIMESTAMP}
+      <if test="appComment.updateDate != null" >
+        AND update_date = #{appComment.updateDate}
       </if>
-      <if test="comment != null" >
-        AND comment = #{comment,jdbcType=VARCHAR}
+      <if test="appComment.comment != null" >
+        AND comment = #{appComment.comment}
       </if>
-      <if test="score != null" >
-        AND score = #{score,jdbcType=INTEGER}
+      <if test="appComment.score != null" >
+        AND score = #{appComment.score}
       </if>
     </where>
   </select>
@@ -152,7 +152,7 @@
         AND app_id = #{appId,jdbcType=INTEGER}
       </if>
       <if test="userId != null" >
-        AND user_id = #{userId,jdbcType=INTEGER}
+        AND ac.user_id = #{userId,jdbcType=INTEGER}
       </if>
       <if test="createDate != null" >
         AND create_date = #{createDate,jdbcType=TIMESTAMP}

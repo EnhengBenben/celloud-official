@@ -37,7 +37,7 @@ public interface AppCommentMapper {
      * @param appComment
      * @return
      */
-    List<Map<String, Object>> selectBySelective(Page page, AppComment appComment);
+    List<Map<String, Object>> selectBySelective(Page page, @Param("appComment") AppComment appComment);
 
     /**
      * 
