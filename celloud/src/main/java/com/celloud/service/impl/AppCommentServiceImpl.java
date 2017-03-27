@@ -68,6 +68,7 @@ public class AppCommentServiceImpl implements AppCommentService {
             } else {
                 appComment.setScore(score);
                 appComment.setComment(comment);
+                appComment.setUpdateDate(new Date());
                 Integer num = appCommentMapper.updateByPrimaryKeySelective(appComment);
                 return num.intValue() == 1;
             }
