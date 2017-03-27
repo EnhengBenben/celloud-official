@@ -258,7 +258,7 @@ public interface AppMapper {
      * @param classifyId
      * @return
      */
-    List<Map<String, Object>> selectBySelective(Page page, @Param("userId") Integer userId,
+    List<Map<String, Object>> selectBySelective(Page page, @Param("app") App app, @Param("userId") Integer userId,
             @Param("offLine") Integer offLine);
 
 }

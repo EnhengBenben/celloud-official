@@ -103,7 +103,7 @@
   </select>
   <select id="selectClassifyByAppId" resultMap="BaseResultMap">
     SELECT
-    <include refid="Base_Column_List" />
+    c.classify_id, c.classify_name, c.classify_pid, c.notes
     FROM tb_classify c, tb_app_classify_relat acr
     WHERE c.classify_id = acr.classify_id
     AND acr.app_id = #{appId }

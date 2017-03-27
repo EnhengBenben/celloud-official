@@ -498,16 +498,18 @@
     FROM tb_app a
     <where>
         a.off_line = #{offLine }
-        <if test="flag != null">
-            AND a.flag = #{flag }
+        <if test="app.flag != null">
+            AND a.flag = #{app.flag }
         </if>
-        <if test="classic != null">
-            AND a.classic = #{classic }
+        <if test="app.classic != null">
+            AND a.classic = #{app.classic }
         </if>
     </where>
+    ORDER BY a.app_id DESC
     ) t1
     LEFT JOIN (SELECT uar.is_add, uar.app_id FROM tb_user_app_right uar
-    WHERE uar.user_id = #{userId }) t2 ON t1.app_id = t2.app_id;
+    WHERE uar.user_id = #{userId }) t2 ON t1.app_id = t2.app_id
+    ORDER BY t1.app_id DESC
   </select>
   <!-- <select id="selectOne" resultType="java.util.Map">
     SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.picture_name pictureName,

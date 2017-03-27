@@ -35,13 +35,16 @@ public class AppCommentActionTest extends BaseActionTest {
     }
 
     @Test
-    public void testGetAppComment() {
-        fail("Not yet implemented");
+    public void testGetAppComment() throws Exception {
+        mockMvc.perform(
+                get("/appComments/82").param("userId", "23"))
+                .andDo(MockMvcResultHandlers.print()).andReturn();
     }
 
     @Test
-    public void testCountScore() {
-        fail("Not yet implemented");
+    public void testCountScore() throws Exception {
+        mockMvc.perform(get("/appComments/countScore").param("appId", "118")).andDo(MockMvcResultHandlers.print())
+                .andReturn();
     }
 
 }

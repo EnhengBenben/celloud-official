@@ -201,7 +201,7 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public PageList<Map<String, Object>> selectBySelective(Page page, App app, Integer userId) {
-        List<Map<String, Object>> datas = appMapper.selectBySelective(page, userId, AppConstants.ON);
+        List<Map<String, Object>> datas = appMapper.selectBySelective(page, app, userId, AppConstants.ON);
         if (datas == null || datas.isEmpty()) {
             return null;
         }

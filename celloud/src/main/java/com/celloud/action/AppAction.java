@@ -163,7 +163,7 @@ public class AppAction {
     }
 
     @RequestMapping(value = "{appId}", method = RequestMethod.GET)
-    public ResponseEntity<App> get(@PathVariable("appId") Integer appId) {
+    public ResponseEntity<Map<String, Object>> get(@PathVariable("appId") Integer appId) {
         Integer userId = ConstantsData.getLoginUserId();
         Map<String, Object> result = new HashMap<String, Object>();
         log.info("用户 {} 获取app详情, appId = {}", userId, appId);
@@ -194,7 +194,7 @@ public class AppAction {
         result.put("company", company);
         result.put("price", price);
         log.info("用户 {} 获取app详情成功, appId = {}", userId, appId);
-        return ResponseEntity.ok(app);
+        return ResponseEntity.ok(result);
     }
 
     /**
@@ -205,7 +205,7 @@ public class AppAction {
      * @param classifyId
      */
     @RequestMapping(value = "listByCondition", method = RequestMethod.GET)
-    public ResponseEntity<PageList<Map<String, Object>>> listByClassifyId(Page page, App app) {
+    public ResponseEntity<PageList<Map<String, Object>>> listByCondition(Page page, App app) {
         Integer userId = ConstantsData.getLoginUserId();
         log.info("用户 {} 根据非空条件获取app列表", userId);
         PageList<Map<String, Object>> list = appService.selectBySelective(page, app, userId);
