@@ -1,6 +1,7 @@
 package com.celloud.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.celloud.common.mq.entity.TaskMessage;
+import com.celloud.common.mq.entity.TaskTracingMessage;
+import com.celloud.common.mq.entity.TrackStatus;
 import com.celloud.common.mq.utils.ProducerUtil;
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.Mod;
@@ -85,5 +88,14 @@ public class AppSubmitUtil {
 		message.setUserId(userId);
 		message.setDatas(datas);
 		utils.deliveryTask(topic, message);
+		utils.taskTracing(new TaskTracingMessage(taskId, appCode, userId, "web", "1", TrackStatus.CONT, "任务成功投递到消息队列！",
+				new HashMap<String, Object>() {
+					private static final long serialVersionUID = 1L;
+
+					{
+						put("topic", topic);
+						put("datas", datas);
+					}
+				}));
 	}
 }
