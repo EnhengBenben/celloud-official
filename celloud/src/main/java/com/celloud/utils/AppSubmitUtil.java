@@ -88,8 +88,8 @@ public class AppSubmitUtil {
 		message.setUserId(userId);
 		message.setDatas(datas);
 		utils.deliveryTask(topic, message);
-		utils.taskTracing(new TaskTracingMessage(taskId, appCode, userId, "web", "1", TrackStatus.CONT, "任务成功投递到消息队列！",
-				new HashMap<String, Object>() {
+		utils.taskTracing(new TaskTracingMessage(taskId, appCode, userId, "celloud-web",
+				ConstantsData.getClusterId(null), TrackStatus.CONT, "任务成功投递到消息队列！", new HashMap<String, Object>() {
 					private static final long serialVersionUID = 1L;
 
 					{
