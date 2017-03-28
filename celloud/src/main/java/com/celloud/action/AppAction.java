@@ -33,6 +33,7 @@ import com.celloud.model.mysql.Price;
 import com.celloud.model.mysql.Screen;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
+import com.celloud.service.AppCommentService;
 import com.celloud.service.AppService;
 import com.celloud.service.ClassifyService;
 import com.celloud.service.CompanyService;
@@ -61,6 +62,8 @@ public class AppAction {
     private CompanyService companyService;
     @Autowired
     private PriceService priceService;
+    @Autowired
+    private AppCommentService appCommentService;
 
 	@ResponseBody
 	@RequestMapping("toAddApp")
@@ -173,26 +176,51 @@ public class AppAction {
             log.error("用户 {} 获取app详情失败 appId = {}", appId);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+        result.put("app", app);
         // 2. 根据appId查询分类
         List<Classify> classifys = classifyService.listClassifyByAppId(app.getAppId());
+        if (classifys != null && classifys.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            classifys.forEach(c -> {
+                sb.append(c.getClassifyName() + ",");
+            });
+            result.put("classifys", sb.toString().substring(0, sb.toString().length() - 1));
+        }
         // 3. 根据companyId查询app的所有者
         Company company = companyService.selectByPrimaryKey(app.getCompanyId());
+        if (company != null) {
+            result.put("company", company.getCompanyName());
+        }
         // 4. 根据appId获取价格
         Price price = priceService.getPriceByApp(app.getAppId());
+        if (price != null) {
+            result.put("price", price.getPrice());
+        }
         // 5. 根据appId获取轮播图
         List<Screen> screens = screenService.getScreenByAppId(app.getAppId());
+        if (screens != null && screens.size() > 0) {
+            String[] screenArray = new String[screens.size()];
+            for (int i = 0; i < screens.size(); i++) {
+                screenArray[i] = screens.get(i).getScreenName();
+            }
+            result.put("screens", screenArray);
+        }
         // 6. 查询用户是否拥有该app权限
         Map<String, Object> map = appService.getUserAppRight(userId, appId);
-        if (map == null || map.keySet().size() == 0) {
-            result.put("isAdd", 2);
-        } else {
+        if (map != null && map.keySet().size() > 0) {
             result.put("isAdd", map.get("isAdd"));
         }
-        result.put("app", app);
-        result.put("classifys", classifys);
-        result.put("screens", screens);
-        result.put("company", company);
-        result.put("price", price);
+        // 7. 获取评分
+        Map<String, Map<String, Integer>> countScore = appCommentService.countScore(appId);
+        if (countScore != null && countScore.keySet().size() > 0) {
+            result.put("countScore", countScore);
+        }
+        // 8. 获取评论
+        Map<String, Object> userComment = appCommentService.getAppComment(userId, appId);
+        if (userComment != null && userComment.keySet().size() > 0) {
+            result.put("userComment", userComment);
+        }
+
         log.info("用户 {} 获取app详情成功, appId = {}", userId, appId);
         return ResponseEntity.ok(result);
     }

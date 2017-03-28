@@ -108,47 +108,5 @@ public class AppCommentAction {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    /**
-     * 
-     * @description 根据userId和appId获取评论信息
-     * @author miaoqi
-     * @date 2017年3月23日 下午8:55:34
-     * @param appId
-     * @return
-     */
-    @RequestMapping(value = "{appId}", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> getAppComment(@PathVariable("appId") Integer appId) {
-        Integer userId = ConstantsData.getLoginUserId();
-        if (appId == null) {
-            LOGGER.error("用户 {} 获取对app的评论, 参数错误, appId = {}", userId, appId);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        LOGGER.info("用户 {} 获取对app的评论 appId = {}", userId, appId);
-        Map<String, Object> map = appCommentService.getAppComment(userId, appId);
-        if (map == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        return ResponseEntity.ok(map);
-    }
-
-    /**
-     * 
-     * @description 根据appId统计评分数量
-     * @author miaoqi
-     * @date 2017年3月23日 下午5:27:42
-     * @param appId
-     * @return
-     */
-    @RequestMapping(value = "countScore", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Map<String, Integer>>> countScore(Integer appId) {
-        Integer userId = ConstantsData.getLoginUserId();
-        if (appId == null) {
-            LOGGER.error("用户 {} 获取app的每个评分数量, 参数错误, appId = {}", userId, appId);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        LOGGER.info("用户 {} 获取app的每个评分数量 appId = {}", appId);
-        Map<String, Map<String, Integer>> countScore = appCommentService.countScore(appId);
-        return ResponseEntity.ok(countScore);
-    }
 
 }
