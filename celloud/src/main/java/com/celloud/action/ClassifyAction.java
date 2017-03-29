@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.model.mysql.Classify;
@@ -39,15 +40,11 @@ public class ClassifyAction {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Classify>> listByPid(Integer pid) {
+    public ResponseEntity<List<Classify>> listByPid(@RequestParam(value = "pid", defaultValue = "0") Integer pid) {
         Integer userId = ConstantsData.getLoginUserId();
         LOGGER.info("用户 {} 加载应用市场分类列表 pid = {}", userId, pid);
-        if (pid == null) {
-            LOGGER.info("用户 {} 加载应用市场分类列表失败, 参数错误 pid = {}", userId, pid);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
         List<Classify> list = classifyService.listClassifyByPid(pid);
-        if (list.size() == 0) {
+        if (list == null || list.isEmpty()) {
             LOGGER.error("用户 {} 根据pid没有加载到分类列表 pid = {}", userId, pid);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

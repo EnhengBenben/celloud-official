@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.celloud.constants.AppConstants;
@@ -227,21 +228,46 @@ public class AppAction {
 
     /**
      * 
-     * @description 根据非空条件分页查询app列表
+     * @description 获取精选app
      * @author miaoqi
-     * @date 2017年3月24日 上午11:16:14
-     * @param classifyId
+     * @date 2017年3月28日 下午6:35:11
+     * @return
      */
-    @RequestMapping(value = "listByCondition", method = RequestMethod.GET)
-    public ResponseEntity<PageList<Map<String, Object>>> listByCondition(Page page, App app) {
+    @RequestMapping(value = "classic", method = RequestMethod.GET)
+    public ResponseEntity<List<Map<String, Object>>> classic(
+            @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize) {
         Integer userId = ConstantsData.getLoginUserId();
-        log.info("用户 {} 根据非空条件获取app列表", userId);
-        PageList<Map<String, Object>> list = appService.selectBySelective(page, app, userId);
-        if (list == null) {
+        App app = new App();
+        app.setClassic(0);
+        Page page = new Page(1, pageSize);
+        PageList<Map<String, Object>> pageList = appService.selectBySelective(page, app, userId);
+        if (pageList == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         log.info("用户 {} 根据非空条件成功获取app列表", userId);
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(pageList.getDatas());
+    }
+
+    /**
+     * 
+     * @description 获取推荐app
+     * @author miaoqi
+     * @date 2017年3月28日 下午6:43:18
+     * @return
+     */
+    @RequestMapping(value = "recommend", method = RequestMethod.GET)
+    public ResponseEntity<List<Map<String, Object>>> recommend(
+            @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize) {
+        Integer userId = ConstantsData.getLoginUserId();
+        App app = new App();
+        app.setFlag(0);
+        Page page = new Page(1, pageSize);
+        PageList<Map<String, Object>> pageList = appService.selectBySelective(page, app, userId);
+        if (pageList == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        log.info("用户 {} 根据非空条件成功获取app列表", userId);
+        return ResponseEntity.ok(pageList.getDatas());
     }
 
 	/**

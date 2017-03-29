@@ -252,7 +252,7 @@ public interface AppService {
 
     /**
      * 
-     * @description 根据classifyId查看app列表
+     * @description 根据非空条件查看app列表
      * @author miaoqi
      * @date 2017年3月24日 上午11:34:19
      * @param classifyId
@@ -260,4 +260,5 @@ public interface AppService {
      * @return
      */
     public PageList<Map<String, Object>> selectBySelective(Page page, App app, Integer userId);
+
 }
