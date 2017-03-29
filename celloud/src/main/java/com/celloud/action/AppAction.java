@@ -157,7 +157,7 @@ public class AppAction {
         result.put("app", app);
         // 2. 根据appId查询分类
         List<Classify> classifys = classifyService.listClassifyByAppId(app.getAppId());
-        if (classifys != null && classifys.size() > 0) {
+        if (classifys != null && !classifys.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             classifys.forEach(c -> {
                 sb.append(c.getClassifyName() + ",");
@@ -176,7 +176,7 @@ public class AppAction {
         }
         // 5. 根据appId获取轮播图
         List<Screen> screens = screenService.getScreenByAppId(app.getAppId());
-        if (screens != null && screens.size() > 0) {
+        if (screens != null && !screens.isEmpty()) {
             String[] screenArray = new String[screens.size()];
             for (int i = 0; i < screens.size(); i++) {
                 screenArray[i] = screens.get(i).getScreenName();
@@ -185,17 +185,17 @@ public class AppAction {
         }
         // 6. 查询用户是否拥有该app权限
         Map<String, Object> map = appService.getUserAppRight(userId, appId);
-        if (map != null && map.keySet().size() > 0) {
+        if (map != null && !map.isEmpty()) {
             result.put("isAdd", map.get("isAdd"));
         }
         // 7. 获取评分
         Map<String, Map<String, Integer>> countScore = appCommentService.countScore(appId);
-        if (countScore != null && countScore.keySet().size() > 0) {
+        if (countScore != null && !countScore.isEmpty()) {
             result.put("countScore", countScore);
         }
         // 8. 获取评论
         Map<String, Object> userComment = appCommentService.getAppComment(userId, appId);
-        if (userComment != null && userComment.keySet().size() > 0) {
+        if (userComment != null && !userComment.isEmpty()) {
             result.put("userComment", userComment);
         }
 
@@ -278,6 +278,9 @@ public class AppAction {
         Integer userId = ConstantsData.getLoginUserId();
         Page page = new Page(1, pageSize);
         List<Classify> classifys = classifyService.listClassifyByPid(0);
+        if (classifys == null || classifys.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
         List<List<Map<String, Object>>> result = new ArrayList<List<Map<String, Object>>>();
         classifys.forEach(c -> {
             PageList<Map<String, Object>> classifyPageList = appService.listByClassifyId(page, c.getClassifyId(),

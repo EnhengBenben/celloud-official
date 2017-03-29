@@ -462,14 +462,14 @@
     WHERE tag_id = #{tagId}
   </select>
   <select id="selectByClassifyId" resultType="java.util.Map">
-    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.address address,
-    t1.picture_name pictureName, t1.create_date createDate, t1.intro intro, t1.description description, t2.is_add isAdd
+    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.address address, t1.picture_name pictureName,      t1.create_date createDate, t1.intro intro, t1.description description, t1.avgScore avgScore, t2.is_add isAdd
     FROM
     (SELECT a.app_id, a.app_name, a.english_name, a.address, a.picture_name,
-    a.create_date, a.intro, a.description
+    a.create_date, a.intro, a.description, AVG(ac.score) avgScore
     FROM tb_app a
     LEFT JOIN tb_app_classify_relat acr ON a.app_id = acr.app_id
-    WHERE acr.classify_id = #{classifyId } AND a.off_line = #{offLine }) t1
+    LEFT JOIN tb_app_comment ac ON a.app_id = ac.app_id
+    WHERE acr.classify_id = #{classifyId } AND a.off_line = #{offLine } GROUP BY a.app_id) t1
     LEFT JOIN (SELECT uar.is_add, uar.app_id FROM tb_user_app_right uar
     WHERE uar.user_id = #{userId }) t2 ON t1.app_id = t2.app_id
   </select>
@@ -491,20 +491,22 @@
   </select>
   <select id="selectBySelective" resultType="java.util.Map">
     SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.address address,
-    t1.picture_name pictureName, t1.create_date createDate, t1.intro intro, t1.description description, t2.is_add isAdd
+    t1.picture_name pictureName, t1.create_date createDate, t1.intro intro, t1.description description, t2.is_add isAdd,
+    t1.avgScore
     FROM
     (SELECT a.app_id, a.app_name, a.english_name, a.address, a.picture_name,
-    a.create_date, a.intro, a.description
-    FROM tb_app a
-    <where>
+    a.create_date, a.intro, a.description, AVG(ac.score) avgScore
+    FROM tb_app a LEFT JOIN tb_app_comment ac ON a.app_id = ac.app_id
+    <WHERE>
         a.off_line = #{offLine }
-        <if test="app.flag != null">
+        <IF test="app.flag != null">
             AND a.flag = #{app.flag }
-        </if>
-        <if test="app.classic != null">
+        </IF>
+        <IF test="app.classic != null">
             AND a.classic = #{app.classic }
-        </if>
-    </where>
+        </IF>
+    </WHERE>
+    GROUP BY a.app_id
     ORDER BY a.app_id DESC
     ) t1
     LEFT JOIN (SELECT uar.is_add, uar.app_id FROM tb_user_app_right uar
