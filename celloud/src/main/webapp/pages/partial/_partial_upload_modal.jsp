@@ -127,7 +127,8 @@
 	                </div>
 	                <div class="step-three-content hide">
 	                    <div class="upload-status">
-	                        数据上传中...数据标签 ：
+	                        数据上传中...<br/>
+	                        数据标签 ：
 	                        <span id="tags-review"></span>
 	                    </div>
 	                    <div class="upload-container">
