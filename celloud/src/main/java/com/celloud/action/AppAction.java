@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -193,7 +194,12 @@ public class AppAction {
         if (countScore != null && !countScore.isEmpty()) {
             result.put("countScore", countScore);
         }
-        // 8. 获取评论
+        // 8. 获取平均评分
+        String avgScore = appCommentService.avgScore(appId);
+        if (StringUtils.isNotBlank(avgScore)) {
+            result.put("avgScore", avgScore);
+        }
+        // 9. 获取评论
         Map<String, Object> userComment = appCommentService.getAppComment(userId, appId);
         if (userComment != null && !userComment.isEmpty()) {
             result.put("userComment", userComment);

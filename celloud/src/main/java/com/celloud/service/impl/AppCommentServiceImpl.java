@@ -88,10 +88,15 @@ public class AppCommentServiceImpl implements AppCommentService {
         queryAppComment.setAppId(appId);
         queryAppComment.setUserId(userId);
         List<Map<String, Object>> datas = appCommentMapper.selectBySelectiveNoPage(queryAppComment);
-        if (datas.size() == 1) {
+        if (datas != null && datas.size() == 1) {
             return datas.get(0);
         }
         return null;
+    }
+
+    @Override
+    public String avgScore(Integer appId) {
+        return appCommentMapper.avgScore(appId);
     }
 
 }

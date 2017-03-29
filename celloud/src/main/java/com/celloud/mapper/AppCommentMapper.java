@@ -59,4 +59,14 @@ public interface AppCommentMapper {
      */
     @MapKey("score")
     Map<String, Map<String, Integer>> countScore(@Param("appId") Integer appId);
+
+    /**
+     * 
+     * @description 根据appId获取平均评分
+     * @author miaoqi
+     * @date 2017年3月29日 上午11:26:51
+     * @param appId
+     * @return
+     */
+    String avgScore(@Param("appId") Integer appId);
 }

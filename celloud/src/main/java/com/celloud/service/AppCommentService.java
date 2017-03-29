@@ -67,4 +67,14 @@ public interface AppCommentService {
      */
     Map<String, Map<String, Integer>> countScore(Integer appId);
 
+    /**
+     * 
+     * @description 获取app的平均评分
+     * @author miaoqi
+     * @date 2017年3月29日 上午11:25:39
+     * @param appId
+     * @return
+     */
+    String avgScore(Integer appId);
+
 }

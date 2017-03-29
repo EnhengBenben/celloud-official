@@ -175,4 +175,9 @@
 	GROUP BY score
 	ORDER BY score DESC
   </select>
+  <select id="avgScore" resultType="java.lang.String">
+    SELECT AVG(score) avgScore
+    FROM tb_app_comment
+    WHERE app_id = #{appId}
+  </select>
 </mapper>
