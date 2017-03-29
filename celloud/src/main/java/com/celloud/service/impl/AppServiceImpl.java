@@ -19,6 +19,7 @@ import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.UserMapper;
 import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.AppVO;
 import com.celloud.model.mysql.Price;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
@@ -175,12 +176,12 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public PageList<Map<String, Object>> listByClassifyId(Page page, Integer classifyId, Integer userId) {
-        List<Map<String, Object>> datas = appMapper.selectByClassifyId(page, classifyId, userId, AppConstants.ON);
+    public PageList<AppVO> listByClassifyId(Page page, Integer classifyId, Integer userId) {
+        List<AppVO> datas = appMapper.selectByClassifyId(page, classifyId, userId, AppConstants.ON);
         if (datas == null || datas.isEmpty()) {
             return null;
         }
-        return new PageList<Map<String, Object>>(page, datas);
+        return new PageList<AppVO>(page, datas);
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.AppVO;
 import com.celloud.page.Page;
 
 public interface AppMapper {
@@ -223,7 +224,7 @@ public interface AppMapper {
      * @param classifyId
      * @return
      */
-    List<Map<String, Object>> selectByClassifyId(Page page, @Param("classifyId") Integer classifyId,
+    List<AppVO> selectByClassifyId(Page page, @Param("classifyId") Integer classifyId,
             @Param("userId") Integer userId, @Param("offLine") Integer offLine);
 
     /**

@@ -461,8 +461,9 @@
     FROM tb_app_tag_relat
     WHERE tag_id = #{tagId}
   </select>
-  <select id="selectByClassifyId" resultType="java.util.Map">
-    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.address address, t1.picture_name pictureName,      t1.create_date createDate, t1.intro intro, t1.description description, t1.avgScore avgScore, t2.is_add isAdd
+  <select id="selectByClassifyId" resultType="com.celloud.model.mysql.AppVO">
+    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.picture_name pictureName,
+    t1.create_date createDate, t1.intro intro, t1.description description, t1.avgScore avgScore, t2.is_add isAdd
     FROM
     (SELECT a.app_id, a.app_name, a.english_name, a.address, a.picture_name,
     a.create_date, a.intro, a.description, AVG(ac.score) avgScore

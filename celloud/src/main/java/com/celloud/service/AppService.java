@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.AppVO;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 
@@ -226,7 +227,7 @@ public interface AppService {
      * @param userId
      * @return
      */
-    public PageList<Map<String, Object>> listByClassifyId(Page page, Integer classifyId, Integer userId);
+    public PageList<AppVO> listByClassifyId(Page page, Integer classifyId, Integer userId);
 
     /**
      * 

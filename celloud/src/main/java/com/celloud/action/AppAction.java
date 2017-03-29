@@ -30,6 +30,7 @@ import com.celloud.constants.ConstantsData;
 import com.celloud.constants.IconConstants;
 import com.celloud.constants.UserResource;
 import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.AppVO;
 import com.celloud.model.mysql.Classify;
 import com.celloud.model.mysql.Company;
 import com.celloud.model.mysql.Price;
@@ -261,7 +262,7 @@ public class AppAction {
      * @param classifyId
      */
     @RequestMapping(value = "classifys/{classifyId}", method = RequestMethod.GET)
-    public ResponseEntity<PageList<Map<String, Object>>> listByClassifyId(Page page,
+    public ResponseEntity<PageList<AppVO>> listByClassifyId(Page page,
             @PathVariable("classifyId") Integer classifyId) {
         Integer userId = ConstantsData.getLoginUserId();
         if (classifyId == null) {
@@ -269,7 +270,7 @@ public class AppAction {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         log.info("用户 {} 根据classifyId获取app列表 classifyId = {}", userId, classifyId);
-        PageList<Map<String, Object>> list = appService.listByClassifyId(page, classifyId, userId);
+        PageList<AppVO> list = appService.listByClassifyId(page, classifyId, userId);
         if (list == null) {
             log.error("用户 {} 根据classifyId没有获取到app列表 classifyId = {}", userId, classifyId);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -279,7 +280,7 @@ public class AppAction {
     }
 
     @RequestMapping(value = "classifys", method = RequestMethod.GET)
-    public ResponseEntity<List<List<Map<String, Object>>>> classifys(
+    public ResponseEntity<List<Map<String, Object>>> classifys(
             @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize) {
         Integer userId = ConstantsData.getLoginUserId();
         Page page = new Page(1, pageSize);
@@ -287,12 +288,15 @@ public class AppAction {
         if (classifys == null || classifys.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        List<List<Map<String, Object>>> result = new ArrayList<List<Map<String, Object>>>();
+        List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         classifys.forEach(c -> {
-            PageList<Map<String, Object>> classifyPageList = appService.listByClassifyId(page, c.getClassifyId(),
+            PageList<AppVO> classifyPageList = appService.listByClassifyId(page, c.getClassifyId(),
                     userId);
             if (classifyPageList != null) {
-                result.add(classifyPageList.getDatas());
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("appList", classifyPageList.getDatas());
+                map.put("classifyName", c.getClassifyName());
+                result.add(map);
             }
         });
         return ResponseEntity.ok(result);
