@@ -490,14 +490,16 @@
 	WHERE user_id = #{userId }
 	AND app_id = #{appId }
   </select>
-  <select id="selectBySelective" resultType="java.util.Map">
-    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.address address,
-    t1.picture_name pictureName, t1.create_date createDate, t1.intro intro, t1.description description, t2.is_add isAdd,
-    t1.avgScore
+  <select id="selectBySelective" resultType="com.celloud.model.mysql.AppVO">
+    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.picture_name pictureName,
+    t1.create_date createDate, t1.intro intro, t1.description description, t2.is_add isAdd, t1.avgScore,
+    t1.calssifyName
     FROM
     (SELECT a.app_id, a.app_name, a.english_name, a.address, a.picture_name,
-    a.create_date, a.intro, a.description, AVG(ac.score) avgScore
+    a.create_date, a.intro, a.description, AVG(ac.score) avgScore, GROUP_CONCAT(c.classify_name) calssifyName
     FROM tb_app a LEFT JOIN tb_app_comment ac ON a.app_id = ac.app_id
+    LEFT JOIN tb_app_classify_relat acr ON a.app_id = acr.app_id
+    LEFT JOIN tb_classify c ON acr.classify_id = c.classify_id
     <WHERE>
         a.off_line = #{offLine }
         <IF test="app.flag != null">

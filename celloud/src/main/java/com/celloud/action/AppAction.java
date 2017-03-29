@@ -218,13 +218,13 @@ public class AppAction {
      * @return
      */
     @RequestMapping(value = "classic", method = RequestMethod.GET)
-    public ResponseEntity<List<Map<String, Object>>> classic(
+    public ResponseEntity<List<AppVO>> classic(
             @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize) {
         Integer userId = ConstantsData.getLoginUserId();
         App app = new App();
         app.setClassic(0);
         Page page = new Page(1, pageSize);
-        PageList<Map<String, Object>> pageList = appService.selectBySelective(page, app, userId);
+        PageList<AppVO> pageList = appService.selectBySelective(page, app, userId);
         if (pageList == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -240,13 +240,13 @@ public class AppAction {
      * @return
      */
     @RequestMapping(value = "recommend", method = RequestMethod.GET)
-    public ResponseEntity<List<Map<String, Object>>> recommend(
+    public ResponseEntity<List<AppVO>> recommend(
             @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize) {
         Integer userId = ConstantsData.getLoginUserId();
         App app = new App();
         app.setFlag(0);
         Page page = new Page(1, pageSize);
-        PageList<Map<String, Object>> pageList = appService.selectBySelective(page, app, userId);
+        PageList<AppVO> pageList = appService.selectBySelective(page, app, userId);
         if (pageList == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

@@ -260,6 +260,6 @@ public interface AppService {
      * @param userId
      * @return
      */
-    public PageList<Map<String, Object>> selectBySelective(Page page, App app, Integer userId);
+    public PageList<AppVO> selectBySelective(Page page, App app, Integer userId);
 
 }
