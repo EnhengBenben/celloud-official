@@ -2,6 +2,7 @@ package com.celloud.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,30 +111,6 @@ public class AppAction {
 		List<Map<String, String>> list = appService.getRanAPP(ConstantsData.getLoginUserId());
 		pageList.setDatas(list);
 		return pageList;
-    }
-
-    /**
-     * 
-     * @description 根据分类id获取app列表 
-     * @author miaoqi
-     * @date 2017年3月24日 上午11:16:14
-     * @param classifyId
-     */
-    @RequestMapping(value = "listByClassifyId", method = RequestMethod.GET)
-    public ResponseEntity<PageList<Map<String,Object>>> listByClassifyId(Page page, Integer classifyId){
-        Integer userId = ConstantsData.getLoginUserId();
-        if (classifyId == null) {
-            log.error("用户 {} 根据classifyId获取app列表 classifyId = {}", userId, classifyId);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        log.info("用户 {} 根据classifyId获取app列表 classifyId = {}", userId, classifyId);
-        PageList<Map<String, Object>> list = appService.listByClassifyId(page, classifyId, userId);
-        if (list == null) {
-            log.error("用户 {} 根据classifyId没有获取到app列表 classifyId = {}", userId, classifyId);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        log.info("用户 {} 根据classifyId成功获取app列表 classifyId = {}", userId, classifyId);
-        return ResponseEntity.ok(list);
     }
 
     /**
@@ -268,6 +245,48 @@ public class AppAction {
         }
         log.info("用户 {} 根据非空条件成功获取app列表", userId);
         return ResponseEntity.ok(pageList.getDatas());
+    }
+
+    /**
+     * 
+     * @description 根据分类id获取app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:16:14
+     * @param classifyId
+     */
+    @RequestMapping(value = "classifys/{classifyId}", method = RequestMethod.GET)
+    public ResponseEntity<PageList<Map<String, Object>>> listByClassifyId(Page page,
+            @PathVariable("classifyId") Integer classifyId) {
+        Integer userId = ConstantsData.getLoginUserId();
+        if (classifyId == null) {
+            log.error("用户 {} 根据classifyId获取app列表 classifyId = {}", userId, classifyId);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        log.info("用户 {} 根据classifyId获取app列表 classifyId = {}", userId, classifyId);
+        PageList<Map<String, Object>> list = appService.listByClassifyId(page, classifyId, userId);
+        if (list == null) {
+            log.error("用户 {} 根据classifyId没有获取到app列表 classifyId = {}", userId, classifyId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        log.info("用户 {} 根据classifyId成功获取app列表 classifyId = {}", userId, classifyId);
+        return ResponseEntity.ok(list);
+    }
+
+    @RequestMapping(value = "classifys", method = RequestMethod.GET)
+    public ResponseEntity<List<List<Map<String, Object>>>> classifys(
+            @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize) {
+        Integer userId = ConstantsData.getLoginUserId();
+        Page page = new Page(1, pageSize);
+        List<Classify> classifys = classifyService.listClassifyByPid(0);
+        List<List<Map<String, Object>>> result = new ArrayList<List<Map<String, Object>>>();
+        classifys.forEach(c -> {
+            PageList<Map<String, Object>> classifyPageList = appService.listByClassifyId(page, c.getClassifyId(),
+                    userId);
+            if (classifyPageList != null) {
+                result.add(classifyPageList.getDatas());
+            }
+        });
+        return ResponseEntity.ok(result);
     }
 
 	/**
