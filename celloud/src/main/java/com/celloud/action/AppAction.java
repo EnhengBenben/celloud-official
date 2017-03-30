@@ -391,4 +391,36 @@ public class AppAction {
         File targetFile = new File(path);
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
     }
+
+    /**
+     * 获取推荐APP大图
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     * @author leamo
+     * @date 2017年3月30日 下午1:35:15
+     */
+    @RequestMapping(value = "recommendMax", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> recommendMax(String file) throws IOException {
+        String path = IconConstants.getRecommendMaxPath(file);
+        File targetFile = new File(path);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
+
+    /**
+     * 获取推荐APP小图
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     * @author leamo
+     * @date 2017年3月30日 下午1:35:15
+     */
+    @RequestMapping(value = "recommendMin", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> recommendMin(String file) throws IOException {
+        String path = IconConstants.getRecommendMinPath(file);
+        File targetFile = new File(path);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+    }
 }
