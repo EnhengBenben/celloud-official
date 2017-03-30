@@ -279,8 +279,8 @@
     	controller: "fsocgDataReportController"
     })
     .when('/app',{
-      templateUrl: "pages/app/app_main.jsp",
-      controller: "toAppStore"
+      templateUrl: "pages/app/main.jsp",
+      controller: "appMainCtrl"
     })
     .when('/app/detail/:pid',{
       templateUrl: "pages/app/app_detail_main.jsp",
