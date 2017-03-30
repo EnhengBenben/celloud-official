@@ -6,7 +6,7 @@ __des__='mysql数据库配置文件'
 __author__='lin'
 
 class MySQLPro:
-	host='10.1.0.7'
-	user='root'
-	password='novacloud'
+	host='db1'
+	user='celloud'
+	password='CelLoud1010'
 	db='celloud'
