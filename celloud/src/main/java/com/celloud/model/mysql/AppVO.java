@@ -4,6 +4,7 @@ public class AppVO extends App {
     private Integer isAdd;
     private String avgScore;
     private String classifyName;
+    private String scoreCount;
 
     public Integer getIsAdd() {
         return isAdd;
@@ -27,6 +28,14 @@ public class AppVO extends App {
 
     public void setClassifyName(String classifyName) {
         this.classifyName = classifyName;
+    }
+
+    public String getScoreCount() {
+        return scoreCount;
+    }
+
+    public void setScoreCount(String scoreCount) {
+        this.scoreCount = scoreCount;
     }
 
 }
