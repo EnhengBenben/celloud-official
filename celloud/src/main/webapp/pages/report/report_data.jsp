@@ -27,7 +27,7 @@
                 <span>-</span>
                 <input type="text" ng-if="dataOptions.fullDate == -1" ng-model="dataOptions.endDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" id="end-date">
                 <input type="text" ng-if="dataOptions.fullDate != -1" class="Wdate input" onclick="WdatePicker()" readonly="readonly" id="end-date">
-                <button class="btn btn-cancel" ng-click="chooseDate()">确定</button>
+                <button type="button" class="btn btn-cancel" ng-click="chooseDate()">确定</button>
               </div>
             </div>
           </li>
@@ -41,7 +41,7 @@
                 </li>
               </ul>
               <div class="search-btns">
-                <button class="btn chevron-btn" ng-click="reportMoreAppTag=changeChevronType(reportMoreAppTag)">{{reportMoreAppTag|chevronTypeTextFilter}}<i ng-class="reportMoreAppTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
+                <button type="button" class="btn chevron-btn" ng-click="reportMoreAppTag=changeChevronType(reportMoreAppTag)">{{reportMoreAppTag|chevronTypeTextFilter}}<i ng-class="reportMoreAppTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
               </div>
             </div>
           </li>
@@ -55,7 +55,7 @@
                 </li>
               </ul>
 	          <div class="search-btns">
-	            <button class="btn chevron-btn" ng-click="reportMoreDataTag=changeChevronType(reportMoreDataTag)">{{reportMoreDataTag|chevronTypeTextFilter}}<i ng-class="reportMoreDataTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
+	            <button type="button" class="btn chevron-btn" ng-click="reportMoreDataTag=changeChevronType(reportMoreDataTag)">{{reportMoreDataTag|chevronTypeTextFilter}}<i ng-class="reportMoreDataTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
 	          </div>
             </div>
           </li>
