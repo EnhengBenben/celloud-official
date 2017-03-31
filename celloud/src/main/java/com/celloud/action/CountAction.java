@@ -67,7 +67,7 @@ public class CountAction {
 		DecimalFormat df = new DecimalFormat("#.00");
 		String size = null;
 		String format = null;
-		if (sumData == null) {
+		if (sumData == null || sumData.equals(0l)) {
 			size = "0";
 			format = "K";
 		} else if (sumData > 1073741824) {

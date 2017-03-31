@@ -7,8 +7,12 @@
         padding: 0;
         background: @content-gray; 
         a{
+            margin-top: 5px;
+            max-width: 100%;
             padding: 2px 4px;
             color: @search-box-a;
+            display: inline-block;
+            .text-overflow();
             &.active{
                 .border-1(@content-green);
             }
@@ -57,9 +61,7 @@
         .search-info>li{
             width: 120px;
             float: left;
-            line-height: 34px;
             display: inline-block;
-            .text-overflow();
         }
         .seartch-date>li:last-child{
             width: 35px;   

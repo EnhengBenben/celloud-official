@@ -74,14 +74,14 @@
           <tr ng-repeat="file in dataList.datas">
             <td>
               <label class="checkbox-lable">
-                <input class="checkbox" is_run="{{file.isRunning==1}}" is_tag="{{file.tagName==null}}" is_bsi="{{file.tagName=='百菌探'}}" is_rocky="{{file.tagName=='华木兰'}}" is_pair="{{file.tagName=='CMP'||file.tagName=='CMP_199'||file.tagName=='GDD'||file.tagName=='split'||file.tagName=='AccuSeqα'||file.tagName=='AccuSeqα199'||file.tagName=='AccuSeqΩ'||file.tagName=='AccuSeqα2'}}" type="checkbox" name="data-checkone" value="{{file.fileId}}" onclick="$.dataManager.checkOneData(this)">
+                <input class="checkbox" is_run="{{file.isRunning==1}}" is_tag="{{file.tagName==null}}" is_bsi="{{file.tagName=='百菌探'}}" is_rocky="{{file.tagName=='华木兰'}}" is_pair="{{file.tagName=='CMP'||file.tagName=='CMP_199'||file.tagName=='GDD'||file.tagName=='split'||file.tagName=='AccuSeqα'||file.tagName=='AccuSeqα199'||file.tagName=='AccuSeqΩ'||file.tagName=='AccuSeqα2'||file.tagName=='AccuSeqΩ-exon'}}" type="checkbox" name="data-checkone" value="{{file.fileId}}" onclick="$.dataManager.checkOneData(this)">
                 <span class="info"></span>
               </label>
             </td>
             <td title="{{file.fileName}}"><i class="fa fa-truck" aria-hidden="true" ng-show="file.isRunning==1 || file.isRun == 1"></i> {{file.fileName.length > 23 ? file.fileName.substring(0,23) + '...' : file.fileName}}</td>
             <td title="{{file.anotherName}}">{{file.anotherName.length > 23 ? file.anotherName.substring(0,23) + '...' : file.anotherName}}</td>
             <td>{{file.tagName}}</td>
-            <td>{{file.batch}}</td>
+            <td title="{{file.batch}}">{{file.batch}}</td>
             <td>{{file.size | fileSizeFormat}}</td>
             <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td ng-if="file.reportNum < 1" style="font-weight: bold;">未运行</td>
@@ -126,7 +126,7 @@
 	          <div class="form-group">
 	            <div class="control-label form-label col-xs-3">数据标签：</div>
 	            <div class="col-xs-9">
-	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="50" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
+	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="30" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
 	            </div>
 	          </div>
             <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
