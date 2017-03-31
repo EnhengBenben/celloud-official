@@ -121,7 +121,7 @@
 						var config = configs[index];
 						var port = config.port||80;
 						var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
-						config = "https://"+config.intranetAddress+":"+port+context;
+						config = window.location.protocol+"//"+config.intranetAddress+":"+port+context;
 						var response = $.ajax(config+"/box/alive",{async: false}).responseText;
 						if(response && JSON.parse(response).success){
 							$scope.box=config;

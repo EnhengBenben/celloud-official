@@ -346,6 +346,7 @@
 			<bean class="com.celloud.common.mq.entity.Topics">
 				<property name="userNotice" value="user-message" />
 				<property name="task" value="task-delivery" />
+				<property name="taskTracing" value="task-tracing" />
 			</bean>
 		</property>
 	</bean>
