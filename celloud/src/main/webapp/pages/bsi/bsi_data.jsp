@@ -35,7 +35,7 @@
 				  </thead>
 				  <tbody id="data-list-tbody" ng-if="pageList.datas.length > 0">
 				        <tr ng-repeat="data in pageList.datas">
-				          <td>{{data.batch}}</td>
+				          <td title="{{data.batch}}">{{data.batch}}</td>
 				          <td title="{{data.fileName}}" name="data-name-td" >
 				              <span>{{data.fileName.length > 60 ? data.fileName.substring(0,60) + '...' : data.fileName}}</span>
 				              <span ng-if="data.anotherName != null">({{data.anotherName}})</span>

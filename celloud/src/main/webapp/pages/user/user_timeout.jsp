@@ -7,7 +7,7 @@
 <meta name="keywords" content="celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据" />
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico"/>
 <link rel="bookmark" href="<%=request.getContextPath()%>/favicon.ico"/>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login-add.css?version=1.0" media="all" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login-add.css?version=1.1" media="all" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/user-add.css" />
 <title>Session超时</title>
 </head>

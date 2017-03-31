@@ -193,7 +193,7 @@
                             <a ng-show="report.period == 2" title="查看报告" style="color: #323232; font-size: 12px;" ng-click="showReport(report.dataKey,report.projectId,report.appId)">{{report.fileName}}</a>
                             <a style="color: #323232; font-size: 12px; cursor: text" ng-show="report.period != 2">{{report.fileName}}</a>
                         </td>
-                        <td>{{report.batch}}</td>
+                        <td title="{{report.batch}}">{{report.batch}}</td>
                         <td>
                             <span ng-show="report.period==0">等待运行</span>
                             <span ng-show="report.period==1">正在运行</span>
