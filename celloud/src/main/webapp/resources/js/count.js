@@ -32,7 +32,7 @@ $(document).ready(function() {
       }
 			spinner.stop();
 		});
-	} else if (companyId == 3) {
+	} else if (companyId == 3 || companyId == 966 || companyId == 965 || companyId == 961) {
 		$.get("count/hbvCount",function(responseText){
 			$("#countDiv").html(responseText);
 			var url = $("#downUrl").val();
