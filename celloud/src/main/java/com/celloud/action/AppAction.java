@@ -222,7 +222,7 @@ public class AppAction {
             @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize) {
         Integer userId = ConstantsData.getLoginUserId();
         App app = new App();
-        app.setClassic(0);
+        app.setClassic(1);
         Page page = new Page(1, pageSize);
         PageList<AppVO> pageList = appService.selectBySelective(page, app, userId);
         if (pageList == null) {
@@ -244,7 +244,7 @@ public class AppAction {
             @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize) {
         Integer userId = ConstantsData.getLoginUserId();
         App app = new App();
-        app.setFlag(0);
+        app.setFlag(1);
         Page page = new Page(1, pageSize);
         PageList<AppVO> pageList = appService.selectBySelective(page, app, userId);
         if (pageList == null) {

@@ -9,6 +9,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 public class AppActionTest extends BaseActionTest {
 
     @Test
+    public void testClassic() throws Exception
+    {
+        mockMvc.perform(get("/app/classic").param("pageSize", "8").param("userId", "82"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
     public void testListByClassifyId() throws Exception {
         mockMvc.perform(
                 get("/app/listByClassifyId").param("classifyId", "3").param("currentPage", "1").param("pageSize", "3"))
