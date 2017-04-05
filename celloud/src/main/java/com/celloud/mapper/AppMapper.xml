@@ -475,6 +475,21 @@
     LEFT JOIN (SELECT uar.is_add, uar.app_id FROM tb_user_app_right uar
     WHERE uar.user_id = #{userId }) t2 ON t1.app_id = t2.app_id
   </select>
+  <select id="selectByClassifyPId" resultType="com.celloud.model.mysql.AppVO">
+    SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.picture_name pictureName,
+    t1.create_date createDate, t1.intro intro, t1.description description, t1.avgScore avgScore, t2.is_add isAdd,
+    t1.scoreCount
+    FROM
+    (SELECT a.app_id, a.app_name, a.english_name, a.address, a.picture_name,
+    a.create_date, a.intro, a.description, AVG(ac.score) avgScore, COUNT(DISTINCT ac.id) scoreCount
+    FROM tb_app a
+    LEFT JOIN tb_app_classify_relat acr ON a.app_id = acr.app_id
+    LEFT JOIN tb_app_comment ac ON a.app_id = ac.app_id
+    LEFT JOIN tb_classify c ON acr.classify_id = c.classify_id
+    WHERE c.classify_pid = #{classifyId } AND a.off_line = #{offLine } GROUP BY a.app_id) t1
+    LEFT JOIN (SELECT uar.is_add, uar.app_id FROM tb_user_app_right uar
+    WHERE uar.user_id = #{userId }) t2 ON t1.app_id = t2.app_id
+  </select>
   <update id="updateUserAppRight">
     UPDATE tb_user_app_right
     <set>

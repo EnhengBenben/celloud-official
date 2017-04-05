@@ -229,6 +229,17 @@ public interface AppMapper {
 
     /**
      * 
+     * @description 根据classifyId获取app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:17:23
+     * @param classifyId
+     * @return
+     */
+    List<AppVO> selectByClassifyPId(Page page, @Param("classifyId") Integer classifyId, @Param("userId") Integer userId,
+            @Param("offLine") Integer offLine);
+
+    /**
+     * 
      * @description 根据userId和appId更新是否添加状态
      * @author miaoqi
      * @date 2017年3月24日 下午1:56:27

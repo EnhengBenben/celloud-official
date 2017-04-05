@@ -227,6 +227,17 @@ public interface AppService {
      * @param userId
      * @return
      */
+    public PageList<AppVO> listByClassifyPId(Page page, Integer classifyId, Integer userId);
+
+    /**
+     * 
+     * @description 根据classifyId查看app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:34:19
+     * @param classifyId
+     * @param userId
+     * @return
+     */
     public PageList<AppVO> listByClassifyId(Page page, Integer classifyId, Integer userId);
 
     /**

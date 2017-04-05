@@ -279,6 +279,14 @@ public class AppAction {
         return ResponseEntity.ok(list);
     }
 
+    /**
+     * 
+     * @description 首页一级产品列表
+     * @author miaoqi
+     * @date 2017年4月5日 下午2:21:28
+     * @param pageSize
+     * @return
+     */
     @RequestMapping(value = "classifys", method = RequestMethod.GET)
     public ResponseEntity<List<Map<String, Object>>> classifys(
             @RequestParam(value = "pageSize", defaultValue = "8") Integer pageSize) {
@@ -290,12 +298,13 @@ public class AppAction {
         }
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
         classifys.forEach(c -> {
-            PageList<AppVO> classifyPageList = appService.listByClassifyId(page, c.getClassifyId(),
+            PageList<AppVO> classifyPageList = appService.listByClassifyPId(page, c.getClassifyId(),
                     userId);
             if (classifyPageList != null) {
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("appList", classifyPageList.getDatas());
                 map.put("classifyName", c.getClassifyName());
+                map.put("classifyId", c.getClassifyId());
                 result.add(map);
             }
         });

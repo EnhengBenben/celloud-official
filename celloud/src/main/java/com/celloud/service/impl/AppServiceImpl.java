@@ -176,6 +176,15 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
+    public PageList<AppVO> listByClassifyPId(Page page, Integer classifyId, Integer userId) {
+        List<AppVO> datas = appMapper.selectByClassifyPId(page, classifyId, userId, AppConstants.ON);
+        if (datas == null || datas.isEmpty()) {
+            return null;
+        }
+        return new PageList<AppVO>(page, datas);
+    }
+
+    @Override
     public PageList<AppVO> listByClassifyId(Page page, Integer classifyId, Integer userId) {
         List<AppVO> datas = appMapper.selectByClassifyId(page, classifyId, userId, AppConstants.ON);
         if (datas == null || datas.isEmpty()) {
