@@ -24,10 +24,9 @@
 # ------------------------------------------------------------
 
 update tb_app set command = 'nohup perl /share/biosoft/Script/Script_share/moniter_qsub_url-v1.pl nohup perl /share/biosoft/Script/AccuSeq_2/qsub_50gene_2samples.pl ${list} ${path} ProjectID${projectId} &>${path}${projectId}.log' where app_id = 131;
-update tb_app set command = 'nohup perl /perl /share/biosoft/Script/Script_share/moniter_qsub_url-v1.pl nohup perl /share/biosoft/Script/CMP_199/qsub_199gene.pl ${list} ${path} ProjectID${projectId} &>${path}${projectId}.log' where app_id = 111;
-update tb_app set command = 'nohup perl perl /share/biosoft/Script/Script_share/moniter_qsub_url-v1.pl nohup perl /share/biosoft/Script/GDD/qsub_GDD.pl ${list} ${path} ProjectID${projectId} &>${path}${projectId}.log' where app_id = 112;
-update tb_app set command = 'nohup perl perl /share/biosoft/Script/Script_share/moniter_qsub_url-v1.pl nohup perl /share/biosoft/Script/MIB/qsub_16sMIB.pl ${list} ${path} ProjectID${projectId} &>${path}${projectId}.log' where app_id = 114;
-update tb_app set command = 'nohup perl /share/biosoft/Script/Script_share/moniter_qsub_url-v1.pl nohup perl /share/biosoft/Script/AccuSeq_2/qsub_50gene_2samples.pl ${list} ${path} ProjectID${projectId} &>${path}${projectId}.log' where app_id = 131;
+update tb_app set command = 'nohup perl /share/biosoft/Script/Script_share/moniter_qsub_url-v1.pl nohup perl /share/biosoft/Script/CMP_199/qsub_199gene.pl ${list} ${path} ProjectID${projectId} &>${path}${projectId}.log' where app_id = 111;
+update tb_app set command = 'nohup perl /share/biosoft/Script/Script_share/moniter_qsub_url-v1.pl nohup perl /share/biosoft/Script/GDD/qsub_GDD.pl ${list} ${path} ProjectID${projectId} &>${path}${projectId}.log' where app_id = 112;
+update tb_app set command = 'nohup perl /share/biosoft/Script/Script_share/moniter_qsub_url-v1.pl nohup perl /share/biosoft/Script/MIB/qsub_16sMIB.pl ${list} ${path} ProjectID${projectId} &>${path}${projectId}.log' where app_id = 114;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
