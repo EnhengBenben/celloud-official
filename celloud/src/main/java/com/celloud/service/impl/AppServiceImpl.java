@@ -194,8 +194,9 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public Boolean updateUserAppRight(Integer userId, Integer appId, Integer isAdd) {
-        Integer num = appMapper.updateUserAppRight(userId, appId, isAdd);
+    public Boolean updateUserAppRight(Integer userId, Integer appId) {
+        Map<String, Integer> userAppRight = appMapper.selectUserAppRight(userId, appId);
+        Integer num = appMapper.updateUserAppRight(userId, appId, userAppRight.get("isAdd") == 0 ? 1 : 0);
         return num.intValue() == 1;
     }
 
@@ -205,7 +206,7 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public Map<String, Object> getUserAppRight(Integer userId, Integer appId) {
+    public Map<String, Integer> getUserAppRight(Integer userId, Integer appId) {
         return appMapper.selectUserAppRight(userId, appId);
     }
 

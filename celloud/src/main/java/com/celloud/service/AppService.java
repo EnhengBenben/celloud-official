@@ -249,7 +249,7 @@ public interface AppService {
      * @param appId
      * @return
      */
-    public Boolean updateUserAppRight(Integer userId, Integer appId, Integer isAdd);
+    public Boolean updateUserAppRight(Integer userId, Integer appId);
 
     /**
      * 
@@ -260,7 +260,7 @@ public interface AppService {
      * @param appId
      * @return
      */
-    public Map<String, Object> getUserAppRight(Integer userId, Integer appId);
+    public Map<String, Integer> getUserAppRight(Integer userId, Integer appId);
 
     /**
      * 

@@ -125,23 +125,23 @@ public class AppAction {
      * @return
      */
     @RequestMapping(value = "addOrRemoveApp", method = RequestMethod.PUT)
-    public ResponseEntity<Void> addOrRemoveApp(Integer appId, Integer isAdd) {
+    public ResponseEntity<Void> addOrRemoveApp(Integer appId) {
         Integer role = ConstantsData.getLoginUser().getRole();
         if (role.intValue() == 5) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         Integer userId = ConstantsData.getLoginUserId();
-        if (appId == null || isAdd == null) {
-            log.error("用户 {} 更新app的添加状态, 参数错误, appId = {}, isAdd = {}", userId, appId, isAdd);
+        if (appId == null) {
+            log.error("用户 {} 更新app的添加状态, 参数错误, appId = {}, isAdd = {}", userId, appId);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        log.info("用户 {} 更新app的添加状态 appId = {}, isAdd = {}", userId, appId, isAdd);
-        Boolean flag = appService.updateUserAppRight(userId, appId, isAdd);
+        log.info("用户 {} 更新app的添加状态 appId = {}, isAdd = {}", userId, appId);
+        Boolean flag = appService.updateUserAppRight(userId, appId);
         if (!flag) {
-            log.error("用户 {} 更新app的添加状态失败 appId = {}, isAdd = {}", userId, appId, isAdd);
+            log.error("用户 {} 更新app的添加状态失败 appId = {}, isAdd = {}", userId, appId);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        log.info("用户 {} 更新app的添加状态成功 appId = {}, isAdd = {}", userId, appId, isAdd);
+        log.info("用户 {} 更新app的添加状态成功 appId = {}, isAdd = {}", userId, appId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -186,7 +186,7 @@ public class AppAction {
             result.put("screens", screenArray);
         }
         // 6. 查询用户是否拥有该app权限
-        Map<String, Object> map = appService.getUserAppRight(userId, appId);
+        Map<String, Integer> map = appService.getUserAppRight(userId, appId);
         if (map != null && !map.isEmpty()) {
             result.put("isAdd", map.get("isAdd"));
         }

@@ -260,7 +260,7 @@ public interface AppMapper {
      * @param appId
      * @return
      */
-    Map<String, Object> selectUserAppRight(@Param("userId") Integer userId, @Param("appId") Integer appId);
+    Map<String, Integer> selectUserAppRight(@Param("userId") Integer userId, @Param("appId") Integer appId);
     
     /**
      * 
