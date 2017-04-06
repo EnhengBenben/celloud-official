@@ -1161,6 +1161,7 @@ public class ReportAction {
 		BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
 		// Map<String, JSONArray> mibCharList = new HashMap<>();
 		Map<String, Object> map = getCommonInfo(projectId, dataKey);
+        DataFile df = dataService.getDataByKey(dataKey);
 		if (bsi == null)
 			return map;
 		// mibCharList.put("readsDistributionInfo",
@@ -1171,6 +1172,7 @@ public class ReportAction {
 		// JSONArray.fromObject(bsi.getGenusDistributionInfo()));
 		// map.put("bsiCharList", mibCharList);
 		map.put("bsi", bsi);
+        map.put("data", df);
 		return map;
 	}
 
