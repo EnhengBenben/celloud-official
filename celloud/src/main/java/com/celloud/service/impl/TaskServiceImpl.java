@@ -188,7 +188,7 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public Integer addOrUpdateUploadTaskByParam(Task task, Boolean isUpdate) {
-		Task task1 = taskMapper.findTaskByParamsAndPeriod(task.getUserId(), DataState.ACTIVE, task.getPeriod(),
+		Task task1 = taskMapper.findTaskByParamsAndPeriodAndBatch(task.getUserId(), DataState.ACTIVE, task.getPeriod(),
 				task.getParams(), task.getBatch());
 		Integer result = 0;
 		if (task1 == null) {

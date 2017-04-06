@@ -584,7 +584,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from tb_task WHERE user_id=#{userId} and state=#{state} and period =
-		#{period} and params=#{params} and batch=#{batch}
+		#{period} and params=#{params}
 	</select>
 	<select id="findTaskByParamsAndPeriodAndBatch" resultMap="BaseResultMap">
 		SELECT
