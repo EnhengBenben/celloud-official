@@ -195,6 +195,11 @@ public class AppAction {
         if (countScore != null && !countScore.isEmpty()) {
             result.put("countScore", countScore);
         }
+        int totalCount = 0;
+        for (Map.Entry<String, Map<String, Integer>> entry : countScore.entrySet()) {
+            totalCount += entry.getValue().get("count");
+        }
+        result.put("totalCount", totalCount);
         // 8. 获取平均评分
         String avgScore = appCommentService.avgScore(appId);
         if (StringUtils.isNotBlank(avgScore)) {
