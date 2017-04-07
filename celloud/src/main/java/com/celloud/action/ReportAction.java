@@ -98,6 +98,7 @@ import com.celloud.utils.CustomStringUtils;
 import com.celloud.utils.FileTools;
 import com.celloud.utils.PerlUtils;
 import com.celloud.utils.PropertiesUtil;
+import com.celloud.utils.UploadPathUtils;
 import com.celloud.utils.VelocityUtil;
 
 import net.sf.cglib.core.CollectionUtils;
@@ -107,7 +108,7 @@ import net.sf.json.JSONArray;
 @RequestMapping(value = "/report")
 @Controller
 public class ReportAction {
-    private Logger log = LoggerFactory.getLogger(ReportAction.class);
+	private Logger log = LoggerFactory.getLogger(ReportAction.class);
 	@Resource
 	private ReportService reportService;
 	@Resource
@@ -144,7 +145,6 @@ public class ReportAction {
 	@RequestMapping("checkPdf")
 	@ResponseBody
 	public Integer checkPdf(String dataKey) {
-        System.out.println("试试");
 		Integer userId = ConstantsData.getLoginUserId();
 		String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + dataKey + "/" + dataKey + ".pdf";
 		if (!new File(filePath).exists()) {
@@ -159,6 +159,9 @@ public class ReportAction {
 	@ResponseBody
 	public Integer down(String path) {
 		String filePath = SparkPro.TOOLSPATH + path;
+		if (!new File(filePath).exists()) {
+			filePath = UploadPathUtils.getOutPathInOSS() + path;
+		}
 		if (new File(filePath).exists()) {
 			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath);
 			return 0;
@@ -181,27 +184,27 @@ public class ReportAction {
 		return 1;
 	}
 
-    @RequestMapping(value = "openPdf/{userId}/{appId}/{dataKey}")
-    public ResponseEntity<byte[]> openPdf(@PathVariable("userId") Integer userId, @PathVariable("appId") Integer appId,
-            @PathVariable("dataKey") String dataKey) throws Exception {
-        Integer loginUserId = ConstantsData.getLoginUserId();
-        if (loginUserId.intValue() != userId.intValue()) {
-            log.info("当前登录用户id = {}, 所请求数据用户id = {}", loginUserId, userId);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        // 查找pdf
-        StringBuilder sb = new StringBuilder();
-        sb.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/").append(dataKey);
-        List<String> files = FileTools.fileSearch(sb.toString(), ".pdf", "endWith");
-        if (files == null || files.size() == 0) {
-            log.info("用户 {} 下没有找到相应的pdf, appId = {}, dataKey = {}", userId, appId, dataKey);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        File targetFile = new File(sb.append("/").append(files.get(0)).toString());
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/pdf");
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
-    }
+	@RequestMapping(value = "openPdf/{userId}/{appId}/{dataKey}")
+	public ResponseEntity<byte[]> openPdf(@PathVariable("userId") Integer userId, @PathVariable("appId") Integer appId,
+			@PathVariable("dataKey") String dataKey) throws Exception {
+		Integer loginUserId = ConstantsData.getLoginUserId();
+		if (loginUserId.intValue() != userId.intValue()) {
+			log.info("当前登录用户id = {}, 所请求数据用户id = {}", loginUserId, userId);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+		// 查找pdf
+		StringBuilder sb = new StringBuilder();
+		sb.append(SparkPro.TOOLSPATH).append(userId).append("/").append(appId).append("/").append(dataKey);
+		List<String> files = FileTools.fileSearch(sb.toString(), ".pdf", "endWith");
+		if (files == null || files.size() == 0) {
+			log.info("用户 {} 下没有找到相应的pdf, appId = {}, dataKey = {}", userId, appId, dataKey);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		File targetFile = new File(sb.append("/").append(files.get(0)).toString());
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/pdf");
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), headers, HttpStatus.OK);
+	}
 
 	@ActionLog(value = "下载", button = "下载")
 	@RequestMapping("downByName")
@@ -224,6 +227,9 @@ public class ReportAction {
 			if (filename.endsWith("_")) {
 				filename = filename.substring(0, filename.lastIndexOf("_"));
 			}
+		}
+		if (!new File(filePath).exists()) {
+			filePath = UploadPathUtils.getOutPathInOSS() + path;
 		}
 		if (new File(filePath).exists()) {
 			FileTools.fileDownLoad(ConstantsData.getResponse(), filePath, filename);
@@ -333,108 +339,99 @@ public class ReportAction {
 	 * @param projectId
 	 *
 	 */
-    private Map<String, Object> getCommonInfo(Integer projectId, String dataKey) {
+	private Map<String, Object> getCommonInfo(Integer projectId, String dataKey) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Project project = projectService.selectByPrimaryKey(projectId);
-        String batch = dataService.getBatchByDataKey(dataKey);
+		String batch = dataService.getBatchByDataKey(dataKey);
 		map.put("uploadPath", "/upload/");
 		map.put("project", project);
-        map.put("batch", batch);
+		map.put("batch", batch);
 		return map;
 	}
 
-    /**
-     * 获取AccuSeqα2数据报告
-     * 
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     * @author leamo
-     * @date 2016年11月10日 下午2:31:58
-     */
-    @ActionLog(value = "查看AccuSeqα2数据报告", button = "数据报告")
-    @RequestMapping("getAccuSeqα2Info")
-    @ResponseBody
-    public Map<String, Object> getAccuSeqα2Info(String dataKey,
-            Integer projectId, Integer appId) {
-        log.info("用户{}查看AccuSeqα2数据报告:proID:{},dataKey:{},appId:{}",
-                ConstantsData.getLoginUserName(), projectId, dataKey, appId);
-        AccuSeqα2 accuSeqα2 = reportService.getAccuSeqα2Report(dataKey,
-                projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
-        map.put("accuSeqα2", accuSeqα2);
-        System.out.println(
-                "AccuSeq报告=============================================");
-        System.out.println(accuSeqα2);
-        return map;
-    }
+	/**
+	 * 获取AccuSeqα2数据报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @author leamo
+	 * @date 2016年11月10日 下午2:31:58
+	 */
+	@ActionLog(value = "查看AccuSeqα2数据报告", button = "数据报告")
+	@RequestMapping("getAccuSeqα2Info")
+	@ResponseBody
+	public Map<String, Object> getAccuSeqα2Info(String dataKey, Integer projectId, Integer appId) {
+		log.info("用户{}查看AccuSeqα2数据报告:proID:{},dataKey:{},appId:{}", ConstantsData.getLoginUserName(), projectId,
+				dataKey, appId);
+		AccuSeqα2 accuSeqα2 = reportService.getAccuSeqα2Report(dataKey, projectId, appId);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		map.put("accuSeqα2", accuSeqα2);
+		System.out.println("AccuSeq报告=============================================");
+		System.out.println(accuSeqα2);
+		return map;
+	}
 
-    /**
-     * 打印 AccuSeqα2详细报告
-     * 
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @author leamo
-     * @date 2016年11月10日 下午2:32:30
-     */
-    @ActionLog(value = "打印 AccuSeqα2详细报告", button = "打印报告")
-    @RequestMapping("printMoreAccuSeqα2Report")
-    @ResponseBody
-    public void printMoreAccuSeqα2Report(String dataKey, Integer projectId,
-            Integer appId) {
-        String path = ConstantsData.getLoginCompanyId() + "/" + appId
-                + "print_more.vm";
-        if (ReportAction.class
-                .getResource("/templates/report/" + path) == null) {
-            path = "default/" + appId + "/print_more.vm";
-        }
-        Map<String, Object> context = new HashMap<String, Object>();
-        context.put("accuSeq",
-                reportService.getAccuSeqα2Report(dataKey, projectId, appId));
-        returnToVelocity(path, context, projectId);
-    }
+	/**
+	 * 打印 AccuSeqα2详细报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @author leamo
+	 * @date 2016年11月10日 下午2:32:30
+	 */
+	@ActionLog(value = "打印 AccuSeqα2详细报告", button = "打印报告")
+	@RequestMapping("printMoreAccuSeqα2Report")
+	@ResponseBody
+	public void printMoreAccuSeqα2Report(String dataKey, Integer projectId, Integer appId) {
+		String path = ConstantsData.getLoginCompanyId() + "/" + appId + "print_more.vm";
+		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+			path = "default/" + appId + "/print_more.vm";
+		}
+		Map<String, Object> context = new HashMap<String, Object>();
+		context.put("accuSeq", reportService.getAccuSeqα2Report(dataKey, projectId, appId));
+		returnToVelocity(path, context, projectId);
+	}
 
-    @ActionLog(value = "打印报告时修改 AccuSeqα2流程用户填写信息", button = "修改数据报告")
-    @RequestMapping("updateAccuSeqFilling")
-    @ResponseStatus(value = HttpStatus.OK)
-    public void updateAccuSeqFilling(AccuSeqα2Fill accuSeqFill, String cmpId) {
-        List<CmpGeneSnpResult> usefulList = accuSeqFill.getUsefulGeneResult();
-        List<DrugResistanceSite> rssList = accuSeqFill.getResistanceSiteSum();
-        List<DrugResistanceSite> pmList = accuSeqFill.getPersonalizedMedicine();
-        List<RecommendDrug> rdList = accuSeqFill.getRecommendDrug();
-        if (usefulList != null) {
-            filterFillUsefulList(usefulList);
-            accuSeqFill.setUsefulGeneResult(usefulList);
-        }
-        if (rssList != null) {
-            filterFillDrugResistanceSite(rssList);
-            accuSeqFill.setResistanceSiteSum(rssList);
-        }
-        if (pmList != null) {
-            filterFillDrugResistanceSite(pmList);
-            accuSeqFill.setPersonalizedMedicine(pmList);
-        }
-        if (rdList != null) {
-            CollectionUtils.filter(rdList, new Predicate() {
-                @Override
-                public boolean evaluate(Object obj) {
-                    RecommendDrug rd = (RecommendDrug) obj;
-                    if ((rd.getDrugName() == null
-                            || rd.getDrugName().trim().equals(""))
-                            && (rd.getDrugDescrip() == null
-                                    || rd.getDrugDescrip().trim().equals(""))) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            });
-            accuSeqFill.setRecommendDrug(rdList);
-        }
-        reportService.updateAccuSeqα2Fill(new ObjectId(cmpId), accuSeqFill);
-    }
+	@ActionLog(value = "打印报告时修改 AccuSeqα2流程用户填写信息", button = "修改数据报告")
+	@RequestMapping("updateAccuSeqFilling")
+	@ResponseStatus(value = HttpStatus.OK)
+	public void updateAccuSeqFilling(AccuSeqα2Fill accuSeqFill, String cmpId) {
+		List<CmpGeneSnpResult> usefulList = accuSeqFill.getUsefulGeneResult();
+		List<DrugResistanceSite> rssList = accuSeqFill.getResistanceSiteSum();
+		List<DrugResistanceSite> pmList = accuSeqFill.getPersonalizedMedicine();
+		List<RecommendDrug> rdList = accuSeqFill.getRecommendDrug();
+		if (usefulList != null) {
+			filterFillUsefulList(usefulList);
+			accuSeqFill.setUsefulGeneResult(usefulList);
+		}
+		if (rssList != null) {
+			filterFillDrugResistanceSite(rssList);
+			accuSeqFill.setResistanceSiteSum(rssList);
+		}
+		if (pmList != null) {
+			filterFillDrugResistanceSite(pmList);
+			accuSeqFill.setPersonalizedMedicine(pmList);
+		}
+		if (rdList != null) {
+			CollectionUtils.filter(rdList, new Predicate() {
+				@Override
+				public boolean evaluate(Object obj) {
+					RecommendDrug rd = (RecommendDrug) obj;
+					if ((rd.getDrugName() == null || rd.getDrugName().trim().equals(""))
+							&& (rd.getDrugDescrip() == null || rd.getDrugDescrip().trim().equals(""))) {
+						return false;
+					} else {
+						return true;
+					}
+				}
+			});
+			accuSeqFill.setRecommendDrug(rdList);
+		}
+		reportService.updateAccuSeqα2Fill(new ObjectId(cmpId), accuSeqFill);
+	}
 
 	/**
 	 * 
@@ -452,7 +449,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getCMPInfo(String dataKey, Integer projectId, Integer appId) {
 		CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("cmp", cmp);
 		return map;
 	}
@@ -521,7 +518,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getGDDInfo(String dataKey, Integer projectId, Integer appId) {
 		CmpReport cmp = reportService.getCMPReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("cmp", cmp);
 		return map;
 	}
@@ -548,10 +545,10 @@ public class ReportAction {
 		if (geneMap == null) {
 			String[] fields = { "name" };
 			context.put("cmpReport", cmpReport);
-            context.put("gddDiseaseList",
-                    appId.equals(AppConstants.AccuSeqC)
-                            ? reportService.getAccuGddDiseaseDictNormal(fields, conditionMap, "gene")
-                            : reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+			context.put("gddDiseaseList",
+					appId.equals(AppConstants.AccuSeqC)
+							? reportService.getAccuGddDiseaseDictNormal(fields, conditionMap, "gene")
+							: reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
 			returnToVelocity(path, context, projectId);
 			return;
 		}
@@ -658,10 +655,10 @@ public class ReportAction {
 
 		String[] fields = { "gene", "name" };
 		conditionMap.put("gene", unnormalGene);
-        context.put("gddDiseaseList",
-                appId.equals(AppConstants.AccuSeqC)
-                        ? reportService.getAccuGddDiseaseDictNormal(fields, conditionMap, "gene")
-                        : reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
+		context.put("gddDiseaseList",
+				appId.equals(AppConstants.AccuSeqC)
+						? reportService.getAccuGddDiseaseDictNormal(fields, conditionMap, "gene")
+						: reportService.getGddDiseaseDictNormal(fields, conditionMap, "gene"));
 
 		returnToVelocity(path, context, projectId);
 	}
@@ -708,43 +705,38 @@ public class ReportAction {
 	}
 
 	/**
-     * 过滤AccuSeq用户填写药物信息为空的信息
-     * 
-     * @param list
-     * @author leamo
-     * @date 2016年11月24日 下午1:40:59
-     */
-    private void filterFillUsefulList(List<CmpGeneSnpResult> usefulList) {
-        CollectionUtils.filter(usefulList, new Predicate() {
-            @Override
-            public boolean evaluate(Object obj) {
-                CmpGeneSnpResult cgs = (CmpGeneSnpResult) obj;
-                if ((cgs.getGene() == null || cgs.getGene().trim().equals(""))
-                        && (cgs.getRefBase() == null
-                                || cgs.getRefBase().trim().equals(""))
-                        && (cgs.getDepth() == null
-                                || cgs.getDepth().trim().equals(""))
-                        && (cgs.getMutBase() == null
-                                || cgs.getMutBase().trim().equals(""))
-                        && (cgs.getCdsMutSyntax() == null
-                                || cgs.getCdsMutSyntax().trim().equals(""))
-                        && (cgs.getAaMutSyntax() == null
-                                || cgs.getAaMutSyntax().trim().equals(""))) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        });
-    }
+	 * 过滤AccuSeq用户填写药物信息为空的信息
+	 * 
+	 * @param list
+	 * @author leamo
+	 * @date 2016年11月24日 下午1:40:59
+	 */
+	private void filterFillUsefulList(List<CmpGeneSnpResult> usefulList) {
+		CollectionUtils.filter(usefulList, new Predicate() {
+			@Override
+			public boolean evaluate(Object obj) {
+				CmpGeneSnpResult cgs = (CmpGeneSnpResult) obj;
+				if ((cgs.getGene() == null || cgs.getGene().trim().equals(""))
+						&& (cgs.getRefBase() == null || cgs.getRefBase().trim().equals(""))
+						&& (cgs.getDepth() == null || cgs.getDepth().trim().equals(""))
+						&& (cgs.getMutBase() == null || cgs.getMutBase().trim().equals(""))
+						&& (cgs.getCdsMutSyntax() == null || cgs.getCdsMutSyntax().trim().equals(""))
+						&& (cgs.getAaMutSyntax() == null || cgs.getAaMutSyntax().trim().equals(""))) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+		});
+	}
 
-    /**
-     * 过滤CMP用户填写药物信息为空的信息
-     * 
-     * @param list
-     * @author leamo
-     * @date 2016年2月3日 下午3:40:59
-     */
+	/**
+	 * 过滤CMP用户填写药物信息为空的信息
+	 * 
+	 * @param list
+	 * @author leamo
+	 * @date 2016年2月3日 下午3:40:59
+	 */
 	private void filterFillDrugResistanceSite(List<DrugResistanceSite> list) {
 		CollectionUtils.filter(list, new Predicate() {
 			@Override
@@ -775,7 +767,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getSplitInfo(String dataKey, Integer projectId, Integer appId) {
 		Split split = reportService.getSplitReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("split", split);
 		map.put("splitId", split.getId().toString());
 		return map;
@@ -808,7 +800,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getMIBReportInfo(String dataKey, Integer projectId, Integer appId) {
 		MIB mib = reportService.getMIBReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		if (mib.getReadsDistributionInfo() != null && mib.getReadsDistributionInfo().size() > 0)
 			map.put("readsDistributionInfo", JSONArray.fromObject(mib.getReadsDistributionInfo()));
 		if (mib.getFamilyDistributionInfo() != null && mib.getFamilyDistributionInfo().size() > 0)
@@ -912,36 +904,36 @@ public class ReportAction {
 		return mv;
 	}
 
-    /**
-     * 获取 BSI 的患者报告
-     * 
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     * @date 2016-1-10 下午10:40:40
-     */
-    @ActionLog(value = "查看BSI患者报告", button = "数据报告")
-    @RequestMapping("getBSIPatientReportInfo")
-    @ResponseBody
-    public Map<String, Object> getBSIPatientReportInfo(String dataKey, Integer projectId, Integer appId, String batch,
-            Integer dataIndex) {
-        log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
-        Map<String, Object> dataMap = new HashMap<String, Object>();
-        // 代表上一页, 下一页, 需要动态获取dataKey, projectId, dataKey
-        // if (dataIndex != 0) {
-        // Page pager = new Page(dataIndex, 1);
-        // PageList<Task> batchPageList = taskService.findTasksByBatch(pager,
-        // ConstantsData.getLoginUserId(), appId,
-        // batch);
-        // BSI bsi =
-        // reportService.getBSIReport(batchPageList.getDatas().get(0).getDataKey(),
-        // batchPageList.getDatas().get(0).getProjectId(),
-        // batchPageList.getDatas().get(0).getAppId());
-        // DataFile df = dataService.getDataByKey(dataKey);
-        // dataMap.put("bsi", bsi);
-        // dataMap.put("data", df);
-        // } else {
+	/**
+	 * 获取 BSI 的患者报告
+	 * 
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 * @date 2016-1-10 下午10:40:40
+	 */
+	@ActionLog(value = "查看BSI患者报告", button = "数据报告")
+	@RequestMapping("getBSIPatientReportInfo")
+	@ResponseBody
+	public Map<String, Object> getBSIPatientReportInfo(String dataKey, Integer projectId, Integer appId, String batch,
+			Integer dataIndex) {
+		log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		// 代表上一页, 下一页, 需要动态获取dataKey, projectId, dataKey
+		// if (dataIndex != 0) {
+		// Page pager = new Page(dataIndex, 1);
+		// PageList<Task> batchPageList = taskService.findTasksByBatch(pager,
+		// ConstantsData.getLoginUserId(), appId,
+		// batch);
+		// BSI bsi =
+		// reportService.getBSIReport(batchPageList.getDatas().get(0).getDataKey(),
+		// batchPageList.getDatas().get(0).getProjectId(),
+		// batchPageList.getDatas().get(0).getAppId());
+		// DataFile df = dataService.getDataByKey(dataKey);
+		// dataMap.put("bsi", bsi);
+		// dataMap.put("data", df);
+		// } else {
 		Task task = taskService.findTaskByProjectid(projectId);
 		Sample sample = sampleservice.findByPrimaryKey(task.getSampleId());
 		BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
@@ -949,45 +941,35 @@ public class ReportAction {
 		dataMap.put("bsi", bsi);
 		dataMap.put("data", df);
 		dataMap.put("sample", sample);
-        // }
-        return dataMap;
-    }
+		// }
+		return dataMap;
+	}
 
-
-    // XXX 百菌探报证结束后删除（完全拷贝的↑）
-    @RequestMapping("/baozheng/getBSIPatientReport")
-    public ModelAndView getBSIPatientReport1(String dataKey, Integer projectId,
-            Integer appId, Integer reportIndex,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size, String condition,
-            @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName,
-            @RequestParam(defaultValue = "asc") String sortPeriod, String batch,
-            String period, String beginDate, String endDate,
-            String sampleName) {
-        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
-        Matcher m = p.matcher(condition);
-        StringBuffer con_sb = new StringBuffer();
-        while (m.find()) {
-            String rep = "\\\\" + m.group(0);
-            m.appendReplacement(con_sb, rep);
-        }
-        m.appendTail(con_sb);
-        Page pager = new Page((page - 1) * size + reportIndex, 1);
-        PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortBatch, sortName, sortPeriod, batch, period, beginDate,
-                endDate, appId, sampleName);
-        ModelAndView mv = getBSIModelAndView("bsi/baozheng/report_data_new",
-                dataKey,
-                projectId, appId);
-        DataFile df = dataService.getDataByKey(dataKey);
-        mv.addObject("pageList", pageList);
-        mv.addObject("data", df);
-        return mv;
-    }
+	// XXX 百菌探报证结束后删除（完全拷贝的↑）
+	@RequestMapping("/baozheng/getBSIPatientReport")
+	public ModelAndView getBSIPatientReport1(String dataKey, Integer projectId, Integer appId, Integer reportIndex,
+			@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size, String condition,
+			@RequestParam(defaultValue = "0") int sort, @RequestParam(defaultValue = "desc") String sortDate,
+			@RequestParam(defaultValue = "asc") String sortBatch, @RequestParam(defaultValue = "asc") String sortName,
+			@RequestParam(defaultValue = "asc") String sortPeriod, String batch, String period, String beginDate,
+			String endDate, String sampleName) {
+		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+		Matcher m = p.matcher(condition);
+		StringBuffer con_sb = new StringBuffer();
+		while (m.find()) {
+			String rep = "\\\\" + m.group(0);
+			m.appendReplacement(con_sb, rep);
+		}
+		m.appendTail(con_sb);
+		Page pager = new Page((page - 1) * size + reportIndex, 1);
+		PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
+				sort, sortDate, sortBatch, sortName, sortPeriod, batch, period, beginDate, endDate, appId, sampleName);
+		ModelAndView mv = getBSIModelAndView("bsi/baozheng/report_data_new", dataKey, projectId, appId);
+		DataFile df = dataService.getDataByKey(dataKey);
+		mv.addObject("pageList", pageList);
+		mv.addObject("data", df);
+		return mv;
+	}
 
 	@ActionLog(value = "查看BSI患者报告", button = "数据报告")
 	@RequestMapping("getPrevOrNextBSIReport")
@@ -1032,105 +1014,98 @@ public class ReportAction {
 
 	}
 
-    @ActionLog(value = "查看BSI患者报告", button = "数据报告")
-    @RequestMapping("getPrevOrNextBSIReportInfo")
-    @ResponseBody
-    public Map<String, Object> getPrevOrNextBSIReportInfo(@RequestParam(defaultValue = "1") int page, String condition,
-            @RequestParam(defaultValue = "0") int totalPage, @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
-            Boolean isPrev, String batch, String period, String beginDate,
-            String endDate, String sampleName, Integer appId) {
-        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
-        Matcher m = p.matcher(condition);
-        StringBuffer con_sb = new StringBuffer();
-        while (m.find()) {
-            String rep = "\\\\" + m.group(0);
-            m.appendReplacement(con_sb, rep);
-        }
-        m.appendTail(con_sb);
-        Page pager = new Page(page, 1);
-        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager, ConstantsData.getLoginUserId(), condition,
-                sort, sortDate, sortBatch, sortName, sortPeriod, isPrev, totalPage, batch, period, beginDate, endDate,
-                appId, sampleName);
-        if (pageList != null) {
-            List<Task> list = pageList.getDatas();
-            if (list != null) {
-                Task task = list.get(0);
-                if (task != null) {
-                    Map<String, Object> dataMap = new HashMap<String, Object>();
-                    String dataKey = task.getDataKey();
-                    BSI bsi = reportService.getBSIReport(dataKey, task.getProjectId(), task.getAppId());
-                    Map<String, List<List<String>>> mibCharList = new HashMap<>();
-                    dataMap.put("uploadPath", "/upload/");
-                    Project project = projectService.selectByPrimaryKey(task.getProjectId());
-                    dataMap.put("project", project);
+	@ActionLog(value = "查看BSI患者报告", button = "数据报告")
+	@RequestMapping("getPrevOrNextBSIReportInfo")
+	@ResponseBody
+	public Map<String, Object> getPrevOrNextBSIReportInfo(@RequestParam(defaultValue = "1") int page, String condition,
+			@RequestParam(defaultValue = "0") int totalPage, @RequestParam(defaultValue = "0") int sort,
+			@RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+			@RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
+			Boolean isPrev, String batch, String period, String beginDate, String endDate, String sampleName,
+			Integer appId) {
+		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+		Matcher m = p.matcher(condition);
+		StringBuffer con_sb = new StringBuffer();
+		while (m.find()) {
+			String rep = "\\\\" + m.group(0);
+			m.appendReplacement(con_sb, rep);
+		}
+		m.appendTail(con_sb);
+		Page pager = new Page(page, 1);
+		PageList<Task> pageList = taskService.findNextOrPrevTasks(pager, ConstantsData.getLoginUserId(), condition,
+				sort, sortDate, sortBatch, sortName, sortPeriod, isPrev, totalPage, batch, period, beginDate, endDate,
+				appId, sampleName);
+		if (pageList != null) {
+			List<Task> list = pageList.getDatas();
+			if (list != null) {
+				Task task = list.get(0);
+				if (task != null) {
+					Map<String, Object> dataMap = new HashMap<String, Object>();
+					String dataKey = task.getDataKey();
+					BSI bsi = reportService.getBSIReport(dataKey, task.getProjectId(), task.getAppId());
+					Map<String, List<List<String>>> mibCharList = new HashMap<>();
+					dataMap.put("uploadPath", "/upload/");
+					Project project = projectService.selectByPrimaryKey(task.getProjectId());
+					dataMap.put("project", project);
 
-                    dataMap.put("readsDistributionInfo", bsi.getReadsDistributionInfo());
-                    dataMap.put("familyDistributionInfo", bsi.getFamilyDistributionInfo());
-                    mibCharList.put("genusDistributionInfo", bsi.getGenusDistributionInfo());
-                    dataMap.put("bsiCharList", mibCharList);
-                    dataMap.put("bsi", bsi);
-                    DataFile df = dataService.getDataByKey(dataKey);
-                    dataMap.put("data", df);
-                    dataMap.put("pageList", pageList);
+					dataMap.put("readsDistributionInfo", bsi.getReadsDistributionInfo());
+					dataMap.put("familyDistributionInfo", bsi.getFamilyDistributionInfo());
+					mibCharList.put("genusDistributionInfo", bsi.getGenusDistributionInfo());
+					dataMap.put("bsiCharList", mibCharList);
+					dataMap.put("bsi", bsi);
+					DataFile df = dataService.getDataByKey(dataKey);
+					dataMap.put("data", df);
+					dataMap.put("pageList", pageList);
 
-                    return dataMap;
-                }
-            }
-        }
-        return null;
-    }
+					return dataMap;
+				}
+			}
+		}
+		return null;
+	}
 
-    // XXX 百菌探报证结束后删除（完全拷贝的↑）
-    @RequestMapping("/baozheng/getPrevOrNextBSIReport")
-    public ModelAndView getPrevOrNextBSIReport1(
-            @RequestParam(defaultValue = "1") int page, String condition,
-            @RequestParam(defaultValue = "0") int totalPage,
-            @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName,
-            @RequestParam(defaultValue = "asc") String sortPeriod,
-            Boolean isPrev, String batch, String period, String beginDate,
-            String endDate, String sampleName) {
-        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
-        Matcher m = p.matcher(condition);
-        StringBuffer con_sb = new StringBuffer();
-        while (m.find()) {
-            String rep = "\\\\" + m.group(0);
-            m.appendReplacement(con_sb, rep);
-        }
-        m.appendTail(con_sb);
-        Page pager = new Page(page, 1);
-        PageList<Task> pageList = taskService.findNextOrPrevTasks(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortBatch, sortName, sortPeriod, isPrev, totalPage, batch,
-                period, beginDate, endDate, 118, sampleName);
-        if (pageList != null) {
-            List<Task> list = pageList.getDatas();
-            if (list != null) {
-                Task task = list.get(0);
-                if (task != null) {
-                    String dataKey = task.getDataKey();
-                    ModelAndView mv = getBSIModelAndView(
-                            "bsi/baozheng/report_data_new", dataKey,
-                            task.getProjectId(), task.getAppId());
-                    DataFile df = dataService.getDataByKey(dataKey);
-                    mv.addObject("data", df);
-                    mv.addObject("pageList", pageList);
-                    return mv;
-                } else {
-                    return null;
-                }
-            } else {
-                return null;
-            }
-        } else {
-            return null;
-        }
+	// XXX 百菌探报证结束后删除（完全拷贝的↑）
+	@RequestMapping("/baozheng/getPrevOrNextBSIReport")
+	public ModelAndView getPrevOrNextBSIReport1(@RequestParam(defaultValue = "1") int page, String condition,
+			@RequestParam(defaultValue = "0") int totalPage, @RequestParam(defaultValue = "0") int sort,
+			@RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+			@RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
+			Boolean isPrev, String batch, String period, String beginDate, String endDate, String sampleName) {
+		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+		Matcher m = p.matcher(condition);
+		StringBuffer con_sb = new StringBuffer();
+		while (m.find()) {
+			String rep = "\\\\" + m.group(0);
+			m.appendReplacement(con_sb, rep);
+		}
+		m.appendTail(con_sb);
+		Page pager = new Page(page, 1);
+		PageList<Task> pageList = taskService.findNextOrPrevTasks(pager, ConstantsData.getLoginUserId(), condition,
+				sort, sortDate, sortBatch, sortName, sortPeriod, isPrev, totalPage, batch, period, beginDate, endDate,
+				118, sampleName);
+		if (pageList != null) {
+			List<Task> list = pageList.getDatas();
+			if (list != null) {
+				Task task = list.get(0);
+				if (task != null) {
+					String dataKey = task.getDataKey();
+					ModelAndView mv = getBSIModelAndView("bsi/baozheng/report_data_new", dataKey, task.getProjectId(),
+							task.getAppId());
+					DataFile df = dataService.getDataByKey(dataKey);
+					mv.addObject("data", df);
+					mv.addObject("pageList", pageList);
+					return mv;
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
 
-    }
+	}
 
 	/**
 	 * 获取 BSI 的患者报告
@@ -1147,13 +1122,12 @@ public class ReportAction {
 		return getBSIModelAndView("bsi/report_data_bsi_analy", dataKey, projectId, appId);
 	}
 
-    // XXX 百菌探报证结束后删除（完全拷贝的↑）
-    @RequestMapping("/baozheng/getBSIAnalyReport")
-    public ModelAndView getBSIAnalyReport1(String dataKey, Integer projectId,
-            Integer appId) {
-        return getBSIModelAndView("bsi/baozheng/report_data_bsi_analy", dataKey,
-                projectId, appId);
-    }
+	// XXX 百菌探报证结束后删除（完全拷贝的↑）
+	@RequestMapping("/baozheng/getBSIAnalyReport")
+	public ModelAndView getBSIAnalyReport1(String dataKey, Integer projectId, Integer appId) {
+		return getBSIModelAndView("bsi/baozheng/report_data_bsi_analy", dataKey, projectId, appId);
+	}
+
 	/**
 	 * 获取 BSI 的数据报告
 	 * 
@@ -1186,7 +1160,8 @@ public class ReportAction {
 	public Map<String, Object> getBSIInfo(String dataKey, Integer projectId, Integer appId) {
 		BSI bsi = reportService.getBSIReport(dataKey, projectId, appId);
 		// Map<String, JSONArray> mibCharList = new HashMap<>();
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
+        DataFile df = dataService.getDataByKey(dataKey);
 		if (bsi == null)
 			return map;
 		// mibCharList.put("readsDistributionInfo",
@@ -1197,6 +1172,7 @@ public class ReportAction {
 		// JSONArray.fromObject(bsi.getGenusDistributionInfo()));
 		// map.put("bsiCharList", mibCharList);
 		map.put("bsi", bsi);
+        map.put("data", df);
 		return map;
 	}
 
@@ -1309,7 +1285,7 @@ public class ReportAction {
 			// 构建pdf路径
 			Integer userId = ConstantsData.getLoginUserId();
 			String filePath = PropertiesUtil.rockyPdfPath + "/" + userId + "/" + rocky.getDataKey() + "/"
-			        + rocky.getDataKey() + ".pdf";
+					+ rocky.getDataKey() + ".pdf";
 			// 删除原有的pdf,创建新的pdf
 			File pdfFile = new File(filePath);
 			if (pdfFile.exists()) {
@@ -1340,37 +1316,37 @@ public class ReportAction {
 		return mv.addObject("hbv", hbv);
 	}
 
-    /**
-     * 
-     * @author miaoqi
-     * @date 2016年9月6日下午1:34:54
-     * @description 查看HBV数据报告
-     * @param dataKey
-     * @param projectId
-     * @param appId
-     * @return
-     *
-     */
-    @ActionLog(value = "查看HBV数据报告", button = "数据报告")
-    @RequestMapping("getHBVInfo")
-    @ResponseBody
-    public Map<String, Object> getHBVInfo(String dataKey, Integer projectId, Integer appId) {
-        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
-        hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
-        List<Map.Entry<String, Map<String, String>>> hbvOtherSiteList = reportService
-                .getHBVOtherSiteByUserId(ConstantsData.getLoginUserId(), appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
-        map.put("hbvOtherSiteList", hbvOtherSiteList);
-        map.put("hbv", hbv);
-        return map;
-    }
+	/**
+	 * 
+	 * @author miaoqi
+	 * @date 2016年9月6日下午1:34:54
+	 * @description 查看HBV数据报告
+	 * @param dataKey
+	 * @param projectId
+	 * @param appId
+	 * @return
+	 *
+	 */
+	@ActionLog(value = "查看HBV数据报告", button = "数据报告")
+	@RequestMapping("getHBVInfo")
+	@ResponseBody
+	public Map<String, Object> getHBVInfo(String dataKey, Integer projectId, Integer appId) {
+		HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
+		hbv.setReporttxt(CustomStringUtils.htmlbr(hbv.getReporttxt()));
+		List<Map.Entry<String, Map<String, String>>> hbvOtherSiteList = reportService
+				.getHBVOtherSiteByUserId(ConstantsData.getLoginUserId(), appId);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		map.put("hbvOtherSiteList", hbvOtherSiteList);
+		map.put("hbv", hbv);
+		return map;
+	}
 
 	@ActionLog(value = "查看FSocg数据报告", button = "数据报告")
 	@RequestMapping("getFSocgInfo")
 	@ResponseBody
 	public Map<String, Object> getFSocgInfo(String dataKey, Integer projectId, Integer appId) {
 		FSocg fsocg = reportService.getFSocgReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("fsocg", fsocg);
 		return map;
 	}
@@ -1409,7 +1385,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getABINJInfo(String dataKey, Integer projectId, Integer appId) {
 		ABINJ abinj = reportService.getABINJReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("abinj", abinj);
 		return map;
 	}
@@ -1448,7 +1424,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> get16SInfo(String dataKey, Integer projectId, Integer appId) {
 		S16 s16 = reportService.get16SReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("s16", s16);
 		return map;
 	}
@@ -1489,7 +1465,7 @@ public class ReportAction {
 	@RequestMapping("getPgsInfo")
 	@ResponseBody
 	public Map<String, Object> getPgsInfo(String dataKey, Integer projectId, Integer appId) {
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
 		List<Experiment> expList = null;
 		if (pgs != null) {
@@ -1570,7 +1546,7 @@ public class ReportAction {
 				oncogene.setOut(out);
 			}
 		}
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("oncogene", oncogene);
 		return map;
 	}
@@ -1608,7 +1584,7 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> getHCVInfo(String dataKey, Integer projectId, Integer appId) {
 		HCV hcv = reportService.getHCVReport(dataKey, projectId, appId);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("hcv", hcv);
 		return map;
 	}
@@ -1667,7 +1643,7 @@ public class ReportAction {
 		} else {
 			translate.setResult(CustomStringUtils.htmlbr(result));
 		}
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("translate", translate);
 		return map;
 	}
@@ -1710,7 +1686,7 @@ public class ReportAction {
 		if (StringUtils.isNotBlank(position)) {
 			egfr.setPosition(CustomStringUtils.htmlbr(position));
 		}
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("egfr", egfr);
 		return map;
 	}
@@ -1764,7 +1740,7 @@ public class ReportAction {
 		if (StringUtils.isNotBlank(pos)) {
 			kras.setPosition(CustomStringUtils.htmlbr(pos));
 		}
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("kras", kras);
 		return map;
 	}
@@ -1815,7 +1791,7 @@ public class ReportAction {
 		if (StringUtils.isNotBlank(postion)) {
 			dpd.setPosition(CustomStringUtils.htmlbr(postion));
 		}
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("dpd", dpd);
 		return map;
 	}
@@ -1870,7 +1846,7 @@ public class ReportAction {
 		if (StringUtils.isNotBlank(mutationPosition)) {
 			ugt.setMutationPosition(CustomStringUtils.htmlbr(mutationPosition));
 		}
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("ugt", ugt);
 		return map;
 	}
@@ -1948,7 +1924,7 @@ public class ReportAction {
 		Integer wild = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 1);
 		// 非野生型
 		Integer mutant = reportService.getTBINHisWildByGeneNameAndUserId(userId, simpleGeneName, 2);
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("tbinh", tbinh);
 		map.put("wild", wild);
 		map.put("mutant", mutant);
@@ -1993,7 +1969,7 @@ public class ReportAction {
 		TBRifampicin tbrifampicin = reportService.getTBRifampicinReport(dataKey, projectId, appId);
 		String report = tbrifampicin.getReport();
 		tbrifampicin.setReport(CustomStringUtils.toTable(report));
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("tbrifampicin", tbrifampicin);
 		return map;
 	}
@@ -2034,7 +2010,7 @@ public class ReportAction {
 		BRAF braf = reportService.getBRAFReport(dataKey, projectId, appId);
 		String mp = braf.getMutationPosition();
 		braf.setMutationPosition(CustomStringUtils.toTable(mp));
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("braf", braf);
 		return map;
 	}
@@ -2114,19 +2090,19 @@ public class ReportAction {
 	public void printPGS(Integer appId, Integer projectId, String dataKey, Integer flag) {
 		Pgs pgs = reportService.getPgsReport(dataKey, projectId, appId);
 		// 涉及共享，此处不能取登陆者的companyId
-        String path = null;
-        // 如果是上海国妇婴医院就判断report.txt中的内容
-        if (pgs.getCompanyId().intValue() == 949) {
-            String report = pgs.getReport() != null ? pgs.getReport().trim() : null;
-            // 只包含XY或者XX, 代表正常
-            if ("XY".equals(report) || ("XX").equals(report)) {
-                path = pgs.getCompanyId() + "/PGS/normal_print.vm";
-            } else { // 有突变
-                path = pgs.getCompanyId() + "/PGS/abnormal_print.vm";
-            }
-        } else {
-            path = pgs.getCompanyId() + "/PGS/print.vm";
-        }
+		String path = null;
+		// 如果是上海国妇婴医院就判断report.txt中的内容
+		if (pgs.getCompanyId().intValue() == 949) {
+			String report = pgs.getReport() != null ? pgs.getReport().trim() : null;
+			// 只包含XY或者XX, 代表正常
+			if ("XY".equals(report) || ("XX").equals(report)) {
+				path = pgs.getCompanyId() + "/PGS/normal_print.vm";
+			} else { // 有突变
+				path = pgs.getCompanyId() + "/PGS/abnormal_print.vm";
+			}
+		} else {
+			path = pgs.getCompanyId() + "/PGS/print.vm";
+		}
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/PGS/print.vm";
 		}
@@ -2146,7 +2122,6 @@ public class ReportAction {
 		context.put("fsocg", fsocg);
 		returnToVelocity(path, context, projectId);
 	}
-
 
 	/**
 	 * 
@@ -2178,22 +2153,22 @@ public class ReportAction {
 		returnToVelocity(path, context, projectId);
 	}
 
-    /**
-     * 
-     * @description 获取已保存的用户签名
-     * @author miaoqi
-     * @date 2016年12月5日下午3:07:26
-     *
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    @RequestMapping(value = "signature", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> signature(String file) throws IOException {
-        String path = IconConstants.getSignaturePath(file);
-        File targetFile = new File(path);
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
-    }
+	/**
+	 * 
+	 * @description 获取已保存的用户签名
+	 * @author miaoqi
+	 * @date 2016年12月5日下午3:07:26
+	 *
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "signature", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> signature(String file) throws IOException {
+		String path = IconConstants.getSignaturePath(file);
+		File targetFile = new File(path);
+		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(targetFile), null, HttpStatus.OK);
+	}
 
 	/**
 	 * 打印TBRifampicin
@@ -2340,43 +2315,43 @@ public class ReportAction {
 		returnToVelocity(path, context, projectId);
 	}
 
-    /**
-     * 打印HBV
-     * 
-     * @param appId
-     * @param dataKey
-     * @param projectId
-     * @param flag
-     * @return
-     * @author lin
-     * @date 2016年3月21日下午2:51:25
-     */
-    @ActionLog(value = "打印HBV数据报告", button = "打印数据报告")
-    @RequestMapping("printSanger")
-    @ResponseBody
-    public void printSanger(Integer appId, String dataKey, Integer projectId, Integer flag) {
-        // 获取结果视图路径
-        String path = null;
-        if (flag == 0) { // 详细报告
-            path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_detail.vm";
-            if (ReportAction.class.getResource("/templates/report/" + path) == null) {
-                path = "default/" + appId + "/print_detail.vm";
-            }
-        } else { // 简要报告
-            path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_brief.vm";
-            if (ReportAction.class.getResource("/templates/report/" + path) == null) {
-                path = "default/" + appId + "/print_brief.vm";
-            }
-        }
-        Map<String, Object> context = new HashMap<String, Object>();
-        HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
-        Integer userId = ConstantsData.getLoginUserId();
-        Integer fileId = dataService.getDataByKey(dataKey).getFileId();
-        Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
-        context.put("hbv", hbv);
-        context.put("report", report);
-        returnToVelocity(path, context, projectId);
-    }
+	/**
+	 * 打印HBV
+	 * 
+	 * @param appId
+	 * @param dataKey
+	 * @param projectId
+	 * @param flag
+	 * @return
+	 * @author lin
+	 * @date 2016年3月21日下午2:51:25
+	 */
+	@ActionLog(value = "打印HBV数据报告", button = "打印数据报告")
+	@RequestMapping("printSanger")
+	@ResponseBody
+	public void printSanger(Integer appId, String dataKey, Integer projectId, Integer flag) {
+		// 获取结果视图路径
+		String path = null;
+		if (flag == 0) { // 详细报告
+			path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_detail.vm";
+			if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+				path = "default/" + appId + "/print_detail.vm";
+			}
+		} else { // 简要报告
+			path = ConstantsData.getLoginCompanyId() + "/" + appId + "/print_brief.vm";
+			if (ReportAction.class.getResource("/templates/report/" + path) == null) {
+				path = "default/" + appId + "/print_brief.vm";
+			}
+		}
+		Map<String, Object> context = new HashMap<String, Object>();
+		HBV hbv = reportService.getHBVReport(dataKey, projectId, appId);
+		Integer userId = ConstantsData.getLoginUserId();
+		Integer fileId = dataService.getDataByKey(dataKey).getFileId();
+		Report report = reportService.getReport(userId, appId, projectId, fileId, ReportType.DATA);
+		context.put("hbv", hbv);
+		context.put("report", report);
+		returnToVelocity(path, context, projectId);
+	}
 
 	/**
 	 * 打印HCV
@@ -2794,7 +2769,7 @@ public class ReportAction {
 		try {
 			Project project = projectService.selectByPrimaryKey(projectId);
 			context.put("uploadPath", "/upload/");
-            context.put("rockyResult", "/output/");
+			context.put("rockyResult", "/output/");
 			context.put("project", project);
 			HttpServletResponse response = ConstantsData.getResponse();
 			response.setContentType("text/html;charset=UTF-8");
@@ -2804,56 +2779,52 @@ public class ReportAction {
 		}
 	}
 
-    // XXX 百菌探报证结束后删除（完全拷贝的↑）
-    @RequestMapping("/baozheng/bsi/reportMain")
-    public ModelAndView reportMain1() {
-        ModelAndView mv = new ModelAndView("bsi/baozheng/report_main");
-        Integer userId = ConstantsData.getLoginUserId();
-        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118,
-                userId);
-        List<String> batchList = dataService.getBatchList(userId);
-        periodMap.put("uploaded", batchList.size());
-        mv.addObject("periodMap", periodMap);
-        mv.addObject("batchList", batchList);
-        mv.addObject("nowDate", new Date());
-        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
-        return mv;
-    }
-    @ActionLog(value = "获取所有数据任务列表", button = "百菌探报告")
-    @RequestMapping("bsi/reportList")
-    public ModelAndView reportList(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        ModelAndView mv = new ModelAndView("bsi/report_list");
-        Page pager = new Page(page, size);
-        Integer userId = ConstantsData.getLoginUserId();
-        PageList<Task> pageList = taskService.findTasksByUser(pager, userId,
-                118);
-        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118,
-                userId);
-        mv.addObject("pageList", pageList);
-        mv.addObject("periodMap", periodMap);
-        mv.addObject("nowDate", new Date());
-        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
-        return mv;
-    }
+	// XXX 百菌探报证结束后删除（完全拷贝的↑）
+	@RequestMapping("/baozheng/bsi/reportMain")
+	public ModelAndView reportMain1() {
+		ModelAndView mv = new ModelAndView("bsi/baozheng/report_main");
+		Integer userId = ConstantsData.getLoginUserId();
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+		List<String> batchList = dataService.getBatchList(userId);
+		periodMap.put("uploaded", batchList.size());
+		mv.addObject("periodMap", periodMap);
+		mv.addObject("batchList", batchList);
+		mv.addObject("nowDate", new Date());
+		log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+		return mv;
+	}
 
-    // XXX 百菌探报证结束后删除（完全拷贝的↑）
-    @RequestMapping("/baozheng/bsi/reportList")
-    public ModelAndView reportList1(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        ModelAndView mv = new ModelAndView("bsi/baozheng/report_list");
-        Page pager = new Page(page, size);
-        Integer userId = ConstantsData.getLoginUserId();
-        PageList<Task> pageList = taskService.findTasksByUser(pager, userId,
-                118);
-        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118,
-                userId);
-        mv.addObject("pageList", pageList);
-        mv.addObject("periodMap", periodMap);
-        mv.addObject("nowDate", new Date());
-        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
-        return mv;
-    }
+	@ActionLog(value = "获取所有数据任务列表", button = "百菌探报告")
+	@RequestMapping("bsi/reportList")
+	public ModelAndView reportList(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "20") int size) {
+		ModelAndView mv = new ModelAndView("bsi/report_list");
+		Page pager = new Page(page, size);
+		Integer userId = ConstantsData.getLoginUserId();
+		PageList<Task> pageList = taskService.findTasksByUser(pager, userId, 118);
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+		mv.addObject("pageList", pageList);
+		mv.addObject("periodMap", periodMap);
+		mv.addObject("nowDate", new Date());
+		log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+		return mv;
+	}
+
+	// XXX 百菌探报证结束后删除（完全拷贝的↑）
+	@RequestMapping("/baozheng/bsi/reportList")
+	public ModelAndView reportList1(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "20") int size) {
+		ModelAndView mv = new ModelAndView("bsi/baozheng/report_list");
+		Page pager = new Page(page, size);
+		Integer userId = ConstantsData.getLoginUserId();
+		PageList<Task> pageList = taskService.findTasksByUser(pager, userId, 118);
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+		mv.addObject("pageList", pageList);
+		mv.addObject("periodMap", periodMap);
+		mv.addObject("nowDate", new Date());
+		log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+		return mv;
+	}
 	// @ActionLog(value = "报告菜单", button = "乳腺癌报告")
 	// @RequestMapping("rocky/reportMain_bak")
 	// public ModelAndView rockyReportMain_bak(@RequestParam(defaultValue = "1")
@@ -2900,7 +2871,7 @@ public class ReportAction {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer userId = ConstantsData.getLoginUserId();
 		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
-        List<String> batchList = dataService.getBatchListByAppId(userId, 123);
+		List<String> batchList = dataService.getBatchListByAppId(userId, 123);
 		Page pager = new Page(page, size);
 
 		ArrayList<String> queryBatches = null;
@@ -2963,7 +2934,7 @@ public class ReportAction {
 		ModelAndView mv = new ModelAndView("rocky/report/report_data_main");
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		mv.addObject("rocky", rocky);
-        mv.addObject("rockyPdfPath", PropertiesUtil.rockyPdfPath);
+		mv.addObject("rockyPdfPath", PropertiesUtil.rockyPdfPath);
 		mv.addObject("significances", ConstantsData.significances());
 		log.info("乳腺癌用户{}查看数据报告", ConstantsData.getLoginUserName());
 		return mv;
@@ -2984,7 +2955,7 @@ public class ReportAction {
 	@RequestMapping("getRockyInfo")
 	@ResponseBody
 	public Map<String, Object> getRockyInfo(String dataKey, Integer projectId, Integer appId) {
-        Map<String, Object> map = getCommonInfo(projectId, dataKey);
+		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		Rocky rocky = reportService.getRockyReport(dataKey, projectId, appId);
 		map.put("rocky", rocky);
 		map.put("significances", ConstantsData.significances());
@@ -2992,20 +2963,20 @@ public class ReportAction {
 		return map;
 	}
 
-    @ActionLog(value = "打开报告列表", button = "百菌探报告")
-    @RequestMapping("bsi/reportMain")
-    public ModelAndView reportMain() {
-        ModelAndView mv = new ModelAndView("bsi/report_main");
-        Integer userId = ConstantsData.getLoginUserId();
-        Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
-        List<String> batchList = dataService.getBatchList(userId);
-        periodMap.put("uploaded", batchList.size());
-        mv.addObject("periodMap", periodMap);
-        mv.addObject("batchList", batchList);
-        mv.addObject("nowDate", new Date());
-        log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
-        return mv;
-    }
+	@ActionLog(value = "打开报告列表", button = "百菌探报告")
+	@RequestMapping("bsi/reportMain")
+	public ModelAndView reportMain() {
+		ModelAndView mv = new ModelAndView("bsi/report_main");
+		Integer userId = ConstantsData.getLoginUserId();
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(118, userId);
+		List<String> batchList = dataService.getBatchList(userId);
+		periodMap.put("uploaded", batchList.size());
+		mv.addObject("periodMap", periodMap);
+		mv.addObject("batchList", batchList);
+		mv.addObject("nowDate", new Date());
+		log.info("血流用户{}查看我的报告列表", ConstantsData.getLoginUserName());
+		return mv;
+	}
 
 	/**
 	 * 根据条件获取数据列表
@@ -3047,52 +3018,50 @@ public class ReportAction {
 		return mv;
 	}
 
-    /**
-     * 
-     * @description 整合bsi的分页查询
-     * @author miaoqi
-     * @date 2016年11月9日上午11:26:12
-     *
-     * @param page
-     * @param size
-     * @param condition
-     * @param sort
-     * @param sortDate
-     * @param sortBatch
-     * @param sortName
-     * @param sortPeriod
-     * @param batch
-     * @param period
-     * @param beginDate
-     * @param endDate
-     * @param sampleName
-     * @return
-     */
-    @ActionLog(value = "条件检索任务列表", button = "报告搜索/分页")
-    @RequestMapping("bsi/reportPageQuery")
-    @ResponseBody
-    public Map<String, Object> bsiReportPageQuery(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
-            String batch, String period, String beginDate, String endDate,
-            String sampleName, Integer appId) {
-        log.info("用户 {} 根据条件检索数据列表", ConstantsData.getLoginUserName());
-        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
-        Matcher m = p.matcher(condition);
-        StringBuffer con_sb = new StringBuffer();
-        while (m.find()) {
-            String rep = "\\\\" + m.group(0);
-            m.appendReplacement(con_sb, rep);
-        }
-        m.appendTail(con_sb);
-        Integer userId = ConstantsData.getLoginUserId();
-        // 封装结果map
-        Map<String, Object> map = new HashMap<String, Object>();
-        Map<String, Object> periodMap = taskService.findTaskPeriodNum(appId,
-                userId);
+	/**
+	 * 
+	 * @description 整合bsi的分页查询
+	 * @author miaoqi
+	 * @date 2016年11月9日上午11:26:12
+	 *
+	 * @param page
+	 * @param size
+	 * @param condition
+	 * @param sort
+	 * @param sortDate
+	 * @param sortBatch
+	 * @param sortName
+	 * @param sortPeriod
+	 * @param batch
+	 * @param period
+	 * @param beginDate
+	 * @param endDate
+	 * @param sampleName
+	 * @return
+	 */
+	@ActionLog(value = "条件检索任务列表", button = "报告搜索/分页")
+	@RequestMapping("bsi/reportPageQuery")
+	@ResponseBody
+	public Map<String, Object> bsiReportPageQuery(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
+			@RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+			@RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
+			String batch, String period, String beginDate, String endDate, String sampleName, Integer appId) {
+		log.info("用户 {} 根据条件检索数据列表", ConstantsData.getLoginUserName());
+		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+		Matcher m = p.matcher(condition);
+		StringBuffer con_sb = new StringBuffer();
+		while (m.find()) {
+			String rep = "\\\\" + m.group(0);
+			m.appendReplacement(con_sb, rep);
+		}
+		m.appendTail(con_sb);
+		Integer userId = ConstantsData.getLoginUserId();
+		// 封装结果map
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> periodMap = taskService.findTaskPeriodNum(appId, userId);
 		List<String> batchList1 = dataService.getBsiBatchList(userId, appId);
-        List<String> batchList2 = dataService.getBatchListByAppId(userId, 118);
+		List<String> batchList2 = dataService.getBatchListByAppId(userId, 118);
 		List<String> batchList = new ArrayList<>();
 		for (String temp : batchList1) {
 			if (!batchList.contains(temp)) {
@@ -3104,47 +3073,40 @@ public class ReportAction {
 				batchList.add(temp);
 			}
 		}
-        periodMap.put("uploaded", batchList.size());
-        map.put("periodMap", periodMap);
-        map.put("batchList", batchList);
-        map.put("nowDate", new Date());
-        Page pager = new Page(page, size);
-        PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
-                sort, sortDate, sortBatch, sortName, sortPeriod, batch, period,
-                beginDate, endDate, appId, sampleName);
-        map.put("pageList", pageList);
-        return map;
-    }
+		periodMap.put("uploaded", batchList.size());
+		map.put("periodMap", periodMap);
+		map.put("batchList", batchList);
+		map.put("nowDate", new Date());
+		Page pager = new Page(page, size);
+		PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
+				sort, sortDate, sortBatch, sortName, sortPeriod, batch, period, beginDate, endDate, appId, sampleName);
+		map.put("pageList", pageList);
+		return map;
+	}
 
-    // XXX 百菌探报证结束后删除（完全拷贝的↑）
-    @RequestMapping("/baozheng/bsi/searchReportList")
-    public ModelAndView reportList1(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size, String condition,
-            @RequestParam(defaultValue = "0") int sort,
-            @RequestParam(defaultValue = "desc") String sortDate,
-            @RequestParam(defaultValue = "asc") String sortBatch,
-            @RequestParam(defaultValue = "asc") String sortName,
-            @RequestParam(defaultValue = "asc") String sortPeriod, String batch,
-            String period, String beginDate, String endDate,
-            String sampleName) {
-        Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
-        Matcher m = p.matcher(condition);
-        StringBuffer con_sb = new StringBuffer();
-        while (m.find()) {
-            String rep = "\\\\" + m.group(0);
-            m.appendReplacement(con_sb, rep);
-        }
-        m.appendTail(con_sb);
-        ModelAndView mv = new ModelAndView("bsi/baozheng/report_list");
-        Page pager = new Page(page, size);
-        PageList<Task> pageList = taskService.findTasksByUserCondition(pager,
-                ConstantsData.getLoginUserId(), condition, sort, sortDate,
-                sortBatch, sortName, sortPeriod, batch, period, beginDate,
-                endDate, 118, sampleName);
-        mv.addObject("pageList", pageList);
-        log.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
-        return mv;
-    }
+	// XXX 百菌探报证结束后删除（完全拷贝的↑）
+	@RequestMapping("/baozheng/bsi/searchReportList")
+	public ModelAndView reportList1(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "20") int size, String condition, @RequestParam(defaultValue = "0") int sort,
+			@RequestParam(defaultValue = "desc") String sortDate, @RequestParam(defaultValue = "asc") String sortBatch,
+			@RequestParam(defaultValue = "asc") String sortName, @RequestParam(defaultValue = "asc") String sortPeriod,
+			String batch, String period, String beginDate, String endDate, String sampleName) {
+		Pattern p = Pattern.compile("\\_|\\%|\\'|\"");
+		Matcher m = p.matcher(condition);
+		StringBuffer con_sb = new StringBuffer();
+		while (m.find()) {
+			String rep = "\\\\" + m.group(0);
+			m.appendReplacement(con_sb, rep);
+		}
+		m.appendTail(con_sb);
+		ModelAndView mv = new ModelAndView("bsi/baozheng/report_list");
+		Page pager = new Page(page, size);
+		PageList<Task> pageList = taskService.findTasksByUserCondition(pager, ConstantsData.getLoginUserId(), condition,
+				sort, sortDate, sortBatch, sortName, sortPeriod, batch, period, beginDate, endDate, 118, sampleName);
+		mv.addObject("pageList", pageList);
+		log.info("用户{}根据条件检索数据列表", ConstantsData.getLoginUserName());
+		return mv;
+	}
 
 	@ActionLog(value = "获取所有数据任务列表", button = "报告详情翻页")
 	@RequestMapping("bsi/batchReportList")
@@ -3158,100 +3120,95 @@ public class ReportAction {
 		return mv;
 	}
 
-    @ActionLog(value = "获取所有数据任务列表", button = "报告详情翻页")
-    @RequestMapping("bsi/batchReportListInfo")
-    @ResponseBody
-    public Map<String, Object> batchReportListInfo(Integer page, String batch, Integer appId, String dataKey,
-            Integer dataIndex) {
-        Map<String, Object> dataMap = new HashMap<String, Object>();
-        // if (dataIndex != 0) {
-        // log.info("血流用户 {} 查看报告(点击上一份或下一份)", ConstantsData.getLoginUserId());
-        // // 此处是上一份, 下一份, 直接会传递dataIndex, 可直接根据dataIndex和batch查询分页列表
-        // Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 :
-        // dataIndex / 10;
-        // Page pager = new Page(currentPage, 10);
-        // PageList<Task> batchPageList = taskService.findTasksByBatch(pager,
-        // ConstantsData.getLoginUserId(), appId,
-        // batch);
-        // dataMap.put("batchPageList", batchPageList);
-        // dataMap.put("dataIndex", dataIndex);
-        // dataMap.put("dataIndexFlag", true);
-        // } else
-        if (StringUtils.isNotEmpty(dataKey)) {
-            log.info("血流用户 {} 查看报告(点击报告列表查看)", ConstantsData.getLoginUserId());
-            // 直接点击报告, 会带batch, 需要算出page, 但不带dataIndex
-            // 首先查询相同batch的所有Task
-            List<Task> taskList = taskService.findAllByBatch(batch, ConstantsData.getLoginUserId(), appId);
-            // 遍历taskList, 根据dataKey判断当前报告的dataIndex
-            // dataIndex代表该数据所在的记录位置, 可算出当前页
-            dataIndex = 0;
-            for (Task task : taskList) {
-                dataIndex++;
-                if (task.getDataKey().equals(dataKey)) {
-                    break;
-                }
-            }
-            // 首先根据dataIndex算出分页列表下方的当前页
-            Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex / 10;
-            Page pager = new Page(currentPage, 10);
-            PageList<Task> batchPageList = taskService.findTasksByBatchNoUserId(pager, ConstantsData.getLoginUserId(),
-                    appId,
-                    batch);
-            dataMap.put("batchPageList", batchPageList);
-            dataMap.put("dataIndex", dataIndex);
-            dataMap.put("dataIndexFlag", true);
-        } else {
-            log.info("血流用户 {} 查看报告(下侧分页按钮)", ConstantsData.getLoginUserId());
-            // 此处代表既没有dataIndex也没有batch, 是点击下方分页按钮
-            Page pager = new Page(page, 10);
-            PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
-                    batch);
-            dataMap.put("batchPageList", batchPageList);
-            // 标识是否刷新dataIndex
-            dataMap.put("dataIndexFlag", false);
-        }
-        return dataMap;
-    }
+	@ActionLog(value = "获取所有数据任务列表", button = "报告详情翻页")
+	@RequestMapping("bsi/batchReportListInfo")
+	@ResponseBody
+	public Map<String, Object> batchReportListInfo(Integer page, String batch, Integer appId, String dataKey,
+			Integer dataIndex) {
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		// if (dataIndex != 0) {
+		// log.info("血流用户 {} 查看报告(点击上一份或下一份)", ConstantsData.getLoginUserId());
+		// // 此处是上一份, 下一份, 直接会传递dataIndex, 可直接根据dataIndex和batch查询分页列表
+		// Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 :
+		// dataIndex / 10;
+		// Page pager = new Page(currentPage, 10);
+		// PageList<Task> batchPageList = taskService.findTasksByBatch(pager,
+		// ConstantsData.getLoginUserId(), appId,
+		// batch);
+		// dataMap.put("batchPageList", batchPageList);
+		// dataMap.put("dataIndex", dataIndex);
+		// dataMap.put("dataIndexFlag", true);
+		// } else
+		if (StringUtils.isNotEmpty(dataKey)) {
+			log.info("血流用户 {} 查看报告(点击报告列表查看)", ConstantsData.getLoginUserId());
+			// 直接点击报告, 会带batch, 需要算出page, 但不带dataIndex
+			// 首先查询相同batch的所有Task
+			List<Task> taskList = taskService.findAllByBatch(batch, ConstantsData.getLoginUserId(), appId);
+			// 遍历taskList, 根据dataKey判断当前报告的dataIndex
+			// dataIndex代表该数据所在的记录位置, 可算出当前页
+			dataIndex = 0;
+			for (Task task : taskList) {
+				dataIndex++;
+				if (task.getDataKey().equals(dataKey)) {
+					break;
+				}
+			}
+			// 首先根据dataIndex算出分页列表下方的当前页
+			Integer currentPage = dataIndex % 10 != 0 ? dataIndex / 10 + 1 : dataIndex / 10;
+			Page pager = new Page(currentPage, 10);
+			PageList<Task> batchPageList = taskService.findTasksByBatchNoUserId(pager, ConstantsData.getLoginUserId(),
+					appId, batch);
+			dataMap.put("batchPageList", batchPageList);
+			dataMap.put("dataIndex", dataIndex);
+			dataMap.put("dataIndexFlag", true);
+		} else {
+			log.info("血流用户 {} 查看报告(下侧分页按钮)", ConstantsData.getLoginUserId());
+			// 此处代表既没有dataIndex也没有batch, 是点击下方分页按钮
+			Page pager = new Page(page, 10);
+			PageList<Task> batchPageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId,
+					batch);
+			dataMap.put("batchPageList", batchPageList);
+			// 标识是否刷新dataIndex
+			dataMap.put("dataIndexFlag", false);
+		}
+		return dataMap;
+	}
 
-    @RequestMapping("reportInBatch")
-    @ResponseBody
-    public PageList<Task> reportInBatch(Integer currentPage, String dataKey, Integer appId, Integer projectId,
-            String batch) {
-        Page pager = new Page();
-        Integer userId = ConstantsData.getLoginUserId();
-        if (currentPage == null) {// 代表从报告页面点进来的或者是右侧相同batch的列表点击
-            // 1. 查询相同batch的所有dataKey
-            List<String> dataKeys = taskService.findDataKeysByBatchNoSample(userId, appId, batch);
-            // 2. 当前数据所在的行数
-            Integer dataIndex = 0;
-            for (String data : dataKeys) {
-                dataIndex++;
-                if (data.equals(dataKey)) {
-                    break;
-                }
-            }
-            // 3. 根据当前数据所在行数算出页数
-            currentPage = dataIndex % 2 == 0 ? dataIndex / 2 : dataIndex / 2 + 1;
-        }
-        pager.setCurrentPage(currentPage);
-        pager.setPageSize(2);
-        // 根据page分页查询pageList
-        return taskService.findTasksByBatchNoSample(pager, userId, appId, batch);
-    }
+	@RequestMapping("reportInBatch")
+	@ResponseBody
+	public PageList<Task> reportInBatch(Integer currentPage, String dataKey, Integer appId, Integer projectId,
+			String batch) {
+		Page pager = new Page();
+		Integer userId = ConstantsData.getLoginUserId();
+		if (currentPage == null) {// 代表从报告页面点进来的或者是右侧相同batch的列表点击
+			// 1. 查询相同batch的所有dataKey
+			List<String> dataKeys = taskService.findDataKeysByBatchNoSample(userId, appId, batch);
+			// 2. 当前数据所在的行数
+			Integer dataIndex = 0;
+			for (String data : dataKeys) {
+				dataIndex++;
+				if (data.equals(dataKey)) {
+					break;
+				}
+			}
+			// 3. 根据当前数据所在行数算出页数
+			currentPage = dataIndex % 2 == 0 ? dataIndex / 2 : dataIndex / 2 + 1;
+		}
+		pager.setCurrentPage(currentPage);
+		pager.setPageSize(2);
+		// 根据page分页查询pageList
+		return taskService.findTasksByBatchNoSample(pager, userId, appId, batch);
+	}
 
-    // XXX 百菌探报证结束后删除（完全拷贝的↑）
-    @RequestMapping("/baozheng/bsi/batchReportList")
-    public ModelAndView batchReportList1(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size, String batch,
-            Integer appId) {
-        ModelAndView mv = new ModelAndView(
-                "bsi/baozheng/report_data_pagination");
-        Page pager = new Page(page, size);
-        PageList<Task> pageList = taskService.findTasksByBatch(pager,
-                ConstantsData.getLoginUserId(), appId, batch);
-        mv.addObject("pageList", pageList);
-        log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
-        return mv;
-    }
+	// XXX 百菌探报证结束后删除（完全拷贝的↑）
+	@RequestMapping("/baozheng/bsi/batchReportList")
+	public ModelAndView batchReportList1(@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int size, String batch, Integer appId) {
+		ModelAndView mv = new ModelAndView("bsi/baozheng/report_data_pagination");
+		Page pager = new Page(page, size);
+		PageList<Task> pageList = taskService.findTasksByBatch(pager, ConstantsData.getLoginUserId(), appId, batch);
+		mv.addObject("pageList", pageList);
+		log.info("血流用户{}获取所有数据任务列表", ConstantsData.getLoginUserName());
+		return mv;
+	}
 }

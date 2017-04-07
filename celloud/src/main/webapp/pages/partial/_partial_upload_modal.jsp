@@ -34,7 +34,7 @@
         
         <div class="upload-content" ng-class="{hide: step!='two'}">
           <div class="info">第二步：拖拽文件到下面指定区域或者点击指定位置的选择文件</div>
-          <div class="info text-left">数据标签：{{batch}}&nbsp;&nbsp;产品标签：{{tagSelected.tagName}}</div>
+          <div class="info text-left" style="height: auto;">数据标签：{{batch}}<br/>产品标签：{{tagSelected.tagName}}</div>
           <div id="plupload-content" class="plupload-content" style="height:120px;overflow-y: auto;">
 	          <table class="table table-main" id="upload-list-table">
 	            <tbody id="upload-list-tbody">
@@ -49,7 +49,7 @@
         
         <div class="upload-content" ng-class="{hide: step!='three'}">
           <div class="info">第三步：上传中...</div>
-          <div class="info text-left">数据标签：{{batch}}&nbsp;&nbsp;产品标签：{{tagSelected.tagName}}</div>
+          <div class="info text-left" style="height: auto;">数据标签：{{batch}}<br/>产品标签：{{tagSelected.tagName}}</div>
           <div id="plupload-content2" class="plupload-content" style="height:150px;overflow-y: auto;">
 	          <table class="table table-main" id="uploading-list-table">
 	            <thead>

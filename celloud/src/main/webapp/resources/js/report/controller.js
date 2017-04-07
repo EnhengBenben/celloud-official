@@ -2131,6 +2131,7 @@
 	  dataReportService.getDataReportInfo("report/getBSIInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
 	  success(function(bsiInfo){
 		  $scope.bsi = bsiInfo.bsi;
+		  $scope.data = bsiInfo.data;
 		  $scope.project = bsiInfo.project;
 		  $scope.uploadPath = bsiInfo.uploadPath;
 
