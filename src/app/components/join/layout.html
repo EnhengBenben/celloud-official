@@ -1,0 +1,18 @@
+<div class="row banner-box">
+  <div class="banner">
+    <img ng-src="assets/images/banner-join.png" style="width: 100%">
+  </div>
+</div>
+<div class="row">
+  <div class="tab1">
+    <ul>
+      <li ui-sref-active="active" class="active"><a ui-sref="app.join.list({status: 'xiaoshou'})">销售岗位</a></li>
+      <li ui-sref-active="active"><a ui-sref="app.join.list({status: 'shengwu'})">生物岗位</a></li>
+      <li ui-sref-active="active"><a ui-sref="app.join.list({status: 'chanpin'})">产品岗位</a></li>
+      <li ui-sref-active="active" style="border-right: 1px solid #e6e6e6"><a ui-sref="app.join.list({status: 'jishu'})">技术岗位</a></li>
+    </ul>
+
+  </div>
+</div>
+
+<div ui-view=""></div>
