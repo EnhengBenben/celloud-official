@@ -345,6 +345,7 @@ public class RunServiceImpl implements RunService {
 			task.setPeriod(TaskPeriod.UPLOADING);
 			task.setParams(pubName);
 			task.setAppId(appId);
+			task.setBatch(batch);
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
 				logger.info("完全上传BSI所需的配对文件");
@@ -433,6 +434,7 @@ public class RunServiceImpl implements RunService {
 			task.setPeriod(TaskPeriod.UPLOADING);// TODO 小心处理这个状态，将关系到数据的统计
 			task.setParams(pubName);
 			task.setAppId(IconConstants.APP_ID_ROCKY);
+			task.setBatch(data.getBatch());
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
 				logger.info("数据{}上传完可以运行", originalName);
