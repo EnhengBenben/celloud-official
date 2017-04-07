@@ -1,0 +1,48 @@
+<div class="row banner-box">
+  <div class="banner">
+    <img ng-src="assets/images/banner-case.png" style="width: 100%">
+  </div>
+</div>
+<div class="row">
+  <div class="tab2">
+    <ul>
+      <li ui-sref-active="active" class="active" ui-sref="app.case.list({status: 'test'})">
+        <div class="tab2-img">
+          <img ng-src="assets/images/icon_03.png" ng-if="status != 'test'">
+          <img ng-src="assets/images/icon_12.png" ng-if="status === 'test'">
+        </div>
+        <div>
+          <p>第三方检测机构</p>
+        </div>
+      </li>
+      <li ui-sref-active="active" ui-sref="app.case.list({status: 'company'})">
+        <div class="tab2-img">
+          <img ng-src="assets/images/icon_05.png" ng-if="status != 'company'">
+          <img ng-src="assets/images/icon_13.png" ng-if="status === 'company'">
+        </div>
+        <div>
+          <p>IVD生产企业</p>
+        </div>
+      </li>
+      <li ui-sref-active="active" ui-sref="app.case.list({status: 'technology'})">
+        <div class="tab2-img">
+          <img ng-src="assets/images/icon_07.png" ng-if="status != 'technology'">
+          <img ng-src="assets/images/icon_14.png" ng-if="status === 'technology'">
+        </div>
+        <div>
+          <p>工业领域</p>
+        </div>
+      </li>
+      <li ui-sref-active="active" ui-sref="app.case.list({status: 'scientific'})" style="border-right: 1px solid #e6e6e6">
+        <div class="tab2-img">
+          <img ng-src="assets/images/iconl_03.png" ng-if="status != 'scientific'">
+          <img ng-src="assets/images/iconl_06.png" ng-if="status === 'scientific'">
+        </div>
+        <div>
+          <p>科研成果转化</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div ui-view=""></div>

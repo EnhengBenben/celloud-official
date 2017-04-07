@@ -45,6 +45,16 @@
         templateUrl: 'app/components/cases/list.html',
         controller: 'CaseListCtrl as vm'
       })
+      .state('app.product', {
+        url: '/product',
+        abstract: true,
+        templateUrl: 'app/components/product/layout.html',
+      })
+      .state('app.product.list', {
+        url: '/list',
+        templateUrl: 'app/components/product/list.html',
+        controller: 'ProductListCtrl as vm'
+      })
       .state('app.about', {
         url: '/about',
         abstract: true,

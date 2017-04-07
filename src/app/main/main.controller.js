@@ -6,11 +6,10 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($scope, $state, $localStorage) {
+  function MainController($state, $localStorage) {
     var app = this;
     app.logout = logout;
-    $scope.$state = $state;
-
+    app.$state = $state;
     return init();
 
     function init() {
