@@ -75,9 +75,9 @@
             </div>
           </li>
           <li class="search-type clearfix">
-            <label>样本编码：</label>
+            <label>样本编号：</label>
             <div class="search-type-detail">
-              <input ng-change="conditionQuery()" ng-model="dataOptions.condition" type="text" placeholder="扫码或输入编号">
+              <input ng-change="conditionQuery()" ng-model="dataOptions.condition" type="text" placeholder="扫码或输入样本编号">
             </div>
           </li>
         </ul>
@@ -92,7 +92,7 @@
                 <span class="info"></span>
               </label>
             </th>
-            <th>样品编号</th>
+            <th>样本编号</th>
             <th>文件名称</th>
             <th>产品标签</th>
             <th>数据标签</th>
