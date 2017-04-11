@@ -22,6 +22,8 @@ public class IconConstants {
 	private static Properties properties = null;
 	private static String appPath;
 	private static String screenPath;
+    private static String recommendMaxPath;
+    private static String recommendMinPath;
 	private static String deptPath;
 	private static String companyPath;
 	private static String tempPath;
@@ -54,11 +56,58 @@ public class IconConstants {
 			companyPath = properties.getProperty("company");
 			tempPath = properties.getProperty("temp");
             signaturePath = properties.getProperty("signature");
+            recommendMaxPath = properties.getProperty("recommendMax");
+            recommendMinPath = properties.getProperty("recommendMin");
 		} catch (IOException e) {
 			logger.error("加载配置文件失败：{}", PROPERTIES_PATH, e);
 		}
 	}
 
+    /**
+     * 获取推荐APP大图
+     * 
+     * @return
+     * @author leamo
+     * @date 2017年3月30日 下午1:31:02
+     */
+    public static String getRecommendMaxPath() {
+        return recommendMaxPath;
+    }
+
+    /**
+     * 获取推荐APP大图
+     * 
+     * @param name
+     * @return
+     * @author leamo
+     * @date 2017年3月30日 下午1:31:36
+     */
+    public static String getRecommendMaxPath(String name) {
+        return recommendMaxPath + File.separator + name;
+    }
+
+    /**
+     * 获取推荐APP小图
+     * 
+     * @return
+     * @author leamo
+     * @date 2017年3月30日 下午1:31:02
+     */
+    public static String getRecommendMinPath() {
+        return recommendMinPath;
+    }
+
+    /**
+     * 获取推荐APP小图
+     * 
+     * @param name
+     * @return
+     * @author leamo
+     * @date 2017年3月30日 下午1:31:36
+     */
+    public static String getRecommendMinPath(String name) {
+        return recommendMinPath + File.separator + name;
+    }
 	/**
 	 * 获取APP图标文件夹
 	 * 

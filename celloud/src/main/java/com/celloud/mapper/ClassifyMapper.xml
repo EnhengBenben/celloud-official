@@ -85,4 +85,27 @@
   <select id="getClassifyById" resultMap="BaseResultMap">
     select classify_id,classify_pid,classify_name from tb_classify where classify_id=#{classifyId }
   </select>
+  <select id="selectBySelective" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM tb_classify
+    <where>
+      <if test="classifyName != null" >
+        AND classify_name = #{classifyName}
+      </if>
+      <if test="classifyPid != null" >
+        AND classify_pid = #{classifyPid}
+      </if>
+      <if test="notes != null" >
+        AND notes = #{notes}
+      </if>
+    </where>
+  </select>
+  <select id="selectClassifyByAppId" resultMap="BaseResultMap">
+    SELECT
+    c.classify_id, c.classify_name, c.classify_pid, c.notes
+    FROM tb_classify c, tb_app_classify_relat acr
+    WHERE c.classify_id = acr.classify_id
+    AND acr.app_id = #{appId }
+  </select>
 </mapper>

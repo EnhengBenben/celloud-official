@@ -1,215 +1,352 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
          http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
         http://www.springframework.org/schema/task
         http://www.springframework.org/schema/task/spring-task.xsd">
-	<!--主动扫描Controller的配置，使得控制器能够扫描到相关的类 -->
-	<context:component-scan base-package="com.celloud" />
-	<mvc:annotation-driven />
-	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
-	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-		<property name="supportedMediaTypes">
-			<list>
-				<value>text/html;charset=UTF-8</value>
-			</list>
-		</property>
-	</bean>
-	<!-- 允许异步运行的配置 -->
-	<task:annotation-driven executor="asyncExecutor" />
-	<task:executor id="asyncExecutor" pool-size="100-10000" queue-capacity="10" />
-	<mvc:resources mapping="/js/**" location="/resources/js/" />
-	<mvc:resources mapping="/css/**" location="/resources/css/" />
-	<mvc:resources mapping="/images/**" location="/resources/img/" />
-	<mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
-	<mvc:resources mapping="/resources/**" location="/resources/" />
-	<!--配置一个返回视图用的bean，下面的这个class整合了jstl技术 -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/pages/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
-	<!-- 引入配置文件 -->
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>
-				<value>classpath:jdbc.properties</value>
-				<value>classpath:mongodb.properties</value>
-				<value>classpath:email.properties</value>
-			</list>
-		</property>
-	</bean>
+    <!--主动扫描Controller的配置，使得控制器能够扫描到相关的类 -->
+    <context:component-scan base-package="com.celloud" />
+    <mvc:annotation-driven />
+    <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
+    <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+    <!-- 允许异步运行的配置 -->
+    <task:annotation-driven executor="asyncExecutor" />
+    <task:executor id="asyncExecutor" pool-size="100-10000" queue-capacity="10" />
+    <mvc:resources mapping="/js/**" location="/resources/js/" />
+    <mvc:resources mapping="/css/**" location="/resources/css/" />
+    <mvc:resources mapping="/less/**" location="/resources/less/" />
+    <mvc:resources mapping="/images/**" location="/resources/img/" />
+    <mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <!--配置一个返回视图用的bean，下面的这个class整合了jstl技术 -->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="1" />
+        <property name="prefix" value="/pages/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="order" value="0" />
+        <property name="cache" value="true" />
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="toolboxConfigLocation" value="/WEB-INF/classes/velocityTool.xml" />
+        <property name="layoutUrl" value="layout.vm" />
+        <property name="screenContentKey" value="screen_content" />
+    </bean>
+    <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <!-- velocity配置文件路径 -->
+        <property name="configLocation" value="classpath:velocity.properties" />
+        <!-- velocity模板路径 -->
+        <property name="resourceLoaderPath" value="classpath:templates/report/" />
+    </bean>
+    <!-- 引入配置文件 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:kafka.properties</value>
+                <value>classpath:mongodb.properties</value>
+                <value>classpath:email.properties</value>
+                <value>classpath:wechat.properties</value>
+                <value>classpath:env.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${driver}" />
+        <property name="url" value="${url}" />
+        <property name="username" value="${username}" />
+        <property name="password" value="${password}" />
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="${initialSize}" />
+        <!-- 连接池最大数量 -->
+        <property name="maxActive" value="${maxActive}" />
+        <!-- 连接池最大空闲 -->
+        <property name="maxIdle" value="${maxIdle}" />
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="${minIdle}" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="${maxWait}" />
+        <property name="testWhileIdle" value="${testWhileIdle}" />
+        <property name="testOnBorrow" value="${testOnBorrow}" />
+        <property name="testOnReturn" value="${testOnReturn}" />
+        <property name="validationQuery" value="${validationQuery}" />
+        <property name="removeAbandoned" value="${removeAbandoned}" />
+        <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+        <property name="logAbandoned" value="${logAbandoned}" />
+    </bean>
+    <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 自动扫描mapping.xml文件 -->
+        <property name="mapperLocations" value="classpath:com/celloud/mapper/*.xml" />
+        <property name="plugins">
+            <bean class="com.celloud.page.PageInterceptor" />
+        </property>
+    </bean>
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.celloud.mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
+    <!-- 文件上传配置 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSize" value="10485760000"></property>
+        <property name="maxInMemorySize" value="40960"></property>
+    </bean>
+    <!-- 异常处理配置 -->
+    <bean id="exceptionHandler" class="com.celloud.exception.ExceptionHandler" />
+    <!-- 拦截器配置 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <mvc:exclude-mapping path="/js/**" />
+            <mvc:exclude-mapping path="/images/**" />
+            <mvc:exclude-mapping path="/css/**" />
+            <mvc:exclude-mapping path="/plugins/**" />
+            <mvc:exclude-mapping path="/resources/**" />
+            <mvc:exclude-mapping path="/home/**" />
+            <mvc:exclude-mapping path="/home**" />
+            <mvc:exclude-mapping path="/feedback/save" />
+            <mvc:exclude-mapping path="/**/*.html" />
+            <mvc:exclude-mapping path="/api/**" />
+            <bean class="com.celloud.interceptor.BehaviorInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!-- 启动面向切面的自动代理 -->
+    <aop:aspectj-autoproxy />
+    <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!-- 拦截器方式配置事物 -->
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- 事务传递特性 -->
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="create*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="modify*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="remove*" propagation="REQUIRED" />
+            <tx:method name="run*" propagation="REQUIRED" />
+            <tx:method name="find*" propagation="SUPPORTS" />
+            <tx:method name="query" propagation="SUPPORTS" />
+            <tx:method name="search*" propagation="SUPPORTS" />
+            <tx:method name="*" propagation="SUPPORTS" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.celloud.service.*.*(..))" />
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
+    </aop:config>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${driver}" />
-		<property name="url" value="${url}" />
-		<property name="username" value="${username}" />
-		<property name="password" value="${password}" />
-		<!-- 初始化连接大小 -->
-		<property name="initialSize" value="${initialSize}" />
-		<!-- 连接池最大数量 -->
-		<property name="maxActive" value="${maxActive}" />
-		<!-- 连接池最大空闲 -->
-		<property name="maxIdle" value="${maxIdle}" />
-		<!-- 连接池最小空闲 -->
-		<property name="minIdle" value="${minIdle}" />
-		<!-- 获取连接最大等待时间 -->
-		<property name="maxWait" value="${maxWait}" />
-		<property name="testWhileIdle" value="${testWhileIdle}" />
-		<property name="testOnBorrow" value="${testOnBorrow}" />
-		<property name="testOnReturn" value="${testOnReturn}" />
-		<property name="validationQuery" value="${validationQuery}" />
-		<property name="removeAbandoned" value="${removeAbandoned}" />
-		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
-		<property name="logAbandoned" value="${logAbandoned}" />
-	</bean>
-	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath:com/celloud/mapper/*.xml" />
-		<property name="plugins">
-			<bean class="com.celloud.page.PageInterceptor" />
-		</property>
-	</bean>
-	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.celloud.mapper" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-	</bean>
-	<!-- 文件上传配置 -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="defaultEncoding" value="utf-8"></property>
-		<property name="maxUploadSize" value="10485760000"></property>
-		<property name="maxInMemorySize" value="40960"></property>
-	</bean>
-	<!-- 异常处理配置 -->
-	<bean id="exceptionHandler" class="com.celloud.exception.ExceptionHandler" />
-	<!-- 拦截器配置 -->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/js/**" />
-			<mvc:exclude-mapping path="/images/**" />
-			<mvc:exclude-mapping path="/css/**" />
-			<mvc:exclude-mapping path="/plugins/**" />
-			<mvc:exclude-mapping path="/resources/**" />
-			<mvc:exclude-mapping path="/home/**" />
-			<mvc:exclude-mapping path="/home**" />
-			<mvc:exclude-mapping path="/feedback/save" />
-			<mvc:exclude-mapping path="/**/*.html" />
-			<mvc:exclude-mapping path="/api/**" />
-			<mvc:exclude-mapping path="/login/**" />
-			<mvc:exclude-mapping path="/logout/**" />
-			<bean class="com.celloud.interceptor.SecurityInterceptor" />
-		</mvc:interceptor>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/js/**" />
-			<mvc:exclude-mapping path="/images/**" />
-			<mvc:exclude-mapping path="/css/**" />
-			<mvc:exclude-mapping path="/plugins/**" />
-			<mvc:exclude-mapping path="/resources/**" />
-			<mvc:exclude-mapping path="/home/**" />
-			<mvc:exclude-mapping path="/home**" />
-			<mvc:exclude-mapping path="/feedback/save" />
-			<mvc:exclude-mapping path="/**/*.html" />
-			<mvc:exclude-mapping path="/api/**" />
-			<bean class="com.celloud.interceptor.BehaviorInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
-	<!-- 启动面向切面的自动代理 -->
-	<aop:aspectj-autoproxy />
-	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-	<!-- 拦截器方式配置事物 -->
-	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<!-- 事务传递特性 -->
-			<tx:method name="add*" propagation="REQUIRED" />
-			<tx:method name="create*" propagation="REQUIRED" />
-			<tx:method name="insert*" propagation="REQUIRED" />
-			<tx:method name="modify*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="delete*" propagation="REQUIRED" />
-			<tx:method name="remove*" propagation="REQUIRED" />
-			<tx:method name="find*" propagation="SUPPORTS" />
-			<tx:method name="query" propagation="SUPPORTS" />
-			<tx:method name="search*" propagation="SUPPORTS" />
-			<tx:method name="*" propagation="SUPPORTS" />
-		</tx:attributes>
-	</tx:advice>
-	<aop:config>
-		<aop:pointcut id="transactionPointcut" expression="execution(* com.celloud.service.*.*(..))" />
-		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
-	</aop:config>
-
-	<bean id="mongoServerAddress" class="com.mongodb.ServerAddress">
-		<constructor-arg value="${mongo.host}" />
-		<constructor-arg value="${mongo.port}" />
-	</bean>
-	<!-- 如果没有启用mongodb的用户验证，可不使用此配置 -->
-	<!-- <bean id="mongoCredential" class="com.mongodb.MongoCredential" factory-method="createCredential"> 构造Credential的方法的参数，顺序不能改变 
-		<constructor-arg value="${mongo.username}" /> <constructor-arg value="${mongo.database}" /> <constructor-arg value="${mongo.password}" 
-		/> </bean> -->
-	<bean id="mongoClient" class="com.mongodb.MongoClient" destroy-method="close">
-		<constructor-arg ref="mongoServerAddress" />
-		<!-- <constructor-arg> <list> <ref bean="mongoCredential" /> </list> </constructor-arg> -->
-	</bean>
-	<bean id="morphia" class="org.mongodb.morphia.Morphia" />
-	<bean id="datastore" class="org.mongodb.morphia.Datastore" factory-bean="morphia" factory-method="createDatastore">
-		<constructor-arg ref="mongoClient" />
-		<constructor-arg value="${mongo.database}" />
-	</bean>
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${mail.smtp}" />
-		<property name="username" value="${mail.username}" />
-		<property name="password" value="${mail.password}" />
-		<property name="defaultEncoding" value="UTF-8"></property>
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
-				<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
-			</props>
-		</property>
-	</bean>
-	<bean id="emailService" class="com.celloud.mail.EmailService">
-		<property name="mailSender" ref="mailSender" />
-		<property name="velocityUtil" ref="velocityUtil" />
-		<property name="defaultFrom" value="${mail.default.from}" />
-		<property name="emailName" value="${mail.emailName}" />
-		<property name="defaultTitle" value="${mail.default.title}" />
-	</bean>
-	<bean id="emailUtil" class="com.celloud.mail.EmailUtils">
-		<property name="errorTitle" value="${mail.error.title}" />
-		<property name="errorMailTo" value="${mail.error.mailTo}" />
-		<property name="feedbackTitle" value="${mail.feedback.title}" />
-		<property name="feedbackMailTo" value="${mail.feedback.mailTo}" />
-	</bean>
-	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-		<property name="velocityProperties">
-			<props>
-				<prop key="resource.loader">class</prop>
-				<prop key="class.resource.loader.class">
-					org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-				</prop>
-				<prop key="velocimacro.library"></prop>
-				<prop key="file.resource.loader.cache">true</prop>
-				<prop key="userdirective">
-					com.celloud.velocity.BlockDirective,
-					com.celloud.velocity.OverrideDirective,
-					com.celloud.velocity.ExtendsDirective
-				</prop>
-			</props>
-		</property>
-	</bean>
-	<bean id="velocityUtil" class="com.celloud.utils.VelocityUtil">
-		<property name="velocityEngine" ref="velocityEngine" />
-	</bean>
+    <bean id="mongoServerAddress" class="com.mongodb.ServerAddress">
+        <constructor-arg value="${mongo.host}" />
+        <constructor-arg value="${mongo.port}" />
+    </bean>
+    <!-- 如果没有启用mongodb的用户验证，可不使用此配置 -->
+    <!-- <bean id="mongoCredential" class="com.mongodb.MongoCredential" factory-method="createCredential"> 构造Credential的方法的参数，顺序不能改变 <constructor-arg value="${mongo.username}" /> <constructor-arg value="${mongo.database}" 
+        /> <constructor-arg value="${mongo.password}" /> </bean> -->
+    <bean id="mongoClient" class="com.mongodb.MongoClient" destroy-method="close">
+        <constructor-arg ref="mongoServerAddress" />
+        <!-- <constructor-arg> <list> <ref bean="mongoCredential" /> </list> </constructor-arg> -->
+    </bean>
+    <bean id="morphia" class="org.mongodb.morphia.Morphia" />
+    <bean id="datastore" class="org.mongodb.morphia.Datastore" factory-bean="morphia" factory-method="createDatastore">
+        <constructor-arg ref="mongoClient" />
+        <constructor-arg value="${mongo.database}" />
+    </bean>
+    <bean id="emailService" class="com.celloud.mail.EmailService">
+        <property name="velocityUtil" ref="velocityUtil" />
+        <property name="defaultFrom" value="${mail.default.from}" />
+        <property name="emailName" value="${mail.emailName}" />
+        <property name="defaultTitle" value="${mail.default.title}" />
+    </bean>
+    <bean id="emailUtil" class="com.celloud.mail.EmailUtils">
+        <property name="apiUser" value="${mail.apiUser}" />
+        <property name="apiKey" value="${mail.apiKey}" />
+        <property name="username" value="${mail.username}" />
+        <property name="emailName" value="${mail.emailName}" />
+        <property name="errorTitle" value="${mail.error.title}" />
+        <property name="errorMailTo" value="${mail.error.mailTo}" />
+        <property name="feedbackTitle" value="${mail.feedback.title}" />
+        <property name="feedbackMailTo" value="${mail.feedback.mailTo}" />
+    </bean>
+    <bean id="sendCloudEmailUtil" class="com.celloud.alimail.AliEmailUtils">
+        <property name="apiUser" value="${mail.apiUser}" />
+        <property name="apiKey" value="${mail.apiKey}" />
+        <property name="username" value="${mail.username}" />
+        <property name="emailName" value="${mail.emailName}" />
+    </bean>
+    <bean id="wechatProperties" class="com.celloud.wechat.WechatUtils">
+        <property name="appId" value="${wechat.appId}" />
+        <property name="appSecret" value="${wechat.appSecret}" />
+        <property name="urlToken" value="${wechat.urlToken}" />
+        <property name="oAuth2TokenUrl" value="${wechat.oAuth2TokenUrl}" />
+        <property name="tokenUrl" value="${wechat.tokenUrl}" />
+        <property name="templateUrl" value="${wechat.templateUrl}" />
+        <property name="createMenu" value="${wechat.createMenu}" />
+        <property name="qrcodeCreate" value="${wechat.qrcodeCreate}" />
+        <property name="qrcodeShow" value="${wechat.qrcodeShow}" />
+    </bean>
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">class</prop>
+                <prop key="class.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+                </prop>
+                <prop key="velocimacro.library"></prop>
+                <prop key="file.resource.loader.cache">true</prop>
+                <prop key="userdirective">
+                    com.celloud.velocity.BlockDirective,
+                    com.celloud.velocity.OverrideDirective,
+                    com.celloud.velocity.ExtendsDirective
+                </prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="velocityUtil" class="com.celloud.utils.VelocityUtil">
+        <property name="velocityEngine" ref="velocityEngine" />
+    </bean>
+    <!-- shiro权限管理相关配置 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="/login" />
+        <property name="filters">
+            <map>
+                <entry key="user">
+                    <bean class="com.celloud.security.UserAuthFilter"></bean>
+                </entry>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /js/** = anon
+                /images/** = anon
+                /favicon.ico = anon
+                /css/** = anon
+                /plugins/** = anon
+                /resources/** = anon
+                /kaptcha = anon
+                /home/** = anon
+                /home** = anon
+                /feedback/save = anon
+                /**/*.html = anon
+                /api/** = anon
+                /user/email/** = anon
+                /customer/sendCaptcha = anon
+                /customer/login = anon
+                /login/** = anon
+                /logout/** = anon
+                / = anon
+                /pages/** = user
+                /** = user
+            </value>
+        </property>
+    </bean>
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="userRealm" />
+    </bean>
+    <bean id="userRealm" class="com.celloud.security.UserRealm">
+        <property name="cachingEnabled" value="false" />
+    </bean>
+    <bean id="springTool" class="com.celloud.utils.SpringTool"></bean>
+    <bean id="taskUtils" class="com.celloud.utils.TaskUtils"></bean>
+    <bean id="messageUtils" class="com.celloud.message.MessageUtils" scope="prototype"></bean>
+    <bean id="consumerConfig" class="com.celloud.common.mq.kafka.KafkaConsumerConfig">
+        <property name="servers" value="${public.bootstrap.servers}" />
+        <property name="workerNum" value="${consumer.workerNum}" />
+        <property name="autoCommit" value="${consumer.enable.auto.commit}" />
+        <property name="keyDeserializer" value="${consumer.key.deserializer}" />
+        <property name="valueDeserializer" value="${consumer.key.deserializer}" />
+        <property name="sessionTimeout" value="${consumer.session.timeout.ms}" />
+        <property name="props">
+            <map>
+                <entry key="fetch.max.wait.ms" value="${consumer.fetch.max.wait.ms}" />
+                <entry key="auto.commit.interval.ms" value="${consumer.auto.commit.interval.ms}" />
+                <entry key="client.id" value="userMessageConsumer" />
+            </map>
+        </property>
+    </bean>
+    <bean id="messageConsumer" class="com.celloud.common.mq.kafka.KafkaConsumerImpl" destroy-method="shutdown">
+        <property name="config" ref="consumerConfig" />
+        <property name="subscriptions">
+            <set>
+                <bean class="com.celloud.common.mq.entity.Subscription">
+                    <property name="topic" value="user-message" />
+                    <property name="expression" value="*" />
+                    <property name="listener" value="com.celloud.message.UserMessageListener" />
+                </bean>
+            </set>
+        </property>
+    </bean>
+    <bean id="taskTraceConsumerConfig" class="com.celloud.common.mq.kafka.KafkaConsumerConfig">
+        <property name="servers" value="${public.bootstrap.servers}" />
+        <property name="workerNum" value="${consumer.workerNum}" />
+        <property name="groupId" value="celloud-task-finish-tracing" />
+        <property name="autoCommit" value="${consumer.enable.auto.commit}" />
+        <property name="keyDeserializer" value="${consumer.key.deserializer}" />
+        <property name="valueDeserializer" value="${consumer.key.deserializer}" />
+        <property name="sessionTimeout" value="${consumer.session.timeout.ms}" />
+        <property name="props">
+            <map>
+                <entry key="fetch.max.wait.ms" value="${consumer.fetch.max.wait.ms}" />
+                <entry key="auto.commit.interval.ms" value="${consumer.auto.commit.interval.ms}" />
+                <entry key="client.id" value="taskTraceConsumer" />
+            </map>
+        </property>
+    </bean>
+    <bean id="taskTraceMessageConsumer" class="com.celloud.common.mq.kafka.KafkaConsumerImpl" init-method="startup" destroy-method="shutdown">
+        <property name="config" ref="taskTraceConsumerConfig" />
+        <property name="subscriptions">
+            <set>
+                <bean class="com.celloud.common.mq.entity.Subscription">
+                    <property name="topic" value="task-tracing" />
+                    <property name="expression" value="*" />
+                    <property name="listener" value="com.celloud.task.TaskTracingListener" />
+                </bean>
+            </set>
+        </property>
+    </bean>
+    <bean id="producerConfig" class="com.celloud.common.mq.kafka.KafkaProducerConfig">
+        <property name="servers" value="${public.bootstrap.servers}" />
+        <property name="keySerializer" value="${producer.key.serializer}" />
+        <property name="valueSerializer" value="${producer.value.serializer}" />
+        <property name="props">
+            <map>
+                <entry key="acks" value="${producer.acks}" />
+                <entry key="retries" value="${producer.retries}" />
+                <entry key="batch.size" value="${producer.batch.size}" />
+                <entry key="linger.ms" value="${producer.linger.ms}" />
+                <entry key="buffer.memory" value="${producer.buffer.memory}" />
+                <entry key="client.id" value="celloudProducer" />
+            </map>
+        </property>
+    </bean>
+    <bean id="messageProducer" class="com.celloud.common.mq.kafka.KafkaProducerImpl" destroy-method="shutdown" init-method="startup">
+        <property name="config" ref="producerConfig"></property>
+    </bean>
+    <bean id="producerUtil" class="com.celloud.common.mq.utils.ProducerUtil">
+        <property name="producer" ref="messageProducer" />
+        <property name="topics">
+            <bean class="com.celloud.common.mq.entity.Topics">
+                <property name="userNotice" value="user-message" />
+                <property name="task" value="task-delivery" />
+            </bean>
+        </property>
+    </bean>
 </beans>

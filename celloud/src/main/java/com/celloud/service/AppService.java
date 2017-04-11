@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.AppVO;
 import com.celloud.page.Page;
 import com.celloud.page.PageList;
 
@@ -14,6 +15,16 @@ import com.celloud.page.PageList;
  * @date 2015年12月25日 下午5:43:03
  */
 public interface AppService {
+
+    /**
+     * 
+     * @description 根据主键查询app
+     * @author miaoqi
+     * @date 2017年3月24日 下午3:54:53
+     * @param id
+     * @return
+     */
+    public App get(Integer id);
 
     /**
      * 
@@ -206,4 +217,60 @@ public interface AppService {
 	public int addUserAppRight(Integer userId, Integer[] appIds, Integer authFrom);
 
 	public boolean appDeleteByAuthFrom(Integer userId, Integer[] appIds);
+
+    /**
+     * 
+     * @description 根据classifyId查看app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:34:19
+     * @param classifyId
+     * @param userId
+     * @return
+     */
+    public PageList<AppVO> listByClassifyPId(Page page, Integer classifyId, Integer userId);
+
+    /**
+     * 
+     * @description 根据classifyId查看app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:34:19
+     * @param classifyId
+     * @param userId
+     * @return
+     */
+    public PageList<AppVO> listByClassifyId(Page page, Integer classifyId, Integer userId);
+
+    /**
+     * 
+     * @description
+     * @author miaoqi
+     * @date 2017年3月24日 下午1:48:25
+     * @param userId
+     * @param appId
+     * @return
+     */
+    public Boolean updateUserAppRight(Integer userId, Integer appId);
+
+    /**
+     * 
+     * @description 根据userId, appId获取用户app授权信息
+     * @author miaoqi
+     * @date 2017年3月25日 下午11:11:20
+     * @param userId
+     * @param appId
+     * @return
+     */
+    public Map<String, Integer> getUserAppRight(Integer userId, Integer appId);
+
+    /**
+     * 
+     * @description 根据非空条件查看app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:34:19
+     * @param classifyId
+     * @param userId
+     * @return
+     */
+    public PageList<AppVO> selectBySelective(Page page, App app, Integer userId);
+
 }

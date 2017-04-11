@@ -19,7 +19,7 @@
         width: 100%;
         white-space: nowrap!important;
         overflow: hidden;
-         li{
+        li{
             margin: 1px 0px;
             width: 100%;
             a{
@@ -38,8 +38,21 @@
             line-height: 60px;
             text-align: center;
             font-size: 14px;
-            color: @light-gray;
+            color: @dark-gray;
             .border-bottom-1(@dark-black);
+        }
+        >.pro-main{
+            margin: 0;
+            color: @dark-gray;
+            .border-bottom-1(@dark-black);
+            a{
+                color: @dark-gray;
+            }
+            &:hover>a, &.active>a {
+                color: @light-gray;
+                background: @gray-black;
+                border-left: none;
+            }
         }
     }
     &.large-left{
