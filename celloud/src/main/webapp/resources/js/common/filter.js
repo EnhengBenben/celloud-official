@@ -172,4 +172,17 @@
       return thisReport ? "this-report" : "";
     }
   });
+  
+  //应用市场评分
+  celloudApp.filter("scoreFilter",function(){
+    return function(score,scoreType){
+      var result = "score-full";
+      if(score<scoreType){
+        result = "score-null";
+      }else if(score>scoreType && score<scoreType+1){
+        result = "score-half";
+      }
+      return result;
+    }
+  });
 })();

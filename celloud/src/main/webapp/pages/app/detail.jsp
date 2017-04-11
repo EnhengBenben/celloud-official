@@ -1,58 +1,44 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<title>应用详情</title>
-		<link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  		<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-		<link href="less/celloud-default.less" rel="stylesheet/less" type="text/css"  />
-  		<link href="less/app.less" rel="stylesheet/less" type="text/css"  />
-		<script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
-		<link href="plugins/swiper-3.4.2/swiper-3.4.2.min.css" rel="stylesheet">
-	</head>
-	<body class="container">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<ng-include src="'pages/partial/_partial_app_sidebar.jsp'"></ng-include>
+<div class="pro-body">
+    <ol class="breadcrumb">
+      <li>CelLoud</li>
+      <li>应用市场</li>
+      <li>{{appInfos.classifys}}</li>
+      <li>{{appInfos.app.appName}}</li>
+    </ol>
+    <div class="content">
 		<div class="app-infos">
 			<div class="app-left">
 				<div class="app-logo">
-					<img src="img/rocky-bg0.png" />
+					<img ng-src="app/image?file={{appInfos.app.pictureName}}" />
 				</div>
-				<button class="button-gray">获取</button>
+				<a class="button-gray" ng-click="getApp(appInfos.app.appId)" ng-if="appInfos.isAdd!=1">获取</a>
+                <a class="button-gray add" ng-click="getApp(appInfos.app.appId)" ng-if="appInfos.isAdd==1">已获取</a>
 			</div>
 			<div class="inner-content">
-				<h5>华木兰-乳腺癌基因检测</h5>
+				<h5>{{appInfos.app.appName}}</h5>
 				<ul class="row">
-					<li class="col-sm-3">应用分类：临床产品</li>
+					<li class="col-sm-4">应用分类：{{appInfos.classifys}}</li>
 					<li class="col-sm-3">版本：1.0.1</li>
 				</ul>
 				<ul class="row">
-					<li class="col-sm-3">更新时间：2017-01-10 15:23:32</li>
-					<li class="col-sm-2">价格：50¥</li>
-					<li class="col-sm-7">提供者： 上海华点云生物科技有限公司</li>
+					<li class="col-sm-4">更新时间：{{appInfos.app.createDate | date:"yyyy-MM-dd HH:mm:ss"}}</li>
+					<li class="col-sm-2">价格：{{appInfos.price}}¥</li>
+					<li class="col-sm-6">提供者： {{appInfos.company}}</li>
 				</ul>
-				<p>应用介绍：分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测
-				分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测
-				分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测
-				分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测分析基于华木兰-乳腺癌基因检测
+				<p>应用介绍：{{appInfos.app.intro}}
 				</p>
 			</div>
 		</div>
 		<div class="app-screen">
 			<div class="zoom">
-				<img src="img/rocky_screen1.png" />
+				<img src="app/screen?file={{appInfos.screens[0].screenName}}" />
 			</div>
 			<div class="screen-list">
 				<ul>
-					<li>
-						<a><img src="img/rocky_screen1.png" /><i></i></a>
-					</li>
-					<li>
-						<a><img src="img/rocky_screen1.png" /><i></i></a>
-					</li>
-					<li>
-						<a><img src="img/rocky_screen1.png" /><i></i></a>
-					</li>
-					<li class="active">
-						<a><img src="img/rocky_screen1.png" /><i></i></a>
+					<li ng-repeat="screen in appInfos.screens">
+						<a><img ng-src="app/screen?file={{screen.screenName}}" /><i></i></a>
 					</li>
 				</ul>
 			</div>
@@ -61,90 +47,90 @@
 			<h5>评分与评论</h5>
 			<div class="score">
 				<div class="score-icons">
-					<img src="img/score-full.png"/>
-					<img src="img/score-full.png"/>
-					<img src="img/score-full.png"/>
-					<img src="img/score-full.png"/>
-					<img src="img/score-full.png"/>
+					<span class="score-icon {{appInfos.avgScore|scoreFilter:5}}"></span>
+					<span class="score-icon {{appInfos.avgScore|scoreFilter:4}}"></span>
+					<span class="score-icon {{appInfos.avgScore|scoreFilter:3}}"></span>
+					<span class="score-icon {{appInfos.avgScore|scoreFilter:2}}"></span>
+					<span class="score-icon {{appInfos.avgScore|scoreFilter:1}}"></span>
 				</div>
 				<div class="score-text">
-					<span class="score-count">54</span>
-					<span>份评分/还没有足够的评分，无法显示此软件当前的评价评分</span>
+					<span class="score-count">{{appInfos.totalCount}}</span>
+					<span>份评分</span>
 				</div>
 			</div>
 			<div class="score progress-group">
 				<div class="score-icons">
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
+					<span class="score-icon score-gray"></span>
+					<span class="score-icon score-gray"></span>
+					<span class="score-icon score-gray"></span>
+					<span class="score-icon score-gray"></span>
+					<span class="score-icon score-gray"></span>
 				</div>
 				<div class="score-progress">
 					<div class="progress">
-					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-style="scoreStype5">
 					      <span class="sr-only">60% Complete</span>
 					    </div>
 					</div>
-					<span>100</span>
+					<span>{{countScore5}}</span>
 				</div>
 			</div>
 			<div class="score progress-group">
 				<div class="score-icons">
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
+					<span class="score-icon score-gray"></span>
+                    <span class="score-icon score-gray"></span>
+                    <span class="score-icon score-gray"></span>
+                    <span class="score-icon score-gray"></span>
 				</div>
 				<div class="score-progress">
 					<div class="progress">
-					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-style="scoreStype4">
 					      <span class="sr-only">60% Complete</span>
 					    </div>
 					</div>
-					<span>100</span>
+					<span>{{countScore4}}</span>
 				</div>
 			</div>
 			<div class="score progress-group">
 				<div class="score-icons">
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
+					<span class="score-icon score-gray"></span>
+                    <span class="score-icon score-gray"></span>
+                    <span class="score-icon score-gray"></span>
 				</div>
 				<div class="score-progress">
 					<div class="progress">
-					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-style="scoreStype3">
 					      <span class="sr-only">60% Complete</span>
 					    </div>
 					</div>
-					<span>100</span>
+					<span>{{countScore3}}</span>
 				</div>
 			</div>
 			<div class="score progress-group">
 				<div class="score-icons">
-					<img src="img/score-gray.png"/>
-					<img src="img/score-gray.png"/>
+					<span class="score-icon score-gray"></span>
+                    <span class="score-icon score-gray"></span>
 				</div>
 				<div class="score-progress">
 					<div class="progress">
-					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-style="scoreStype2">
 					      <span class="sr-only">60% Complete</span>
 					    </div>
 					</div>
-					<span>100</span>
+					<span>{{countScore2}}</span>
 				</div>
 			</div>
 			<div class="score progress-group">
 				<div class="score-icons">
-					<img src="img/score-gray.png"/>
+					<span class="score-icon score-gray"></span>
 				</div>
 				<div class="score-progress">
 					<div class="progress">
-					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+					    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-style="scoreStype1">
 					      <span class="sr-only">60% Complete</span>
 					    </div>
 					</div>
-					<span>100</span>
+					<span>{{countScore1}}</span>
 				</div>
 			</div>
 			<div class="app-comment">
@@ -152,12 +138,12 @@
 					点星评论：
 				</div>
 				<div class="comment-right">
-					<div class="score-icons">
-						<img src="img/score-gray-null.png"/>
-						<img src="img/score-gray-null.png"/>
-						<img src="img/score-gray-null.png"/>
-						<img src="img/score-gray-null.png"/>
-						<img src="img/score-gray-null.png"/>
+					<div class="score-icons comment-score">
+						<span class="score-icon score-gray-null" id="score-1" ng-click="updateScore(1)"></span>
+						<span class="score-icon score-gray-null" id="score-2" ng-click="updateScore(2)"></span>
+						<span class="score-icon score-gray-null" id="score-3" ng-click="updateScore(3)"></span>
+						<span class="score-icon score-gray-null" id="score-4" ng-click="updateScore(4)"></span>
+						<span class="score-icon score-gray-null" id="score-5" ng-click="updateScore(5)"></span>
 					</div>
 				</div>
 			</div>
@@ -167,8 +153,8 @@
 				</div>
 				<div class="comment-right">
 					<div class="comment-commit">
-						<textarea placeholder="至少输入5个字符"></textarea>
-						<button class="button-black">回复</button>
+						<textarea ng-model="userComment" placeholder="至少输入5个字符">{{appInfo.userComment.comment}}</textarea>
+						<button class="button-black" ng-click="updateComment()">回复</button>
 					</div>
 				</div>
 			</div>
@@ -178,32 +164,21 @@
 				</div>
 				<div class="comment-right">
 					<ul class="comment-list">
-						<li>
+						<li ng-repeat="comment in appComments.datas">
 							<div class="score-icons">
-								<img src="img/score-full.png"/>
-								<img src="img/score-full.png"/>
-								<img src="img/score-full.png"/>
-								<img src="img/score-full.png"/>
-								<img src="img/score-null.png"/>
+								<span class="score-icon {{comment.score|scoreFilter:1}}"></span>
+			                    <span class="score-icon {{comment.score|scoreFilter:2}}"></span>
+			                    <span class="score-icon {{comment.score|scoreFilter:3}}"></span>
+			                    <span class="score-icon {{comment.score|scoreFilter:4}}"></span>
+			                    <span class="score-icon {{comment.score|scoreFilter:5}}"></span>
 							</div>
-							<p>赞，这个产品太好用了，解决了我们很多之前的难点</p>
-							<p class="score-user">评论人：XWT&emsp;&emsp;&emsp;2015-06-17 12:30:20</p>
-						</li>
-						<li>
-							<div class="score-icons">
-								<img src="img/score-full.png"/>
-								<img src="img/score-full.png"/>
-								<img src="img/score-full.png"/>
-								<img src="img/score-full.png"/>
-								<img src="img/score-null.png"/>
-							</div>
-							<p>赞，这个产品太好用了，解决了我们很多之前的难点</p>
-							<p class="score-user">评论人：XWT&emsp;&emsp;&emsp;2015-06-17 12:30:20</p>
+							<p>{{comment.comment}}</p>
+							<p class="score-user">评论人：{{comment.username}}&emsp;&emsp;&emsp;{{comment.updateDate|date:"yyyy-MM-dd HH:mm:ss"}}</p>
 						</li>
 					</ul>
+					<pagination page="appComments.page" change="pageQuery(page,pageSize)"></pagination>
 				</div>
 			</div>
 		</div>
-		<script src="plugins/jquery-1.11.3.min.js"></script>
-	</body>
-</html>
+	</div>
+</div>

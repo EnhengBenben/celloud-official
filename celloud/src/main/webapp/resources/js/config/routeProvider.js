@@ -282,9 +282,13 @@
       templateUrl: "pages/app/main.jsp",
       controller: "appMainCtrl"
     })
-    .when('/app/detail/:pid',{
-      templateUrl: "pages/app/app_detail_main.jsp",
-      controller: "toAppDetail"
+    .when('/app/list/:cid',{
+      templateUrl: "pages/app/list.jsp",
+      controller: "appListCtrl"
+    })
+    .when('/app/detail/:id',{
+      templateUrl: "pages/app/detail.jsp",
+      controller: "appDetailCtrl"
     })
     .when('/reportdata/bsi',{
       templateUrl: "pages/report/report_data_bsi.jsp"
