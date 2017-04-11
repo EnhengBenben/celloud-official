@@ -1193,7 +1193,7 @@ a, a:link, a:hover, a:active, a:visited {
 .content .data-content-footer ul>li{
 	display: inline-block;
 	height: 30px;
-	padding: 0px 20px 0px 0px;
+	padding: 0px 12px 0px 0px;
 }
 .content .data-content-footer ul>li>label{
 	font-weight: normal;
@@ -1216,7 +1216,7 @@ a, a:link, a:hover, a:active, a:visited {
 .content .data-content-footer ul>li>span{
 	display: inline-block;
 	line-height: 30px;
-	max-width: 80px;
+	max-width: 75px;
 	float: left;
     -webkit-text-overflow: ellipsis;
     -moz-text-overflow: ellipsis;
