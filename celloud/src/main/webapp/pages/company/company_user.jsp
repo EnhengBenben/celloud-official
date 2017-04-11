@@ -12,8 +12,8 @@
       <div class="table-opera">
         <div class="table-opera-content">
           <div class="opera-info">
-            <button class="btn data-operate" data-toggle="modal" data-target="#company-addUser-modal" ng-click="showAddUserForm()">邮箱注册</button>
-            <button class="btn data-operate" data-toggle="modal" data-target="#company-cellphone-addUser-modal" ng-click="showAddUserForm()">手机注册</button>
+            <button class="btn data-operate" data-toggle="modal" data-target="#company-addUser-modal" ng-click="showAddUserForm(1)">邮箱注册</button>
+            <button class="btn data-operate" data-toggle="modal" data-target="#company-cellphone-addUser-modal" ng-click="showAddUserForm(0)">手机注册</button>
           </div>
         </div>
       </div>

@@ -150,17 +150,17 @@
                       <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+2 },${classifyFloor })">${appPageList.page.currentPage+2 }</a></li>
                   </c:if>
                   <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>3}">
-                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+3 })">${appPageList.page.currentPage+3 }</a></li>
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+3 },${classifyFloor })">${appPageList.page.currentPage+3 }</a></li>
                   </c:if>
                   <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>4}">
-                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+4 })">${appPageList.page.currentPage+4 }</a></li>
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+4 },${classifyFloor })">${appPageList.page.currentPage+4 }</a></li>
                   </c:if>
                   <c:if test="${appPageList.page.totalPage-appPageList.page.currentPage>5}">
-                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+5 })">${appPageList.page.currentPage+5 }</a></li>
+                      <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+5 },${classifyFloor })">${appPageList.page.currentPage+5 }</a></li>
                   </c:if>
                   <c:if test="${appPageList.page.currentPage<4}">
                       <c:if test="%{appPageList.page.totalPage-appPageList.page.currentPage>6}">
-                          <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 })">${appPageList.page.currentPage+6 }</a></li>
+                          <li><a href="javascript:appStore.toMoreApp(${classifyPid },${classifyId },${appPageList.page.currentPage+6 },${classifyFloor })">${appPageList.page.currentPage+6 }</a></li>
                       </c:if>
                   </c:if>
                   <c:choose>

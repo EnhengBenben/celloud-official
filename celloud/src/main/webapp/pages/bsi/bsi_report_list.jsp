@@ -135,7 +135,7 @@
 				              <div class="celicon checkbox checkbox-un"></div>
 				            </td>
 				            <td>{{task.sampleName}}</td>
-				            <td>{{task.batch}}</td>
+				            <td title="{{task.batch}}">{{task.batch}}</td>
 				            <td title="{{task.fileName}}" name="data-name-td" >
 				                <a ng-if="task.period == 2" ng-href="${pageContext.request.contextPath }/index#/product/bactive/rdata/{{task.dataKey}}/{{task.projectId}}/{{task.appId}}/null/0">
 				                  {{task.fileName.length > 60 ? task.fileName.substring(0, 60) + '...' : task.fileName}}{{task.anotherName != null ? '(' + task.anotherName + ')' : ''}}

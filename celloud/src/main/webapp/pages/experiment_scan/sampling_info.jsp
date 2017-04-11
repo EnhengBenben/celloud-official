@@ -65,8 +65,8 @@
         <div class="modal-body form-modal">
           <form class="form-horizontal info-form sampleInfo" name="addSampleInfoForm" id="addSampleInfoForm" ng-submit="saveSample()">
               <div class="form-group">
-                <div class="control-label form-label tips sample-star" ng-show="(addSampleInfoForm.sampleName.$dirty && addSampleInfoForm.sampleName.$invalid)||(addSampleInfoForm.tel.$dirty && addSampleInfoForm.tel.$invalid)||(addSampleInfoForm.idCard.$dirty && addSampleInfoForm.idCard.$invalid)||(addSampleInfoForm.productTag.$dirty && addSampleInfoForm.productTag.$invalid)||
-                (addSampleInfoForm.name.$dirty && addSampleInfoForm.name.$invalid)||(addSampleInfoForm.age.$dirty && addSampleInfoForm.age.$invalid)||(addSampleInfoForm.sampleType.$dirty && addSampleInfoForm.sampleType.$invalid)">您输入的信息有误,请检查后再输入...</div>
+                <div class="control-label form-label tips sample-star" ng-show="(addSampleInfoForm.sampleName.$dirty && addSampleInfoForm.sampleName.$invalid)||(addSampleInfoForm.tel.$dirty && addSampleInfoForm.tel.$invalid)||(addSampleInfoForm.productTag.$dirty && addSampleInfoForm.productTag.$invalid)||
+                (addSampleInfoForm.name.$dirty && addSampleInfoForm.name.$invalid)||(addSampleInfoForm.age.$dirty && addSampleInfoForm.age.$invalid)||(addSampleInfoForm.sampleType.$dirty && addSampleInfoForm.sampleType.$invalid) || (addSampleInfoForm.idCard.$dirty && !vaidIdCard)">您输入的信息有误,请检查后再输入...</div>
                 <div class="control-label form-label tips sample-star" ng-show="repeat && addSampleInfoForm.$valid">您提交的样品编号重复</div>
               </div>
               <div class="form-group">
@@ -84,16 +84,6 @@
                 <div>
                     <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="tel" ng-model="patient.tel" placeholder="手机" maxlength="11" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required>
                 </div>
-                <div class="control-label form-label second">年&emsp;&emsp;龄：<span class="sample-star">*</span></div>
-                <div>
-                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label">身份证号：<span class="sample-star">*</span></div>
-                <div>
-                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" maxlength="18" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" required>
-                </div>
                 <div class="control-label form-label mr10 second">性&emsp;&emsp;别：<span class="sample-star">*</span></div>
                 <div class="form-group-content">
                    <label class="radio-lable">
@@ -106,6 +96,16 @@
                      <span class="info"></span>
                    </label>
                    女士
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label">身份证号：<span class="sample-star">*</span></div>
+                <div>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" ng-change="checkIdCard()" maxlength="18" required>
+                </div>
+                <div class="control-label form-label second">年&emsp;&emsp;龄：<span class="sample-star">*</span></div>
+                <div>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
                 </div>
               </div>
               <div class="form-group">
@@ -166,7 +166,7 @@
               <div class="form-group">
                 <div class="text-center">
 		            <button ng-click="addReset()" type="button" class="btn btn-cancel">重置</button>
-		            <button type="submit" class="btn" ng-disabled="addSampleInfoForm.$invalid" >提交</button>
+		            <button type="submit" class="btn" ng-disabled="addSampleInfoForm.$invalid || !vaidIdCard" >提交</button>
 		        </div>
               </div>
           </form>
@@ -184,8 +184,8 @@
         <div class="modal-body form-modal">
           <form class="form-horizontal info-form" name="updateSampleInfoForm" id="updateSampleInfoForm" ng-submit="updateSample()">
               <div class="form-group">
-                <div class="control-label form-label tips sample-star" ng-show="(updateSampleInfoForm.sampleName.$dirty && updateSampleInfoForm.sampleName.$invalid)||(updateSampleInfoForm.tel.$dirty && updateSampleInfoForm.tel.$invalid)||(updateSampleInfoForm.idCard.$dirty && updateSampleInfoForm.idCard.$invalid)||(updateSampleInfoForm.productTag.$dirty && updateSampleInfoForm.productTag.$invalid)||
-                (updateSampleInfoForm.name.$dirty && updateSampleInfoForm.name.$invalid)||(updateSampleInfoForm.age.$dirty && updateSampleInfoForm.age.$invalid)||(updateSampleInfoForm.sampleType.$dirty && updateSampleInfoForm.sampleType.$invalid)">您输入的信息有误,请检查后再输入...</div>
+                <div class="control-label form-label tips sample-star" ng-show="(addSampleInfoForm.sampleName.$dirty && addSampleInfoForm.sampleName.$invalid)||(addSampleInfoForm.tel.$dirty && addSampleInfoForm.tel.$invalid)||(addSampleInfoForm.productTag.$dirty && addSampleInfoForm.productTag.$invalid)||
+                (addSampleInfoForm.name.$dirty && addSampleInfoForm.name.$invalid)||(addSampleInfoForm.age.$dirty && addSampleInfoForm.age.$invalid)||(addSampleInfoForm.sampleType.$dirty && addSampleInfoForm.sampleType.$invalid) || (addSampleInfoForm.idCard.$dirty && !vaidIdCard)">您输入的信息有误,请检查后再输入...</div>
                 <div class="control-label form-label tips sample-star" ng-show="repeat && updateSampleInfoForm.$valid">您提交的样品编号重复</div>
               </div>
               <div class="form-group">
@@ -203,20 +203,10 @@
                 <div>
                     <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="tel" ng-model="patient.tel" placeholder="手机" maxlength="11" ng-pattern="/^((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))\d{8}$/" required>
                 </div>
-                <div class="control-label form-label mw76 second">年&emsp;&emsp;龄：<span class="sample-star">*</span></div>
-                <div>
-                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="control-label form-label">身份证号：<span class="sample-star">*</span></div>
-                <div>
-                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" maxlength="18" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" required>
-                </div>
                 <div class="control-label form-label second mr10 mw76">性&emsp;&emsp;别：<span class="sample-star">*</span></div>
                 <div class="form-group-content">
                    <label class="radio-lable">
-                     <input class="radio" type="radio" value="1" ng-model="patient.gender" name="gender" ng-checked="true">
+                     <input class="radio" type="radio" value="1" ng-model="patient.gender" name="gender">
                      <span class="info"></span>
                    </label>
                    先生
@@ -225,6 +215,16 @@
                      <span class="info"></span>
                    </label>
                    女士
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="control-label form-label">身份证号：<span class="sample-star">*</span></div>
+                <div>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="idCard" ng-model="patient.idCard" placeholder="身份证号" maxlength="18" ng-change="checkIdCard()" ng-pattern="/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/" required>
+                </div>
+                <div class="control-label form-label mw76 second">年&emsp;&emsp;龄：<span class="sample-star">*</span></div>
+                <div>
+                    <input onkeyup="this.value=this.value.replace(/\s+/g,'')" type="text" name="age" ng-model="patient.age" placeholder="年龄" maxlength="3" ng-pattern="/^\d{1,3}$/" required>
                 </div>
               </div>
               <div class="form-group">

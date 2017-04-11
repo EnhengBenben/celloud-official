@@ -196,7 +196,7 @@ public class DataKeyListToFile {
 					canRunDataList.add(data_R1);
 					canRunDataList.add(data_R2);
 				}
-			} else if (fname_R1.contains(".tar.gz")) {
+            } else if (fname_R1.contains(".tar.gz") && !fname_R1.contains("R2")) {
 				dataFileInfo = new StringBuffer();
                 dataFileInfo.append(data_R1.getPath())
 						.append("\t");

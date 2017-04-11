@@ -24,6 +24,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.celloud.model.mysql.OSSConfig;
 import com.celloud.model.mysql.User;
+import com.celloud.utils.LocalIpAddressUtil;
 
 /**
  * 系统级常量及参数配置
@@ -39,6 +40,7 @@ public class ConstantsData {
 	private static Properties bioinfoServices;
 	private static String anotherNamePerlPath;
 	private static OSSConfig ossConfig;
+	private static String clusterId;
 
 	/**
 	 * 获取所有机器列表(如果内存中已存在，则直接使用内存中的；如果内存中不存在，则加载配置文件)
@@ -278,5 +280,12 @@ public class ConstantsData {
 
 	public synchronized static void setOSSConfig(OSSConfig config) {
 		ossConfig = config;
+	}
+
+	public static String getClusterId(Integer port) {
+		if (clusterId == null) {
+			clusterId = LocalIpAddressUtil.getLocalIps().stream().sorted().reduce((x, y) -> x + "," + y).orElse("1");
+		}
+		return clusterId + (port == null ? "" : port + "");
 	}
 }

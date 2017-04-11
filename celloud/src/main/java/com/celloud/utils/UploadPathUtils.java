@@ -33,6 +33,10 @@ public class UploadPathUtils {
 		return ConstantsData.getOfsPath() + "output/" + userId + "/" + appId + "/";
 	}
 
+	public static String getOutPathInOSS() {
+		return ConstantsData.getOfsPath() + "output/";
+	}
+
 	public static String getObjectKey(Integer userId, String fileDataKey, String extName) {
 		return "file/" + userId + "/" + DateUtil.getDateToString("yyyyMMdd") + "/" + fileDataKey + extName;
 	}

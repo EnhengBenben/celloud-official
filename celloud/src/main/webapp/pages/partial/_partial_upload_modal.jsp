@@ -18,7 +18,7 @@
 	          <div class="info-form-group">
 	            <label>数据标签：</label>
 	            <div>
-	              <input type="text" placeholder="请输入数据标签" name="batch" ng-model="batch" required/>
+	              <input type="text" placeholder="请输入数据标签" name="batch" ng-model="batch" required maxlength="30"/>
 	            </div>
 	          </div>
 	          <div class="info-form-group">
@@ -34,7 +34,7 @@
         
         <div class="upload-content" ng-class="{hide: step!='two'}">
           <div class="info">第二步：拖拽文件到下面指定区域或者点击指定位置的选择文件</div>
-          <div class="info text-left">数据标签：{{batch}}&nbsp;&nbsp;产品标签：{{tagSelected.tagName}}</div>
+          <div class="info text-left" style="height: auto;">数据标签：{{batch}}<br/>产品标签：{{tagSelected.tagName}}</div>
           <div id="plupload-content" class="plupload-content" style="height:120px;overflow-y: auto;">
 	          <table class="table table-main" id="upload-list-table">
 	            <tbody id="upload-list-tbody">
@@ -49,7 +49,7 @@
         
         <div class="upload-content" ng-class="{hide: step!='three'}">
           <div class="info">第三步：上传中...</div>
-          <div class="info text-left">数据标签：{{batch}}&nbsp;&nbsp;产品标签：{{tagSelected.tagName}}</div>
+          <div class="info text-left" style="height: auto;">数据标签：{{batch}}<br/>产品标签：{{tagSelected.tagName}}</div>
           <div id="plupload-content2" class="plupload-content" style="height:150px;overflow-y: auto;">
 	          <table class="table table-main" id="uploading-list-table">
 	            <thead>
@@ -93,7 +93,7 @@
 	                    <div class="step-three">3</div>
 	                </div>
 	                <div class="step-one-content">
-	                    <input id="batch-info" type="text" placeholder="请输入标签" ng-model="bsiBatch" ng-keypress="batchInfo($event)" />
+	                    <input id="batch-info" type="text" placeholder="请输入标签" ng-model="bsiBatch" ng-keypress="batchInfo($event)" maxlength="30" />
 	                    <br>
 	                    <p>
 	                        <span>
@@ -127,7 +127,8 @@
 	                </div>
 	                <div class="step-three-content hide">
 	                    <div class="upload-status">
-	                        数据上传中...数据标签 ：
+	                        数据上传中...<br/>
+	                        数据标签 ：
 	                        <span id="tags-review"></span>
 	                    </div>
 	                    <div class="upload-container">

@@ -27,7 +27,7 @@
                 <span>-</span>
                 <input type="text" ng-if="dataOptions.fullDate == -1" ng-model="dataOptions.endDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" id="end-date">
                 <input type="text" ng-if="dataOptions.fullDate != -1" class="Wdate input" onclick="WdatePicker()" readonly="readonly" id="end-date">
-                <button class="btn btn-cancel" ng-click="chooseDate()">确定</button>
+                <button type="button" class="btn btn-cancel" ng-click="chooseDate()">确定</button>
               </div>
             </div>
           </li>
@@ -41,7 +41,7 @@
                 </li>
               </ul>
               <div class="search-btns">
-                <button class="btn chevron-btn" ng-click="reportMoreAppTag=changeChevronType(reportMoreAppTag)">{{reportMoreAppTag|chevronTypeTextFilter}}<i ng-class="reportMoreAppTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
+                <button type="button" class="btn chevron-btn" ng-click="reportMoreAppTag=changeChevronType(reportMoreAppTag)">{{reportMoreAppTag|chevronTypeTextFilter}}<i ng-class="reportMoreAppTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
               </div>
             </div>
           </li>
@@ -55,7 +55,7 @@
                 </li>
               </ul>
 	          <div class="search-btns">
-	            <button class="btn chevron-btn" ng-click="reportMoreDataTag=changeChevronType(reportMoreDataTag)">{{reportMoreDataTag|chevronTypeTextFilter}}<i ng-class="reportMoreDataTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
+	            <button type="button" class="btn chevron-btn" ng-click="reportMoreDataTag=changeChevronType(reportMoreDataTag)">{{reportMoreDataTag|chevronTypeTextFilter}}<i ng-class="reportMoreDataTag|chevronTypeFaFilter" aria-hidden="true"></i></button>
 	          </div>
             </div>
           </li>
@@ -75,9 +75,9 @@
             </div>
           </li>
           <li class="search-type clearfix">
-            <label>样本编码：</label>
+            <label>样本编号：</label>
             <div class="search-type-detail">
-              <input ng-change="conditionQuery()" ng-model="dataOptions.condition" type="text" placeholder="扫码或输入编号">
+              <input ng-change="conditionQuery()" ng-model="dataOptions.condition" type="text" placeholder="扫码或输入样本编号">
             </div>
           </li>
         </ul>
@@ -92,7 +92,7 @@
                 <span class="info"></span>
               </label>
             </th>
-            <th>样品编号</th>
+            <th>样本编号</th>
             <th>文件名称</th>
             <th>产品标签</th>
             <th>数据标签</th>

@@ -179,10 +179,11 @@ public interface TaskMapper {
 	 * @param params
 	 * @return
 	 * @author leamo
+	 * @param batch 
 	 * @date 2016年5月16日 下午3:27:39
 	 */
 	Task findTaskByParamsAndPeriod(@Param("userId") Integer userId, @Param("state") Integer state,
-			@Param("period") Integer period, @Param("params") String params);
+			@Param("period") Integer period, @Param("params") String params, @Param("batch") String batch);
 
 	/**
 	 * 

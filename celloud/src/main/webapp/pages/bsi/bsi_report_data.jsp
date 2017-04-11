@@ -322,7 +322,7 @@
                   </li>
                   <li>
                     <label>原始数据：</label>
-                    <span style="width: 150px;max-width: 150px;">
+                    <span style="width: 140px;max-width: 140px;">
                         <p ng-repeat="data in bsi.data">{{data.fileName}}&nbsp;&nbsp;</p>
                     </span>
                     <a href="javascript:void(0)">（查看原始数据信息）</a>
@@ -377,9 +377,9 @@
                         <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-1)">{{batchPageList.page.currentPage-1}}</a></li>
                         <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage == batchPageList.page.totalPage" class="active"><a name="pagination-task">{{batchPageList.page.currentPage}}</a></li>
                             
-                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-1)">{{batchPageList.page.currentPage-1}}</a></li>
-                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage" class="active"><a name="pagination-task">{{batchPageList.page.currentPage}}</a></li>
-                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < pageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage+1)">{{batchPageList.page.currentPage+1}}</a></li>
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < batchPageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage-1)">{{batchPageList.page.currentPage-1}}</a></li>
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < batchPageList.page.totalPage" class="active"><a name="pagination-task">{{batchPageList.page.currentPage}}</a></li>
+                        <li ng-if="batchPageList.page.totalPage > 3 && batchPageList.page.currentPage > 1 && batchPageList.page.currentPage < batchPageList.page.totalPage"><a name="pagination-task" ng-click="batchPageQueryBtn(batchPageList.page.currentPage+1)">{{batchPageList.page.currentPage+1}}</a></li>
                       
                         <li><a id="next-page-task" class="ends pull-right" ng-click="batchPageQueryBtn(batchPageList.page.currentPage < batchPageList.page.totalPage ? batchPageList.page.currentPage + 1 : batchPageList.page.totalPage)">&gt;&gt;</a></li>
                     </ul>
