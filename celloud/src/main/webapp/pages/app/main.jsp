@@ -8,7 +8,7 @@
     <div class="content">
 		<div class="app-header">
 			<div class="view">
-				<div class="swiper-container">
+				<div class="swiper-container" id="app-show-swipper">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide" ng-repeat="app in recommendApps">
 							<a><img ng-src="app/recommendMax?file={{app.pictureName}}" /></a>
@@ -17,12 +17,14 @@
 				</div>
 			</div>
 			<div class="preview">
-				<div class="swiper-container">
+				<div class="swiper-container" id="app-nav-swipper">
+				    <i class="fa fa-caret-up" aria-hidden="true" ng-click="appSwiperPre()"></i>
 					<div class="swiper-wrapper">
 						<div class="swiper-slide" ng-repeat="app in recommendApps">
 							<a><img ng-src="app/recommendMin?file={{app.pictureName}}" /><span>{{app.appName}}</span></a>
 						</div>
 					</div>
+					<i class="fa fa-caret-down" aria-hidden="true" ng-click="appSwiperNext()"></i>
 				</div>
 			</div>
 		</div>
@@ -104,34 +106,3 @@
 		</div>
 	</div>
 </div>	
-<script src="//cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
-<script>
-var viewSwiper = new Swiper('.view .swiper-container', {
-  onSlideChangeStart: function() {
-      updateNavPosition()
-  }
-})
-
-var previewSwiper = new Swiper('.preview .swiper-container', {
-  direction : 'vertical',
-  visibilityFullFit: true,
-  slidesPerView: 'auto',
-  onlyExternal: true,
-  onSlideClick: function() {
-      viewSwiper.swipeTo(previewSwiper.clickedSlideIndex)
-  }
-})
-function updateNavPosition() {
-  $('.preview .active-nav').removeClass('active-nav')
-  var activeNav = $('.preview .swiper-slide').eq(viewSwiper.activeIndex).addClass('active-nav')
-  if (!activeNav.hasClass('swiper-slide-visible')) {
-      if (activeNav.index() > previewSwiper.activeIndex) {
-          var thumbsPerNav = Math.floor(previewSwiper.width / activeNav.width()) - 1
-          previewSwiper.swipeTo(activeNav.index() - thumbsPerNav)
-      } else {
-          previewSwiper.swipeTo(activeNav.index())
-      }
-  }
-}
-
-</script>

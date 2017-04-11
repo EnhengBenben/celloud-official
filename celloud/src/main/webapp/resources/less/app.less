@@ -40,6 +40,35 @@
             height: 100%;
             .border-radius(0px 10px 10px 0px);
         }
+        .fa{
+            position: absolute;
+            font-size: 50px;
+            line-height: 30px;
+            left: 50%;
+            .transform(translate(-50%,0%));
+            z-index: 99;
+            opacity: 0.2;
+            color: @c-fff;
+            cursor: pointer;
+            &:hover,&:active{
+                opacity: 0.9;
+            }
+        }
+        .fa-caret-up{
+            top: 0;
+        }
+        .fa-caret-down{
+            bottom: 0;
+        }
+        .arrow-down{
+            position: absolute;
+            font-size: 50px;
+            line-height: 30px;
+            bottom: 0;
+            left: 50%;
+            z-index: 99;
+            opacity: 0.5;
+        }
         .swiper-slide{
             height: 33.3333%;
             width: 100%;
@@ -437,7 +466,7 @@
                     width: 17px;
                     height: 12px;
                     .transform(translate(-50%,0%));
-                    background: url(../img/screen-arrow.png);
+                    background: url(@screen-arrow-bg);
                     display: none;
                 }
                 &.active{

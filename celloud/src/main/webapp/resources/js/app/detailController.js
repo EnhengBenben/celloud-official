@@ -4,11 +4,11 @@
     $scope.pageQuery = pageQuery;
     $scope.updateScore = updateScore;
     $scope.updateComment = updateComment;
+    $scope.appScreenShow = appScreenShow;
     return init();
     function init(){
       AppService.appDetail($routeParams.id).success(function(data) {
         $scope.appInfos = data;
-        console.log(data.countScore);
         $scope.countScore5 = data.countScore[5]==undefined?0:data.countScore[5].count;
         $scope.countScore4 = data.countScore[4]==undefined?0:data.countScore[4].count;
         $scope.countScore3 = data.countScore[3]==undefined?0:data.countScore[3].count;
@@ -20,6 +20,7 @@
         $scope.scoreStype3 = {"width":($scope.countScore3/data.totalCount)*100+"%"};
         $scope.scoreStype2 = {"width":($scope.countScore2/data.totalCount)*100+"%"};
         $scope.scoreStype1 = {"width":($scope.countScore1/data.totalCount)*100+"%"};
+        $scope.screenShow = data.screens[0];
       });
       $scope.currentPage = 1;
       $scope.pageSize = 10;
@@ -45,6 +46,11 @@
       AppService.updateComment($routeParams.id,$scope.userScore,$scope.userComment).success(function() {
         $.tips("评论成功");
       });
+    }
+    function appScreenShow(img,index){
+      $scope.screenShow = img;
+      $("#screens-ul .active").removeClass("active");
+      $("#screen-"+index).addClass("active");
     }
   }]);
 })();

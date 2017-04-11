@@ -33,12 +33,12 @@
 		</div>
 		<div class="app-screen">
 			<div class="zoom">
-				<img src="app/screen?file={{appInfos.screens[0].screenName}}" />
+				<img src="app/screen?file={{screenShow}}" />
 			</div>
 			<div class="screen-list">
-				<ul>
-					<li ng-repeat="screen in appInfos.screens">
-						<a><img ng-src="app/screen?file={{screen.screenName}}" /><i></i></a>
+				<ul id="screens-ul">
+					<li ng-repeat="screen in appInfos.screens" ng-class="{active: $index==0}" id="screen-{{$index}}" ng-click="appScreenShow(screen,$index)">
+						<a><img ng-src="app/screen?file={{screen}}" /><i></i></a>
 					</li>
 				</ul>
 			</div>
