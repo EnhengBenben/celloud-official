@@ -78,7 +78,7 @@ public class AppCommentServiceImpl implements AppCommentService {
     }
 
     @Override
-    public Map<String, Map<String, Integer>> countScore(Integer appId) {
+    public Map<String, Map<String, Long>> countScore(Integer appId) {
         return appCommentMapper.countScore(appId);
     }
 

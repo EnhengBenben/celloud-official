@@ -58,7 +58,7 @@ public interface AppCommentMapper {
      * @return
      */
     @MapKey("score")
-    Map<String, Map<String, Integer>> countScore(@Param("appId") Integer appId);
+    Map<String, Map<String, Long>> countScore(@Param("appId") Integer appId);
 
     /**
      * 

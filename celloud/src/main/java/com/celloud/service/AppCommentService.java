@@ -65,7 +65,7 @@ public interface AppCommentService {
      * @param appid
      * @return
      */
-    Map<String, Map<String, Integer>> countScore(Integer appId);
+    Map<String, Map<String, Long>> countScore(Integer appId);
 
     /**
      * 

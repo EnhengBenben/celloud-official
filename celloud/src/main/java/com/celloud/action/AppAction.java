@@ -191,12 +191,12 @@ public class AppAction {
             result.put("isAdd", map.get("isAdd"));
         }
         // 7. 获取评分
-        Map<String, Map<String, Integer>> countScore = appCommentService.countScore(appId);
+        Map<String, Map<String, Long>> countScore = appCommentService.countScore(appId);
         if (countScore != null && !countScore.isEmpty()) {
             result.put("countScore", countScore);
         }
-        int totalCount = 0;
-        for (Map.Entry<String, Map<String, Integer>> entry : countScore.entrySet()) {
+        Long totalCount = 0l;
+        for (Map.Entry<String, Map<String, Long>> entry : countScore.entrySet()) {
             totalCount += entry.getValue().get("count");
         }
         result.put("totalCount", totalCount);
