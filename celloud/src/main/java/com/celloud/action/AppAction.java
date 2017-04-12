@@ -138,8 +138,8 @@ public class AppAction {
         log.info("用户 {} 更新app的添加状态 appId = {}", userId, appId);
         Boolean flag = appService.updateUserAppRight(userId, appId);
         if (!flag) {
-            log.error("用户 {} 更新app的添加状态失败 appId = {}", userId, appId);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            log.error("用户 {} 更新app的添加状态失败, 没有获取过该app, appId = {}", userId, appId);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         log.info("用户 {} 更新app的添加状态成功 appId = {}", userId, appId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
