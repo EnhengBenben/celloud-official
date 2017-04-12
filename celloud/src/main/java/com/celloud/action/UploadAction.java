@@ -192,12 +192,12 @@ public class UploadAction {
                             runService.bsiCheckRun(batch, dataId, fileDataKey,
                                     originalName, userId,
                                     fileFormat);
-                        } else if (tagId == 2) {
-                            logger.info("{}拥有华木兰权限", userId);
+                        } else if (tagId == 2 || tagId == 187) {
+                            logger.info("{}拥有华木兰系列权限", userId);
                             DataFile data = dataService.getDataById(dataId);
                             // TODO 写死的华木兰标签信息和APPID
-                            data.setTagId(2);
-                            data.setTagName("华木兰");
+                            data.setTagId(tagId);
+                            data.setTagName(tagService.get(tagId).getTagName());
                             dataService.updateDataAndTag(data);
                             runService.rockyCheckRun(123, data);
                         }
