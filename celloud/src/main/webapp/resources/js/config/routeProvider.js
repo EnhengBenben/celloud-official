@@ -274,6 +274,10 @@
     	templateUrl: "pages/report/report_data_rocky.jsp",
     	controller: "rockyDataReportController"
     })
+    .when('/reportdata/Rocky-platinum/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_rocky.jsp",
+    	controller: "rockyDataReportController"
+    })
     .when('/reportdata/FS-ocg/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_fsocg.jsp",
     	controller: "fsocgDataReportController"
