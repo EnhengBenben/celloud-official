@@ -286,4 +286,5 @@ public interface TaskService {
 	 */
 	public PageList<Task> findTasksByBatchNoSample(Page page, Integer userId, Integer appId, String batch);
 
+
 }

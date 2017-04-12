@@ -38,30 +38,30 @@ public class FileDownloadedListener implements ApplicationListener<FileDownloade
 		logger.info("文件更新状态{}:{}", result > 0 ? "成功" : "失败", boxFile.getPath());
         // 判断是否为百菌探系列
         if (boxFile.getTagId() != null) {
-            if (Constants.bsiTags.containsKey(boxFile.getTagId())) {
+            Integer tagId = boxFile.getTagId();
+            if (Constants.bsiTags.containsKey(tagId)) {
                 if (boxFile.getNeedSplit() != null && boxFile.getNeedSplit().intValue() == 0 && boxFile.isSplited()) {
                     logger.info("文件已经运行完split，不需要再运行：{}", boxFile.getFileName());
                     return;
                 }
-                logger.info("盒子上传, oss下载成功, tagId = 1, 检查是否可以运行百菌探");
+                logger.info("盒子上传, oss下载成功, tagId = {}, 检查是否可以运行百菌探", tagId);
                 // TODO 保险起见，这里还应该校验用户是否已经添加app
                 String checkRunresult = runService.bsiCheckRun(boxFile.getBatch(), boxFile.getFileId(),
                         boxFile.getDataKey(), boxFile.getFileName(), boxFile.getUserId(), fileFormat);
                 if (logger.isDebugEnabled()) {
                     logger.debug("bsi check run result: {}", checkRunresult);
                 }
-            } else if (boxFile.getTagId().intValue() == 2) {
-                logger.info("盒子上传, oss下载成功, tagId = 2, 检查是否可以运行华木兰");
+            } else if (Constants.rockyTags.containsKey(tagId)) {
+                logger.info("盒子上传, oss下载成功, tagId = {}, 检查是否可以运行华木兰", tagId);
                 DataFile data = new DataFile();
                 data.setFileFormat(fileFormat);
                 data.setFileName(boxFile.getFileName());
                 data.setUserId(boxFile.getUserId());
                 data.setBatch(boxFile.getBatch());
                 data.setDataKey(boxFile.getDataKey());
-                runService.rockyCheckRun(123, data);
+                runService.rockyCheckRun(Constants.rockyTags.get(tagId), data);
             }
 		}
-        logger.info("盒子上传, oss下载成功, 没有匹配的tag");
 	}
 
 }

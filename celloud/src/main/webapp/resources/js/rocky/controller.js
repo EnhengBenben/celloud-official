@@ -1,5 +1,6 @@
 (function() {
-	celloudApp.controller("rockyUploadController", function($route, $location, $scope, $rootScope, uploadService) {
+	celloudApp.controller("rockyUploadController", function($route, $location, $scope, $rootScope, $routeParams, uploadService) {
+		$rootScope.rockyTagId = $routeParams.tagId;
 		$scope.stepOne = function(){
 			// 在第二步存在了uploader对象但是没选择文件
 			if($rootScope.rockyUploader && $rootScope.rockyUploader.files.length <=0 && $rootScope.rockyStep != 'three'){
@@ -217,7 +218,7 @@
 					        'signature': object.signature,
 					        'x-oss-meta-name':file.name,
 					        'x-oss-meta-batch':$rootScope.rockyBatch,
-					        'x-oss-meta-tagId':2
+					        'x-oss-meta-tagId':$rootScope.rockyTagId
 						}
 					});
 					file.objectKey = object.dir + file.id +object.ext;
@@ -230,7 +231,7 @@
 							'size':file.size,
 							'originalName': file.name,
 							'name': file.name,
-							'tagId':2,
+							'tagId':$rootScope.rockyTagId,
 							'batch': $rootScope.rockyBatch
 						}
 					});
@@ -239,14 +240,14 @@
 			uploader.bind("FileUploaded", function(uploader, file, response) {
 				if($scope.box==null){
 					var res = JSON.parse(response.response);
-					uploader.setOption("multipart_params",{'originalName': file.name, "tagId":2, "batch":$rootScope.rockyBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
+					uploader.setOption("multipart_params",{'originalName': file.name, "tagId":$rootScope.tagId, "batch":$rootScope.rockyBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
 					$("#" + file.id +" .percent").html("上传完成");
 					$.post(CONTEXT_PATH+"/oss/upload/newfile",{
 						'name':file.name,
 						'batch':$rootScope.rockyBatch,
 						'size':file.size, 
 						'objectKey':file.objectKey,
-						'tagId':2
+						'tagId':$rootScope.rockyTagId
 					},function(data){
 						console.log(data);
 					});

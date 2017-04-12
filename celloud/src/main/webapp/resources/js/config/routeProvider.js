@@ -353,7 +353,7 @@
       templateUrl: "pages/experiment_scan/library_detail.jsp",
       controller: "storagesController"
     })
-    .when('/product/rocky/upload',{
+    .when('/product/rocky/upload/:tagId',{
       templateUrl: "pages/rocky/rocky_upload.jsp",
       controller: "rockyUploadController"
     })

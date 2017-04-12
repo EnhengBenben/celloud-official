@@ -30,4 +30,15 @@ public interface TagService {
      * @return
      */
     List<Map<String, String>> listProductTagsToSelect(Integer userId);
+
+    /**
+     * 
+     * @description 根据tagId获取tag对象t
+     * @author miaoqi
+     * @date 2017年4月11日 下午6:23:17
+     * @param tagId
+     * @return
+     */
+    public Tag get(Integer tagId);
+
 }

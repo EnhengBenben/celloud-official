@@ -22,11 +22,11 @@ from app.AccuSeqc import AccuSeqc
 # eg : python e:/git/celloud/python/task_over.py d:/share/data/webapps/Tools/upload/ 88 112 15112501860090,15112501860183
 
 # 对应class名
-method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI, 123: Rocky, 126: CMP, 127: CMP, 128: CMP, 131: AccuSeqa2, 133: BSI, 134: BSI, 135: BSI, 136: BSI, 137: BSI, 139: MIB, 279: AccuSeqc}
+method_dic = {110: CMP, 111: CMP, 112: CMP, 113: split, 114: MIB, 118: BSI, 123: Rocky, 126: CMP, 127: CMP, 128: CMP, 131: AccuSeqa2, 133: BSI, 134: BSI, 135: BSI, 136: BSI, 137: BSI, 139: MIB, 279: AccuSeqc, 280: Rocky}
 
 # 对应database名
 collection_dic = {110: "CmpReport", 111: "CmpReport", 112: "CmpReport", 113: "Split", 114: "MIB", 118: "BSI",
-                  123: "Rocky", 126: "CmpReport", 127: "CmpReport", 128: "CmpReport", 131: "AccuSeqα2", 133: "BSI", 134: "BSI", 135: "BSI", 136: "BSI", 137: "BSI", 139: "MIB", 279: "CmpReport"}
+                  123: "Rocky", 126: "CmpReport", 127: "CmpReport", 128: "CmpReport", 131: "AccuSeqα2", 133: "BSI", 134: "BSI", 135: "BSI", 136: "BSI", 137: "BSI", 139: "MIB", 279: "CmpReport", 280: "Rocky"}
 
 if len(sys.argv) != 6:
     print 'Usage: *.py path userId appId dataKeys projectId'
@@ -61,14 +61,14 @@ if myDB:
                 base['sample'] = sample_dict
         path = os.path.join(path, userId, appId)
         result = None
-        if appId == '123':
+        if appId == '123' or appId == '280':
             result = appFun.getResult(path, appId, dataKey, user_dict['userId'], user_dict['companyId'])
         else:
             result = appFun.getResult(path, appId, dataKey)
         result = dict(result, **base)
         moDB = mongo.getInstance()
         objId = moDB.put(result, collection_dic[int(appId)])
-        if appId == '123':
+        if appId == '123' or appId == '280':
             RockyPdf = RockyPdf.getInstance()
             RockyPdf.createPDF(objId)
         print objId

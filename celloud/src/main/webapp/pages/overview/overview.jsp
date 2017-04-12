@@ -54,7 +54,7 @@
                   </a>
                 </li>
 			    <li ng-if="userProduct.app123==123">
-			      <a href="${pageContext.request.contextPath }/index#/product/rocky/upload" ng-if="userProduct.rockyupload==true">
+			      <a href="${pageContext.request.contextPath }/index#/product/rocky/upload/2" ng-if="userProduct.rockyupload==true">
 			        <div class="inner">
 			          <img src="${pageContext.request.contextPath }/app/image?file=rocky.png" alt="华木兰" title="华木兰">
 			        </div>
@@ -65,6 +65,18 @@
 			        </div>
 			      </a>
 			    </li>
+			    <li ng-if="userProduct.app280==280">
+                  <a href="${pageContext.request.contextPath }/index#/product/rocky/upload/187" ng-if="userProduct.rockyupload==true">
+                    <div class="inner">
+                      <img src="${pageContext.request.contextPath }/app/image?file=rocky.png" alt="华木兰-白金" title="华木兰-白金">
+                    </div>
+                  </a>
+                  <a href="${pageContext.request.contextPath }/index#/product/rocky/report" ng-if="userProduct.rockyreport==true">
+                    <div class="inner">
+                      <img src="${pageContext.request.contextPath }/app/image?file=rocky.png" alt="华木兰-白金" title="华木兰-白金">
+                    </div>
+                  </a>
+                </li>
 			  </ul>
 		    </div>
 		  </section>
