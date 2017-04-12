@@ -20,6 +20,7 @@ import com.celloud.constants.ConstantsData;
 import com.celloud.constants.FileFormat;
 import com.celloud.model.mysql.DataFile;
 import com.celloud.model.mysql.Tag;
+import com.celloud.service.AppService;
 import com.celloud.service.DataService;
 import com.celloud.service.RunService;
 import com.celloud.service.TagService;
@@ -48,6 +49,8 @@ public class UploadAction {
 	private TagService tagService;
 	@Resource
 	private RunService runService;
+    @Resource
+    private AppService appService;
 	private String realPath = PropertiesUtil.bigFilePath;
 	/**
 	 * 用于判断数据格式
@@ -199,7 +202,8 @@ public class UploadAction {
                             data.setTagId(tagId);
                             data.setTagName(tagService.get(tagId).getTagName());
                             dataService.updateDataAndTag(data);
-                            runService.rockyCheckRun(123, data);
+                            // 根据tagId查询appId
+                            runService.rockyCheckRun(appService.getAppIdByTagId(tagId), data);
                         }
                     } else {
                         logger.info("用户 {} 合并文件出错", userId);

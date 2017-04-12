@@ -433,7 +433,7 @@ public class RunServiceImpl implements RunService {
 			task.setDataKey(data.getDataKey());
 			task.setPeriod(TaskPeriod.UPLOADING);// TODO 小心处理这个状态，将关系到数据的统计
 			task.setParams(pubName);
-			task.setAppId(IconConstants.APP_ID_ROCKY);
+            task.setAppId(appId);
 			task.setBatch(data.getBatch());
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {
