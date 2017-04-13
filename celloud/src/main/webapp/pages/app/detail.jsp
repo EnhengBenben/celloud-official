@@ -158,7 +158,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="app-comment">
+			<div class="app-comment" ng-if="appComments != null">
 				<div class="comment-left">
 					用户评价：
 				</div>
