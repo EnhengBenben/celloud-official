@@ -9,6 +9,7 @@
     return init();
     function init(){
       AppService.appDetail($routeParams.id).success(function(data) {
+    	$(document).scrollTop(0);
         $scope.appInfos = data;
         $scope.countScore5 = data.countScore[5]==undefined?0:data.countScore[5].count;
         $scope.countScore4 = data.countScore[4]==undefined?0:data.countScore[4].count;
@@ -38,8 +39,9 @@
       appComments();
     }
     function updateScore(score){
-      for(var i=1;i<score;i++){
-        $("score-"+i).attr("class","score-icon score-full");
+	  $(".user-click").attr("class","user-click score-icon score-gray-null");
+      for(var i=1;i<=score;i++){
+        $("#score-"+i).attr("class","user-click score-icon score-full");
       }
       $scope.userScore = score;
     }

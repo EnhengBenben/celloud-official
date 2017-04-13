@@ -4,7 +4,7 @@
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li>应用市场</li>
-      <li>{{appInfos.classifys}}</li>
+      <li><a ng-href="index#/app/list/{{appInfos.classifyId}}?currentPage=1&pageSize=10">{{appInfos.classifys}}</a></li>
       <li>{{appInfos.app.appName}}</li>
     </ol>
     <div class="content">
@@ -139,11 +139,11 @@
 				</div>
 				<div class="comment-right">
 					<div class="score-icons comment-score">
-						<span class="score-icon score-gray-null" id="score-1" ng-click="updateScore(1)"></span>
-						<span class="score-icon score-gray-null" id="score-2" ng-click="updateScore(2)"></span>
-						<span class="score-icon score-gray-null" id="score-3" ng-click="updateScore(3)"></span>
-						<span class="score-icon score-gray-null" id="score-4" ng-click="updateScore(4)"></span>
-						<span class="score-icon score-gray-null" id="score-5" ng-click="updateScore(5)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-1" ng-click="updateScore(1)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-2" ng-click="updateScore(2)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-3" ng-click="updateScore(3)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-4" ng-click="updateScore(4)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-5" ng-click="updateScore(5)"></span>
 					</div>
 				</div>
 			</div>
