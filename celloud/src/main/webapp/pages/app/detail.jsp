@@ -135,7 +135,7 @@
 			</div>
 			<div class="app-comment">
 				<div class="comment-left">
-					点星评论：
+					点星评分：
 				</div>
 				<div class="comment-right">
 					<div class="score-icons comment-score">
