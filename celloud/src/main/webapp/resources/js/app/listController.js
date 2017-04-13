@@ -19,7 +19,11 @@
       });
     }
     function getAppsByCid(id){
-      $scope.nowCid = id==undefined?$scope.nowCid:id;
+      if(id != undefined){
+        $scope.nowCid = id;
+        $scope.currentPage = 1;
+        $scope.pageSize = 10;
+      }
       AppService.classifyAppsByCid($scope.nowCid,$scope.currentPage,$scope.pageSize).success(function(data) {
         $scope.appPageInfo = data;
       });

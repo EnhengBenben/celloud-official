@@ -11,7 +11,7 @@
 				<div class="swiper-container" id="app-show-swipper">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide" ng-repeat="app in recommendApps">
-							<a><img ng-src="app/recommendMax?file={{app.pictureName}}" /></a>
+							<a style="cursor: auto;"><img ng-src="app/recommendMax?file={{app.pictureName}}" /></a>
 						</div>
 					</div>
 				</div>
@@ -37,9 +37,9 @@
 				<ul class="row">
 					<li class="col-sm-3" ng-repeat="app in classicApps">
 						<div class="inner">
-							<div class="app-logo">
+							<a class="app-logo" ng-href="#app/detail/{{app.appId}}">
 								<img ng-src="app/image?file={{app.pictureName}}" />
-							</div>
+							</a>
 							<div class="inner-content">
 								<h5>{{app.appName}}</h5>
 								<p>{{app.classifyName}}</p>
@@ -74,9 +74,9 @@
 				<ul class="row">
 					<li class="col-sm-3" ng-repeat="app in classifysApp.appList">
 						<div class="inner">
-							<div class="app-logo">
+							<a class="app-logo" ng-href="#app/detail/{{app.appId}}">
 								<img ng-src="app/image?file={{app.pictureName}}" />
-							</div>
+							</a>
 							<div class="inner-content">
 								<h5>{{app.appName}}</h5>
 								<p>{{classifysApp.classifyName}}</p>

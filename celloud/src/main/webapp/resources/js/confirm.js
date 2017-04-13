@@ -12,7 +12,7 @@
     var $header = $('<div class="modal-header"><button type="button" class="close" aria-label="Close" id="close-confirm"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button><h4 class="modal-title">'+title+'</h4></div>');
     var $body = $('<div class="modal-body"></div>');
     var $h5 = $('<h5></h5>');
-    var $footer = $('<div class="modal-footer"><button type="reset" class="btn btn-cancel -low pull-left" data-dismiss="modal" id="confirm-cancle">取消</button><button type="submit" class="btn -low pull-right" id="confirm-ok">确定</button></div>');
+    var $footer = $('<div class="modal-footer"><button type="reset" class="btn btn-cancel -low pull-left" data-dismiss="modal" id="confirm-cancle">'+window.modalCancelBtn+'</button><button type="submit" class="btn -low pull-right" id="confirm-ok">'+window.modalConfirmBtn+'</button></div>');
     $h5.append($('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'));
     $h5.append($('<span>' + message + '</span>'));
     $body.append($h5);
@@ -49,13 +49,13 @@
   }
   var confirm = function(message, title, callback) {
     if( title == null ) title = '确认框';
-    show("confirm",title, message,function(result) {
+    show("confirm",title,message,function(result) {
       if( callback ) callback(result);
     });
   }
   var tips = function(message, title) {
     if( title == null ) title = '提示框';
-    show("tips",title, message,null);
+    show("tips",title,null,null, message,null);
   }
   $.extend({
     confirm : function(message, title, callback) {
