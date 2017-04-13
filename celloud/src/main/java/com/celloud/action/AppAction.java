@@ -165,6 +165,7 @@ public class AppAction {
                 sb.append(c.getClassifyName() + ",");
             });
             result.put("classifys", sb.toString().substring(0, sb.toString().length() - 1));
+            result.put("classifyId", classifys.get(0).getClassifyId());
         }
         // 3. 根据companyId查询app的所有者
         Company company = companyService.selectByPrimaryKey(app.getCompanyId());
