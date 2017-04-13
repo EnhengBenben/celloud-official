@@ -157,7 +157,10 @@
     "FILE_ALIAS_MAX_CHAR": "The file alia cannot exceed {{maxNum}} characters!",
     "DATA_LABEL_MAX_CHAR": "The data label cannot exceed {{maxNum}} characters!",
     "TEST_USER_NO_ARCHIVE": "Test account can not archive datas!",
-    "TEST_USER_NO_MODIFIED": "Test account can not modify datas!"
+    "TEST_USER_NO_MODIFIED": "Test account can not modify datas!",
+    "SELECT_START_TIME": "Please select start time!",
+    "TIME_ERROR": "Time error",
+    "MACK_SURE_TIME": "Please make sure \"start time\" > \"end time\""
   },
   "CONFIRM": {
     "CONFIRM": "Confirm",
