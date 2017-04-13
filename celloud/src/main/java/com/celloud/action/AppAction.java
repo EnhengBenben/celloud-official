@@ -176,6 +176,8 @@ public class AppAction {
         Price price = priceService.getPriceByApp(app.getAppId());
         if (price != null) {
             result.put("price", price.getPrice());
+        } else {
+            result.put("price", 0);
         }
         // 5. 根据appId获取轮播图
         List<Screen> screens = screenService.getScreenByAppId(app.getAppId());
