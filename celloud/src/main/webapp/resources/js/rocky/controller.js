@@ -354,8 +354,8 @@
 		$scope.pageQuery();
 	});
 	
-	celloudApp.controller("rockyReportController", function($scope, rockyReportService) {
-		
+	celloudApp.controller("rockyReportController", function($scope, $rootScope, $routeParams, rockyReportService) {
+		$rootScope.rockyTagId = $routeParams.tagId;
 		$scope.showReport = function(dataKey,projectId,appId) {
 			var url = CONTEXT_PATH + "/report/rocky/data/report";
 			$.get(url,{
@@ -629,7 +629,8 @@
 			endDate : $scope.endDate,
 			condition : $scope.condition,
 			batches : $scope.batches,
-			periods : $scope.periods
+			periods : $scope.periods,
+			tagId : $rootScope.rockyTagId
 		};
 		
 		$scope.pageQuery = function() {

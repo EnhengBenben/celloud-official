@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.celloud.constants.ConstantsData;
 import com.celloud.constants.DataState;
-import com.celloud.constants.IconConstants;
 import com.celloud.constants.ReportPeriod;
 import com.celloud.constants.ReportType;
 import com.celloud.constants.TaskPeriod;
@@ -281,9 +280,9 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public PageList<Task> findRockyTasks(Page pager, String sample, String condition, String sidx, String sord,
-			ArrayList<String> batches, ArrayList<Integer> periods, Date beginDate, Date endDate) {
+            ArrayList<String> batches, ArrayList<Integer> periods, Date beginDate, Date endDate, Integer appId) {
 		List<Task> list = taskMapper.findRockyTasks(pager, ConstantsData.getLoginUserId(), DataState.ACTIVE,
-				IconConstants.APP_ID_ROCKY, sample, condition, sidx, sord, batches, periods, beginDate, endDate);
+                appId, sample, condition, sidx, sord, batches, periods, beginDate, endDate);
 		return new PageList<>(pager, list);
 	}
 

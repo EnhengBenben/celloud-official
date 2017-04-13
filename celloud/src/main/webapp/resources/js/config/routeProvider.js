@@ -365,7 +365,7 @@
     	templateUrl: "pages/rocky/rocky_data.jsp",
     	controller: "rockyDataController"
     })
-    .when('/product/rocky/report',{
+    .when('/product/rocky/report/:tagId',{
       templateUrl: "pages/rocky/rocky_report.jsp",
       controller: "rockyReportController"
     })
