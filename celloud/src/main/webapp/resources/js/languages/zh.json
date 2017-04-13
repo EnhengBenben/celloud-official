@@ -100,7 +100,7 @@
     "ETV": "恩替卡韦 ETV",
     "MUTATION_DETECTION": "突变检测",
     "MUTATION_DETECTED": "突变检测的耐药株",
-    "OTHER_MUTATION": "其他突变位点（该位点目前没有已发表文献支持，无明确临床意义）",
+    "OTHER_MUTATION": "其他突变位点",
     "REFERENCE_CONCLUSIONS": "参考结论（根据已发表文献得出以下参考结论）",
     "ORIGINAL_SEQUENCE": "原始序列",
     "ORIGINAL_PEAK_MAP": "原始峰图",
