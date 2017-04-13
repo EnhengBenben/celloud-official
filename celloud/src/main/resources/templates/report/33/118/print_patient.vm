@@ -164,7 +164,7 @@
             <li>复核员：<span class="print"></span><input class="width-120" type="text" name='baseInfo["compounder"]' value=""></li>
         </ul>
         <input id="sample-name-hide" type="hidden" value="$!{bsi.sample.sample_name}">
-        <div class="sample_qr" id="qrcode"></div>
+        <div class="barcode2 sample_qr" id="qrcode"></div>
       </div>
     </form>
 </div>
