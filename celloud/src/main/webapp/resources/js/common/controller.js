@@ -170,8 +170,5 @@
 	celloudApp.controller("proSidebarController", function($rootScope,$location) {
 	  $rootScope.collapsed = false;
 	  $rootScope.toggleCollapse();
-	  if($location.path().indexOf("app")>0){
-	    $rootScope.appSwiperInit();
-	  }
 	});
 })();

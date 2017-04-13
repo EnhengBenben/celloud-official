@@ -153,7 +153,7 @@
 				</div>
 				<div class="comment-right">
 					<div class="comment-commit">
-						<textarea ng-model="userComment" placeholder="至少输入5个字符">{{appInfos.userComment.comment}}</textarea>
+						<textarea ng-model="userComment" placeholder="至少输入5个字符"></textarea>
 						<button class="button-black" ng-click="updateComment()">回复</button>
 					</div>
 				</div>
