@@ -770,6 +770,13 @@ public class ReportAction {
 		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("split", split);
 		map.put("splitId", split.getId().toString());
+		String keyPath = SparkPro.TOOLSPATH + ConstantsData.getLoginUserId() + File.separatorChar + appId
+				+ File.separatorChar + dataKey;
+		if (new File(keyPath).exists()) {
+			map.put("uploadPath", "/upload/");
+		} else {
+			map.put("uploadPath", "/output/");
+		}
 		return map;
 	}
 
