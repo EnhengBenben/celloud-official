@@ -44,6 +44,10 @@
       $scope.userScore = score;
     }
     function updateComment(){
+    	if(!$scope.userScore||!$scope.userComment){
+    		$.tips("评分和评论均不能为空！");
+    		return;
+    	}
       AppService.updateComment($routeParams.id,$scope.userScore,$scope.userComment).success(function() {
         $.tips("评论成功");
         init();
