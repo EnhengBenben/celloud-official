@@ -23,12 +23,7 @@
 .clearBoth{
 	clear: both;
 }
-.detailInfo{
-    border-bottom: 1px solid #c8c8c8;
-    margin: 0 -10px;
-    padding: 0 10px 10px 10px;
-    font-weight: bold;
-}
+
 .base-info{
 	padding-bottom: 0;
 }
@@ -38,14 +33,9 @@
 .tests-content{
 	padding-top:0;
 }
-.row li{
-	margin: 10px 0;
-}
-.row li:first-child{
-	margin-top: 20px;
-}
+
 </style>
-<div class="content">
+<div class="content yanda">
   <div class="print-button">
     <a id="print-report" class="btn" title="打印" href="javascript:void(0)"><i class="fa fa-print"></i></a>
     <a id="reset-info" class="btn" title="清空" href="javascript:void(0)">
@@ -61,7 +51,7 @@
     <div class="title-content">
       <img src="${base}/images/hospitalIcon/yanda.png" style="float:left;">
       <div class="title" style="padding-right: 200px;">河北燕达医院</div>
-      <div class="sub-title" style="padding-right: 200px;">细菌性<span id="bsi_title_info">血流</span>感染检测报告</div>
+      <div class="sub-title" style="padding-right: 200px;">细菌性血液感染检测结果报告</div>
     </div>
     <form id="print-form">
       <div class="base-info">
@@ -70,14 +60,14 @@
       <div class="tests-content">
         <div class="tests-info">
         	<div class="row">
-				<div class="width-35">
-					<div class="detailInfo">
+				<div class="width-220">
+					<div class="detail-info">
 						样本信息
 					</div>
 					<ul>
 						<li><lable>样本种类：</lable>
 					        <span id="sample-type-text" class="print"></span>
-					        <select id="sample-type" class="width-120" name='baseInfo["sampleType"]'>
+					        <select id="sample-type" name='baseInfo["sampleType"]'>
 					          <option value="血液">血液</option>
 					          <option value="尿">尿</option>
 					          <option value="腹水">腹水</option>
@@ -90,11 +80,11 @@
 					    </li>
 					    <li><lable>样本编号：</lable>
 					        <span class="print"></span>
-					        <input class="width-120" type="text" value="$!{bsi.sample.sample_name}" name='baseInfo["sampleNo"]' placeholder="88484">
+					        <input type="text" value="$!{bsi.sample.sample_name}" name='baseInfo["sampleNo"]' placeholder="88484">
 					    </li>
 					    <li><lable>送检医生：</lable>
 					        <span class="print"></span>
-					        <input class="width-120" type="text" name='baseInfo["doctor"]' placeholder="ab0302">
+					        <input type="text" name='baseInfo["doctor"]' placeholder="ab0302">
 					    </li>
 					    <li><lable>送检日期：</lable>
 					        <span class="print"></span>
@@ -102,7 +92,7 @@
 					    </li>
 					    <li><lable>送检科室：</lable>
 					       <span id="department-text" class="print"></span>
-					       <select id="department" class="width-120" name='baseInfo["department"]'>
+					       <select id="department" name='baseInfo["department"]'>
 					          <option value="ICU病房">ICU病房</option>
 					          <option value="呼吸科">呼吸科</option>
 					          <option value="儿科">儿科</option>
@@ -112,19 +102,19 @@
 					    </li>
 					    <li><lable>住&ensp;院&ensp;号：</lable>
 					        <span class="print"></span>
-					        <input class="width-120" type="text" name='baseInfo["inpatientNo"]' placeholder="83947536">
+					        <input type="text" name='baseInfo["inpatientNo"]' placeholder="83947536">
 					    </li>
 					    <li><lable>床&emsp;&emsp;号：</lable>
 					        <span class="print"></span>
-					        <input class="width-120" type="text" name='baseInfo["bedNo"]' placeholder="ab0302">
+					        <input type="text" name='baseInfo["bedNo"]' placeholder="ab0302">
 					    </li>
 					</ul>
 				</div>
-				<div class="width-30">
-					<div class="detailInfo">
+				<div class="width-260">
+					<div class="detail-info">
 						检出菌
 					</div>
-					<ul>
+					<ul class="result-species">
 						<li>
 				           #if($bsi.species_20)
 				              #foreach($species_20 in $!bsi.species_20) 
@@ -145,13 +135,13 @@
 			       		</li>
 					</ul>
 				</div>
-				<div class="width-20">
-					<div class="detailInfo">
+				<div class="width-140">
+					<div class="detail-info">
 						结果
 					</div>
 				</div>
-				<div class="width-15">
-					<div class="detailInfo">
+				<div class="width-280">
+					<div class="detail-info">
 						参考值
 					</div>
 				</div>
@@ -167,12 +157,13 @@
         <h4>检测方法：<span>基于16S rDNA高通量测序方法</span></h4>
       </div>
       <div class="tests-footer">
-        <ul>
-            <li>检测人：<span class="print"></span><input class="width-120" type="text" name='baseInfo["inspector"]' value=""></li>
-            <li>复核人：<span class="print"></span><input class="width-120" type="text" name='baseInfo["compounder"]' value=""></li>
-            <li>报告时间：<span class="print"></span><input class="width-120 Wdate" onclick="WdatePicker()" readonly="readonly" type="text" name='baseInfo["reportDate"]' value=""></li>
-        </ul>
         <div class="statement"><span>声明：1.报告仅对本次送检样品负责;2.检测结果仅供医师参考</span></div>
+        <ul>
+            <li>报告时间：<span class="print"></span><input class="width-120 Wdate" onclick="WdatePicker()" readonly="readonly" type="text" name='baseInfo["reportDate"]' value=""></li>
+            <li>检验员：<span class="print"></span><input class="width-120" type="text" name='baseInfo["inspector"]' value=""></li>
+            <li>复核员：<span class="print"></span><input class="width-120" type="text" name='baseInfo["compounder"]' value=""></li>
+        </ul>
+        <img class="sample_qr" width="76" alt="" src="${base}/user/icon/temp?file=$!{bsi.sample.sample_name}.png">
       </div>
     </form>
 </div>
