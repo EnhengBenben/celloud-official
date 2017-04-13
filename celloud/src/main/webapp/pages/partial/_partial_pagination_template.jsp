@@ -2,7 +2,7 @@
 <div class="pagination text-center">
 	<ul class="pages pull-left">
 		<li class="first-page">
-			<a id="prev-page" data-click="pagination-btn" ng-click="change({page:1,pageSize:page.pageSize})">首页{{dataPage}}</a>
+			<a id="prev-page" data-click="pagination-btn" ng-click="change({page:1,pageSize:page.pageSize})">{{'PAGE.FIRST_PAGE' | translate}}{{dataPage}}</a>
 		</li>
 	</ul>
 	<ul id="pagination-ul" class="pages pull-left">
@@ -59,21 +59,21 @@
 	</ul>
 	<ul class="pages pull-left">
 		<li class="last-page">
-			<a ng-click="change({page:page.totalPage,pageSize:page.pageSize})">尾页</a>
+			<a ng-click="change({page:page.totalPage,pageSize:page.pageSize})">{{'PAGE.LAST_PAGE' | translate}}</a>
 		</li>
 	</ul>
 	<ul class="datanumul pull-right">
 		<li>
-			<span>共&nbsp;&nbsp;{{page.rowCount}}&nbsp;&nbsp;条</span>
+			<span>{{'PAGE.TOTAL' | translate}}&nbsp;&nbsp;{{page.rowCount}}&nbsp;&nbsp;{{'PAGE.PAGE' | translate}}</span>
 		</li>
 		<li>
-			每页 <select class="form-control" id="page-size-sel" ng-model="pageSize" ng-change="change({page:1,pageSize:pageSize})">
+			{{'PAGE.EACH_PAGE' | translate}}<select class="form-control" id="page-size-sel" ng-model="pageSize" ng-change="change({page:1,pageSize:pageSize})">
 				<option value="10" ng-selected="page.pageSize == 10">10</option>
 				<option value="20" ng-selected="page.pageSize == 20">20</option>
 				<option value="30" ng-selected="page.pageSize == 30">30</option>
 				<option value="50" ng-selected="page.pageSize == 50">50</option>
 				<option value="100" ng-selected="page.pageSize == 100">100</option>
-			</select> 条
+			</select> {{'PAGE.ARTICLE' | translate}}
 		</li>
 	</ul>
 </div>

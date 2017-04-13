@@ -5,7 +5,7 @@
  	  <table class="table table-main">
           <thead>
             <tr>
-              <th style="padding:0px;text-align: center;">相同标签报告</th>
+              <th style="padding:0px;text-align: center;">{{'REPORT.SAME_DATA_LABEL' | translate}}</th>
             </tr>
           </thead>
           <tbody id="data-list-tbody" ng-if="taskPageList.datas.length > 0">
