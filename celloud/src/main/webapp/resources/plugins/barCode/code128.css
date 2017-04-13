@@ -2,8 +2,7 @@
   float:left;
   clear:both;
   padding: 0 10px; /*quiet zone*/
-  overflow:auto;
-  height:0.5in; /*size*/ 
+  height: 36px; /*size*/ 
 }
 .right { float:right; }
 .barcode + * { clear:both; }
@@ -23,21 +22,21 @@
 .barcode label { 
   clear:both; 
   display:block; 
-  text-align:center;  
-  font: 0.125in/100% helvetica; /*size*/
+  text-align:center; 
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: bolder;
 }
 /*** bigger ******************************************/
 .barcode2 { 
   float:left;
   clear:both;
-  padding: 0 10px; /*quiet zone*/
-  overflow:auto;
-  height:1in; /*size*/ 
+  height:50px; /*size*/ 
 }
 .barcode2 + * { clear:both; }
 .barcode2 div { 
   float:left;
-  height: 0.7in; /*size*/
+  height: 36px; /*size*/
 }
 .barcode2 .bar1 { border-left:2px solid black; }
 .barcode2 .bar2 { border-left:4px solid black; }
@@ -52,5 +51,7 @@
   clear:both; 
   display:block; 
   text-align:center;  
-  font: 0.250in/100% helvetica; /*size*/
+  font-size: 12px; /*size*/
+  font-weight: bolder;
+  line-height: 14px;
 }
