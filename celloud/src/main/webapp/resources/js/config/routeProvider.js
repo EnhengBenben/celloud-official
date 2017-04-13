@@ -290,7 +290,7 @@
       templateUrl: "pages/app/list.jsp",
       controller: "appListCtrl"
     })
-    .when('/app/detail/:id',{
+    .when('/app/list/:classifyId/detail/:id',{
       templateUrl: "pages/app/detail.jsp",
       controller: "appDetailCtrl"
     })

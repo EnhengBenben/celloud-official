@@ -10,6 +10,7 @@
     function init(){
       AppService.classifysByPid($routeParams.cid).success(function(data) {
         $scope.sclassifys = data;
+        $scope.rootClassifyId = $routeParams.cid;
         if(data.length>0){
           $scope.nowCid = data[0].classifyId;
           $scope.nowCName = data[0].classifyName;
