@@ -1,8 +1,299 @@
 (function() {
-	celloudApp.controller("rockyUploadController", function($route, $location, $scope, $rootScope, $routeParams, uploadService) {
-		console.log($location.path());
+	celloudApp.controller("rockyPlatinumUploadController", function($route, $location, $scope, $rootScope, $routeParams, uploadService) {
 		$rootScope.rockyTagId = $location.path().substr($location.path().lastIndexOf('/') + 1);
-		console.log($rootScope.rockyTagId);
+		$scope.stepOne = function(){
+			// 在第二步存在了uploader对象但是没选择文件
+			if($rootScope.rockyPlatinumUploader && $rootScope.rockyPlatinumUploader.files.length <=0 && $rootScope.rockyStep != 'three'){
+				$rootScope.rockyPlatinumUploader = undefined;
+				$(".steps").addClass("hide");
+				$("#upload-nav-step-three").addClass("not-reached");
+				$("#upload-nav-step-two").addClass("not-reached");
+				$("#upload-step-one").removeClass("hide");
+				$(".step-line").addClass("not-reached")
+				$(".uploadtips .tips").addClass('hide');
+				$("#batch-info-input").val('');
+				$("#upload-tip-one").removeClass("hide");
+				$rootScope.rockyBatch = "";
+			}else if(!$rootScope.rockyPlatinumUploader){ // 在第三步点击新上传
+				$(".steps").addClass("hide");
+				$("#upload-nav-step-three").addClass("not-reached");
+				$("#upload-nav-step-two").addClass("not-reached");
+				$("#upload-step-one").removeClass("hide");
+				$(".step-line").addClass("not-reached")
+				$(".uploadtips .tips").addClass('hide');
+				$("#batch-info-input").val('');
+				$("#upload-tip-one").removeClass("hide");
+				$rootScope.rockyBatch = "";
+			}
+		},
+		$scope.stepTwo = function() {
+			if(!$rootScope.rockyBatch){
+				$rootScope.rockyBatch = $scope.rockyBatch;
+			}
+			if(!$rootScope.rockyPlatinumUploader){
+				$rootScope.rockyPlatinumUploader = initUploader();
+				$rootScope.rockyPlatinumUploader.init();
+				$rootScope.rockyUploadSpead = {};
+			}
+			$(".steps").addClass("hide");
+			$(".step-line").addClass("not-reached")
+			$("#upload-nav-line-one").removeClass("not-reached");
+			$("#upload-nav-step-two").removeClass("not-reached");
+			$("#upload-nav-step-three").addClass("not-reached");
+			$("#upload-step-two").removeClass("hide");
+			$(".uploadtips .tips").addClass('hide');
+			$("#upload-tip-two").removeClass("hide");
+		},
+		$scope.stepThree = function(){
+			$(".steps").addClass("hide");
+			$("#upload-step-three").removeClass("hide");
+			$("#upload-nav-line-one").removeClass("not-reached");
+			$("#upload-nav-line-two").removeClass("not-reached");
+			$("#upload-nav-step-three").removeClass("not-reached");
+			$("#upload-nav-step-two").removeClass("not-reached");
+			$(".uploadtips .tips").addClass('hide');
+			$("#upload-tip-three").removeClass("hide");
+		}
+		if($rootScope.rockyPlatinumUploader && $rootScope.rockyStep == 'two'){
+			$scope.stepTwo();
+			$("#rocky-upload-list-table").removeClass("hide");
+			$.each($rootScope.rockyPlatinumUploader.files, function(index, item) {
+				if(item.percent == 100){
+					var $fileDom = $('<tr id="' + item.id + '"></tr>');
+					$fileDom.append($('<td class="filename">' + item.name + '</td>'));
+					$fileDom.append($('<td class="percent">上传完成</td>'));
+					$fileDom.append($('<td class="surplus">00:00:00</td>'));
+					$fileDom.append($('<td class="spead">'+$rootScope.rockyUploadSpead[item.id]+'</td>'));
+					$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
+					$("#rocky-upload-list-tbody").append($fileDom);
+				}else if(item.percent >0){
+					var $fileDom = $('<tr id="' + item.id + '"></tr>');
+					$fileDom.append($('<td class="filename">' + item.name + '</td>'));
+					$fileDom.append($('<td class="percent">'+item.percent+'%</td>'));
+					$fileDom.append($('<td class="surplus">'+getSize($rootScope.rockyPlatinumUploader.total.bytesPerSec)+'/s</td>'));
+					$fileDom.append($('<td class="spead">'+utils.formatDate((item.size-item.loaded)/$rootScope.rockyPlatinumUploader.total.bytesPerSec)+'</td>'));
+					$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
+					$("#rocky-upload-list-tbody").append($fileDom);
+				}else{
+					var $fileDom = $('<tr id="' + item.id + '"></tr>');
+					$fileDom.append($('<td class="filename">' + item.name + '</td>'));
+					$fileDom.append($('<td class="percent">等待上传</td>'));
+					$fileDom.append($('<td class="surplus">---</td>'));
+					$fileDom.append($('<td class="spead">---</td>'));
+					$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
+					$("#rocky-upload-list-tbody").append($fileDom);
+				}
+			});
+		}
+		
+		if($rootScope.rockyPlatinumUploader && $rootScope.rockyStep == 'three'){
+			$rootScope.rockyPlatinumUploader.destroy();
+			$scope.stepThree();
+		}
+		
+		$scope.refreshSession = function(){
+			$.get("uploadFile/checkAdminSessionTimeOut");
+		};
+		
+		// 继续上传
+		$scope.continueUpload = function(){
+			$rootScope.rockyPlatinumUploader = undefined;
+			$rootScope.rockyStep = 'one';
+			$scope.stepTwo();
+		}
+		
+		// 新上传
+		$scope.newUpload = function(){
+			$rootScope.rockyPlatinumUploader = undefined;
+			$rootScope.rockyStep = 'one';
+			$scope.stepOne();
+		}
+		var refreshSession = function(){
+			return 
+		}
+		var initUploader = function(){
+			var uploadUrl = "../uploadFile/uploadManyFile";
+			$.ajax({
+				type:"GET",
+				async:false,
+				url:CONTEXT_PATH+"/box/configs",
+				success:function(configs){
+					for(var index in configs){
+						var config = configs[index];
+						var port = config.port||80;
+						var context = !config.context?'':(config.context.startsWith("/")?config.context:("/"+config.context));
+						config = window.location.protocol+"//"+config.intranetAddress+":"+port+context;
+						var response = $.ajax(config+"/box/alive",{async: false}).responseText;
+						if(response && JSON.parse(response).success){
+							$scope.box=config;
+							break;
+						}
+					}
+					if($scope.box != null){
+						uploadUrl = $scope.box + "/box/upload";
+						console.log("成功找到了一个盒子，地址为："+$scope.box);
+					}else{
+						console.log("没有找到盒子...");
+					}
+				}
+			});
+			var uploader = new plupload.Uploader({
+				runtimes : 'html5,flash,silverlight,html4',
+				browse_button : 'plupload-content',
+				url : uploadUrl,
+				drop_element : 'plupload-content',
+				filters : {
+					max_file_size : '10gb',
+					prevent_duplicates : true, // 不允许选取重复文件
+					mime_types : [
+						{title : "fastq", extensions : "fastq"},
+						{title : "txt", extensions : "txt"},
+						{title : "gz", extensions : "gz"},
+						{title : "bam", extensions : "bam"}
+					]
+				},
+				max_retries : 5,
+				flash_swf_url : '//cdn.bootcss.com/plupload/2.1.8/Moxie.swf'
+			});
+			$(document).on("click", "[data-click='del-upload-file']", function() {
+				var id = $(this).data("id");
+				uploader.removeFile(id);
+				$("#"+id).remove();
+			});
+			uploader.bind("StateChanged", function() {
+				if (uploader.state === plupload.STARTED) {
+					window.parent.isUploading = true;
+					refresh = setInterval($scope.refreshSession,600000);
+				}else if(uploader.state === plupload.STOPPED){
+					window.parent.isUploading = false;
+					clearInterval(refresh);
+				}
+			});
+			uploader.bind("UploadProgress", function(uploader, file) {
+				$("#" + file.id + " .percent").html(file.percent+"%");
+				var curSpead = getSize(uploader.total.bytesPerSec)+"/s";
+				$("#" + file.id + " .spead").html(curSpead);
+				if(curSpead && curSpead != 'undefined'){
+					$rootScope.rockyUploadSpead[file.id] = curSpead;
+				}
+				$("#" + file.id + " .surplus").html(utils.formatDate((file.size-file.loaded)/uploader.total.bytesPerSec));
+			});
+			uploader.bind("FilesAdded", function(uploader, files) {
+				$.each(files, function(index, item) {
+					if(item.size > 0){
+						var $fileDom = $('<tr id="' + item.id + '"></tr>');
+						$fileDom.append($('<td class="filename">' + item.name + '</td>'));
+						$fileDom.append($('<td class="percent">等待上传</td>'));
+						$fileDom.append($('<td class="surplus">---</td>'));
+						$fileDom.append($('<td class="spead">---</td>'));
+						$fileDom.append($('<td><a data-click="del-upload-file" data-id="'+item.id+'"  href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a></td>'));
+						$("#rocky-upload-list-tbody").append($fileDom);
+					}else{
+						uploader.removeFile(item);
+					}
+				});
+				if(uploader.files.length > 0){
+					$("#rocky-upload-list-table").removeClass("hide");
+					uploader.start();
+					$rootScope.rockyStep = 'two'; // 只有选择了文件才算真的在第二步
+				}
+			});
+			uploader.bind("BeforeUpload", function(uploader, file) {
+				if($scope.box==null){
+					$("#" + file.id +" .percent").html("正在上传");
+					var object = $.ajax({
+						 url: CONTEXT_PATH+"/oss/upload/postPolicy",
+						 async: false,
+						 data:'name='+file.name+'&oName=ddd'+file.id
+					}).responseText;
+					object = JSON.parse(object);
+					uploader.setOption({
+						url:"https://"+object.host,
+						chunk_size: 0,
+						multipart_params:{
+							'key' : object.dir + file.id +object.ext,
+							'policy': object.policy,
+					        'OSSAccessKeyId': object.accessid, 
+					        'success_action_status' : '200', //让服务端返回200,不然，默认会返回204
+					        'signature': object.signature,
+					        'x-oss-meta-name':file.name,
+					        'x-oss-meta-batch':$rootScope.rockyBatch,
+					        'x-oss-meta-tagId':$rootScope.rockyTagId
+						}
+					});
+					file.objectKey = object.dir + file.id +object.ext;
+				} else {
+					uploader.setOption({
+						chunk_size: "1mb",
+						multipart_params:{
+							'userId':window.userId,
+							"lastModifiedDate":file.lastModifiedDate,
+							'size':file.size,
+							'originalName': file.name,
+							'name': file.name,
+							'tagId':$rootScope.rockyTagId,
+							'batch': $rootScope.rockyBatch
+						}
+					});
+				}
+			});
+			uploader.bind("FileUploaded", function(uploader, file, response) {
+				if($scope.box==null){
+					var res = JSON.parse(response.response);
+					uploader.setOption("multipart_params",{'originalName': file.name, "tagId":$rootScope.tagId, "batch":$rootScope.rockyBatch, 'size':file.size, 'lastModifiedDate':file.lastModifiedDate, "uniqueName":file.id});
+					$("#" + file.id +" .percent").html("上传完成");
+					$.post(CONTEXT_PATH+"/oss/upload/newfile",{
+						'name':file.name,
+						'batch':$rootScope.rockyBatch,
+						'size':file.size, 
+						'objectKey':file.objectKey,
+						'tagId':$rootScope.rockyTagId
+					},function(data){
+						console.log(data);
+					});
+				}
+				file.hint;
+				messageUtils.notify("上传完成","数据【" + file.name + "】上传成功。");
+			});
+			uploader.bind("UploadComplete",function(uploader,files){
+				uploader.splice(0, uploader.files.length);
+				$("#rocky-upload-list-tbody").html('');
+				$("#rocky-upload-list-table").addClass("hide");
+				$rootScope.rockyPlatinumUploader.destroy();
+				$rootScope.rockyStep = 'three';
+				$scope.stepThree();
+			});
+			return uploader;
+		};
+		
+		$scope.stepOne();
+		
+		function getSize(fileSize){
+			if(!fileSize){
+				return "";
+			}
+			var unit = "b";
+			if(fileSize > 1000){
+				fileSize= fileSize / 1000;
+				unit = "kb";
+			}
+			if(fileSize > 1000){
+				fileSize= fileSize / 1000;
+				unit = "mb";
+			}
+			return fileSize.toFixed(2)+unit;
+		}
+		window.onbeforeunload=function(){
+			var qp=$rootScope.rockyPlatinumUploader.total;
+			var percent=qp.percent;
+			if(qp.size>0&&percent<100&&percent>0){
+				return "数据正在上传，您确定要关闭页面吗?"
+			}
+		}
+	});
+	
+	celloudApp.controller("rockyUploadController", function($route, $location, $scope, $rootScope, $routeParams, uploadService) {
+		$rootScope.rockyTagId = $location.path().substr($location.path().lastIndexOf('/') + 1);
 		$scope.stepOne = function(){
 			// 在第二步存在了uploader对象但是没选择文件
 			if($rootScope.rockyUploader && $rootScope.rockyUploader.files.length <=0 && $rootScope.rockyStep != 'three'){

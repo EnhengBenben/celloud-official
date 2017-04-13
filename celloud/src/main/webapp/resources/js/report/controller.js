@@ -1436,7 +1436,12 @@
 					aType += ("['"+$translate.instant("HBV.ABNORMAL_DATA")+"'," + hbvtype[9]/2 + "]");
 				}
 				aType += "]";
-				$.reportChar.draw.echartsShowHBVType('char0',$routeParams.appId,hbvtype,aType,45);
+				$.reportChar.draw.echartsShowHBVType('char0',$routeParams.appId,hbvtype,aType,45,
+				    $translate.instant("HBV.GENOTYPING_OVERVIEW_TABLE"),
+				    $translate.instant("HBV.DATA_SOURCES")+"("+$translate.instant("HBV.ALL_HBV_DATA_IN_CELLOUD")+")",
+				    $translate.instant("HBV.HBV_GENOTYPE"),$translate.instant("HBV.CURRENT_DATA_GENOTYPE"),
+				    $translate.instant("HBV.CONTRAST_FAILED"),$translate.instant("HBV.ABNORMAL_DATA"),
+            $translate.instant("HBV.GENOTYPE_NUMBER"),$translate.instant("HBV.CURRENT_DATA_GENOTYPE"));
 				
 				var result = $("#resultDiv").html();
 				if(result){
