@@ -49,8 +49,12 @@
       $scope.userScore = score;
     }
     function updateComment(){
-    	if(!$scope.userScore||!$scope.userComment){
-    		$.tips("评分和评论均不能为空！");
+    	if(!$scope.userScore){
+    		$.tips("评分不能为空！");
+    		return;
+    	}
+    	if(!$scope.userComment||$scope.userComment.length<5){
+    		$.tips("评论不能少于五个字符！");
     		return;
     	}
       AppService.updateComment($routeParams.id,$scope.userScore,$scope.userComment).success(function() {
