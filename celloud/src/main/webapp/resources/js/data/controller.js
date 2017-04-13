@@ -92,14 +92,15 @@
 			        return;
 			      }
 			      if($.dataManager.options.isPair!=0){
+			        window.modalConfirmBtn = $translate.instant("BUTTON.CONFIRM");
+			        window.modalCancelBtn = $translate.instant("BUTTON.CANCEL");
 			        $.confirm(
 			            $translate.instant("CONFIRM.DATA_PAIRED"),
 			            $translate.instant("CONFIRM.CONFIRM"),
-			            $translate.instant("BUTTON.CONFIRM"),
-			            $translate.instant("BUTTON.CANCEL"),
 			            function(){
 			              $scope.run();
-			        });
+			            }
+			        );
 			      }else{
 			        $scope.run();
 			      }
@@ -155,11 +156,11 @@
   		      if(!$scope.checkNum()){
   			      return ;
   			    }
+  		      window.modalConfirmBtn = $translate.instant("BUTTON.CONFIRM");
+            window.modalCancelBtn = $translate.instant("BUTTON.CANCEL");
   		       $.confirm(
   		          $translate.instant("CONFIRM.ARCHIVE_DATA"),
   		          $translate.instant("CONFIRM.CONFIRM"),
-  		          $translate.instant("BUTTON.CONFIRM"),
-  		          $translate.instant("BUTTON.CANCEL"),
   		          function(){
       		        runService.deleteData().success(function(response){
       		          if(response.success){
