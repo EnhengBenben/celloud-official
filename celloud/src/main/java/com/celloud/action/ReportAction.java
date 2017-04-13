@@ -3194,7 +3194,7 @@ public class ReportAction {
 				}
 			}
 			// 3. 根据当前数据所在行数算出页数
-			currentPage = dataIndex % 2 == 0 ? dataIndex / 2 : dataIndex / 2 + 1;
+            currentPage = dataIndex % 10 == 0 ? dataIndex / 10 : dataIndex / 10 + 1;
 		}
 		pager.setCurrentPage(currentPage);
         pager.setPageSize(10);
