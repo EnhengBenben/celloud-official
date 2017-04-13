@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
-<header class="header">
+<header class="header" ng-controller="headerCtrl">
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -28,6 +28,13 @@
           </shiro:hasPermission>
         </ul>
         <ul class="nav navbar-nav pull-right">
+          <shiro:hasPermission name="i18n:lang">
+	          <li class="dropdown">
+	            <a ng-click="setLang('en')">English</a>
+			    |
+			    <a ng-click="setLang('zh')">中文</a>
+	          </li>
+          </shiro:hasPermission>
           <li class="dropdown">
             <a href="javascript:void(0)" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
               <i class="code-icon"></i>

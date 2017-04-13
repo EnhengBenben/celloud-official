@@ -17,7 +17,7 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/images/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/login.css?version=3.2.4" media="all" />
 </head>
-<body onselectstart="return false;">
+<body onselectstart="return false;" ng-app="celloudApp">
 	<!--#S bgContainer-->
 	<div class="bgContainer">
 	<div class="login">
@@ -26,7 +26,7 @@
 				<img src="<%=request.getContextPath()%>/images/icon/login_logo_187.png" />
 			</a>
 		</div>
-		<div class="logo-name">生物信息云平台</div>
+		<div class="logo-name">{{'LOGIN.CLOUD_PLATFORM' | translate}}</div>
 		<form action="login" method="post" id="loginForm">
 			<div class="login-main clearfix">
 			    <div class="error">&nbsp;</div>
@@ -34,26 +34,26 @@
 				<input type="hidden" id="exponentHidden" name="exponent" value="${publicKey.exponent }" />
 				<input type="hidden" name="checked" id="checked" value="${requestScope.checked }" />
 				<input type="hidden" name="info" id="info" value="${requestScope.info }" />
-				<input type="text" class="username input-top" placeholder="用户名或邮箱" id="username" name="username"
+				<input type="text" class="username input-top" ng-placeholder="'LOGIN.USERNAME_OR_EMAIL' | translate" id="username" name="username"
 					value="${requestScope.user.username }" />
-				<input type="password" class="pwd <c:if test="${!showKaptchaCode }">input-bottom</c:if>" placeholder="密码" id="password"
+				<input type="password" class="pwd <c:if test="${!showKaptchaCode }">input-bottom</c:if>" ng-placeholder="'LOGIN.PASSWORD' | translate" id="password"
 					value="${fn:substring(requestScope.user.password,0,16)}" />
 				<input type="hidden" name="password" value="${user.password }" />
 				<input type="hidden" id="tempPassword" />
 				<input type="hidden" name="newPassword" />
 				<c:if test="${showKaptchaCode }">
 					<div class="yzm">
-						<input type="text" class="yzm input-bottom" placeholder="验证码" id="captcha" name="kaptchaCode" value="${requestScope.kapcode }" />
-						<img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage" alt="验证码"
+						<input type="text" class="yzm input-bottom" ng-placeholder="'LOGIN.VERIFICATION_CODE' | translate" id="captcha" name="kaptchaCode" value="${requestScope.kapcode }" />
+						<img title="看不清，换一张" src="<%=request.getContextPath()%>/kaptcha" id="kaptchaImage" ng-alt="{{'LOGIN.VERIFICATION_CODE' | translate}}"
 							class="validateCode" style="cursor: pointer;" />
 					</div>
 				</c:if>
-				<a id="submit" class="btn-login sign-in" href="javascript:void(0);">登录</a>
+				<a id="submit" class="btn-login sign-in" href="javascript:void(0);">{{'LOGIN.LOGIN' | translate}}</a>
 				<div class="autolog">
 					<span class="btn-login checkbox-un" id="remPass"></span>
 					<input id="isRem" name="isRem" value="0" type="hidden">
-					记住密码
-					<a href="forgot.html" class="forget">忘记密码</a>
+					{{'LOGIN.REMEMBER_PASSWORD' | translate}}
+					<a href="forgot.html" class="forget">{{'LOGIN.FORGOT_PASSWORD' | translate}}</a>
 				</div>
 			</div>
 		</form>
@@ -63,7 +63,7 @@
 		©
 		<fmt:formatDate value="${_now}" type="both" dateStyle="long" pattern="yyyy" />
 		CelLoud，Inc. All Rights reserved.
-		<a href="#">生物信息云平台</a>
+		<a href="#">{{'LOGIN.CLOUD_PLATFORM' | translate}}</a>
 		·
 		<a href="javascript:void();">沪ICP备14035977号</a>
 		·
@@ -79,6 +79,17 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/md5.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/security.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/browser.js?version=3.1.16.1"></script>
+	<script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
+    <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
+    <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
+    <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
+    <script src="//cdn.bootcss.com/angular-cookie/4.1.0/angular-cookie.min.js"></script>
+    <script src="//cdn.bootcss.com/angular-translate/2.15.1/angular-translate.min.js"></script>
+    <script src="//cdn.bootcss.com/angular-translate-loader-static-files/2.15.1/angular-translate-loader-static-files.min.js"></script>
+    <script src="//cdn.bootcss.com/angular-translate-loader-url/2.15.1/angular-translate-loader-url.min.js"></script>
+    <script src="//cdn.bootcss.com/angular-translate-storage-local/2.15.1/angular-translate-storage-local.min.js"></script>
+    <script src="//cdn.bootcss.com/angular-translate-storage-cookie/2.15.1/angular-translate-storage-cookie.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.4.13.01"></script>
 	<script type="text/javascript">
 		var browser = $.NV();
 		if(browser.name=='ie'&&browser.version<9){

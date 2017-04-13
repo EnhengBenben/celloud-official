@@ -1,8 +1,23 @@
 (function() {
   var intro;
+  celloudApp.config(["$translateProvider", function ($translateProvider) {
+    var lang = window.localStorage.lang||'zh';
+    $translateProvider.useStaticFilesLoader({
+      prefix: './js/languages/',
+      suffix: '.json'
+    });
+    
+    //默认选择使用语言
+    $translateProvider.preferredLanguage(lang); 
+  }]);
+  celloudApp.controller("headerCtrl",["$scope","$translate",function($scope,$translate){
+    $scope.setLang = function(langKey) {
+      window.localStorage.lang = langKey;
+      $translate.use(langKey);
+    };
+  }]);
 	celloudApp.controller("sidebarController", function($scope,
 			$location, $rootScope, $timeout, commonService) {
-		
 		$rootScope.showZoom = function(src) {
 			var bh = $("body").height();  
 			var bw = $("body").width();

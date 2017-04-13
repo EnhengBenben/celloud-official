@@ -1,3 +1,3 @@
 (function() {
-	window.celloudApp = angular.module("celloudApp", [ "ngRoute","ngResource","ngSanitize" ]);
+	window.celloudApp = angular.module("celloudApp", [ "ngRoute","ngResource","ngSanitize","pascalprecht.translate" ]);
 }());

@@ -1,5 +1,5 @@
 (function($) {
-  var show = function(type,title,message,callback) {
+  var show = function(type,title,confirmBtn,cancelBtn,message,callback) {
     if(!$("#confirm-modal-div").html()){
       $("BODY").append('<div id="confirm-modal-div"></div>');
     }else{
@@ -12,7 +12,7 @@
     var $header = $('<div class="modal-header"><button type="button" class="close" aria-label="Close" id="close-confirm"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button><h4 class="modal-title">'+title+'</h4></div>');
     var $body = $('<div class="modal-body"></div>');
     var $h5 = $('<h5></h5>');
-    var $footer = $('<div class="modal-footer"><button type="reset" class="btn btn-cancel -low pull-left" data-dismiss="modal" id="confirm-cancle">取消</button><button type="submit" class="btn -low pull-right" id="confirm-ok">确定</button></div>');
+    var $footer = $('<div class="modal-footer"><button type="reset" class="btn btn-cancel -low pull-left" data-dismiss="modal" id="confirm-cancle">'+cancelBtn+'</button><button type="submit" class="btn -low pull-right" id="confirm-ok">'+confirmBtn+'</button></div>');
     $h5.append($('<i class="fa fa-exclamation-circle" aria-hidden="true"></i>'));
     $h5.append($('<span>' + message + '</span>'));
     $body.append($h5);
@@ -47,15 +47,18 @@
   var hide = function(){
     $("#confirm-modal").modal("hide");
   }
-  var confirm = function(message, title, callback) {
+  var confirm = function(message, title, confirmBtn, cancelBtn, callback) {
+    alert(cancelBtn);
     if( title == null ) title = '确认框';
-    show("confirm",title, message,function(result) {
+    if( confirmBtn == null ) confirmBtn = '确认';
+    if( cancelBtn == null ) cancelBtn = '取消';
+    show("confirm",title,confirmBtn,cancelBtn,message,function(result) {
       if( callback ) callback(result);
     });
   }
   var tips = function(message, title) {
     if( title == null ) title = '提示框';
-    show("tips",title, message,null);
+    show("tips",title,null,null, message,null);
   }
   $.extend({
     confirm : function(message, title, callback) {
