@@ -38,8 +38,9 @@
       appComments();
     }
     function updateScore(score){
-      for(var i=1;i<score;i++){
-        $("score-"+i).attr("class","score-icon score-full");
+	  $(".user-click").attr("class","user-click score-icon score-gray-null");
+      for(var i=1;i<=score;i++){
+        $("#score-"+i).attr("class","user-click score-icon score-full");
       }
       $scope.userScore = score;
     }
