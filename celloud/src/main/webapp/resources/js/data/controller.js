@@ -167,7 +167,8 @@
       		            $scope.conditionList();
       		            $.dataManager.refreshDataList();
       		          }
-      		          $.alert(response.message);
+      		          if(response.message == "归档成功")
+      		            $.alert($translate.instant("ALERT.ARCHIVE_SUCC"));
       		        });
   		          }
   		       );
@@ -218,7 +219,8 @@
           $.dataManager.refreshDataList();
           $("#data-detail-modal").modal("hide");
         }
-        $.alert(response.message);
+        if(response.message == "修改成功")
+          $.alert($translate.instant("ALERT.MODIFIED_SUCC"));
       });
     }
   });
