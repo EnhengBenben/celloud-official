@@ -44,7 +44,7 @@
                 <i class="celicon -uploadgray"></i> {{'DRAG_FILE_UPLOAD' | translate }}
             </div>
           </div>
-          <button ng-click="beginUpload()" ng-disabled="upload.files.length<1" class="btn" href="javascript:void(0)">{{'START_UPLOAD' | translate }}</button>
+          <button ng-click="beginUpload()" style="width: auto;" ng-disabled="upload.files.length<1" class="btn" href="javascript:void(0)">{{'START_UPLOAD' | translate }}</button>
         </div>
         
         <div class="upload-content" ng-class="{hide: step!='three'}">
