@@ -30,7 +30,7 @@
 							<div class="buttons">
 								<a class="button-gray" ng-click="getApp(app.appId)" ng-if="app.isAdd!=1">获取</a>
                                 <a class="button-gray add" ng-click="getApp(app.appId)" ng-if="app.isAdd==1">已获取</a>
-								<a class="button-gray detail" ng-href="#app/detail/{{app.appId}}">查看详情</a>
+								<a class="button-gray detail" ng-href="#app/list/{{rootClassifyId}}/detail/{{app.appId}}">查看详情</a>
 							</div>
 						</div>
 					</div>
