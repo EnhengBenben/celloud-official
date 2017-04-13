@@ -92,9 +92,13 @@
 			        return;
 			      }
 			      if($.dataManager.options.isPair!=0){
-			        $.confirm($translate.instant("CONFIRM.DATA_PAIRED"),$translate.instant("CONFIRM.CONFIRM"),
-			            $translate.instant("BUTTON.CONFIRM"),$translate.instant("BUTTON.CANCEL"),function(){
-			          $scope.run();
+			        $.confirm(
+			            $translate.instant("CONFIRM.DATA_PAIRED"),
+			            $translate.instant("CONFIRM.CONFIRM"),
+			            $translate.instant("BUTTON.CONFIRM"),
+			            $translate.instant("BUTTON.CANCEL"),
+			            function(){
+			              $scope.run();
 			        });
 			      }else{
 			        $scope.run();
@@ -144,52 +148,54 @@
     //数据删除
     $scope.deleteData = function(){
     	// 检查用户角色是否为测试账号
-		uploadService.checkRole().
-		success(function(data){
-			if(data == "0"){
-			  $.tips($translate.instant("PROMPT.TEST_USER_NO_ARCHIVE"),$translate.instant("PROMPT.PROMPT"));
-			}else{
-		      if(!$scope.checkNum()){
-			      return ;
-			  }
-		      uploadService.checkRole
-		      $.confirm($translate.instant("CONFIRM.ARCHIVE_DATA"),$translate.instant("CONFIRM.CONFIRM"),
-		          $translate.instant("BUTTON.CONFIRM"),$translate.instant("BUTTON.CANCEL"),
-		          function(){
-		        runService.deleteData().success(function(response){
-		          if(response.success){
-		            $scope.conditionList();
-		            $.dataManager.refreshDataList();
-		          }
-		          $.alert(response.message);
-		        });
-		      });
-			}
-		});
+		  uploadService.checkRole().success(function(data){
+  			if(data == "0"){
+  			  $.tips($translate.instant("PROMPT.TEST_USER_NO_ARCHIVE"),$translate.instant("PROMPT.PROMPT"));
+  			}else{
+  		      if(!$scope.checkNum()){
+  			      return ;
+  			    }
+  		       $.confirm(
+  		          $translate.instant("CONFIRM.ARCHIVE_DATA"),
+  		          $translate.instant("CONFIRM.CONFIRM"),
+  		          $translate.instant("BUTTON.CONFIRM"),
+  		          $translate.instant("BUTTON.CANCEL"),
+  		          function(){
+      		        runService.deleteData().success(function(response){
+      		          if(response.success){
+      		            $scope.conditionList();
+      		            $.dataManager.refreshDataList();
+      		          }
+      		          $.alert(response.message);
+      		        });
+  		          }
+  		       );
+  			}
+  		});
     };
     //跳转数据编辑
     $scope.toEditData = function(fileId){
     	
     	uploadService.checkRole().
-		success(function(data){
-			if(data == "0"){
-			  $.tips($translate.instant("PROMPT.TEST_USER_NO_MODIFIED"),$translate.instant("PROMPT.PROMPT"));
-			}else{
-				$scope.updateState = false;
-			    runService.toEditData(fileId).
-			    success(function(response){
-			    	$scope.dataFile = response['file'];
-			    	$scope.appList = response['appList'];
-			    	for(i = 0; i < $scope.appList.length; i++){
-			    		if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
-			    			$scope.appSelected = $scope.appList[i];
-			    			break;
-			    		}
-			    	}
-			    });
-			    $("#data-detail-modal").modal("show");
-			}
-		});
+  		success(function(data){
+  			if(data == "0"){
+  			  $.tips($translate.instant("PROMPT.TEST_USER_NO_MODIFIED"),$translate.instant("PROMPT.PROMPT"));
+  			}else{
+  				$scope.updateState = false;
+  			    runService.toEditData(fileId).
+  			    success(function(response){
+  			    	$scope.dataFile = response['file'];
+  			    	$scope.appList = response['appList'];
+  			    	for(i = 0; i < $scope.appList.length; i++){
+  			    		if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
+  			    			$scope.appSelected = $scope.appList[i];
+  			    			break;
+  			    		}
+  			    	}
+  			    });
+  			    $("#data-detail-modal").modal("show");
+  			}
+  		});
     }
     //修改数据信息
     $scope.submitEditData = function(){

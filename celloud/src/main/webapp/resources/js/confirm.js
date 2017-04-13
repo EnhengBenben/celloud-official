@@ -48,7 +48,6 @@
     $("#confirm-modal").modal("hide");
   }
   var confirm = function(message, title, confirmBtn, cancelBtn, callback) {
-    alert(cancelBtn);
     if( title == null ) title = '确认框';
     if( confirmBtn == null ) confirmBtn = '确认';
     if( cancelBtn == null ) cancelBtn = '取消';
