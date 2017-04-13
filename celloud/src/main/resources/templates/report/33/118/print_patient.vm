@@ -1,5 +1,5 @@
 #parse("templates/report/default/118/layout.vm")
-<link href="${base}/css/print_bsi.css?version=3.1.14" rel="stylesheet">
+<link href="${base}/css/print_bsi.css?version=3.4.13" rel="stylesheet">
 <style>
 .tests-content {
     border-top: none;
