@@ -490,7 +490,7 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn -low pull-right" data-dismiss="modal">{{'HBV.CLOSE' | translate}}</button>
+		<button type="button" class="btn -low pull-right" data-dismiss="modal">{{'CLOSE' | translate}}</button>
 	</div>
   </div>
  </div>
