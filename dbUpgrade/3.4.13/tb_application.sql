@@ -103,7 +103,7 @@ INSERT INTO tb_app_classify_relat VALUES(null,8,245);
 INSERT INTO tb_app_classify_relat VALUES(null,8,246);
 INSERT INTO tb_app_classify_relat VALUES(null,8,247);
 INSERT INTO tb_app_classify_relat VALUES(null,9,73);
-INSERT INTO tb_app_classify_relat VALUES(null,9,173);
+INSERT INTO tb_app_classify_relat VALUES(null,9,113);
 INSERT INTO tb_app_classify_relat VALUES(null,10,112);
 INSERT INTO tb_app_classify_relat VALUES(null,10,119);
 INSERT INTO tb_app_classify_relat VALUES(null,10,124);
