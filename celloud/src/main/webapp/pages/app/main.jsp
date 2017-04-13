@@ -11,7 +11,7 @@
 				<div class="swiper-container" id="app-show-swipper">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide" ng-repeat="app in recommendApps">
-							<a><img ng-src="app/recommendMax?file={{app.pictureName}}" /></a>
+							<a style="cursor: auto;"><img ng-src="app/recommendMax?file={{app.pictureName}}" /></a>
 						</div>
 					</div>
 				</div>
