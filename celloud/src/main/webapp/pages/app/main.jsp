@@ -37,7 +37,7 @@
 				<ul class="row">
 					<li class="col-sm-3" ng-repeat="app in classicApps">
 						<div class="inner">
-							<a class="app-logo" ng-href="#app/detail/{{app.appId}}">
+							<a class="app-logo" ng-href="#app/list/{{app.classifyId}}/detail/{{app.appId}}">
 								<img ng-src="app/image?file={{app.pictureName}}" />
 							</a>
 							<div class="inner-content">

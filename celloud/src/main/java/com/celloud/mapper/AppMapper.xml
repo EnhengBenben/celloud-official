@@ -509,13 +509,15 @@
   <select id="selectBySelective" resultType="com.celloud.model.mysql.AppVO">
     SELECT t1.app_id appId, t1.app_name appName, t1.english_name englishName, t1.picture_name pictureName,
     t1.create_date createDate, t1.intro intro, t1.description description, t2.is_add isAdd, t1.avgScore,
-    t1.classifyName, t1.scoreCount scoreCount
+    t1.classifyName, t1.classifyId, t1.scoreCount scoreCount
     FROM
     (SELECT a.app_id, a.app_name, a.english_name, a.address, a.picture_name,
-    a.create_date, a.intro, a.description, AVG(ac.score) avgScore, COUNT(DISTINCT ac.id) scoreCount, GROUP_CONCAT(c.classify_name) classifyName
+    a.create_date, a.intro, a.description, AVG(ac.score) avgScore, COUNT(DISTINCT ac.id) scoreCount,
+    GROUP_CONCAT(c2.classify_name) classifyName, c2.classify_id classifyId
     FROM tb_app a LEFT JOIN tb_app_comment ac ON a.app_id = ac.app_id
     LEFT JOIN tb_app_classify_relat acr ON a.app_id = acr.app_id
-    LEFT JOIN tb_classify c ON acr.classify_id = c.classify_id
+    LEFT JOIN tb_classify c1 ON acr.classify_id = c1.classify_id
+    LEFT JOIN tb_classify c2 ON c2.calssify_id = c1.classify_pid
     <where>
         a.off_line = #{offLine }
         <if test="app.flag != null">
