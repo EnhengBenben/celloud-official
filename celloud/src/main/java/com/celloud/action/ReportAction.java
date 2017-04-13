@@ -3197,7 +3197,7 @@ public class ReportAction {
 			currentPage = dataIndex % 2 == 0 ? dataIndex / 2 : dataIndex / 2 + 1;
 		}
 		pager.setCurrentPage(currentPage);
-		pager.setPageSize(2);
+        pager.setPageSize(10);
 		// 根据page分页查询pageList
 		return taskService.findTasksByBatchNoSample(pager, userId, appId, batch);
 	}

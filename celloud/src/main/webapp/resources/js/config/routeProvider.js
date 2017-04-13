@@ -363,7 +363,7 @@
     })
     .when('/product/rocky/upload/187',{
       templateUrl: "pages/rocky/rocky_platinum_upload.jsp",
-      controller: "rockyUploadController"
+      controller: "rockyPlatinumUploadController"
     })
     .when('/product/rocky/d/:tagId',{
     	templateUrl: "pages/rocky/rocky_data.jsp",
