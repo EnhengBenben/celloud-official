@@ -19,9 +19,10 @@
         }
       });
     }
-    function getAppsByCid(id){
+    function getAppsByCid(id,name){
       if(id != undefined){
         $scope.nowCid = id;
+        $scope.nowCName = name;
         $scope.currentPage = 1;
         $scope.pageSize = 10;
       }

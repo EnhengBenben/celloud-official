@@ -7,11 +7,12 @@
       });
     }
   }]);
-  celloudApp.controller("appMainCtrl",['$scope','AppService',function($scope, AppService){
+  celloudApp.controller("appMainCtrl",['$rootScope','$scope','AppService',function($rootScope, $scope, AppService){
     //获取APP
     $scope.getApp = getApp;
     $scope.appSwiperPre = appSwiperPre;
     $scope.appSwiperNext = appSwiperNext;
+    $rootScope.appSwiperInit = appSwiperInit;
     return init();
     var viewSwiper;
     var previewSwiper;
@@ -19,7 +20,9 @@
       classicApps();
       recommendApps();
       classifysApps();
-      
+      appSwiperInit();
+    }
+    function appSwiperInit(){
       viewSwiper = new Swiper('.view .swiper-container', {
         initialSlide: 0,
         observer: true,//修改swiper自己或子元素时，自动初始化swiper
@@ -38,7 +41,6 @@
         }
       })
     }
-    
     function appSwiperPre(){
       if (viewSwiper.activeIndex == 0) {
         viewSwiper.slideTo(viewSwiper.slides.length - 1, 1000);

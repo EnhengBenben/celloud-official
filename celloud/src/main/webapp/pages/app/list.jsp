@@ -10,7 +10,7 @@
 		<nav class="app-classify-nav">
 			<ul>
 			    <div ng-repeat="classify in sclassifys">
-				    <li id="app-classify-{{classify.classifyId}}" ng-class="{active: $index==0}" ng-click="getAppsByCid(classify.classifyId)">{{classify.classifyName}}</li>
+				    <li id="app-classify-{{classify.classifyId}}" ng-class="{active: $index==0}" ng-click="getAppsByCid(classify.classifyId,classify.classifyName)">{{classify.classifyName}}</li>
 			    </div>
 			</ul>
 		</nav>
