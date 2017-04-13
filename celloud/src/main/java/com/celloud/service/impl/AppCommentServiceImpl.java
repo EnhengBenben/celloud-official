@@ -44,7 +44,7 @@ public class AppCommentServiceImpl implements AppCommentService {
         queryAppComment.setAppId(appId);
         List<Map<String, Object>> list = appCommentMapper.selectBySelectiveNoPage(queryAppComment);
         if (list.size() > 0) {
-            return updateAppComment((Integer) list.get(0).get("id"), userId, score, comment);
+			return updateAppComment(Integer.valueOf(list.get(0).get("id").toString()), userId, score, comment);
         }
         AppComment appComment = new AppComment();
         appComment.setUserId(userId);
