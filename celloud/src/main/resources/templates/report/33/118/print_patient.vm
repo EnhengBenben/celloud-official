@@ -24,7 +24,7 @@
 	clear: both;
 }
 .detailInfo{
-    border-bottom: 1px solid #a0a0a0;
+    border-bottom: 1px solid #c8c8c8;
     margin: 0 -10px;
     padding: 0 10px 10px 10px;
     font-weight: bold;
@@ -38,10 +38,10 @@
 .tests-content{
 	padding-top:0;
 }
-.width-30 li{
+.row li{
 	margin: 10px 0;
 }
-.width-30 li:first-child{
+.row li:first-child{
 	margin-top: 20px;
 }
 </style>

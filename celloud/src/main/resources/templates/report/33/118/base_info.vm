@@ -4,7 +4,7 @@
         <span class="print"></span>
         <input class="width-80" type="text" name='baseInfo["name"]' placeholder="患者姓名">
     </li>
-    <li><lable>性别：</lable>
+    <li style="margin-top:2px;"><lable>性别：</lable>
         <span id="sex-text" class="print"></span>
         <span id="sex">
          <input id="sex-radio" type="radio" name='baseInfo["sex"]' value="男">男
