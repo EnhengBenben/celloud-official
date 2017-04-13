@@ -1,0 +1,49 @@
+<input type="hidden" name="id" value="$!bsi.id">
+<ul>
+    <li><lable>姓名：</lable>
+        <span class="print"></span>
+        <input class="width-80" type="text" name='baseInfo["name"]' placeholder="患者姓名">
+    </li>
+    <li><lable>性别：</lable>
+        <span id="sex-text" class="print"></span>
+        <span id="sex">
+         <input id="sex-radio" type="radio" name='baseInfo["sex"]' value="男">男
+         <input type="radio" name='baseInfo["sex"]' value="女">女
+         <input type="radio" name='baseInfo["sex"]' value="不详">不详
+       </span>
+    </li>
+    <li><lable>年龄：</lable>
+        <span class="print"></span>
+        <input class="width-80" type="text"  name='baseInfo["age"]' placeholder="19">
+    </li>
+    <li><lable>病历号：</lable>
+        <span class="print"></span>
+        <input class="width-120" type="text" name='baseInfo["caseNo"]' placeholder="83947536">
+    </li>
+</ul>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("input[type='radio'][id='sex-radio']:checked").val()
+    $("#print-report").on("click",function(){
+        $.post("../report/updateBSIFilling",$("#print-form").serialize(),function(result){});
+        $("body").find("input[type='text']").each(function(){
+           $(this).prev().text($(this).val());
+        });
+        $("#department-text").text($("#department").val());
+        $("#sample-type-text").text($("#sample-type").val());
+        $("#sex-text").text($("input[type='radio'][name='baseInfo[\"sex\"]']:checked").val());
+        window.print();
+    });
+    $("#reset-info").on("click",function(){
+        $("#print-form")[0].reset();
+    });
+    $("#sample-type").on("change",function(){
+    	var val=$("#sample-type option:selected").val();
+    	if(val=="血液"){
+    		$("#bsi_title_info").html("血流");
+    	}else{
+    		$("#bsi_title_info").html(val);
+    	}
+    });
+});
+</script>
