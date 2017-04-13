@@ -169,5 +169,5 @@
     </form>
 </div>
 <script>
-jquery('#qrcode').qrcode($("#sample-name-hide").val());
+createBarcode('qrcode',$("#sample-name-hide").val(),'B');
 </script>
