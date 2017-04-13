@@ -18,9 +18,9 @@
   <link href="//cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
   <link href="<%=request.getContextPath()%>/css/celloud.min.css?version=3.4.13.01" rel="stylesheet">
-<%--   <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" /> --%>
+  <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
 <%--   <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" /> --%>
-  <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
+<!--   <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script> -->
   <link href="<%=request.getContextPath()%>/plugins/smartJqueryZoom/zoom-styles.css" rel="stylesheet" type="text/css"/>
   <script src="//cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
   <!-- [if It IE 9]>
