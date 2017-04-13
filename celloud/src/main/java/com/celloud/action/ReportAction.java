@@ -797,7 +797,14 @@ public class ReportAction {
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/" + appId + "/print.vm";
 		}
-		Map<String, Object> context = new HashMap<String, Object>();
+        String keyPath = SparkPro.TOOLSPATH + ConstantsData.getLoginUserId() + File.separatorChar + appId
+                + File.separatorChar + dataKey;
+        Map<String, Object> context = new HashMap<String, Object>();
+        if (new File(keyPath).exists()) {
+            context.put("splitUploadPath", "/upload/");
+        } else {
+            context.put("splitUploadPath", "/output/");
+        }
 		Split split = reportService.getSplitReport(dataKey, projectId, appId);
 		context.put("split", split);
 		returnToVelocity(path, context, projectId);

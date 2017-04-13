@@ -156,12 +156,12 @@
     </table>
     <table style="width:100%;">
       <tr>
-        <td style="width:50%;"><img style="width: 100%;" src="#if(!${split.qualityPath1.contains('Tools')})${uploadPath}/${split.userId}/${split.appId}/${split.dataKey}#end${split.qualityPath1}"></td>
-        <td><img style="width: 100%;" src="#if(!${split.qualityPath2.contains('Tools')})${uploadPath}/${split.userId}/${split.appId}/${split.dataKey}/#end${split.qualityPath2}"></td>
+        <td style="width:50%;"><img style="width: 100%;" src="#if(!${split.qualityPath1.contains('Tools')})${splitUploadPath}/${split.userId}/${split.appId}/${split.dataKey}#end${split.qualityPath1}"></td>
+        <td><img style="width: 100%;" src="#if(!${split.qualityPath2.contains('Tools')})${splitUploadPath}/${split.userId}/${split.appId}/${split.dataKey}/#end${split.qualityPath2}"></td>
       </tr>
       <tr>
-        <td><img style="width: 100%;" alt="" src="#if(!${split.seqContentPath1.contains('Tools')})${uploadPath}/${split.userId}/${split.appId}/${split.dataKey}#end${split.seqContentPath1}"></td>
-        <td><img style="width: 100%;" alt="" src="#if(!${split.seqContentPath2.contains('Tools')})${uploadPath}/${split.userId}/${split.appId}/${split.dataKey}#end${split.seqContentPath2}"></td>
+        <td><img style="width: 100%;" alt="" src="#if(!${split.seqContentPath1.contains('Tools')})${splitUploadPath}/${split.userId}/${split.appId}/${split.dataKey}#end${split.seqContentPath1}"></td>
+        <td><img style="width: 100%;" alt="" src="#if(!${split.seqContentPath2.contains('Tools')})${splitUploadPath}/${split.userId}/${split.appId}/${split.dataKey}#end${split.seqContentPath2}"></td>
       </tr>
     </table>
 </section>
