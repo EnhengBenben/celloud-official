@@ -64,7 +64,7 @@
 	</ul>
 	<ul class="datanumul pull-right">
 		<li>
-			<span>{{'PAGE.TOTAL' | translate}}&nbsp;&nbsp;{{page.rowCount}}&nbsp;&nbsp;{{'PAGE.PAGE' | translate}}</span>
+			<span>{{'PAGE.TOTAL' | translate}}&nbsp;&nbsp;{{page.rowCount}}&nbsp;&nbsp;{{'PAGE.PAGE' | ARTICLE}}</span>
 		</li>
 		<li>
 			{{'PAGE.EACH_PAGE' | translate}}<select class="form-control" id="page-size-sel" ng-model="pageSize" ng-change="change({page:1,pageSize:pageSize})">
