@@ -31,21 +31,30 @@
 </script>
 <script src="<%=request.getContextPath()%>/plugins/sockjs-modified-1.0.0.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/plugins/photoClip/iscroll-zoom.js?v=3.3.4"></script>
+<script src="<%=request.getContextPath()%>/plugins/photoClip/hammer.js?v=3.3.4"></script>
+<script src="<%=request.getContextPath()%>/plugins/photoClip/lrz.all.bundle.js?v=3.3.4"></script>
+<script src="<%=request.getContextPath()%>/plugins/photoClip/jquery.photoClip.js?v=3.3.4"></script>
 <script src="//cdn.bootcss.com/spin.js/2.3.2/spin.min.js"></script>
-<script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
 <script src="//cdn.bootcss.com/select2/4.0.3/js/select2.full.min.js"></script>
 <script src="//cdn.bootcss.com/select2/4.0.3/js/i18n/zh-CN.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
 <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
+<script src="//cdn.bootcss.com/angular-cookie/4.1.0/angular-cookie.min.js"></script>
+<script src="//cdn.bootcss.com/angular-translate/2.15.1/angular-translate.min.js"></script>
+<script src="//cdn.bootcss.com/angular-translate-loader-static-files/2.15.1/angular-translate-loader-static-files.min.js"></script>
+<script src="//cdn.bootcss.com/angular-translate-loader-url/2.15.1/angular-translate-loader-url.min.js"></script>
+<script src="//cdn.bootcss.com/angular-translate-storage-local/2.15.1/angular-translate-storage-local.min.js"></script>
+<script src="//cdn.bootcss.com/angular-translate-storage-cookie/2.15.1/angular-translate-storage-cookie.min.js"></script>
 <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
 <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
-<script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js"></script>
+<script src="//cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
 <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
 <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
-<script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
-<script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js?v=3.3.4"></script>
-<script src="<%=request.getContextPath()%>/js/main.min.js?v=3.3.10.1"></script>
+<script src="<%=request.getContextPath()%>/plugins/area/area.js?v=3.3.4"></script>
+<script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js?v=3.4.8"></script>
+<script src="<%=request.getContextPath()%>/js/main.min.js?v=3.4.13.47"></script>
 </body>
 </html>
