@@ -49,8 +49,12 @@
       $scope.userScore = score;
     }
     function updateComment(){
-    	if(!$scope.userScore||!$scope.userComment){
-    		$.tips("评分和评论均不能为空！");
+    	if(!$scope.userScore){
+    		$.tips("评分不能为空！");
+    		return;
+    	}
+    	if(!$scope.userComment||$scope.userComment.length<5){
+    		$.tips("评论不能少于五个字符！");
     		return;
     	}
       AppService.updateComment($routeParams.id,$scope.userScore,$scope.userComment).success(function() {
@@ -63,6 +67,15 @@
       $("#screens-ul .active").removeClass("active");
       $("#screen-"+index).addClass("active");
     }
+    function refresh(){
+		//通过controller来获取Angular应用
+	    var appElement = document.querySelector('[ng-controller=sidebarController]')
+	    var element = angular.element(appElement);
+	    //获取$scope
+	    var $scope = element.scope();
+	    //调用$scope中的方法
+	    $scope.refreshUserProduct();
+	}
     //获取APP授权
     function getApp(appId){
       AppService.updateAdd(appId)
@@ -70,6 +83,7 @@
           function successCallback(res) {
             console.log("successCallback" + res.status +res.status==400);
             init();
+            refresh();
             // 请求成功执行代码
           }, function errorCallback(res) {
             console.log("errorCallback" + res.status);

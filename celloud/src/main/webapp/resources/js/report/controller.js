@@ -985,19 +985,19 @@
 			  $("#cfda").css("display","none");
 			  $("#showMain").scrollTop(0);
 			  
-			  if(localStorage.hbvIntro == undefined){
-			    localStorage.hbvIntro = 0;
-			  }
-			  if(localStorage.hbvIntro == 0){
-			    var intro = introJs();
-			    intro.setOption('tooltipPosition', 'bottom');
-			    intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
-			    intro.setOption('showStepNumbers', false);
-			    intro.setOption('showButtons', true);
-			    intro.setOption('highlightClass', 'hbv-introjs-helperLayer');
-			    intro.setOption('tooltipClass', 'introjs-hbv-tooltip');
-			    intro.goToStep(2).start();
-			  }
+//			  if(localStorage.hbvIntro == undefined){
+//			    localStorage.hbvIntro = 0;
+//			  }
+//			  if(localStorage.hbvIntro == 0){
+//			    var intro = introJs();
+//			    intro.setOption('tooltipPosition', 'bottom');
+//			    intro.setOption('positionPrecedence', ['left', 'right', 'bottom', 'top']);
+//			    intro.setOption('showStepNumbers', false);
+//			    intro.setOption('showButtons', true);
+//			    intro.setOption('highlightClass', 'hbv-introjs-helperLayer');
+//			    intro.setOption('tooltipClass', 'introjs-hbv-tooltip');
+//			    intro.goToStep(2).start();
+//			  }
 		  }
 		  $scope.change2 = function(){
 			  $("#nomal").css("display","none");
