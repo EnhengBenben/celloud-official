@@ -403,7 +403,7 @@
 	                    </div>
 				        <div class="text-center mb20 mt20">
 	                        <a href="javascript:void(0)" ng-show="more" ng-click="showMore('table');" class="btn -low"><i class="i-view"></i>{{'HBV.SHOW_ALL' | translate}}</a>
-	                        <a href="javascript:void(0)" ng-show="less" ng-click="showLess('table');" class="btn -low"><i class="i-view"></i>{{'HBV.PACK_UP' | translate}}</a>
+	                        <a href="javascript:void(0)" ng-show="less" ng-click="showLess('table');" class="btn -low"><i class="i-view"></i>{{'REPORT.PACK_UP' | translate}}</a>
 	                    </div>
 				        <br/>
 				        <div class="row" id="charDiv0">
