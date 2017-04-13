@@ -2867,11 +2867,12 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> rockyReportMain(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "20") int size, String sample, String condition, String sidx, String sord,
-			String batches, String periods, String beginDate, String endDate) throws ParseException {
+            String batches, String periods, String beginDate, String endDate, Integer tagId) throws ParseException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer userId = ConstantsData.getLoginUserId();
-		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
-		List<String> batchList = dataService.getBatchListByAppId(userId, 123);
+        Integer appId = appService.getAppIdByTagId(tagId);
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(appId, userId);
+        List<String> batchList = dataService.getBatchListByAppId(userId, appId);
 		Page pager = new Page(page, size);
 
 		ArrayList<String> queryBatches = null;
@@ -2915,7 +2916,8 @@ public class ReportAction {
 		PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, queryBatches,
 				queryPeriods,
 				beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginDate + " 00:00:00"),
-				endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate + " 23:59:59"));
+                endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate + " 23:59:59"),
+                appId);
 		map.put("pageList", pageList);
 		periodMap.put("uploaded", batchList.size());
 		map.put("periodMap", periodMap);

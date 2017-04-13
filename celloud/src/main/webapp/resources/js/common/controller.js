@@ -1,5 +1,7 @@
 (function() {
   var intro;
+  window.modalConfirmBtn = "确定";
+  window.modalCancelBtn = "取消";
   celloudApp.config(["$translateProvider", function ($translateProvider) {
     var lang = window.localStorage.lang||'zh';
     $translateProvider.useStaticFilesLoader({
