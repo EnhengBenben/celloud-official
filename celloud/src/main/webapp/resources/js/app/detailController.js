@@ -9,6 +9,7 @@
     return init();
     function init(){
       AppService.appDetail($routeParams.id).success(function(data) {
+    	$(document).scrollTop(0);
         $scope.appInfos = data;
         $scope.countScore5 = data.countScore[5]==undefined?0:data.countScore[5].count;
         $scope.countScore4 = data.countScore[4]==undefined?0:data.countScore[4].count;
