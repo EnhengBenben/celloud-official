@@ -10,7 +10,7 @@
   celloudApp.controller("appMainCtrl",['$rootScope','$scope','AppService',function($rootScope, $scope, AppService){
     //获取APP
     $scope.getApp = getApp;
-    $scope.appSwiperPre = appSwiperPre;
+    $scope.appSwiperPre = appSwiperPre; 
     $scope.appSwiperNext = appSwiperNext;
     $rootScope.appSwiperInit = appSwiperInit;
     return init();
