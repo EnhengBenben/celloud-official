@@ -77,7 +77,7 @@
       .then(
           function successCallback(res) {
             console.log("successCallback" + res.status +res.status==400);
-            $scope.getClassifysApps();
+            init();
             // 请求成功执行代码
           }, function errorCallback(res) {
             console.log("errorCallback" + res.status);

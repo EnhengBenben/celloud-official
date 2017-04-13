@@ -55,7 +55,7 @@
   }
   var tips = function(message, title) {
     if( title == null ) title = '提示框';
-    show("tips",title,null,null, message,null);
+    show("tips",title, message,null);
   }
   $.extend({
     confirm : function(message, title, callback) {

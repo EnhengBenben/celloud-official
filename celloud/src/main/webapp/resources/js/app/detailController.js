@@ -1,6 +1,7 @@
 (function(){
   celloudApp.controller("appDetailCtrl",['$scope','$routeParams','AppService',function($scope, $routeParams, AppService){
     //分页检索
+    $scope.getApp = getApp;
     $scope.pageQuery = pageQuery;
     $scope.updateScore = updateScore;
     $scope.updateComment = updateComment;
@@ -51,6 +52,22 @@
       $scope.screenShow = img;
       $("#screens-ul .active").removeClass("active");
       $("#screen-"+index).addClass("active");
+    }
+    //获取APP授权
+    function getApp(appId){
+      AppService.updateAdd(appId)
+      .then(
+          function successCallback(res) {
+            console.log("successCallback" + res.status +res.status==400);
+            init();
+            // 请求成功执行代码
+          }, function errorCallback(res) {
+            console.log("errorCallback" + res.status);
+            if(res.status==400){
+              $.tips("您还没有此应用的使用权限，请通过右侧“联系我们”获取!");
+            }
+          }
+      );
     }
   }]);
 })();
