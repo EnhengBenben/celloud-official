@@ -1,4 +1,4 @@
-#parse("templates/report/default/118/layout.vm")
+#parse("templates/report/33/118/layout.vm")
 <link href="${base}/css/print_bsi.css?version=3.4.13" rel="stylesheet">
 <style>
 .tests-content {
