@@ -60,7 +60,7 @@
 			          <span class="">精英版:BRCA1/2检测</span>
 			        </div>
 			      </a>
-			      <a href="${pageContext.request.contextPath }/index#/product/rocky/report/187" ng-if="userProduct.rockyreport==true">
+			      <a href="${pageContext.request.contextPath }/index#/product/rocky/report/2" ng-if="userProduct.rockyreport==true">
 			        <div class="inner">
 			          <img src="${pageContext.request.contextPath }/app/image?file=rocky.png" alt="华木兰" title="华木兰">
 			          <span class="">精英版:BRCA1/2检测</span>
