@@ -1,0 +1,339 @@
+#parse("templates/report/default/118/layout.vm")
+<link href="${base}/css/print_bsi.css?version=3.1.14" rel="stylesheet">
+<div class="content">
+  <div class="print-button">
+    <a id="print-report" class="btn" title="打印" href="javascript:void(0)"><i class="fa fa-print"></i></a>
+    <a id="reset-info" class="btn" title="清空" href="javascript:void(0)">
+    <svg width="16" height="16" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g class="transform-group">
+    <g transform="scale(0.1953125, 0.1953125)">
+    <path id="reset-icon-path" d="M204.21559 574.738903l27.238364 0 4.136204 0 594.510202 0 11.30344 0 11.79872 0c21.462824 0 31.564903-15.896038 22.414499-35.320437l-76.54842-162.779364c-9.149381-19.423375-34.195823-35.320437-55.658647-35.320437L609.165482 341.318666 609.165482 219.938178 609.165482 102.82897c0-21.482267-17.574261-39.037085-39.036062-39.037085l-78.073146 0c-21.462824 0-39.037085 17.554818-39.037085 39.037085l0 117.110231 0 121.380488L314.007135 341.319689c-21.481244 0-46.508243 15.897062-55.639205 35.320437L181.781648 539.418466C172.65171 558.841841 182.734346 574.738903 204.21559 574.738903zM834.942645 632.531144 236.848824 632.531144c3.25923 60.175521 1.849114 132.6256-48.090275 175.608553-69.934792 60.175521-46.356794 126.030391 3.25923 152.067394l101.537558 0c9.987468-13.628392 65.036225-91.625814 81.237209-170.443927 2.51631-16.353456 4.060479-27.181059 4.060479-27.181059-0.705058 8.996908-2.211365 18.088984-4.060479 27.181059-7.757684 50.130747-25.007557 153.440671-37.606503 170.443927l73.479525 0c9.988492-13.628392 65.036225-91.625814 81.238232-170.443927 2.515287-16.353456 4.059456-27.181059 4.059456-27.181059-0.705058 8.996908-2.211365 18.088984-4.059456 27.181059-7.758708 50.130747-25.007557 153.440671-37.607526 170.443927l92.597955 0c9.968026-13.628392 65.036225-91.625814 81.217766-170.443927 2.535753-16.353456 4.078899-27.181059 4.078899-27.181059-0.685615 8.996908-2.210341 18.088984-4.078899 27.181059-7.739265 50.130747-24.968671 153.440671-37.58706 170.443927l92.998067 0c9.969049-13.628392 65.036225-91.625814 81.21879-170.443927 2.535753-16.353456 4.078899-27.181059 4.078899-27.181059-0.686638 8.996908-2.211365 18.088984-4.078899 27.181059-7.739265 50.130747-24.989137 153.440671-37.607526 170.443927l93.53121 0c0 0 61.701271-22.13002 52.055586-93.513814C858.958618 764.910127 853.469604 708.336644 834.942645 632.531144z"></path>
+    </g>
+    </g>
+    </svg>
+    </a>
+  </div>
+    <div class="title-content">
+      <div class="title">细菌性<span id="bsi_title_info">血流</span>感染检测报告</div>
+      <div class="sub-title">分析报告</div>
+    </div>
+    <form id="print-form">
+      <div class="base-info">
+        #parse("templates/report/default/${bsi.appId}/base_info.vm")
+      </div>
+      <div class="tests-content">
+        <h4>检测结果：</h4>
+        <div class="tests-info">
+          <p>
+           #if($bsi.species_20)
+              #foreach($species_20 in $!bsi.species_20) 
+                  #if($species_20.species_zh.equals("未知") || !$species_20.species_zh)
+                    $!species_20.species<br>
+                  #else
+                    $!species_20.species_zh<br>
+                    #if($havestrain)
+                        #set ($havestrain="$!havestrain,$!species_20.species_zh")
+                    #else
+                        #set ($havestrain="$!species_20.species_zh")
+                    #end
+                  #end
+              #end
+            #else
+                             未检测到病原菌
+            #end
+          </p>
+        </div>
+        <table class="table table-20species">
+            <tbody>
+             <tr>
+               <td class="title" rowspan="3">革兰氏阳性</td>
+               #if($havestrain.contains('屎肠球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               屎肠球菌
+               </td>
+               #if($havestrain.contains('粪肠球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               粪肠球菌
+               </td>
+               #if($havestrain.contains('肺炎链球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                                     肺炎链球菌
+               </td>
+              #if($havestrain.contains('艰难梭状芽胞杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               艰难梭状芽胞杆菌
+               </td>
+             </tr>
+             <tr>
+              #if($havestrain.contains('人葡萄球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               人葡萄球菌
+               </td>
+               #if($havestrain.contains('表皮葡萄球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               表皮葡萄球菌
+               </td>
+               #if($havestrain.contains('溶血性葡萄球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                              溶血性葡萄球菌
+               </td>
+               #if($havestrain.contains('金黄色葡萄球菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               金黄色葡萄球菌
+               </td>
+             </tr>
+             <tr>
+               #if($havestrain.contains('结核分枝杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               结核分枝杆菌
+               </td>
+               <td></td>
+               <td></td>
+               <td></td>
+             </tr>
+             <tr>
+               <td class="title" rowspan="3">革兰氏阴性</td>
+               #if($havestrain.contains('大肠埃希菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               大肠埃希菌
+               </td>
+               #if($havestrain.contains('鲍曼不动杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               鲍曼不动杆菌
+               </td>
+               #if($havestrain.contains('肺炎克雷伯氏菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               肺炎克雷伯氏菌
+               </td>
+               #if($havestrain.contains('嗜麦芽窄食单胞菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                              嗜麦芽窄食单胞菌
+               </td>
+             </tr>
+             <tr>
+               #if($havestrain.contains('阴沟肠杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                              阴沟肠杆菌
+               </td>
+               #if($havestrain.contains('粘质沙雷氏菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               粘质沙雷氏菌
+               </td>
+               #if($havestrain.contains('奇异变形杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               奇异变形杆菌
+               </td>
+               #if($havestrain.contains('洋葱伯克霍尔德菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                              洋葱伯克霍尔德菌
+               </td>
+             </tr>
+             <tr>
+              #if($havestrain.contains('产气肠杆菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               产气肠杆菌
+               </td>
+               #if($havestrain.contains('铜绿假单胞菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                               铜绿假单胞菌
+               </td>
+               #if($havestrain.contains('肠炎沙门氏菌'))
+                   <td class="hasit"><i class="fa fa-circle" aria-hidden="true"></i>
+               #else
+                   <td><i class="fa fa-circle-o" aria-hidden="true"></i>
+               #end
+                             肠炎沙门氏菌
+               </td>
+               <td></td>
+             </tr>
+            </tbody>
+          </table>
+          #if($bsi.species_20)
+              <table id="test-seq-table" class="table seq-table">
+                <thead>
+                  <tr>
+                    <th style="width: 119px;">菌名</th>
+                    <th style="width: 80px;">序列比重</th>
+                    <th style="width: 80px;">检出区域</th>
+                    <th style="width: 380px;">序列 (5'-3')</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  #set ($seqNum=0)
+                  #foreach($species_20 in $!bsi.species_20) 
+                     #set($srowspan = 1)
+                     #if($species_20.seq2 && !$!species_20.seq2.equals(""))
+                       #set($srowspan=$srowspan+1)
+                     #end
+                     #if($species_20.seq3 && !$!species_20.seq3.equals(""))
+                       #set($srowspan=$srowspan+1)
+                     #end
+                     #if($species_20.seq4 && !$!species_20.seq4.equals(""))
+                      #set($srowspan=$srowspan+1)
+                     #end
+                   <tr>
+                     <td class="title" rowspan="$!srowspan">
+                       #if($species_20.species_zh.equals("未知") || !$species_20.species_zh|| $species_20.species_zh.trim().equals(""))
+                        $!species_20.species
+                       #else
+                        $!species_20.species_zh
+                      #end
+                       <br>
+                       <svg width="200" height="20" style="-ms-transform: scale(0.8);">
+                         <g>
+                           <rect x="0" y="0" width="50" height="20" fill="
+                             #if(!$species_20.site1.equals("0,0"))
+                                #8c8c8c
+                             #else
+                                #fff
+                             #end "
+                             style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                           <text x="8" y="15">V1-V2</text>
+                           <rect x="50" y="0" width="50" height="20" fill="
+                             #if(!$species_20.site2.equals("0,0"))
+                                #dcdcdc
+                             #else
+                                #fff
+                             #end "
+                             style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                           <text x="58" y="15">V3-V4</text>
+                           <rect x="100" y="0" width="50" height="20" fill="
+                             #if(!$species_20.site3.equals("0,0"))
+                                #323232
+                             #else
+                                #fff
+                             #end "
+                             style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                           <text x="108" y="15">V5-V6</text>
+                           <rect x="150" y="0" width="50" height="20" fill="
+                             #if(!$species_20.site4.equals("0,0"))
+                                #c8c8c8
+                             #else
+                                #fff
+                             #end "
+                             style="stroke:#8c8c8c;fill-opacity:0.4;stroke-opacity:0.9"></rect>
+                           <text x="158" y="15">V7-V8</text>
+                         </g>
+                       </svg>
+                     </td>
+                     <td class="sub-title" rowspan="$!srowspan">$!species_20.seq_proportion </td>
+                     <td style="text-align: center;vertical-align: middle;">$!species_20.seq1_name </td>
+                     <td>
+                       <div class="seq" style="-ms-transform: scale(0.6);">$!species_20.seq1_no <br>$!species_20.seq1 </div>
+                     </td>
+                   </tr>
+                   #if(!$species_20.seq2|| !$species_20.seq2.trim().equals(""))
+                   <tr>
+                     <td style="text-align: center;vertical-align: middle;">$!species_20.seq2_name </td>
+                     <td>
+                        <div class="seq" style="-ms-transform: scale(0.6);">$!species_20.seq2_no <br>$!species_20.seq2 </div>
+                     </td>
+                   </tr>
+                   #end
+                   #if(!$species_20.seq3|| !$species_20.seq3.trim().equals(""))
+                   <tr>
+                     <td style="text-align: center;vertical-align: middle;">$!species_20.seq3_name </td>
+                     <td>
+                        <div class="seq" style="-ms-transform: scale(0.6);">$!species_20.seq3_no <br>$!species_20.seq3 </div>
+                     </td>
+                   </tr>
+                   #end
+                   #if(!$species_20.seq4|| !$species_20.seq4.trim().equals(""))
+                   <tr>
+                     <td style="text-align: center;vertical-align: middle;">$!species_20.seq4_name </td>
+                     <td>
+                        <div class="seq" style="-ms-transform: scale(0.6);">$!species_20.seq4_no <br>$!species_20.seq4 </div>
+                     </td>
+                   </tr>
+                   #end
+                 #end
+                </tbody>
+              </table>
+          #end
+          <p>序列比重：唯一识别序列数>10条时为检出<br>
+                            快速序列验证及比对(NCBI Blast):  <br>
+             <a href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome" target="_blank">http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome</a>
+          </p>
+          <h4>统计信息</h4>
+          <table class="table table-count">
+            <tr>
+              <td>序列总数</td>
+              <td>平均质量</td>
+              <td>平均GC含量</td>
+              <td>human序列总数</td>
+              <td>16S序列总数</td>
+            </tr>
+            <tr>
+              <td>$!bsi.totalReads</td>
+              <td>$!bsi.avgQuality</td>
+              <td>$!bsi.avgGCContent</td>
+              <td>$!bsi.human_reads</td>
+              <td>$!bsi.reads_16s</td>
+            </tr>
+          </table>
+          <p>
+            序列总数：测序出来的总的DNA片段数<br>
+            平均质量：本地测序的所有片段质量平均数，高于25时为高质量序列
+          </p>
+      </div>
+      <div class="tests-footer">
+      </div>
+    </form>
+</div>

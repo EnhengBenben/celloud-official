@@ -1,0 +1,113 @@
+#if($bsi.species_20)
+  #foreach($species_20 in $!bsi.species_20) 
+    <p>
+      #if($species_20.species_zh.equals("未知") || !$species_20.species_zh)
+        $!species_20.species
+      #else
+        $!species_20.species_zh
+        #if($havestrain)
+            #set ($havestrain="$!havestrain,$!species_20.species_zh")
+        #else
+            #set ($havestrain="$!species_20.species_zh")
+        #end
+      #end
+    </p>
+  #end
+#end
+   <table class="table table-bordered table-condensed gray-table">
+    <tr>
+      <td>G+</td>
+      <td>
+        <i class="fa #if($havestrain.contains('牛链球菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       牛链球菌
+      </td>
+      <td>
+        <i class="fa #if($havestrain.contains('葡萄球菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                      葡萄球菌
+      </td>
+      <td>
+        <i class="fa #if($havestrain.contains('肺炎链球菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                      肺炎链球菌
+      </td>
+      <td>
+        <i class="fa #if($havestrain.contains('粪肠球菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                  粪肠球菌
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+       <td>
+         <i class="fa #if($havestrain.contains('屎肠球菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       屎肠球菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('难辨梭状芽孢杆菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       难辨梭状芽孢杆菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('溃疡棒状杆菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                      溃疡棒状杆菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('结膜干燥杆菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       结膜干燥杆菌
+       </td>
+     </tr>
+     <tr>
+       <td>G-</td>
+       <td>
+         <i class="fa #if($havestrain.contains('大肠埃希菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       大肠埃希菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('铜绿假单胞菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                      铜绿假单胞菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('鲍曼不动杆菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       鲍曼不动杆菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('肺炎克雷伯氏菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       肺炎克雷伯氏菌
+       </td>
+     </tr>
+     <tr>
+       <td></td>
+       <td>
+         <i class="fa #if($havestrain.contains('嗜麦芽窄食单胞菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       嗜麦芽窄食单胞菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('粘质沙雷氏菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       粘质沙雷氏菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('阴沟肠杆菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                      阴沟肠杆菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('嗜水气单胞菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       嗜水气单胞菌
+       </td>
+     </tr>
+     <tr>
+       <td></td>
+       <td>
+         <i class="fa #if($havestrain.contains('产气肠杆菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       产气肠杆菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('肠炎沙门菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       肠炎沙门菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('奇异变形杆菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                      奇异变形杆菌
+       </td>
+       <td>
+         <i class="fa #if($havestrain.contains('洋葱伯克霍尔德菌'))fa-circle #else fa-circle-o #end" aria-hidden="true"></i>
+                       洋葱伯克霍尔德菌
+       </td>
+     </tr>
+   </table>

@@ -1193,7 +1193,7 @@ public class ReportAction {
 		StringBuffer path = new StringBuffer();
 		path.append(ConstantsData.getLoginCompanyId()).append(File.separator).append(appId).append(File.separator)
 				.append(templateType).append(".vm");
-		if (!new File("templates/report/" + path).exists()) {
+		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path.setLength(0);
 			path.append("default").append(File.separator).append(appId).append(File.separator).append(templateType)
 					.append(".vm");
