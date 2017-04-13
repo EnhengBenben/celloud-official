@@ -32,7 +32,11 @@ significances = {
     'Likely pathogenic':'可能致病变异',
     'Uncertain significance':'意义不明确变异',
     'Likely benign':'可能良性变异',
-    'Benign':'良性变异'
+    'Benign':'良性变异',
+    'not provided':'意义不明确变异',
+    'Benign/Likely benign':'良性变异',
+    'Conflicting interpretations of pathogenicity, not provided':'意义不明确变异',
+    'Pathogenic/Likely pathogenic':'致病相关变异'
 }
 px = {
     'a':5,

@@ -23,7 +23,7 @@ public class FastqDataGroup implements DataGroup {
 	private static Logger logger = LoggerFactory.getLogger(FastqDataGroup.class);
 	// TODO 每个app都要在这里列举，不利于扩展，可以给app另外一个字段标识
 	private static List<String> supportedApps = Arrays.asList("CMP", "CMP_199", "GDD", "MIB", "华木兰", "AccuSeqα",
-			"AccuSeqα199", "AccuSeqΩ");
+            "AccuSeqα199", "AccuSeqΩ", "华木兰-白金");
 
 	@Override
 	public Map<String, String> group(List<DataFile> dataFiles) {

@@ -274,6 +274,10 @@
     	templateUrl: "pages/report/report_data_rocky.jsp",
     	controller: "rockyDataReportController"
     })
+    .when('/reportdata/Rocky-platinum/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_rocky.jsp",
+    	controller: "rockyDataReportController"
+    })
     .when('/reportdata/FS-ocg/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_fsocg.jsp",
     	controller: "fsocgDataReportController"
@@ -353,7 +357,7 @@
       templateUrl: "pages/experiment_scan/library_detail.jsp",
       controller: "storagesController"
     })
-    .when('/product/rocky/upload',{
+    .when('/product/rocky/upload/:tagId',{
       templateUrl: "pages/rocky/rocky_upload.jsp",
       controller: "rockyUploadController"
     })

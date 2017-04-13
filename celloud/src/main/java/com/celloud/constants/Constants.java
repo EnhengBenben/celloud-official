@@ -111,4 +111,15 @@ public class Constants {
 			put(44, 137);
 		}
 	};
+    /**
+     * rocky系列app的tagId和appId对应关系
+     */
+    public static final Map<Integer, Integer> rockyTags = new HashMap<Integer, Integer>() {
+        private static final long serialVersionUID = 1L;
+
+        {
+            put(2, 123);
+            put(187, 280);
+        }
+    };
 }

@@ -25,7 +25,7 @@ public class AppConstants {
     /** 已下线 */
     public static final int OFF = 1;
 	/** 产品组：百菌探组+华木兰 */
-	public static final List<Integer> BACTIVE_GROUP = Arrays.asList(118, 123, 133, 134, 135, 136, 137);
+    public static final List<Integer> BACTIVE_GROUP = Arrays.asList(118, 123, 133, 134, 135, 136, 137, 280);
     /** AccuSeqΩ-exon流程APPID */
     public static final int AccuSeqC = 279;
 }
