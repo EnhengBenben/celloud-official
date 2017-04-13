@@ -33,7 +33,7 @@
 					<div class="m-boxCon">
 						<img ng-if="hbv.known['204_png'] != null" ng-src="{{uploadPath}}{{hbv.userId}}/{{hbv.appId}}/{{hbv.dataKey}}/SVG/{{hbv.known['204_png']}}" height="476px" width="420px" style="margin-left: 25px;"/>
 						<div ng-if="hbv.known != undefined && hbv.known['204_png'] == null" class="imgmiss">
-							{{'HBV.SITE_TEST_FAIL' | translate: {"site":204}}}
+							{{'HBV.SITE_TEST_FAIL' | translate: '{site: "204"}'}}
 						</div>
 					</div>
 					<div class="m-tips" style="height: auto;padding-right: 19px;">
@@ -87,7 +87,7 @@
 								</a>
 							</span>
 							<div ng-if="hbv.known['194_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":194}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "194"}'}}
 							</div>
 					    </div>
 					</div>
@@ -106,7 +106,7 @@
 								</a>
 							</span>
 							<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":204}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "204"}'}}
 							</div>
 					    </div>
 					</div>
@@ -125,7 +125,7 @@
 								</a>
 							</span>
 							<div ng-if="hbv.known['181_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":181}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "181"}'}}
 							</div>
 							<span ng-if="hbv.known['236_png'] != null">
 								<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['236_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['236_10_png']);" >
@@ -136,7 +136,7 @@
 								</a>
 							</span>
 							<div ng-if="hbv.known['236_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":236}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "236"}'}}
 							</div>
 					    </div>
 					</div>
@@ -155,7 +155,7 @@
 								</a>
 							</span>
 							<div ng-if="hbv.known['173_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":173}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "173"}'}}
 							</div>
 							<span ng-if="hbv.known['180_png'] != null">
 								<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
@@ -166,7 +166,7 @@
 								</a>
 							</span>
 							<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":180}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "180"}'}}
 							</div>
 							<span ng-if="hbv.known['204_png'] != null">
 					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
@@ -177,7 +177,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":204}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "204"}'}}
 							</div>
 					    </div>
 					</div>
@@ -196,7 +196,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['173_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":173}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "173"}'}}
 							</div>
 							<span ng-if="hbv.known['180_png'] != null">
 							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
@@ -207,7 +207,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":180}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "180"}'}}
 							</div>
 							<span ng-if="hbv.known['204_png'] != null">
 					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
@@ -218,7 +218,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":204}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "204"}'}}
 							</div>
 					    </div>
 					</div>
@@ -237,7 +237,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['169_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":169}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "169"}'}}
 							</div>
 							<span ng-if="hbv.known['180_png'] != null">
 							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['180_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['180_10_png']);" >
@@ -248,7 +248,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['180_png'] == null" class="imgmiss">
-	                            {{'HBV.SITE_TEST_FAIL' | translate: {"site":180}}}
+	                            {{'HBV.SITE_TEST_FAIL' | translate: '{site: "180"}'}}
 	                        </div>
 	                        <span ng-if="hbv.known['184_png'] != null">
 							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['184_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['184_10_png']);" >
@@ -259,7 +259,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['184_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":184}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "184"}'}}
 							</div>
 							<span ng-if="hbv.known['202_png'] != null">
 							<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['202_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['202_10_png']);" >
@@ -270,7 +270,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['202_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":202}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "202"}'}}
 							</div>
 							<span ng-if="hbv.known['204_png'] != null">
 					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['204_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['204_10_png']);" >
@@ -281,7 +281,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['204_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":204}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "204"}'}}
 							</div>
 							<span ng-if="hbv.known['250_png'] != null">
 					    	<a style="display: inline-block;vertical-align: top;color: #333333;" ng-if="hbv.known['250_png'] != null" ng-click="bigFigure(uploadPath + hbv.userId + '/' + hbv.appId + '/' + hbv.dataKey + '/SVG/' + hbv.known['250_10_png']);" >
@@ -292,7 +292,7 @@
 							</a>
 							</span>
 							<div ng-if="hbv.known['250_png'] == null" class="imgmiss">
-								{{'HBV.SITE_TEST_FAIL' | translate: {"site":250}}}
+								{{'HBV.SITE_TEST_FAIL' | translate: '{site: "250"}'}}
 							</div>
 					    </div>
 					</div>

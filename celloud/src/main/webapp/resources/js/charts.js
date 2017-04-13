@@ -131,7 +131,8 @@ $.reportChar.draw = {
   	/**
   	 * 垂直柱状图
   	 */
-  	echartsShowBar : function(id, title, X, Y, rotate, width, height) {
+  	echartsShowBar : function(id, title, X, Y, rotate, width, height, yAxisName) {
+  	  yAxisName = yAxisName==null ? "样本数量":yAxisName;
         var option = {
         		tooltip : {
         	        trigger: 'axis'
@@ -154,7 +155,7 @@ $.reportChar.draw = {
         	    yAxis : [
         	        {
         	            type : 'value',
-        	            name : '样本数量'
+        	            name : yAxisName
         	        }
         	    ],
         	    series : [

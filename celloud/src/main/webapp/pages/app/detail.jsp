@@ -139,11 +139,11 @@
 				</div>
 				<div class="comment-right">
 					<div class="score-icons comment-score">
-						<span class="score-icon score-gray-null" id="score-1" ng-click="updateScore(1)"></span>
-						<span class="score-icon score-gray-null" id="score-2" ng-click="updateScore(2)"></span>
-						<span class="score-icon score-gray-null" id="score-3" ng-click="updateScore(3)"></span>
-						<span class="score-icon score-gray-null" id="score-4" ng-click="updateScore(4)"></span>
-						<span class="score-icon score-gray-null" id="score-5" ng-click="updateScore(5)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-1" ng-click="updateScore(1)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-2" ng-click="updateScore(2)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-3" ng-click="updateScore(3)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-4" ng-click="updateScore(4)"></span>
+						<span class="user-click score-icon score-gray-null" id="score-5" ng-click="updateScore(5)"></span>
 					</div>
 				</div>
 			</div>

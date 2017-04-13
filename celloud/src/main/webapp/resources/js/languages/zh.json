@@ -157,7 +157,10 @@
     "FILE_ALIAS_MAX_CHAR": "文件别名不能超过{{maxNum}}个字符！",
     "DATA_LABEL_MAX_CHAR": "数据标签不能超过{{maxNum}}个字符！",
     "TEST_USER_NO_ARCHIVE": "测试账号不可归档数据！",
-    "TEST_USER_NO_MODIFIED": "测试账号不可以修改数据信息！"
+    "TEST_USER_NO_MODIFIED": "测试账号不可以修改数据信息！",
+    "SELECT_START_TIME": "请选择开始时间！",
+    "TIME_ERROR": "时间错误",
+    "MACK_SURE_TIME": "请确认开始时间  < 结束时间！"
   },
   "CONFIRM": {
     "CONFIRM": "确认框",

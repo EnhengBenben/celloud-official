@@ -1507,7 +1507,7 @@
 				}
 				X = X.substring(0,X.length-1)+"]";
 				Y = Y.substring(0,Y.length-1)+"]";
-				$.reportChar.draw.echartsShowBar("char1", $translate.instant("HBV.TYPE_OF_RESISTANCE"), eval(X), eval(Y), -45, 800, 350);
+				$.reportChar.draw.echartsShowBar("char1", $translate.instant("HBV.TYPE_OF_RESISTANCE"), eval(X), eval(Y), -45, 800, 350, $translate.instant("HBV.NUMBER_OF_SAMPLES"));
 			});
 		  
 	  });
@@ -3088,7 +3088,7 @@
     });
   });
   
-  celloudApp.controller("dataReportController", function($rootScope, $routeParams, $scope,$location,projectReportService,dataReportService){
+  celloudApp.controller("dataReportController", function($rootScope, $routeParams, $scope,$location,$translate,projectReportService,dataReportService){
     $scope.searchInfo = dataReportService.getSearchInfos();
     
     $scope.dataOptions = {
@@ -3174,11 +3174,11 @@
       var end = $("#end-date").val();
       end = end ? end : d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
       if(!begin){
-        $.tips("请选择开始时间！","时间错误");
+        $.tips($translate.instant("PROMPT.SELECT_START_TIME"),$translate.instant("PROMPT.TIME_ERROR"));
         return;
       }
       if(begin > end){
-        $.tips("请确认开始时间  < 结束时间！","时间错误");
+        $.tips($translate.instant("PROMPT.MACK_SURE_TIME"),$translate.instant("PROMPT.TIME_ERROR"));
         return;
       }
       $scope.dataOptions.fullDate = -1;

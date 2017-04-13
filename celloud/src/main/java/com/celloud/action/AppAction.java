@@ -193,9 +193,7 @@ public class AppAction {
         }
         // 7. 获取评分
         Map<String, Map<String, Long>> countScore = appCommentService.countScore(appId);
-        if (countScore != null && !countScore.isEmpty()) {
-            result.put("countScore", countScore);
-        }
+        result.put("countScore", countScore);
         Long totalCount = 0l;
         for (Map.Entry<String, Map<String, Long>> entry : countScore.entrySet()) {
             totalCount += entry.getValue().get("count");
