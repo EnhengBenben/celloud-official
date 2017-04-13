@@ -160,7 +160,7 @@
     "TEST_USER_NO_MODIFIED": "Test account can not modify datas!",
     "SELECT_START_TIME": "Please select start time!",
     "TIME_ERROR": "Time error",
-    "MACK_SURE_TIME": "Please make sure \"start time\" > \"end time\""
+    "MACK_SURE_TIME": "Please make sure \"start time\" < \"end time\""
   },
   "CONFIRM": {
     "CONFIRM": "Confirm",

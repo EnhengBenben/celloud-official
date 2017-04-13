@@ -137,7 +137,7 @@
       spinner.spin(target);
       runService.run().success(function(response) {
         if(response.success){
-          $.alert($translate.instant("PROMPT.RUN_SUCC"));
+          $.alert($translate.instant("ALERT.RUN_SUCC"));
           $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
           $.dataManager.refreshDataList();
         }else{
