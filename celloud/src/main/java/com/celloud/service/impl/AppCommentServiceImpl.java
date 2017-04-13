@@ -44,8 +44,7 @@ public class AppCommentServiceImpl implements AppCommentService {
         queryAppComment.setAppId(appId);
         List<Map<String, Object>> list = appCommentMapper.selectBySelectiveNoPage(queryAppComment);
         if (list.size() > 0) {
-            LOGGER.error("用户 {} 对appId = {}的app已经进行过评论不能保存", userId, appId);
-            return false;
+            return updateAppComment((Integer) list.get(0).get("id"), userId, score, comment);
         }
         AppComment appComment = new AppComment();
         appComment.setUserId(userId);

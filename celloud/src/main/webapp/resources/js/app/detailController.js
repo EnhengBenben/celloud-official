@@ -46,6 +46,7 @@
     function updateComment(){
       AppService.updateComment($routeParams.id,$scope.userScore,$scope.userComment).success(function() {
         $.tips("评论成功");
+        init();
       });
     }
     function appScreenShow(img,index){
