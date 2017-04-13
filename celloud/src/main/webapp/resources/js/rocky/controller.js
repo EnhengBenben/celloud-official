@@ -294,14 +294,16 @@
 		}
 	});
 	
-	celloudApp.controller("rockyDataController", function($scope, $rootScope, rockyDataService) {
+	celloudApp.controller("rockyDataController", function($scope, $routeParams, $rootScope, rockyDataService) {
+		$rootScope.rockyTagId = $routeParams.tagId;
 		$scope.params = {
 		  page: 1,
 		  size: 20,
 		  sample: null,
 	      condition: null,
 	      sortField: "createDate",
-	      sortType: "desc"
+	      sortType: "desc",
+	      tagId: $rootScope.rockyTagId
 	    }
 	    $scope.pageQuery = function(){
 			rockyDataService.pageQuery($scope.params).

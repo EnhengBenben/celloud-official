@@ -349,7 +349,7 @@ public interface DataService {
 	 * @return
 	 */
 	public PageList<Map<String, Object>> filterRockyList(Page pager, String sample, String condition, String sidx,
-	        String sord);
+            String sord, Integer appId);
 
 	public String getAnotherName(HttpServletRequest request, String filePath, String fileDataKey);
 

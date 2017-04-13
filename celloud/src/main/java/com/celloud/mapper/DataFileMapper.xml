@@ -745,15 +745,15 @@
 		lEFT JOIN tb_app_tag_relat atr ON ftr.tag_id = atr.tag_id
 		<where>
 			f.user_id = #{userId } and f.state = #{state }
-			AND atr.app_id = 123
+			AND atr.app_id = #{appId}
 			<if test="condition != null and condition != ''">
-				and (f.file_name LIKE CONCAT('%',#{condition},'%')
-				or s.sample_name LIKE CONCAT('%',#{condition},'%')
-				or f.batch LIKE CONCAT('%',#{condition},'%'))
-			</if>
-			<if test="sample != null and sample != ''">
-				and s.sample_name LIKE CONCAT('%',#{sample},'%')
-			</if>
+                and (f.file_name LIKE CONCAT('%',#{condition},'%')
+                or s.sample_name LIKE CONCAT('%',#{condition},'%')
+                or f.batch LIKE CONCAT('%',#{condition},'%'))
+            </if>
+            <if test="sample != null and sample != ''">
+                and s.sample_name LIKE CONCAT('%',#{sample},'%')
+            </if>
 		</where>
 		<choose>
 			<when test="sidx == 'createDate'">

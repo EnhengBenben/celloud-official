@@ -350,7 +350,8 @@ public interface DataFileMapper {
 
 	List<Map<String, Object>> filterRockyList(Page page, @Param("userId") Integer userId, @Param("state") Integer state,
 			@Param("reportType") Integer reportType, @Param("period") Integer period, @Param("sample") String sample,
-			@Param("condition") String condition, @Param("sidx") String sidx, @Param("sord") String sord);
+            @Param("condition") String condition, @Param("sidx") String sidx, @Param("sord") String sord,
+            @Param("appId") Integer appId);
 
 	/**
 	 * 
