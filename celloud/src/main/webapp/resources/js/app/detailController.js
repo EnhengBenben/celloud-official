@@ -12,6 +12,13 @@
       AppService.appDetail($routeParams.id).success(function(data) {
     	$(document).scrollTop(0);
         $scope.appInfos = data;
+        if($scope.appInfos.userComment != undefined){
+        	$scope.userComment = $scope.appInfos.userComment.comment;
+        	for(var i=1;i<=$scope.appInfos.userComment.score;i++){
+              $("#score-"+i).attr("class","user-click score-icon score-full");
+            }
+            $scope.userScore = $scope.appInfos.userComment.score;
+        }
         $rootScope.appClassifyId = $scope.appInfos.classifyId;
         $rootScope.appClassifyName = $scope.appInfos.classifys;
         $scope.countScore5 = data.countScore[5]==undefined?0:data.countScore[5].count;
