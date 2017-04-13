@@ -177,10 +177,10 @@
   celloudApp.filter("scoreFilter",function(){
     return function(score,scoreType){
       var result = "score-full";
-      if(score<scoreType){
-        result = "score-null";
-      }else if(score>scoreType && score<scoreType+1){
+      if(score>scoreType-1 && score<scoreType){
         result = "score-half";
+      }else if(score<scoreType){
+        result = "score-null";
       }
       return result;
     }
