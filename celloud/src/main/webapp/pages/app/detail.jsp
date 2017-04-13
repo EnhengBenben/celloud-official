@@ -4,7 +4,7 @@
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li>应用市场</li>
-      <li><a ng-href="index#/app/list/{{appInfos.classifyId}}">{{appInfos.classifys}}</a></li>
+      <li><a ng-href="index#/app/list/{{rootClassifyId}}">{{appInfos.classifys}}</a></li>
       <li>{{appInfos.app.appName}}</li>
     </ol>
     <div class="content">
