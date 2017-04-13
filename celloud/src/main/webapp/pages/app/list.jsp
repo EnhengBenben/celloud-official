@@ -10,7 +10,7 @@
 		<nav class="app-classify-nav">
 			<ul>
 			    <div ng-repeat="classify in sclassifys">
-				    <li id="app-classify-{{classify.classifyId}}" ng-class="{active: $index==0}" ng-click="getAppsByCid(classify.classifyId,classify.classifyName)">{{classify.classifyName}}</li>
+				    <li id="app-classify-{{classify.classifyId}}" ng-class="{active: classify.classifyName == appClassifyName}" ng-click="getAppsByCid(classify.classifyId,classify.classifyName)">{{classify.classifyName}}</li>
 			    </div>
 			</ul>
 		</nav>
@@ -30,7 +30,7 @@
 							<div class="buttons">
 								<a class="button-gray" ng-click="getApp(app.appId)" ng-if="app.isAdd!=1">获取</a>
                                 <a class="button-gray add" ng-click="getApp(app.appId)" ng-if="app.isAdd==1">已获取</a>
-								<a class="button-gray detail" ng-href="#app/list/{{rootClassifyId}}/detail/{{app.appId}}">查看详情</a>
+								<a class="button-gray detail" ng-href="#app/list/{{prevClassifyId}}/detail/{{app.appId}}">查看详情</a>
 							</div>
 						</div>
 					</div>

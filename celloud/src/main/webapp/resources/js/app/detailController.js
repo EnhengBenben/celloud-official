@@ -1,16 +1,19 @@
 (function(){
-  celloudApp.controller("appDetailCtrl",['$scope','$routeParams','AppService',function($scope, $routeParams, AppService){
+  celloudApp.controller("appDetailCtrl",['$scope','$routeParams','AppService','$rootScope',function($scope, $routeParams, AppService, $rootScope){
     //分页检索
     $scope.getApp = getApp;
     $scope.pageQuery = pageQuery;
     $scope.updateScore = updateScore;
     $scope.updateComment = updateComment;
     $scope.appScreenShow = appScreenShow;
+    $rootScope.rootClassifyId = $routeParams.classifyId;
     return init();
     function init(){
       AppService.appDetail($routeParams.id).success(function(data) {
     	$(document).scrollTop(0);
         $scope.appInfos = data;
+        $rootScope.appClassifyId = $scope.appInfos.classifyId;
+        $rootScope.appClassifyName = $scope.appInfos.classifys;
         $scope.countScore5 = data.countScore[5]==undefined?0:data.countScore[5].count;
         $scope.countScore4 = data.countScore[4]==undefined?0:data.countScore[4].count;
         $scope.countScore3 = data.countScore[3]==undefined?0:data.countScore[3].count;
