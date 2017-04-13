@@ -36,7 +36,7 @@
 							{{'HBV.SITE_TEST_FAIL' | translate: {"site":204}}}
 						</div>
 					</div>
-					<div class="m-tips">
+					<div class="m-tips" style="height: auto;padding-right: 19px;">
 						<i class="i-tips"></i>
 						<span ng-if="hbv.txt204.indexOf('LAM')>-1 || hbv.txt204.indexOf('FTC')>-1 || hbv.txt204.indexOf('LDT')>-1 || hbv.txt204.indexOf('ETV')>-1">
 							{{'HBV.RESISTANS_STRAINS' | translate}}

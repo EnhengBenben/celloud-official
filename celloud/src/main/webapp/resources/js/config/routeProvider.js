@@ -357,8 +357,12 @@
       templateUrl: "pages/experiment_scan/library_detail.jsp",
       controller: "storagesController"
     })
-    .when('/product/rocky/upload/:tagId',{
+    .when('/product/rocky/upload/2',{
       templateUrl: "pages/rocky/rocky_upload.jsp",
+      controller: "rockyUploadController"
+    })
+    .when('/product/rocky/upload/187',{
+      templateUrl: "pages/rocky/rocky_platinum_upload.jsp",
       controller: "rockyUploadController"
     })
     .when('/product/rocky/d',{

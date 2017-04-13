@@ -1,6 +1,8 @@
 (function() {
 	celloudApp.controller("rockyUploadController", function($route, $location, $scope, $rootScope, $routeParams, uploadService) {
-		$rootScope.rockyTagId = $routeParams.tagId;
+		console.log($location.path());
+		$rootScope.rockyTagId = $location.path().substr($location.path().lastIndexOf('/') + 1);
+		console.log($rootScope.rockyTagId);
 		$scope.stepOne = function(){
 			// 在第二步存在了uploader对象但是没选择文件
 			if($rootScope.rockyUploader && $rootScope.rockyUploader.files.length <=0 && $rootScope.rockyStep != 'three'){
