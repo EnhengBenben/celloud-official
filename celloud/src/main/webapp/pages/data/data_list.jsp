@@ -137,8 +137,8 @@
 	    </div>
 	    <div class="modal-footer">
 	      <div class="text-center">
-              <button type="reset" class="btn btn-cancel" data-dismiss="modal">{{'CANCLE' | translate}}</button>
-              <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">{{'SUBMIT' | translate}}</button>
+              <button type="reset" class="btn btn-cancel" data-dismiss="modal">{{'BUTTON.CANCLE' | translate}}</button>
+              <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">{{'BUTTON.SUBMIT' | translate}}</button>
           </div>
 	    </div>
 	  </div>
