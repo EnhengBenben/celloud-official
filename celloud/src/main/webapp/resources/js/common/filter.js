@@ -179,7 +179,7 @@
       var result = "score-full";
       if(score<scoreType){
         result = "score-null";
-      }else if(score>scoreType && score<scoreType+1){
+      }else if(score>scoreType-1 && score<scoreType){
         result = "score-half";
       }
       return result;
