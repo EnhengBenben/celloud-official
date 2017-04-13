@@ -69,7 +69,7 @@
     	uploadService.checkRole().
 		success(function(data){
 			if(data == "0"){
-				$.alert($translate.instant("PROMPT.RUN_SUCC"));
+				$.alert($translate.instant("ALERT.RUN_SUCC"));
 				return;
 			}else{
 				if(!$scope.checkNum()){
