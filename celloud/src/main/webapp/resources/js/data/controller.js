@@ -167,8 +167,9 @@
       		            $scope.conditionList();
       		            $.dataManager.refreshDataList();
       		          }
-      		          if(response.message == "归档成功")
+      		          if(response.message.indexOf("归档成功")>0){
       		            $.alert($translate.instant("ALERT.ARCHIVE_SUCC"));
+      		          }
       		        });
   		          }
   		       );
@@ -219,8 +220,9 @@
           $.dataManager.refreshDataList();
           $("#data-detail-modal").modal("hide");
         }
-        if(response.message == "修改成功")
+        if(response.message.indexOf("修改成功")>0){
           $.alert($translate.instant("ALERT.MODIFIED_SUCC"));
+        }
       });
     }
   });

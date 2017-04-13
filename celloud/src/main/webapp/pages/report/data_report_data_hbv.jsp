@@ -410,7 +410,7 @@
 	                    </div>
 	                    <div class="text-center mb20">
 			                <a href="javascript:void(0)" ng-show="more" ng-click="showMore('charts');" class="btn -low"><i class="i-view"></i>{{'HBV.SHOW_ALL' | translate}}</a>
-			                <a href="javascript:void(0)" ng-show="less" ng-click="showLess('charts');" class="btn -low"><i class="i-view"></i>{{'HBV.PACK_UP' | translate}}</a>
+			                <a href="javascript:void(0)" ng-show="less" ng-click="showLess('charts');" class="btn -low"><i class="i-view"></i>{{'REPORT.PACK_UP' | translate}}</a>
 			            </div>
 			        	<div class="row" id="charDiv">
 				        </div>
