@@ -277,9 +277,10 @@ section h2,
 /*----------for yanda----------*/
 .yanda .tests-content {
     margin-top: 20px;
+    padding: 0;
 }
 .detail-info{
-    width: 220px;
+    width: 100%;
     border-bottom: 1px solid #c8c8c8;
     font-weight: bold;
     text-align: center;
@@ -300,6 +301,7 @@ section h2,
 }
 .yanda .tests-content >.tests-info .width-260 .detail-info{
 	text-align: left;
+    padding-left: 42px;
 }
 .yanda .tests-content >.tests-info .width-140{
 	float: left;
@@ -321,7 +323,7 @@ section h2,
 .yanda .tests-content >.tests-info ul li select{
     width: 100px;
 }
-.yanda .tests-content .result-species{
+.yanda .tests-content >.tests-info ul.result-species{
 	padding-left: 42px;
 }
 .yanda .test-description{
@@ -331,6 +333,7 @@ section h2,
     padding: 0;
 }
 .yanda .tests-footer{
+    position: relative;
 	margin-top: 20px;
     padding: 20px 200px 0px 0px;
 }
@@ -338,6 +341,12 @@ section h2,
 	position: absolute;
 	right: 0;
 	top: 20px;
+	width: 180px;
+	height: 50px;
+}
+.yanda .tests-footer ul>li {
+	
+    margin-top: 20px;
 }
 @media print{
 	body{
