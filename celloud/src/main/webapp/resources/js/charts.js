@@ -214,22 +214,40 @@ $.reportChar.draw = {
   	/**
   	 * HBV基因型分类总览
   	 */
-  	echartsShowHBVType : function(id, appId, hbvType, currentType, rotate) {
+  	echartsShowHBVType : function(id, appId, hbvType, currentType, rotate,title,subTitle,serName,legend,xAxis1,xAxis2,yAxis,series) {
   		subtext = "";
   		genDat = "";
   		seriesName = "";
+  		titleText = "";
+  		legendData = "";
+  		xAxisData1 = "";
+  		xAxisData2 = "";
+  		yAxisName = "";
+  		seriesName = "";
   		if(appId == 82){
-  			subtext = "数据来源:CelLoud全部HBV数据";
-  			genDat = "HBV基因型";
-  			seriesName = "HBV基因型";
+  			subtext = subTitle;
+  			genDat = serName;
+  			seriesName = serName;
+  			titleText = title;
+  			legendData = legend;
+  			xAxisData1 = xAxis1;
+        xAxisData2 = xAxis2;
+        yAxisName = yAxis;
+        seriesName = series;
   		}else {
   			subtext = "数据来源:CelLoud全部Sanger数据";
   			genDat = "Sanger基因型";
   			seriesName = "Sanger基因型";
+  			titleText = "基因型分类总览表";
+  			legendData = "当前数据基因型";
+  			xAxisData1 = "比对失败";
+        xAxisData2 = "异常数据";
+        yAxisName = "基因型数量(个)";
+        seriesName = "当前数据基因型";
   		}
         var option = {
     		title : {
-    			text : '基因型分类总览表',
+    			text : titleText,
     			subtext : subtext,
     			x : 'center'
     		},
@@ -237,14 +255,14 @@ $.reportChar.draw = {
     		    trigger: 'axis'
     		},
     		legend: {
-    		    data:[genDat,'当前数据基因型'],
+    		    data:[genDat,legendData],
     		    y : 340
     		},
     		calculable : true,
     		xAxis : [
     		    {
     		        type : 'category',
-    		        data : ['A','B','C','D','E','F','G','H','比对失败','异常数据'],
+    		        data : ['A','B','C','D','E','F','G','H',xAxisData1,xAxisData2],
     		        position : 'bottom',
     		        axisLabel : {
     		        	rotate : rotate		        	
@@ -254,7 +272,7 @@ $.reportChar.draw = {
     		yAxis : [
     		    {
     		        type : 'value',
-    		        name : '基因型数量(个)'
+    		        name : yAxisName
     		    }
     		],
     		series : [
@@ -265,7 +283,7 @@ $.reportChar.draw = {
     		        barWidth:30
     		    },
     		    {
-                    name:'当前数据基因型',
+                    name:seriesName,
                     type:'scatter',
                     data:eval(currentType),
                     barWidth:30,

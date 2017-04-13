@@ -300,7 +300,7 @@
 					<div class="container" style="display: none;"></div>
 					<!--位点突变-->
 					<div class="m-box">
-					 	<h2>7.{{'HBV.OTHER_MUTATION' | translate}}
+					 	<h2>7.{{'HBV.OTHER_MUTATION' | translate}}({{'HBV.NO_LITERATURE_SUPPORT' | translate}})
 					 	  	<span style="float:right;padding-right: 30px;" ng-title="{{'HBV.HELP' | translate}}" ng-click="showModal('helpModal',0,7)"><div class="clear button button-glow button-circle button-rounded button-primary button-tiny text-center"><a style="line-height:38px;width: 24px;height: 24px;margin-top: 7px;display: block;" class="hbv-tips"></a></div></span>
 					 	</h2>
 					    <div class="m-boxCon" id="otherPng">

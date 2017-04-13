@@ -100,7 +100,7 @@
     "ETV": "Entecavir (ETV)",
     "MUTATION_DETECTION": "mutation detection",
     "MUTATION_DETECTED": "mutations of tenofovir dipivoxil were detected",
-    "OTHER_MUTATION": "Other mutations (this site is currently no published literature support, no clear clinical significance)",
+    "OTHER_MUTATION": "Other mutations",
     "REFERENCE_CONCLUSIONS": "Reference conclusions (the following reference conclusions were based on the published literature)",
     "ORIGINAL_SEQUENCE": "Original sequence",
     "ORIGINAL_PEAK_MAP": "The original peak map",

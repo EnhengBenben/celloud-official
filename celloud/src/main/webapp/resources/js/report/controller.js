@@ -1234,7 +1234,7 @@
   /**
    * hbv数据报告controller
    */
-  celloudApp.controller("dataHbvDataReportController", function($scope, $rootScope, $routeParams, $compile, dataReportService){
+  celloudApp.controller("dataHbvDataReportController", function($scope, $rootScope, $routeParams, $compile,$translate, dataReportService){
 	  dataReportService.getDataReportInfo("report/getHBVInfo",$routeParams.dataKey,$routeParams.projectId,$routeParams.appId).
 	  success(function(hbvInfo){
 		  $scope.hbv = hbvInfo.hbv;
@@ -1334,7 +1334,7 @@
 		  xLessStr = "[" + xLess.join(",") + "]";
 		  yLessStr = "[" + yLess.join(",") + "]";
 		  $("#charDiv0").append(divLess);
-		  $.reportChar.draw.echartsShowHorizontalBar("less", "其他位点", eval(xLessStr), eval(yLessStr), 700, 40 * xLess.length, "其他位点数量");
+		  $.reportChar.draw.echartsShowHorizontalBar("less", $translate.instant("HBV.OTHER_MUTATION"), eval(xLessStr), eval(yLessStr), 700, 40 * xLess.length, $translate.instant("HBV.NUMBER_OTHER_SITES"));
 		  
 		  // 显示全部
 		  X = X.reverse();
@@ -1343,7 +1343,7 @@
 		  XStr = "[" + X.join(",") + "]";
 		  YStr = "[" + Y.join(",") + "]";
 		  $("#charDiv0").append(divMore);
-		  $.reportChar.draw.echartsShowHorizontalBar("more", "其他位点", eval(XStr), eval(YStr), 700, 40 * X.length, "其他位点数量");
+		  $.reportChar.draw.echartsShowHorizontalBar("more", $translate.instant("HBV.OTHER_MUTATION"), eval(XStr), eval(YStr), 700, 40 * X.length,  $translate.instant("HBV.NUMBER_OTHER_SITES"));
 		  
 		  $scope.more = true;
 		  $("#more").hide();
@@ -1426,16 +1426,22 @@
 					for(var i = 0;i < 8;i++){
 						aType += 'null';
 					}
-					aType += ("['比对失败'," + hbvtype[8]/2 + "]");
+					aType += ("['"+$translate.instant("HBV.CONTRAST_FAILED")+"'," + hbvtype[8]/2 + "]");
 				}
 				if(sType==""){
 					for(var i = 0;i < 9;i++){
 						aType += 'null';
 					}
-					aType += ("['异常数据'," + hbvtype[9]/2 + "]");
+					
+					aType += ("['"+$translate.instant("HBV.ABNORMAL_DATA")+"'," + hbvtype[9]/2 + "]");
 				}
 				aType += "]";
-				$.reportChar.draw.echartsShowHBVType('char0',$routeParams.appId,hbvtype,aType,45);
+				$.reportChar.draw.echartsShowHBVType('char0',$routeParams.appId,hbvtype,aType,45,
+				    $translate.instant("HBV.GENOTYPING_OVERVIEW_TABLE"),
+				    $translate.instant("HBV.DATA_SOURCES")+"("+$translate.instant("HBV.ALL_HBV_DATA_IN_CELLOUD")+")",
+				    $translate.instant("HBV.HBV_GENOTYPE"),$translate.instant("HBV.CURRENT_DATA_GENOTYPE"),
+				    $translate.instant("HBV.CONTRAST_FAILED"),$translate.instant("HBV.ABNORMAL_DATA"),
+            $translate.instant("HBV.GENOTYPE_NUMBER"),$translate.instant("HBV.CURRENT_DATA_GENOTYPE"));
 				
 				var result = $("#resultDiv").html();
 				if(result){
@@ -1501,7 +1507,7 @@
 				}
 				X = X.substring(0,X.length-1)+"]";
 				Y = Y.substring(0,Y.length-1)+"]";
-				$.reportChar.draw.echartsShowBar("char1", "耐药类型", eval(X), eval(Y), -45, 800, 350);
+				$.reportChar.draw.echartsShowBar("char1", $translate.instant("HBV.TYPE_OF_RESISTANCE"), eval(X), eval(Y), -45, 800, 350);
 			});
 		  
 	  });
