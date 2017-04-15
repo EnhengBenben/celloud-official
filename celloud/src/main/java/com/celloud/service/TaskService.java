@@ -224,7 +224,7 @@ public interface TaskService {
 	 * @param pager
 	 */
 	public PageList<Task> findRockyTasks(Page pager, String sample, String condition, String sidx, String sord,
-			ArrayList<String> batches, ArrayList<Integer> state, Date beginDate, Date endDate);
+            ArrayList<String> batches, ArrayList<Integer> state, Date beginDate, Date endDate, Integer appId);
 
 	/**
 	 * 获取所有报告任务列表
@@ -285,5 +285,6 @@ public interface TaskService {
 	 * @return
 	 */
 	public PageList<Task> findTasksByBatchNoSample(Page page, Integer userId, Integer appId, String batch);
+
 
 }

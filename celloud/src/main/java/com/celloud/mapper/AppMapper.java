@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.AppVO;
 import com.celloud.page.Page;
 
 public interface AppMapper {
@@ -214,4 +215,62 @@ public interface AppMapper {
      * @return
      */
     Integer getAppIdByTagId(@Param("tagId") Integer tagId);
+
+    /**
+     * 
+     * @description 根据classifyId获取app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:17:23
+     * @param classifyId
+     * @return
+     */
+    List<AppVO> selectByClassifyId(Page page, @Param("classifyId") Integer classifyId,
+            @Param("userId") Integer userId, @Param("offLine") Integer offLine);
+
+    /**
+     * 
+     * @description 根据classifyId获取app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:17:23
+     * @param classifyId
+     * @return
+     */
+    List<AppVO> selectByClassifyPId(Page page, @Param("classifyId") Integer classifyId, @Param("userId") Integer userId,
+            @Param("offLine") Integer offLine);
+
+    /**
+     * 
+     * @description 根据userId和appId更新是否添加状态
+     * @author miaoqi
+     * @date 2017年3月24日 下午1:56:27
+     * @param userId
+     * @param appId
+     * @param isAdd
+     * @return
+     */
+    int updateUserAppRight(@Param("userId") Integer userId, @Param("appId") Integer appId,
+            @Param("isAdd") Integer isAdd);
+
+    /**
+     * 
+     * @description 根据userId, appId获取用户app授权信息
+     * @author miaoqi
+     * @date 2017年3月25日 下午11:12:55
+     * @param userId
+     * @param appId
+     * @return
+     */
+    Map<String, Integer> selectUserAppRight(@Param("userId") Integer userId, @Param("appId") Integer appId);
+    
+    /**
+     * 
+     * @description 根据classifyId获取app列表
+     * @author miaoqi
+     * @date 2017年3月24日 上午11:17:23
+     * @param classifyId
+     * @return
+     */
+    List<AppVO> selectBySelective(Page page, @Param("app") App app, @Param("userId") Integer userId,
+            @Param("offLine") Integer offLine);
+
 }

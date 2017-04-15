@@ -274,17 +274,25 @@
     	templateUrl: "pages/report/report_data_rocky.jsp",
     	controller: "rockyDataReportController"
     })
+    .when('/reportdata/Rocky-platinum/:appId/:dataKey/:projectId',{
+    	templateUrl: "pages/report/report_data_rocky.jsp",
+    	controller: "rockyDataReportController"
+    })
     .when('/reportdata/FS-ocg/:appId/:dataKey/:projectId',{
     	templateUrl: "pages/report/report_data_fsocg.jsp",
     	controller: "fsocgDataReportController"
     })
     .when('/app',{
-      templateUrl: "pages/app/app_main.jsp",
-      controller: "toAppStore"
+      templateUrl: "pages/app/main.jsp",
+      controller: "appMainCtrl"
     })
-    .when('/app/detail/:pid',{
-      templateUrl: "pages/app/app_detail_main.jsp",
-      controller: "toAppDetail"
+    .when('/app/list/:cid',{
+      templateUrl: "pages/app/list.jsp",
+      controller: "appListCtrl"
+    })
+    .when('/app/list/:classifyId/detail/:id',{
+      templateUrl: "pages/app/detail.jsp",
+      controller: "appDetailCtrl"
     })
     .when('/reportdata/bsi',{
       templateUrl: "pages/report/report_data_bsi.jsp"
@@ -349,15 +357,19 @@
       templateUrl: "pages/experiment_scan/library_detail.jsp",
       controller: "storagesController"
     })
-    .when('/product/rocky/upload',{
+    .when('/product/rocky/upload/2',{
       templateUrl: "pages/rocky/rocky_upload.jsp",
       controller: "rockyUploadController"
     })
-    .when('/product/rocky/d',{
+    .when('/product/rocky/upload/187',{
+      templateUrl: "pages/rocky/rocky_platinum_upload.jsp",
+      controller: "rockyPlatinumUploadController"
+    })
+    .when('/product/rocky/d/:tagId',{
     	templateUrl: "pages/rocky/rocky_data.jsp",
     	controller: "rockyDataController"
     })
-    .when('/product/rocky/report',{
+    .when('/product/rocky/report/:tagId',{
       templateUrl: "pages/rocky/rocky_report.jsp",
       controller: "rockyReportController"
     })

@@ -15,8 +15,9 @@
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/select2/4.0.3/css/select2.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/plugins/intro/introjs.css" rel="stylesheet" type="text/css" />
-  <link href="<%=request.getContextPath()%>/css/celloud.min.css?version=3.4.11.01" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/css/celloud.min.css?version=3.4.13.02" rel="stylesheet">
   <link href="<%=request.getContextPath()%>/css/bsi_main.css" rel="stylesheet" type="text/css" />
 <%--   <link href="<%=request.getContextPath()%>/less/celloud.less" rel="stylesheet/less" type="text/css" /> --%>
 <!--   <script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script> -->
@@ -90,15 +91,22 @@
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-route.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-resource.min.js"></script>
   <script src="//cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.min.js"></script>
+  <script src="//cdn.bootcss.com/angular-cookie/4.1.0/angular-cookie.min.js"></script>
+  <script src="//cdn.bootcss.com/angular-translate/2.15.1/angular-translate.min.js"></script>
+  <script src="//cdn.bootcss.com/angular-translate-loader-static-files/2.15.1/angular-translate-loader-static-files.min.js"></script>
+  <script src="//cdn.bootcss.com/angular-translate-loader-url/2.15.1/angular-translate-loader-url.min.js"></script>
+  <script src="//cdn.bootcss.com/angular-translate-storage-local/2.15.1/angular-translate-storage-local.min.js"></script>
+  <script src="//cdn.bootcss.com/angular-translate-storage-cookie/2.15.1/angular-translate-storage-cookie.min.js"></script>
   <script src="//cdn.bootcss.com/echarts/2.2.7/echarts.js"></script>
   <script src="//cdn.bootcss.com/plupload/2.1.8/plupload.full.min.js"></script>
+  <script src="//cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
   <script src="<%=request.getContextPath() %>/plugins/jquery.ba-resize.min.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/calendar/WdatePicker.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/highcharts/char.js"></script>
   <script src="<%=request.getContextPath()%>/plugins/Lodop/LodopFuncs.js?v=3.4.8"></script>
   <script src="<%=request.getContextPath()%>/plugins/area/area.js?v=3.3.4"></script>
   <script src="<%=request.getContextPath() %>/plugins/smartJqueryZoom/e-smart-zoom-jquery.min.js?v=3.4.8"></script>
-  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.4.11.01"></script>
+  <script src="<%=request.getContextPath()%>/js/main.min.js?v=3.4.13.51"></script>
   <script type="text/javascript">
 	  window.navigation = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getNavigation() %>';
 	  window.username = '<%=((User)request.getSession().getAttribute("loginUserInSession")).getUsername() %>';

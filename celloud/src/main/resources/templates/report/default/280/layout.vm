@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 优先使用最新版本的IE 和 Chrome 内核 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="baidu-site-verification" content="IsldTuHqik" />
+<title>${rocky.dataKey}</title>
+<meta name="keywords" content="上海华点云生物科技有限公司,celloud,生物信息云平台,生物大数据平台,序列数据分析,基因大数据,上海华点云生物科技有限公司网站首页,上海华点云生物科技有限公司官网,上海华点云生物科技有限公司北京分公司" />
+<meta name="description" content="一站式高通量基因检测数据分析系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="bookmark" href="$base/images/favicon.ico" />
+<link rel="shortcut icon" href="$base/images/favicon.ico" />
+<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="$base/css/less/main.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
+<link href="$base/css/less/rocky_print.less?v=3.2.4" rel="stylesheet/less" type="text/css" />
+ #block("links") 
+ #end
+<script src="//cdn.bootcss.com/less.js/2.7.1/less.min.js"></script>
+</head>
+<body class="container" style="width:100%;padding:0px;">
+	<div class="main-container" style="padding:0px 45px 0px 70px;background-color: #f8f8f8;">
+		<section class="content rocky">
+			<div id="container" class="common-container" style="margin-left: 0px;padding:0px;">
+				   #block("content") 
+    			   #end
+			</div>
+		</section>
+	</div>
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="$base/js/rocky_print.js"></script>
+	 #block("scripts") 
+ 	 #end
+</body>
+</html>

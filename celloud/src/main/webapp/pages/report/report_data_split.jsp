@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<div class="pro-body mreport">
+<div class="pro-body mreport" ng-controller="commonReport">
     <ol class="breadcrumb">
       <li>CelLoud</li>
       <li><a style="color: #a0a0a0" href="javascript:void(0);" ng-click="goBack()">报告管理</a></li>

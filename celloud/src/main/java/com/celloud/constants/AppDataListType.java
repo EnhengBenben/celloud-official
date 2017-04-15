@@ -23,7 +23,7 @@ public class AppDataListType {
 	/**
 	 * fastq
 	 */
-    public static final List<Integer> FASTQ_PATH = Arrays.asList(110, 111, 112, 114, 123, 126, 127, 128, 139, 279);
+    public static final List<Integer> FASTQ_PATH = Arrays.asList(110, 111, 112, 114, 123, 126, 127, 128, 139, 279, 280);
 
 	/**
 	 * 两对fastq文件 ...(A/B)_(R1/R2).fastq
@@ -43,7 +43,7 @@ public class AppDataListType {
 	 * path
 	 */
 	public static final List<Integer> ONLY_PATH = Arrays.asList(1, 73, 82, 84, 89, 90, 105, 106, 107, 108, 117, 118,
-			133, 134, 135, 136, 137, 138);
+            133, 134, 135, 136, 137, 138);
 
 	/**
 	 * path and name
@@ -58,7 +58,7 @@ public class AppDataListType {
 	/**
 	 * 调用封装的API运行
 	 */
-	public static final List<Integer> MQ_RUN = Arrays.asList(113, 118, 123);
+    public static final List<Integer> MQ_RUN = Arrays.asList(113, 118, 123, 280);
 	/**
 	 * JAVA直接将输入文件做为结果文件处理
 	 */

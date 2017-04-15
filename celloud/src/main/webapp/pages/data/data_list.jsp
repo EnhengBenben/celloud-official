@@ -3,26 +3,26 @@
 <div class="pro-body">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>数据管理</li>
+      <li>{{'DATA_MANAGEMENT' | translate}}</li>
     </ol>
     <div class="content">
       <div class="table-opera">
         <div class="table-opera-content">
           <div class="opera-info">
             <shiro:hasPermission name="data:run">
-	          <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> 运行</button>
+	          <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="runWithProject()"><i class="fa fa-play" aria-hidden="true"></i> {{'RUN' | translate}}</button>
             </shiro:hasPermission>
-            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> 归档</button>
+            <button class="btn data-operate btn-cancel" disabled="disabled" ng-click="deleteData()"><i class="fa fa-play" aria-hidden="true"></i> {{'ARCHIVE' | translate}}</button>
           </div>
           <div class="info-btn-group pull-right">
-            <input class="field" type="text" placeholder="搜索文件名/数据标签/文件别名" ng-model="dataCondition" ng-keypress="doSearch($event)"/>
-            <a class="action" ng-click="conditionList()">搜索</a>
+            <input class="field" type="text" ng-placeholder="{{'SEARCH_FOR_DATA' | translate}}" ng-model="dataCondition" ng-keypress="doSearch($event)"/>
+            <a class="action" ng-click="conditionList()">{{'SEARCH' | translate}}</a>
           </div>
         </div>
       </div>
       <div class="table-opera">
         <span class="tips">
-             提醒：没有产品标签的数据和正在运行的数据不能运行！
+             {{'DATA_REMINDER' | translate}}
         </span>
       </div>
       <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="state">
@@ -38,9 +38,9 @@
                 <span class="info"></span>
               </label>
             </th>
-            <th>文件名称</th>
+            <th>{{'FILE_NAME' | translate}}</th>
             <th>
-                            文件别名
+               {{'FILE_ALIAS' | translate}}
               <a ng-show="column=='anotherName' && order=='asc'" ng-click="sortQuery('anotherName','asc')" href="javascript:void(0);">
                   <i class="fa fa-sort-amount-asc"></i>
               </a>
@@ -51,12 +51,12 @@
                   <i class="fa fa-sort" aria-hidden="true"></i>
               </a>
             </th>
-            <th>产品标签</th>
-            <th>数据标签</th>
-            <th>数据大小</th>
-            <th>上传时间</th>
+            <th>{{'PRODUCT_LABEL' | translate}}</th>
+            <th>{{'DATA_LABEL' | translate}}</th>
+            <th>{{'FILE_SIZE' | translate}}</th>
+            <th>{{'UPLOAD_TIME' | translate}}</th>
             <th>
-                            是否运行
+               {{'RUN_OR_NOT' | translate}}
               <a ng-show="column=='run' && order=='asc'" ng-click="sortQuery('run','asc')" href="javascript:void(0);">
                   <i class="fa fa-sort-amount-asc"></i>
               </a>
@@ -67,7 +67,7 @@
                   <i class="fa fa-sort" aria-hidden="true"></i>
               </a>
             </th>
-            <th>操作</th>
+            <th>{{'OPERAT' | translate}}</th>
           </tr>
         </thead>
         <tbody>
@@ -84,49 +84,49 @@
             <td title="{{file.batch}}">{{file.batch}}</td>
             <td>{{file.size | fileSizeFormat}}</td>
             <td>{{file.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td ng-if="file.reportNum < 1" style="font-weight: bold;">未运行</td>
-            <td ng-if="file.reportNum > 0">已运行</td>
+            <td ng-if="file.reportNum < 1" style="font-weight: bold;">{{'NOT_RUN' | translate}}</td>
+            <td ng-if="file.reportNum > 0">{{'RUNNING' | translate}}</td>
             <td><a href="javascript:void(0)" ng-click="toEditData(file.fileId)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
           </tr>
           <tr ng-show="dataList.datas.length == 0">
-          	<td colspan="9">暂无数据</td>
+          	<td colspan="9">{{'NO_DATA' | translate}}</td>
           </tr>
         </tbody>
       </table>
       <pagination page="dataList.page" change="pageQuery(page,pageSize)"></pagination>
     </div>
   <div id="data-detail-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-md">
 	  <div class="modal-content">
 	    <div class="modal-header">
 	      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle"></i></span></button>
-	      <h4 class="modal-title">数据修改</h4>
+	      <h4 class="modal-title">{{'DATA_MODIFICATION' | translate}}</h4>
 	    </div>
 	    <div class="modal-body form-modal">
 	      <form class="form-horizontal info-form" name="editDataForm" id="editDataForm">
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">文件名称：</div>
+	            <div class="control-label form-label col-xs-3">{{'FILE_NAME' | translate}}：</div>
 	            <div class="col-xs-9">
 	                <input type="text" ng-model="dataFile.fileName" ng-readonly="true">
 	                <input type="hidden" ng-model="dataFile.fileId" ng-readonly="true">
 	            </div>
 	          </div>
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">文件别名：</div>
+	            <div class="control-label form-label col-xs-3">{{'FILE_ALIAS' | translate}}：</div>
 	            <div class="col-xs-9">
-	                <input type="text" placeholder="请输入文件别名" ng-model="dataFile.anotherName" maxlength="50">
+	                <input type="text" ng-placeholder="{{'PLEASE_INPUT' | translate}}{{'FILE_ALIAS' | translate}}" ng-model="dataFile.anotherName" maxlength="50">
 	            </div>
 	          </div>
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">产品标签：</div>
+	            <div class="control-label form-label col-xs-3">{{'PRODUCT_LABEL' | translate}}：</div>
 	            <div class="col-xs-9 form-group-content">
 	              <select class="checkbox-group" ng-model="appSelected" ng-options="app.tagName for app in appList"></select>
 	            </div>
 	          </div>
 	          <div class="form-group">
-	            <div class="control-label form-label col-xs-3">数据标签：</div>
+	            <div class="control-label form-label col-xs-3">{{'DATA_LABEL' | translate}}：</div>
 	            <div class="col-xs-9">
-	                <input type="text" placeholder="请输入数据标签" name="batch" maxlength="30" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
+	                <input type="text"  ng-placeholder="{{'PLEASE_INPUT' | translate}}{{'DATA_LABEL' | translate}}" name="batch" maxlength="30" ng-model="dataFile.batch" required=""/><span class="invoice-modal-error"></span>
 	            </div>
 	          </div>
             <div class="alert alert-dismissible message-alert fade in" role="alert" ng-show="updateState">
@@ -137,8 +137,8 @@
 	    </div>
 	    <div class="modal-footer">
 	      <div class="text-center">
-              <button type="reset" class="btn btn-cancel" data-dismiss="modal">取消</button>
-              <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">提交</button>
+              <button type="reset" class="btn btn-cancel" data-dismiss="modal">{{'BUTTON.CANCEL' | translate}}</button>
+              <button type="submit" class="btn" ng-disabled="editDataForm.$invalid" ng-click="submitEditData()">{{'BUTTON.SUBMIT' | translate}}</button>
           </div>
 	    </div>
 	  </div>

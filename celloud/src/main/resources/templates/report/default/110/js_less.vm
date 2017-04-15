@@ -13,8 +13,14 @@ $(function(){
         var classname;
         var cmpDrug = "";
         $("#print").hide();
+        $("body").find("section").each(function(){
+            $(this).removeClass("border1");
+        });
         window.print();
         $("#print").show();
+        $("body").find("section").each(function(){
+            $(this).addClass("border1");
+        });
         $("#change").show();
     });
     

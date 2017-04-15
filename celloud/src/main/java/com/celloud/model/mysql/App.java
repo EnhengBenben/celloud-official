@@ -46,6 +46,10 @@ public class App {
 
 	private Integer maxTask;
 
+    private Integer classic;
+
+    private String version;
+
 	// 展示字段
 	private String companyName;
 	/** 是否已被用户添加 =0——>未添加 >0——>已添加 */
@@ -297,5 +301,21 @@ public class App {
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+    public Integer getClassic() {
+        return classic;
+    }
+
+    public void setClassic(Integer classic) {
+        this.classic = classic;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
 }

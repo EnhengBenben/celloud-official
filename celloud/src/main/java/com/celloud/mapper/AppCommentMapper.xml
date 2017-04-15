@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.celloud.mapper.AppCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.celloud.model.mysql.AppComment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, app_id, user_id, create_date, update_date, comment, score
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_app_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_app_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.celloud.model.mysql.AppComment" >
+    insert into tb_app_comment (id, app_id, user_id, 
+      create_date, update_date, comment, 
+      score)
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{comment,jdbcType=VARCHAR}, 
+      #{score,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.celloud.model.mysql.AppComment" >
+    insert into tb_app_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.celloud.model.mysql.AppComment" >
+    update tb_app_comment
+    <set >
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.celloud.model.mysql.AppComment" >
+    update tb_app_comment
+    set app_id = #{appId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      comment = #{comment,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectBySelective" resultType="java.util.Map">
+    SELECT
+    ac.id id, ac.app_id appId, ac.user_id userId, ac.create_date createDate,
+    ac.update_date updateDate, ac.comment comment, ac.score score, u.username username
+    FROM tb_app_comment ac
+    LEFT JOIN tb_user u ON ac.user_id = u.user_id
+    <where>
+      <if test="appComment.appId != null" >
+        AND app_id = #{appComment.appId}
+      </if>
+      <if test="appComment.userId != null" >
+        AND ac.user_id = #{appComment.userId}
+      </if>
+      <if test="appComment.createDate != null" >
+        AND create_date = #{appComment.createDate}
+      </if>
+      <if test="appComment.updateDate != null" >
+        AND update_date = #{appComment.updateDate}
+      </if>
+      <if test="appComment.comment != null" >
+        AND comment = #{appComment.comment}
+      </if>
+      <if test="appComment.score != null" >
+        AND score = #{appComment.score}
+      </if>
+    </where>
+  </select>
+  <select id="selectBySelectiveNoPage" resultType="java.util.Map">
+    SELECT
+    ac.id id, ac.app_id appId, ac.user_id userId, ac.create_date createDate,
+    ac.update_date updateDate, ac.comment comment, ac.score score, u.username username
+    FROM tb_app_comment ac
+    LEFT JOIN tb_user u ON ac.user_id = u.user_id
+    <where>
+      <if test="appId != null" >
+        AND app_id = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="userId != null" >
+        AND ac.user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="createDate != null" >
+        AND create_date = #{createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateDate != null" >
+        AND update_date = #{updateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="comment != null" >
+        AND comment = #{comment,jdbcType=VARCHAR}
+      </if>
+      <if test="score != null" >
+        AND score = #{score,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+  <select id="countScore" resultType="java.util.Map">
+    SELECT score score, count(id) count
+    FROM tb_app_comment
+	WHERE app_id = #{appId}
+	GROUP BY score
+	ORDER BY score DESC
+  </select>
+  <select id="avgScore" resultType="java.lang.String">
+    SELECT AVG(score) avgScore
+    FROM tb_app_comment
+    WHERE app_id = #{appId}
+  </select>
+</mapper>

@@ -25,6 +25,11 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.tomcat.embed</groupId>
+		    <artifactId>tomcat-embed-websocket</artifactId>
+		    <version>8.0.28</version>
+		</dependency>
 		<!-- jsp-api的依赖，在配置到tomcat前，可以直接编译项目，scope设置为provided，不会被打包到war -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>

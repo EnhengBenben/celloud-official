@@ -237,7 +237,7 @@ public class RunServiceImpl implements RunService {
 		if (!FileTools.checkPath(appPath)) {
 			new File(appPath).mkdirs();
 		}
-        if (dataList.get(0).getOssPath() != null && appId == 123) {
+        if (dataList.get(0).getOssPath() != null && appId == 123 && appId == 280) {
 			appPath = UploadPathUtils.getObjectKeyByPath(UploadPathUtils.getOutPathInOSS(userId, appId));
 		}
 		for (Entry<String, Object> entry : dataFilePathMap.entrySet()) {
@@ -433,7 +433,7 @@ public class RunServiceImpl implements RunService {
 			task.setDataKey(data.getDataKey());
 			task.setPeriod(TaskPeriod.UPLOADING);// TODO 小心处理这个状态，将关系到数据的统计
 			task.setParams(pubName);
-			task.setAppId(IconConstants.APP_ID_ROCKY);
+            task.setAppId(appId);
 			task.setBatch(data.getBatch());
 			taskService.addOrUpdateUploadTaskByParam(task, isR1);
 			if (hasR1 && hasR2) {

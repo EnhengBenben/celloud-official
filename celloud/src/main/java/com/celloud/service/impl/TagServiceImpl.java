@@ -38,4 +38,9 @@ public class TagServiceImpl implements TagService {
         return tagMapper.listProductTagsToSelect(userId, DataState.ACTIVE);
     }
 
+    @Override
+    public Tag get(Integer tagId) {
+        return tagMapper.selectByPrimaryKey(tagId);
+    }
+
 }

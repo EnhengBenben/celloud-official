@@ -770,6 +770,13 @@ public class ReportAction {
 		Map<String, Object> map = getCommonInfo(projectId, dataKey);
 		map.put("split", split);
 		map.put("splitId", split.getId().toString());
+		String keyPath = SparkPro.TOOLSPATH + ConstantsData.getLoginUserId() + File.separatorChar + appId
+				+ File.separatorChar + dataKey;
+		if (new File(keyPath).exists()) {
+			map.put("uploadPath", "/upload/");
+		} else {
+			map.put("uploadPath", "/output/");
+		}
 		return map;
 	}
 
@@ -790,7 +797,14 @@ public class ReportAction {
 		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path = "default/" + appId + "/print.vm";
 		}
-		Map<String, Object> context = new HashMap<String, Object>();
+        String keyPath = SparkPro.TOOLSPATH + ConstantsData.getLoginUserId() + File.separatorChar + appId
+                + File.separatorChar + dataKey;
+        Map<String, Object> context = new HashMap<String, Object>();
+        if (new File(keyPath).exists()) {
+            context.put("splitUploadPath", "/upload/");
+        } else {
+            context.put("splitUploadPath", "/output/");
+        }
 		Split split = reportService.getSplitReport(dataKey, projectId, appId);
 		context.put("split", split);
 		returnToVelocity(path, context, projectId);
@@ -1193,7 +1207,7 @@ public class ReportAction {
 		StringBuffer path = new StringBuffer();
 		path.append(ConstantsData.getLoginCompanyId()).append(File.separator).append(appId).append(File.separator)
 				.append(templateType).append(".vm");
-		if (!new File("templates/report/" + path).exists()) {
+		if (ReportAction.class.getResource("/templates/report/" + path) == null) {
 			path.setLength(0);
 			path.append("default").append(File.separator).append(appId).append(File.separator).append(templateType)
 					.append(".vm");
@@ -2867,11 +2881,12 @@ public class ReportAction {
 	@ResponseBody
 	public Map<String, Object> rockyReportMain(@RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "20") int size, String sample, String condition, String sidx, String sord,
-			String batches, String periods, String beginDate, String endDate) throws ParseException {
+            String batches, String periods, String beginDate, String endDate, Integer tagId) throws ParseException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Integer userId = ConstantsData.getLoginUserId();
-		Map<String, Object> periodMap = taskService.findTaskPeriodNum(IconConstants.APP_ID_ROCKY, userId);
-		List<String> batchList = dataService.getBatchListByAppId(userId, 123);
+        Integer appId = appService.getAppIdByTagId(tagId);
+        Map<String, Object> periodMap = taskService.findTaskPeriodNum(appId, userId);
+        List<String> batchList = dataService.getBatchListByAppId(userId, appId);
 		Page pager = new Page(page, size);
 
 		ArrayList<String> queryBatches = null;
@@ -2915,7 +2930,8 @@ public class ReportAction {
 		PageList<Task> pageList = taskService.findRockyTasks(pager, sample, condition, sidx, sord, queryBatches,
 				queryPeriods,
 				beginDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(beginDate + " 00:00:00"),
-				endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate + " 23:59:59"));
+                endDate == null ? null : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endDate + " 23:59:59"),
+                appId);
 		map.put("pageList", pageList);
 		periodMap.put("uploaded", batchList.size());
 		map.put("periodMap", periodMap);
@@ -3192,10 +3208,10 @@ public class ReportAction {
 				}
 			}
 			// 3. 根据当前数据所在行数算出页数
-			currentPage = dataIndex % 2 == 0 ? dataIndex / 2 : dataIndex / 2 + 1;
+            currentPage = dataIndex % 10 == 0 ? dataIndex / 10 : dataIndex / 10 + 1;
 		}
 		pager.setCurrentPage(currentPage);
-		pager.setPageSize(2);
+        pager.setPageSize(10);
 		// 根据page分页查询pageList
 		return taskService.findTasksByBatchNoSample(pager, userId, appId, batch);
 	}

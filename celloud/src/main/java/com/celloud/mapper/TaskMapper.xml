@@ -648,8 +648,7 @@
 		left join tb_app a on t.app_id = a.app_id
 		where f.state=#{state}
 		<if test="condition != null and condition!=''">
-			and (f.file_name like concat('%',#{condition},'%')
-			or s.sample_name like concat('%',#{condition},'%'))
+			and s.sample_name like concat('%',#{condition},'%')
 		</if>
 		<if test="period != null">
 			and t.period=#{period}

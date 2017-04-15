@@ -19,6 +19,7 @@ import com.celloud.mapper.AppMapper;
 import com.celloud.mapper.PriceMapper;
 import com.celloud.mapper.UserMapper;
 import com.celloud.model.mysql.App;
+import com.celloud.model.mysql.AppVO;
 import com.celloud.model.mysql.Price;
 import com.celloud.model.mysql.User;
 import com.celloud.page.Page;
@@ -172,6 +173,53 @@ public class AppServiceImpl implements AppService {
     @Override
     public Integer getAppIdByTagId(Integer tagId) {
         return appMapper.getAppIdByTagId(tagId);
+    }
+
+    @Override
+    public PageList<AppVO> listByClassifyPId(Page page, Integer classifyId, Integer userId) {
+        List<AppVO> datas = appMapper.selectByClassifyPId(page, classifyId, userId, AppConstants.ON);
+        if (datas == null || datas.isEmpty()) {
+            return null;
+        }
+        return new PageList<AppVO>(page, datas);
+    }
+
+    @Override
+    public PageList<AppVO> listByClassifyId(Page page, Integer classifyId, Integer userId) {
+        List<AppVO> datas = appMapper.selectByClassifyId(page, classifyId, userId, AppConstants.ON);
+        if (datas == null || datas.isEmpty()) {
+            return null;
+        }
+        return new PageList<AppVO>(page, datas);
+    }
+
+    @Override
+    public Boolean updateUserAppRight(Integer userId, Integer appId) {
+        Map<String, Integer> userAppRight = appMapper.selectUserAppRight(userId, appId);
+        if (userAppRight != null && !userAppRight.isEmpty()) {
+            Integer num = appMapper.updateUserAppRight(userId, appId, userAppRight.get("isAdd") == 0 ? 1 : 0);
+            return num.intValue() == 1;
+        }
+        return false;
+    }
+
+    @Override
+    public App get(Integer id) {
+        return appMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Map<String, Integer> getUserAppRight(Integer userId, Integer appId) {
+        return appMapper.selectUserAppRight(userId, appId);
+    }
+
+    @Override
+    public PageList<AppVO> selectBySelective(Page page, App app, Integer userId) {
+        List<AppVO> datas = appMapper.selectBySelective(page, app, userId, AppConstants.ON);
+        if (datas == null || datas.isEmpty()) {
+            return null;
+        }
+        return new PageList<AppVO>(page, datas);
     }
 
 }

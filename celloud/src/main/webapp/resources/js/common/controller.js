@@ -1,8 +1,25 @@
 (function() {
   var intro;
+  window.modalConfirmBtn = "确定";
+  window.modalCancelBtn = "取消";
+  celloudApp.config(["$translateProvider", function ($translateProvider) {
+    var lang = window.localStorage.lang||'zh';
+    $translateProvider.useStaticFilesLoader({
+      prefix: './js/languages/',
+      suffix: '.json'
+    });
+    
+    //默认选择使用语言
+    $translateProvider.preferredLanguage(lang); 
+  }]);
+  celloudApp.controller("headerCtrl",["$scope","$translate",function($scope,$translate){
+    $scope.setLang = function(langKey) {
+      window.localStorage.lang = langKey;
+      $translate.use(langKey);
+    };
+  }]);
 	celloudApp.controller("sidebarController", function($scope,
 			$location, $rootScope, $timeout, commonService) {
-		
 		$rootScope.showZoom = function(src) {
 			var bh = $("body").height();  
 			var bw = $("body").width();
@@ -150,7 +167,7 @@
 	    }
     }, 1000);
 	});
-	celloudApp.controller("proSidebarController", function($rootScope) {
+	celloudApp.controller("proSidebarController", function($rootScope,$location) {
 	  $rootScope.collapsed = false;
 	  $rootScope.toggleCollapse();
 	});

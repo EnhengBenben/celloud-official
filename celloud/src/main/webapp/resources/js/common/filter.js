@@ -24,11 +24,11 @@
       return chevronType ? "fa fa-chevron-down":"fa fa-chevron-up";
     }
   });
-  celloudApp.filter("chevronTypeTextFilter",function(){
+  celloudApp.filter("chevronTypeTextFilter", ['$translate', function($translate){
     return function(chevronType){
-      return chevronType ? "更多":"收起";
+      return chevronType ? $translate.instant("REPORT.MORE"):$translate.instant("REPORT.PACK_UP");
     }
-  });
+  }]);
   celloudApp.filter("chevronTypeDivFilter",function(){
     return function(chevronType){
       return chevronType ? "":"more";
@@ -99,7 +99,7 @@
     };
   }]);
   
-  celloudApp.filter("taskPeriodFilter",function(){
+  celloudApp.filter("taskPeriodFilter",['$translate', function($translate){
     return function(period){
       if(typeof period == "string" && period.indexOf(",")>=0){
         var p = period.split(",");
@@ -107,42 +107,42 @@
         for(var i=0; i<p.length; i++){
           period=p[i];
           if(period == 0){
-            result += "等待分析    ";
+            result += $translate.instant("TASK.WAIT_RUN")+"    ";
           }else if(period == 1){
-            result += "分析中    ";
+            result += $translate.instant("TASK.RUNNING")+"    ";
           }else if(period == 2){
-            result += "完成    ";
+            result += $translate.instant("TASK.COMPLETE")+"    ";
           }else if(period == 3){
-            result += "数据不完整    ";
+            result += $translate.instant("TASK.INCOMPLETE_DATA")+"    ";
           }else if(period == 4){
-            result += "异常终止    ";
+            result += $translate.instant("TASK.ERROR")+"    ";
           }else if(period == 5){
-            result += "送样中    ";
+            result += $translate.instant("TASK.SAMPING")+"    ";
           }else if(period == 6){
-            result += "实验中    ";
+            result += $translate.instant("TASK.EXPERIMENT")+"    ";
           }
         }
         return result; 
       }else{
         if(period == 0){
-          return "等待分析";
+          return $translate.instant("TASK.WAIT_RUN");
         }else if(period == 1){
-          return "分析中";
+          return $translate.instant("TASK.RUNNING");
         }else if(period == 2){
-          return "完成";
+          return $translate.instant("TASK.COMPLETE");
         }else if(period == 3){
-          return "数据不完整";
+          return $translate.instant("TASK.INCOMPLETE_DATA");
         }else if(period == 4){
-          return "异常终止";
+          return $translate.instant("TASK.ERROR");
         }else if(period == 5){
-          return "送样中";
+          return $translate.instant("TASK.SAMPING");
         }else if(period == 6){
-          return "实验中";
+          return $translate.instant("TASK.EXPERIMENT");
         }
         return ""; 
       }
     }
-  });
+  }]);
   celloudApp.filter("experStateFilter",function(){
     return function(experState){
       if(experState == 0){
@@ -170,6 +170,19 @@
   celloudApp.filter("thisReportFilter",function(){
     return function(thisReport){
       return thisReport ? "this-report" : "";
+    }
+  });
+  
+  //应用市场评分
+  celloudApp.filter("scoreFilter",function(){
+    return function(score,scoreType){
+      var result = "score-full";
+      if(score>scoreType-1 && score<scoreType){
+        result = "score-half";
+      }else if(score<scoreType){
+        result = "score-null";
+      }
+      return result;
     }
   });
 })();

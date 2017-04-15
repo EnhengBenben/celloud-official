@@ -1,5 +1,5 @@
 (function(){
-  celloudApp.controller("dataListController", function($scope, $rootScope, $location, $routeParams, runService, uploadService){
+  celloudApp.controller("dataListController", function($scope, $rootScope, $location, $routeParams,$translate, runService, uploadService){
     //基本检索方法
     $scope.pageQuery = function(page,pageSize){
       $.dataManager.options.condition = $scope.dataCondition;
@@ -54,14 +54,12 @@
     $scope.checkNum = function(){
       var checkedIds = $.dataManager.options.checkedIds;
       if(checkedIds.length==0){
-        $rootScope.errorInfo = "请选择至少一条记录";
-        $("#tips-modal").modal("show");
+        $.tips($translate.instant("PROMPT.AT_LEAST_ONE"),$translate.instant("PROMPT.PROMPT"));
         return false;
       }
       var maxNum = $.dataManager.options.dataMax;
       if(checkedIds.length>maxNum){
-        $rootScope.errorInfo = "最多允许同时操作" + maxNum + "条数据！";
-        $("#tips-modal").modal("show");
+        $.tips($translate.instant("PROMPT.ARCHIVE_MAX",{maxNum: maxNum}),$translate.instant("PROMPT.PROMPT"));
         return false;
       }
       return true;
@@ -71,36 +69,38 @@
     	uploadService.checkRole().
 		success(function(data){
 			if(data == "0"){
-				$.alert("运行成功");
+				$.alert($translate.instant("ALERT.RUN_SUCC"));
 				return;
 			}else{
 				if(!$scope.checkNum()){
 			        return ;
 			      }
 			      if($.dataManager.options.isRun!=0){
-			        $rootScope.errorInfo = "所勾选的数据必须不处于运行状态！";
-			        $("#tips-modal").modal("show");
+			        $.tips($translate.instant("PROMPT.SELECT_NOT_RUN"),$translate.instant("PROMPT.PROMPT"));
 			        return;
 			      }
 			      if($.dataManager.options.isTag!=0){
-			        $rootScope.errorInfo = "所勾选的数据必须有产品标签！";
-			        $("#tips-modal").modal("show");
+			        $.tips($translate.instant("PROMPT.SELECT_NO_PRODUCT"),$translate.instant("PROMPT.PROMPT"));
 			        return;
 			      }
 			      if($.dataManager.options.isBSI!=0){
-			        $rootScope.errorInfo = "所勾选的数据产品标签不能为百菌探！";
-			        $("#tips-modal").modal("show");
+			        $.tips($translate.instant("PROMPT.SELECT_NOT_BACTIVE"),$translate.instant("PROMPT.PROMPT"));
 			        return;
 			      }
 			      if($.dataManager.options.isRocky!=0){
-			        $rootScope.errorInfo = "所勾选的数据产品标签不能为华木兰！";
-			        $("#tips-modal").modal("show");
+			        $.tips($translate.instant("PROMPT.SELECT_NOT_ROCKY"),$translate.instant("PROMPT.PROMPT"));
 			        return;
 			      }
 			      if($.dataManager.options.isPair!=0){
-			        $.confirm("请保证所选数据为配对数据！","确认框",function(){
-			          $scope.run();
-			        });
+			        window.modalConfirmBtn = $translate.instant("BUTTON.CONFIRM");
+			        window.modalCancelBtn = $translate.instant("BUTTON.CANCEL");
+			        $.confirm(
+			            $translate.instant("CONFIRM.DATA_PAIRED"),
+			            $translate.instant("CONFIRM.CONFIRM"),
+			            function(){
+			              $scope.run();
+			            }
+			        );
 			      }else{
 			        $scope.run();
 			      }
@@ -137,7 +137,7 @@
       spinner.spin(target);
       runService.run().success(function(response) {
         if(response.success){
-          $.alert("运行成功");
+          $.alert($translate.instant("ALERT.RUN_SUCC"));
           $scope.pageQuery($.dataManager.options.page,$.dataManager.options.pageSize);
           $.dataManager.refreshDataList();
         }else{
@@ -149,63 +149,65 @@
     //数据删除
     $scope.deleteData = function(){
     	// 检查用户角色是否为测试账号
-		uploadService.checkRole().
-		success(function(data){
-			if(data == "0"){
-				alert("测试账号不可归档");
-			}else{
-		      if(!$scope.checkNum()){
-			      return ;
-			  }
-		      uploadService.checkRole
-		      $.confirm("确定要归档所选数据？","确认框",function(){
-		        runService.deleteData().success(function(response){
-		          if(response.success){
-		            $scope.conditionList();
-		            $.dataManager.refreshDataList();
-		          }
-		          $.alert(response.message);
-		        });
-		      });
-			}
-		});
+		  uploadService.checkRole().success(function(data){
+  			if(data == "0"){
+  			  $.tips($translate.instant("PROMPT.TEST_USER_NO_ARCHIVE"),$translate.instant("PROMPT.PROMPT"));
+  			}else{
+  		      if(!$scope.checkNum()){
+  			      return ;
+  			    }
+  		      window.modalConfirmBtn = $translate.instant("BUTTON.CONFIRM");
+            window.modalCancelBtn = $translate.instant("BUTTON.CANCEL");
+  		       $.confirm(
+  		          $translate.instant("CONFIRM.ARCHIVE_DATA"),
+  		          $translate.instant("CONFIRM.CONFIRM"),
+  		          function(){
+      		        runService.deleteData().success(function(response){
+      		          if(response.success){
+      		            $scope.conditionList();
+      		            $.dataManager.refreshDataList();
+      		          }
+      		          $.alert($translate.instant("ALERT.ARCHIVE_SUCC"));
+      		        });
+  		          }
+  		       );
+  			}
+  		});
     };
     //跳转数据编辑
     $scope.toEditData = function(fileId){
     	
     	uploadService.checkRole().
-		success(function(data){
-			if(data == "0"){
-				alert("测试账号不可以修改数据信息!");
-			}else{
-				$scope.updateState = false;
-			    runService.toEditData(fileId).
-			    success(function(response){
-			    	$scope.dataFile = response['file'];
-			    	$scope.appList = response['appList'];
-			    	for(i = 0; i < $scope.appList.length; i++){
-			    		if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
-			    			$scope.appSelected = $scope.appList[i];
-			    			break;
-			    		}
-			    	}
-			    });
-			    $("#data-detail-modal").modal("show");
-			}
-		});
+  		success(function(data){
+  			if(data == "0"){
+  			  $.tips($translate.instant("PROMPT.TEST_USER_NO_MODIFIED"),$translate.instant("PROMPT.PROMPT"));
+  			}else{
+  				$scope.updateState = false;
+  			    runService.toEditData(fileId).
+  			    success(function(response){
+  			    	$scope.dataFile = response['file'];
+  			    	$scope.appList = response['appList'];
+  			    	for(i = 0; i < $scope.appList.length; i++){
+  			    		if($.trim($scope.appList[i].tagName) == $.trim($scope.dataFile.tagName)){
+  			    			$scope.appSelected = $scope.appList[i];
+  			    			break;
+  			    		}
+  			    	}
+  			    });
+  			    $("#data-detail-modal").modal("show");
+  			}
+  		});
     }
     //修改数据信息
     $scope.submitEditData = function(){
       var alias = $scope.dataFile.anotherName;
       if(alias!=null && alias.length>50){
-        $scope.updateMessage = "文件别名不能超过50个字符";
-        $scope.updateState = true;
+        $.tips($translate.instant("PROMPT.FILE_ALIAS_MAX_CHAR",{maxNum: 50}),$translate.instant("PROMPT.PROMPT"));
         return;
       }
       var batch = $scope.dataFile.batch;
       if(batch!=null && batch.length>50){
-        $scope.updateMessage = "数据标签不能超过50个字符";
-        $scope.updateState = true;
+        $.tips($translate.instant("PROMPT.DATA_LABEL_MAX_CHAR",{maxNum: 50}),$translate.instant("PROMPT.PROMPT"));
         return;
       }
       $scope.updateState = false;
@@ -216,7 +218,7 @@
           $.dataManager.refreshDataList();
           $("#data-detail-modal").modal("hide");
         }
-        $.alert(response.message);
+        $.alert($translate.instant("ALERT.MODIFIED_SUCC"));
       });
     }
   });

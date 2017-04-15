@@ -4,17 +4,17 @@
 <div class="pro-body">
     <ol class="breadcrumb">
       <li>CelLoud</li>
-      <li>报告管理</li>
+      <li>{{'REPORT.MANAGEMENT' | translate}}</li>
     </ol>
     <div class="content">
       <form class="search-box-form">
       <div class="search-box">
         <ul class="search-type-list">
           <li class="search-type clearfix">
-            <label>时&emsp;&emsp;间：</label>
+            <label>{{'REPORT.TIME' | translate}}：</label>
             <div class="search-type-detail times">
               <ul class="search-info seartch-date">
-	            <li><a id="fullDateQuery0" ng-class="{active: dataOptions.fullDate == 0 }" class="fullDateQuery" ng-click="fullDateQuery(0)" href="javascript:void(0)">全部</a></li>
+	            <li><a id="fullDateQuery0" ng-class="{active: dataOptions.fullDate == 0 }" class="fullDateQuery" ng-click="fullDateQuery(0)" href="javascript:void(0)">{{'REPORT.ALL' | translate}}</a></li>
 	            <li><a id="fullDateQuery1" ng-class="{active: dataOptions.fullDate == 1 }" class="fullDateQuery" ng-click="fullDateQuery(1)" href="javascript:void(0)">24h</a></li>
 	            <li><a id="fullDateQuery3" ng-class="{active: dataOptions.fullDate == 3 }" class="fullDateQuery" ng-click="fullDateQuery(3)" href="javascript:void(0)">3d</a></li>
 	            <li><a id="fullDateQuery7" ng-class="{active: dataOptions.fullDate == 7 }" class="fullDateQuery" ng-click="fullDateQuery(7)" href="javascript:void(0)">7d</a></li>
@@ -27,15 +27,15 @@
                 <span>-</span>
                 <input type="text" ng-if="dataOptions.fullDate == -1" ng-model="dataOptions.endDate" class="Wdate input" onclick="WdatePicker()" readonly="readonly" id="end-date">
                 <input type="text" ng-if="dataOptions.fullDate != -1" class="Wdate input" onclick="WdatePicker()" readonly="readonly" id="end-date">
-                <button type="button" class="btn btn-cancel" ng-click="chooseDate()">确定</button>
+                <button type="button" class="btn btn-cancel" ng-click="chooseDate()">{{'BUTTON.CONFIRM' | translate}}</button>
               </div>
             </div>
           </li>
           <li class="search-type clearfix">
-            <label>产品标签：</label>
+            <label>{{'PRODUCT_LABEL' | translate}}：</label>
             <div class="search-type-detail inline-detail {{reportMoreAppTag|chevronTypeDivFilter}}" ng-init="reportMoreAppTag=true">
               <ul class="search-info">
-                <li><a id="tagsQuerynull" ng-class="{active: dataOptions.tagId == 'all'}" class="tagsQuery" href="javascript:void(0)" ng-click="tagsQuery('all')">全部</a></li>
+                <li><a id="tagsQuerynull" ng-class="{active: dataOptions.tagId == 'all'}" class="tagsQuery" href="javascript:void(0)" ng-click="tagsQuery('all')">{{'REPORT.ALL' | translate}}</a></li>
                 <li ng-repeat="tag in searchInfo.tags">
                     <a id="tagsQuery{{tag.tagId}}" ng-class="{active: dataOptions.tagId == tag.tagId}" class="tagsQuery" ng-click="tagsQuery(tag.tagId)" href="javascript:void(0)">{{tag.tagName}}</a>
                 </li>
@@ -46,10 +46,10 @@
             </div>
           </li>
           <li class="search-type clearfix">
-            <label>数据标签：</label>
+            <label>{{'DATA_LABEL' | translate}}：</label>
             <div class="search-type-detail inline-detail {{reportMoreDataTag|chevronTypeDivFilter}}" ng-init="reportMoreDataTag=true">
               <ul class="search-info">
-                <li><a id="batchsQuerynull" ng-class="{active: dataOptions.batch == 'all'}" class="batchsQuery" href="javascript:void(0)" ng-click="batchsQuery('all')">全部</a></li>
+                <li><a id="batchsQuerynull" ng-class="{active: dataOptions.batch == 'all'}" class="batchsQuery" href="javascript:void(0)" ng-click="batchsQuery('all')">{{'REPORT.ALL' | translate}}</a></li>
                 <li ng-repeat="batch in searchInfo.batchs">
                     <a id="batchsQuery{{batch}}" ng-class="{active: dataOptions.batch == batch}" class="batchsQuery" href="javascript:void(0)" ng-click="batchsQuery(batch)">{{batch}}</a>
                 </li>
@@ -60,24 +60,24 @@
             </div>
           </li>
           <li class="search-type seartch-period clearfix">
-            <label>状&emsp;&emsp;态：</label>
+            <label>{{'REPORT.STATUS' | translate}}：</label>
             <div class="search-type-detail">
               <ul class="search-info">
-                <li><a id="periodQuerynull" ng-class="{active: dataOptions.period == 'all'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery('all')">全部</a></li>
-                <li><a id="periodQuery2" ng-class="{active: dataOptions.period == '2'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(2)">完成</a></li>
-                <li><a id="periodQuery1" ng-class="{active: dataOptions.period == '1'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(1)">分析中</a></li>
-                <li><a id="periodQuery0" ng-class="{active: dataOptions.period == '0'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(0)">等待分析</a></li>
-                <li><a id="periodQuery3" ng-class="{active: dataOptions.period == '3'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(3)">数据不完整</a></li>
-                <li><a id="periodQuery4" ng-class="{active: dataOptions.period == '4'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(4)">异常终止</a></li>
+                <li><a id="periodQuerynull" ng-class="{active: dataOptions.period == 'all'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery('all')">{{'REPORT.ALL' | translate}}</a></li>
+                <li><a id="periodQuery2" ng-class="{active: dataOptions.period == '2'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(2)">{{'TASK.COMPLETE' | translate}}</a></li>
+                <li><a id="periodQuery1" ng-class="{active: dataOptions.period == '1'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(1)">{{'TASK.RUNNING' | translate}}</a></li>
+                <li><a id="periodQuery0" ng-class="{active: dataOptions.period == '0'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(0)">{{'TASK.WAIT_RUN' | translate}}</a></li>
+                <li><a id="periodQuery3" ng-class="{active: dataOptions.period == '3'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(3)">{{'TASK.INCOMPLETE_DATA' | translate}}</a></li>
+                <li><a id="periodQuery4" ng-class="{active: dataOptions.period == '4'}" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(4)">{{'TASK.ERROR' | translate}}</a></li>
 <!--                 <li><a id="periodQuery6" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(6)">实验中</a></li> -->
 <!--                 <li><a id="periodQuery5" class="periodQuery" href="javascript:void(0)" ng-click="periodQuery(5)">送样中</a></li> -->
               </ul>
             </div>
           </li>
           <li class="search-type clearfix">
-            <label>样本编码：</label>
+            <label>{{'SAMPLE.SAMPLE_ID' | translate}}：</label>
             <div class="search-type-detail">
-              <input ng-change="conditionQuery()" ng-model="dataOptions.condition" type="text" placeholder="扫码或输入编号">
+              <input ng-change="conditionQuery()" ng-model="dataOptions.condition" type="text" ng-placeholder="{{'SAMPLE.SWIPE_ENTER_SAMPLE' | translate}}">
             </div>
           </li>
         </ul>
@@ -92,13 +92,13 @@
                 <span class="info"></span>
               </label>
             </th>
-            <th>样品编号</th>
-            <th>文件名称</th>
-            <th>产品标签</th>
-            <th>数据标签</th>
-            <th>更新时间</th>
-            <th>状态</th>
-            <th>操作</th>
+            <th>{{'SAMPLE.SAMPLE_ID' | translate}}</th>
+            <th>{{'DATA.FILE_NAME' | translate}}</th>
+            <th>{{'DATA.PRODUCT_LABEL' | translate}}</th>
+            <th>{{'DATA.DATA_LABEL' | translate}}</th>
+            <th>{{'REPORT.UPDATE_TIME' | translate}}</th>
+            <th>{{'REPORT.PERIOD_STATUS' | translate}}</th>
+            <th>{{'OPERAT' | translate}}</th>
           </tr>
         </thead>
         <tbody>
@@ -116,8 +116,8 @@
             <td>{{task.updateDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td>{{task.period | taskPeriodFilter}}</td>
             <td>
-              <a ng-if="task.period == 1 && task.appId < 141 || task.appId > 279" ng-class="{disabled:task.period == 1}"><i class="fa fa-eye" aria-hidden="true"></i></a>
-              <a ng-if="task.period == 2 && task.appId < 141 || task.appId > 279" ng-href="#/reportdata/{{task.englishName == '华木兰' ? 'rocky' : task.englishName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a ng-if="task.period == 1 && (task.appId < 141 || task.appId > 279)" ng-class="{disabled:task.period == 1}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+              <a ng-if="task.period == 2 && (task.appId < 141 || task.appId > 279)" ng-href="#/reportdata/{{task.englishName == '华木兰' ? 'rocky' : task.englishName}}/{{task.appId}}/{{task.dataKey}}/{{task.projectId}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
               <a ng-if="(task.period == 1 || task.isPay == 0) && (task.appId >= 141 && task.appId <= 279)" class="disabled" ><i class="fa fa-eye" aria-hidden="true"></i></a>
               <a ng-if="task.period == 2 && task.isPay == 1 && (task.appId >= 141 && task.appId <= 279)" target="_blank" ng-href="${pageContext.request.contextPath }/report/openPdf/{{task.userId}}/{{task.appId}}/{{task.dataKey}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
             </td>
