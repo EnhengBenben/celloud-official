@@ -9,8 +9,9 @@
 
   /** @ngInject */
 
-  function Controller($stateParams) {
+  function Controller($stateParams, $state, $scope) {
     var vm = this;
+    $scope.$parent.$state = $state;
     vm.status = $stateParams.status;
     vm.item = $stateParams.item;
     return init();

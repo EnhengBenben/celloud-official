@@ -6,12 +6,16 @@
 <div class="row">
   <div class="tab1">
     <ul>
-      <li ui-sref-active="active" class="active"><a ui-sref="app.join.list({status: 'xiaoshou'})">销售岗位</a></li>
-      <li ui-sref-active="active"><a ui-sref="app.join.list({status: 'shengwu'})">生物岗位</a></li>
-      <li ui-sref-active="active"><a ui-sref="app.join.list({status: 'chanpin'})">产品岗位</a></li>
-      <li ui-sref-active="active" style="border-right: 1px solid #e6e6e6"><a ui-sref="app.join.list({status: 'jishu'})">技术岗位</a></li>
+      <li ng-class="{'active': $state.includes('app.join.list', {status: 'market'})}"><a
+        ui-sref="app.join.list({status: 'market', item: 'market-f1'})">市场-营销岗位</a></li>
+      <li ng-class="{'active': $state.includes('app.join.list', {status: 'biology'})}"><a
+        ui-sref="app.join.list({status: 'biology', item: 'biology-f1'})">生信-实验岗位</a></li>
+      <li ng-class="{'active': $state.includes('app.join.list', {status: 'technology'})}"><a
+        ui-sref="app.join.list({status: 'technology', item: 'technology-f1'})">IT-技术岗位</a></li>
+      <li ng-class="{'active': $state.includes('app.join.list', {status: 'admin'})}"
+          style="border-right: 1px solid #e6e6e6"><a ui-sref="app.join.list({status: 'admin', item: 'admin-f1'})">行政-管理岗位</a>
+      </li>
     </ul>
-
   </div>
 </div>
 
