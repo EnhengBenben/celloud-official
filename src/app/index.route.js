@@ -51,9 +51,29 @@
         templateUrl: 'app/components/product/layout.html',
       })
       .state('app.product.list', {
-        url: '/list',
+        url: '/list?clinical&healthy',
         templateUrl: 'app/components/product/list.html',
         controller: 'ProductListCtrl as vm'
+      })
+      .state('app.product.mulan', {
+        url: '/mulan',
+        abstract: true,
+        templateUrl: 'app/components/product/mulan/layout.html',
+      })
+      .state('app.product.mulan.list', {
+        url: '/list?status',
+        templateUrl: 'app/components/product/mulan/list.html',
+        controller: 'ProductMulanListCtrl as vm'
+      })
+      .state('app.product.bacteria', {
+        url: '/bacteria',
+        abstract: true,
+        templateUrl: 'app/components/product/bacteria/layout.html',
+      })
+      .state('app.product.bacteria.list', {
+        url: '/bacteria?status',
+        templateUrl: 'app/components/product/bacteria/list.html',
+        controller: 'ProductBacteriaListCtrl as vm'
       })
       .state('app.about', {
         url: '/about',
