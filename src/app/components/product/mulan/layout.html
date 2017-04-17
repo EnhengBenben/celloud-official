@@ -1,0 +1,35 @@
+<div class="row banner-box product-show-banner">
+  <div class="product-show">
+    <div class="product-show-icon">
+      <img ng-src="assets/images/icon-mulan.png">
+    </div>
+    <div class="product-show-content">
+      <div class="row">
+        <p class="product-show-content-title">BRCA Mutat Scan<sup>TM</sup></p>
+        <p class="product-show-condition">华木兰<sup>TM</sup>——遗传性乳腺癌易感基因BRCA突变检测</p>
+      </div>
+      <div class="row product-show-btn">
+        <div class="btn btn-default" style="margin-right: 10px">了解详情</div>
+        <div class="btn btn-primary">报告案例</div>
+      </div>
+      <div class="row product-show-description">
+        <p>通过NGS测序技术检测乳腺癌易感基因（BRAC1/BRAC2）的突变情况，利用专业分析工具与平台，结合已知数据资源，精确评价突变与乳腺癌的相关性。</p>
+        <p>标准核酸序列进行比对分析，从分子水平灵敏、高效鉴定出细菌种属，给临床病原诊断和治疗提供可靠依据。</p>
+        <p>售前咨询电话：010-123456789</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="tab1 tab-project">
+    <ul style="width: 955px">
+      <li ui-sref-active="active"><a ui-sref="app.product.mulan.list({status: 'background'})">背景介绍</a></li>
+      <li ui-sref-active="active"><a ui-sref="app.product.mulan.list({status: 'technology'})">技术说明</a></li>
+      <li ui-sref-active="active"><a ui-sref="app.product.mulan.list({status: 'process'})">检测流程</a></li>
+      <li ui-sref-active="active"><a ui-sref="app.product.mulan.list({status: 'advantage'})">检测优势</a></li>
+      <li ui-sref-active="active"><a ui-sref="app.product.mulan.list({status: 'about'})">送检相关</a></li>
+      <li ui-sref-active="active" style="border-right: 1px solid #e6e6e6"><a ui-sref="app.product.mulan.list({status: 'product'})">案例分享</a></li>
+    </ul>
+  </div>
+</div>
+<div ui-view=""></div>

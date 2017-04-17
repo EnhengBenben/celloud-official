@@ -1,0 +1,3177 @@
+<div class="banner-box swiper-container swiper-product-banner" style="width: 100%">
+  <div class="swiper-wrapper" style="width: 100%">
+    <div class="swiper-slide" ui-sref="app.product.bacteria.list({status: 'background'})">
+      <img ng-src="assets/images/banner-product.png" style="width: 100%;cursor: pointer">
+    </div>
+    <div class="swiper-slide" ui-sref="app.product.mulan.list({status: 'background'})">
+      <img ng-src="assets/images/banner-product-2.png" style="width: 100%;cursor: pointer">
+    </div>
+  </div>
+  <!-- 如果需要分页器 -->
+  <div class="swiper-pagination swiper-pagination-banner"></div>
+
+  <!-- 如果需要导航按钮 -->
+  <div class="swiper-button-prev swiper-button-prev-banner"></div>
+  <div class="swiper-button-next swiper-button-next-banner"></div>
+</div>
+<div class="row" style="background-color: #f1f8fc;margin-top: -5px">
+  <div class="ibox-article">
+    <p class="article-title" style="font-size: 26px">产品</p>
+  </div>
+  <div class="ibox-content product-list-box">
+    <div class="ibox ibox-content product-list">
+      <span>临床产品</span>
+      <ul class="pull-right" style="margin-right: 70px">
+        <li ng-class="{'active': vm.clinical === 'f1'}" ng-click="vm.params1('f1')"><p>生育</p><p>健康相关</p></li>
+        <li ng-class="{'active': vm.clinical === 'f2'}" ng-click="vm.params1('f2')"><p>肿瘤</p><p>个体化治疗</p></li>
+        <li ng-class="{'active': vm.clinical === 'f3'}" ng-click="vm.params1('f3')"><p>病原</p><p>微生物检测</p></li>
+        <li ng-class="{'active': vm.clinical === 'f4'}" ng-click="vm.params1('f4')"><p>遗传性疾病</p><p>相关基因检测</p></li>
+        <li ng-class="{'active': vm.clinical === 'f5'}" ng-click="vm.params1('f5')"><p>血液病</p><p>相关分子检测</p></li>
+        <li ng-class="{'active': vm.clinical === 'f6'}" ng-click="vm.params1('f6')" style="line-height: 28px">用药检测</li>
+      </ul>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-f1" ng-show="vm.clinical === 'f1'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>GDD</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>JBRH-PGS</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>VMDA-v1.0-PGS</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>VgDNA_1M</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+               <p>VgDNA-v1.0</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>MDA-v1.4</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>gDNA-v1.4</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>Sureplex-v1.4</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>AccuSeqΩ</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>AmpLibrary-v1.0</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/NIPT.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>NIPT</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/PGS-PGD.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>PGS/PGD</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f1-abortion.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>流产组织</p>
+                  <p>染色体异常检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f1-new-boy.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>新生儿</p>
+                  <p>遗传代谢病检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-f1"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-f1"></div>
+      <div class="swiper-button-next swiper-button-next-f1"></div>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-f2" ng-show="vm.clinical === 'f2'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>EGFR</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>KRAS</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>DPD</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>BRAF</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>UGT</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>FS-ocg</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f1-targeted.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>靶向药物</p>
+                  <p>敏感性基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f1-tumour.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>肿瘤化疗药物的</p>
+                  <p>风险和有效性检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f1-recurrence.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肿瘤复发转移监测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-f2"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-f2"></div>
+      <div class="swiper-button-next swiper-button-next-f2"></div>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-f3" ng-show="vm.clinical === 'f3'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>16S</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>MIB</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f3-bacteria.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>百菌探</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+               <p>百菌探-腹水</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>百菌探-脑脊液</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>百菌探-阴道拭子</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>百菌探-尿</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>百菌探-水</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f3-resistance.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>细菌及耐药基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f1-virus.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>病毒及耐药基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f3-all.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>全面病原检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-f3"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-f3"></div>
+      <div class="swiper-button-next swiper-button-next-f3"></div>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-f4" ng-show="vm.clinical === 'f4'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-neuromuscular.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>神经肌肉系统</p>
+                  <p>遗传性疾病</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-metabolic.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>遗传代谢性疾病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-urinary.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+               <div>
+                 <p>泌尿系统遗传性疾病</p>
+               </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-endocrine.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>内分泌系统</p>
+                  <p>遗传性疾病</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-hematological.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>血液系统遗传性疾病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-skin.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>皮肤遗传性疾病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-eye.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>眼科遗传性疾病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-cardiovascular.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>心血管系统遗</p>
+                  <p>传性疾病</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-digestive.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>消化系统遗传性疾病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-breathing.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>呼吸系统遗传性疾病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-ears.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>耳遗传性疾病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-immune.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>免疫系统遗传性疾病</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f4-skeletal.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>骨骼系统遗传性疾病</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-f4"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-f4"></div>
+      <div class="swiper-button-next swiper-button-next-f4"></div>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-f5" ng-show="vm.clinical === 'f5'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f5-myeloid-leukemia.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>急性髓细胞白血病</p>
+                  <p>（AML）基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f5-lymphoblastic.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>急性淋巴细胞白血病</p>
+                  <p>（AML）基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f5-myelodysplastic.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>骨髓增生异常综合征</p>
+                  <p>（MDS）基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f5-bone-marrow.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>骨髓增值性肿瘤</p>
+                  <p>（MPN）基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/f5-hematological.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>血液肿瘤综合性检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-f5"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-f5"></div>
+      <div class="swiper-button-next swiper-button-next-f5"></div>
+    </div>
+    <div class="ibox-content product-picture-box" style="width: 770px;margin: 0 auto;" ng-show="vm.clinical === 'f6'">
+      <ul>
+        <li>
+          <div class="product-picture">
+            <img src="assets/images/products/.png" alt="">
+          </div>
+          <div class="product-picture-describe">
+            <p>HCV_Genotype</p>
+          </div>
+        </li>
+        <li>
+          <div class="product-picture">
+            <img src="assets/images/products/.png" alt="">
+          </div>
+          <div class="product-picture-describe">
+            <p>HBV_SNP2</p>
+          </div>
+        </li>
+        <li>
+          <div class="product-picture">
+            <img src="assets/images/products/.png" alt="">
+          </div>
+          <div class="product-picture-describe">
+            <p>TB-Rifampicin</p>
+          </div>
+        </li>
+        <li>
+          <div class="product-picture">
+            <img src="assets/images/products/.png" alt="">
+          </div>
+          <div class="product-picture-describe">
+            <p>TB-INH</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="ibox-content product-list-box">
+    <div class="ibox ibox-content product-list">
+      <span>健康产品</span>
+      <ul class="pull-right" style="margin-right: 70px">
+        <li ng-class="{'active': vm.healthy === 'h1'}" ng-click="vm.params2('h1')" style="line-height: 28px">肿瘤风险检测</li>
+        <li ng-class="{'active': vm.healthy === 'h2'}" ng-click="vm.params2('h2')" style="line-height: 28px">用药检测</li>
+        <li ng-class="{'active': vm.healthy === 'h3'}" ng-click="vm.params2('h3')" ><p>遗传性</p><p>疾病风险检测</p></li>
+        <li ng-class="{'active': vm.healthy === 'h4'}" ng-click="vm.params2('h4')" ><p>疾病</p><p>易感基因检测</p></li>
+        <li ng-class="{'active': vm.healthy === 'h5'}" ng-click="vm.params2('h5')" ><p>自身免疫</p><p>代谢内分泌</p></li>
+        <li ng-class="{'active': vm.healthy === 'h6'}" ng-click="vm.params2('h6')" style="line-height: 28px">孕前期检测</li>
+        <li ng-class="{'active': vm.healthy === 'h7'}" ng-click="vm.params2('h7')" style="line-height: 28px">健康管理产品</li>
+        <li ng-class="{'active': vm.healthy === 'h8'}" ng-click="vm.params2('h8')" style="line-height: 28px">儿童类检测</li>
+      </ul>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-h1" ng-show="vm.healthy === 'h1'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>CMP</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>CMP_199</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>AccuSeqα</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>AccuSeqα199</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>AccuSeqΩ-exon</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>AccuSeqα2</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>华木兰</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-breast.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+               <p>乳腺癌基因检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-ovarian.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>卵巢癌基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-cervical.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>宫颈癌基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-endometrial.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>子宫内膜癌基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-female-tumor.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性肿瘤专项基因检测</p>
+                  <p style="line-height: 1"><small style="font-size: 12px">(乳腺癌、卵巢癌、宫颈癌、子宫内膜癌)</small></p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-childhood-leukemia.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>儿童白血病基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-lung.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肺腺癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-lung-squamous.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肺鳞癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-small-lung.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>小细胞肺癌</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-esophageal.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>食管癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-bladder.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>膀胱癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-nasopharyngeal.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>鼻咽癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-colorectal.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>大肠癌</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-liver.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肝癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-thyroid.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>甲状腺癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-stomach.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>胃癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-pancreas.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>胰腺癌</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-acute-lymphoblastic.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>急性淋巴白血病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-acute-myeloid.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>急性髓白血病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-chronic-myeloid.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>慢性髓白血病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-chronic-lymphoblastic.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>慢性淋巴细胞白血病</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-mds.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>骨髓增生异常综合症</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-multiple-myeloma.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>多发性骨髓瘤</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-urothelial.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>尿路上皮癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-basal-cell.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>皮肤基底细胞癌</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-melanoma.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>恶性黑色素瘤</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-skin-squamous.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>皮肤鳞状细胞癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-throat.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>喉癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-mouth.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>口腔癌</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-prostate.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>前列腺癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-small-intestine.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>小肠癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-kidney.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肾癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肺癌</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>胆囊癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-lymph.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>淋巴癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-hereditary.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>遗传结直肠癌</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-glia.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>脑胶质瘤</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-man-3.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>男性3项肿瘤</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-woman-3.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>女性3项肿瘤</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-man-10.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>男性10项肿瘤</p>
+                  <p>易感基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-woman-13.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性13项肿瘤</p>
+                  <p>易感基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-detection-tumor.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>超早期肿瘤预警检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-integrated-screen.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肿瘤综合早筛</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-common-tumor.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>常见肿瘤早筛</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-assessment.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>遗传性肿瘤风险评估</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-susceptibility.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肿瘤全面易感基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-breast-cancer.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>遗传性乳腺癌</p>
+                  <p>/卵巢癌风险检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-gastric-cancer.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>遗传性胃癌基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-renal.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>遗传性肾癌基因检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-lynch-syndrome.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>林奇综合症基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-prostate-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>遗传性前列腺癌</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-thyroid-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>遗传性甲状腺癌</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-endometrium.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>遗传性子宫内膜癌</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-pancreas-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>遗传性胰腺癌基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-colorectal-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>遗传性结直肠癌</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-pheochromocytoma.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>遗传性嗜铬细胞瘤</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-female-tumor-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性肿瘤易感</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h1-male-tumor.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>男性肿瘤易感</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-h1"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-h1"></div>
+      <div class="swiper-button-next swiper-button-next-h1"></div>
+    </div>
+    <div class="ibox-content product-picture-box" ng-show="vm.healthy === 'h2'">
+      <ul>
+        <li>
+          <div class="product-picture">
+            <img src="assets/images/products/h2-personalized.png" alt="">
+          </div>
+          <div class="product-picture-describe">
+            <p>个性化用药检测</p>
+          </div>
+        </li>
+        <li>
+          <div class="product-picture">
+            <img src="assets/images/products/h2-classical.png" alt="">
+          </div>
+          <div class="product-picture-describe">
+            <p>经典用药检测</p>
+          </div>
+        </li>
+        <li>
+          <div class="product-picture">
+            <img src="assets/images/products/h2-children.png" alt="">
+          </div>
+          <div class="product-picture-describe">
+            <p>儿童敏感用药基因检测</p>
+          </div>
+        </li>
+        <li>
+          <div class="product-picture">
+            <img src="assets/images/products/h2-liver.png" alt="">
+          </div>
+          <div class="product-picture-describe">
+            <p>肝脏药物代谢能力检测</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-h3" ng-show="vm.healthy === 'h3'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h3-single.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>单基因遗传疾病检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h3-fAp.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>家族性腺瘤息肉病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h3-aged.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>老年性神经系统遗传疾病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h3-parkinson.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>帕金森病风险检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h3-alzheimer.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>阿尔茨海默症风险检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>遗传性心率失常风险检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-h3"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-h3"></div>
+      <div class="swiper-button-next swiper-button-next-h3"></div>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-h4" ng-show="vm.healthy === 'h4'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-hypertension.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>高血压</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-coronary.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>冠心病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-atherosclerosis.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>动脉粥样硬化</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-cerebral-infarction.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>脑梗塞</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-cerebral-hemorrhage.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>脑出血</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-myocardial.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>心肌梗塞</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-fibrillation.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>房颤</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-cardiomyopathy.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肥厚性心肌病</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-cardiomyopathy-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>扩张型心肌病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-thrombosis.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>深静脉血栓</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-children.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>儿童疾病风险检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-male-high.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>男性高发疾病风险检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-woman-high.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>女性高发疾病风险检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-cardiovascular.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>心脑血管疾病风险检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h2-hyperlipidemia.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>高血脂风险检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-hypertension-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>高血压风险检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-coronary-heart.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>冠心病心肌梗塞</p>
+                  <p>风险检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-stroke.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>脑中风风险检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-older.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>老年痴呆症风险检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-fibrillation-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>房颤风险检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-rheumatoid.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>类风湿性关节炎</p>
+                  <p>风险基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h4-diabetes.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>糖尿病风险检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-h4"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-h4"></div>
+      <div class="swiper-button-next swiper-button-next-h4"></div>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-h5" ng-show="vm.healthy === 'h5'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-phosphorus.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>钙磷代谢能力</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-glucose.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>糖代谢能力</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-poison.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>毒物激活能力</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-detoxification.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>解毒能力</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-dna.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>DNA损伤修复能力</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-alcohol.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>酒精代谢能力</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-cigarette.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>香烟代谢能力</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-free.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>抗自由基能力</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-lipid.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>脂质代谢能力</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-gastric.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>胃溃疡</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-alcoholic.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>酒精性肝病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-hepatic.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>肝纤维化</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-posthepatitic.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>乙肝后肝硬化</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-cirrhosis.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>原发性胆汁肝硬化</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-periodontitis.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>牙周炎</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-nonalcoholic.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>非酒精性脂肪肝</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-pancreatitis.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>慢性胰腺炎</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-hepatitis.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>慢性乙型肝炎</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-osteoporosis.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>骨质疏松</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>2型糖尿病</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-hyperlipidemia.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>高脂血症</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-gout.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>痛风</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-hyperthyroidism.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>甲状腺功能亢进</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-hypothyroidism.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>甲状腺功能减退</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-hyperhomocysteinemia.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>高同型半胱氨酸血症</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-hyperuricemia.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>高尿酸血症</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-erythematosus.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>系统性红斑狼疮</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-rheumatoid.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>类风湿性关节炎</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-bronchial.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>支气管哮喘</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-ulcerative.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>溃疡性结肠炎</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-ankylosing.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>强直性脊柱炎</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-hashimoto.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>桥本甲状腺炎</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-rhinitis.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>应变性鼻炎</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-allergy.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>过敏体质基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-psoriasis.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>牛皮癣风险基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-osteoporosis-2.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>骨质疏松症风险基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-calcium.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>钙吸收代谢能力</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h5-estrogen.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>雌激素代谢能力</p>
+                  <p>基因检测（女）</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-h5"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-h5"></div>
+      <div class="swiper-button-next swiper-button-next-h5"></div>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-h6" ng-show="vm.healthy === 'h6'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-folate.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>叶酸利用能力</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-folate-requirements.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>孕期叶酸需求</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-nutritional.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>孕前/围产期营养需求</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-risk.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>围产期风险</p>
+                  <p style="line-height: 1;font-size: 12px"><small>(妊娠高血压、妊娠糖尿病、产后肥胖)</small></p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-abortion.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>习惯性流产风险</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-deafness.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>预防药物性耳聋</p>
+                  <p>(孕母/儿童)</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-estrogen.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性雌激素效能</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-during-pregnancy.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>孕期叶酸代谢能力</p>
+                  <p>基因检测（女）</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-hypertensive.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>妊娠期高血压疾病</p>
+                  <p>基因检测（女）</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-detoxification.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>解毒能力</p>
+                  <p>基因检测（女）</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-gestational.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>妊娠期糖尿病</p>
+                  <p>基因检测（女）</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-woman-harelip.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>唇腭裂（兔唇）</p>
+                  <p>遗传风险预测（女）</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-man-harelip.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>唇腭裂（兔唇）</p>
+                  <p>遗传风险预测（男）</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h6-placental.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+               <p>胎盘早剥（女）</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-h6"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-h6"></div>
+      <div class="swiper-button-next swiper-button-next-h6"></div>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-h7" ng-show="vm.healthy === 'h7'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肥胖(体重管理)</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>忧郁症</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>精神分裂症</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>焦虑症</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>多发性硬化症</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h3-alzheimer.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>阿尔茨海默病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/h3-parkinson.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>帕金森病</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>尘肺</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>石棉肺</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肺纤维化</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>饮酒损伤评估</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>吸烟损伤评估</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>膳食营养健康基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>营养运动健康基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性美容美体28项</p>
+                  <p>基因体检</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>肥胖风险检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>强迫症专项基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>自闭症专项基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>焦虑、抑郁症专项</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>代谢能力检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>12项心脑血管及代谢类</p>
+                  <p>易感基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>男性22项肿瘤、心脑血管及</p>
+                  <p>代谢类疾病易感基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性25项肿瘤、心脑血管及</p>
+                  <p>代谢类疾病易感基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>4种肿瘤+4项健康能力</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>男性6种肿瘤检测+4项</p>
+                  <p>健康能力基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性7种肿瘤+4项健康</p>
+                  <p>能力基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>男性13项肿瘤+4项健康</p>
+                  <p>能力基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性14项肿瘤+4项健康</p>
+                  <p>能力基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>男性26项常见肿瘤+4项</p>
+                  <p>健康能力基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性28项常见肿瘤+4项</p>
+                  <p>健康能力基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>男性肿瘤31项疾病+10项</p>
+                  <p>心脑血管基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性肿瘤33种疾病+10</p>
+                  <p>项心脑血管基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>男性66项六大类</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性68种六大类</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>男性89种八大类</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>女性92种八大类</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-h7"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-h7"></div>
+      <div class="swiper-button-next swiper-button-next-h7"></div>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container-h8" ng-show="vm.healthy === 'h8'">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童过敏性哮喘</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>预防儿童/青春期肥胖</p>
+                  <p>基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童骨骼发育与</p>
+                  <p>钙需求基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>性早熟基因检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>矮身材风险与</p>
+                  <p>健康指导基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>儿童用药基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>叶酸、铁、钙、维生素</p>
+                  <p>吸收能力检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>乳糖耐受基因检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童套餐一</p>
+                  <p><small>(情商)</small></p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童套餐二</p>
+                  <p><small>(情商、绘画)</small></p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童套餐三</p>
+                  <p><small>(情商、绘画、舞蹈)</small></p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童套餐四</p>
+                  <p><small>(情商、绘画、舞蹈、智力)</small></p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童套餐五</p>
+                  <p><small>(情商、绘画、舞蹈、智力、运动)</small></p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童套餐六</p>
+                  <p><small>(情商、绘画、舞蹈、智力、运动、音乐)</small></p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童套餐七</p>
+                  <p><small>(情商、绘画、舞蹈、智力、运动、音乐、安全用药)</small></p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>儿童艺术7项基因检测</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>儿童健康16项基因检测</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童健康?</p>
+                  <p>天赋20项基因检测</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <div>
+                  <p>儿童健康?</p>
+                  <p>天赋15项基因检测</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination-h8"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev-h8"></div>
+      <div class="swiper-button-next swiper-button-next-h8"></div>
+    </div>
+  </div>
+</div>
+<div class="row" style="background-color: #f1f8fc;padding-bottom: 40px">
+  <div class="ibox-article">
+    <p class="article-title" style="font-size: 26px">服务</p>
+  </div>
+  <div class="ibox-content product-list-box">
+    <div class="ibox ibox-content product-list">
+      <span>平台服务</span>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container1">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <ul>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                 <div>
+                   <p>基础服务(数据</p>
+                   <p>存储、分析、报告)</p>
+                 </div>
+                </div>
+              </li>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                  <p>样本管理服务</p>
+                </div>
+              </li>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                  <div>
+                    <p>实现管理服务</p>
+                    <p>（集成标签打印机）</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                  <div>
+                    <p>实验管理服务</p>
+                    <p>（无集成标签打印机）</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="swiper-slide">
+            <ul>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                  <p>报告定制化服务</p>
+                </div>
+              </li>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                  <p>个人用户统计服务</p>
+                </div>
+              </li>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                  <p>渠道管理服务</p>
+                </div>
+              </li>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                  <p>大数据挖掘服务</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="swiper-slide">
+            <ul>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                  <div>
+                    <p>CellBox服务</p>
+                    <p>(硬件设备投放)</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="product-picture">
+                  <img src="assets/images/products/.png" alt="">
+                </div>
+                <div class="product-picture-describe">
+                  <p>流程加速服务</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination swiper-pagination1"></div>
+
+        <!-- 如果需要导航按钮 -->
+        <div class="swiper-button-prev swiper-button-prev1"></div>
+        <div class="swiper-button-next swiper-button-next1"></div>
+    </div>
+  </div>
+  <div class="ibox-content product-list-box">
+    <div class="ibox ibox-content product-list">
+      <span>生信服务</span>
+    </div>
+    <div class="ibox-content product-picture-box swiper-container swiper-container2">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>全外显子分析</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>目标区域分析</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>转录组mRNA分析</p>
+              </div>
+            </li>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>16S/18S/ITS分析</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="swiper-slide">
+          <ul>
+            <li>
+              <div class="product-picture">
+                <img src="assets/images/products/.png" alt="">
+              </div>
+              <div class="product-picture-describe">
+                <p>宏基因组分析</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination swiper-pagination2"></div>
+
+      <!-- 如果需要导航按钮 -->
+      <div class="swiper-button-prev swiper-button-prev2"></div>
+      <div class="swiper-button-next swiper-button-next2"></div>
+    </div>
+  </div>
+</div>
+<script>
+  var mySwiper_banner = new Swiper ('.swiper-product-banner', {
+    autoplay: 5000, // 自动播放时间
+    loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-banner',
+
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-banner',
+    prevButton: '.swiper-button-prev-banner',
+
+  });
+  var mySwiper = new Swiper ('.swiper-container1', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination1',
+
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next1',
+    prevButton: '.swiper-button-prev1',
+
+  });
+  var mySwiper2 = new Swiper ('.swiper-container2', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+   // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination2',
+
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next2',
+    prevButton: '.swiper-button-prev2',
+
+  });
+  var mySwiper3 = new Swiper ('.swiper-container3', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination3',
+
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next3',
+    prevButton: '.swiper-button-prev3',
+
+  });
+  var mySwiper4 = new Swiper ('.swiper-container4', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination4',
+
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next4',
+    prevButton: '.swiper-button-prev4',
+
+  });
+  //菜单导航
+  var mySwiper_f1 = new Swiper ('.swiper-container-f1', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-f1',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-f1',
+    prevButton: '.swiper-button-prev-f1',
+  });
+  var mySwiper_f2 = new Swiper ('.swiper-container-f2', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-f2',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-f2',
+    prevButton: '.swiper-button-prev-f2',
+  });
+  var mySwiper_f3 = new Swiper ('.swiper-container-f3', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-f3',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-f3',
+    prevButton: '.swiper-button-prev-f3',
+  });
+  var mySwiper_f4 = new Swiper ('.swiper-container-f4', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-f4',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-f4',
+    prevButton: '.swiper-button-prev-f4',
+  });
+  var mySwiper_f5 = new Swiper ('.swiper-container-f5', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-f5',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-f5',
+    prevButton: '.swiper-button-prev-f5',
+  });
+  var mySwiper_h1 = new Swiper ('.swiper-container-h1', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-h1',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-h1',
+    prevButton: '.swiper-button-prev-h1',
+  });
+  var mySwiper_h3 = new Swiper ('.swiper-container-h3', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-h3',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-h3',
+    prevButton: '.swiper-button-prev-h3',
+  });
+  var mySwiper_h4 = new Swiper ('.swiper-container-h4', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-h4',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-h4',
+    prevButton: '.swiper-button-prev-h4',
+  });
+  var mySwiper_h5 = new Swiper ('.swiper-container-h5', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-h5',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-h5',
+    prevButton: '.swiper-button-prev-h5',
+  });
+  var mySwiper_h6 = new Swiper ('.swiper-container-h6', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-h6',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-h6',
+    prevButton: '.swiper-button-prev-h6',
+  });
+  var mySwiper_h7 = new Swiper ('.swiper-container-h7', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-h7',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-h7',
+    prevButton: '.swiper-button-prev-h7',
+  });
+  var mySwiper_h8 = new Swiper ('.swiper-container-h8', {
+    //autoplay: 5000, // 自动播放时间
+    //loop: true, //是否循环播放
+    paginationClickable: true, // 分页器可点击切换
+    //uniqueNavElements: false, //聚焦
+    // autoplayDisableOnInteraction: false, //有其他操作是依然继续进行自动播放
+
+    // 如果需要分页器
+    pagination: '.swiper-pagination-h8',
+    // 如果需要前进后退按钮
+    nextButton: '.swiper-button-next-h8',
+    prevButton: '.swiper-button-prev-h8',
+  });
+
+
+</script>
