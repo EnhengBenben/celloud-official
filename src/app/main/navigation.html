@@ -6,7 +6,7 @@
     <div class="pull-left nav-top-box">
       <ul>
         <li ng-class="{nav_active: app.$state.includes('app.dashboard')}"><a ui-sref="app.dashboard.list">首页</a></li>
-        <li ng-class="{nav_active: app.$state.includes('app.product')}"><a ui-sref="app.product.list({clinical: 'f1', healthy: 'f1'})">产品服务</a></li>
+        <li ng-class="{nav_active: app.$state.includes('app.product')}"><a ui-sref="app.product.list">产品服务</a></li>
         <li ng-class="{nav_active: app.$state.includes('app.case')}"><a ui-sref="app.case.list({status: 'test'})">成功案例</a></li>
         <!--<li ng-class="{nav_active: app.$state.includes('app.dashboard')}"><a ui-sref="app.dashboard.list">技术社区</a></li>-->
         <li ng-class="{nav_active: app.$state.includes('app.about')}"><a ui-sref="app.about.list">关于我们</a></li>
@@ -14,7 +14,7 @@
       </ul>
     </div>
     <div class="pull-right nav-top-btn">
-      <div class="btn btn-default">登陆</div>
+      <div class="btn btn-default"><a href="https://www.celloud.cn/login" target="_blank" style="color: #646464">登陆</a></div>
     </div>
   </div>
 </div>

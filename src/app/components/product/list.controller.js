@@ -8,9 +8,8 @@
     .controller('ProductListCtrl', Controller);
 
   /** @ngInject */
-  function Controller($stateParams) {
+  function Controller() {
     var vm = this;
-    vm.stateParams = $stateParams;
     vm.params1 = params1;
     vm.params2 = params2;
     return init();

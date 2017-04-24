@@ -14,7 +14,6 @@
     return init();
 
     function init() {
-
     }
   }
 })();
